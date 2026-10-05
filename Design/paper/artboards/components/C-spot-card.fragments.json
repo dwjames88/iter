@@ -1,0 +1,265 @@
+{
+ "artboard": {
+  "name": "SpotCard",
+  "page": "Components",
+  "width": 1200,
+  "height": 448,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1200px",
+   "height": "448px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 7,
+  "clones": 3,
+  "writesNoClone": 11,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "SpotCard",
+   "parentPathArray": [
+    "SpotCard"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">SpotCard</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">SpotCard · Spot/SpotLayout.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">The card surface for the spot page lead and charts: padding space/md, background/control, radius/card, hairline.</div>\n  </div>\n  <div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border);width:556px\">\n      <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "SpotCard/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "SpotCard",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Section / On the lead\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">On the lead</div>\n  <div layer-name=\"SpotCard / Lead\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:calc(var(--spacing-md) - var(--spacing-stroke-hairline));background:var(--color-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch\">\n    <div layer-name=\"Lead / Best window\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:flex-start\">\n      <div layer-name=\"LightBadge / large / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0\">\n        <div layer-name=\"ScoreChip / large / Great\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)\">\n          <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap\">87</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "SpotCard/Page/Appearances/Light Appearance/Section / On the lead/SpotCard / Lead/Lead / Best window/LightBadge / large / Scored",
+   "parentPathArray": [
+    "SpotCard",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / On the lead",
+    "SpotCard / Lead",
+    "Lead / Best window",
+    "LightBadge / large / Scored"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start\">\n  <div layer-name=\"Headline\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Sunrise · 87</div>\n  <div layer-name=\"Band Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n    <div layer-name=\"Band\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">Great</div>\n    <div layer-name=\"Separator\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">·</div>\n    <div layer-name=\"Range\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">Likely 72–100</div>\n  </div>\n  <div layer-name=\"Confidence Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n    <div layer-name=\"ConfidenceMark / Low\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)\">\n      <div layer-name=\"Bar 1\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n      <div layer-name=\"Bar 2\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0\"></div>\n      <div layer-name=\"Bar 3\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0\"></div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "SpotCard/Page/Appearances/Light Appearance/Section / On the lead/SpotCard / Lead/Lead / Best window/LightBadge / large / Scored/Text/Confidence Line",
+   "parentPathArray": [
+    "SpotCard",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / On the lead",
+    "SpotCard / Lead",
+    "Lead / Best window",
+    "LightBadge / large / Scored",
+    "Text",
+    "Confidence Line"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Confidence\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Low confidence</div>",
+   "lines": 1
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "SpotCard/Page/Appearances/Light Appearance/Section / On the lead/SpotCard / Lead/Lead / Best window",
+   "parentPathArray": [
+    "SpotCard",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / On the lead",
+    "SpotCard / Lead",
+    "Lead / Best window"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Lead Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex:1 1 0;min-width:0\">\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Best sunrise in the next 10 days</div>\n  <div layer-name=\"Best Day and Time\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap;font-variant-numeric:tabular-nums\">Mon, Oct 12, 2026 · 07:25–08:01</div>\n  <div layer-name=\"Top Factor\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)\">Mid and high cloud catches colour.</div>\n  <div layer-name=\"Updated\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-text-secondary);white-space:nowrap\">Updated 09:00</div>\n</div>",
+   "lines": 6
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "SpotCard/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "SpotCard",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Section / Empty surface\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Empty surface</div>\n  <div layer-name=\"SpotCard\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:calc(var(--spacing-md) - var(--spacing-stroke-hairline));background:var(--color-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch\">\n    <div layer-name=\"Placeholder\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap\">Any content: lead, chart, facts</div>\n  </div>\n</div>",
+   "lines": 6
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "SpotCard/Page/Appearances",
+   "parentPathArray": [
+    "SpotCard",
+    "Page",
+    "Appearances"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border);width:556px\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Section / On the lead\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">On the lead</div>\n    <div layer-name=\"SpotCard / Lead\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:calc(var(--spacing-md) - var(--spacing-stroke-hairline));background:var(--color-dark-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);align-self:stretch\">\n      <div layer-name=\"Lead / Best window\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:flex-start\">\n        <div layer-name=\"LightBadge / large / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0\">\n          <div layer-name=\"ScoreChip / large / Great\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)\">\n            <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap\">87</div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 8,
+   "kind": "clone",
+   "parentPath": "SpotCard/Page/Appearances/Dark Appearance/Section / On the lead/SpotCard / Lead/Lead / Best window/LightBadge / large / Scored",
+   "parentPathArray": [
+    "SpotCard",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Section / On the lead",
+    "SpotCard / Lead",
+    "Lead / Best window",
+    "LightBadge / large / Scored"
+   ],
+   "parentSeq": 7,
+   "sourceSeq": 3,
+   "sourcePath": "SpotCard/Page/Appearances/Light Appearance/Section / On the lead/SpotCard / Lead/Lead / Best window/LightBadge / large / Scored/Text",
+   "sourcePathArray": [
+    "SpotCard",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / On the lead",
+    "SpotCard / Lead",
+    "Lead / Best window",
+    "LightBadge / large / Scored",
+    "Text"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 8
+   }
+  },
+  {
+   "seq": 9,
+   "kind": "clone",
+   "parentPath": "SpotCard/Page/Appearances/Dark Appearance/Section / On the lead/SpotCard / Lead/Lead / Best window",
+   "parentPathArray": [
+    "SpotCard",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Section / On the lead",
+    "SpotCard / Lead",
+    "Lead / Best window"
+   ],
+   "parentSeq": 7,
+   "sourceSeq": 5,
+   "sourcePath": "SpotCard/Page/Appearances/Light Appearance/Section / On the lead/SpotCard / Lead/Lead / Best window/Lead Text",
+   "sourcePathArray": [
+    "SpotCard",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / On the lead",
+    "SpotCard / Lead",
+    "Lead / Best window",
+    "Lead Text"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 4
+   }
+  },
+  {
+   "seq": 10,
+   "kind": "clone",
+   "parentPath": "SpotCard/Page/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "SpotCard",
+    "Page",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 7,
+   "sourceSeq": 6,
+   "sourcePath": "SpotCard/Page/Appearances/Light Appearance/Section / Empty surface",
+   "sourcePathArray": [
+    "SpotCard",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / Empty surface"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 3
+   }
+  }
+ ]
+}

@@ -1,0 +1,300 @@
+{
+ "artboard": {
+  "name": "Warning lines",
+  "page": "Components",
+  "width": 1264,
+  "height": 664,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1264px",
+   "height": "664px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 17,
+  "clones": 0,
+  "writesNoClone": 17,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "Warning lines",
+   "parentPathArray": [
+    "Warning lines"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">Warning lines</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">IssueLine and inline equivalents · Trips/StopRow.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">A warning is violet and always carries an icon. Failures and validation are crimson with an icon.</div>\n  </div>\n  <div layer-name=\"Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n      <div layer-name=\"Note / Pattern, not one component\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n        <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Pattern, not one component</div>\n        <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">IssueLine in StopRow.swift; the same pattern is inline in the Change Dates sheet, Spot editor and Explore search error. Validation wording for the danger line is illustrative.</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Section / Warning (status/warning, caption)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n      <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Warning (status/warning, caption)</div>\n      <div layer-name=\"Warnings\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n        <div layer-name=\"Specimen / warning 1\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Light Appearance/Section / Warning (status/warning, caption)/Warnings/Specimen / warning 1",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Warning (status/warning, caption)",
+    "Warnings",
+    "Specimen / warning 1"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n    <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n  </div>\n  <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-status-warning);flex:1 1 0;min-width:0\">Out of order: this Sunrise is earlier than the previous stop's Sunset</div>\n</div>",
+   "lines": 6
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Light Appearance/Section / Warning (status/warning, caption)/Warnings",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Warning (status/warning, caption)",
+    "Warnings"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Specimen / warning 2\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\">\n  <div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n    <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n      <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n    </div>\n    <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-status-warning);flex:1 1 0;min-width:0\">No Sunset window on this day at this place</div>\n  </div>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Light Appearance/Section / Warning (status/warning, caption)/Warnings",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Warning (status/warning, caption)",
+    "Warnings"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Specimen / warning 3\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\">\n  <div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n    <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n      <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n    </div>\n    <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-status-warning);flex:1 1 0;min-width:0\">Drive doesn't fit: 2 hr, 58 min short</div>\n  </div>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Light Appearance/Section / Warning (status/warning, caption)/Warnings",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Warning (status/warning, caption)",
+    "Warnings"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Specimen / warning 4\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\">\n  <div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n    <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n      <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n    </div>\n    <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-status-warning);flex:1 1 0;min-width:0\">Couldn't find this place's time zone, so using this Mac's.</div>\n  </div>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Light Appearance/Section / Warning (status/warning, caption)/Warnings",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Warning (status/warning, caption)",
+    "Warnings"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Specimen / warning 5\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\">\n  <div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n    <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n      <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n    </div>\n    <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-status-warning);flex:1 1 0;min-width:0\">Couldn’t search Apple Maps for “Horseshoe Bend”.</div>\n  </div>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 8,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Section / Warning (callout, as in Change Dates)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Warning (callout, as in Change Dates)</div>\n  <div layer-name=\"Specimen / callout\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\">\n    <div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n      <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:15px;flex-shrink:0\">\n        <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n      </div>\n      <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-status-warning);flex:1 1 0;min-width:0\">2 stops will move to Day 3, the new last day. You can undo this.</div>\n    </div>\n  </div>\n</div>",
+   "lines": 11
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Section / Danger (status/danger): Spot editor vali\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Danger (status/danger): Spot editor validation</div>\n  <div layer-name=\"Specimen / danger\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\">\n    <div layer-name=\"DangerLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n      <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n        <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-status-danger)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n      </div>\n      <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-status-danger);flex:1 1 0;min-width:0\">Enter a latitude between −90 and 90.</div>\n    </div>\n  </div>\n</div>",
+   "lines": 11
+  },
+  {
+   "seq": 10,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Section / Warning (status/warning, caption)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Warning (status/warning, caption)</div>\n    <div layer-name=\"Warnings\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n      <div layer-name=\"Specimen / warning 1\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\">\n        <div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n          <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n            <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 11,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Dark Appearance/Section / Warning (status/warning, caption)/Warnings/Specimen / warning 1/WarningLine",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Warning (status/warning, caption)",
+    "Warnings",
+    "Specimen / warning 1",
+    "WarningLine"
+   ],
+   "parentSeq": 10,
+   "html": "<div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-status-warning);flex:1 1 0;min-width:0\">Out of order: this Sunrise is earlier than the previous stop's Sunset</div>",
+   "lines": 1
+  },
+  {
+   "seq": 12,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Dark Appearance/Section / Warning (status/warning, caption)/Warnings",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Warning (status/warning, caption)",
+    "Warnings"
+   ],
+   "parentSeq": 10,
+   "html": "<div layer-name=\"Specimen / warning 2\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\">\n  <div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n    <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n      <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n    </div>\n    <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-status-warning);flex:1 1 0;min-width:0\">No Sunset window on this day at this place</div>\n  </div>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 13,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Dark Appearance/Section / Warning (status/warning, caption)/Warnings",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Warning (status/warning, caption)",
+    "Warnings"
+   ],
+   "parentSeq": 10,
+   "html": "<div layer-name=\"Specimen / warning 3\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\">\n  <div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n    <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n      <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n    </div>\n    <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-status-warning);flex:1 1 0;min-width:0\">Drive doesn't fit: 2 hr, 58 min short</div>\n  </div>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 14,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Dark Appearance/Section / Warning (status/warning, caption)/Warnings",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Warning (status/warning, caption)",
+    "Warnings"
+   ],
+   "parentSeq": 10,
+   "html": "<div layer-name=\"Specimen / warning 4\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\">\n  <div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n    <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n      <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n    </div>\n    <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-status-warning);flex:1 1 0;min-width:0\">Couldn't find this place's time zone, so using this Mac's.</div>\n  </div>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 15,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Dark Appearance/Section / Warning (status/warning, caption)/Warnings",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Warning (status/warning, caption)",
+    "Warnings"
+   ],
+   "parentSeq": 10,
+   "html": "<div layer-name=\"Specimen / warning 5\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\">\n  <div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n    <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n      <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n    </div>\n    <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-status-warning);flex:1 1 0;min-width:0\">Couldn’t search Apple Maps for “Horseshoe Bend”.</div>\n  </div>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 16,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 10,
+   "html": "<div layer-name=\"Section / Warning (callout, as in Change Dates)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Warning (callout, as in Change Dates)</div>\n  <div layer-name=\"Specimen / callout\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\">\n    <div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n      <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:15px;flex-shrink:0\">\n        <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n      </div>\n      <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-status-warning);flex:1 1 0;min-width:0\">2 stops will move to Day 3, the new last day. You can undo this.</div>\n    </div>\n  </div>\n</div>",
+   "lines": 11
+  },
+  {
+   "seq": 17,
+   "kind": "write",
+   "parentPath": "Warning lines/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "Warning lines",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 10,
+   "html": "<div layer-name=\"Section / Danger (status/danger): Spot editor vali\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Danger (status/danger): Spot editor validation</div>\n  <div layer-name=\"Specimen / danger\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:360px;flex-shrink:0\">\n    <div layer-name=\"DangerLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n      <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n        <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-status-danger)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n      </div>\n      <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-status-danger);flex:1 1 0;min-width:0\">Enter a latitude between −90 and 90.</div>\n    </div>\n  </div>\n</div>",
+   "lines": 11
+  }
+ ]
+}

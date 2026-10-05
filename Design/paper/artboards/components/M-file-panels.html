@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>File importer and exporter</title>
+<link rel="stylesheet" href="../../tokens.css">
+</head>
+<body style="margin:0;background:var(--color-canvas-artboard)">
+<div layer-name="File importer and exporter" data-artboard style="box-sizing:border-box;width:1264px;height:1176px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:var(--color-canvas-artboard)">
+<div layer-name="Page" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0">
+<div layer-name="Artboard Header" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)">
+<div layer-name="Artboard Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap">File importer and exporter</div>
+<div layer-name="Type and File" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap">fileImporter / fileExporter · Trips/TripFlows.swift (Import Trip…), Trips/TripBuilderView.swift (Export…)</div>
+<div layer-name="Job" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px">System open and save panels. Import accepts .iter and .json; the export file name derives from the trip name.</div>
+</div>
+<div layer-name="Content" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+<div layer-name="Notes" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start">
+<div layer-name="Note / System UI, simplified" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:340px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">System UI, simplified</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">The real panels are macOS-owned (sidebar, columns, search, tags). Drawn only to show where the app's name, types and default file name appear.</div>
+</div>
+</div>
+<div layer-name="Appearances" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+<div layer-name="Light Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em">LIGHT</div>
+<div layer-name="Panels" style="box-sizing:border-box;display:flex;flex-direction:row;gap:32px;align-items:flex-start">
+<div layer-name="Specimen / open panel" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="System Panel / Open" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0;width:560px;background:var(--color-canvas-sheet-background);border-radius:26px;box-shadow:var(--shadow-canvas-sheet);overflow:hidden;border:1px solid var(--color-canvas-window-outline)">
+<div layer-name="Panel Title Bar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;height:44px;padding:0 18px;flex-shrink:0">
+<div layer-name="Traffic Lights" style="box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center;flex-shrink:0">
+<div layer-name="Close" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-canvas-traffic-close);border:0.5px solid var(--color-canvas-traffic-close-stroke);flex-shrink:0"></div>
+<div layer-name="Minimize" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-canvas-traffic-minimize);border:0.5px solid var(--color-canvas-traffic-minimize-stroke);flex-shrink:0"></div>
+<div layer-name="Zoom" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-canvas-traffic-zoom);border:0.5px solid var(--color-canvas-traffic-zoom-stroke);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Open Body" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:0 20px">
+<div layer-name="Location Bar" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center">
+<div layer-name="Pop-up Button / Documents" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;justify-content:space-between;flex-shrink:0;width:200px;height:var(--spacing-size-control-height);padding:0 var(--spacing-sm) 0 var(--spacing-md);border-radius:999px;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button)">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Documents</div>
+<svg layer-name="Icon / chevron.up.chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 64.97 94.04" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:3.90;stroke-linejoin:round"><path d="M32.51 0C31.23 0 30.12 0.52 29.18 1.46L1.27 28.2C0.54 28.99 0 29.97 0 31.42C0 33.96 1.95 35.9 4.49 35.9C5.53 35.9 6.68 35.62 7.71 34.6L32.51 10.31L57.26 34.6C58.3 35.58 59.5 35.9 60.52 35.9C63.06 35.9 64.97 33.96 64.97 31.42C64.97 29.97 64.48 28.99 63.7 28.2L35.85 1.46C34.84 0.52 33.74 0 32.51 0ZM32.51 94.04C33.74 94.04 34.84 93.53 35.85 92.58L63.7 65.85C64.48 65.06 64.97 64.07 64.97 62.63C64.97 60.08 63.06 58.15 60.52 58.15C59.5 58.15 58.3 58.46 57.26 59.45L32.51 83.73L7.71 59.45C6.68 58.42 5.53 58.15 4.49 58.15C1.95 58.15 0 60.08 0 62.63C0 64.07 0.54 65.06 1.27 65.85L29.18 92.58C30.12 93.53 31.23 94.04 32.51 94.04Z"/></svg>
+</div>
+<div layer-name="Prompt" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap">Choose an Iter trip (.iter) or JSON file</div>
+</div>
+<div layer-name="Browser" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);height:200px">
+<div layer-name="Panel Sidebar" style="box-sizing:border-box;display:flex;flex-direction:column;gap:2px;flex-shrink:0;width:140px">
+<div layer-name="Section" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;padding:2px 10px">Favorites</div>
+<div layer-name="Panel Sidebar Row / Recents" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;border-radius:8px;height:26px;padding:0 10px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Recents</div>
+</div>
+<div layer-name="Panel Sidebar Row / Desktop" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;border-radius:8px;height:26px;padding:0 10px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Desktop</div>
+</div>
+<div layer-name="Panel Sidebar Row / Documents" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;background:var(--color-canvas-selection-tint);border-radius:8px;height:26px;padding:0 10px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Documents</div>
+</div>
+<div layer-name="Panel Sidebar Row / Downloads" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;border-radius:8px;height:26px;padding:0 10px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Downloads</div>
+</div>
+</div>
+<div layer-name="File List" style="box-sizing:border-box;display:flex;flex-direction:column;gap:2px;flex:1 1 0;min-width:0;min-height:0">
+<div layer-name="List Header" style="box-sizing:border-box;display:flex;flex-direction:row;padding:0 8px 4px;gap:var(--spacing-md)">
+<div layer-name="Name Column" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;flex:1 1 0;min-width:0">Name</div>
+<div layer-name="Date Column" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:140px;flex-shrink:0">Date Modified</div>
+</div>
+<div layer-name="File Row / Canyon Country.iter" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;background:var(--color-accent-primary);border-radius:6px;height:24px;padding:0 8px;flex-shrink:0">
+<div layer-name="File Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-accent-on-accent);white-space:nowrap;flex:1 1 0;min-width:0">Canyon Country.iter</div>
+<div layer-name="Date Modified" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-accent-on-accent);white-space:nowrap;width:140px;flex-shrink:0">Today, 09:41</div>
+</div>
+<div layer-name="File Row / Eastern Sierra.iter" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;border-radius:6px;height:24px;padding:0 8px;flex-shrink:0">
+<div layer-name="File Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex:1 1 0;min-width:0">Eastern Sierra.iter</div>
+<div layer-name="Date Modified" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-secondary);white-space:nowrap;width:140px;flex-shrink:0">Yesterday</div>
+</div>
+<div layer-name="File Row / Notes.txt" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;border-radius:6px;height:24px;padding:0 8px;flex-shrink:0">
+<div layer-name="File Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-quaternary);white-space:nowrap;flex:1 1 0;min-width:0">Notes.txt</div>
+<div layer-name="Date Modified" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-quaternary);white-space:nowrap;width:140px;flex-shrink:0">3 Oct 2026</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Panel Buttons" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);justify-content:flex-end;padding:12px 20px 20px">
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Cancel</div>
+</div>
+<div layer-name="Button / Open" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-accent-primary);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-accent-on-accent);white-space:nowrap">Open</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">Import Trip… (⌘O)</div>
+</div>
+<div layer-name="Specimen / save panel" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="System Panel / Save" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0;width:560px;background:var(--color-canvas-sheet-background);border-radius:26px;box-shadow:var(--shadow-canvas-sheet);overflow:hidden;border:1px solid var(--color-canvas-window-outline)">
+<div layer-name="Panel Title Bar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;height:44px;padding:0 18px;flex-shrink:0">
+<div layer-name="Traffic Lights" style="box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center;flex-shrink:0">
+<div layer-name="Close" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-canvas-traffic-close);border:0.5px solid var(--color-canvas-traffic-close-stroke);flex-shrink:0"></div>
+<div layer-name="Minimize" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-canvas-traffic-minimize);border:0.5px solid var(--color-canvas-traffic-minimize-stroke);flex-shrink:0"></div>
+<div layer-name="Zoom" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-canvas-traffic-zoom);border:0.5px solid var(--color-canvas-traffic-zoom-stroke);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Save Body" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-lg);padding:0 20px">
+<div layer-name="Save As Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;width:64px;flex-shrink:0">Save As:</div>
+<div layer-name="Text Field" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:360px;height:var(--spacing-size-control-height);padding:0 var(--spacing-sm);border-radius:var(--radius-control);background:var(--color-canvas-control-field);border:1px solid var(--color-canvas-control-field-stroke)">
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Canyon Country.iter</div>
+</div>
+</div>
+<div layer-name="Where Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;width:64px;flex-shrink:0">Where:</div>
+<div layer-name="Pop-up Button / Documents" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;justify-content:space-between;flex-shrink:0;width:200px;height:var(--spacing-size-control-height);padding:0 var(--spacing-sm) 0 var(--spacing-md);border-radius:999px;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button)">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Documents</div>
+<svg layer-name="Icon / chevron.up.chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 64.97 94.04" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:3.90;stroke-linejoin:round"><path d="M32.51 0C31.23 0 30.12 0.52 29.18 1.46L1.27 28.2C0.54 28.99 0 29.97 0 31.42C0 33.96 1.95 35.9 4.49 35.9C5.53 35.9 6.68 35.62 7.71 34.6L32.51 10.31L57.26 34.6C58.3 35.58 59.5 35.9 60.52 35.9C63.06 35.9 64.97 33.96 64.97 31.42C64.97 29.97 64.48 28.99 63.7 28.2L35.85 1.46C34.84 0.52 33.74 0 32.51 0ZM32.51 94.04C33.74 94.04 34.84 93.53 35.85 92.58L63.7 65.85C64.48 65.06 64.97 64.07 64.97 62.63C64.97 60.08 63.06 58.15 60.52 58.15C59.5 58.15 58.3 58.46 57.26 59.45L32.51 83.73L7.71 59.45C6.68 58.42 5.53 58.15 4.49 58.15C1.95 58.15 0 60.08 0 62.63C0 64.07 0.54 65.06 1.27 65.85L29.18 92.58C30.12 93.53 31.23 94.04 32.51 94.04Z"/></svg>
+</div>
+</div>
+<div layer-name="Hint" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;padding-left:76px">The default name comes from the trip name.</div>
+</div>
+<div layer-name="Panel Buttons" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);justify-content:flex-end;padding:12px 20px 20px">
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Cancel</div>
+</div>
+<div layer-name="Button / Save" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-accent-primary);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-accent-on-accent);white-space:nowrap">Save</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">Export… (⇧⌘E)</div>
+</div>
+</div>
+</div>
+<div layer-name="Dark Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em">DARK</div>
+<div layer-name="Panels" style="box-sizing:border-box;display:flex;flex-direction:row;gap:32px;align-items:flex-start">
+<div layer-name="Specimen / open panel" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="System Panel / Open" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0;width:560px;background:var(--color-dark-canvas-sheet-background);border-radius:26px;box-shadow:var(--shadow-dark-canvas-sheet);overflow:hidden;border:1px solid var(--color-dark-canvas-window-outline)">
+<div layer-name="Panel Title Bar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;height:44px;padding:0 18px;flex-shrink:0">
+<div layer-name="Traffic Lights" style="box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center;flex-shrink:0">
+<div layer-name="Close" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-dark-canvas-traffic-close);border:0.5px solid var(--color-dark-canvas-traffic-close-stroke);flex-shrink:0"></div>
+<div layer-name="Minimize" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-dark-canvas-traffic-minimize);border:0.5px solid var(--color-dark-canvas-traffic-minimize-stroke);flex-shrink:0"></div>
+<div layer-name="Zoom" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-dark-canvas-traffic-zoom);border:0.5px solid var(--color-dark-canvas-traffic-zoom-stroke);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Open Body" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:0 20px">
+<div layer-name="Location Bar" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center">
+<div layer-name="Pop-up Button / Documents" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;justify-content:space-between;flex-shrink:0;width:200px;height:var(--spacing-size-control-height);padding:0 var(--spacing-sm) 0 var(--spacing-md);border-radius:999px;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke);box-shadow:var(--shadow-dark-canvas-button)">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Documents</div>
+<svg layer-name="Icon / chevron.up.chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 64.97 94.04" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:3.90;stroke-linejoin:round"><path d="M32.51 0C31.23 0 30.12 0.52 29.18 1.46L1.27 28.2C0.54 28.99 0 29.97 0 31.42C0 33.96 1.95 35.9 4.49 35.9C5.53 35.9 6.68 35.62 7.71 34.6L32.51 10.31L57.26 34.6C58.3 35.58 59.5 35.9 60.52 35.9C63.06 35.9 64.97 33.96 64.97 31.42C64.97 29.97 64.48 28.99 63.7 28.2L35.85 1.46C34.84 0.52 33.74 0 32.51 0ZM32.51 94.04C33.74 94.04 34.84 93.53 35.85 92.58L63.7 65.85C64.48 65.06 64.97 64.07 64.97 62.63C64.97 60.08 63.06 58.15 60.52 58.15C59.5 58.15 58.3 58.46 57.26 59.45L32.51 83.73L7.71 59.45C6.68 58.42 5.53 58.15 4.49 58.15C1.95 58.15 0 60.08 0 62.63C0 64.07 0.54 65.06 1.27 65.85L29.18 92.58C30.12 93.53 31.23 94.04 32.51 94.04Z"/></svg>
+</div>
+<div layer-name="Prompt" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap">Choose an Iter trip (.iter) or JSON file</div>
+</div>
+<div layer-name="Browser" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);height:200px">
+<div layer-name="Panel Sidebar" style="box-sizing:border-box;display:flex;flex-direction:column;gap:2px;flex-shrink:0;width:140px">
+<div layer-name="Section" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;padding:2px 10px">Favorites</div>
+<div layer-name="Panel Sidebar Row / Recents" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;border-radius:8px;height:26px;padding:0 10px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Recents</div>
+</div>
+<div layer-name="Panel Sidebar Row / Desktop" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;border-radius:8px;height:26px;padding:0 10px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Desktop</div>
+</div>
+<div layer-name="Panel Sidebar Row / Documents" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;background:var(--color-dark-canvas-selection-tint);border-radius:8px;height:26px;padding:0 10px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Documents</div>
+</div>
+<div layer-name="Panel Sidebar Row / Downloads" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;border-radius:8px;height:26px;padding:0 10px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Downloads</div>
+</div>
+</div>
+<div layer-name="File List" style="box-sizing:border-box;display:flex;flex-direction:column;gap:2px;flex:1 1 0;min-width:0;min-height:0">
+<div layer-name="List Header" style="box-sizing:border-box;display:flex;flex-direction:row;padding:0 8px 4px;gap:var(--spacing-md)">
+<div layer-name="Name Column" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;flex:1 1 0;min-width:0">Name</div>
+<div layer-name="Date Column" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:140px;flex-shrink:0">Date Modified</div>
+</div>
+<div layer-name="File Row / Canyon Country.iter" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;background:var(--color-dark-accent-primary);border-radius:6px;height:24px;padding:0 8px;flex-shrink:0">
+<div layer-name="File Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-accent-on-accent);white-space:nowrap;flex:1 1 0;min-width:0">Canyon Country.iter</div>
+<div layer-name="Date Modified" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-accent-on-accent);white-space:nowrap;width:140px;flex-shrink:0">Today, 09:41</div>
+</div>
+<div layer-name="File Row / Eastern Sierra.iter" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;border-radius:6px;height:24px;padding:0 8px;flex-shrink:0">
+<div layer-name="File Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex:1 1 0;min-width:0">Eastern Sierra.iter</div>
+<div layer-name="Date Modified" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-secondary);white-space:nowrap;width:140px;flex-shrink:0">Yesterday</div>
+</div>
+<div layer-name="File Row / Notes.txt" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;border-radius:6px;height:24px;padding:0 8px;flex-shrink:0">
+<div layer-name="File Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-quaternary);white-space:nowrap;flex:1 1 0;min-width:0">Notes.txt</div>
+<div layer-name="Date Modified" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-quaternary);white-space:nowrap;width:140px;flex-shrink:0">3 Oct 2026</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Panel Buttons" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);justify-content:flex-end;padding:12px 20px 20px">
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke);box-shadow:var(--shadow-dark-canvas-button);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Cancel</div>
+</div>
+<div layer-name="Button / Open" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-accent-primary);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-accent-on-accent);white-space:nowrap">Open</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">Import Trip… (⌘O)</div>
+</div>
+<div layer-name="Specimen / save panel" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="System Panel / Save" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0;width:560px;background:var(--color-dark-canvas-sheet-background);border-radius:26px;box-shadow:var(--shadow-dark-canvas-sheet);overflow:hidden;border:1px solid var(--color-dark-canvas-window-outline)">
+<div layer-name="Panel Title Bar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;height:44px;padding:0 18px;flex-shrink:0">
+<div layer-name="Traffic Lights" style="box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center;flex-shrink:0">
+<div layer-name="Close" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-dark-canvas-traffic-close);border:0.5px solid var(--color-dark-canvas-traffic-close-stroke);flex-shrink:0"></div>
+<div layer-name="Minimize" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-dark-canvas-traffic-minimize);border:0.5px solid var(--color-dark-canvas-traffic-minimize-stroke);flex-shrink:0"></div>
+<div layer-name="Zoom" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-dark-canvas-traffic-zoom);border:0.5px solid var(--color-dark-canvas-traffic-zoom-stroke);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Save Body" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-lg);padding:0 20px">
+<div layer-name="Save As Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;width:64px;flex-shrink:0">Save As:</div>
+<div layer-name="Text Field" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:360px;height:var(--spacing-size-control-height);padding:0 var(--spacing-sm);border-radius:var(--radius-control);background:var(--color-dark-canvas-control-field);border:1px solid var(--color-dark-canvas-control-field-stroke)">
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Canyon Country.iter</div>
+</div>
+</div>
+<div layer-name="Where Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;width:64px;flex-shrink:0">Where:</div>
+<div layer-name="Pop-up Button / Documents" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;justify-content:space-between;flex-shrink:0;width:200px;height:var(--spacing-size-control-height);padding:0 var(--spacing-sm) 0 var(--spacing-md);border-radius:999px;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke);box-shadow:var(--shadow-dark-canvas-button)">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Documents</div>
+<svg layer-name="Icon / chevron.up.chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 64.97 94.04" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:3.90;stroke-linejoin:round"><path d="M32.51 0C31.23 0 30.12 0.52 29.18 1.46L1.27 28.2C0.54 28.99 0 29.97 0 31.42C0 33.96 1.95 35.9 4.49 35.9C5.53 35.9 6.68 35.62 7.71 34.6L32.51 10.31L57.26 34.6C58.3 35.58 59.5 35.9 60.52 35.9C63.06 35.9 64.97 33.96 64.97 31.42C64.97 29.97 64.48 28.99 63.7 28.2L35.85 1.46C34.84 0.52 33.74 0 32.51 0ZM32.51 94.04C33.74 94.04 34.84 93.53 35.85 92.58L63.7 65.85C64.48 65.06 64.97 64.07 64.97 62.63C64.97 60.08 63.06 58.15 60.52 58.15C59.5 58.15 58.3 58.46 57.26 59.45L32.51 83.73L7.71 59.45C6.68 58.42 5.53 58.15 4.49 58.15C1.95 58.15 0 60.08 0 62.63C0 64.07 0.54 65.06 1.27 65.85L29.18 92.58C30.12 93.53 31.23 94.04 32.51 94.04Z"/></svg>
+</div>
+</div>
+<div layer-name="Hint" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;padding-left:76px">The default name comes from the trip name.</div>
+</div>
+<div layer-name="Panel Buttons" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);justify-content:flex-end;padding:12px 20px 20px">
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke);box-shadow:var(--shadow-dark-canvas-button);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Cancel</div>
+</div>
+<div layer-name="Button / Save" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-accent-primary);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-accent-on-accent);white-space:nowrap">Save</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">Export… (⇧⌘E)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

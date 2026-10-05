@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WindowRow</title>
+<link rel="stylesheet" href="../../tokens.css">
+</head>
+<body style="margin:0;background:var(--color-canvas-artboard)">
+<div layer-name="WindowRow" data-artboard style="box-sizing:border-box;width:1000px;height:2000px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:var(--color-canvas-artboard)">
+<div layer-name="Page" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0">
+<div layer-name="Artboard Header" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)">
+<div layer-name="Artboard Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap">WindowRow</div>
+<div layer-name="Type and File" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap">WindowRow (private) · Spot/DayWindowsView.swift</div>
+<div layer-name="Job" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px">One window with its score, expandable to its reasons.</div>
+</div>
+<div layer-name="Notes" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;flex-wrap:wrap">
+<div layer-name="Note / Chevron drawn open" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:280px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Chevron drawn open</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">The expanded row chevron rotates 90 degrees in the app; here it is chevron.down.</div>
+</div>
+<div layer-name="Note / Signed bars are grey" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:280px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Signed bars are grey</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">COMPONENTS.md says helps = accent/primary, hurts = status/warning. The source fills every bar text/secondary so colour never reads as good or bad. Source followed.</div>
+</div>
+</div>
+<div layer-name="Appearances" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+<div layer-name="Light Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border);width:934px">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em">LIGHT</div>
+<div layer-name="Specimen / Collapsed" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch">
+<div layer-name="Specimen Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap">Collapsed</div>
+<div layer-name="Card Frame" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-background-control);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch">
+<div layer-name="WindowRow / goldenEvening" style="box-sizing:border-box;display:flex;flex-direction:column">
+<div layer-name="Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:var(--spacing-sm) var(--spacing-md)">
+<div layer-name="Chevron Slot" style="box-sizing:border-box;width:var(--spacing-size-icon-small);display:flex;justify-content:center;flex-shrink:0">
+<svg layer-name="Icon / chevron.right" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 47.72 84.72" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:2.86;stroke-linejoin:round"><path d="M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z"/></svg>
+</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">56</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Fair</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0"></div>
+<div layer-name="Time Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap">18:09–18:45</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / Selected" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch">
+<div layer-name="Specimen Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap">Selected</div>
+<div layer-name="Card Frame" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-background-control);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch">
+<div layer-name="WindowRow / goldenMorning" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-selection-fill)">
+<div layer-name="Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:var(--spacing-sm) var(--spacing-md)">
+<div layer-name="Chevron Slot" style="box-sizing:border-box;width:var(--spacing-size-icon-small);display:flex;justify-content:center;flex-shrink:0">
+<svg layer-name="Icon / chevron.right" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 47.72 84.72" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:2.86;stroke-linejoin:round"><path d="M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z"/></svg>
+</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">87</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunrise</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0"></div>
+<div layer-name="Time Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap">07:25–08:01</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / Expanded and selected" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch">
+<div layer-name="Specimen Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap">Expanded and selected</div>
+<div layer-name="Card Frame" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-background-control);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch">
+<div layer-name="WindowRow / goldenMorning" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-selection-fill)">
+<div layer-name="Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:var(--spacing-sm) var(--spacing-md)">
+<div layer-name="Chevron Slot" style="box-sizing:border-box;width:var(--spacing-size-icon-small);display:flex;justify-content:center;flex-shrink:0">
+<svg layer-name="Icon / chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 84.8 47.73" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:5.09;stroke-linejoin:round"><path d="M42.42 47.73C43.66 47.73 44.86 47.26 45.71 46.3L83.49 7.63C84.31 6.81 84.8 5.74 84.8 4.49C84.8 1.95 82.9 0 80.36 0C79.16 0 77.98 0.52 77.15 1.29L39.79 39.46L45.02 39.46L7.64 1.29C6.83 0.52 5.73 0 4.49 0C1.95 0 0 1.95 0 4.49C0 5.74 0.5 6.81 1.32 7.64L39.14 46.31C40.04 47.27 41.14 47.73 42.42 47.73Z"/></svg>
+</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">87</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunrise</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0"></div>
+<div layer-name="Time Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap">07:25–08:01</div>
+</div>
+<div layer-name="Reasons Indent" style="box-sizing:border-box;display:flex;flex-direction:column;padding:0 var(--spacing-md) var(--spacing-md) calc(var(--spacing-md) + var(--spacing-size-icon-small) + var(--spacing-sm))">
+<div layer-name="ReasonsGrid" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-items:flex-start">
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap">Why this score</div>
+<div layer-name="Factors" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Factor / Mid and high cloud" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:baseline">
+<div layer-name="Factor Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;width:128px;flex-shrink:0">Mid and high cloud</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:right;white-space:nowrap;width:44px;flex-shrink:0">29%</div>
+<div layer-name="Bar Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;align-self:center;flex-shrink:0">
+<div layer-name="SignedBar / +21" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="Track" style="box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;left:36px;top:3px;width:36px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)"></div>
+</div>
+<div layer-name="Points" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0">+21</div>
+</div>
+</div>
+<div layer-name="Sentence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)">Mid and high cloud catches colour.</div>
+</div>
+<div layer-name="Factor / Low cloud" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:baseline">
+<div layer-name="Factor Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;width:128px;flex-shrink:0">Low cloud</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:right;white-space:nowrap;width:44px;flex-shrink:0">6%</div>
+<div layer-name="Bar Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;align-self:center;flex-shrink:0">
+<div layer-name="SignedBar / +4" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="Track" style="box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;left:36px;top:3px;width:6.857142857142857px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)"></div>
+</div>
+<div layer-name="Points" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0">+4</div>
+</div>
+</div>
+<div layer-name="Sentence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)">Little low cloud: the horizon should be open.</div>
+</div>
+<div layer-name="Factor / Visibility" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:baseline">
+<div layer-name="Factor Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;width:128px;flex-shrink:0">Visibility</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:right;white-space:nowrap;width:44px;flex-shrink:0">15 mi</div>
+<div layer-name="Bar Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;align-self:center;flex-shrink:0">
+<div layer-name="SignedBar / +2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="Track" style="box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;left:36px;top:3px;width:3.4285714285714284px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)"></div>
+</div>
+<div layer-name="Points" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0">+2</div>
+</div>
+</div>
+<div layer-name="Sentence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)">Good visibility.</div>
+</div>
+</div>
+<div layer-name="Confidence" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)">
+<div layer-name="Confidence Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center">
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+<div layer-name="Confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Low confidence</div>
+<div layer-name="Dot" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap">·</div>
+<div layer-name="Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Likely 72–100</div>
+<div layer-name="Dot" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap">·</div>
+<div layer-name="Updated" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap">Updated 09:00</div>
+<div layer-name="SampleDataLabel / inline" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<svg layer-name="Icon / flask" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 93.31 102.4" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-status-warning)"><path d="M13.32 102.4L80.03 102.4C88.31 102.4 93.3 96.59 93.3 89.11C93.3 86.69 92.12 83.34 89.8 80.03L63.39 42.15L57.2 46.53L84.52 85.73C85.39 87 85.43 88.18 85.43 89.1C85.43 92.08 83.33 94.74 79.97 94.74L13.38 94.74C9.99 94.74 7.87 92.08 7.87 89.1C7.87 88.18 7.97 87 8.83 85.73L36.17 46.53L29.91 42.15L3.1 80.59C1.04 83.54 0 86.69 0 89.11C0 96.59 5.03 102.4 13.32 102.4ZM28.31 46.53L36.17 46.53L36.17 4.12L28.31 4.12ZM65.05 46.53L65.05 4.12L57.2 4.12L57.2 46.53ZM27.98 8.22L65.33 8.22C67.77 8.22 69.46 6.32 69.46 4.08C69.46 1.86 67.77 0 65.33 0L27.98 0C25.53 0 23.9 1.86 23.9 4.08C23.9 6.32 25.53 8.22 27.98 8.22ZM32.03 20.9L45.01 20.9C46.61 20.9 47.85 19.62 47.85 18.01C47.85 16.44 46.51 15.16 44.96 15.16L32.03 15.16ZM32.09 34.8L45.06 34.8C46.66 34.8 47.9 33.57 47.9 31.9C47.9 30.39 46.56 29.11 45.01 29.11L32.09 29.11ZM32.09 48.75L45.06 48.75C46.66 48.75 47.9 47.52 47.9 45.85C47.9 44.34 46.61 43.06 45.06 43.06L32.09 43.06Z"/></svg>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-status-warning);white-space:nowrap">Sample data</div>
+</div>
+</div>
+<div layer-name="Footnote" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-text-secondary)">Far out or missing inputs: treat the score as a guide. Forecast is about 6 days ahead of this window.</div>
+</div>
+<div layer-name="ExplainBlock / Idle" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-items:flex-start">
+<div layer-name="Button / Explain" style="box-sizing:border-box;display:flex;flex-direction:row;height:22px;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button);padding:0 10px">
+<svg layer-name="Icon / apple.intelligence" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 114.23 109.21" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary)"><path d="M81.85 107.52C89.85 103.74 91.81 96.08 92.07 86.2C92.13 79.57 91.46 71.94 93.1 64.69C94.65 57.62 98.71 51.01 101.4 44.9C105.5 36.07 107.01 28.22 101.5 21.25C95.96 14.37 87.97 14.14 78.38 16.16C71.83 17.59 64.48 19.85 57.12 19.8C49.7 19.85 42.4 17.59 35.9 16.11C26.21 14.08 18.27 14.32 12.73 21.29C7.23 28.27 8.74 36.08 12.9 44.9C15.57 51.01 19.53 57.68 21.13 64.69C22.81 71.94 22.05 79.52 22.23 86.2C22.41 96.08 24.38 103.74 32.42 107.52C34.82 108.67 37.17 109.21 39.46 109.21C44.81 109.16 49.91 106.32 55.36 102.18C60.75 98.17 66.49 92.88 73.03 89.71C79.7 86.48 87.26 85.44 93.59 83.88C103.26 81.48 110.26 77.86 112.33 69.21C114.23 60.6 109.52 54.15 101.93 47.93C96.69 43.71 90.35 39.38 85.76 33.6C81.21 27.92 78.59 20.79 75.55 14.83C71.05 6.08 65.95 0 57.06 0C48.24 0 43.13 6.08 38.74 14.83C35.75 20.79 33.02 27.87 28.47 33.56C23.87 39.43 17.58 43.71 12.35 47.93C4.71 54.1 0 60.6 1.97 69.16C3.98 77.81 10.97 81.48 20.54 83.88C27.02 85.44 34.52 86.43 41.26 89.71C47.74 92.88 53.49 98.12 58.81 102.24C64.26 106.39 69.41 109.21 74.77 109.21C77.07 109.21 79.41 108.67 81.85 107.52ZM78.46 100.54C72.98 103.11 68.39 99.55 63.69 96.05C57.87 91.62 51.56 85.94 44.65 82.67C37.57 79.24 29.45 77.92 22.32 76.21C16.59 74.8 10.96 73.33 9.66 67.41C8.29 61.57 12.76 57.89 17.28 54.06C22.93 49.41 29.71 44.65 34.53 38.55C39.49 32.46 42.44 24.79 45.75 18.27C48.4 13.06 51.06 7.95 57.06 7.95C63.17 7.9 65.79 13.01 68.53 18.32C71.77 24.84 74.73 32.36 79.59 38.56C84.52 44.7 91.34 49.41 96.94 54.06C101.53 57.89 105.94 61.57 104.62 67.41C103.27 73.33 97.63 74.8 91.85 76.21C85.19 77.77 76.7 79.24 69.58 82.67C62.66 85.99 56.14 91.72 50.5 96.1C45.83 99.6 41.21 103.05 35.76 100.54C30.37 97.86 30.25 91.97 30.07 86.1C29.94 78.84 30.51 70.61 28.81 62.88C27.05 55.41 23.04 48.2 19.9 41.49C17.6 36.16 15.14 30.85 18.83 26.26C22.63 21.51 28.29 22.63 34.05 23.8C41.16 25.33 49.21 27.75 57.06 27.75C65.06 27.7 73.06 25.33 80.14 23.8C85.99 22.53 91.6 21.56 95.39 26.25C99.15 30.9 96.63 36.17 94.33 41.49C91.19 48.2 87.17 55.46 85.43 62.98C83.72 70.61 84.28 78.89 84.21 86.15C83.98 92.02 83.87 97.91 78.46 100.54Z"/></svg>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Explain</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / No forecast" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch">
+<div layer-name="Specimen Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap">No forecast</div>
+<div layer-name="Card Frame" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-background-control);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch">
+<div layer-name="WindowRow / goldenEvening" style="box-sizing:border-box;display:flex;flex-direction:column">
+<div layer-name="Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:var(--spacing-sm) var(--spacing-md)">
+<div layer-name="Chevron Slot" style="box-sizing:border-box;width:var(--spacing-size-icon-small);display:flex;justify-content:center;flex-shrink:0">
+<svg layer-name="Icon / chevron.right" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 47.72 84.72" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:2.86;stroke-linejoin:round"><path d="M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z"/></svg>
+</div>
+<div layer-name="LightBadge / regular / No forecast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">No forecast</div>
+</div>
+</div>
+<div layer-name="Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0"></div>
+<div layer-name="Time Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap">18:19–18:54</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / No forecast, expanded" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch">
+<div layer-name="Specimen Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap">No forecast, expanded</div>
+<div layer-name="Card Frame" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-background-control);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch">
+<div layer-name="WindowRow / goldenEvening" style="box-sizing:border-box;display:flex;flex-direction:column">
+<div layer-name="Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:var(--spacing-sm) var(--spacing-md)">
+<div layer-name="Chevron Slot" style="box-sizing:border-box;width:var(--spacing-size-icon-small);display:flex;justify-content:center;flex-shrink:0">
+<svg layer-name="Icon / chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 84.8 47.73" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:5.09;stroke-linejoin:round"><path d="M42.42 47.73C43.66 47.73 44.86 47.26 45.71 46.3L83.49 7.63C84.31 6.81 84.8 5.74 84.8 4.49C84.8 1.95 82.9 0 80.36 0C79.16 0 77.98 0.52 77.15 1.29L39.79 39.46L45.02 39.46L7.64 1.29C6.83 0.52 5.73 0 4.49 0C1.95 0 0 1.95 0 4.49C0 5.74 0.5 6.81 1.32 7.64L39.14 46.31C40.04 47.27 41.14 47.73 42.42 47.73Z"/></svg>
+</div>
+<div layer-name="LightBadge / regular / No forecast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">No forecast</div>
+</div>
+</div>
+<div layer-name="Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0"></div>
+<div layer-name="Time Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap">18:19–18:54</div>
+</div>
+<div layer-name="Reasons Indent" style="box-sizing:border-box;display:flex;flex-direction:column;padding:0 var(--spacing-md) var(--spacing-md) calc(var(--spacing-md) + var(--spacing-size-icon-small) + var(--spacing-sm))">
+<div layer-name="ReasonsGrid / No forecast" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-items:flex-start">
+<div layer-name="Reason" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary)">Weather isn't enabled for this build of Iter, so only sun and moon times are shown.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / Service failed, expanded (Retry)" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch">
+<div layer-name="Specimen Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap">Service failed, expanded (Retry)</div>
+<div layer-name="Card Frame" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-background-control);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch">
+<div layer-name="WindowRow / goldenEvening" style="box-sizing:border-box;display:flex;flex-direction:column">
+<div layer-name="Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:var(--spacing-sm) var(--spacing-md)">
+<div layer-name="Chevron Slot" style="box-sizing:border-box;width:var(--spacing-size-icon-small);display:flex;justify-content:center;flex-shrink:0">
+<svg layer-name="Icon / chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 84.8 47.73" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:5.09;stroke-linejoin:round"><path d="M42.42 47.73C43.66 47.73 44.86 47.26 45.71 46.3L83.49 7.63C84.31 6.81 84.8 5.74 84.8 4.49C84.8 1.95 82.9 0 80.36 0C79.16 0 77.98 0.52 77.15 1.29L39.79 39.46L45.02 39.46L7.64 1.29C6.83 0.52 5.73 0 4.49 0C1.95 0 0 1.95 0 4.49C0 5.74 0.5 6.81 1.32 7.64L39.14 46.31C40.04 47.27 41.14 47.73 42.42 47.73Z"/></svg>
+</div>
+<div layer-name="LightBadge / regular / No forecast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">No forecast</div>
+</div>
+</div>
+<div layer-name="Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0"></div>
+<div layer-name="Time Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap">18:19–18:54</div>
+</div>
+<div layer-name="Reasons Indent" style="box-sizing:border-box;display:flex;flex-direction:column;padding:0 var(--spacing-md) var(--spacing-md) calc(var(--spacing-md) + var(--spacing-size-icon-small) + var(--spacing-sm))">
+<div layer-name="ReasonsGrid / No forecast" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-items:flex-start">
+<div layer-name="Reason" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary)">Couldn't reach Apple Weather. Sun and moon times are still exact.</div>
+<div layer-name="Button / Retry" style="box-sizing:border-box;display:flex;flex-direction:row;height:22px;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button);padding:0 10px">
+<svg layer-name="Icon / arrow.clockwise" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 86.22 104.91" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary)"><path d="M43.11 104.91C66.95 104.91 86.22 85.58 86.22 61.74C86.22 59.56 84.42 57.83 82.3 57.83C80.16 57.83 78.38 59.56 78.38 61.74C78.38 81.23 62.59 96.96 43.11 96.96C23.63 96.96 7.85 81.23 7.85 61.74C7.85 42.27 23.63 26.48 43.11 26.48C47.46 26.48 51.58 27.23 55.42 28.69C57.93 29.68 60.89 28.25 60.93 25.21C60.96 22.7 59.13 21.81 57.78 21.34C53.3 19.6 48.31 18.69 43.11 18.69C19.28 18.69 0 37.96 0 61.81C0 85.58 19.28 104.91 43.11 104.91ZM56.35 24.54L38.57 42.14C37.8 42.86 37.46 43.89 37.46 44.9C37.46 47.11 39.15 48.82 41.3 48.82C42.55 48.82 43.42 48.38 44.13 47.72L64.23 27.5C65.1 26.63 65.49 25.68 65.49 24.53C65.49 23.48 65.03 22.44 64.23 21.64L44.14 1.21C43.43 0.49 42.52 0 41.28 0C39.14 0 37.46 1.81 37.46 4.03C37.46 5.08 37.8 6.1 38.52 6.84Z"/></svg>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Retry</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Dark Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border);width:934px">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em">DARK</div>
+<div layer-name="Specimen / Collapsed" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch">
+<div layer-name="Specimen Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap">Collapsed</div>
+<div layer-name="Card Frame" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-background-control);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);align-self:stretch">
+<div layer-name="WindowRow / goldenEvening" style="box-sizing:border-box;display:flex;flex-direction:column">
+<div layer-name="Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:var(--spacing-sm) var(--spacing-md)">
+<div layer-name="Chevron Slot" style="box-sizing:border-box;width:var(--spacing-size-icon-small);display:flex;justify-content:center;flex-shrink:0">
+<svg layer-name="Icon / chevron.right" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 47.72 84.72" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:2.86;stroke-linejoin:round"><path d="M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z"/></svg>
+</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">56</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Fair</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0"></div>
+<div layer-name="Time Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap">18:09–18:45</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / Selected" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch">
+<div layer-name="Specimen Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap">Selected</div>
+<div layer-name="Card Frame" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-background-control);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);align-self:stretch">
+<div layer-name="WindowRow / goldenMorning" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-selection-fill)">
+<div layer-name="Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:var(--spacing-sm) var(--spacing-md)">
+<div layer-name="Chevron Slot" style="box-sizing:border-box;width:var(--spacing-size-icon-small);display:flex;justify-content:center;flex-shrink:0">
+<svg layer-name="Icon / chevron.right" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 47.72 84.72" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:2.86;stroke-linejoin:round"><path d="M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z"/></svg>
+</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">87</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunrise</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0"></div>
+<div layer-name="Time Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap">07:25–08:01</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / Expanded and selected" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch">
+<div layer-name="Specimen Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap">Expanded and selected</div>
+<div layer-name="Card Frame" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-background-control);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);align-self:stretch">
+<div layer-name="WindowRow / goldenMorning" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-selection-fill)">
+<div layer-name="Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:var(--spacing-sm) var(--spacing-md)">
+<div layer-name="Chevron Slot" style="box-sizing:border-box;width:var(--spacing-size-icon-small);display:flex;justify-content:center;flex-shrink:0">
+<svg layer-name="Icon / chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 84.8 47.73" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:5.09;stroke-linejoin:round"><path d="M42.42 47.73C43.66 47.73 44.86 47.26 45.71 46.3L83.49 7.63C84.31 6.81 84.8 5.74 84.8 4.49C84.8 1.95 82.9 0 80.36 0C79.16 0 77.98 0.52 77.15 1.29L39.79 39.46L45.02 39.46L7.64 1.29C6.83 0.52 5.73 0 4.49 0C1.95 0 0 1.95 0 4.49C0 5.74 0.5 6.81 1.32 7.64L39.14 46.31C40.04 47.27 41.14 47.73 42.42 47.73Z"/></svg>
+</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">87</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunrise</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0"></div>
+<div layer-name="Time Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap">07:25–08:01</div>
+</div>
+<div layer-name="Reasons Indent" style="box-sizing:border-box;display:flex;flex-direction:column;padding:0 var(--spacing-md) var(--spacing-md) calc(var(--spacing-md) + var(--spacing-size-icon-small) + var(--spacing-sm))">
+<div layer-name="ReasonsGrid" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-items:flex-start">
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap">Why this score</div>
+<div layer-name="Factors" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Factor / Mid and high cloud" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:baseline">
+<div layer-name="Factor Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;width:128px;flex-shrink:0">Mid and high cloud</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);text-align:right;white-space:nowrap;width:44px;flex-shrink:0">29%</div>
+<div layer-name="Bar Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;align-self:center;flex-shrink:0">
+<div layer-name="SignedBar / +21" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="Track" style="box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;left:36px;top:3px;width:36px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)"></div>
+</div>
+<div layer-name="Points" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0">+21</div>
+</div>
+</div>
+<div layer-name="Sentence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary)">Mid and high cloud catches colour.</div>
+</div>
+<div layer-name="Factor / Low cloud" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:baseline">
+<div layer-name="Factor Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;width:128px;flex-shrink:0">Low cloud</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);text-align:right;white-space:nowrap;width:44px;flex-shrink:0">6%</div>
+<div layer-name="Bar Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;align-self:center;flex-shrink:0">
+<div layer-name="SignedBar / +4" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="Track" style="box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;left:36px;top:3px;width:6.857142857142857px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)"></div>
+</div>
+<div layer-name="Points" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0">+4</div>
+</div>
+</div>
+<div layer-name="Sentence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary)">Little low cloud: the horizon should be open.</div>
+</div>
+<div layer-name="Factor / Visibility" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:baseline">
+<div layer-name="Factor Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;width:128px;flex-shrink:0">Visibility</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);text-align:right;white-space:nowrap;width:44px;flex-shrink:0">15 mi</div>
+<div layer-name="Bar Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;align-self:center;flex-shrink:0">
+<div layer-name="SignedBar / +2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="Track" style="box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;left:36px;top:3px;width:3.4285714285714284px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)"></div>
+</div>
+<div layer-name="Points" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0">+2</div>
+</div>
+</div>
+<div layer-name="Sentence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary)">Good visibility.</div>
+</div>
+</div>
+<div layer-name="Confidence" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)">
+<div layer-name="Confidence Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center">
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+<div layer-name="Confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Low confidence</div>
+<div layer-name="Dot" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-secondary);white-space:nowrap">·</div>
+<div layer-name="Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Likely 72–100</div>
+<div layer-name="Dot" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-secondary);white-space:nowrap">·</div>
+<div layer-name="Updated" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-secondary);white-space:nowrap">Updated 09:00</div>
+<div layer-name="SampleDataLabel / inline" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<svg layer-name="Icon / flask" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 93.31 102.4" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-status-warning)"><path d="M13.32 102.4L80.03 102.4C88.31 102.4 93.3 96.59 93.3 89.11C93.3 86.69 92.12 83.34 89.8 80.03L63.39 42.15L57.2 46.53L84.52 85.73C85.39 87 85.43 88.18 85.43 89.1C85.43 92.08 83.33 94.74 79.97 94.74L13.38 94.74C9.99 94.74 7.87 92.08 7.87 89.1C7.87 88.18 7.97 87 8.83 85.73L36.17 46.53L29.91 42.15L3.1 80.59C1.04 83.54 0 86.69 0 89.11C0 96.59 5.03 102.4 13.32 102.4ZM28.31 46.53L36.17 46.53L36.17 4.12L28.31 4.12ZM65.05 46.53L65.05 4.12L57.2 4.12L57.2 46.53ZM27.98 8.22L65.33 8.22C67.77 8.22 69.46 6.32 69.46 4.08C69.46 1.86 67.77 0 65.33 0L27.98 0C25.53 0 23.9 1.86 23.9 4.08C23.9 6.32 25.53 8.22 27.98 8.22ZM32.03 20.9L45.01 20.9C46.61 20.9 47.85 19.62 47.85 18.01C47.85 16.44 46.51 15.16 44.96 15.16L32.03 15.16ZM32.09 34.8L45.06 34.8C46.66 34.8 47.9 33.57 47.9 31.9C47.9 30.39 46.56 29.11 45.01 29.11L32.09 29.11ZM32.09 48.75L45.06 48.75C46.66 48.75 47.9 47.52 47.9 45.85C47.9 44.34 46.61 43.06 45.06 43.06L32.09 43.06Z"/></svg>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-status-warning);white-space:nowrap">Sample data</div>
+</div>
+</div>
+<div layer-name="Footnote" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-dark-text-secondary)">Far out or missing inputs: treat the score as a guide. Forecast is about 6 days ahead of this window.</div>
+</div>
+<div layer-name="ExplainBlock / Idle" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-items:flex-start">
+<div layer-name="Button / Explain" style="box-sizing:border-box;display:flex;flex-direction:row;height:22px;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke);box-shadow:var(--shadow-dark-canvas-button);padding:0 10px">
+<svg layer-name="Icon / apple.intelligence" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 114.23 109.21" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary)"><path d="M81.85 107.52C89.85 103.74 91.81 96.08 92.07 86.2C92.13 79.57 91.46 71.94 93.1 64.69C94.65 57.62 98.71 51.01 101.4 44.9C105.5 36.07 107.01 28.22 101.5 21.25C95.96 14.37 87.97 14.14 78.38 16.16C71.83 17.59 64.48 19.85 57.12 19.8C49.7 19.85 42.4 17.59 35.9 16.11C26.21 14.08 18.27 14.32 12.73 21.29C7.23 28.27 8.74 36.08 12.9 44.9C15.57 51.01 19.53 57.68 21.13 64.69C22.81 71.94 22.05 79.52 22.23 86.2C22.41 96.08 24.38 103.74 32.42 107.52C34.82 108.67 37.17 109.21 39.46 109.21C44.81 109.16 49.91 106.32 55.36 102.18C60.75 98.17 66.49 92.88 73.03 89.71C79.7 86.48 87.26 85.44 93.59 83.88C103.26 81.48 110.26 77.86 112.33 69.21C114.23 60.6 109.52 54.15 101.93 47.93C96.69 43.71 90.35 39.38 85.76 33.6C81.21 27.92 78.59 20.79 75.55 14.83C71.05 6.08 65.95 0 57.06 0C48.24 0 43.13 6.08 38.74 14.83C35.75 20.79 33.02 27.87 28.47 33.56C23.87 39.43 17.58 43.71 12.35 47.93C4.71 54.1 0 60.6 1.97 69.16C3.98 77.81 10.97 81.48 20.54 83.88C27.02 85.44 34.52 86.43 41.26 89.71C47.74 92.88 53.49 98.12 58.81 102.24C64.26 106.39 69.41 109.21 74.77 109.21C77.07 109.21 79.41 108.67 81.85 107.52ZM78.46 100.54C72.98 103.11 68.39 99.55 63.69 96.05C57.87 91.62 51.56 85.94 44.65 82.67C37.57 79.24 29.45 77.92 22.32 76.21C16.59 74.8 10.96 73.33 9.66 67.41C8.29 61.57 12.76 57.89 17.28 54.06C22.93 49.41 29.71 44.65 34.53 38.55C39.49 32.46 42.44 24.79 45.75 18.27C48.4 13.06 51.06 7.95 57.06 7.95C63.17 7.9 65.79 13.01 68.53 18.32C71.77 24.84 74.73 32.36 79.59 38.56C84.52 44.7 91.34 49.41 96.94 54.06C101.53 57.89 105.94 61.57 104.62 67.41C103.27 73.33 97.63 74.8 91.85 76.21C85.19 77.77 76.7 79.24 69.58 82.67C62.66 85.99 56.14 91.72 50.5 96.1C45.83 99.6 41.21 103.05 35.76 100.54C30.37 97.86 30.25 91.97 30.07 86.1C29.94 78.84 30.51 70.61 28.81 62.88C27.05 55.41 23.04 48.2 19.9 41.49C17.6 36.16 15.14 30.85 18.83 26.26C22.63 21.51 28.29 22.63 34.05 23.8C41.16 25.33 49.21 27.75 57.06 27.75C65.06 27.7 73.06 25.33 80.14 23.8C85.99 22.53 91.6 21.56 95.39 26.25C99.15 30.9 96.63 36.17 94.33 41.49C91.19 48.2 87.17 55.46 85.43 62.98C83.72 70.61 84.28 78.89 84.21 86.15C83.98 92.02 83.87 97.91 78.46 100.54Z"/></svg>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Explain</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / No forecast" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch">
+<div layer-name="Specimen Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap">No forecast</div>
+<div layer-name="Card Frame" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-background-control);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);align-self:stretch">
+<div layer-name="WindowRow / goldenEvening" style="box-sizing:border-box;display:flex;flex-direction:column">
+<div layer-name="Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:var(--spacing-sm) var(--spacing-md)">
+<div layer-name="Chevron Slot" style="box-sizing:border-box;width:var(--spacing-size-icon-small);display:flex;justify-content:center;flex-shrink:0">
+<svg layer-name="Icon / chevron.right" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 47.72 84.72" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:2.86;stroke-linejoin:round"><path d="M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z"/></svg>
+</div>
+<div layer-name="LightBadge / regular / No forecast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">No forecast</div>
+</div>
+</div>
+<div layer-name="Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0"></div>
+<div layer-name="Time Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap">18:19–18:54</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / No forecast, expanded" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch">
+<div layer-name="Specimen Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap">No forecast, expanded</div>
+<div layer-name="Card Frame" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-background-control);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);align-self:stretch">
+<div layer-name="WindowRow / goldenEvening" style="box-sizing:border-box;display:flex;flex-direction:column">
+<div layer-name="Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:var(--spacing-sm) var(--spacing-md)">
+<div layer-name="Chevron Slot" style="box-sizing:border-box;width:var(--spacing-size-icon-small);display:flex;justify-content:center;flex-shrink:0">
+<svg layer-name="Icon / chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 84.8 47.73" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:5.09;stroke-linejoin:round"><path d="M42.42 47.73C43.66 47.73 44.86 47.26 45.71 46.3L83.49 7.63C84.31 6.81 84.8 5.74 84.8 4.49C84.8 1.95 82.9 0 80.36 0C79.16 0 77.98 0.52 77.15 1.29L39.79 39.46L45.02 39.46L7.64 1.29C6.83 0.52 5.73 0 4.49 0C1.95 0 0 1.95 0 4.49C0 5.74 0.5 6.81 1.32 7.64L39.14 46.31C40.04 47.27 41.14 47.73 42.42 47.73Z"/></svg>
+</div>
+<div layer-name="LightBadge / regular / No forecast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">No forecast</div>
+</div>
+</div>
+<div layer-name="Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0"></div>
+<div layer-name="Time Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap">18:19–18:54</div>
+</div>
+<div layer-name="Reasons Indent" style="box-sizing:border-box;display:flex;flex-direction:column;padding:0 var(--spacing-md) var(--spacing-md) calc(var(--spacing-md) + var(--spacing-size-icon-small) + var(--spacing-sm))">
+<div layer-name="ReasonsGrid / No forecast" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-items:flex-start">
+<div layer-name="Reason" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary)">Weather isn't enabled for this build of Iter, so only sun and moon times are shown.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / Service failed, expanded (Retry)" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch">
+<div layer-name="Specimen Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap">Service failed, expanded (Retry)</div>
+<div layer-name="Card Frame" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-background-control);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);align-self:stretch">
+<div layer-name="WindowRow / goldenEvening" style="box-sizing:border-box;display:flex;flex-direction:column">
+<div layer-name="Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:var(--spacing-sm) var(--spacing-md)">
+<div layer-name="Chevron Slot" style="box-sizing:border-box;width:var(--spacing-size-icon-small);display:flex;justify-content:center;flex-shrink:0">
+<svg layer-name="Icon / chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 84.8 47.73" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:5.09;stroke-linejoin:round"><path d="M42.42 47.73C43.66 47.73 44.86 47.26 45.71 46.3L83.49 7.63C84.31 6.81 84.8 5.74 84.8 4.49C84.8 1.95 82.9 0 80.36 0C79.16 0 77.98 0.52 77.15 1.29L39.79 39.46L45.02 39.46L7.64 1.29C6.83 0.52 5.73 0 4.49 0C1.95 0 0 1.95 0 4.49C0 5.74 0.5 6.81 1.32 7.64L39.14 46.31C40.04 47.27 41.14 47.73 42.42 47.73Z"/></svg>
+</div>
+<div layer-name="LightBadge / regular / No forecast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">No forecast</div>
+</div>
+</div>
+<div layer-name="Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0"></div>
+<div layer-name="Time Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap">18:19–18:54</div>
+</div>
+<div layer-name="Reasons Indent" style="box-sizing:border-box;display:flex;flex-direction:column;padding:0 var(--spacing-md) var(--spacing-md) calc(var(--spacing-md) + var(--spacing-size-icon-small) + var(--spacing-sm))">
+<div layer-name="ReasonsGrid / No forecast" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-items:flex-start">
+<div layer-name="Reason" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary)">Couldn't reach Apple Weather. Sun and moon times are still exact.</div>
+<div layer-name="Button / Retry" style="box-sizing:border-box;display:flex;flex-direction:row;height:22px;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke);box-shadow:var(--shadow-dark-canvas-button);padding:0 10px">
+<svg layer-name="Icon / arrow.clockwise" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 86.22 104.91" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary)"><path d="M43.11 104.91C66.95 104.91 86.22 85.58 86.22 61.74C86.22 59.56 84.42 57.83 82.3 57.83C80.16 57.83 78.38 59.56 78.38 61.74C78.38 81.23 62.59 96.96 43.11 96.96C23.63 96.96 7.85 81.23 7.85 61.74C7.85 42.27 23.63 26.48 43.11 26.48C47.46 26.48 51.58 27.23 55.42 28.69C57.93 29.68 60.89 28.25 60.93 25.21C60.96 22.7 59.13 21.81 57.78 21.34C53.3 19.6 48.31 18.69 43.11 18.69C19.28 18.69 0 37.96 0 61.81C0 85.58 19.28 104.91 43.11 104.91ZM56.35 24.54L38.57 42.14C37.8 42.86 37.46 43.89 37.46 44.9C37.46 47.11 39.15 48.82 41.3 48.82C42.55 48.82 43.42 48.38 44.13 47.72L64.23 27.5C65.1 26.63 65.49 25.68 65.49 24.53C65.49 23.48 65.03 22.44 64.23 21.64L44.14 1.21C43.43 0.49 42.52 0 41.28 0C39.14 0 37.46 1.81 37.46 4.03C37.46 5.08 37.8 6.1 38.52 6.84Z"/></svg>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Retry</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

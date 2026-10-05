@@ -1,0 +1,403 @@
+{
+ "artboard": {
+  "name": "F04 Elevation & materials",
+  "page": "Foundations",
+  "width": 1480,
+  "height": 1368,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1480px",
+   "height": "1368px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 12,
+  "clones": 5,
+  "writesNoClone": 20,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "F04 Elevation & materials",
+   "parentPathArray": [
+    "F04 Elevation & materials"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:40px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">Elevation and materials</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">Materials · App/Sources (regularMaterial, bar) · tools/canvas-tokens.json</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">Iter draws flat: paper, cards with a hairline. Only what floats (place card, Add Spot banner, route day picker, sheets, menus) takes a system material and a soft shadow. These are canvas stand-ins for the macOS values; each sits over a coloured backdrop so the translucency shows.</div>\n  </div>\n  <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n    <div layer-name=\"Note / Materials are system-drawn\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:360px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n      <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Materials are system-drawn</div>\n      <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">regularMaterial and bar are Apple materials. Snapshots draw them as flat background/content; the fills here approximate the macOS 26 look and are canvas tokens, not app tokens.</div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "F04 Elevation & materials/Page/Notes",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Note / Shadows are canvas only\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:360px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n  <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Shadows are canvas only</div>\n  <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">tokens.json has no elevation tokens. The shadows come from tools/canvas-tokens.json and are CSS-only (Paper has no shadow token type). The one in-app shadow is the spot-editor pin (radius = stroke/regular).</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "F04 Elevation & materials/Page",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border);width:686px\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Section / Flat: paper and cards\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n      <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Flat: paper and cards</div>\n      <div layer-name=\"Flat\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xl);flex-wrap:wrap\">\n        <div layer-name=\"Specimen / Card on paper\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex-shrink:0;width:300px\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "F04 Elevation & materials/Page/Appearances/Light Appearance/Section / Flat: paper and cards/Flat/Specimen / Card on paper",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / Flat: paper and cards",
+    "Flat",
+    "Specimen / Card on paper"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Paper\" style=\"box-sizing:border-box;width:300px;height:120px;display:flex;align-items:center;justify-content:center;background:var(--color-background-window);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n  <div layer-name=\"Card / Card on paper\" style=\"box-sizing:border-box;width:220px;height:72px;display:flex;align-items:center;justify-content:center;background:var(--color-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);white-space:nowrap\">Card on paper</div>\n  </div>\n</div>\n<div layer-name=\"Tokens\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">background/control · stroke/hairline separator/default</div>",
+   "lines": 6
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "F04 Elevation & materials/Page/Appearances/Light Appearance/Section / Flat: paper and cards/Flat",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / Flat: paper and cards",
+    "Flat"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Specimen / List on paper\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex-shrink:0;width:300px\">\n  <div layer-name=\"Paper\" style=\"box-sizing:border-box;width:300px;height:120px;display:flex;align-items:center;justify-content:center;background:var(--color-background-window);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n    <div layer-name=\"Card / List on paper\" style=\"box-sizing:border-box;width:220px;height:72px;display:flex;align-items:center;justify-content:center;background:var(--color-background-content);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n      <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);white-space:nowrap\">List on paper</div>\n    </div>\n  </div>\n  <div layer-name=\"Tokens\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">background/content · stroke/hairline separator/default</div>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "F04 Elevation & materials/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Section / Materials (what floats over the map)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Materials (what floats over the map)</div>\n  <div layer-name=\"Materials\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xl);flex-wrap:wrap\">\n    <div layer-name=\"Specimen / regularMaterial\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex-shrink:0;width:300px\">\n      <div layer-name=\"Backdrop\" style=\"box-sizing:border-box;position:relative;width:300px;height:120px;flex-shrink:0;display:flex;border-radius:var(--radius-card);overflow:hidden;background:linear-gradient(120deg, var(--color-sky-blue-hour) 0 40%, var(--color-light-ramp-good) 40% 70%, var(--color-route-active) 70%)\">\n        <div layer-name=\"Surface / regularMaterial\" style=\"box-sizing:border-box;position:absolute;left:24px;top:20px;right:24px;bottom:20px;display:flex;align-items:center;justify-content:center;background:var(--color-canvas-material-regular);border:1px solid var(--color-canvas-material-stroke);border-radius:var(--radius-panel);box-shadow:var(--shadow-canvas-material)\">\n          <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);white-space:nowrap\">regularMaterial</div>\n        </div>\n      </div>\n      <div layer-name=\"Tokens\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">material/regular + shadow/material</div>\n      <div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">regularMaterial (place card, Add Spot banner, route day picker).</div>\n    </div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "F04 Elevation & materials/Page/Appearances/Light Appearance/Section / Materials (what floats over the map)/Materials",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / Materials (what floats over the map)",
+    "Materials"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"Specimen / bar material\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex-shrink:0;width:300px\">\n  <div layer-name=\"Backdrop\" style=\"box-sizing:border-box;position:relative;width:300px;height:120px;flex-shrink:0;display:flex;border-radius:var(--radius-card);overflow:hidden;background:linear-gradient(120deg, var(--color-sky-blue-hour) 0 40%, var(--color-light-ramp-good) 40% 70%, var(--color-route-active) 70%)\">\n    <div layer-name=\"Surface / bar material\" style=\"box-sizing:border-box;position:absolute;left:24px;top:20px;right:24px;bottom:20px;display:flex;align-items:center;justify-content:center;background:var(--color-canvas-material-bar);border:1px solid var(--color-canvas-material-stroke);border-radius:var(--radius-control)\">\n      <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);white-space:nowrap\">bar material</div>\n    </div>\n  </div>\n  <div layer-name=\"Tokens\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">material/bar</div>\n  <div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">bar material (Saved footer).</div>\n</div>",
+   "lines": 9
+  },
+  {
+   "seq": 8,
+   "kind": "write",
+   "parentPath": "F04 Elevation & materials/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Section / Sheets, menus and popovers\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Sheets, menus and popovers</div>\n  <div layer-name=\"Floating\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xl);flex-wrap:wrap\">\n    <div layer-name=\"Specimen / Sheet\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex-shrink:0;width:300px\">\n      <div layer-name=\"Backdrop\" style=\"box-sizing:border-box;position:relative;width:300px;height:120px;flex-shrink:0;display:flex;border-radius:var(--radius-card);overflow:hidden;background:linear-gradient(120deg, var(--color-sky-blue-hour) 0 40%, var(--color-light-ramp-good) 40% 70%, var(--color-route-active) 70%)\">\n        <div layer-name=\"Surface / Sheet\" style=\"box-sizing:border-box;position:absolute;left:24px;top:20px;right:24px;bottom:20px;display:flex;align-items:center;justify-content:center;background:var(--color-canvas-sheet-background);border-radius:var(--radius-panel);box-shadow:var(--shadow-canvas-sheet)\">\n          <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);white-space:nowrap\">Sheet</div>\n        </div>\n      </div>\n      <div layer-name=\"Tokens\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">sheet/background + shadow/sheet</div>\n      <div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Sheet and alert panel fill. Opaque enough to read without blur.</div>\n    </div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "F04 Elevation & materials/Page/Appearances/Light Appearance/Section / Sheets, menus and popovers/Floating",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / Sheets, menus and popovers",
+    "Floating"
+   ],
+   "parentSeq": 8,
+   "html": "<div layer-name=\"Specimen / Menu and popover\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex-shrink:0;width:300px\">\n  <div layer-name=\"Backdrop\" style=\"box-sizing:border-box;position:relative;width:300px;height:120px;flex-shrink:0;display:flex;border-radius:var(--radius-card);overflow:hidden;background:linear-gradient(120deg, var(--color-sky-blue-hour) 0 40%, var(--color-light-ramp-good) 40% 70%, var(--color-route-active) 70%)\">\n    <div layer-name=\"Surface / Menu and popover\" style=\"box-sizing:border-box;position:absolute;left:24px;top:20px;right:24px;bottom:20px;display:flex;align-items:center;justify-content:center;background:var(--color-canvas-menu-background);border:1px solid var(--color-canvas-menu-stroke);border-radius:var(--radius-control);box-shadow:var(--shadow-canvas-menu)\">\n      <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);white-space:nowrap\">Menu and popover</div>\n    </div>\n  </div>\n  <div layer-name=\"Tokens\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">menu/background + shadow/menu</div>\n  <div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Menu and popover glass fill.</div>\n</div>",
+   "lines": 9
+  },
+  {
+   "seq": 10,
+   "kind": "clone",
+   "parentPath": "F04 Elevation & materials/Page/Appearances/Light Appearance/Section / Sheets, menus and popovers/Floating",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / Sheets, menus and popovers",
+    "Floating"
+   ],
+   "parentSeq": 8,
+   "sourceSeq": 9,
+   "sourcePath": "F04 Elevation & materials/Page/Appearances/Light Appearance/Section / Sheets, menus and popovers/Floating/Specimen / Menu and popover",
+   "sourcePathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / Sheets, menus and popovers",
+    "Floating",
+    "Specimen / Menu and popover"
+   ],
+   "styleOverrides": {
+    "./Backdrop/Surface / Menu and popover": {
+     "background": "var(--color-canvas-chrome-control)",
+     "border": "1px solid var(--color-canvas-chrome-control-stroke)",
+     "border-radius": "var(--radius-panel)",
+     "box-shadow": "var(--shadow-canvas-control)"
+    }
+   },
+   "textOverrides": {
+    "./Backdrop/Surface / Menu and popover/Label/#text0": "Toolbar control",
+    "./Tokens/#text0": "chrome/control + shadow/control",
+    "./Role/#text0": "Toolbar control capsule (glass button) fill."
+   },
+   "nameOverrides": {
+    ".": "Specimen / Toolbar control",
+    "./Backdrop/Surface / Menu and popover": "Surface / Toolbar control"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 11,
+   "kind": "write",
+   "parentPath": "F04 Elevation & materials/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Section / Scrim\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Scrim</div>\n  <div layer-name=\"Scrim Specimen\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);width:300px\">\n    <div layer-name=\"Backdrop\" style=\"box-sizing:border-box;position:relative;width:300px;height:120px;flex-shrink:0;display:flex;border-radius:var(--radius-card);overflow:hidden;background:linear-gradient(120deg, var(--color-sky-blue-hour) 0 40%, var(--color-light-ramp-good) 40% 70%, var(--color-route-active) 70%)\">\n      <div layer-name=\"Scrim\" style=\"box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;background:var(--color-canvas-scrim-sheet)\"></div>\n    </div>\n    <div layer-name=\"Tokens\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">scrim/sheet</div>\n    <div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Dimming scrim behind a sheet.</div>\n  </div>\n</div>",
+   "lines": 10
+  },
+  {
+   "seq": 12,
+   "kind": "write",
+   "parentPath": "F04 Elevation & materials/Page/Appearances",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border);width:686px\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Section / Flat: paper and cards\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Flat: paper and cards</div>\n    <div layer-name=\"Flat\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xl);flex-wrap:wrap\">\n      <div layer-name=\"Specimen / Card on paper\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex-shrink:0;width:300px\">\n        <div layer-name=\"Paper\" style=\"box-sizing:border-box;width:300px;height:120px;display:flex;align-items:center;justify-content:center;background:var(--color-dark-background-window);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)\">\n          <div layer-name=\"Card / Card on paper\" style=\"box-sizing:border-box;width:220px;height:72px;display:flex;align-items:center;justify-content:center;background:var(--color-dark-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)\">\n            <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary);white-space:nowrap\">Card on paper</div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 13,
+   "kind": "write",
+   "parentPath": "F04 Elevation & materials/Page/Appearances/Dark Appearance/Section / Flat: paper and cards/Flat/Specimen / Card on paper",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Flat: paper and cards",
+    "Flat",
+    "Specimen / Card on paper"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"Tokens\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-primary);white-space:nowrap\">background/control · stroke/hairline separator/default</div>",
+   "lines": 1
+  },
+  {
+   "seq": 14,
+   "kind": "clone",
+   "parentPath": "F04 Elevation & materials/Page/Appearances/Dark Appearance/Section / Flat: paper and cards/Flat",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Flat: paper and cards",
+    "Flat"
+   ],
+   "parentSeq": 12,
+   "sourceSeq": 5,
+   "sourcePath": "F04 Elevation & materials/Page/Appearances/Light Appearance/Section / Flat: paper and cards/Flat/Specimen / List on paper",
+   "sourcePathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / Flat: paper and cards",
+    "Flat",
+    "Specimen / List on paper"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 4
+   }
+  },
+  {
+   "seq": 15,
+   "kind": "clone",
+   "parentPath": "F04 Elevation & materials/Page/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 12,
+   "sourceSeq": 6,
+   "sourcePath": "F04 Elevation & materials/Page/Appearances/Light Appearance/Section / Materials (what floats over the map)",
+   "sourcePathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / Materials (what floats over the map)"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 11
+   }
+  },
+  {
+   "seq": 16,
+   "kind": "clone",
+   "parentPath": "F04 Elevation & materials/Page/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 12,
+   "sourceSeq": 8,
+   "sourcePath": "F04 Elevation & materials/Page/Appearances/Light Appearance/Section / Sheets, menus and popovers",
+   "sourcePathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / Sheets, menus and popovers"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 16
+   }
+  },
+  {
+   "seq": 17,
+   "kind": "clone",
+   "parentPath": "F04 Elevation & materials/Page/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 12,
+   "sourceSeq": 11,
+   "sourcePath": "F04 Elevation & materials/Page/Appearances/Light Appearance/Section / Scrim",
+   "sourcePathArray": [
+    "F04 Elevation & materials",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scrim"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 5
+   }
+  }
+ ]
+}

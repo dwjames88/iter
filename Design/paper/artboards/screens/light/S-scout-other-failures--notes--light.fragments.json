@@ -1,0 +1,37 @@
+{
+ "artboard": {
+  "name": "Scout · Other failures · Notes",
+  "page": "Screens (Light)",
+  "width": 320,
+  "height": 184,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "320px",
+   "height": "184px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 1,
+  "clones": 0,
+  "writesNoClone": 1,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "Scout · Other failures · Notes",
+   "parentPathArray": [
+    "Scout · Other failures · Notes"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:12px;padding:16px\">\n  <div layer-name=\"Note / Note\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:288px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n    <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Note</div>\n    <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">The four \"other failure\" empty states share one layout, so they are shown together in a 2 x 2 grid with a label each (labels are annotations, not UI). In the app each fills the content area alone, with the request bar shown except for \"unavailable\".</div>\n  </div>\n</div>",
+   "lines": 6
+  }
+ ]
+}

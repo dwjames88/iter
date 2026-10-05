@@ -1,0 +1,991 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>F07 Light Index language</title>
+<link rel="stylesheet" href="../../tokens.css">
+</head>
+<body style="margin:0;background:var(--color-canvas-artboard)">
+<div layer-name="F07 Light Index language" data-artboard style="box-sizing:border-box;width:1736px;height:1824px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:var(--color-canvas-artboard)">
+<div layer-name="Page" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:40px;flex:1 1 auto;min-width:0;min-height:0">
+<div layer-name="Artboard Header" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)">
+<div layer-name="Artboard Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap">Light Index language</div>
+<div layer-name="Type and File" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap">LightBadge · LightText · App/Sources/Components/LightBadge.swift · App/Sources/Text/LightText.swift</div>
+<div layer-name="Job" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px">A score is always a window and a number and a band word; confidence is shown; no forecast is a ring and a reason. Colour never carries the band alone.</div>
+</div>
+<div layer-name="Notes" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start">
+<div layer-name="Note / Never green, never coral" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:360px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Never green, never coral</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">The ramp is amber. Coral is the accent and the route; warnings are violet, failure is raspberry. Unknown is neutral grey, never a low score.</div>
+</div>
+<div layer-name="Note / Thresholds" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:360px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Thresholds</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Band edges live in IterCore (Light.swift), not in tokens: Poor below 40, Fair 40, Good 58, Great 74, Epic 88. The ranges shown are computed from those minimums.</div>
+</div>
+<div layer-name="Note / Sample bars" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:360px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Sample bars</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Signed bars use illustrative points; the real ones scale to the largest factor (minimum 10). Colour follows the effect: accent for helps, status/warning for hurts, with the signed number as the other cue.</div>
+</div>
+</div>
+<div layer-name="Appearances" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start">
+<div layer-name="Light Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border);width:800px">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em">LIGHT</div>
+<div layer-name="Section / Bands: one amber hue, ordered by lightne" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Bands: one amber hue, ordered by lightness</div>
+<div layer-name="Bands" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Band / poor" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="ScoreChip / large / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Band Text" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:120px">
+<div layer-name="Band Word" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Poor</div>
+<div layer-name="Score Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap">Score 0–39</div>
+</div>
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Tokens" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0">
+<div layer-name="Token Names" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap">light/ramp/poor · light/rampText/poor</div>
+<div layer-name="Contrast" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Text on fill 11.59:1</div>
+</div>
+</div>
+<div layer-name="Band / fair" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="ScoreChip / large / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Band Text" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:120px">
+<div layer-name="Band Word" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Fair</div>
+<div layer-name="Score Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap">Score 40–57</div>
+</div>
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="ScoreChip / compact / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Tokens" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0">
+<div layer-name="Token Names" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap">light/ramp/fair · light/rampText/fair</div>
+<div layer-name="Contrast" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Text on fill 8.92:1</div>
+</div>
+</div>
+<div layer-name="Band / good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="ScoreChip / large / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Band Text" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:120px">
+<div layer-name="Band Word" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Good</div>
+<div layer-name="Score Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap">Score 58–73</div>
+</div>
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Tokens" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0">
+<div layer-name="Token Names" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap">light/ramp/good · light/rampText/good</div>
+<div layer-name="Contrast" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Text on fill 7.59:1</div>
+</div>
+</div>
+<div layer-name="Band / great" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="ScoreChip / large / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Band Text" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:120px">
+<div layer-name="Band Word" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Great</div>
+<div layer-name="Score Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap">Score 74–87</div>
+</div>
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="ScoreChip / compact / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Tokens" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0">
+<div layer-name="Token Names" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap">light/ramp/great · light/rampText/great</div>
+<div layer-name="Contrast" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Text on fill 4.86:1</div>
+</div>
+</div>
+<div layer-name="Band / epic" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="ScoreChip / large / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Band Text" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:120px">
+<div layer-name="Band Word" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Epic</div>
+<div layer-name="Score Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap">Score 88–100</div>
+</div>
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Tokens" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0">
+<div layer-name="Token Names" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap">light/ramp/epic · light/rampText/epic</div>
+<div layer-name="Contrast" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Text on fill 9.59:1</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Windows" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Windows</div>
+<div layer-name="Windows" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Window Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg)">
+<div layer-name="Cell / " style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:28px"></div>
+<div layer-name="Cell / Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">Name</div>
+<div layer-name="Cell / Short (pins)" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:100px">Short (pins)</div>
+<div layer-name="Cell / Symbol" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">Symbol</div>
+<div layer-name="Cell / Badge" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:200px">Badge</div>
+</div>
+<div layer-name="Window / Morning blue hour" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Icon Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:28px">
+<svg layer-name="Icon / sun.horizon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 125.11 79.62" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary)"><path d="M42.24 73.45L55.07 73.45C48.45 70.62 43.72 63.99 43.72 56.32C43.72 46.01 52.23 37.49 62.55 37.49C72.87 37.49 81.39 46.01 81.39 56.32C81.39 63.99 76.66 70.62 70.04 73.45L82.87 73.45C86.87 68.84 89.23 62.85 89.23 56.32C89.23 41.7 77.12 29.59 62.55 29.59C47.99 29.59 35.88 41.7 35.88 56.32C35.88 62.85 38.23 68.84 42.24 73.45ZM10.6 59.05L22.61 59.05C25.15 59.05 27.03 57.25 26.98 55.08C26.93 52.9 25.09 51.12 22.61 51.12L10.6 51.12C8.08 51.12 6.23 52.9 6.23 55.08C6.23 57.25 8.08 59.05 10.6 59.05ZM37.38 31.15C38.9 29.58 38.9 27.02 37.09 25.27L28.59 16.77C26.8 14.92 24.32 14.99 22.74 16.51C21.16 18.04 21.15 20.58 22.98 22.35L31.49 30.86C33.25 32.67 35.87 32.72 37.38 31.15ZM87.72 31.15C89.31 32.67 91.86 32.67 93.62 30.86L102.12 22.35C103.96 20.58 103.9 18.09 102.37 16.51C100.85 14.94 98.31 14.92 96.52 16.77L88.02 25.27C86.21 27.02 86.14 29.63 87.72 31.15ZM102.5 59.05L114.51 59.05C117.04 59.05 118.88 57.25 118.88 55.08C118.88 52.9 117.04 51.12 114.51 51.12L102.5 51.12C100.03 51.12 98.08 52.9 98.13 55.08C98.18 57.25 100.03 59.05 102.5 59.05ZM62.55 20.75C64.72 20.7 66.52 18.85 66.52 16.33L66.52 4.31C66.52 1.83 64.72 0 62.55 0C60.39 0 58.58 1.83 58.58 4.31L58.58 16.33C58.58 18.85 60.39 20.81 62.55 20.75ZM4.26 79.62L120.85 79.62C123.15 79.62 125.11 77.85 125.11 75.72C125.11 73.59 123.15 71.81 120.85 71.81L4.26 71.81C1.96 71.81 0 73.59 0 75.72C0 77.85 1.96 79.62 4.26 79.62Z"/></svg>
+</div>
+<div layer-name="Cell / Morning blue hour" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:160px">Morning blue hour</div>
+<div layer-name="Cell / Blue AM" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:100px">Blue AM</div>
+<div layer-name="Cell / sun.horizon" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">sun.horizon</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Morning blue hour</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Window / Sunrise" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Icon Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:28px">
+<svg layer-name="Icon / sunrise" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 138.46 115.2" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary)"><path d="M69.23 105.32C83.8 105.32 95.9 93.21 95.9 78.59C95.9 63.92 83.8 51.8 69.23 51.8C54.66 51.8 42.56 63.92 42.56 78.59C42.56 93.21 54.66 105.32 69.23 105.32ZM69.23 97.43C58.91 97.43 50.4 88.9 50.4 78.59C50.4 68.22 58.91 59.7 69.23 59.7C79.55 59.7 88.07 68.22 88.07 78.59C88.07 88.9 79.55 97.43 69.23 97.43ZM17.27 81.31L29.29 81.31C31.83 81.31 33.71 79.51 33.66 77.35C33.6 75.12 31.77 73.38 29.29 73.38L17.27 73.38C14.75 73.38 12.91 75.12 12.91 77.35C12.91 79.51 14.75 81.31 17.27 81.31ZM44.06 53.42C45.58 51.84 45.58 49.29 43.77 47.48L35.26 38.97C33.48 37.19 30.98 37.25 29.42 38.78C27.84 40.24 27.83 42.79 29.66 44.61L38.17 53.12C39.93 54.88 42.54 54.93 44.06 53.42ZM94.4 53.42C95.98 54.88 98.54 54.88 100.3 53.12L108.8 44.61C110.64 42.79 110.57 40.29 109.04 38.78C107.53 37.2 104.98 37.19 103.2 38.97L94.7 47.48C92.88 49.29 92.82 51.89 94.4 53.42ZM109.17 81.31L121.19 81.31C123.72 81.31 125.55 79.51 125.55 77.35C125.55 75.12 123.72 73.38 121.19 73.38L109.17 73.38C106.7 73.38 104.76 75.12 104.81 77.35C104.86 79.51 106.7 81.31 109.17 81.31ZM10.94 115.2L127.53 115.2C133.52 115.2 138.46 110.43 138.46 104.65C138.46 98.82 133.52 94.07 127.53 94.07L10.94 94.07C4.94 94.07 0 98.82 0 104.65C0 110.43 4.94 115.2 10.94 115.2ZM10.94 101.89L127.53 101.89C129.83 101.89 131.78 100.11 131.78 97.98C131.78 95.8 129.83 94.07 127.53 94.07L10.94 94.07C8.64 94.07 6.68 95.8 6.68 97.98C6.68 100.11 8.64 101.89 10.94 101.89ZM69.23 5.68L76.31 14.01L82.39 20.18C83.12 20.91 84.04 21.29 84.98 21.29C86.95 21.29 88.34 19.95 88.34 18.02C88.34 17.01 87.98 16.22 87.13 15.48L71.91 1.25C70.9 0.34 70.17 0 69.28 0C68.4 0 67.67 0.34 66.65 1.25L51.38 15.48C50.59 16.22 50.23 17.01 50.23 18.02C50.23 19.95 51.62 21.29 53.59 21.29C54.52 21.29 55.44 20.91 56.17 20.18L62.78 13.54ZM72.56 7.53C72.4 5.68 71.08 4.2 69.23 4.2C67.39 4.2 66.06 5.68 65.91 7.53L65.25 17.21L65.25 35.5C65.25 37.88 67.11 39.84 69.23 39.84C71.35 39.84 73.21 37.88 73.21 35.5L73.21 17.21Z"/></svg>
+</div>
+<div layer-name="Cell / Sunrise" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:160px">Sunrise</div>
+<div layer-name="Cell / Sunrise" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:100px">Sunrise</div>
+<div layer-name="Cell / sunrise" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">sunrise</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunrise</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Window / Sunset" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Icon Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:28px">
+<svg layer-name="Icon / sunset" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 138.46 115.2" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary)"><path d="M69.23 105.32C83.8 105.32 95.9 93.21 95.9 78.59C95.9 63.92 83.8 51.8 69.23 51.8C54.66 51.8 42.56 63.92 42.56 78.59C42.56 93.21 54.66 105.32 69.23 105.32ZM69.23 97.43C58.91 97.43 50.4 88.9 50.4 78.59C50.4 68.22 58.91 59.7 69.23 59.7C79.55 59.7 88.07 68.22 88.07 78.59C88.07 88.9 79.55 97.43 69.23 97.43ZM17.27 81.31L29.29 81.31C31.83 81.31 33.71 79.51 33.66 77.35C33.6 75.12 31.77 73.38 29.29 73.38L17.27 73.38C14.75 73.38 12.91 75.12 12.91 77.35C12.91 79.51 14.75 81.31 17.27 81.31ZM44.06 53.42C45.58 51.84 45.58 49.29 43.77 47.48L35.26 38.97C33.48 37.19 30.98 37.25 29.42 38.78C27.84 40.24 27.83 42.79 29.66 44.61L38.17 53.12C39.93 54.88 42.54 54.93 44.06 53.42ZM94.4 53.42C95.98 54.88 98.54 54.88 100.3 53.12L108.8 44.61C110.64 42.79 110.57 40.29 109.04 38.78C107.53 37.2 104.98 37.19 103.2 38.97L94.7 47.48C92.88 49.29 92.82 51.89 94.4 53.42ZM109.17 81.31L121.19 81.31C123.72 81.31 125.55 79.51 125.55 77.35C125.55 75.12 123.72 73.38 121.19 73.38L109.17 73.38C106.7 73.38 104.76 75.12 104.81 77.35C104.86 79.51 106.7 81.31 109.17 81.31ZM10.94 115.2L127.53 115.2C133.52 115.2 138.46 110.43 138.46 104.65C138.46 98.82 133.52 94.07 127.53 94.07L10.94 94.07C4.94 94.07 0 98.82 0 104.65C0 110.43 4.94 115.2 10.94 115.2ZM10.94 101.89L127.53 101.89C129.83 101.89 131.78 100.11 131.78 97.98C131.78 95.8 129.83 94.07 127.53 94.07L10.94 94.07C8.64 94.07 6.68 95.8 6.68 97.98C6.68 100.11 8.64 101.89 10.94 101.89ZM69.23 34.15L62.78 26.29L56.17 19.65C55.44 18.98 54.52 18.55 53.59 18.55C51.62 18.55 50.23 19.87 50.23 21.81C50.23 22.82 50.59 23.62 51.38 24.35L66.65 38.58C67.67 39.5 68.4 39.84 69.28 39.84C70.17 39.84 70.9 39.5 71.91 38.58L87.13 24.35C87.98 23.62 88.34 22.82 88.34 21.81C88.34 19.87 86.95 18.55 84.98 18.55C84.04 18.55 83.12 18.98 82.39 19.65L76.31 25.83ZM72.56 32.3L73.21 22.62L73.21 4.33C73.21 1.94 71.35 0 69.23 0C67.11 0 65.25 1.94 65.25 4.33L65.25 22.62L65.91 32.3C66.06 34.15 67.39 35.63 69.23 35.63C71.08 35.63 72.4 34.15 72.56 32.3Z"/></svg>
+</div>
+<div layer-name="Cell / Sunset" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:160px">Sunset</div>
+<div layer-name="Cell / Sunset" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:100px">Sunset</div>
+<div layer-name="Cell / sunset" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">sunset</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Window / Evening blue hour" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Icon Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:28px">
+<svg layer-name="Icon / moon.haze" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 130.88 108.19" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary)"><path d="M63.15 73.74C78.91 73.74 91.7 64.25 97.29 52.07C98.58 49.53 96.94 47.91 94.56 48.62C91.9 49.55 87.49 50.42 83.41 50.42C61.64 50.42 49.23 37.97 49.23 16.23C49.23 12.19 50.17 7.57 51.48 4.31C52.58 1.56 50.62 0 48.07 1.11C35.11 6.75 25.26 20.08 25.26 35.86C25.26 56.76 42.25 73.74 63.15 73.74ZM63.15 66.33C46.37 66.33 32.64 52.65 32.64 35.86C32.64 26.86 36.77 19.34 42.05 14.09C41.86 14.74 41.89 15.34 41.89 16.23C41.89 42.01 57.68 57.75 82.23 57.75C83.08 57.75 83.72 57.73 84.13 57.7C78.9 62.87 71.52 66.33 63.15 66.33ZM9.08 82.66L121.8 82.66C126.82 82.66 130.88 78.59 130.88 73.58C130.88 68.58 126.82 64.51 121.8 64.51L9.08 64.51C4.08 64.51 0 68.58 0 73.58C0 78.59 4.08 82.66 9.08 82.66ZM8.38 89.44L107.55 89.44C109.26 89.44 110.61 88.13 110.61 86.36C110.61 84.64 109.26 83.27 107.55 83.27L8.38 83.27C6.66 83.27 5.31 84.64 5.31 86.36C5.31 88.13 6.66 89.44 8.38 89.44ZM15.73 108.19L114.9 108.19C116.61 108.19 117.96 106.88 117.96 105.11C117.96 103.4 116.61 102.02 114.9 102.02L15.73 102.02C14.01 102.02 12.67 103.4 12.67 105.11C12.67 106.88 14.01 108.19 15.73 108.19ZM15.73 70.69L114.9 70.69C116.61 70.69 117.96 69.37 117.96 67.61C117.96 65.89 116.61 64.51 114.9 64.51L15.73 64.51C14.01 64.51 12.67 65.89 12.67 67.61C12.67 69.37 14.01 70.69 15.73 70.69Z"/></svg>
+</div>
+<div layer-name="Cell / Evening blue hour" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:160px">Evening blue hour</div>
+<div layer-name="Cell / Blue PM" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:100px">Blue PM</div>
+<div layer-name="Cell / moon.haze" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">moon.haze</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Evening blue hour</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Window / Night" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Icon Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:28px">
+<svg layer-name="Icon / moon.stars" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 97.67 101.67" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary)"><path d="M78.9 56.74C79.77 56.74 80.44 56.09 80.55 55.16C82.11 42.11 82.75 41.78 95.98 39.61C97.06 39.45 97.67 38.96 97.67 37.96C97.67 37.06 97.06 36.48 96.19 36.37C82.86 33.79 82.11 33.88 80.55 20.83C80.44 19.83 79.77 19.24 78.9 19.24C77.98 19.24 77.36 19.83 77.25 20.78C75.52 34.01 75.08 34.45 61.56 36.37C60.73 36.43 60.06 37.06 60.06 37.96C60.06 38.91 60.73 39.45 61.56 39.61C75.08 42.19 75.48 42.22 77.25 55.26C77.36 56.09 77.98 56.74 78.9 56.74ZM55.55 23.7C56.09 23.7 56.42 23.37 56.53 22.81C58.07 14.7 57.98 14.48 66.49 12.86C67 12.74 67.38 12.45 67.38 11.85C67.38 11.23 67 10.95 66.49 10.84C57.99 9.14 58.23 8.93 56.53 0.88C56.42 0.33 56.09 0 55.55 0C54.94 0 54.62 0.33 54.51 0.88C52.8 8.93 53.09 9.14 44.59 10.84C44.03 10.95 43.66 11.23 43.66 11.85C43.66 12.45 44.03 12.74 44.59 12.86C53.09 14.56 53 14.7 54.51 22.81C54.62 23.37 54.94 23.7 55.55 23.7ZM42.07 101.67C59.61 101.67 73.82 91.06 80.07 77.64C81.48 74.77 79.67 72.93 77.01 73.71C74.01 74.72 69.12 75.65 64.58 75.65C40.5 75.65 26.65 61.87 26.65 37.74C26.65 33.2 27.67 28.06 29.11 24.52C30.32 21.45 28.2 19.66 25.34 20.93C10.94 27.15 0 41.99 0 59.55C0 82.83 18.85 101.67 42.07 101.67ZM42.07 94.59C22.74 94.59 6.97 78.88 6.97 59.55C6.97 48.1 12.61 38.44 20.19 32.37C19.82 34.16 19.68 35.87 19.68 37.74C19.68 65.71 36.54 82.73 64.58 82.73C66.05 82.73 67.44 82.53 68.63 82.26C62.49 89.65 53.04 94.59 42.07 94.59Z"/></svg>
+</div>
+<div layer-name="Cell / Night" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:160px">Night</div>
+<div layer-name="Cell / Night" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:100px">Night</div>
+<div layer-name="Cell / moon.stars" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">moon.stars</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Night</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Confidence" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Confidence</div>
+<div layer-name="Confidence" style="box-sizing:border-box;display:flex;flex-direction:row;gap:40px;align-items:flex-start">
+<div layer-name="Confidence / low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex-shrink:0;width:190px">
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap">Low confidence</div>
+<div layer-name="Bars" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap">1 bar · chip at 85% opacity</div>
+</div>
+<div layer-name="Confidence / medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex-shrink:0;width:190px">
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap">Medium confidence</div>
+<div layer-name="Bars" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap">2 bars</div>
+</div>
+<div layer-name="Confidence / high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex-shrink:0;width:190px">
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap">High confidence</div>
+<div layer-name="Bars" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap">3 bars</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / No forecast: a ring and a reason, never " style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">No forecast: a ring and a reason, never a number</div>
+<div layer-name="No Forecast" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Reason Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg)">
+<div layer-name="Cell / " style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:30px"></div>
+<div layer-name="Cell / Short (rows)" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:110px">Short (rows)</div>
+<div layer-name="Cell / Long (large surfaces)" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:520px">Long (large surfaces)</div>
+</div>
+<div layer-name="Reason / weatherServiceNotEnabled" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Ring Slot" style="box-sizing:border-box;display:flex;flex-direction:row;justify-content:center;flex-shrink:0;width:30px">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+</div>
+<div layer-name="Cell / Weather off" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:110px">Weather off</div>
+<div layer-name="Cell / Weather isn't enabled for this build of Ite" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);flex-shrink:0;width:520px">Weather isn't enabled for this build of Iter, so only sun and moon times are shown.</div>
+</div>
+<div layer-name="Reason / serviceFailed" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Ring Slot" style="box-sizing:border-box;display:flex;flex-direction:row;justify-content:center;flex-shrink:0;width:30px">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+</div>
+<div layer-name="Cell / Offline" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:110px">Offline</div>
+<div layer-name="Cell / Couldn't reach Apple Weather. Sun and moon " style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);flex-shrink:0;width:520px">Couldn't reach Apple Weather. Sun and moon times are still exact.</div>
+</div>
+<div layer-name="Reason / beyondHorizon" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Ring Slot" style="box-sizing:border-box;display:flex;flex-direction:row;justify-content:center;flex-shrink:0;width:30px">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+</div>
+<div layer-name="Cell / Too far ahead" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:110px">Too far ahead</div>
+<div layer-name="Cell / Too far ahead for a forecast. Planned on su" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);flex-shrink:0;width:520px">Too far ahead for a forecast. Planned on sun angle and season until about ten days out.</div>
+</div>
+<div layer-name="Reason / inThePast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Ring Slot" style="box-sizing:border-box;display:flex;flex-direction:row;justify-content:center;flex-shrink:0;width:30px">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+</div>
+<div layer-name="Cell / Passed" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:110px">Passed</div>
+<div layer-name="Cell / This window has passed." style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);flex-shrink:0;width:520px">This window has passed.</div>
+</div>
+<div layer-name="Reason / notLoaded" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Ring Slot" style="box-sizing:border-box;display:flex;flex-direction:row;justify-content:center;flex-shrink:0;width:30px">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+</div>
+<div layer-name="Cell / Loading" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:110px">Loading</div>
+<div layer-name="Cell / Forecast not loaded yet." style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);flex-shrink:0;width:520px">Forecast not loaded yet.</div>
+</div>
+<div layer-name="No Forecast Badges" style="box-sizing:border-box;display:flex;flex-direction:row;gap:28px;align-items:center;padding-top:8px">
+<div layer-name="LightBadge / large / No forecast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center">
+<svg layer-name="NoForecastRing / 64" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="32" cy="32" r="31.25" fill="none" style="stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="Headline" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Sunset · No forecast</div>
+<div layer-name="Reason" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);max-width:280px">Too far ahead for a forecast. Planned on sun angle and season until about ten days out.</div>
+</div>
+</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);white-space:nowrap">“No forecast”</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Reasons: why the score is what it is" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Reasons: why the score is what it is</div>
+<div layer-name="Reasons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Factor Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg)">
+<div layer-name="Cell / Factor" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:130px">Factor</div>
+<div layer-name="Cell / Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">Value</div>
+<div layer-name="Cell / Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:72px">Hurts</div>
+<div layer-name="Cell / Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:72px">Helps</div>
+<div layer-name="Cell / When it hurts · when it helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:310px">When it hurts · when it helps</div>
+</div>
+<div layer-name="Factor / Low cloud" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Low cloud" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Low cloud</div>
+<div layer-name="Cell / 29%" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">29%</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:6.4px;left:27.6px;background:var(--color-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:8px;left:34px;background:var(--color-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)">Low cloud can block the sun at the horizon.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary)">Little low cloud: the horizon should be open.</div>
+</div>
+</div>
+<div layer-name="Factor / Mid and high cloud" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Mid and high cloud" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Mid and high cloud</div>
+<div layer-name="Cell / 41%" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">41%</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:8.8px;left:25.2px;background:var(--color-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:11.200000000000001px;left:34px;background:var(--color-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)">A thick upper deck mutes the colour.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary)">Mid and high cloud catches colour.</div>
+</div>
+</div>
+<div layer-name="Factor / Cloud cover" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Cloud cover" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Cloud cover</div>
+<div layer-name="Cell / 55%" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">55%</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:11.200000000000001px;left:22.799999999999997px;background:var(--color-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:14.4px;left:34px;background:var(--color-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)">Heavy cloud cover.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary)">Cloud cover suits this window.</div>
+</div>
+</div>
+<div layer-name="Factor / Clear sky" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Clear sky" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Clear sky</div>
+<div layer-name="Cell / 12%" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">12%</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:13.600000000000001px;left:20.4px;background:var(--color-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:17.6px;left:34px;background:var(--color-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)">Bare sky: clean light, flat colour.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary)">Clear sky for stars.</div>
+</div>
+</div>
+<div layer-name="Factor / Rain" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Rain" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Rain</div>
+<div layer-name="Cell / 10%" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">10%</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:16px;left:18px;background:var(--color-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:20.8px;left:34px;background:var(--color-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)">Rain is likely.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary)">Little chance of rain.</div>
+</div>
+</div>
+<div layer-name="Factor / Visibility" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Visibility" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Visibility</div>
+<div layer-name="Cell / 15 mi" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">15 mi</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:18.400000000000002px;left:15.599999999999998px;background:var(--color-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:24px;left:34px;background:var(--color-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)">Haze or fog cuts visibility.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary)">Good visibility.</div>
+</div>
+</div>
+<div layer-name="Factor / Moonlight" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Moonlight" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Moonlight</div>
+<div layer-name="Cell / 30%" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">30%</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:20.8px;left:13.2px;background:var(--color-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:27.200000000000003px;left:34px;background:var(--color-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)">A bright moon is up and washes out stars.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary)">Moon down or thin: a dark sky.</div>
+</div>
+</div>
+<div layer-name="Factor / Wind" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Wind" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Wind</div>
+<div layer-name="Cell / 12 mph" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">12 mph</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:23.200000000000003px;left:10.799999999999997px;background:var(--color-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:30.400000000000002px;left:34px;background:var(--color-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)">Strong wind: tripods and reflections suffer.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary)">Light wind.</div>
+</div>
+</div>
+<div layer-name="Factor / Sun direction" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Sun direction" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Sun direction</div>
+<div layer-name="Cell / 34°" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">34°</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:25.6px;left:8.399999999999999px;background:var(--color-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:33.6px;left:34px;background:var(--color-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)">The sun is off-axis from the classic view.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary)">The sun lines up with the classic view.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Dark Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border);width:800px">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em">DARK</div>
+<div layer-name="Section / Bands: one amber hue, ordered by lightne" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Bands: one amber hue, ordered by lightness</div>
+<div layer-name="Bands" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Band / poor" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="ScoreChip / large / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Band Text" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:120px">
+<div layer-name="Band Word" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Poor</div>
+<div layer-name="Score Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap">Score 0–39</div>
+</div>
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Tokens" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0">
+<div layer-name="Token Names" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-primary);white-space:nowrap">light/ramp/poor · light/rampText/poor</div>
+<div layer-name="Contrast" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Text on fill 10.12:1</div>
+</div>
+</div>
+<div layer-name="Band / fair" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="ScoreChip / large / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Band Text" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:120px">
+<div layer-name="Band Word" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Fair</div>
+<div layer-name="Score Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap">Score 40–57</div>
+</div>
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="ScoreChip / compact / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Tokens" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0">
+<div layer-name="Token Names" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-primary);white-space:nowrap">light/ramp/fair · light/rampText/fair</div>
+<div layer-name="Contrast" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Text on fill 7.27:1</div>
+</div>
+</div>
+<div layer-name="Band / good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="ScoreChip / large / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Band Text" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:120px">
+<div layer-name="Band Word" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Good</div>
+<div layer-name="Score Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap">Score 58–73</div>
+</div>
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Tokens" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0">
+<div layer-name="Token Names" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-primary);white-space:nowrap">light/ramp/good · light/rampText/good</div>
+<div layer-name="Contrast" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Text on fill 4.94:1</div>
+</div>
+</div>
+<div layer-name="Band / great" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="ScoreChip / large / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Band Text" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:120px">
+<div layer-name="Band Word" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Great</div>
+<div layer-name="Score Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap">Score 74–87</div>
+</div>
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="ScoreChip / compact / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Tokens" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0">
+<div layer-name="Token Names" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-primary);white-space:nowrap">light/ramp/great · light/rampText/great</div>
+<div layer-name="Contrast" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Text on fill 7.58:1</div>
+</div>
+</div>
+<div layer-name="Band / epic" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="ScoreChip / large / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Band Text" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:120px">
+<div layer-name="Band Word" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Epic</div>
+<div layer-name="Score Range" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap">Score 88–100</div>
+</div>
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Tokens" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0">
+<div layer-name="Token Names" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-primary);white-space:nowrap">light/ramp/epic · light/rampText/epic</div>
+<div layer-name="Contrast" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Text on fill 11.24:1</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Windows" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Windows</div>
+<div layer-name="Windows" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Window Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg)">
+<div layer-name="Cell / " style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:28px"></div>
+<div layer-name="Cell / Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">Name</div>
+<div layer-name="Cell / Short (pins)" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:100px">Short (pins)</div>
+<div layer-name="Cell / Symbol" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">Symbol</div>
+<div layer-name="Cell / Badge" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:200px">Badge</div>
+</div>
+<div layer-name="Window / Morning blue hour" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Icon Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:28px">
+<svg layer-name="Icon / sun.horizon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 125.11 79.62" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary)"><path d="M42.24 73.45L55.07 73.45C48.45 70.62 43.72 63.99 43.72 56.32C43.72 46.01 52.23 37.49 62.55 37.49C72.87 37.49 81.39 46.01 81.39 56.32C81.39 63.99 76.66 70.62 70.04 73.45L82.87 73.45C86.87 68.84 89.23 62.85 89.23 56.32C89.23 41.7 77.12 29.59 62.55 29.59C47.99 29.59 35.88 41.7 35.88 56.32C35.88 62.85 38.23 68.84 42.24 73.45ZM10.6 59.05L22.61 59.05C25.15 59.05 27.03 57.25 26.98 55.08C26.93 52.9 25.09 51.12 22.61 51.12L10.6 51.12C8.08 51.12 6.23 52.9 6.23 55.08C6.23 57.25 8.08 59.05 10.6 59.05ZM37.38 31.15C38.9 29.58 38.9 27.02 37.09 25.27L28.59 16.77C26.8 14.92 24.32 14.99 22.74 16.51C21.16 18.04 21.15 20.58 22.98 22.35L31.49 30.86C33.25 32.67 35.87 32.72 37.38 31.15ZM87.72 31.15C89.31 32.67 91.86 32.67 93.62 30.86L102.12 22.35C103.96 20.58 103.9 18.09 102.37 16.51C100.85 14.94 98.31 14.92 96.52 16.77L88.02 25.27C86.21 27.02 86.14 29.63 87.72 31.15ZM102.5 59.05L114.51 59.05C117.04 59.05 118.88 57.25 118.88 55.08C118.88 52.9 117.04 51.12 114.51 51.12L102.5 51.12C100.03 51.12 98.08 52.9 98.13 55.08C98.18 57.25 100.03 59.05 102.5 59.05ZM62.55 20.75C64.72 20.7 66.52 18.85 66.52 16.33L66.52 4.31C66.52 1.83 64.72 0 62.55 0C60.39 0 58.58 1.83 58.58 4.31L58.58 16.33C58.58 18.85 60.39 20.81 62.55 20.75ZM4.26 79.62L120.85 79.62C123.15 79.62 125.11 77.85 125.11 75.72C125.11 73.59 123.15 71.81 120.85 71.81L4.26 71.81C1.96 71.81 0 73.59 0 75.72C0 77.85 1.96 79.62 4.26 79.62Z"/></svg>
+</div>
+<div layer-name="Cell / Morning blue hour" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:160px">Morning blue hour</div>
+<div layer-name="Cell / Blue AM" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:100px">Blue AM</div>
+<div layer-name="Cell / sun.horizon" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">sun.horizon</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Morning blue hour</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Window / Sunrise" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Icon Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:28px">
+<svg layer-name="Icon / sunrise" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 138.46 115.2" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary)"><path d="M69.23 105.32C83.8 105.32 95.9 93.21 95.9 78.59C95.9 63.92 83.8 51.8 69.23 51.8C54.66 51.8 42.56 63.92 42.56 78.59C42.56 93.21 54.66 105.32 69.23 105.32ZM69.23 97.43C58.91 97.43 50.4 88.9 50.4 78.59C50.4 68.22 58.91 59.7 69.23 59.7C79.55 59.7 88.07 68.22 88.07 78.59C88.07 88.9 79.55 97.43 69.23 97.43ZM17.27 81.31L29.29 81.31C31.83 81.31 33.71 79.51 33.66 77.35C33.6 75.12 31.77 73.38 29.29 73.38L17.27 73.38C14.75 73.38 12.91 75.12 12.91 77.35C12.91 79.51 14.75 81.31 17.27 81.31ZM44.06 53.42C45.58 51.84 45.58 49.29 43.77 47.48L35.26 38.97C33.48 37.19 30.98 37.25 29.42 38.78C27.84 40.24 27.83 42.79 29.66 44.61L38.17 53.12C39.93 54.88 42.54 54.93 44.06 53.42ZM94.4 53.42C95.98 54.88 98.54 54.88 100.3 53.12L108.8 44.61C110.64 42.79 110.57 40.29 109.04 38.78C107.53 37.2 104.98 37.19 103.2 38.97L94.7 47.48C92.88 49.29 92.82 51.89 94.4 53.42ZM109.17 81.31L121.19 81.31C123.72 81.31 125.55 79.51 125.55 77.35C125.55 75.12 123.72 73.38 121.19 73.38L109.17 73.38C106.7 73.38 104.76 75.12 104.81 77.35C104.86 79.51 106.7 81.31 109.17 81.31ZM10.94 115.2L127.53 115.2C133.52 115.2 138.46 110.43 138.46 104.65C138.46 98.82 133.52 94.07 127.53 94.07L10.94 94.07C4.94 94.07 0 98.82 0 104.65C0 110.43 4.94 115.2 10.94 115.2ZM10.94 101.89L127.53 101.89C129.83 101.89 131.78 100.11 131.78 97.98C131.78 95.8 129.83 94.07 127.53 94.07L10.94 94.07C8.64 94.07 6.68 95.8 6.68 97.98C6.68 100.11 8.64 101.89 10.94 101.89ZM69.23 5.68L76.31 14.01L82.39 20.18C83.12 20.91 84.04 21.29 84.98 21.29C86.95 21.29 88.34 19.95 88.34 18.02C88.34 17.01 87.98 16.22 87.13 15.48L71.91 1.25C70.9 0.34 70.17 0 69.28 0C68.4 0 67.67 0.34 66.65 1.25L51.38 15.48C50.59 16.22 50.23 17.01 50.23 18.02C50.23 19.95 51.62 21.29 53.59 21.29C54.52 21.29 55.44 20.91 56.17 20.18L62.78 13.54ZM72.56 7.53C72.4 5.68 71.08 4.2 69.23 4.2C67.39 4.2 66.06 5.68 65.91 7.53L65.25 17.21L65.25 35.5C65.25 37.88 67.11 39.84 69.23 39.84C71.35 39.84 73.21 37.88 73.21 35.5L73.21 17.21Z"/></svg>
+</div>
+<div layer-name="Cell / Sunrise" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:160px">Sunrise</div>
+<div layer-name="Cell / Sunrise" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:100px">Sunrise</div>
+<div layer-name="Cell / sunrise" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">sunrise</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunrise</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Window / Sunset" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Icon Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:28px">
+<svg layer-name="Icon / sunset" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 138.46 115.2" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary)"><path d="M69.23 105.32C83.8 105.32 95.9 93.21 95.9 78.59C95.9 63.92 83.8 51.8 69.23 51.8C54.66 51.8 42.56 63.92 42.56 78.59C42.56 93.21 54.66 105.32 69.23 105.32ZM69.23 97.43C58.91 97.43 50.4 88.9 50.4 78.59C50.4 68.22 58.91 59.7 69.23 59.7C79.55 59.7 88.07 68.22 88.07 78.59C88.07 88.9 79.55 97.43 69.23 97.43ZM17.27 81.31L29.29 81.31C31.83 81.31 33.71 79.51 33.66 77.35C33.6 75.12 31.77 73.38 29.29 73.38L17.27 73.38C14.75 73.38 12.91 75.12 12.91 77.35C12.91 79.51 14.75 81.31 17.27 81.31ZM44.06 53.42C45.58 51.84 45.58 49.29 43.77 47.48L35.26 38.97C33.48 37.19 30.98 37.25 29.42 38.78C27.84 40.24 27.83 42.79 29.66 44.61L38.17 53.12C39.93 54.88 42.54 54.93 44.06 53.42ZM94.4 53.42C95.98 54.88 98.54 54.88 100.3 53.12L108.8 44.61C110.64 42.79 110.57 40.29 109.04 38.78C107.53 37.2 104.98 37.19 103.2 38.97L94.7 47.48C92.88 49.29 92.82 51.89 94.4 53.42ZM109.17 81.31L121.19 81.31C123.72 81.31 125.55 79.51 125.55 77.35C125.55 75.12 123.72 73.38 121.19 73.38L109.17 73.38C106.7 73.38 104.76 75.12 104.81 77.35C104.86 79.51 106.7 81.31 109.17 81.31ZM10.94 115.2L127.53 115.2C133.52 115.2 138.46 110.43 138.46 104.65C138.46 98.82 133.52 94.07 127.53 94.07L10.94 94.07C4.94 94.07 0 98.82 0 104.65C0 110.43 4.94 115.2 10.94 115.2ZM10.94 101.89L127.53 101.89C129.83 101.89 131.78 100.11 131.78 97.98C131.78 95.8 129.83 94.07 127.53 94.07L10.94 94.07C8.64 94.07 6.68 95.8 6.68 97.98C6.68 100.11 8.64 101.89 10.94 101.89ZM69.23 34.15L62.78 26.29L56.17 19.65C55.44 18.98 54.52 18.55 53.59 18.55C51.62 18.55 50.23 19.87 50.23 21.81C50.23 22.82 50.59 23.62 51.38 24.35L66.65 38.58C67.67 39.5 68.4 39.84 69.28 39.84C70.17 39.84 70.9 39.5 71.91 38.58L87.13 24.35C87.98 23.62 88.34 22.82 88.34 21.81C88.34 19.87 86.95 18.55 84.98 18.55C84.04 18.55 83.12 18.98 82.39 19.65L76.31 25.83ZM72.56 32.3L73.21 22.62L73.21 4.33C73.21 1.94 71.35 0 69.23 0C67.11 0 65.25 1.94 65.25 4.33L65.25 22.62L65.91 32.3C66.06 34.15 67.39 35.63 69.23 35.63C71.08 35.63 72.4 34.15 72.56 32.3Z"/></svg>
+</div>
+<div layer-name="Cell / Sunset" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:160px">Sunset</div>
+<div layer-name="Cell / Sunset" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:100px">Sunset</div>
+<div layer-name="Cell / sunset" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">sunset</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Window / Evening blue hour" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Icon Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:28px">
+<svg layer-name="Icon / moon.haze" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 130.88 108.19" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary)"><path d="M63.15 73.74C78.91 73.74 91.7 64.25 97.29 52.07C98.58 49.53 96.94 47.91 94.56 48.62C91.9 49.55 87.49 50.42 83.41 50.42C61.64 50.42 49.23 37.97 49.23 16.23C49.23 12.19 50.17 7.57 51.48 4.31C52.58 1.56 50.62 0 48.07 1.11C35.11 6.75 25.26 20.08 25.26 35.86C25.26 56.76 42.25 73.74 63.15 73.74ZM63.15 66.33C46.37 66.33 32.64 52.65 32.64 35.86C32.64 26.86 36.77 19.34 42.05 14.09C41.86 14.74 41.89 15.34 41.89 16.23C41.89 42.01 57.68 57.75 82.23 57.75C83.08 57.75 83.72 57.73 84.13 57.7C78.9 62.87 71.52 66.33 63.15 66.33ZM9.08 82.66L121.8 82.66C126.82 82.66 130.88 78.59 130.88 73.58C130.88 68.58 126.82 64.51 121.8 64.51L9.08 64.51C4.08 64.51 0 68.58 0 73.58C0 78.59 4.08 82.66 9.08 82.66ZM8.38 89.44L107.55 89.44C109.26 89.44 110.61 88.13 110.61 86.36C110.61 84.64 109.26 83.27 107.55 83.27L8.38 83.27C6.66 83.27 5.31 84.64 5.31 86.36C5.31 88.13 6.66 89.44 8.38 89.44ZM15.73 108.19L114.9 108.19C116.61 108.19 117.96 106.88 117.96 105.11C117.96 103.4 116.61 102.02 114.9 102.02L15.73 102.02C14.01 102.02 12.67 103.4 12.67 105.11C12.67 106.88 14.01 108.19 15.73 108.19ZM15.73 70.69L114.9 70.69C116.61 70.69 117.96 69.37 117.96 67.61C117.96 65.89 116.61 64.51 114.9 64.51L15.73 64.51C14.01 64.51 12.67 65.89 12.67 67.61C12.67 69.37 14.01 70.69 15.73 70.69Z"/></svg>
+</div>
+<div layer-name="Cell / Evening blue hour" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:160px">Evening blue hour</div>
+<div layer-name="Cell / Blue PM" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:100px">Blue PM</div>
+<div layer-name="Cell / moon.haze" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">moon.haze</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Evening blue hour</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Window / Night" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Icon Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:28px">
+<svg layer-name="Icon / moon.stars" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 97.67 101.67" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary)"><path d="M78.9 56.74C79.77 56.74 80.44 56.09 80.55 55.16C82.11 42.11 82.75 41.78 95.98 39.61C97.06 39.45 97.67 38.96 97.67 37.96C97.67 37.06 97.06 36.48 96.19 36.37C82.86 33.79 82.11 33.88 80.55 20.83C80.44 19.83 79.77 19.24 78.9 19.24C77.98 19.24 77.36 19.83 77.25 20.78C75.52 34.01 75.08 34.45 61.56 36.37C60.73 36.43 60.06 37.06 60.06 37.96C60.06 38.91 60.73 39.45 61.56 39.61C75.08 42.19 75.48 42.22 77.25 55.26C77.36 56.09 77.98 56.74 78.9 56.74ZM55.55 23.7C56.09 23.7 56.42 23.37 56.53 22.81C58.07 14.7 57.98 14.48 66.49 12.86C67 12.74 67.38 12.45 67.38 11.85C67.38 11.23 67 10.95 66.49 10.84C57.99 9.14 58.23 8.93 56.53 0.88C56.42 0.33 56.09 0 55.55 0C54.94 0 54.62 0.33 54.51 0.88C52.8 8.93 53.09 9.14 44.59 10.84C44.03 10.95 43.66 11.23 43.66 11.85C43.66 12.45 44.03 12.74 44.59 12.86C53.09 14.56 53 14.7 54.51 22.81C54.62 23.37 54.94 23.7 55.55 23.7ZM42.07 101.67C59.61 101.67 73.82 91.06 80.07 77.64C81.48 74.77 79.67 72.93 77.01 73.71C74.01 74.72 69.12 75.65 64.58 75.65C40.5 75.65 26.65 61.87 26.65 37.74C26.65 33.2 27.67 28.06 29.11 24.52C30.32 21.45 28.2 19.66 25.34 20.93C10.94 27.15 0 41.99 0 59.55C0 82.83 18.85 101.67 42.07 101.67ZM42.07 94.59C22.74 94.59 6.97 78.88 6.97 59.55C6.97 48.1 12.61 38.44 20.19 32.37C19.82 34.16 19.68 35.87 19.68 37.74C19.68 65.71 36.54 82.73 64.58 82.73C66.05 82.73 67.44 82.53 68.63 82.26C62.49 89.65 53.04 94.59 42.07 94.59Z"/></svg>
+</div>
+<div layer-name="Cell / Night" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:160px">Night</div>
+<div layer-name="Cell / Night" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:100px">Night</div>
+<div layer-name="Cell / moon.stars" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:160px">moon.stars</div>
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Night</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Confidence" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Confidence</div>
+<div layer-name="Confidence" style="box-sizing:border-box;display:flex;flex-direction:row;gap:40px;align-items:flex-start">
+<div layer-name="Confidence / low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex-shrink:0;width:190px">
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap">Low confidence</div>
+<div layer-name="Bars" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap">1 bar · chip at 85% opacity</div>
+</div>
+<div layer-name="Confidence / medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex-shrink:0;width:190px">
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap">Medium confidence</div>
+<div layer-name="Bars" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap">2 bars</div>
+</div>
+<div layer-name="Confidence / high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex-shrink:0;width:190px">
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap">High confidence</div>
+<div layer-name="Bars" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap">3 bars</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / No forecast: a ring and a reason, never " style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">No forecast: a ring and a reason, never a number</div>
+<div layer-name="No Forecast" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Reason Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg)">
+<div layer-name="Cell / " style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:30px"></div>
+<div layer-name="Cell / Short (rows)" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:110px">Short (rows)</div>
+<div layer-name="Cell / Long (large surfaces)" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:520px">Long (large surfaces)</div>
+</div>
+<div layer-name="Reason / weatherServiceNotEnabled" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Ring Slot" style="box-sizing:border-box;display:flex;flex-direction:row;justify-content:center;flex-shrink:0;width:30px">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+</div>
+<div layer-name="Cell / Weather off" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:110px">Weather off</div>
+<div layer-name="Cell / Weather isn't enabled for this build of Ite" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);flex-shrink:0;width:520px">Weather isn't enabled for this build of Iter, so only sun and moon times are shown.</div>
+</div>
+<div layer-name="Reason / serviceFailed" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Ring Slot" style="box-sizing:border-box;display:flex;flex-direction:row;justify-content:center;flex-shrink:0;width:30px">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+</div>
+<div layer-name="Cell / Offline" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:110px">Offline</div>
+<div layer-name="Cell / Couldn't reach Apple Weather. Sun and moon " style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);flex-shrink:0;width:520px">Couldn't reach Apple Weather. Sun and moon times are still exact.</div>
+</div>
+<div layer-name="Reason / beyondHorizon" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Ring Slot" style="box-sizing:border-box;display:flex;flex-direction:row;justify-content:center;flex-shrink:0;width:30px">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+</div>
+<div layer-name="Cell / Too far ahead" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:110px">Too far ahead</div>
+<div layer-name="Cell / Too far ahead for a forecast. Planned on su" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);flex-shrink:0;width:520px">Too far ahead for a forecast. Planned on sun angle and season until about ten days out.</div>
+</div>
+<div layer-name="Reason / inThePast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Ring Slot" style="box-sizing:border-box;display:flex;flex-direction:row;justify-content:center;flex-shrink:0;width:30px">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+</div>
+<div layer-name="Cell / Passed" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:110px">Passed</div>
+<div layer-name="Cell / This window has passed." style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);flex-shrink:0;width:520px">This window has passed.</div>
+</div>
+<div layer-name="Reason / notLoaded" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Ring Slot" style="box-sizing:border-box;display:flex;flex-direction:row;justify-content:center;flex-shrink:0;width:30px">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+</div>
+<div layer-name="Cell / Loading" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:110px">Loading</div>
+<div layer-name="Cell / Forecast not loaded yet." style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);flex-shrink:0;width:520px">Forecast not loaded yet.</div>
+</div>
+<div layer-name="No Forecast Badges" style="box-sizing:border-box;display:flex;flex-direction:row;gap:28px;align-items:center;padding-top:8px">
+<div layer-name="LightBadge / large / No forecast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center">
+<svg layer-name="NoForecastRing / 64" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="32" cy="32" r="31.25" fill="none" style="stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="Headline" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset · No forecast</div>
+<div layer-name="Reason" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-secondary);max-width:280px">Too far ahead for a forecast. Planned on sun angle and season until about ten days out.</div>
+</div>
+</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);white-space:nowrap">“No forecast”</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Reasons: why the score is what it is" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Reasons: why the score is what it is</div>
+<div layer-name="Reasons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Factor Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg)">
+<div layer-name="Cell / Factor" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:130px">Factor</div>
+<div layer-name="Cell / Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">Value</div>
+<div layer-name="Cell / Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:72px">Hurts</div>
+<div layer-name="Cell / Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:72px">Helps</div>
+<div layer-name="Cell / When it hurts · when it helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:310px">When it hurts · when it helps</div>
+</div>
+<div layer-name="Factor / Low cloud" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Low cloud" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Low cloud</div>
+<div layer-name="Cell / 29%" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">29%</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:6.4px;left:27.6px;background:var(--color-dark-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:8px;left:34px;background:var(--color-dark-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary)">Low cloud can block the sun at the horizon.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary)">Little low cloud: the horizon should be open.</div>
+</div>
+</div>
+<div layer-name="Factor / Mid and high cloud" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Mid and high cloud" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Mid and high cloud</div>
+<div layer-name="Cell / 41%" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">41%</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:8.8px;left:25.2px;background:var(--color-dark-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:11.200000000000001px;left:34px;background:var(--color-dark-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary)">A thick upper deck mutes the colour.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary)">Mid and high cloud catches colour.</div>
+</div>
+</div>
+<div layer-name="Factor / Cloud cover" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Cloud cover" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Cloud cover</div>
+<div layer-name="Cell / 55%" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">55%</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:11.200000000000001px;left:22.799999999999997px;background:var(--color-dark-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:14.4px;left:34px;background:var(--color-dark-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary)">Heavy cloud cover.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary)">Cloud cover suits this window.</div>
+</div>
+</div>
+<div layer-name="Factor / Clear sky" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Clear sky" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Clear sky</div>
+<div layer-name="Cell / 12%" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">12%</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:13.600000000000001px;left:20.4px;background:var(--color-dark-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:17.6px;left:34px;background:var(--color-dark-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary)">Bare sky: clean light, flat colour.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary)">Clear sky for stars.</div>
+</div>
+</div>
+<div layer-name="Factor / Rain" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Rain" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Rain</div>
+<div layer-name="Cell / 10%" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">10%</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:16px;left:18px;background:var(--color-dark-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:20.8px;left:34px;background:var(--color-dark-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary)">Rain is likely.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary)">Little chance of rain.</div>
+</div>
+</div>
+<div layer-name="Factor / Visibility" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Visibility" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Visibility</div>
+<div layer-name="Cell / 15 mi" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">15 mi</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:18.400000000000002px;left:15.599999999999998px;background:var(--color-dark-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:24px;left:34px;background:var(--color-dark-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary)">Haze or fog cuts visibility.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary)">Good visibility.</div>
+</div>
+</div>
+<div layer-name="Factor / Moonlight" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Moonlight" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Moonlight</div>
+<div layer-name="Cell / 30%" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">30%</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:20.8px;left:13.2px;background:var(--color-dark-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:27.200000000000003px;left:34px;background:var(--color-dark-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary)">A bright moon is up and washes out stars.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary)">Moon down or thin: a dark sky.</div>
+</div>
+</div>
+<div layer-name="Factor / Wind" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Wind" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Wind</div>
+<div layer-name="Cell / 12 mph" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">12 mph</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:23.200000000000003px;left:10.799999999999997px;background:var(--color-dark-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:30.400000000000002px;left:34px;background:var(--color-dark-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary)">Strong wind: tripods and reflections suffer.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary)">Light wind.</div>
+</div>
+</div>
+<div layer-name="Factor / Sun direction" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center">
+<div layer-name="Cell / Sun direction" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0;width:130px">Sun direction</div>
+<div layer-name="Cell / 34°" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0;width:64px">34°</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:25.6px;left:8.399999999999999px;background:var(--color-dark-status-warning)"></div>
+</div>
+<div layer-name="SignedBar" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;width:68px;height:var(--spacing-size-confidence-mark);position:relative">
+<div layer-name="Centre Line" style="box-sizing:border-box;position:absolute;left:34px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)"></div>
+<div layer-name="Bar" style="box-sizing:border-box;position:absolute;top:3px;height:var(--spacing-sm);width:33.6px;left:34px;background:var(--color-dark-accent-primary)"></div>
+</div>
+<div layer-name="Sentences" style="box-sizing:border-box;display:flex;flex-direction:column;gap:0;flex-shrink:0;width:310px">
+<div layer-name="Hurts" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary)">The sun is off-axis from the classic view.</div>
+<div layer-name="Helps" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary)">The sun lines up with the classic view.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

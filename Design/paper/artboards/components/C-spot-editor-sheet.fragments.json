@@ -1,0 +1,1352 @@
+{
+ "artboard": {
+  "name": "SpotEditorSheet",
+  "page": "Components",
+  "width": 2300,
+  "height": 1136,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "2300px",
+   "height": "1136px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 27,
+  "clones": 18,
+  "writesNoClone": 68,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet",
+   "parentPathArray": [
+    "SpotEditorSheet"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">SpotEditorSheet</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">SpotEditorSheet · Components/SpotEditorSheet.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">Create a spot from a dropped pin, or edit one of your own. Anything you type is yours; a lookup never overwrites it. Fixed 520 x 750 pt.</div>\n  </div>\n  <div layer-name=\"Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n      <div layer-name=\"Note / Create and edit\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n        <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Create and edit</div>\n        <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Left: create (lookup filled name, place and zone, no best light ticked, button \"Add Spot\"). Right: edit (values held, Sunrise and Night sky ticked, button \"Save\").</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Notes",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Note / Form scrolls\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n  <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Form scrolls</div>\n  <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">The grouped form scrolls inside the fixed 520 x 750 frame. With errors, a lookup line or a multi-line Notes (3 to 6 lines) it is taller than the frame and is cut at the divider (see the screen states). The snapshot crops it the same way.</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 3,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Notes",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "sourceSeq": 2,
+   "sourcePath": "SpotEditorSheet/Page/Content/Notes/Note / Form scrolls",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Notes",
+    "Note / Form scrolls"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Note Title/#text0": "Map and pin",
+    "./Note Body/#text0": "The pin map is 168 high, 12 pt corners and a hairline. The mappin symbol (largest title size, accent, small shadow) has its tip on the map centre; the map moves under it. The map itself is a placeholder to swap."
+   },
+   "nameOverrides": {
+    ".": "Note / Map and pin"
+   },
+   "lines": 3
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Sheets\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n      <div layer-name=\"Sheet / New Spot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0;width:520px;height:750px;overflow:hidden;background:var(--color-canvas-sheet-background);border-radius:26px;box-shadow:var(--shadow-canvas-sheet)\">\n        <div layer-name=\"Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-text-primary);white-space:nowrap;padding:var(--spacing-lg) var(--spacing-lg) var(--spacing-sm);flex-shrink:0\">New Spot</div>\n        <div layer-name=\"Form Scroll (clipped)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0;overflow:hidden;min-height:0\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Form\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px 20px 20px;flex-shrink:0\">\n  <div layer-name=\"Section / Pin\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n    <div layer-name=\"Group / Pin Map\" style=\"box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0\">\n      <div layer-name=\"Map Inset\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:10px\">\n        <div layer-name=\"Pin Map Clip\" style=\"box-sizing:border-box;display:flex;flex-direction:column;border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-separator-default);flex-shrink:0\">\n          <div layer-name=\"Map placeholder (swap)\" style=\"box-sizing:border-box;position:relative;display:flex;overflow:hidden;background:var(--color-canvas-map-ground);height:168px;min-width:0;min-height:0;flex-shrink:0\">\n            <div layer-name=\"Map Art\" style=\"box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;display:flex\">\n              <svg layer-name=\"Roads and Contours\" xmlns=\"http://www.w3.org/2000/svg\" width=\"100%\" height=\"100%\" viewBox=\"0 0 1000 700\" preserveAspectRatio=\"xMidYMid slice\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M-20 520 C 160 470, 280 560, 430 500 S 700 380, 1020 430\" style=\"stroke:var(--color-canvas-map-line-major)\" stroke-width=\"5\"/><path d=\"M120 -20 C 180 150, 140 280, 260 380 S 380 600, 340 720\" style=\"stroke:var(--color-canvas-map-line-major)\" stroke-width=\"4\"/><path d=\"M-20 240 C 150 210, 300 260, 470 190 S 760 120, 1020 170\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"3\"/><path d=\"M560 -20 C 600 130, 540 260, 640 360 S 780 560, 740 720\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"3\"/><path d=\"M820 -20 C 800 100, 900 200, 860 330 S 940 520, 1020 600\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"2\"/><path d=\"M-20 650 C 200 620, 380 700, 600 640 S 880 600, 1020 690\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"2\"/><ellipse cx=\"760\" cy=\"520\" rx=\"210\" ry=\"120\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"1.5\"/><ellipse cx=\"760\" cy=\"520\" rx=\"150\" ry=\"82\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"1.5\"/><ellipse cx=\"760\" cy=\"520\" rx=\"90\" ry=\"46\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"1.5\"/><ellipse cx=\"270\" cy=\"170\" rx=\"170\" ry=\"90\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"1.5\"/><ellipse cx=\"270\" cy=\"170\" rx=\"100\" ry=\"50\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"1.5\"/></g></svg>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Pin/Group / Pin Map/Map Inset/Pin Map Clip/Map placeholder (swap)",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Pin",
+    "Group / Pin Map",
+    "Map Inset",
+    "Pin Map Clip",
+    "Map placeholder (swap)"
+   ],
+   "parentSeq": 5,
+   "html": "<div layer-name=\"Map Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-canvas-map-label);white-space:nowrap;position:absolute;left:12px;bottom:10px\">Map placeholder: swap for a map image</div>\n<div layer-name=\"Pin (tip at map centre)\" style=\"box-sizing:border-box;position:absolute;left:calc(50% - 17px);top:calc(50% - 34px);display:flex;filter:drop-shadow(0 1px 1.5px color-mix(in srgb, var(--color-text-primary) 35%, transparent))\">\n  <svg layer-name=\"Icon / mappin\" xmlns=\"http://www.w3.org/2000/svg\" width=\"34\" height=\"34\" viewBox=\"0 0 36.67 103.71\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-accent-primary)\"><path d=\"M0 18.38C0 26.96 5.81 34.13 13.74 36.2L13.74 81.48C13.74 95.83 16.33 103.71 18.33 103.71C20.28 103.71 22.82 95.89 22.82 81.48L22.82 36.2C30.8 34.2 36.67 26.96 36.67 18.38C36.67 8.25 28.53 0 18.33 0C8.14 0 0 8.25 0 18.38ZM13.08 19.39C9.74 19.39 6.81 16.46 6.81 13.07C6.81 9.67 9.74 6.8 13.08 6.8C16.53 6.8 19.35 9.67 19.35 13.07C19.35 16.46 16.53 19.39 13.08 19.39Z\"/></svg>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Pin",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Pin"
+   ],
+   "parentSeq": 5,
+   "html": "<div layer-name=\"Section Footer\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"Hint\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-text-secondary);white-space:nowrap\">Drag the map to move the pin.</div>\n  <div layer-name=\"Coordinates\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-text-secondary);white-space:nowrap;font-variant-numeric:tabular-nums\">36.5786, -118.2920</div>\n  <div layer-name=\"Footer Spacer\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0\"></div>\n</div>",
+   "lines": 5
+  },
+  {
+   "seq": 8,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form"
+   ],
+   "parentSeq": 5,
+   "html": "<div layer-name=\"Group / Fields\" style=\"box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0\">\n  <div layer-name=\"Row / Name\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0\">\n    <div layer-name=\"Row Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px\">\n      <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0\">Name</div>\n      <div layer-name=\"Name Control\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center\">\n        <div layer-name=\"Value\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;text-align:right\">Dropped pin</div>\n      </div>\n    </div>\n    <div layer-name=\"Row Separator\" style=\"box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column\">\n      <div layer-name=\"Separator\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0\"></div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Group / Fields",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Group / Fields"
+   ],
+   "parentSeq": 8,
+   "html": "<div layer-name=\"Row / Place\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0\">\n  <div layer-name=\"Row Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px\">\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0\">Place</div>\n    <div layer-name=\"Value\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;text-align:right\">Moab, UT</div>\n  </div>\n  <div layer-name=\"Row Separator\" style=\"box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column\">\n    <div layer-name=\"Separator\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0\"></div>\n  </div>\n</div>",
+   "lines": 9
+  },
+  {
+   "seq": 10,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Group / Fields",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Group / Fields"
+   ],
+   "parentSeq": 8,
+   "html": "<div layer-name=\"Row / Category\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0\">\n  <div layer-name=\"Row Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px\">\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0\">Category</div>\n    <div layer-name=\"Category Picker\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n      <svg layer-name=\"Icon / mountain.2\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 174.12 86.24\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary)\"><path d=\"M11.46 86.24L89.14 86.24C98.43 86.24 100.61 77.29 95.36 70.8L58.7 25.37C56.16 22.25 53.23 20.67 50.3 20.67C47.4 20.67 44.46 22.25 41.91 25.37L5.2 70.8C0 77.29 2.18 86.24 11.46 86.24ZM12.65 78.39C10.96 78.39 10.44 76.86 11.43 75.65L47.98 30.33C48.71 29.51 49.53 29.05 50.3 29.05C51.08 29.05 51.9 29.51 52.6 30.33L89.17 75.65C90.13 76.86 89.59 78.39 87.96 78.39ZM36.02 55.72C43.34 55.72 46.25 49.87 50.3 49.87C54.37 49.87 57.29 55.72 64.58 55.72C69.55 55.72 72.48 51.06 75.06 48.49L71.52 44.57C68.75 47.16 66.66 50.32 64.58 50.32C60.76 50.32 57.31 44.53 50.3 44.53C43.31 44.53 39.81 50.32 36.02 50.32C33.94 50.32 31.86 47.16 29.11 44.57L25.56 48.49C28.14 51.06 31.06 55.72 36.02 55.72ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM61.24 78.39C59.44 78.39 58.92 76.91 59.85 75.65L110.05 9.72C111.34 7.98 113.56 8.04 114.8 9.67L164.99 75.6C165.98 76.86 165.46 78.39 163.61 78.39ZM96.54 43.8C104.65 43.8 107.97 37.39 112.43 37.39C116.94 37.39 120.21 43.8 128.32 43.8C133.32 43.8 136.58 39.75 139.32 36.75L135.55 32.19C132.81 35 130.67 37.86 128.32 37.86C124.07 37.86 120.21 31.45 112.43 31.45C104.65 31.45 100.85 37.86 96.54 37.86C94.21 37.86 92.02 34.96 89.25 32.15L85.46 36.71C88.31 39.72 91.51 43.8 96.54 43.8Z\"/></svg>\n      <div layer-name=\"Value\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Landscape</div>\n      <div layer-name=\"Picker Chevrons\" style=\"box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:999px;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke)\">\n        <svg layer-name=\"Icon / chevron.up.chevron.down\" xmlns=\"http://www.w3.org/2000/svg\" width=\"10\" height=\"10\" viewBox=\"0 0 64.97 94.04\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:3.90;stroke-linejoin:round\"><path d=\"M32.51 0C31.23 0 30.12 0.52 29.18 1.46L1.27 28.2C0.54 28.99 0 29.97 0 31.42C0 33.96 1.95 35.9 4.49 35.9C5.53 35.9 6.68 35.62 7.71 34.6L32.51 10.31L57.26 34.6C58.3 35.58 59.5 35.9 60.52 35.9C63.06 35.9 64.97 33.96 64.97 31.42C64.97 29.97 64.48 28.99 63.7 28.2L35.85 1.46C34.84 0.52 33.74 0 32.51 0ZM32.51 94.04C33.74 94.04 34.84 93.53 35.85 92.58L63.7 65.85C64.48 65.06 64.97 64.07 64.97 62.63C64.97 60.08 63.06 58.15 60.52 58.15C59.5 58.15 58.3 58.46 57.26 59.45L32.51 83.73L7.71 59.45C6.68 58.42 5.53 58.15 4.49 58.15C1.95 58.15 0 60.08 0 62.63C0 64.07 0.54 65.06 1.27 65.85L29.18 92.58C30.12 93.53 31.23 94.04 32.51 94.04Z\"/></svg>\n      </div>\n    </div>\n  </div>\n  <div layer-name=\"Row Separator\" style=\"box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column\">\n    <div layer-name=\"Separator\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0\"></div>\n  </div>\n</div>",
+   "lines": 15
+  },
+  {
+   "seq": 11,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Group / Fields",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Group / Fields"
+   ],
+   "parentSeq": 8,
+   "html": "<div layer-name=\"Row / Time zone\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0\">\n  <div layer-name=\"Row Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px\">\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0\">Time zone</div>\n    <div layer-name=\"Value\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-secondary);white-space:nowrap\">Mountain Time</div>\n  </div>\n</div>",
+   "lines": 6
+  },
+  {
+   "seq": 12,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form"
+   ],
+   "parentSeq": 5,
+   "html": "<div layer-name=\"Section / Best Light\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n  <div layer-name=\"Header\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap;padding:0 10px\">Best light (choose any)</div>\n  <div layer-name=\"Group / Best Light\" style=\"box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0\">\n    <div layer-name=\"Checkbox Grid\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);padding:var(--spacing-sm) 10px\">\n      <div layer-name=\"Checkbox Row 1\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0\">\n        <div layer-name=\"Cell / Sunrise\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;display:flex\">\n          <div layer-name=\"Checkbox / Sunrise\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n            <div layer-name=\"Box\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)\"></div>\n            <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Sunrise</div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 13,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid/Checkbox Row 1",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid",
+    "Checkbox Row 1"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"Cell / Sunset\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;display:flex\">\n  <div layer-name=\"Checkbox / Sunset\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n    <div layer-name=\"Box\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)\"></div>\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Sunset</div>\n  </div>\n</div>",
+   "lines": 6
+  },
+  {
+   "seq": 14,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid/Checkbox Row 1",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid",
+    "Checkbox Row 1"
+   ],
+   "parentSeq": 12,
+   "sourceSeq": 13,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid/Checkbox Row 1/Cell / Sunset",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid",
+    "Checkbox Row 1",
+    "Cell / Sunset"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Checkbox / Sunset/Label/#text0": "Blue hour"
+   },
+   "nameOverrides": {
+    ".": "Cell / Blue hour",
+    "./Checkbox / Sunset": "Checkbox / Blue hour"
+   },
+   "lines": 3
+  },
+  {
+   "seq": 15,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"Checkbox Row 2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0\">\n  <div layer-name=\"Cell / Night sky\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;display:flex\">\n    <div layer-name=\"Checkbox / Night sky\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n      <div layer-name=\"Box\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)\"></div>\n      <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Night sky</div>\n    </div>\n  </div>\n  <div layer-name=\"Cell / Midday\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;display:flex\">\n    <div layer-name=\"Checkbox / Midday\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n      <div layer-name=\"Box\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)\"></div>\n      <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Midday</div>\n    </div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 16,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid/Checkbox Row 2",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid",
+    "Checkbox Row 2"
+   ],
+   "parentSeq": 15,
+   "sourceSeq": 13,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid/Checkbox Row 1/Cell / Sunset",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid",
+    "Checkbox Row 1",
+    "Cell / Sunset"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Checkbox / Sunset/Label/#text0": "Overcast"
+   },
+   "nameOverrides": {
+    ".": "Cell / Overcast",
+    "./Checkbox / Sunset": "Checkbox / Overcast"
+   },
+   "lines": 3
+  },
+  {
+   "seq": 17,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Best Light",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"Section Footer\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"Footer\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-text-secondary);white-space:nowrap\">With none chosen, light is shown for sunset.</div>\n</div>",
+   "lines": 3
+  },
+  {
+   "seq": 18,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form"
+   ],
+   "parentSeq": 5,
+   "html": "<div layer-name=\"Group / Walk-in and Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0\">\n  <div layer-name=\"Row / Walk-in (minutes)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0\">\n    <div layer-name=\"Row Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px\">\n      <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0\">Walk-in (minutes)</div>\n      <div layer-name=\"Placeholder\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-tertiary);white-space:nowrap;text-align:right\">Optional</div>\n    </div>\n    <div layer-name=\"Row Separator\" style=\"box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column\">\n      <div layer-name=\"Separator\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0\"></div>\n    </div>\n  </div>\n  <div layer-name=\"Row / Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0\"></div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 19,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Group / Walk-in and Notes/Row / Notes",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Group / Walk-in and Notes",
+    "Row / Notes"
+   ],
+   "parentSeq": 18,
+   "html": "<div layer-name=\"Row Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px\">\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0\">Notes</div>\n  <div layer-name=\"Placeholder\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-tertiary);white-space:nowrap;text-align:right\">Access, gear, crowds, permits</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 20,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Divider\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0\"></div>\n<div layer-name=\"Sheet Buttons\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);padding:var(--spacing-lg);align-items:center;justify-content:flex-end;flex-shrink:0\">\n  <div layer-name=\"Button / Cancel\" style=\"box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button);padding:0 14px\">\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Cancel</div>\n  </div>\n  <div layer-name=\"Button / Add Spot\" style=\"box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-accent-primary);padding:0 14px\">\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-accent-on-accent);white-space:nowrap\">Add Spot</div>\n  </div>\n</div>",
+   "lines": 9
+  },
+  {
+   "seq": 21,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Sheet / Edit Spot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0;width:520px;height:750px;overflow:hidden;background:var(--color-canvas-sheet-background);border-radius:26px;box-shadow:var(--shadow-canvas-sheet)\">\n  <div layer-name=\"Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-text-primary);white-space:nowrap;padding:var(--spacing-lg) var(--spacing-lg) var(--spacing-sm);flex-shrink:0\">Edit Spot</div>\n  <div layer-name=\"Form Scroll (clipped)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0;overflow:hidden;min-height:0\">\n    <div layer-name=\"Form\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px 20px 20px;flex-shrink:0\">\n      <div layer-name=\"Section / Pin\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n        <div layer-name=\"Group / Pin Map\" style=\"box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0\">\n          <div layer-name=\"Map Inset\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:10px\"></div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 22,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot/Form Scroll (clipped)/Form/Section / Pin/Group / Pin Map/Map Inset",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Pin",
+    "Group / Pin Map",
+    "Map Inset"
+   ],
+   "parentSeq": 21,
+   "html": "<div layer-name=\"Pin Map Clip\" style=\"box-sizing:border-box;display:flex;flex-direction:column;border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-separator-default);flex-shrink:0\">\n  <div layer-name=\"Map placeholder (swap)\" style=\"box-sizing:border-box;position:relative;display:flex;overflow:hidden;background:var(--color-canvas-map-ground);height:168px;min-width:0;min-height:0;flex-shrink:0\">\n    <div layer-name=\"Map Art\" style=\"box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;display:flex\">\n      <svg layer-name=\"Roads and Contours\" xmlns=\"http://www.w3.org/2000/svg\" width=\"100%\" height=\"100%\" viewBox=\"0 0 1000 700\" preserveAspectRatio=\"xMidYMid slice\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M-20 520 C 160 470, 280 560, 430 500 S 700 380, 1020 430\" style=\"stroke:var(--color-canvas-map-line-major)\" stroke-width=\"5\"/><path d=\"M120 -20 C 180 150, 140 280, 260 380 S 380 600, 340 720\" style=\"stroke:var(--color-canvas-map-line-major)\" stroke-width=\"4\"/><path d=\"M-20 240 C 150 210, 300 260, 470 190 S 760 120, 1020 170\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"3\"/><path d=\"M560 -20 C 600 130, 540 260, 640 360 S 780 560, 740 720\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"3\"/><path d=\"M820 -20 C 800 100, 900 200, 860 330 S 940 520, 1020 600\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"2\"/><path d=\"M-20 650 C 200 620, 380 700, 600 640 S 880 600, 1020 690\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"2\"/><ellipse cx=\"760\" cy=\"520\" rx=\"210\" ry=\"120\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"1.5\"/><ellipse cx=\"760\" cy=\"520\" rx=\"150\" ry=\"82\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"1.5\"/><ellipse cx=\"760\" cy=\"520\" rx=\"90\" ry=\"46\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"1.5\"/><ellipse cx=\"270\" cy=\"170\" rx=\"170\" ry=\"90\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"1.5\"/><ellipse cx=\"270\" cy=\"170\" rx=\"100\" ry=\"50\" style=\"stroke:var(--color-canvas-map-line)\" stroke-width=\"1.5\"/></g></svg>\n    </div>\n    <div layer-name=\"Map Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-canvas-map-label);white-space:nowrap;position:absolute;left:12px;bottom:10px\">Map placeholder: swap for a map image</div>\n    <div layer-name=\"Pin (tip at map centre)\" style=\"box-sizing:border-box;position:absolute;left:calc(50% - 17px);top:calc(50% - 34px);display:flex;filter:drop-shadow(0 1px 1.5px color-mix(in srgb, var(--color-text-primary) 35%, transparent))\">\n      <svg layer-name=\"Icon / mappin\" xmlns=\"http://www.w3.org/2000/svg\" width=\"34\" height=\"34\" viewBox=\"0 0 36.67 103.71\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-accent-primary)\"><path d=\"M0 18.38C0 26.96 5.81 34.13 13.74 36.2L13.74 81.48C13.74 95.83 16.33 103.71 18.33 103.71C20.28 103.71 22.82 95.89 22.82 81.48L22.82 36.2C30.8 34.2 36.67 26.96 36.67 18.38C36.67 8.25 28.53 0 18.33 0C8.14 0 0 8.25 0 18.38ZM13.08 19.39C9.74 19.39 6.81 16.46 6.81 13.07C6.81 9.67 9.74 6.8 13.08 6.8C16.53 6.8 19.35 9.67 19.35 13.07C19.35 16.46 16.53 19.39 13.08 19.39Z\"/></svg>\n    </div>\n  </div>\n</div>",
+   "lines": 11
+  },
+  {
+   "seq": 23,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot/Form Scroll (clipped)/Form/Section / Pin",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Pin"
+   ],
+   "parentSeq": 21,
+   "sourceSeq": 7,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Pin/Section Footer",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Pin",
+    "Section Footer"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 0
+  },
+  {
+   "seq": 24,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot/Form Scroll (clipped)/Form",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot",
+    "Form Scroll (clipped)",
+    "Form"
+   ],
+   "parentSeq": 21,
+   "sourceSeq": 8,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Group / Fields",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Group / Fields"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Row / Name/Row Line/Name Control/Value/#text0": "Back field at Lone Pine",
+    "./Row / Place/Row Line/Value/#text0": "Lone Pine, CA",
+    "./Row / Time zone/Row Line/Value/#text0": "Pacific Time"
+   },
+   "nameOverrides": {},
+   "lines": 3
+  },
+  {
+   "seq": 25,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot/Form Scroll (clipped)/Form",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot",
+    "Form Scroll (clipped)",
+    "Form"
+   ],
+   "parentSeq": 21,
+   "html": "<div layer-name=\"Section / Best Light\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n  <div layer-name=\"Header\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap;padding:0 10px\">Best light (choose any)</div>\n  <div layer-name=\"Group / Best Light\" style=\"box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0\">\n    <div layer-name=\"Checkbox Grid\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);padding:var(--spacing-sm) 10px\">\n      <div layer-name=\"Checkbox Row 1\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0\">\n        <div layer-name=\"Cell / Sunrise\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;display:flex\">\n          <div layer-name=\"Checkbox / Sunrise\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\"></div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 26,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid/Checkbox Row 1/Cell / Sunrise/Checkbox / Sunrise",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid",
+    "Checkbox Row 1",
+    "Cell / Sunrise",
+    "Checkbox / Sunrise"
+   ],
+   "parentSeq": 25,
+   "html": "<div layer-name=\"Box\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-accent-primary);border:none\">\n  <svg layer-name=\"Icon / checkmark\" xmlns=\"http://www.w3.org/2000/svg\" width=\"10\" height=\"10\" viewBox=\"0 0 84.11 83.42\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-accent-on-accent);stroke:var(--color-accent-on-accent);stroke-width:8.41;stroke-linejoin:round\"><path d=\"M31.84 83.42C33.93 83.42 35.58 82.51 36.76 80.69L82.87 8.11C83.79 6.69 84.11 5.57 84.11 4.45C84.11 1.81 82.35 0 79.66 0C77.72 0 76.63 0.66 75.46 2.53L31.63 72.36L8.88 42.57C7.65 40.9 6.45 40.19 4.67 40.19C1.95 40.19 0 42.09 0 44.79C0 45.93 0.48 47.17 1.42 48.36L26.73 80.59C28.25 82.53 29.74 83.42 31.84 83.42Z\"/></svg>\n</div>\n<div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Sunrise</div>",
+   "lines": 4
+  },
+  {
+   "seq": 27,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid/Checkbox Row 1",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid",
+    "Checkbox Row 1"
+   ],
+   "parentSeq": 25,
+   "sourceSeq": 13,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid/Checkbox Row 1/Cell / Sunset",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid",
+    "Checkbox Row 1",
+    "Cell / Sunset"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 0
+  },
+  {
+   "seq": 28,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid/Checkbox Row 1",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid",
+    "Checkbox Row 1"
+   ],
+   "parentSeq": 25,
+   "sourceSeq": 13,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid/Checkbox Row 1/Cell / Sunset",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid",
+    "Checkbox Row 1",
+    "Cell / Sunset"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Checkbox / Sunset/Label/#text0": "Blue hour"
+   },
+   "nameOverrides": {
+    ".": "Cell / Blue hour",
+    "./Checkbox / Sunset": "Checkbox / Blue hour"
+   },
+   "lines": 3
+  },
+  {
+   "seq": 29,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid"
+   ],
+   "parentSeq": 25,
+   "html": "<div layer-name=\"Checkbox Row 2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0\">\n  <div layer-name=\"Cell / Night sky\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;display:flex\">\n    <div layer-name=\"Checkbox / Night sky\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n      <div layer-name=\"Box\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-accent-primary);border:none\">\n        <svg layer-name=\"Icon / checkmark\" xmlns=\"http://www.w3.org/2000/svg\" width=\"10\" height=\"10\" viewBox=\"0 0 84.11 83.42\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-accent-on-accent);stroke:var(--color-accent-on-accent);stroke-width:8.41;stroke-linejoin:round\"><path d=\"M31.84 83.42C33.93 83.42 35.58 82.51 36.76 80.69L82.87 8.11C83.79 6.69 84.11 5.57 84.11 4.45C84.11 1.81 82.35 0 79.66 0C77.72 0 76.63 0.66 75.46 2.53L31.63 72.36L8.88 42.57C7.65 40.9 6.45 40.19 4.67 40.19C1.95 40.19 0 42.09 0 44.79C0 45.93 0.48 47.17 1.42 48.36L26.73 80.59C28.25 82.53 29.74 83.42 31.84 83.42Z\"/></svg>\n      </div>\n      <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Night sky</div>\n    </div>\n  </div>\n  <div layer-name=\"Cell / Midday\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;display:flex\"></div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 30,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid/Checkbox Row 2/Cell / Midday",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid",
+    "Checkbox Row 2",
+    "Cell / Midday"
+   ],
+   "parentSeq": 29,
+   "html": "<div layer-name=\"Checkbox / Midday\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Box\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Midday</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 31,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid/Checkbox Row 2",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid",
+    "Checkbox Row 2"
+   ],
+   "parentSeq": 29,
+   "sourceSeq": 13,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Best Light/Group / Best Light/Checkbox Grid/Checkbox Row 1/Cell / Sunset",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Group / Best Light",
+    "Checkbox Grid",
+    "Checkbox Row 1",
+    "Cell / Sunset"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Checkbox / Sunset/Label/#text0": "Overcast"
+   },
+   "nameOverrides": {
+    ".": "Cell / Overcast",
+    "./Checkbox / Sunset": "Checkbox / Overcast"
+   },
+   "lines": 3
+  },
+  {
+   "seq": 32,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot/Form Scroll (clipped)/Form/Section / Best Light",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light"
+   ],
+   "parentSeq": 25,
+   "sourceSeq": 17,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Best Light/Section Footer",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light",
+    "Section Footer"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 0
+  },
+  {
+   "seq": 33,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot/Form Scroll (clipped)/Form",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot",
+    "Form Scroll (clipped)",
+    "Form"
+   ],
+   "parentSeq": 21,
+   "sourceSeq": 18,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Group / Walk-in and Notes",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Group / Walk-in and Notes"
+   ],
+   "styleOverrides": {
+    "./Row / Walk-in (minutes)/Row Line/Placeholder": {
+     "color": "var(--color-text-primary)"
+    },
+    "./Row / Notes/Row Line/Placeholder": {
+     "color": "var(--color-text-primary)"
+    }
+   },
+   "textOverrides": {
+    "./Row / Walk-in (minutes)/Row Line/Placeholder/#text0": "12",
+    "./Row / Notes/Row Line/Placeholder/#text0": "Park at the pullout; the gate is usually open before dawn."
+   },
+   "nameOverrides": {
+    "./Row / Walk-in (minutes)/Row Line/Placeholder": "Value",
+    "./Row / Notes/Row Line/Placeholder": "Value"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 34,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot"
+   ],
+   "parentSeq": 21,
+   "sourceSeq": 20,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Sheet Buttons",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Sheet Buttons"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Button / Add Spot/Label/#text0": "Save"
+   },
+   "nameOverrides": {
+    "./Button / Add Spot": "Button / Save"
+   },
+   "lines": 2
+  },
+  {
+   "seq": 35,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot"
+   ],
+   "parentSeq": 21,
+   "html": "<div layer-name=\"Divider\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0\"></div>",
+   "lines": 1
+  },
+  {
+   "seq": 36,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Sheets\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Sheet / New Spot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0;width:520px;height:750px;overflow:hidden;background:var(--color-dark-canvas-sheet-background);border-radius:26px;box-shadow:var(--shadow-dark-canvas-sheet)\">\n      <div layer-name=\"Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-dark-text-primary);white-space:nowrap;padding:var(--spacing-lg) var(--spacing-lg) var(--spacing-sm);flex-shrink:0\">New Spot</div>\n      <div layer-name=\"Form Scroll (clipped)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0;overflow:hidden;min-height:0\">\n        <div layer-name=\"Form\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px 20px 20px;flex-shrink:0\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 37,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Dark Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form"
+   ],
+   "parentSeq": 36,
+   "html": "<div layer-name=\"Section / Pin\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n  <div layer-name=\"Group / Pin Map\" style=\"box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0\">\n    <div layer-name=\"Map Inset\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:10px\">\n      <div layer-name=\"Pin Map Clip\" style=\"box-sizing:border-box;display:flex;flex-direction:column;border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);flex-shrink:0\">\n        <div layer-name=\"Map placeholder (swap)\" style=\"box-sizing:border-box;position:relative;display:flex;overflow:hidden;background:var(--color-dark-canvas-map-ground);height:168px;min-width:0;min-height:0;flex-shrink:0\">\n          <div layer-name=\"Map Art\" style=\"box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;display:flex\">\n            <svg layer-name=\"Roads and Contours\" xmlns=\"http://www.w3.org/2000/svg\" width=\"100%\" height=\"100%\" viewBox=\"0 0 1000 700\" preserveAspectRatio=\"xMidYMid slice\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M-20 520 C 160 470, 280 560, 430 500 S 700 380, 1020 430\" style=\"stroke:var(--color-dark-canvas-map-line-major)\" stroke-width=\"5\"/><path d=\"M120 -20 C 180 150, 140 280, 260 380 S 380 600, 340 720\" style=\"stroke:var(--color-dark-canvas-map-line-major)\" stroke-width=\"4\"/><path d=\"M-20 240 C 150 210, 300 260, 470 190 S 760 120, 1020 170\" style=\"stroke:var(--color-dark-canvas-map-line)\" stroke-width=\"3\"/><path d=\"M560 -20 C 600 130, 540 260, 640 360 S 780 560, 740 720\" style=\"stroke:var(--color-dark-canvas-map-line)\" stroke-width=\"3\"/><path d=\"M820 -20 C 800 100, 900 200, 860 330 S 940 520, 1020 600\" style=\"stroke:var(--color-dark-canvas-map-line)\" stroke-width=\"2\"/><path d=\"M-20 650 C 200 620, 380 700, 600 640 S 880 600, 1020 690\" style=\"stroke:var(--color-dark-canvas-map-line)\" stroke-width=\"2\"/><ellipse cx=\"760\" cy=\"520\" rx=\"210\" ry=\"120\" style=\"stroke:var(--color-dark-canvas-map-line)\" stroke-width=\"1.5\"/><ellipse cx=\"760\" cy=\"520\" rx=\"150\" ry=\"82\" style=\"stroke:var(--color-dark-canvas-map-line)\" stroke-width=\"1.5\"/><ellipse cx=\"760\" cy=\"520\" rx=\"90\" ry=\"46\" style=\"stroke:var(--color-dark-canvas-map-line)\" stroke-width=\"1.5\"/><ellipse cx=\"270\" cy=\"170\" rx=\"170\" ry=\"90\" style=\"stroke:var(--color-dark-canvas-map-line)\" stroke-width=\"1.5\"/><ellipse cx=\"270\" cy=\"170\" rx=\"100\" ry=\"50\" style=\"stroke:var(--color-dark-canvas-map-line)\" stroke-width=\"1.5\"/></g></svg>\n          </div>\n          <div layer-name=\"Map Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-canvas-map-label);white-space:nowrap;position:absolute;left:12px;bottom:10px\">Map placeholder: swap for a map image</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 38,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Dark Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Pin/Group / Pin Map/Map Inset/Pin Map Clip/Map placeholder (swap)",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Pin",
+    "Group / Pin Map",
+    "Map Inset",
+    "Pin Map Clip",
+    "Map placeholder (swap)"
+   ],
+   "parentSeq": 37,
+   "sourceSeq": 6,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Pin/Group / Pin Map/Map Inset/Pin Map Clip/Map placeholder (swap)/Pin (tip at map centre)",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Pin",
+    "Group / Pin Map",
+    "Map Inset",
+    "Pin Map Clip",
+    "Map placeholder (swap)",
+    "Pin (tip at map centre)"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 2
+   }
+  },
+  {
+   "seq": 39,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Dark Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Pin",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Pin"
+   ],
+   "parentSeq": 37,
+   "sourceSeq": 7,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Pin/Section Footer",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Pin",
+    "Section Footer"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 2
+   }
+  },
+  {
+   "seq": 40,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Dark Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form"
+   ],
+   "parentSeq": 36,
+   "sourceSeq": 8,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Group / Fields",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Group / Fields"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 15
+   }
+  },
+  {
+   "seq": 41,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Dark Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form"
+   ],
+   "parentSeq": 36,
+   "sourceSeq": 12,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Section / Best Light",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Section / Best Light"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 15
+   }
+  },
+  {
+   "seq": 42,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Dark Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form"
+   ],
+   "parentSeq": 36,
+   "sourceSeq": 18,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Form Scroll (clipped)/Form/Group / Walk-in and Notes",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Form Scroll (clipped)",
+    "Form",
+    "Group / Walk-in and Notes"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 6
+   }
+  },
+  {
+   "seq": 43,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Dark Appearance/Sheets/Sheet / New Spot",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Sheets",
+    "Sheet / New Spot"
+   ],
+   "parentSeq": 36,
+   "sourceSeq": 20,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / New Spot/Sheet Buttons",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / New Spot",
+    "Sheet Buttons"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 4
+   }
+  },
+  {
+   "seq": 44,
+   "kind": "write",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Dark Appearance/Sheets/Sheet / New Spot",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Sheets",
+    "Sheet / New Spot"
+   ],
+   "parentSeq": 36,
+   "html": "<div layer-name=\"Divider\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0\"></div>",
+   "lines": 1
+  },
+  {
+   "seq": 45,
+   "kind": "clone",
+   "parentPath": "SpotEditorSheet/Page/Content/Appearances/Dark Appearance/Sheets",
+   "parentPathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Sheets"
+   ],
+   "parentSeq": 36,
+   "sourceSeq": 21,
+   "sourcePath": "SpotEditorSheet/Page/Content/Appearances/Light Appearance/Sheets/Sheet / Edit Spot",
+   "sourcePathArray": [
+    "SpotEditorSheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Sheets",
+    "Sheet / Edit Spot"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 53
+   }
+  }
+ ]
+}

@@ -1,0 +1,199 @@
+{
+ "artboard": {
+  "name": "NoForecastRing",
+  "page": "Components",
+  "width": 1564,
+  "height": 640,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1564px",
+   "height": "640px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 11,
+  "clones": 0,
+  "writesNoClone": 11,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "NoForecastRing",
+   "parentPathArray": [
+    "NoForecastRing"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">NoForecastRing</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">NoForecastRing · Components/LightBadge.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">The \"no forecast\" mark: a hollow circle with a dashed outline, no fill, no number. Unknown is not poor.</div>\n  </div>\n  <div layer-name=\"Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n      <div layer-name=\"Note / Anatomy\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n        <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Anatomy</div>\n        <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Circle, stroke inside, 1.5 pt in status/noForecast, dashed 4 on / 3 off. Hidden from VoiceOver: the parent speaks the reason.</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "NoForecastRing/Page/Content",
+   "parentPathArray": [
+    "NoForecastRing",
+    "Page",
+    "Content"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Section / Diameters\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n      <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Diameters</div>\n      <div layer-name=\"Rings\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:32px;align-items:flex-end\">\n        <div layer-name=\"Specimen / ring 16\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:150px;flex-shrink:0\">\n          <svg layer-name=\"NoForecastRing / 16\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"8\" cy=\"8\" r=\"7.25\" fill=\"none\" style=\"stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n          <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">16 · Scout row (size/icon/medium)</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "NoForecastRing/Page/Content/Appearances/Light Appearance/Section / Diameters/Rings",
+   "parentPathArray": [
+    "NoForecastRing",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Diameters",
+    "Rings"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Specimen / ring 18\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:150px;flex-shrink:0\">\n  <svg layer-name=\"NoForecastRing / 18\" xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 18 18\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"9\" cy=\"9\" r=\"8.25\" fill=\"none\" style=\"stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">18 · compact (size/badge/heightCompact)</div>\n</div>\n<div layer-name=\"Specimen / ring 22\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:150px;flex-shrink:0\">\n  <svg layer-name=\"NoForecastRing / 22\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"11\" cy=\"11\" r=\"10.25\" fill=\"none\" style=\"stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">22 · regular, outlook cells (size/badge/height)</div>\n</div>\n<div layer-name=\"Specimen / ring 64\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:150px;flex-shrink:0\">\n  <svg layer-name=\"NoForecastRing / 64\" xmlns=\"http://www.w3.org/2000/svg\" width=\"64\" height=\"64\" viewBox=\"0 0 64 64\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"32\" cy=\"32\" r=\"31.25\" fill=\"none\" style=\"stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">64 · large, lead card (size/lightRing/large)</div>\n</div>",
+   "lines": 12
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "NoForecastRing/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "NoForecastRing",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Section / Map-pin variant (inside ExplorePinView)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Map-pin variant (inside ExplorePinView)</div>\n  <div layer-name=\"Pin Variant\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px\">\n    <div layer-name=\"Specimen / pin dot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n      <div layer-name=\"NoForecast Pin Dot\" style=\"box-sizing:border-box;width:12px;height:12px;border-radius:999px;background:var(--color-background-content);border:var(--spacing-stroke-regular) solid var(--color-status-no-forecast);flex-shrink:0\"></div>\n      <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">12 pt dot, fill background/content, 1.5 pt ring</div>\n    </div>\n  </div>\n</div>",
+   "lines": 9
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "NoForecastRing/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "NoForecastRing",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Section / In context\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">In context</div>\n  <div layer-name=\"Context\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:32px;flex-wrap:wrap\">\n    <div layer-name=\"Specimen / compact\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n      <div layer-name=\"LightBadge / compact / No forecast\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n        <svg layer-name=\"NoForecastRing / 18\" xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 18 18\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"9\" cy=\"9\" r=\"8.25\" fill=\"none\" style=\"stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n        <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Sunrise</div>\n      </div>\n    </div>\n    <div layer-name=\"Specimen / regular\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\"></div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "NoForecastRing/Page/Content/Appearances/Light Appearance/Section / In context/Context/Specimen / regular",
+   "parentPathArray": [
+    "NoForecastRing",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / In context",
+    "Context",
+    "Specimen / regular"
+   ],
+   "parentSeq": 5,
+   "html": "<div layer-name=\"LightBadge / regular / No forecast\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n  <svg layer-name=\"NoForecastRing / 22\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"11\" cy=\"11\" r=\"10.25\" fill=\"none\" style=\"stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n  <div layer-name=\"Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start\">\n    <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap\">Sunrise</div>\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">No forecast</div>\n  </div>\n</div>",
+   "lines": 7
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "NoForecastRing/Page/Content/Appearances",
+   "parentPathArray": [
+    "NoForecastRing",
+    "Page",
+    "Content",
+    "Appearances"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Section / Diameters\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Diameters</div>\n    <div layer-name=\"Rings\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:32px;align-items:flex-end\">\n      <div layer-name=\"Specimen / ring 16\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:150px;flex-shrink:0\">\n        <svg layer-name=\"NoForecastRing / 16\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"8\" cy=\"8\" r=\"7.25\" fill=\"none\" style=\"stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n        <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)\">16 · Scout row (size/icon/medium)</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 8,
+   "kind": "write",
+   "parentPath": "NoForecastRing/Page/Content/Appearances/Dark Appearance/Section / Diameters/Rings",
+   "parentPathArray": [
+    "NoForecastRing",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Diameters",
+    "Rings"
+   ],
+   "parentSeq": 7,
+   "html": "<div layer-name=\"Specimen / ring 18\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:150px;flex-shrink:0\">\n  <svg layer-name=\"NoForecastRing / 18\" xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 18 18\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"9\" cy=\"9\" r=\"8.25\" fill=\"none\" style=\"stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)\">18 · compact (size/badge/heightCompact)</div>\n</div>\n<div layer-name=\"Specimen / ring 22\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:150px;flex-shrink:0\">\n  <svg layer-name=\"NoForecastRing / 22\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"11\" cy=\"11\" r=\"10.25\" fill=\"none\" style=\"stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)\">22 · regular, outlook cells (size/badge/height)</div>\n</div>\n<div layer-name=\"Specimen / ring 64\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:150px;flex-shrink:0\">\n  <svg layer-name=\"NoForecastRing / 64\" xmlns=\"http://www.w3.org/2000/svg\" width=\"64\" height=\"64\" viewBox=\"0 0 64 64\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"32\" cy=\"32\" r=\"31.25\" fill=\"none\" style=\"stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)\">64 · large, lead card (size/lightRing/large)</div>\n</div>",
+   "lines": 12
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "NoForecastRing/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "NoForecastRing",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 7,
+   "html": "<div layer-name=\"Section / Map-pin variant (inside ExplorePinView)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Map-pin variant (inside ExplorePinView)</div>\n  <div layer-name=\"Pin Variant\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px\">\n    <div layer-name=\"Specimen / pin dot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n      <div layer-name=\"NoForecast Pin Dot\" style=\"box-sizing:border-box;width:12px;height:12px;border-radius:999px;background:var(--color-dark-background-content);border:var(--spacing-stroke-regular) solid var(--color-dark-status-no-forecast);flex-shrink:0\"></div>\n      <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)\">12 pt dot, fill background/content, 1.5 pt ring</div>\n    </div>\n  </div>\n</div>",
+   "lines": 9
+  },
+  {
+   "seq": 10,
+   "kind": "write",
+   "parentPath": "NoForecastRing/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "NoForecastRing",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 7,
+   "html": "<div layer-name=\"Section / In context\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">In context</div>\n  <div layer-name=\"Context\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:32px;flex-wrap:wrap\">\n    <div layer-name=\"Specimen / compact\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n      <div layer-name=\"LightBadge / compact / No forecast\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n        <svg layer-name=\"NoForecastRing / 18\" xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 18 18\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"9\" cy=\"9\" r=\"8.25\" fill=\"none\" style=\"stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n        <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap\">Sunrise</div>\n      </div>\n    </div>\n    <div layer-name=\"Specimen / regular\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\"></div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 11,
+   "kind": "write",
+   "parentPath": "NoForecastRing/Page/Content/Appearances/Dark Appearance/Section / In context/Context/Specimen / regular",
+   "parentPathArray": [
+    "NoForecastRing",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / In context",
+    "Context",
+    "Specimen / regular"
+   ],
+   "parentSeq": 10,
+   "html": "<div layer-name=\"LightBadge / regular / No forecast\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n  <svg layer-name=\"NoForecastRing / 22\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"11\" cy=\"11\" r=\"10.25\" fill=\"none\" style=\"stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n  <div layer-name=\"Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start\">\n    <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap\">Sunrise</div>\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap\">No forecast</div>\n  </div>\n</div>",
+   "lines": 7
+  }
+ ]
+}

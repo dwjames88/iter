@@ -1,0 +1,2892 @@
+{
+ "artboard": {
+  "name": "F01 Colour",
+  "page": "Foundations",
+  "width": 1480,
+  "height": 5384,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1480px",
+   "height": "5384px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 27,
+  "clones": 61,
+  "writesNoClone": 134,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "F01 Colour",
+   "parentPathArray": [
+    "F01 Colour"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:32px;padding:40px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">Colour</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">IterColor · Packages/IterKit/Sources/IterDesign/IterColor.swift · Design/tokens.json</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">First Light is the palette: espresso ink, cream paper and a coral accent, with one amber ramp for the Light Index. Every token has one job. Values and roles are read from Design/tokens.json when this page is built.</div>\n  </div>\n  <div layer-name=\"Retired Line\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">Alpine was retired on 2026-10-05.</div>\n  <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n    <div layer-name=\"Note / Paper has no modes\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:320px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n      <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Paper has no modes</div>\n      <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Light and dark are two token sets (--color-* and --color-dark-*). Dark artboards reference the dark set, so each pair of swatches below is the same token in both appearances.</div>\n    </div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Notes",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Note / System alias\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:320px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n  <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">System alias</div>\n  <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Only background/systemWindow aliases a system colour (for snapshot stand-ins of system-drawn surfaces). Everything else is a concrete First Light value.</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Colour Tokens\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl)\">\n  <div layer-name=\"Column Headers\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:0 0 var(--spacing-xs) 0;align-items:flex-end;border-bottom:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border)\">\n    <div layer-name=\"Column / Light · Dark\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:200px\">Light · Dark</div>\n    <div layer-name=\"Column / Token\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:210px\">Token</div>\n    <div layer-name=\"Column / Light\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:84px\">Light</div>\n    <div layer-name=\"Column / Dark\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:84px\">Dark</div>\n    <div layer-name=\"Column / System alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\">System alias</div>\n    <div layer-name=\"Column / Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex:1 1 0;min-width:0\">Role: the one job</div>\n  </div>\n  <div layer-name=\"Group / Accent\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n    <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Accent</div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Accent",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Token / accent/primary\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n  <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n    <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n      <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-accent-primary);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border)\"></div>\n    </div>\n    <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n      <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-accent-primary);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border)\"></div>\n    </div>\n  </div>\n  <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">accent/primary</div>\n  <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;D9431A</div>\n  <div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;FF8A5C</div>\n  <div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n  <div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">First Light coral. Interface accent: fills, icons, selection tint, focus, large text. Not small text on paper (4.18:1; use accent/text). Never a score, a status or an error.</div>\n</div>",
+   "lines": 15
+  },
+  {
+   "seq": 5,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Accent",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-accent-text)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-accent-text)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "accent/text",
+    "./Light Hex/#text0": "&#35;B5360F",
+    "./Role/#text0": "Accent as words (links, small labels) on paper or cards: 5.70:1 light, 8.30:1 dark."
+   },
+   "nameOverrides": {
+    ".": "Token / accent/text"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 6,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Accent",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-accent-hover)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-accent-hover)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "accent/hover",
+    "./Light Hex/#text0": "&#35;C83D17",
+    "./Dark Hex/#text0": "&#35;FF9E78",
+    "./Role/#text0": "Accent fill while the pointer is over a custom control."
+   },
+   "nameOverrides": {
+    ".": "Token / accent/hover"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 7,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Accent",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-accent-pressed)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-accent-pressed)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "accent/pressed",
+    "./Light Hex/#text0": "&#35;B23510",
+    "./Dark Hex/#text0": "&#35;F07A4C",
+    "./Role/#text0": "Accent fill while a custom control is pressed."
+   },
+   "nameOverrides": {
+    ".": "Token / accent/pressed"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 8,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Accent",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-accent-disabled)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-accent-disabled)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "accent/disabled",
+    "./Light Hex/#text0": "&#35;EBC3B2",
+    "./Dark Hex/#text0": "&#35;5E3426",
+    "./Role/#text0": "Accent fill or icon on a disabled custom control. Decorative contrast by design; pair with text/quaternary."
+   },
+   "nameOverrides": {
+    ".": "Token / accent/disabled"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 9,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Accent",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-accent-emphasis)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-accent-emphasis)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "accent/emphasis",
+    "./Light Hex/#text0": "&#35;B5360F",
+    "./Role/#text0": "Accent fill behind small text (the Best tag, stop numbers): accent/onAccent on it is 6.0:1 light, 8.3:1 dark."
+   },
+   "nameOverrides": {
+    ".": "Token / accent/emphasis"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 10,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Accent",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-accent-on-accent)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-accent-on-accent)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "accent/onAccent",
+    "./Light Hex/#text0": "&#35;FFFFFF",
+    "./Dark Hex/#text0": "&#35;150C0A",
+    "./Role/#text0": "Text or icon on accent/emphasis (any size) or on accent/primary (icons and large text only: 4.40:1 light)."
+   },
+   "nameOverrides": {
+    ".": "Token / accent/onAccent"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 11,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Group / Selection\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Selection</div>\n  <div layer-name=\"Token / selection/fill\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-selection-fill);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-selection-fill);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">selection/fill</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;FBE6DB</div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 12,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Selection/Token / selection/fill",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Selection",
+    "Token / selection/fill"
+   ],
+   "parentSeq": 11,
+   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;36221B</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">Selected row, day or window in the app's own views, with an accent/primary stroke. Text on it keeps text/* colours: text/primary 15.47:1 and text/secondary 5.44:1 light, 13.81:1 and 6.62:1 dark; accent/text 4.98:1 light.</div>",
+   "lines": 3
+  },
+  {
+   "seq": 13,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 11,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Selection",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Selection"
+   ],
+   "styleOverrides": {
+    "./Token / selection/fill/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-focus-ring)"
+    },
+    "./Token / selection/fill/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-focus-ring)"
+    }
+   },
+   "textOverrides": {
+    "./Group Title/#text0": "Focus",
+    "./Token / selection/fill/Token Name/#text0": "focus/ring",
+    "./Token / selection/fill/Light Hex/#text0": "&#35;D9431A",
+    "./Token / selection/fill/Dark Hex/#text0": "&#35;FF8A5C",
+    "./Token / selection/fill/Role/#text0": "Keyboard focus ring on custom controls (3:1 or better against the window). Standard controls keep the system ring."
+   },
+   "nameOverrides": {
+    ".": "Group / Focus",
+    "./Token / selection/fill": "Token / focus/ring"
+   },
+   "lines": 9
+  },
+  {
+   "seq": 14,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Group / Route\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Route</div>\n  <div layer-name=\"Token / route/active\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-route-active);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-route-active);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">route/active</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;D9431A</div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 15,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Route/Token / route/active",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Route",
+    "Token / route/active"
+   ],
+   "parentSeq": 14,
+   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;FF8A5C</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">The route line, trip connectors and the switchback device for the leg being looked at. Not a rating.</div>",
+   "lines": 3
+  },
+  {
+   "seq": 16,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Route",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Route"
+   ],
+   "parentSeq": 14,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-route-inactive)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-route-inactive)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "route/inactive",
+    "./Light Hex/#text0": "&#35;9C7B70",
+    "./Dark Hex/#text0": "&#35;8F6E62",
+    "./Role/#text0": "Route lines and connectors for legs that are not selected. Warm grey-coral, 3:1 or better on paper."
+   },
+   "nameOverrides": {
+    ".": "Token / route/inactive"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 17,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 11,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Selection",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Selection"
+   ],
+   "styleOverrides": {
+    "./Token / selection/fill/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-brand-dot)"
+    },
+    "./Token / selection/fill/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-brand-dot)"
+    }
+   },
+   "textOverrides": {
+    "./Group Title/#text0": "Brand",
+    "./Token / selection/fill/Token Name/#text0": "brand/dot",
+    "./Token / selection/fill/Light Hex/#text0": "&#35;D9431A",
+    "./Token / selection/fill/Dark Hex/#text0": "&#35;FF8A5C",
+    "./Token / selection/fill/Role/#text0": "The logo's dot (First Light coral). Graphic only, never text."
+   },
+   "nameOverrides": {
+    ".": "Group / Brand",
+    "./Token / selection/fill": "Token / brand/dot"
+   },
+   "lines": 9
+  },
+  {
+   "seq": 18,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Group / Map\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Map</div>\n  <div layer-name=\"Token / map/pin\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-map-pin);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-map-pin);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">map/pin</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;D9431A</div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 19,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Map/Token / map/pin",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Map",
+    "Token / map/pin"
+   ],
+   "parentSeq": 18,
+   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;FF8A5C</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">Selected spot pin and trip stop pins for the day being looked at.</div>",
+   "lines": 3
+  },
+  {
+   "seq": 20,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Map",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Map"
+   ],
+   "parentSeq": 18,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-map-pin-inactive)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-map-pin-inactive)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "map/pinInactive",
+    "./Light Hex/#text0": "&#35;857369",
+    "./Dark Hex/#text0": "&#35;8F7D73",
+    "./Role/#text0": "Trip stop pins outside the day being looked at, and unselected stand-in pins."
+   },
+   "nameOverrides": {
+    ".": "Token / map/pinInactive"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 21,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Map",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Map"
+   ],
+   "parentSeq": 18,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-map-sun)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-map-sun)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "map/sun",
+    "./Role/#text0": "The sun marker on the sky arc and the timeline. The light moment; never a fill behind text."
+   },
+   "nameOverrides": {
+    ".": "Token / map/sun"
+   },
+   "lines": 5
+  },
+  {
+   "seq": 22,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Map",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Map"
+   ],
+   "parentSeq": 18,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-map-moon)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-map-moon)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "map/moon",
+    "./Light Hex/#text0": "&#35;5B6B8C",
+    "./Dark Hex/#text0": "&#35;C8D2EA",
+    "./Role/#text0": "The moon marker on the sky arc and the timeline."
+   },
+   "nameOverrides": {
+    ".": "Token / map/moon"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 23,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Group / Status\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Status</div>\n  <div layer-name=\"Token / status/warning\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-status-warning);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-status-warning);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">status/warning</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;7A3EB8</div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 24,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Status/Token / status/warning",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Status",
+    "Token / status/warning"
+   ],
+   "parentSeq": 23,
+   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;C79BFF</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">Something needs attention (a tight schedule, stale forecast). Violet, always with a warning icon. Never amber, coral or green.</div>",
+   "lines": 3
+  },
+  {
+   "seq": 25,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Status",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Status"
+   ],
+   "parentSeq": 23,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-status-danger)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-status-danger)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "status/danger",
+    "./Light Hex/#text0": "&#35;A3115C",
+    "./Dark Hex/#text0": "&#35;FF77AE",
+    "./Role/#text0": "A destructive action or a failure. Raspberry, always with an icon and words. Kept 40+ deg (OKLCH) from the coral accent so it never reads as the brand."
+   },
+   "nameOverrides": {
+    ".": "Token / status/danger"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 26,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Status",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Status"
+   ],
+   "parentSeq": 23,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-status-no-forecast)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-status-no-forecast)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "status/noForecast",
+    "./Light Hex/#text0": "&#35;6E6E73",
+    "./Dark Hex/#text0": "&#35;9A9AA0",
+    "./Role/#text0": "No forecast: the hollow ring and dashed arc. Neutral by design; it is never a score colour."
+   },
+   "nameOverrides": {
+    ".": "Token / status/noForecast"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 27,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 18,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Map",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Map"
+   ],
+   "styleOverrides": {
+    "./Token / map/pin/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-sky-night)"
+    },
+    "./Token / map/pin/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-sky-night)"
+    },
+    "./Token / map/pinInactive/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-sky-blue-hour)"
+    },
+    "./Token / map/pinInactive/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-sky-blue-hour)"
+    },
+    "./Token / map/sun/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-sky-golden)"
+    },
+    "./Token / map/sun/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-sky-golden)"
+    },
+    "./Token / map/moon/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-sky-day)"
+    },
+    "./Token / map/moon/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-sky-day)"
+    }
+   },
+   "textOverrides": {
+    "./Group Title/#text0": "Sky bands",
+    "./Token / map/pin/Token Name/#text0": "sky/night",
+    "./Token / map/pin/Light Hex/#text0": "&#35;0B1530",
+    "./Token / map/pin/Dark Hex/#text0": "&#35;070D1F",
+    "./Token / map/pin/Role/#text0": "Timeline band: night.",
+    "./Token / map/pinInactive/Token Name/#text0": "sky/blueHour",
+    "./Token / map/pinInactive/Light Hex/#text0": "&#35;3A4FA0",
+    "./Token / map/pinInactive/Dark Hex/#text0": "&#35;34468F",
+    "./Token / map/pinInactive/Role/#text0": "Timeline band: blue hour and twilight.",
+    "./Token / map/sun/Token Name/#text0": "sky/golden",
+    "./Token / map/sun/Light Hex/#text0": "&#35;F0B35A",
+    "./Token / map/sun/Dark Hex/#text0": "&#35;C98A2E",
+    "./Token / map/sun/Role/#text0": "Timeline band: golden hour. Sky only; the Light Index uses light/ramp.",
+    "./Token / map/moon/Token Name/#text0": "sky/day",
+    "./Token / map/moon/Light Hex/#text0": "&#35;CFE3F2",
+    "./Token / map/moon/Dark Hex/#text0": "&#35;5E87A8",
+    "./Token / map/moon/Role/#text0": "Timeline band: daylight."
+   },
+   "nameOverrides": {
+    ".": "Group / Sky bands",
+    "./Token / map/pin": "Token / sky/night",
+    "./Token / map/pinInactive": "Token / sky/blueHour",
+    "./Token / map/sun": "Token / sky/golden",
+    "./Token / map/moon": "Token / sky/day"
+   },
+   "lines": 30
+  },
+  {
+   "seq": 28,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 23,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Status",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Status"
+   ],
+   "styleOverrides": {
+    "./Token / status/warning/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-cloud-low)"
+    },
+    "./Token / status/warning/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-cloud-low)"
+    },
+    "./Token / status/danger/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-cloud-mid)"
+    },
+    "./Token / status/danger/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-cloud-mid)"
+    },
+    "./Token / status/noForecast/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-cloud-high)"
+    },
+    "./Token / status/noForecast/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-cloud-high)"
+    }
+   },
+   "textOverrides": {
+    "./Group Title/#text0": "Cloud layers",
+    "./Token / status/warning/Token Name/#text0": "cloud/low",
+    "./Token / status/warning/Light Hex/#text0": "&#35;8A94A3",
+    "./Token / status/warning/Dark Hex/#text0": "&#35;9AA3B2",
+    "./Token / status/warning/Role/#text0": "Low cloud layer fill in the cloud-by-altitude chart.",
+    "./Token / status/danger/Token Name/#text0": "cloud/mid",
+    "./Token / status/danger/Light Hex/#text0": "&#35;B4BCC8",
+    "./Token / status/danger/Dark Hex/#text0": "&#35;6F7888",
+    "./Token / status/danger/Role/#text0": "Mid cloud layer fill.",
+    "./Token / status/noForecast/Token Name/#text0": "cloud/high",
+    "./Token / status/noForecast/Light Hex/#text0": "&#35;DCE1E8",
+    "./Token / status/noForecast/Dark Hex/#text0": "&#35;4A5160",
+    "./Token / status/noForecast/Role/#text0": "High cloud layer fill."
+   },
+   "nameOverrides": {
+    ".": "Group / Cloud layers",
+    "./Token / status/warning": "Token / cloud/low",
+    "./Token / status/danger": "Token / cloud/mid",
+    "./Token / status/noForecast": "Token / cloud/high"
+   },
+   "lines": 23
+  },
+  {
+   "seq": 29,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Group / Light Index ramp\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Light Index ramp</div>\n  <div layer-name=\"Token / light/ramp/poor\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-light-ramp-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-light-ramp-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">light/ramp/poor</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;E4DCCB</div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 30,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Light Index ramp/Token / light/ramp/poor",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Light Index ramp",
+    "Token / light/ramp/poor"
+   ],
+   "parentSeq": 29,
+   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;3A362F</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">Light Index fill, Poor band. Sand. Single hue ramp, ordered by lightness. Always printed with the band word.</div>",
+   "lines": 3
+  },
+  {
+   "seq": 31,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Light Index ramp",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Light Index ramp"
+   ],
+   "parentSeq": 29,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-light-ramp-fair)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-light-ramp-fair)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "light/ramp/fair",
+    "./Light Hex/#text0": "&#35;D8C08E",
+    "./Dark Hex/#text0": "&#35;5C4F36",
+    "./Role/#text0": "Light Index fill, Fair band."
+   },
+   "nameOverrides": {
+    ".": "Token / light/ramp/fair"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 32,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Light Index ramp",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Light Index ramp"
+   ],
+   "parentSeq": 29,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-light-ramp-good)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-light-ramp-good)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "light/ramp/good",
+    "./Light Hex/#text0": "&#35;D9A646",
+    "./Dark Hex/#text0": "&#35;8F6A21",
+    "./Role/#text0": "Light Index fill, Good band. Amber, not green."
+   },
+   "nameOverrides": {
+    ".": "Token / light/ramp/good"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 33,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Light Index ramp",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Light Index ramp"
+   ],
+   "parentSeq": 29,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-light-ramp-great)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-light-ramp-great)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "light/ramp/great",
+    "./Light Hex/#text0": "&#35;986808",
+    "./Dark Hex/#text0": "&#35;D49E2E",
+    "./Role/#text0": "Light Index fill, Great band."
+   },
+   "nameOverrides": {
+    ".": "Token / light/ramp/great"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 34,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Light Index ramp",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Light Index ramp"
+   ],
+   "parentSeq": 29,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-light-ramp-epic)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-light-ramp-epic)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "light/ramp/epic",
+    "./Light Hex/#text0": "&#35;6B3800",
+    "./Dark Hex/#text0": "&#35;FFC05A",
+    "./Role/#text0": "Light Index fill, Epic band. Deepest amber in light mode, brightest in dark mode."
+   },
+   "nameOverrides": {
+    ".": "Token / light/ramp/epic"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 35,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Light Index ramp",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Light Index ramp"
+   ],
+   "parentSeq": 29,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-light-ramp-text-poor)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-light-ramp-text-poor)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "light/rampText/poor",
+    "./Light Hex/#text0": "&#35;2B2112",
+    "./Dark Hex/#text0": "&#35;F2EBDD",
+    "./Role/#text0": "Band word or number on light/ramp/poor (4.5:1 or better)."
+   },
+   "nameOverrides": {
+    ".": "Token / light/rampText/poor"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 36,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Light Index ramp",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Light Index ramp"
+   ],
+   "parentSeq": 29,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-light-ramp-text-fair)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-light-ramp-text-fair)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "light/rampText/fair",
+    "./Light Hex/#text0": "&#35;2B2112",
+    "./Dark Hex/#text0": "&#35;FFF3DA",
+    "./Role/#text0": "Band word or number on light/ramp/fair."
+   },
+   "nameOverrides": {
+    ".": "Token / light/rampText/fair"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 37,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Light Index ramp",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Light Index ramp"
+   ],
+   "parentSeq": 29,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-light-ramp-text-good)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-light-ramp-text-good)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "light/rampText/good",
+    "./Light Hex/#text0": "&#35;2B1A00",
+    "./Dark Hex/#text0": "&#35;FFFFFF",
+    "./Role/#text0": "Band word or number on light/ramp/good."
+   },
+   "nameOverrides": {
+    ".": "Token / light/rampText/good"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 38,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Light Index ramp",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Light Index ramp"
+   ],
+   "parentSeq": 29,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-light-ramp-text-great)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-light-ramp-text-great)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "light/rampText/great",
+    "./Light Hex/#text0": "&#35;FFFFFF",
+    "./Dark Hex/#text0": "&#35;1F1300",
+    "./Role/#text0": "Band word or number on light/ramp/great."
+   },
+   "nameOverrides": {
+    ".": "Token / light/rampText/great"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 39,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Light Index ramp",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Light Index ramp"
+   ],
+   "parentSeq": 29,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-light-ramp-text-epic)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-light-ramp-text-epic)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "light/rampText/epic",
+    "./Light Hex/#text0": "&#35;FFFFFF",
+    "./Dark Hex/#text0": "&#35;1F1300",
+    "./Role/#text0": "Band word or number on light/ramp/epic."
+   },
+   "nameOverrides": {
+    ".": "Token / light/rampText/epic"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 40,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 18,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Map",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Map"
+   ],
+   "styleOverrides": {
+    "./Token / map/pin/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-text-primary)"
+    },
+    "./Token / map/pin/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-text-primary)"
+    },
+    "./Token / map/pinInactive/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-text-secondary)"
+    },
+    "./Token / map/pinInactive/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-text-secondary)"
+    },
+    "./Token / map/sun/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-text-tertiary)"
+    },
+    "./Token / map/sun/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-text-tertiary)"
+    },
+    "./Token / map/moon/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-text-quaternary)"
+    },
+    "./Token / map/moon/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-text-quaternary)"
+    }
+   },
+   "textOverrides": {
+    "./Group Title/#text0": "Text",
+    "./Token / map/pin/Token Name/#text0": "text/primary",
+    "./Token / map/pin/Light Hex/#text0": "&#35;1E0F0A",
+    "./Token / map/pin/Dark Hex/#text0": "&#35;FFF4E8",
+    "./Token / map/pin/Role/#text0": "Primary text: First Light ink (espresso / warm cream).",
+    "./Token / map/pinInactive/Token Name/#text0": "text/secondary",
+    "./Token / map/pinInactive/Light Hex/#text0": "&#35;6B5A51",
+    "./Token / map/pinInactive/Dark Hex/#text0": "&#35;BBA99D",
+    "./Token / map/pinInactive/Role/#text0": "Secondary text, 4.5:1 or better on paper, cards and the system window.",
+    "./Token / map/sun/Token Name/#text0": "text/tertiary",
+    "./Token / map/sun/Light Hex/#text0": "&#35;A6958B",
+    "./Token / map/sun/Dark Hex/#text0": "&#35;7A685E",
+    "./Token / map/sun/Role/#text0": "Decoration and placeholders only; never information.",
+    "./Token / map/moon/Token Name/#text0": "text/quaternary",
+    "./Token / map/moon/Light Hex/#text0": "&#35;CDBDB2",
+    "./Token / map/moon/Dark Hex/#text0": "&#35;4F423B",
+    "./Token / map/moon/Role/#text0": "Disabled text."
+   },
+   "nameOverrides": {
+    ".": "Group / Text",
+    "./Token / map/pin": "Token / text/primary",
+    "./Token / map/pinInactive": "Token / text/secondary",
+    "./Token / map/sun": "Token / text/tertiary",
+    "./Token / map/moon": "Token / text/quaternary"
+   },
+   "lines": 30
+  },
+  {
+   "seq": 41,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 11,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Selection",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Selection"
+   ],
+   "styleOverrides": {
+    "./Token / selection/fill/Swatches/Swatch / light/Colour": {
+     "background": "var(--color-separator-default)"
+    },
+    "./Token / selection/fill/Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-separator-default)"
+    }
+   },
+   "textOverrides": {
+    "./Group Title/#text0": "Separator",
+    "./Token / selection/fill/Token Name/#text0": "separator/default",
+    "./Token / selection/fill/Light Hex/#text0": "&#35;E6D6C8",
+    "./Token / selection/fill/Dark Hex/#text0": "&#35;3A2C26",
+    "./Token / selection/fill/Role/#text0": "Hairlines and dividers, warm."
+   },
+   "nameOverrides": {
+    ".": "Group / Separator",
+    "./Token / selection/fill": "Token / separator/default"
+   },
+   "lines": 9
+  },
+  {
+   "seq": 42,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Group / Backgrounds\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Backgrounds</div>\n  <div layer-name=\"Token / background/window\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-background-window);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-background-window);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">background/window</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;FFF8F0</div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 43,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Backgrounds/Token / background/window",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Backgrounds",
+    "Token / background/window"
+   ],
+   "parentSeq": 42,
+   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;150C0A</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">First Light paper: the ground of the app's own content (spot page, trip builder, trips home, list panels).</div>",
+   "lines": 3
+  },
+  {
+   "seq": 44,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Backgrounds",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Backgrounds"
+   ],
+   "parentSeq": 42,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-background-control)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-background-control)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "background/control",
+    "./Light Hex/#text0": "&#35;FFFDF9",
+    "./Dark Hex/#text0": "&#35;1F1512",
+    "./Role/#text0": "Cards and lifted surfaces on paper."
+   },
+   "nameOverrides": {
+    ".": "Token / background/control"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 45,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Backgrounds",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Backgrounds"
+   ],
+   "parentSeq": 42,
+   "sourceSeq": 4,
+   "sourcePath": "F01 Colour/Page/Colour Tokens/Group / Accent/Token / accent/primary",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Accent",
+    "Token / accent/primary"
+   ],
+   "styleOverrides": {
+    "./Swatches/Swatch / light/Colour": {
+     "background": "var(--color-background-content)"
+    },
+    "./Swatches/Swatch / dark/Colour": {
+     "background": "var(--color-dark-background-content)"
+    }
+   },
+   "textOverrides": {
+    "./Token Name/#text0": "background/content",
+    "./Light Hex/#text0": "&#35;FFFDF9",
+    "./Dark Hex/#text0": "&#35;1F1512",
+    "./Role/#text0": "Lists, text areas and pin labels on paper."
+   },
+   "nameOverrides": {
+    ".": "Token / background/content"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 46,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Colour Tokens/Group / Backgrounds",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Colour Tokens",
+    "Group / Backgrounds"
+   ],
+   "parentSeq": 42,
+   "html": "<div layer-name=\"Token / background/systemWindow\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n  <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n    <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n      <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-background-system-window);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border)\"></div>\n    </div>\n    <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n      <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-background-system-window);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border)\"></div>\n    </div>\n  </div>\n  <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">background/systemWindow</div>\n  <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;ECECEC</div>\n  <div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;1E1E1E</div>\n  <div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\">windowBackgroundColor</div>\n  <div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">The system window colour, for snapshot stand-ins of system-drawn surfaces (sidebar, settings). Not for the app's own content.</div>\n</div>",
+   "lines": 15
+  },
+  {
+   "seq": 47,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Light Index Ramp\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap\">Light ramp</div>\n  <div layer-name=\"Ramp Cards\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xl)\">\n    <div layer-name=\"Ramp / light\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0;background:var(--color-background-window);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border);flex:1 1 0\">\n      <div layer-name=\"Appearance\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;padding:var(--spacing-md) var(--spacing-md) var(--spacing-sm);letter-spacing:0.08em\">LIGHT</div>\n      <div layer-name=\"Ramp Bands\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:stretch\">\n        <div layer-name=\"Band / poor\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:center;justify-content:center;flex:1 1 0;min-width:0;height:116px;background:var(--color-light-ramp-poor)\">\n          <div layer-name=\"Band Word\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-light-ramp-text-poor);white-space:nowrap\">Poor</div>\n          <div layer-name=\"Text Contrast\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-light-ramp-text-poor);white-space:nowrap\">11.59:1</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 48,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Light Index Ramp/Ramp Cards/Ramp / light/Ramp Bands",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Light Index Ramp",
+    "Ramp Cards",
+    "Ramp / light",
+    "Ramp Bands"
+   ],
+   "parentSeq": 47,
+   "html": "<div layer-name=\"Band / fair\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:center;justify-content:center;flex:1 1 0;min-width:0;height:116px;background:var(--color-light-ramp-fair)\">\n  <div layer-name=\"Band Word\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-light-ramp-text-fair);white-space:nowrap\">Fair</div>\n  <div layer-name=\"Text Contrast\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-light-ramp-text-fair);white-space:nowrap\">8.92:1</div>\n</div>\n<div layer-name=\"Band / good\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:center;justify-content:center;flex:1 1 0;min-width:0;height:116px;background:var(--color-light-ramp-good)\">\n  <div layer-name=\"Band Word\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-light-ramp-text-good);white-space:nowrap\">Good</div>\n  <div layer-name=\"Text Contrast\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-light-ramp-text-good);white-space:nowrap\">7.59:1</div>\n</div>\n<div layer-name=\"Band / great\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:center;justify-content:center;flex:1 1 0;min-width:0;height:116px;background:var(--color-light-ramp-great)\">\n  <div layer-name=\"Band Word\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-light-ramp-text-great);white-space:nowrap\">Great</div>\n  <div layer-name=\"Text Contrast\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-light-ramp-text-great);white-space:nowrap\">4.86:1</div>\n</div>",
+   "lines": 12
+  },
+  {
+   "seq": 49,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Light Index Ramp/Ramp Cards/Ramp / light/Ramp Bands",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Light Index Ramp",
+    "Ramp Cards",
+    "Ramp / light",
+    "Ramp Bands"
+   ],
+   "parentSeq": 47,
+   "html": "<div layer-name=\"Band / epic\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:center;justify-content:center;flex:1 1 0;min-width:0;height:116px;background:var(--color-light-ramp-epic)\">\n  <div layer-name=\"Band Word\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-light-ramp-text-epic);white-space:nowrap\">Epic</div>\n  <div layer-name=\"Text Contrast\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-light-ramp-text-epic);white-space:nowrap\">9.59:1</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 50,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Light Index Ramp/Ramp Cards",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Light Index Ramp",
+    "Ramp Cards"
+   ],
+   "parentSeq": 47,
+   "html": "<div layer-name=\"Ramp / dark\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0;background:var(--color-dark-background-window);border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border);flex:1 1 0\">\n  <div layer-name=\"Appearance\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;padding:var(--spacing-md) var(--spacing-md) var(--spacing-sm);letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Ramp Bands\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:stretch\">\n    <div layer-name=\"Band / poor\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:center;justify-content:center;flex:1 1 0;min-width:0;height:116px;background:var(--color-dark-light-ramp-poor)\">\n      <div layer-name=\"Band Word\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-light-ramp-text-poor);white-space:nowrap\">Poor</div>\n      <div layer-name=\"Text Contrast\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-light-ramp-text-poor);white-space:nowrap\">10.12:1</div>\n    </div>\n    <div layer-name=\"Band / fair\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:center;justify-content:center;flex:1 1 0;min-width:0;height:116px;background:var(--color-dark-light-ramp-fair)\">\n      <div layer-name=\"Band Word\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-light-ramp-text-fair);white-space:nowrap\">Fair</div>\n      <div layer-name=\"Text Contrast\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-light-ramp-text-fair);white-space:nowrap\">7.27:1</div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 51,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Light Index Ramp/Ramp Cards/Ramp / dark/Ramp Bands",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Light Index Ramp",
+    "Ramp Cards",
+    "Ramp / dark",
+    "Ramp Bands"
+   ],
+   "parentSeq": 50,
+   "html": "<div layer-name=\"Band / good\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:center;justify-content:center;flex:1 1 0;min-width:0;height:116px;background:var(--color-dark-light-ramp-good)\">\n  <div layer-name=\"Band Word\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-light-ramp-text-good);white-space:nowrap\">Good</div>\n  <div layer-name=\"Text Contrast\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-light-ramp-text-good);white-space:nowrap\">4.94:1</div>\n</div>\n<div layer-name=\"Band / great\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:center;justify-content:center;flex:1 1 0;min-width:0;height:116px;background:var(--color-dark-light-ramp-great)\">\n  <div layer-name=\"Band Word\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-light-ramp-text-great);white-space:nowrap\">Great</div>\n  <div layer-name=\"Text Contrast\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-light-ramp-text-great);white-space:nowrap\">7.58:1</div>\n</div>\n<div layer-name=\"Band / epic\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:center;justify-content:center;flex:1 1 0;min-width:0;height:116px;background:var(--color-dark-light-ramp-epic)\">\n  <div layer-name=\"Band Word\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-light-ramp-text-epic);white-space:nowrap\">Epic</div>\n  <div layer-name=\"Text Contrast\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-light-ramp-text-epic);white-space:nowrap\">11.24:1</div>\n</div>",
+   "lines": 12
+  },
+  {
+   "seq": 52,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Contrast Pairs\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap\">Contrast, computed from the token values</div>\n  <div layer-name=\"Method\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);max-width:900px\">WCAG 2.x relative-luminance ratio of each pair, computed when this page is built from the light and dark values above, so it follows the tokens.</div>\n  <div layer-name=\"Contrast Headers\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:0 0 var(--spacing-xs) 0;align-items:flex-end;border-bottom:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border)\">\n    <div layer-name=\"Column / Light · Dark\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:96px\">Light · Dark</div>\n    <div layer-name=\"Column / Foreground on background\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:330px\">Foreground on background</div>\n    <div layer-name=\"Column / Light\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:76px\">Light</div>\n    <div layer-name=\"Column / \" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:70px\"></div>\n    <div layer-name=\"Column / Dark\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:76px\">Dark</div>\n    <div layer-name=\"Column / \" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:70px\"></div>\n    <div layer-name=\"Column / Rule\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:100px\">Rule</div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 53,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "html": "<div layer-name=\"Pair / text/primary on background/window\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n  <div layer-name=\"Samples\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:96px\">\n    <div layer-name=\"Sample / light\" style=\"box-sizing:border-box;width:44px;height:28px;display:flex;align-items:center;justify-content:center;background:var(--color-background-window);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border);border-radius:var(--radius-badge);flex-shrink:0\">\n      <div layer-name=\"Sample Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Aa</div>\n    </div>\n    <div layer-name=\"Sample / dark\" style=\"box-sizing:border-box;width:44px;height:28px;display:flex;align-items:center;justify-content:center;background:var(--color-dark-background-window);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-badge);flex-shrink:0\">\n      <div layer-name=\"Sample Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Aa</div>\n    </div>\n  </div>\n  <div layer-name=\"Pair\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:330px\">text/primary on background/window</div>\n  <div layer-name=\"Ratio\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:76px\">17.68:1</div>\n  <div layer-name=\"Verdict\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:70px\">Pass</div>\n  <div layer-name=\"Ratio\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:76px\">17.78:1</div>\n  <div layer-name=\"Verdict\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:70px\">Pass</div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 54,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "parentSeq": 53,
+   "html": "<div layer-name=\"Rule\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:100px\">Text 4.5</div>",
+   "lines": 1
+  },
+  {
+   "seq": 55,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-background-control)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-background-control)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "text/primary on background/control",
+    "./Ratio/#text0": "18.33:1",
+    "./Ratio#2/#text0": "16.48:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / text/primary on background/control"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 56,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-text-secondary)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-text-secondary)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "text/secondary on background/window",
+    "./Ratio/#text0": "6.22:1",
+    "./Ratio#2/#text0": "8.52:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / text/secondary on background/window"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 57,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-background-control)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-text-secondary)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-background-control)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-text-secondary)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "text/secondary on background/control",
+    "./Ratio/#text0": "6.45:1",
+    "./Ratio#2/#text0": "7.90:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / text/secondary on background/control"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 58,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-background-system-window)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-text-secondary)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-background-system-window)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-text-secondary)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "text/secondary on background/systemWindow",
+    "./Ratio/#text0": "5.54:1",
+    "./Ratio#2/#text0": "7.36:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / text/secondary on background/systemWindow"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 59,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "html": "<div layer-name=\"Pair / text/tertiary on background/window\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n  <div layer-name=\"Samples\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:96px\">\n    <div layer-name=\"Sample / light\" style=\"box-sizing:border-box;width:44px;height:28px;display:flex;align-items:center;justify-content:center;background:var(--color-background-window);border:var(--spacing-stroke-hairline) solid var(--color-canvas-specimen-border);border-radius:var(--radius-badge);flex-shrink:0\">\n      <div layer-name=\"Sample Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-tertiary);white-space:nowrap\">Aa</div>\n    </div>\n    <div layer-name=\"Sample / dark\" style=\"box-sizing:border-box;width:44px;height:28px;display:flex;align-items:center;justify-content:center;background:var(--color-dark-background-window);border:var(--spacing-stroke-hairline) solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-badge);flex-shrink:0\">\n      <div layer-name=\"Sample Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-tertiary);white-space:nowrap\">Aa</div>\n    </div>\n  </div>\n  <div layer-name=\"Pair\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:330px\">text/tertiary on background/window</div>\n  <div layer-name=\"Ratio\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:76px\">2.73:1</div>\n  <div layer-name=\"Verdict\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:70px\"></div>\n  <div layer-name=\"Ratio\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:76px\">3.65:1</div>\n  <div layer-name=\"Verdict\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:70px\"></div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 60,
+   "kind": "write",
+   "parentPath": "F01 Colour/Page/Contrast Pairs/Pair / text/tertiary on background/window",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/tertiary on background/window"
+   ],
+   "parentSeq": 59,
+   "html": "<div layer-name=\"Rule\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:100px\">Decoration</div>",
+   "lines": 1
+  },
+  {
+   "seq": 61,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-accent-text)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-accent-text)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "accent/text on background/window",
+    "./Ratio/#text0": "5.70:1",
+    "./Ratio#2/#text0": "8.30:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / accent/text on background/window"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 62,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-background-control)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-accent-text)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-background-control)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-accent-text)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "accent/text on background/control",
+    "./Ratio/#text0": "5.91:1",
+    "./Ratio#2/#text0": "7.70:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / accent/text on background/control"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 63,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-background-system-window)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-accent-text)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-background-system-window)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-accent-text)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "accent/text on background/systemWindow",
+    "./Ratio/#text0": "5.08:1",
+    "./Ratio#2/#text0": "7.18:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / accent/text on background/systemWindow"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 64,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-accent-primary)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-accent-primary)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "accent/primary on background/window",
+    "./Ratio/#text0": "4.18:1",
+    "./Ratio#2/#text0": "8.30:1",
+    "./Rule/#text0": "Graphic 3"
+   },
+   "nameOverrides": {
+    ".": "Pair / accent/primary on background/window"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 65,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-background-control)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-accent-primary)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-background-control)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-accent-primary)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "accent/primary on background/control",
+    "./Ratio/#text0": "4.34:1",
+    "./Ratio#2/#text0": "7.70:1",
+    "./Rule/#text0": "Graphic 3"
+   },
+   "nameOverrides": {
+    ".": "Pair / accent/primary on background/control"
+   },
+   "lines": 9
+  },
+  {
+   "seq": 66,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-background-system-window)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-accent-primary)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-background-system-window)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-accent-primary)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "accent/primary on background/systemWindow",
+    "./Ratio/#text0": "3.73:1",
+    "./Ratio#2/#text0": "7.18:1",
+    "./Rule/#text0": "Graphic 3"
+   },
+   "nameOverrides": {
+    ".": "Pair / accent/primary on background/systemWindow"
+   },
+   "lines": 9
+  },
+  {
+   "seq": 67,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-accent-emphasis)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-accent-on-accent)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-accent-emphasis)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-accent-on-accent)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "accent/onAccent on accent/emphasis",
+    "./Ratio/#text0": "6.00:1",
+    "./Ratio#2/#text0": "8.30:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / accent/onAccent on accent/emphasis"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 68,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-accent-primary)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-accent-on-accent)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-accent-primary)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-accent-on-accent)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "accent/onAccent on accent/primary",
+    "./Ratio/#text0": "4.40:1",
+    "./Ratio#2/#text0": "8.30:1",
+    "./Rule/#text0": "Graphic 3"
+   },
+   "nameOverrides": {
+    ".": "Pair / accent/onAccent on accent/primary"
+   },
+   "lines": 9
+  },
+  {
+   "seq": 69,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-selection-fill)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-selection-fill)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "text/primary on selection/fill",
+    "./Ratio/#text0": "15.47:1",
+    "./Ratio#2/#text0": "13.81:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / text/primary on selection/fill"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 70,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-selection-fill)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-text-secondary)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-selection-fill)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-text-secondary)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "text/secondary on selection/fill",
+    "./Ratio/#text0": "5.44:1",
+    "./Ratio#2/#text0": "6.62:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / text/secondary on selection/fill"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 71,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-selection-fill)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-accent-text)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-selection-fill)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-accent-text)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "accent/text on selection/fill",
+    "./Ratio/#text0": "4.98:1",
+    "./Ratio#2/#text0": "6.45:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / accent/text on selection/fill"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 72,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-focus-ring)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-focus-ring)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "focus/ring on background/window",
+    "./Ratio/#text0": "4.18:1",
+    "./Ratio#2/#text0": "8.30:1",
+    "./Rule/#text0": "Graphic 3"
+   },
+   "nameOverrides": {
+    ".": "Pair / focus/ring on background/window"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 73,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-route-active)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-route-active)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "route/active on background/window",
+    "./Ratio/#text0": "4.18:1",
+    "./Ratio#2/#text0": "8.30:1",
+    "./Rule/#text0": "Graphic 3"
+   },
+   "nameOverrides": {
+    ".": "Pair / route/active on background/window"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 74,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-route-inactive)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-route-inactive)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "route/inactive on background/window",
+    "./Ratio/#text0": "3.64:1",
+    "./Ratio#2/#text0": "4.20:1",
+    "./Rule/#text0": "Graphic 3"
+   },
+   "nameOverrides": {
+    ".": "Pair / route/inactive on background/window"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 75,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-map-pin)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-map-pin)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "map/pin on background/window",
+    "./Ratio/#text0": "4.18:1",
+    "./Ratio#2/#text0": "8.30:1",
+    "./Rule/#text0": "Graphic 3"
+   },
+   "nameOverrides": {
+    ".": "Pair / map/pin on background/window"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 76,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-map-pin-inactive)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-map-pin-inactive)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "map/pinInactive on background/window",
+    "./Ratio/#text0": "4.28:1",
+    "./Ratio#2/#text0": "4.91:1",
+    "./Rule/#text0": "Graphic 3"
+   },
+   "nameOverrides": {
+    ".": "Pair / map/pinInactive on background/window"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 77,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-map-sun)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-map-sun)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "map/sun on background/window",
+    "./Ratio/#text0": "4.18:1",
+    "./Ratio#2/#text0": "8.30:1",
+    "./Rule/#text0": "Graphic 3"
+   },
+   "nameOverrides": {
+    ".": "Pair / map/sun on background/window"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 78,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-status-warning)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-status-warning)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "status/warning on background/window",
+    "./Ratio/#text0": "6.21:1",
+    "./Ratio#2/#text0": "8.78:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / status/warning on background/window"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 79,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-background-control)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-status-warning)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-background-control)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-status-warning)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "status/warning on background/control",
+    "./Ratio/#text0": "6.44:1",
+    "./Ratio#2/#text0": "8.14:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / status/warning on background/control"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 80,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-status-danger)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-status-danger)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "status/danger on background/window",
+    "./Ratio/#text0": "7.14:1",
+    "./Ratio#2/#text0": "7.81:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / status/danger on background/window"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 81,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-background-control)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-status-danger)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-background-control)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-status-danger)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "status/danger on background/control",
+    "./Ratio/#text0": "7.40:1",
+    "./Ratio#2/#text0": "7.24:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / status/danger on background/control"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 82,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-status-no-forecast)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-status-no-forecast)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "status/noForecast on background/window",
+    "./Ratio/#text0": "4.81:1",
+    "./Ratio#2/#text0": "6.89:1",
+    "./Rule/#text0": "Graphic 3"
+   },
+   "nameOverrides": {
+    ".": "Pair / status/noForecast on background/window"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 83,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 59,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/tertiary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/tertiary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-brand-dot)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-brand-dot)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "brand/dot on background/window",
+    "./Ratio/#text0": "4.18:1",
+    "./Ratio#2/#text0": "8.30:1",
+    "./Rule/#text0": "Logo (exempt)"
+   },
+   "nameOverrides": {
+    ".": "Pair / brand/dot on background/window"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 84,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-light-ramp-poor)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-light-ramp-text-poor)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-light-ramp-poor)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-light-ramp-text-poor)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "light/rampText/poor on light/ramp/poor",
+    "./Ratio/#text0": "11.59:1",
+    "./Ratio#2/#text0": "10.12:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / light/rampText/poor on light/ramp/poor"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 85,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-light-ramp-fair)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-light-ramp-text-fair)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-light-ramp-fair)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-light-ramp-text-fair)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "light/rampText/fair on light/ramp/fair",
+    "./Ratio/#text0": "8.92:1",
+    "./Ratio#2/#text0": "7.27:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / light/rampText/fair on light/ramp/fair"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 86,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-light-ramp-good)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-light-ramp-text-good)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-light-ramp-good)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-light-ramp-text-good)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "light/rampText/good on light/ramp/good",
+    "./Ratio/#text0": "7.59:1",
+    "./Ratio#2/#text0": "4.94:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / light/rampText/good on light/ramp/good"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 87,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-light-ramp-great)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-light-ramp-text-great)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-light-ramp-great)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-light-ramp-text-great)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "light/rampText/great on light/ramp/great",
+    "./Ratio/#text0": "4.86:1",
+    "./Ratio#2/#text0": "7.58:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / light/rampText/great on light/ramp/great"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 88,
+   "kind": "clone",
+   "parentPath": "F01 Colour/Page/Contrast Pairs",
+   "parentPathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs"
+   ],
+   "parentSeq": 52,
+   "sourceSeq": 53,
+   "sourcePath": "F01 Colour/Page/Contrast Pairs/Pair / text/primary on background/window",
+   "sourcePathArray": [
+    "F01 Colour",
+    "Page",
+    "Contrast Pairs",
+    "Pair / text/primary on background/window"
+   ],
+   "styleOverrides": {
+    "./Samples/Sample / light": {
+     "background": "var(--color-light-ramp-epic)"
+    },
+    "./Samples/Sample / light/Sample Text": {
+     "color": "var(--color-light-ramp-text-epic)"
+    },
+    "./Samples/Sample / dark": {
+     "background": "var(--color-dark-light-ramp-epic)"
+    },
+    "./Samples/Sample / dark/Sample Text": {
+     "color": "var(--color-dark-light-ramp-text-epic)"
+    }
+   },
+   "textOverrides": {
+    "./Pair/#text0": "light/rampText/epic on light/ramp/epic",
+    "./Ratio/#text0": "9.59:1",
+    "./Ratio#2/#text0": "11.24:1"
+   },
+   "nameOverrides": {
+    ".": "Pair / light/rampText/epic on light/ramp/epic"
+   },
+   "lines": 8
+  }
+ ]
+}

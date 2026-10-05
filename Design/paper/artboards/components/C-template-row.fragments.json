@@ -1,0 +1,172 @@
+{
+ "artboard": {
+  "name": "TemplateRow",
+  "page": "Components",
+  "width": 1304,
+  "height": 640,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1304px",
+   "height": "640px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 9,
+  "clones": 0,
+  "writesNoClone": 9,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "TemplateRow",
+   "parentPathArray": [
+    "TemplateRow"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">TemplateRow</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">TemplateRow (private) · Trips/TripsHomeView.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">Starts a new trip from a template. Used in the All Trips empty state, max width 520.</div>\n  </div>\n  <div layer-name=\"Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n      <div layer-name=\"Note / Spot names\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:340px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n        <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Spot names</div>\n        <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">The first three distinct spots, joined with commas, then an ellipsis when there are more. Built from the source (TripTemplates), so Eastern Sierra reads Fossil Falls, Alabama Hills, Lake Sabrina…; the snapshot shows an older seed (Mobius Arch).</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "TemplateRow/Page/Content",
+   "parentPathArray": [
+    "TemplateRow",
+    "Page",
+    "Content"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Section / Rows (max width 520)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n      <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Rows (max width 520)</div>\n      <div layer-name=\"Rows\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n        <div layer-name=\"Specimen / Canyon Country\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "TemplateRow/Page/Content/Appearances/Light Appearance/Section / Rows (max width 520)/Rows/Specimen / Canyon Country",
+   "parentPathArray": [
+    "TemplateRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Rows (max width 520)",
+    "Rows",
+    "Specimen / Canyon Country"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"TemplateRow / Canyon Country\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);padding:var(--spacing-md);align-items:center;width:520px;background:var(--color-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n  <div layer-name=\"Template Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0\">\n    <div layer-name=\"Template Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Canyon Country</div>\n    <div layer-name=\"Days and Stops\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">4 days · 6 stops</div>\n    <div layer-name=\"Spot Names\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Horseshoe Bend, Monument Valley, Dead Horse Point…</div>\n  </div>\n  <svg layer-name=\"Icon / chevron.right\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 47.72 84.72\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:2.86;stroke-linejoin:round\"><path d=\"M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z\"/></svg>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "TemplateRow/Page/Content/Appearances/Light Appearance/Section / Rows (max width 520)/Rows",
+   "parentPathArray": [
+    "TemplateRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Rows (max width 520)",
+    "Rows"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Specimen / Eastern Sierra\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"TemplateRow / Eastern Sierra\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);padding:var(--spacing-md);align-items:center;width:520px;background:var(--color-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n    <div layer-name=\"Template Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0\">\n      <div layer-name=\"Template Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Eastern Sierra</div>\n      <div layer-name=\"Days and Stops\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">3 days · 6 stops</div>\n      <div layer-name=\"Spot Names\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Fossil Falls, Alabama Hills, Lake Sabrina…</div>\n    </div>\n    <svg layer-name=\"Icon / chevron.right\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 47.72 84.72\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:2.86;stroke-linejoin:round\"><path d=\"M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z\"/></svg>\n  </div>\n</div>",
+   "lines": 10
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "TemplateRow/Page/Content/Appearances/Light Appearance/Section / Rows (max width 520)/Rows",
+   "parentPathArray": [
+    "TemplateRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Rows (max width 520)",
+    "Rows"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Specimen / Yosemite\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"TemplateRow / Yosemite\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);padding:var(--spacing-md);align-items:center;width:520px;background:var(--color-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n    <div layer-name=\"Template Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0\">\n      <div layer-name=\"Template Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Yosemite</div>\n      <div layer-name=\"Days and Stops\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">2 days · 3 stops</div>\n      <div layer-name=\"Spot Names\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Tunnel View, Valley View, Glacier Point</div>\n    </div>\n    <svg layer-name=\"Icon / chevron.right\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 47.72 84.72\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:2.86;stroke-linejoin:round\"><path d=\"M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z\"/></svg>\n  </div>\n</div>",
+   "lines": 10
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "TemplateRow/Page/Content/Appearances",
+   "parentPathArray": [
+    "TemplateRow",
+    "Page",
+    "Content",
+    "Appearances"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Section / Rows (max width 520)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Rows (max width 520)</div>\n    <div layer-name=\"Rows\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n      <div layer-name=\"Specimen / Canyon Country\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n        <div layer-name=\"TemplateRow / Canyon Country\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);padding:var(--spacing-md);align-items:center;width:520px;background:var(--color-dark-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "TemplateRow/Page/Content/Appearances/Dark Appearance/Section / Rows (max width 520)/Rows/Specimen / Canyon Country/TemplateRow / Canyon Country",
+   "parentPathArray": [
+    "TemplateRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Rows (max width 520)",
+    "Rows",
+    "Specimen / Canyon Country",
+    "TemplateRow / Canyon Country"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"Template Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0\">\n  <div layer-name=\"Template Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Canyon Country</div>\n  <div layer-name=\"Days and Stops\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-secondary);white-space:nowrap\">4 days · 6 stops</div>\n  <div layer-name=\"Spot Names\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap\">Horseshoe Bend, Monument Valley, Dead Horse Point…</div>\n</div>\n<svg layer-name=\"Icon / chevron.right\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 47.72 84.72\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:2.86;stroke-linejoin:round\"><path d=\"M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z\"/></svg>",
+   "lines": 6
+  },
+  {
+   "seq": 8,
+   "kind": "write",
+   "parentPath": "TemplateRow/Page/Content/Appearances/Dark Appearance/Section / Rows (max width 520)/Rows",
+   "parentPathArray": [
+    "TemplateRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Rows (max width 520)",
+    "Rows"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"Specimen / Eastern Sierra\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"TemplateRow / Eastern Sierra\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);padding:var(--spacing-md);align-items:center;width:520px;background:var(--color-dark-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)\">\n    <div layer-name=\"Template Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0\">\n      <div layer-name=\"Template Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Eastern Sierra</div>\n      <div layer-name=\"Days and Stops\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-secondary);white-space:nowrap\">3 days · 6 stops</div>\n      <div layer-name=\"Spot Names\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap\">Fossil Falls, Alabama Hills, Lake Sabrina…</div>\n    </div>\n    <svg layer-name=\"Icon / chevron.right\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 47.72 84.72\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:2.86;stroke-linejoin:round\"><path d=\"M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z\"/></svg>\n  </div>\n</div>",
+   "lines": 10
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "TemplateRow/Page/Content/Appearances/Dark Appearance/Section / Rows (max width 520)/Rows",
+   "parentPathArray": [
+    "TemplateRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Rows (max width 520)",
+    "Rows"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"Specimen / Yosemite\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"TemplateRow / Yosemite\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);padding:var(--spacing-md);align-items:center;width:520px;background:var(--color-dark-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)\">\n    <div layer-name=\"Template Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0\">\n      <div layer-name=\"Template Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Yosemite</div>\n      <div layer-name=\"Days and Stops\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-secondary);white-space:nowrap\">2 days · 3 stops</div>\n      <div layer-name=\"Spot Names\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap\">Tunnel View, Valley View, Glacier Point</div>\n    </div>\n    <svg layer-name=\"Icon / chevron.right\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 47.72 84.72\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:2.86;stroke-linejoin:round\"><path d=\"M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z\"/></svg>\n  </div>\n</div>",
+   "lines": 10
+  }
+ ]
+}

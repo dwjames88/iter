@@ -1,0 +1,1229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>LightBadge · Compact, Regular</title>
+<link rel="stylesheet" href="../../tokens.css">
+</head>
+<body style="margin:0;background:var(--color-canvas-artboard)">
+<div layer-name="LightBadge · Compact, Regular" data-artboard style="box-sizing:border-box;width:1632px;height:1128px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:var(--color-canvas-artboard)">
+<div layer-name="Page" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0">
+<div layer-name="Artboard Header" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)">
+<div layer-name="Artboard Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap">LightBadge · Compact and Regular</div>
+<div layer-name="Type and File" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap">LightBadge · Components/LightBadge.swift</div>
+<div layer-name="Job" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px">One Light Index window: the window name always beside the number, the band word and confidence; or a hollow dashed ring and the reason when there is no forecast.</div>
+</div>
+<div layer-name="Content" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+<div layer-name="Notes" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start">
+<div layer-name="Note / Deviation 1: no band word in compact" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Deviation 1: no band word in compact</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Compact badges (map pins, Saved, Scout and Add Stop rows) show the number and short window name but not the band word. The VoiceOver label includes it. Reproduced as built; the design pass decides on a word, a glyph or nothing.</div>
+</div>
+<div layer-name="Note / Deviation 7: literal opacity 0.85" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Deviation 7: literal opacity 0.85</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Low confidence fades the whole chip to 85% opacity. 0.85 is a literal in LightBadge.swift, not a token (here --opacity-low-confidence in canvas-tokens.json).</div>
+</div>
+<div layer-name="Note / Chip width vs doc" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Chip width vs doc</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">COMPONENTS.md says min width 28 (regular) and 18 (compact). In SwiftUI the horizontal padding sits outside the min-width frame, so built chips are 36 and 26 wide at minimum. Built size is drawn.</div>
+</div>
+<div layer-name="Note / Rule: never alone" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Rule: never alone</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Every score names its window. No forecast is a ring and a reason, never a number and never a low score.</div>
+</div>
+</div>
+<div layer-name="Appearances" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start">
+<div layer-name="Light Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em">LIGHT</div>
+<div layer-name="Section / Compact · scored" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Compact · scored</div>
+<div layer-name="Column Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end">
+<div layer-name="Corner" style="box-sizing:border-box;width:88px;flex-shrink:0"></div>
+<div layer-name="Column / High confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">High confidence</div>
+<div layer-name="Column / Medium confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">Medium confidence</div>
+<div layer-name="Column / Low (85% opacity)" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">Low (85% opacity)</div>
+</div>
+<div layer-name="Row / Poor" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Poor</div>
+<div layer-name="Specimen / compact poor high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact poor medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact poor low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Fair" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Fair</div>
+<div layer-name="Specimen / compact fair high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact fair medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact fair low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Good</div>
+<div layer-name="Specimen / compact good high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact good medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact good low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Great" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Great</div>
+<div layer-name="Specimen / compact great high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact great medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact great low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Epic" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Epic</div>
+<div layer-name="Specimen / compact epic high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact epic medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact epic low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Regular · scored" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Regular · scored</div>
+<div layer-name="Column Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end">
+<div layer-name="Corner" style="box-sizing:border-box;width:88px;flex-shrink:0"></div>
+<div layer-name="Column / High confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">High confidence</div>
+<div layer-name="Column / Medium confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">Medium confidence</div>
+<div layer-name="Column / Low (85% opacity)" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">Low (85% opacity)</div>
+</div>
+<div layer-name="Row / Poor" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Poor</div>
+<div layer-name="Specimen / regular poor high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Poor</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular poor medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Poor</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular poor low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Poor</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Fair" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Fair</div>
+<div layer-name="Specimen / regular fair high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Fair</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular fair medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Fair</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular fair low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Fair</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Good</div>
+<div layer-name="Specimen / regular good high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular good medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular good low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Great" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Great</div>
+<div layer-name="Specimen / regular great high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular great medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular great low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Epic" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Epic</div>
+<div layer-name="Specimen / regular epic high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Epic</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular epic medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Epic</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular epic low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Epic</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Windows (good band, high confidence)" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Windows (good band, high confidence)</div>
+<div layer-name="Column Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end">
+<div layer-name="Corner" style="box-sizing:border-box;width:88px;flex-shrink:0"></div>
+<div layer-name="Column / Compact" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">Compact</div>
+<div layer-name="Column / Regular" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:220px;flex-shrink:0">Regular</div>
+</div>
+<div layer-name="Row / Blue AM" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Blue AM</div>
+<div layer-name="Specimen / compact blueMorning" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Blue AM</div>
+</div>
+</div>
+<div layer-name="Specimen / regular blueMorning" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:220px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Morning blue hour</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Sunrise" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Sunrise</div>
+<div layer-name="Specimen / compact goldenMorning" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunrise</div>
+</div>
+</div>
+<div layer-name="Specimen / regular goldenMorning" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:220px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunrise</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Sunset" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Sunset</div>
+<div layer-name="Specimen / compact goldenEvening" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / regular goldenEvening" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:220px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Blue PM" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Blue PM</div>
+<div layer-name="Specimen / compact blueEvening" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Blue PM</div>
+</div>
+</div>
+<div layer-name="Specimen / regular blueEvening" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:220px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Evening blue hour</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Night" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Night</div>
+<div layer-name="Specimen / compact night" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Night</div>
+</div>
+</div>
+<div layer-name="Specimen / regular night" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:220px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Night</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Dark Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em">DARK</div>
+<div layer-name="Section / Compact · scored" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Compact · scored</div>
+<div layer-name="Column Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end">
+<div layer-name="Corner" style="box-sizing:border-box;width:88px;flex-shrink:0"></div>
+<div layer-name="Column / High confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">High confidence</div>
+<div layer-name="Column / Medium confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">Medium confidence</div>
+<div layer-name="Column / Low (85% opacity)" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">Low (85% opacity)</div>
+</div>
+<div layer-name="Row / Poor" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Poor</div>
+<div layer-name="Specimen / compact poor high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact poor medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact poor low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Fair" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Fair</div>
+<div layer-name="Specimen / compact fair high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact fair medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact fair low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Good</div>
+<div layer-name="Specimen / compact good high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact good medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact good low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Great" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Great</div>
+<div layer-name="Specimen / compact great high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact great medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact great low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Epic" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Epic</div>
+<div layer-name="Specimen / compact epic high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact epic medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / compact epic low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Regular · scored" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Regular · scored</div>
+<div layer-name="Column Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end">
+<div layer-name="Corner" style="box-sizing:border-box;width:88px;flex-shrink:0"></div>
+<div layer-name="Column / High confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">High confidence</div>
+<div layer-name="Column / Medium confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">Medium confidence</div>
+<div layer-name="Column / Low (85% opacity)" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">Low (85% opacity)</div>
+</div>
+<div layer-name="Row / Poor" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Poor</div>
+<div layer-name="Specimen / regular poor high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Poor</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular poor medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Poor</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular poor low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Poor</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Fair" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Fair</div>
+<div layer-name="Specimen / regular fair high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Fair</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular fair medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Fair</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular fair low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Fair</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Good</div>
+<div layer-name="Specimen / regular good high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular good medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular good low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Great" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Great</div>
+<div layer-name="Specimen / regular great high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular great medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular great low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Epic" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Epic</div>
+<div layer-name="Specimen / regular epic high" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Epic</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular epic medium" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Epic</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / regular epic low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Epic</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Windows (good band, high confidence)" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Windows (good band, high confidence)</div>
+<div layer-name="Column Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end">
+<div layer-name="Corner" style="box-sizing:border-box;width:88px;flex-shrink:0"></div>
+<div layer-name="Column / Compact" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:190px;flex-shrink:0">Compact</div>
+<div layer-name="Column / Regular" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:220px;flex-shrink:0">Regular</div>
+</div>
+<div layer-name="Row / Blue AM" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Blue AM</div>
+<div layer-name="Specimen / compact blueMorning" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Blue AM</div>
+</div>
+</div>
+<div layer-name="Specimen / regular blueMorning" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:220px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Morning blue hour</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Sunrise" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Sunrise</div>
+<div layer-name="Specimen / compact goldenMorning" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunrise</div>
+</div>
+</div>
+<div layer-name="Specimen / regular goldenMorning" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:220px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunrise</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Sunset" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Sunset</div>
+<div layer-name="Specimen / compact goldenEvening" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Specimen / regular goldenEvening" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:220px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Blue PM" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Blue PM</div>
+<div layer-name="Specimen / compact blueEvening" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Blue PM</div>
+</div>
+</div>
+<div layer-name="Specimen / regular blueEvening" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:220px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Evening blue hour</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Night" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Night</div>
+<div layer-name="Specimen / compact night" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0">
+<div layer-name="LightBadge / compact / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Night</div>
+</div>
+</div>
+<div layer-name="Specimen / regular night" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:220px;flex-shrink:0">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Night</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / High" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

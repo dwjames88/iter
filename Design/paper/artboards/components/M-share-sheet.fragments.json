@@ -1,0 +1,410 @@
+{
+ "artboard": {
+  "name": "Share sheet",
+  "page": "Components",
+  "width": 1408,
+  "height": 680,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1408px",
+   "height": "680px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 21,
+  "clones": 0,
+  "writesNoClone": 21,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "Share sheet",
+   "parentPathArray": [
+    "Share sheet"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">Share sheet</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">ShareLink · Trips/TripBuilderView.swift (toolbar Share), Shell/SidebarView.swift (context menu), Spot/SpotHeaderView.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">The system share popover. A trip is shared as an .iter file; a spot as an Apple Maps link.</div>\n  </div>\n  <div layer-name=\"Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n      <div layer-name=\"Note / System UI\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:340px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n        <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">System UI</div>\n        <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">The share popover is macOS-owned and its destinations depend on the Mac. Drawn as a simplified stand-in; the icon tiles are placeholders (named \"App Icon (swap)\").</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Share Popovers\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:40px;align-items:flex-start;padding-top:12px\">\n      <div layer-name=\"Specimen / trip share\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n        <div layer-name=\"Popover\" style=\"box-sizing:border-box;position:relative;width:260px;height:292px;flex-shrink:0;display:flex;border-radius:14px;background:var(--color-canvas-menu-background);backdrop-filter:blur(30px) saturate(1.6);border:1px solid var(--color-canvas-menu-stroke);box-shadow:var(--shadow-canvas-menu)\">\n          <svg layer-name=\"Popover Arrow\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"11\" viewBox=\"0 0 22 11\" style=\"box-sizing:border-box;display:block;flex-shrink:0;position:absolute;top:-10px;left:200px\"><path d=\"M0 11 L11 0 L22 11\" style=\"fill:var(--color-canvas-menu-background);stroke:var(--color-canvas-menu-stroke)\" stroke-width=\"1\"/></svg>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Light Appearance/Share Popovers/Specimen / trip share/Popover",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Share Popovers",
+    "Specimen / trip share",
+    "Popover"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Popover Content\" style=\"box-sizing:border-box;width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;border-radius:14px;position:relative\">\n  <div layer-name=\"Share Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:2px;padding:6px\">\n    <div layer-name=\"Preview\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;padding:8px 10px\">\n      <div layer-name=\"File Icon (swap)\" style=\"box-sizing:border-box;width:40px;height:40px;border-radius:8px;background:var(--color-canvas-control-segmented-track);border:1px solid var(--color-canvas-control-button-stroke);flex-shrink:0\"></div>\n      <div layer-name=\"Preview Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column\">\n        <div layer-name=\"Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Canyon Country.iter</div>\n        <div layer-name=\"Detail\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Iter Trip · 4 KB</div>\n      </div>\n    </div>\n    <div layer-name=\"Divider Inset\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:4px 8px\">\n      <div layer-name=\"Divider\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0\"></div>\n    </div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Light Appearance/Share Popovers/Specimen / trip share/Popover/Popover Content/Share Content",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Share Popovers",
+    "Specimen / trip share",
+    "Popover",
+    "Popover Content",
+    "Share Content"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Share Item / AirDrop\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / AirDrop\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-canvas-control-segmented-track);border:1px solid var(--color-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">AirDrop</div>\n</div>\n<div layer-name=\"Share Item / Messages\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Messages\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-canvas-control-segmented-track);border:1px solid var(--color-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Messages</div>\n</div>\n<div layer-name=\"Share Item / Mail\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Mail\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-canvas-control-segmented-track);border:1px solid var(--color-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Mail</div>\n</div>",
+   "lines": 12
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Light Appearance/Share Popovers/Specimen / trip share/Popover/Popover Content/Share Content",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Share Popovers",
+    "Specimen / trip share",
+    "Popover",
+    "Popover Content",
+    "Share Content"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Share Item / Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Notes\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-canvas-control-segmented-track);border:1px solid var(--color-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Notes</div>\n</div>\n<div layer-name=\"Share Item / Reminders\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Reminders\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-canvas-control-segmented-track);border:1px solid var(--color-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Reminders</div>\n</div>\n<div layer-name=\"Divider Inset\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:4px 8px\">\n  <div layer-name=\"Divider\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0\"></div>\n</div>\n<div layer-name=\"Share Item / Edit Extensions\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;height:28px;padding:0 10px\">\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Edit Extensions…</div>\n</div>",
+   "lines": 14
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Light Appearance/Share Popovers/Specimen / trip share",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Share Popovers",
+    "Specimen / trip share"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Trip: shares Canyon Country.iter (a ShareLink to a TripDocument)</div>",
+   "lines": 1
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Light Appearance/Share Popovers",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Share Popovers"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Specimen / spot share\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"Popover\" style=\"box-sizing:border-box;position:relative;width:260px;height:292px;flex-shrink:0;display:flex;border-radius:14px;background:var(--color-canvas-menu-background);backdrop-filter:blur(30px) saturate(1.6);border:1px solid var(--color-canvas-menu-stroke);box-shadow:var(--shadow-canvas-menu)\">\n    <svg layer-name=\"Popover Arrow\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"11\" viewBox=\"0 0 22 11\" style=\"box-sizing:border-box;display:block;flex-shrink:0;position:absolute;top:-10px;left:200px\"><path d=\"M0 11 L11 0 L22 11\" style=\"fill:var(--color-canvas-menu-background);stroke:var(--color-canvas-menu-stroke)\" stroke-width=\"1\"/></svg>\n    <div layer-name=\"Popover Content\" style=\"box-sizing:border-box;width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;border-radius:14px;position:relative\">\n      <div layer-name=\"Share Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:2px;padding:6px\">\n        <div layer-name=\"Preview\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;padding:8px 10px\">\n          <div layer-name=\"File Icon (swap)\" style=\"box-sizing:border-box;width:40px;height:40px;border-radius:8px;background:var(--color-canvas-control-segmented-track);border:1px solid var(--color-canvas-control-button-stroke);flex-shrink:0\"></div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 8,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Light Appearance/Share Popovers/Specimen / spot share/Popover/Popover Content/Share Content/Preview",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Share Popovers",
+    "Specimen / spot share",
+    "Popover",
+    "Popover Content",
+    "Share Content",
+    "Preview"
+   ],
+   "parentSeq": 7,
+   "html": "<div layer-name=\"Preview Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column\">\n  <div layer-name=\"Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Horseshoe Bend</div>\n  <div layer-name=\"Detail\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Apple Maps link</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Light Appearance/Share Popovers/Specimen / spot share/Popover/Popover Content/Share Content",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Share Popovers",
+    "Specimen / spot share",
+    "Popover",
+    "Popover Content",
+    "Share Content"
+   ],
+   "parentSeq": 7,
+   "html": "<div layer-name=\"Divider Inset\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:4px 8px\">\n  <div layer-name=\"Divider\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0\"></div>\n</div>\n<div layer-name=\"Share Item / Copy Link\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Copy Link\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-canvas-control-segmented-track);border:1px solid var(--color-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Copy Link</div>\n</div>\n<div layer-name=\"Share Item / AirDrop\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / AirDrop\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-canvas-control-segmented-track);border:1px solid var(--color-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">AirDrop</div>\n</div>\n<div layer-name=\"Share Item / Messages\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Messages\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-canvas-control-segmented-track);border:1px solid var(--color-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Messages</div>\n</div>",
+   "lines": 15
+  },
+  {
+   "seq": 10,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Light Appearance/Share Popovers/Specimen / spot share/Popover/Popover Content/Share Content",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Share Popovers",
+    "Specimen / spot share",
+    "Popover",
+    "Popover Content",
+    "Share Content"
+   ],
+   "parentSeq": 7,
+   "html": "<div layer-name=\"Share Item / Mail\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Mail\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-canvas-control-segmented-track);border:1px solid var(--color-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Mail</div>\n</div>\n<div layer-name=\"Share Item / Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Notes\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-canvas-control-segmented-track);border:1px solid var(--color-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Notes</div>\n</div>\n<div layer-name=\"Divider Inset\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:4px 8px\">\n  <div layer-name=\"Divider\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0\"></div>\n</div>\n<div layer-name=\"Share Item / Edit Extensions\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;height:28px;padding:0 10px\">\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Edit Extensions…</div>\n</div>",
+   "lines": 14
+  },
+  {
+   "seq": 11,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Light Appearance/Share Popovers/Specimen / spot share",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Share Popovers",
+    "Specimen / spot share"
+   ],
+   "parentSeq": 7,
+   "html": "<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Spot: shares an Apple Maps link</div>",
+   "lines": 1
+  },
+  {
+   "seq": 12,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Share Popovers\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:40px;align-items:flex-start;padding-top:12px\">\n    <div layer-name=\"Specimen / trip share\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n      <div layer-name=\"Popover\" style=\"box-sizing:border-box;position:relative;width:260px;height:292px;flex-shrink:0;display:flex;border-radius:14px;background:var(--color-dark-canvas-menu-background);backdrop-filter:blur(30px) saturate(1.6);border:1px solid var(--color-dark-canvas-menu-stroke);box-shadow:var(--shadow-dark-canvas-menu)\">\n        <svg layer-name=\"Popover Arrow\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"11\" viewBox=\"0 0 22 11\" style=\"box-sizing:border-box;display:block;flex-shrink:0;position:absolute;top:-10px;left:200px\"><path d=\"M0 11 L11 0 L22 11\" style=\"fill:var(--color-dark-canvas-menu-background);stroke:var(--color-dark-canvas-menu-stroke)\" stroke-width=\"1\"/></svg>\n        <div layer-name=\"Popover Content\" style=\"box-sizing:border-box;width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;border-radius:14px;position:relative\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 13,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Dark Appearance/Share Popovers/Specimen / trip share/Popover/Popover Content",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Share Popovers",
+    "Specimen / trip share",
+    "Popover",
+    "Popover Content"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"Share Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:2px;padding:6px\">\n  <div layer-name=\"Preview\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;padding:8px 10px\">\n    <div layer-name=\"File Icon (swap)\" style=\"box-sizing:border-box;width:40px;height:40px;border-radius:8px;background:var(--color-dark-canvas-control-segmented-track);border:1px solid var(--color-dark-canvas-control-button-stroke);flex-shrink:0\"></div>\n    <div layer-name=\"Preview Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column\">\n      <div layer-name=\"Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Canyon Country.iter</div>\n      <div layer-name=\"Detail\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap\">Iter Trip · 4 KB</div>\n    </div>\n  </div>\n  <div layer-name=\"Divider Inset\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:4px 8px\">\n    <div layer-name=\"Divider\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0\"></div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 14,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Dark Appearance/Share Popovers/Specimen / trip share/Popover/Popover Content/Share Content",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Share Popovers",
+    "Specimen / trip share",
+    "Popover",
+    "Popover Content",
+    "Share Content"
+   ],
+   "parentSeq": 13,
+   "html": "<div layer-name=\"Share Item / AirDrop\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / AirDrop\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-dark-canvas-control-segmented-track);border:1px solid var(--color-dark-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">AirDrop</div>\n</div>\n<div layer-name=\"Share Item / Messages\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Messages\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-dark-canvas-control-segmented-track);border:1px solid var(--color-dark-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">Messages</div>\n</div>\n<div layer-name=\"Share Item / Mail\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Mail\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-dark-canvas-control-segmented-track);border:1px solid var(--color-dark-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">Mail</div>\n</div>",
+   "lines": 12
+  },
+  {
+   "seq": 15,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Dark Appearance/Share Popovers/Specimen / trip share/Popover/Popover Content/Share Content",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Share Popovers",
+    "Specimen / trip share",
+    "Popover",
+    "Popover Content",
+    "Share Content"
+   ],
+   "parentSeq": 13,
+   "html": "<div layer-name=\"Share Item / Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Notes\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-dark-canvas-control-segmented-track);border:1px solid var(--color-dark-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">Notes</div>\n</div>\n<div layer-name=\"Share Item / Reminders\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Reminders\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-dark-canvas-control-segmented-track);border:1px solid var(--color-dark-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">Reminders</div>\n</div>\n<div layer-name=\"Divider Inset\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:4px 8px\">\n  <div layer-name=\"Divider\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0\"></div>\n</div>\n<div layer-name=\"Share Item / Edit Extensions\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;height:28px;padding:0 10px\">\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">Edit Extensions…</div>\n</div>",
+   "lines": 14
+  },
+  {
+   "seq": 16,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Dark Appearance/Share Popovers/Specimen / trip share",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Share Popovers",
+    "Specimen / trip share"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)\">Trip: shares Canyon Country.iter (a ShareLink to a TripDocument)</div>",
+   "lines": 1
+  },
+  {
+   "seq": 17,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Dark Appearance/Share Popovers",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Share Popovers"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"Specimen / spot share\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"Popover\" style=\"box-sizing:border-box;position:relative;width:260px;height:292px;flex-shrink:0;display:flex;border-radius:14px;background:var(--color-dark-canvas-menu-background);backdrop-filter:blur(30px) saturate(1.6);border:1px solid var(--color-dark-canvas-menu-stroke);box-shadow:var(--shadow-dark-canvas-menu)\">\n    <svg layer-name=\"Popover Arrow\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"11\" viewBox=\"0 0 22 11\" style=\"box-sizing:border-box;display:block;flex-shrink:0;position:absolute;top:-10px;left:200px\"><path d=\"M0 11 L11 0 L22 11\" style=\"fill:var(--color-dark-canvas-menu-background);stroke:var(--color-dark-canvas-menu-stroke)\" stroke-width=\"1\"/></svg>\n    <div layer-name=\"Popover Content\" style=\"box-sizing:border-box;width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;border-radius:14px;position:relative\">\n      <div layer-name=\"Share Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:2px;padding:6px\">\n        <div layer-name=\"Preview\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;padding:8px 10px\">\n          <div layer-name=\"File Icon (swap)\" style=\"box-sizing:border-box;width:40px;height:40px;border-radius:8px;background:var(--color-dark-canvas-control-segmented-track);border:1px solid var(--color-dark-canvas-control-button-stroke);flex-shrink:0\"></div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 18,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Dark Appearance/Share Popovers/Specimen / spot share/Popover/Popover Content/Share Content/Preview",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Share Popovers",
+    "Specimen / spot share",
+    "Popover",
+    "Popover Content",
+    "Share Content",
+    "Preview"
+   ],
+   "parentSeq": 17,
+   "html": "<div layer-name=\"Preview Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column\">\n  <div layer-name=\"Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Horseshoe Bend</div>\n  <div layer-name=\"Detail\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap\">Apple Maps link</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 19,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Dark Appearance/Share Popovers/Specimen / spot share/Popover/Popover Content/Share Content",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Share Popovers",
+    "Specimen / spot share",
+    "Popover",
+    "Popover Content",
+    "Share Content"
+   ],
+   "parentSeq": 17,
+   "html": "<div layer-name=\"Divider Inset\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:4px 8px\">\n  <div layer-name=\"Divider\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0\"></div>\n</div>\n<div layer-name=\"Share Item / Copy Link\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Copy Link\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-dark-canvas-control-segmented-track);border:1px solid var(--color-dark-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">Copy Link</div>\n</div>\n<div layer-name=\"Share Item / AirDrop\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / AirDrop\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-dark-canvas-control-segmented-track);border:1px solid var(--color-dark-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">AirDrop</div>\n</div>\n<div layer-name=\"Share Item / Messages\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Messages\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-dark-canvas-control-segmented-track);border:1px solid var(--color-dark-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">Messages</div>\n</div>",
+   "lines": 15
+  },
+  {
+   "seq": 20,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Dark Appearance/Share Popovers/Specimen / spot share/Popover/Popover Content/Share Content",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Share Popovers",
+    "Specimen / spot share",
+    "Popover",
+    "Popover Content",
+    "Share Content"
+   ],
+   "parentSeq": 17,
+   "html": "<div layer-name=\"Share Item / Mail\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Mail\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-dark-canvas-control-segmented-track);border:1px solid var(--color-dark-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">Mail</div>\n</div>\n<div layer-name=\"Share Item / Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;border-radius:8px;height:28px;padding:0 10px;flex-shrink:0\">\n  <div layer-name=\"App Icon (swap) / Notes\" style=\"box-sizing:border-box;width:22px;height:22px;border-radius:6px;background:var(--color-dark-canvas-control-segmented-track);border:1px solid var(--color-dark-canvas-control-button-stroke);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">Notes</div>\n</div>\n<div layer-name=\"Divider Inset\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:4px 8px\">\n  <div layer-name=\"Divider\" style=\"box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0\"></div>\n</div>\n<div layer-name=\"Share Item / Edit Extensions\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;height:28px;padding:0 10px\">\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">Edit Extensions…</div>\n</div>",
+   "lines": 14
+  },
+  {
+   "seq": 21,
+   "kind": "write",
+   "parentPath": "Share sheet/Page/Content/Appearances/Dark Appearance/Share Popovers/Specimen / spot share",
+   "parentPathArray": [
+    "Share sheet",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Share Popovers",
+    "Specimen / spot share"
+   ],
+   "parentSeq": 17,
+   "html": "<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)\">Spot: shares an Apple Maps link</div>",
+   "lines": 1
+  }
+ ]
+}

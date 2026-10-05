@@ -1,0 +1,370 @@
+{
+ "artboard": {
+  "name": "ConfidenceMark",
+  "page": "Components",
+  "width": 1200,
+  "height": 552,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1200px",
+   "height": "552px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 10,
+  "clones": 4,
+  "writesNoClone": 17,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "ConfidenceMark",
+   "parentPathArray": [
+    "ConfidenceMark"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">ConfidenceMark</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">ConfidenceMark · Components/LightBadge.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">How far to trust the score, as three ascending bars: low 1, medium 2, high 3.</div>\n  </div>\n  <div layer-name=\"Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n      <div layer-name=\"Note / Anatomy\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n        <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Anatomy</div>\n        <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Three bars 2 pt wide, heights 1/3, 2/3 and full of 14 pt, 1 pt gap, radius 1. Filled bars text/secondary, empty bars separator/default. Accessibility label \"High confidence\" (Medium, Low).</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "ConfidenceMark/Page/Content",
+   "parentPathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Section / Levels\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n      <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Levels</div>\n      <div layer-name=\"Levels\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:40px;align-items:flex-end\">\n        <div layer-name=\"Specimen / confidence low\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:90px;flex-shrink:0\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "ConfidenceMark/Page/Content/Appearances/Light Appearance/Section / Levels/Levels/Specimen / confidence low",
+   "parentPathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Levels",
+    "Levels",
+    "Specimen / confidence low"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"ConfidenceMark / Low\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)\">\n  <div layer-name=\"Bar 1\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n  <div layer-name=\"Bar 2\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0\"></div>\n  <div layer-name=\"Bar 3\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0\"></div>\n</div>\n<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Low · 1 bar</div>",
+   "lines": 6
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "ConfidenceMark/Page/Content/Appearances/Light Appearance/Section / Levels/Levels",
+   "parentPathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Levels",
+    "Levels"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Specimen / confidence medium\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:90px;flex-shrink:0\">\n  <div layer-name=\"ConfidenceMark / Medium\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)\">\n    <div layer-name=\"Bar 1\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n    <div layer-name=\"Bar 2\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n    <div layer-name=\"Bar 3\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0\"></div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Medium · 2 bars</div>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 5,
+   "kind": "clone",
+   "parentPath": "ConfidenceMark/Page/Content/Appearances/Light Appearance/Section / Levels/Levels",
+   "parentPathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Levels",
+    "Levels"
+   ],
+   "parentSeq": 2,
+   "sourceSeq": 4,
+   "sourcePath": "ConfidenceMark/Page/Content/Appearances/Light Appearance/Section / Levels/Levels/Specimen / confidence medium",
+   "sourcePathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Levels",
+    "Levels",
+    "Specimen / confidence medium"
+   ],
+   "styleOverrides": {
+    "./ConfidenceMark / Medium/Bar 3": {
+     "background": "var(--color-text-secondary)"
+    }
+   },
+   "textOverrides": {
+    "./Caption/#text0": "High · 3 bars"
+   },
+   "nameOverrides": {
+    ".": "Specimen / confidence high",
+    "./ConfidenceMark / Medium": "ConfidenceMark / High"
+   },
+   "lines": 4
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "ConfidenceMark/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Section / In context (regular and large badges)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">In context (regular and large badges)</div>\n  <div layer-name=\"Context\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:32px;flex-wrap:wrap\">\n    <div layer-name=\"Specimen / regular medium\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n      <div layer-name=\"LightBadge / regular / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n        <div layer-name=\"ScoreChip / regular / Good\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n          <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">66</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "ConfidenceMark/Page/Content/Appearances/Light Appearance/Section / In context (regular and large badges)/Context/Specimen / regular medium/LightBadge / regular / Scored",
+   "parentPathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / In context (regular and large badges)",
+    "Context",
+    "Specimen / regular medium",
+    "LightBadge / regular / Scored"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start\">\n  <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap\">Sunset</div>\n  <div layer-name=\"Band Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n    <div layer-name=\"Band\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Good</div>\n    <div layer-name=\"ConfidenceMark / Medium\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)\">\n      <div layer-name=\"Bar 1\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n      <div layer-name=\"Bar 2\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n      <div layer-name=\"Bar 3\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0\"></div>\n    </div>\n  </div>\n</div>",
+   "lines": 11
+  },
+  {
+   "seq": 8,
+   "kind": "write",
+   "parentPath": "ConfidenceMark/Page/Content/Appearances/Light Appearance/Section / In context (regular and large badges)/Context",
+   "parentPathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / In context (regular and large badges)",
+    "Context"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"Specimen / large low\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"LightBadge / large / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0\">\n    <div layer-name=\"ScoreChip / large / Good\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)\">\n      <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap\">66</div>\n    </div>\n    <div layer-name=\"Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start\">\n      <div layer-name=\"Headline\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Sunset · 66</div>\n      <div layer-name=\"Band Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n        <div layer-name=\"Band\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">Good</div>\n        <div layer-name=\"Separator\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">·</div>\n        <div layer-name=\"Range\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">Likely 55–75</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "ConfidenceMark/Page/Content/Appearances/Light Appearance/Section / In context (regular and large badges)/Context/Specimen / large low/LightBadge / large / Scored/Text",
+   "parentPathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / In context (regular and large badges)",
+    "Context",
+    "Specimen / large low",
+    "LightBadge / large / Scored",
+    "Text"
+   ],
+   "parentSeq": 8,
+   "html": "<div layer-name=\"Confidence Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n  <div layer-name=\"ConfidenceMark / Low\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)\">\n    <div layer-name=\"Bar 1\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n    <div layer-name=\"Bar 2\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0\"></div>\n    <div layer-name=\"Bar 3\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0\"></div>\n  </div>\n  <div layer-name=\"Confidence\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Low confidence</div>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 10,
+   "kind": "write",
+   "parentPath": "ConfidenceMark/Page/Content/Appearances",
+   "parentPathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Section / Levels\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Levels</div>\n    <div layer-name=\"Levels\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:40px;align-items:flex-end\">\n      <div layer-name=\"Specimen / confidence low\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:90px;flex-shrink:0\">\n        <div layer-name=\"ConfidenceMark / Low\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)\">\n          <div layer-name=\"Bar 1\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0\"></div>\n          <div layer-name=\"Bar 2\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0\"></div>\n          <div layer-name=\"Bar 3\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0\"></div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 11,
+   "kind": "write",
+   "parentPath": "ConfidenceMark/Page/Content/Appearances/Dark Appearance/Section / Levels/Levels/Specimen / confidence low",
+   "parentPathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Levels",
+    "Levels",
+    "Specimen / confidence low"
+   ],
+   "parentSeq": 10,
+   "html": "<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)\">Low · 1 bar</div>",
+   "lines": 1
+  },
+  {
+   "seq": 12,
+   "kind": "clone",
+   "parentPath": "ConfidenceMark/Page/Content/Appearances/Dark Appearance/Section / Levels/Levels",
+   "parentPathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Levels",
+    "Levels"
+   ],
+   "parentSeq": 10,
+   "sourceSeq": 4,
+   "sourcePath": "ConfidenceMark/Page/Content/Appearances/Light Appearance/Section / Levels/Levels/Specimen / confidence medium",
+   "sourcePathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Levels",
+    "Levels",
+    "Specimen / confidence medium"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 4
+   }
+  },
+  {
+   "seq": 13,
+   "kind": "clone",
+   "parentPath": "ConfidenceMark/Page/Content/Appearances/Dark Appearance/Section / Levels/Levels",
+   "parentPathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Levels",
+    "Levels"
+   ],
+   "parentSeq": 10,
+   "sourceSeq": 4,
+   "sourcePath": "ConfidenceMark/Page/Content/Appearances/Light Appearance/Section / Levels/Levels/Specimen / confidence medium",
+   "sourcePathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Levels",
+    "Levels",
+    "Specimen / confidence medium"
+   ],
+   "styleOverrides": {
+    "./ConfidenceMark / Medium/Bar 3": {
+     "background": "var(--color-dark-text-secondary)"
+    }
+   },
+   "textOverrides": {
+    "./Caption/#text0": "High · 3 bars"
+   },
+   "nameOverrides": {
+    ".": "Specimen / confidence high",
+    "./ConfidenceMark / Medium": "ConfidenceMark / High"
+   },
+   "lines": 5,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 3
+   }
+  },
+  {
+   "seq": 14,
+   "kind": "clone",
+   "parentPath": "ConfidenceMark/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 10,
+   "sourceSeq": 6,
+   "sourcePath": "ConfidenceMark/Page/Content/Appearances/Light Appearance/Section / In context (regular and large badges)",
+   "sourcePathArray": [
+    "ConfidenceMark",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / In context (regular and large badges)"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 16
+   }
+  }
+ ]
+}

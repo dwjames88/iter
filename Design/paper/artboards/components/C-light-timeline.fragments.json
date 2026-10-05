@@ -1,0 +1,835 @@
+{
+ "artboard": {
+  "name": "LightTimeline",
+  "page": "Components",
+  "width": 1000,
+  "height": 3224,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1000px",
+   "height": "3224px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 22,
+  "clones": 12,
+  "writesNoClone": 50,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "LightTimeline",
+   "parentPathArray": [
+    "LightTimeline"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">LightTimeline</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">LightTimelineSection, TimelineRenderer · Spot/LightTimelineView.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">The 24 hours of light: sky by sun altitude, five windows with scores, cloud by altitude, rain chance, and a scrubber.</div>\n  </div>\n  <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;flex-wrap:wrap\">\n    <div layer-name=\"Note / cloud.slash does not exist\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:280px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n      <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">cloud.slash does not exist</div>\n      <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">The no-forecast note is a Label with systemImage \"cloud.slash\", which is missing on this macOS: the app shows the sentence with an empty icon slot. Drawn as built.</div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Notes",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Note / Hard-coded opacities\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:280px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n  <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Hard-coded opacities</div>\n  <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Window tints 0.2, selection 0.16, cloud 0.5, below-horizon 0.35, outlook fades 0.8 and 0.6 are literals in SpotLayout.swift (deviation 7); here they are the opacity tokens.</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 3,
+   "kind": "clone",
+   "parentPath": "LightTimeline/Page/Notes",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "sourceSeq": 2,
+   "sourcePath": "LightTimeline/Page/Notes/Note / Hard-coded opacities",
+   "sourcePathArray": [
+    "LightTimeline",
+    "Page",
+    "Notes",
+    "Note / Hard-coded opacities"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Note Title/#text0": "Fixtures",
+    "./Note Body/#text0": "Numbers are the real engine output for Mesa Arch on Mon 12 Oct 2026 with sample weather (and Tromso, Cottonwood bend), not drawn by hand."
+   },
+   "nameOverrides": {
+    ".": "Note / Fixtures"
+   },
+   "lines": 3
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border);width:934px\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Specimen / Full day, Mon 12 Oct (Sunrise selected)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n      <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">Full day, Mon 12 Oct (Sunrise selected)</div>\n      <div layer-name=\"LightTimeline\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n        <div layer-name=\"Title Row\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:baseline;justify-content:space-between\">\n          <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-text-primary);white-space:nowrap\">Light through the day</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Full day, Mon 12 Oct (Sunrise selected)/LightTimeline/Title Row",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Full day, Mon 12 Oct (Sunrise selected)",
+    "LightTimeline",
+    "Title Row"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Segmented Control\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch\">\n  <div layer-name=\"Segment / Full day\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:103px;border-radius:999px;background:var(--color-canvas-control-segmented-thumb);box-shadow:var(--shadow-canvas-button);flex-shrink:0\">\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Full day</div>\n  </div>\n  <div layer-name=\"Segment / Sunrise ±2 h\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:103px;border-radius:999px;flex-shrink:0\">\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Sunrise ±2 h</div>\n  </div>\n  <div layer-name=\"Segment / Sunset ±2 h\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:103px;border-radius:999px;flex-shrink:0\">\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Sunset ±2 h</div>\n  </div>\n</div>",
+   "lines": 11
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Full day, Mon 12 Oct (Sunrise selected)/LightTimeline",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Full day, Mon 12 Oct (Sunrise selected)",
+    "LightTimeline"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"SpotCard / Timeline\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:calc(var(--spacing-md) - var(--spacing-stroke-hairline));background:var(--color-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch\">\n  <div layer-name=\"Timeline Body\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n    <div layer-name=\"Readout\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;min-height:var(--spacing-size-badge-height)\">\n      <div layer-name=\"Readout Values\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;font-variant-numeric:tabular-nums\">07:43 · 44% cloud · 3% rain</div>\n      <div layer-name=\"Dot\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-secondary);white-space:nowrap\">·</div>\n      <div layer-name=\"Window Under Marker\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">Sunrise</div>\n      <div layer-name=\"Spacer\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0\"></div>\n      <div layer-name=\"Hint\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-tertiary);white-space:nowrap\">Hover or drag to read any time</div>\n    </div>\n    <div layer-name=\"Canvas / Light Timeline\" style=\"box-sizing:border-box;position:relative;width:868px;height:220px;flex-shrink:0\">\n      <div layer-name=\"Sky Band\" style=\"box-sizing:border-box;position:absolute;left:44px;top:56px;width:808px;height:56px;border-radius:var(--radius-badge);background:linear-gradient(90deg, var(--color-sky-night) 0%, var(--color-sky-night) 24.31%, color-mix(in srgb, var(--color-sky-blue-hour) 3.82%, var(--color-sky-night)) 25%, color-mix(in srgb, var(--color-sky-blue-hour) 20.12%, var(--color-sky-night)) 25.69%, color-mix(in srgb, var(--color-sky-blue-hour) 36.46%, var(--color-sky-night)) 26.39%, color-mix(in srgb, var(--color-sky-blue-hour) 52.82%, var(--color-sky-night)) 27.08%, color-mix(in srgb, var(--color-sky-blue-hour) 69.18%, var(--color-sky-night)) 27.78%, color-mix(in srgb, var(--color-sky-blue-hour) 85.55%, var(--color-sky-night)) 28.47%, var(--color-sky-blue-hour) 29.17%, var(--color-sky-blue-hour) 30.56%, color-mix(in srgb, var(--color-sky-golden) 80.25%, var(--color-sky-blue-hour)) 31.25%, var(--color-sky-golden) 31.94%, var(--color-sky-golden) 33.33%, color-mix(in srgb, var(--color-sky-day) 21.88%, var(--color-sky-golden)) 34.03%, color-mix(in srgb, var(--color-sky-day) 45.05%, var(--color-sky-golden)) 34.72%, color-mix(in srgb, var(--color-sky-day) 68.09%, var(--color-sky-golden)) 35.42%, color-mix(in srgb, var(--color-sky-day) 90.92%, var(--color-sky-golden)) 36.11%, var(--color-sky-day) 36.81%, var(--color-sky-day) 72.22%, color-mix(in srgb, var(--color-sky-day) 93.78%, var(--color-sky-golden)) 72.92%, color-mix(in srgb, var(--color-sky-day) 70.94%, var(--color-sky-golden)) 73.61%, color-mix(in srgb, var(--color-sky-day) 47.9%, var(--color-sky-golden)) 74.31%, color-mix(in srgb, var(--color-sky-day) 24.73%, var(--color-sky-golden)) 75%, color-mix(in srgb, var(--color-sky-day) 1.48%, var(--color-sky-golden)) 75.69%, var(--color-sky-golden) 76.39%, var(--color-sky-golden) 77.08%, color-mix(in srgb, var(--color-sky-golden) 92.69%, var(--color-sky-blue-hour)) 77.78%, var(--color-sky-blue-hour) 78.47%, var(--color-sky-blue-hour) 79.86%, color-mix(in srgb, var(--color-sky-blue-hour) 87.43%, var(--color-sky-night)) 80.56%, color-mix(in srgb, var(--color-sky-blue-hour) 71.03%, var(--color-sky-night)) 81.25%, color-mix(in srgb, var(--color-sky-blue-hour) 54.64%, var(--color-sky-night)) 81.94%, color-mix(in srgb, var(--color-sky-blue-hour) 38.27%, var(--color-sky-night)) 82.64%, color-mix(in srgb, var(--color-sky-blue-hour) 21.9%, var(--color-sky-night)) 83.33%, color-mix(in srgb, var(--color-sky-blue-hour) 5.56%, var(--color-sky-night)) 84.03%, var(--color-sky-night) 84.72%, var(--color-sky-night) 100%)\"></div>\n      <svg layer-name=\"Timeline Graphics\" xmlns=\"http://www.w3.org/2000/svg\" width=\"868\" height=\"220\" viewBox=\"0 0 868 220\" style=\"box-sizing:border-box;display:block;flex-shrink:0;position:absolute;left:0;top:0\"><path d=\"M44 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M145 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M246 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M347 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M448 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M549 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M650 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M751 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M852 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><rect x=\"279.16\" y=\"138\" width=\"14.92\" height=\"80\" style=\"fill:var(--color-sky-blue-hour);fill-opacity:var(--opacity-window-tint)\"/><rect x=\"294.08\" y=\"138\" width=\"20\" height=\"80\" style=\"fill:var(--color-sky-golden);fill-opacity:var(--opacity-window-tint)\"/><rect x=\"294.08\" y=\"138\" width=\"20\" height=\"80\" style=\"fill:var(--color-selection-fill)\"/><rect x=\"655.54\" y=\"138\" width=\"19.99\" height=\"80\" style=\"fill:var(--color-sky-golden);fill-opacity:var(--opacity-window-tint)\"/><rect x=\"675.54\" y=\"138\" width=\"14.9\" height=\"80\" style=\"fill:var(--color-sky-blue-hour);fill-opacity:var(--opacity-window-tint)\"/><rect x=\"724.8\" y=\"138\" width=\"101\" height=\"80\" style=\"fill:var(--color-sky-night);fill-opacity:var(--opacity-window-tint)\"/><path d=\"M44 218H852\" style=\"stroke:var(--color-separator-default);stroke-width:0.5\" fill=\"none\"/><path d=\"M44 178H852\" style=\"stroke:var(--color-separator-default);stroke-width:0.5\" fill=\"none\"/><path d=\"M44 138H852\" style=\"stroke:var(--color-separator-default);stroke-width:0.5\" fill=\"none\"/><path d=\"M60.83 218L60.83 146.06L94.5 148.9L128.17 195.68L161.83 195.86L195.5 197.85L229.17 197.02L262.83 199.14L296.5 194.89L330.17 198.15L363.83 201.91L397.5 198.3L431.17 198.71L464.83 196.59L498.5 181.88L532.17 178.76L565.83 183.49L599.5 182.18L633.17 153.88L666.83 153.26L700.5 148.51L734.17 151.94L767.83 154.78L801.5 152.58L835.17 148.46L835.17 218Z\" style=\"fill:var(--color-cloud-high);fill-opacity:var(--opacity-cloud-fill)\"/><path d=\"M60.83 146.06L94.5 148.9L128.17 195.68L161.83 195.86L195.5 197.85L229.17 197.02L262.83 199.14L296.5 194.89L330.17 198.15L363.83 201.91L397.5 198.3L431.17 198.71L464.83 196.59L498.5 181.88L532.17 178.76L565.83 183.49L599.5 182.18L633.17 153.88L666.83 153.26L700.5 148.51L734.17 151.94L767.83 154.78L801.5 152.58L835.17 148.46\" style=\"stroke:var(--color-cloud-high);stroke-width:1.5;stroke-linejoin:round\" fill=\"none\"/><path d=\"M60.83 218L60.83 150.06L94.5 152.9L128.17 204.5L161.83 204.5L195.5 204.5L229.17 204.5L262.83 204.5L296.5 204.5L330.17 204.5L363.83 204.5L397.5 204.5L431.17 204.5L464.83 204.5L498.5 204.5L532.17 204.5L565.83 204.5L599.5 204.5L633.17 204.5L666.83 204.5L700.5 204.5L734.17 204.5L767.83 204.5L801.5 204.5L835.17 204.5L835.17 218Z\" style=\"fill:var(--color-cloud-mid);fill-opacity:var(--opacity-cloud-fill)\"/><path d=\"M60.83 150.06L94.5 152.9L128.17 204.5L161.83 204.5L195.5 204.5L229.17 204.5L262.83 204.5L296.5 204.5L330.17 204.5L363.83 204.5L397.5 204.5L431.17 204.5L464.83 204.5L498.5 204.5L532.17 204.5L565.83 204.5L599.5 204.5L633.17 204.5L666.83 204.5L700.5 204.5L734.17 204.5L767.83 204.5L801.5 204.5L835.17 204.5\" style=\"stroke:var(--color-cloud-mid);stroke-width:1.5;stroke-linejoin:round\" fill=\"none\"/><path d=\"M60.83 218L60.83 154.1L94.5 158.36L128.17 213.87L161.83 213.94L195.5 214.74L229.17 214.41L262.83 214.34L296.5 213.55L330.17 214.74L363.83 213.23L397.5 214.68L431.17 214.51L464.83 214.24L498.5 214.75L532.17 213.5L565.83 214.21L599.5 214.73L633.17 214.1L666.83 214.35L700.5 213.34L734.17 214.72L767.83 213.74L801.5 214.62L835.17 213.33L835.17 218Z\" style=\"fill:var(--color-cloud-low);fill-opacity:var(--opacity-cloud-fill)\"/><path d=\"M60.83 154.1L94.5 158.36L128.17 213.87L161.83 213.94L195.5 214.74L229.17 214.41L262.83 214.34L296.5 213.55L330.17 214.74L363.83 213.23L397.5 214.68L431.17 214.51L464.83 214.24L498.5 214.75L532.17 213.5L565.83 214.21L599.5 214.73L633.17 214.1L666.83 214.35L700.5 213.34L734.17 214.72L767.83 213.74L801.5 214.62L835.17 213.33\" style=\"stroke:var(--color-cloud-low);stroke-width:1.5;stroke-linejoin:round\" fill=\"none\"/><rect x=\"50.73\" y=\"204.55\" width=\"20.2\" height=\"13.45\" rx=\"1\" style=\"fill:var(--color-sky-blue-hour)\"/><rect x=\"84.4\" y=\"204.55\" width=\"20.2\" height=\"13.45\" rx=\"1\" style=\"fill:var(--color-sky-blue-hour)\"/><rect x=\"293.08\" y=\"55\" width=\"22\" height=\"164\" rx=\"3\" style=\"stroke:var(--color-background-window);stroke-width:4\" fill=\"none\"/><rect x=\"293.08\" y=\"55\" width=\"22\" height=\"164\" rx=\"3\" style=\"stroke:var(--color-accent-primary);stroke-width:2\" fill=\"none\"/><path d=\"M279.16 54V50H294.08V54\" style=\"stroke:var(--color-text-secondary);stroke-width:1.5\" fill=\"none\"/><path d=\"M294.08 54V50H314.08V54\" style=\"stroke:var(--color-accent-primary);stroke-width:2\" fill=\"none\"/><path d=\"M294.08 31V50\" style=\"stroke:var(--color-separator-default);stroke-width:0.5\" fill=\"none\"/><path d=\"M655.54 54V50H675.54V54\" style=\"stroke:var(--color-text-secondary);stroke-width:1.5\" fill=\"none\"/><path d=\"M675.54 54V50H690.44V54\" style=\"stroke:var(--color-text-secondary);stroke-width:1.5\" fill=\"none\"/><path d=\"M675.54 31V50\" style=\"stroke:var(--color-separator-default);stroke-width:0.5\" fill=\"none\"/><path d=\"M724.8 54V50H825.8V54\" style=\"stroke:var(--color-text-secondary);stroke-width:1.5\" fill=\"none\"/><path d=\"M304.08 56V218\" style=\"stroke:var(--color-background-window);stroke-width:3\" fill=\"none\"/><path d=\"M304.08 56V218\" style=\"stroke:var(--color-text-primary);stroke-width:1;stroke-dasharray:4 3\" fill=\"none\"/><circle cx=\"304.08\" cy=\"112\" r=\"4\" style=\"fill:var(--color-text-primary);stroke:var(--color-background-window);stroke-width:1\"/></svg>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Full day, Mon 12 Oct (Sunrise selected)/LightTimeline/SpotCard / Timeline/Timeline Body/Canvas / Light Timeline",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Full day, Mon 12 Oct (Sunrise selected)",
+    "LightTimeline",
+    "SpotCard / Timeline",
+    "Timeline Body",
+    "Canvas / Light Timeline"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"Hour 0\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:31.5px;top:116px;height:13px\">00</div>\n<div layer-name=\"Hour 3\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:132.5px;top:116px;height:13px\">03</div>\n<div layer-name=\"Hour 6\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:233.5px;top:116px;height:13px\">06</div>\n<div layer-name=\"Hour 9\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:334.5px;top:116px;height:13px\">09</div>\n<div layer-name=\"Hour 12\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:435.5px;top:116px;height:13px\">12</div>\n<div layer-name=\"Hour 15\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:536.5px;top:116px;height:13px\">15</div>\n<div layer-name=\"Hour 18\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:637.5px;top:116px;height:13px\">18</div>\n<div layer-name=\"Hour 21\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:738.5px;top:116px;height:13px\">21</div>\n<div layer-name=\"Hour 0\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:839.5px;top:116px;height:13px\">00</div>\n<div layer-name=\"Axis 0%\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:right;white-space:nowrap;width:24px;position:absolute;left:16px;top:211.5px;height:13px\">0%</div>\n<div layer-name=\"Axis 50%\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:right;white-space:nowrap;width:30px;position:absolute;left:10px;top:171.5px;height:13px\">50%</div>\n<div layer-name=\"Axis 100%\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:right;white-space:nowrap;width:36px;position:absolute;left:4px;top:131.5px;height:13px\">100%</div>\n<div layer-name=\"Bracket Label / Blue AM\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-primary);text-align:left;white-space:nowrap;width:62px;position:absolute;left:279.16px;top:32px;height:13px\">Blue AM 85</div>\n<div layer-name=\"Bracket Label / Sunrise\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);text-align:left;white-space:nowrap;width:65px;position:absolute;left:294.08px;top:16px;height:13px\">Sunrise 87</div>\n<div layer-name=\"Bracket Label / Sunset\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-primary);text-align:left;white-space:nowrap;width:60px;position:absolute;left:655.54px;top:32px;height:13px\">Sunset 56</div>",
+   "lines": 15
+  },
+  {
+   "seq": 8,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Full day, Mon 12 Oct (Sunrise selected)/LightTimeline/SpotCard / Timeline/Timeline Body/Canvas / Light Timeline",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Full day, Mon 12 Oct (Sunrise selected)",
+    "LightTimeline",
+    "SpotCard / Timeline",
+    "Timeline Body",
+    "Canvas / Light Timeline"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"Bracket Label / Blue PM\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-primary);text-align:left;white-space:nowrap;width:62px;position:absolute;left:675.54px;top:16px;height:13px\">Blue PM 54</div>\n<div layer-name=\"Bracket Label / Night\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-primary);text-align:left;white-space:nowrap;width:52px;position:absolute;left:724.8px;top:32px;height:13px\">Night 30</div>",
+   "lines": 2
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Full day, Mon 12 Oct (Sunrise selected)/LightTimeline/SpotCard / Timeline/Timeline Body",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Full day, Mon 12 Oct (Sunrise selected)",
+    "LightTimeline",
+    "SpotCard / Timeline",
+    "Timeline Body"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"Legend\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center\">\n  <div layer-name=\"Legend / High cloud\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n    <div layer-name=\"Swatch\" style=\"box-sizing:border-box;width:var(--spacing-md);height:var(--spacing-md);border-radius:var(--spacing-xxs);background:var(--color-cloud-high);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);flex-shrink:0\"></div>\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">High cloud</div>\n  </div>\n  <div layer-name=\"Legend / Mid cloud\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n    <div layer-name=\"Swatch\" style=\"box-sizing:border-box;width:var(--spacing-md);height:var(--spacing-md);border-radius:var(--spacing-xxs);background:var(--color-cloud-mid);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);flex-shrink:0\"></div>\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Mid cloud</div>\n  </div>\n  <div layer-name=\"Legend / Low cloud\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n    <div layer-name=\"Swatch\" style=\"box-sizing:border-box;width:var(--spacing-md);height:var(--spacing-md);border-radius:var(--spacing-xxs);background:var(--color-cloud-low);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);flex-shrink:0\"></div>\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Low cloud</div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 10,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Full day, Mon 12 Oct (Sunrise selected)/LightTimeline/SpotCard / Timeline/Timeline Body/Legend",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Full day, Mon 12 Oct (Sunrise selected)",
+    "LightTimeline",
+    "SpotCard / Timeline",
+    "Timeline Body",
+    "Legend"
+   ],
+   "parentSeq": 9,
+   "html": "<div layer-name=\"Legend / Chance of rain\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n  <div layer-name=\"Swatch\" style=\"box-sizing:border-box;width:var(--spacing-md);height:var(--spacing-md);border-radius:var(--spacing-xxs);background:var(--color-sky-blue-hour);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);flex-shrink:0\"></div>\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Chance of rain</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 11,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Specimen / Sunrise ±2 h (two tiers, hourly ticks)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n  <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">Sunrise ±2 h (two tiers, hourly ticks)</div>\n  <div layer-name=\"LightTimeline\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Title Row\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:baseline;justify-content:space-between\">\n      <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-text-primary);white-space:nowrap\">Light through the day</div>\n      <div layer-name=\"Segmented Control\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch\">\n        <div layer-name=\"Segment / Full day\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:103px;border-radius:999px;flex-shrink:0\">\n          <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Full day</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 12,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunrise ±2 h (two tiers, hourly ticks)/LightTimeline/Title Row/Segmented Control",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise ±2 h (two tiers, hourly ticks)",
+    "LightTimeline",
+    "Title Row",
+    "Segmented Control"
+   ],
+   "parentSeq": 11,
+   "html": "<div layer-name=\"Segment / Sunrise ±2 h\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:103px;border-radius:999px;background:var(--color-canvas-control-segmented-thumb);box-shadow:var(--shadow-canvas-button);flex-shrink:0\">\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Sunrise ±2 h</div>\n</div>\n<div layer-name=\"Segment / Sunset ±2 h\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:103px;border-radius:999px;flex-shrink:0\">\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Sunset ±2 h</div>\n</div>",
+   "lines": 6
+  },
+  {
+   "seq": 13,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunrise ±2 h (two tiers, hourly ticks)/LightTimeline",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise ±2 h (two tiers, hourly ticks)",
+    "LightTimeline"
+   ],
+   "parentSeq": 11,
+   "html": "<div layer-name=\"SpotCard / Timeline\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:calc(var(--spacing-md) - var(--spacing-stroke-hairline));background:var(--color-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch\">\n  <div layer-name=\"Timeline Body\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n    <div layer-name=\"Readout\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;min-height:var(--spacing-size-badge-height)\">\n      <div layer-name=\"Readout Values\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;font-variant-numeric:tabular-nums\">07:43 · 44% cloud · 3% rain</div>\n      <div layer-name=\"Dot\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-secondary);white-space:nowrap\">·</div>\n      <div layer-name=\"Window Under Marker\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">Sunrise</div>\n      <div layer-name=\"Spacer\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0\"></div>\n      <div layer-name=\"Hint\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-tertiary);white-space:nowrap\">Hover or drag to read any time</div>\n    </div>\n    <div layer-name=\"Canvas / Light Timeline\" style=\"box-sizing:border-box;position:relative;width:868px;height:204px;flex-shrink:0\">\n      <div layer-name=\"Sky Band\" style=\"box-sizing:border-box;position:absolute;left:44px;top:40px;width:808px;height:56px;border-radius:var(--radius-badge);background:linear-gradient(90deg, var(--color-sky-night) 0%, var(--color-sky-night) 10.42%, color-mix(in srgb, var(--color-sky-blue-hour) 3.82%, var(--color-sky-night)) 14.58%, color-mix(in srgb, var(--color-sky-blue-hour) 20.12%, var(--color-sky-night)) 18.75%, color-mix(in srgb, var(--color-sky-blue-hour) 36.46%, var(--color-sky-night)) 22.92%, color-mix(in srgb, var(--color-sky-blue-hour) 52.82%, var(--color-sky-night)) 27.08%, color-mix(in srgb, var(--color-sky-blue-hour) 69.18%, var(--color-sky-night)) 31.25%, color-mix(in srgb, var(--color-sky-blue-hour) 85.55%, var(--color-sky-night)) 35.42%, var(--color-sky-blue-hour) 39.58%, var(--color-sky-blue-hour) 47.92%, color-mix(in srgb, var(--color-sky-golden) 80.25%, var(--color-sky-blue-hour)) 52.08%, var(--color-sky-golden) 56.25%, var(--color-sky-golden) 64.58%, color-mix(in srgb, var(--color-sky-day) 21.88%, var(--color-sky-golden)) 68.75%, color-mix(in srgb, var(--color-sky-day) 45.05%, var(--color-sky-golden)) 72.92%, color-mix(in srgb, var(--color-sky-day) 68.09%, var(--color-sky-golden)) 77.08%, color-mix(in srgb, var(--color-sky-day) 90.92%, var(--color-sky-golden)) 81.25%, var(--color-sky-day) 85.42%, var(--color-sky-day) 100%)\"></div>\n      <svg layer-name=\"Timeline Graphics\" xmlns=\"http://www.w3.org/2000/svg\" width=\"868\" height=\"204\" viewBox=\"0 0 868 204\" style=\"box-sizing:border-box;display:block;flex-shrink:0;position:absolute;left:0;top:0\"><path d=\"M161.83 96V100\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M363.83 96V100\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M565.83 96V100\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M767.83 96V100\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><rect x=\"360.77\" y=\"122\" width=\"89.52\" height=\"80\" style=\"fill:var(--color-sky-blue-hour);fill-opacity:var(--opacity-window-tint)\"/><rect x=\"450.29\" y=\"122\" width=\"120.02\" height=\"80\" style=\"fill:var(--color-sky-golden);fill-opacity:var(--opacity-window-tint)\"/><rect x=\"450.29\" y=\"122\" width=\"120.02\" height=\"80\" style=\"fill:var(--color-selection-fill)\"/><path d=\"M44 202H852\" style=\"stroke:var(--color-separator-default);stroke-width:0.5\" fill=\"none\"/><path d=\"M44 162H852\" style=\"stroke:var(--color-separator-default);stroke-width:0.5\" fill=\"none\"/><path d=\"M44 122H852\" style=\"stroke:var(--color-separator-default);stroke-width:0.5\" fill=\"none\"/><path d=\"M44 202L44 181.09L60.83 181.02L262.83 183.14L464.83 178.89L666.83 182.15L852 185.6L852 202Z\" style=\"fill:var(--color-cloud-high);fill-opacity:var(--opacity-cloud-fill)\"/><path d=\"M44 181.09L60.83 181.02L262.83 183.14L464.83 178.89L666.83 182.15L852 185.6\" style=\"stroke:var(--color-cloud-high);stroke-width:1.5;stroke-linejoin:round\" fill=\"none\"/><path d=\"M44 202L44 188.5L60.83 188.5L262.83 188.5L464.83 188.5L666.83 188.5L852 188.5L852 202Z\" style=\"fill:var(--color-cloud-mid);fill-opacity:var(--opacity-cloud-fill)\"/><path d=\"M44 188.5L60.83 188.5L262.83 188.5L464.83 188.5L666.83 188.5L852 188.5\" style=\"stroke:var(--color-cloud-mid);stroke-width:1.5;stroke-linejoin:round\" fill=\"none\"/><path d=\"M44 202L44 198.44L60.83 198.41L262.83 198.34L464.83 197.55L666.83 198.74L852 197.36L852 202Z\" style=\"fill:var(--color-cloud-low);fill-opacity:var(--opacity-cloud-fill)\"/><path d=\"M44 198.44L60.83 198.41L262.83 198.34L464.83 197.55L666.83 198.74L852 197.36\" style=\"stroke:var(--color-cloud-low);stroke-width:1.5;stroke-linejoin:round\" fill=\"none\"/><rect x=\"449.29\" y=\"39\" width=\"122.02\" height=\"164\" rx=\"3\" style=\"stroke:var(--color-background-window);stroke-width:4\" fill=\"none\"/><rect x=\"449.29\" y=\"39\" width=\"122.02\" height=\"164\" rx=\"3\" style=\"stroke:var(--color-accent-primary);stroke-width:2\" fill=\"none\"/><path d=\"M360.77 38V34H450.29V38\" style=\"stroke:var(--color-text-secondary);stroke-width:1.5\" fill=\"none\"/><path d=\"M450.29 38V34H570.31V38\" style=\"stroke:var(--color-accent-primary);stroke-width:2\" fill=\"none\"/><path d=\"M510.32 40V202\" style=\"stroke:var(--color-background-window);stroke-width:3\" fill=\"none\"/><path d=\"M510.32 40V202\" style=\"stroke:var(--color-text-primary);stroke-width:1;stroke-dasharray:4 3\" fill=\"none\"/><circle cx=\"510.32\" cy=\"96\" r=\"4\" style=\"fill:var(--color-text-primary);stroke:var(--color-background-window);stroke-width:1\"/></svg>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 14,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunrise ±2 h (two tiers, hourly ticks)/LightTimeline/SpotCard / Timeline/Timeline Body/Canvas / Light Timeline",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise ±2 h (two tiers, hourly ticks)",
+    "LightTimeline",
+    "SpotCard / Timeline",
+    "Timeline Body",
+    "Canvas / Light Timeline"
+   ],
+   "parentSeq": 13,
+   "html": "<div layer-name=\"Hour 6\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:149.33px;top:100px;height:13px\">06</div>\n<div layer-name=\"Hour 7\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:351.33px;top:100px;height:13px\">07</div>\n<div layer-name=\"Hour 8\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:553.33px;top:100px;height:13px\">08</div>\n<div layer-name=\"Hour 9\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:755.33px;top:100px;height:13px\">09</div>\n<div layer-name=\"Axis 0%\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:right;white-space:nowrap;width:24px;position:absolute;left:16px;top:195.5px;height:13px\">0%</div>\n<div layer-name=\"Axis 50%\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:right;white-space:nowrap;width:30px;position:absolute;left:10px;top:155.5px;height:13px\">50%</div>\n<div layer-name=\"Axis 100%\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:right;white-space:nowrap;width:36px;position:absolute;left:4px;top:115.5px;height:13px\">100%</div>\n<div layer-name=\"Bracket Label / Blue AM\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-primary);text-align:left;white-space:nowrap;width:62px;position:absolute;left:360.77px;top:16px;height:13px\">Blue AM 85</div>\n<div layer-name=\"Bracket Label / Sunrise\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);text-align:left;white-space:nowrap;width:65px;position:absolute;left:450.29px;top:16px;height:13px\">Sunrise 87</div>",
+   "lines": 9
+  },
+  {
+   "seq": 15,
+   "kind": "clone",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunrise ±2 h (two tiers, hourly ticks)/LightTimeline/SpotCard / Timeline/Timeline Body",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise ±2 h (two tiers, hourly ticks)",
+    "LightTimeline",
+    "SpotCard / Timeline",
+    "Timeline Body"
+   ],
+   "parentSeq": 13,
+   "sourceSeq": 9,
+   "sourcePath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Full day, Mon 12 Oct (Sunrise selected)/LightTimeline/SpotCard / Timeline/Timeline Body/Legend",
+   "sourcePathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Full day, Mon 12 Oct (Sunrise selected)",
+    "LightTimeline",
+    "SpotCard / Timeline",
+    "Timeline Body",
+    "Legend"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 0
+  },
+  {
+   "seq": 16,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Specimen / Sunset ±2 h\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n  <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">Sunset ±2 h</div>\n  <div layer-name=\"LightTimeline\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Title Row\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:baseline;justify-content:space-between\">\n      <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-text-primary);white-space:nowrap\">Light through the day</div>\n      <div layer-name=\"Segmented Control\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch\">\n        <div layer-name=\"Segment / Full day\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:103px;border-radius:999px;flex-shrink:0\">\n          <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Full day</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 17,
+   "kind": "clone",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunset ±2 h/LightTimeline/Title Row/Segmented Control",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunset ±2 h",
+    "LightTimeline",
+    "Title Row",
+    "Segmented Control"
+   ],
+   "parentSeq": 16,
+   "sourceSeq": 12,
+   "sourcePath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunrise ±2 h (two tiers, hourly ticks)/LightTimeline/Title Row/Segmented Control/Segment / Sunset ±2 h",
+   "sourcePathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise ±2 h (two tiers, hourly ticks)",
+    "LightTimeline",
+    "Title Row",
+    "Segmented Control",
+    "Segment / Sunset ±2 h"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Label/#text0": "Sunrise ±2 h"
+   },
+   "nameOverrides": {
+    ".": "Segment / Sunrise ±2 h"
+   },
+   "lines": 2
+  },
+  {
+   "seq": 18,
+   "kind": "clone",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunset ±2 h/LightTimeline/Title Row/Segmented Control",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunset ±2 h",
+    "LightTimeline",
+    "Title Row",
+    "Segmented Control"
+   ],
+   "parentSeq": 16,
+   "sourceSeq": 12,
+   "sourcePath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunrise ±2 h (two tiers, hourly ticks)/LightTimeline/Title Row/Segmented Control/Segment / Sunrise ±2 h",
+   "sourcePathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise ±2 h (two tiers, hourly ticks)",
+    "LightTimeline",
+    "Title Row",
+    "Segmented Control",
+    "Segment / Sunrise ±2 h"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Label/#text0": "Sunset ±2 h"
+   },
+   "nameOverrides": {
+    ".": "Segment / Sunset ±2 h"
+   },
+   "lines": 2
+  },
+  {
+   "seq": 19,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunset ±2 h/LightTimeline",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunset ±2 h",
+    "LightTimeline"
+   ],
+   "parentSeq": 16,
+   "html": "<div layer-name=\"SpotCard / Timeline\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:calc(var(--spacing-md) - var(--spacing-stroke-hairline));background:var(--color-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch\">\n  <div layer-name=\"Timeline Body\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n    <div layer-name=\"Readout\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;min-height:var(--spacing-size-badge-height)\">\n      <div layer-name=\"Readout Values\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;font-variant-numeric:tabular-nums\">18:30 · 64% cloud · 8% rain</div>\n      <div layer-name=\"Dot\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-secondary);white-space:nowrap\">·</div>\n      <div layer-name=\"Window Under Marker\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">Sunset</div>\n      <div layer-name=\"Spacer\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0\"></div>\n      <div layer-name=\"Hint\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-tertiary);white-space:nowrap\">Hover or drag to read any time</div>\n    </div>\n    <div layer-name=\"Canvas / Light Timeline\" style=\"box-sizing:border-box;position:relative;width:868px;height:204px;flex-shrink:0\">\n      <div layer-name=\"Sky Band\" style=\"box-sizing:border-box;position:absolute;left:44px;top:40px;width:808px;height:56px;border-radius:var(--radius-badge);background:linear-gradient(90deg, var(--color-sky-day) 0%, var(--color-sky-day) 17.5%, color-mix(in srgb, var(--color-sky-day) 78.4%, var(--color-sky-golden)) 21.67%, color-mix(in srgb, var(--color-sky-day) 55.3%, var(--color-sky-golden)) 25.83%, color-mix(in srgb, var(--color-sky-day) 32.06%, var(--color-sky-golden)) 30%, color-mix(in srgb, var(--color-sky-day) 8.74%, var(--color-sky-golden)) 34.17%, var(--color-sky-golden) 38.33%, var(--color-sky-golden) 46.67%, var(--color-sky-blue-hour) 50.83%, var(--color-sky-blue-hour) 59.17%, color-mix(in srgb, var(--color-sky-blue-hour) 92.47%, var(--color-sky-night)) 63.33%, color-mix(in srgb, var(--color-sky-blue-hour) 76.09%, var(--color-sky-night)) 67.5%, color-mix(in srgb, var(--color-sky-blue-hour) 59.74%, var(--color-sky-night)) 71.67%, color-mix(in srgb, var(--color-sky-blue-hour) 43.42%, var(--color-sky-night)) 75.83%, color-mix(in srgb, var(--color-sky-blue-hour) 27.11%, var(--color-sky-night)) 80%, color-mix(in srgb, var(--color-sky-blue-hour) 10.83%, var(--color-sky-night)) 84.17%, var(--color-sky-night) 88.33%, var(--color-sky-night) 100%)\"></div>\n      <svg layer-name=\"Timeline Graphics\" xmlns=\"http://www.w3.org/2000/svg\" width=\"868\" height=\"204\" viewBox=\"0 0 868 204\" style=\"box-sizing:border-box;display:block;flex-shrink:0;position:absolute;left:0;top:0\"><path d=\"M84.4 96V100\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M286.4 96V100\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M488.4 96V100\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M690.4 96V100\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><rect x=\"330.17\" y=\"122\" width=\"119.72\" height=\"80\" style=\"fill:var(--color-sky-golden);fill-opacity:var(--opacity-window-tint)\"/><rect x=\"330.17\" y=\"122\" width=\"119.72\" height=\"80\" style=\"fill:var(--color-selection-fill)\"/><rect x=\"449.89\" y=\"122\" width=\"89.45\" height=\"80\" style=\"fill:var(--color-sky-blue-hour);fill-opacity:var(--opacity-window-tint)\"/><rect x=\"746.22\" y=\"122\" width=\"105.78\" height=\"80\" style=\"fill:var(--color-sky-night);fill-opacity:var(--opacity-window-tint)\"/><path d=\"M44 202H852\" style=\"stroke:var(--color-separator-default);stroke-width:0.5\" fill=\"none\"/><path d=\"M44 162H852\" style=\"stroke:var(--color-separator-default);stroke-width:0.5\" fill=\"none\"/><path d=\"M44 122H852\" style=\"stroke:var(--color-separator-default);stroke-width:0.5\" fill=\"none\"/><path d=\"M44 202L44 183.92L185.4 183.92L387.4 183.92L589.4 183.92L791.4 183.92L852 183.92L852 202Z\" style=\"fill:var(--color-cloud-high);fill-opacity:var(--opacity-cloud-fill)\"/><path d=\"M44 183.92L185.4 183.92L387.4 183.92L589.4 183.92L791.4 183.92L852 183.92\" style=\"stroke:var(--color-cloud-high);stroke-width:1.5;stroke-linejoin:round\" fill=\"none\"/><path d=\"M44 202L44 173.97L185.4 170.06L387.4 175.58L589.4 170.86L791.4 182.68L852 181.41L852 202Z\" style=\"fill:var(--color-cloud-mid);fill-opacity:var(--opacity-cloud-fill)\"/><path d=\"M44 173.97L185.4 170.06L387.4 175.58L589.4 170.86L791.4 182.68L852 181.41\" style=\"stroke:var(--color-cloud-mid);stroke-width:1.5;stroke-linejoin:round\" fill=\"none\"/><path d=\"M44 202L44 174.87L185.4 170L387.4 176.89L589.4 170.98L791.4 185.77L852 184.17L852 202Z\" style=\"fill:var(--color-cloud-low);fill-opacity:var(--opacity-cloud-fill)\"/><path d=\"M44 174.87L185.4 170L387.4 176.89L589.4 170.98L791.4 185.77L852 184.17\" style=\"stroke:var(--color-cloud-low);stroke-width:1.5;stroke-linejoin:round\" fill=\"none\"/><rect x=\"329.17\" y=\"39\" width=\"121.72\" height=\"164\" rx=\"3\" style=\"stroke:var(--color-background-window);stroke-width:4\" fill=\"none\"/><rect x=\"329.17\" y=\"39\" width=\"121.72\" height=\"164\" rx=\"3\" style=\"stroke:var(--color-accent-primary);stroke-width:2\" fill=\"none\"/><path d=\"M330.17 38V34H449.89V38\" style=\"stroke:var(--color-accent-primary);stroke-width:2\" fill=\"none\"/><path d=\"M449.89 38V34H539.34V38\" style=\"stroke:var(--color-text-secondary);stroke-width:1.5\" fill=\"none\"/><path d=\"M746.22 38V34H852V38\" style=\"stroke:var(--color-text-secondary);stroke-width:1.5\" fill=\"none\"/><path d=\"M390.03 40V202\" style=\"stroke:var(--color-background-window);stroke-width:3\" fill=\"none\"/><path d=\"M390.03 40V202\" style=\"stroke:var(--color-text-primary);stroke-width:1;stroke-dasharray:4 3\" fill=\"none\"/><circle cx=\"390.03\" cy=\"96\" r=\"4\" style=\"fill:var(--color-text-primary);stroke:var(--color-background-window);stroke-width:1\"/></svg>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 20,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunset ±2 h/LightTimeline/SpotCard / Timeline/Timeline Body/Canvas / Light Timeline",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunset ±2 h",
+    "LightTimeline",
+    "SpotCard / Timeline",
+    "Timeline Body",
+    "Canvas / Light Timeline"
+   ],
+   "parentSeq": 19,
+   "html": "<div layer-name=\"Hour 17\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:71.9px;top:100px;height:13px\">17</div>\n<div layer-name=\"Hour 18\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:273.9px;top:100px;height:13px\">18</div>\n<div layer-name=\"Hour 19\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:475.9px;top:100px;height:13px\">19</div>\n<div layer-name=\"Hour 20\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:677.9px;top:100px;height:13px\">20</div>\n<div layer-name=\"Axis 0%\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:right;white-space:nowrap;width:24px;position:absolute;left:16px;top:195.5px;height:13px\">0%</div>\n<div layer-name=\"Axis 50%\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:right;white-space:nowrap;width:30px;position:absolute;left:10px;top:155.5px;height:13px\">50%</div>\n<div layer-name=\"Axis 100%\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:right;white-space:nowrap;width:36px;position:absolute;left:4px;top:115.5px;height:13px\">100%</div>\n<div layer-name=\"Bracket Label / Sunset\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);text-align:left;white-space:nowrap;width:62px;position:absolute;left:330.17px;top:16px;height:13px\">Sunset 83</div>\n<div layer-name=\"Bracket Label / Blue PM\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-primary);text-align:left;white-space:nowrap;width:62px;position:absolute;left:449.89px;top:16px;height:13px\">Blue PM 72</div>\n<div layer-name=\"Bracket Label / Night\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-primary);text-align:left;white-space:nowrap;width:52px;position:absolute;left:746.22px;top:16px;height:13px\">Night 40</div>",
+   "lines": 10
+  },
+  {
+   "seq": 21,
+   "kind": "clone",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunset ±2 h/LightTimeline/SpotCard / Timeline/Timeline Body",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunset ±2 h",
+    "LightTimeline",
+    "SpotCard / Timeline",
+    "Timeline Body"
+   ],
+   "parentSeq": 19,
+   "sourceSeq": 9,
+   "sourcePath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Full day, Mon 12 Oct (Sunrise selected)/LightTimeline/SpotCard / Timeline/Timeline Body/Legend",
+   "sourcePathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Full day, Mon 12 Oct (Sunrise selected)",
+    "LightTimeline",
+    "SpotCard / Timeline",
+    "Timeline Body",
+    "Legend"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 0
+  },
+  {
+   "seq": 22,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Specimen / No forecast: sky strip only\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n  <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">No forecast: sky strip only</div>\n  <div layer-name=\"LightTimeline\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Title Row\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:baseline;justify-content:space-between\">\n      <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-text-primary);white-space:nowrap\">Light through the day</div>\n      <div layer-name=\"Segmented Control\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch\">\n        <div layer-name=\"Segment / Full day\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:103px;border-radius:999px;background:var(--color-canvas-control-segmented-thumb);box-shadow:var(--shadow-canvas-button);flex-shrink:0\">\n          <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap\">Full day</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 23,
+   "kind": "clone",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / No forecast: sky strip only/LightTimeline/Title Row/Segmented Control",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / No forecast: sky strip only",
+    "LightTimeline",
+    "Title Row",
+    "Segmented Control"
+   ],
+   "parentSeq": 22,
+   "sourceSeq": 12,
+   "sourcePath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunrise ±2 h (two tiers, hourly ticks)/LightTimeline/Title Row/Segmented Control/Segment / Sunset ±2 h",
+   "sourcePathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise ±2 h (two tiers, hourly ticks)",
+    "LightTimeline",
+    "Title Row",
+    "Segmented Control",
+    "Segment / Sunset ±2 h"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Label/#text0": "Sunrise ±2 h"
+   },
+   "nameOverrides": {
+    ".": "Segment / Sunrise ±2 h"
+   },
+   "lines": 2
+  },
+  {
+   "seq": 24,
+   "kind": "clone",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / No forecast: sky strip only/LightTimeline/Title Row/Segmented Control",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / No forecast: sky strip only",
+    "LightTimeline",
+    "Title Row",
+    "Segmented Control"
+   ],
+   "parentSeq": 22,
+   "sourceSeq": 12,
+   "sourcePath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunrise ±2 h (two tiers, hourly ticks)/LightTimeline/Title Row/Segmented Control/Segment / Sunset ±2 h",
+   "sourcePathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise ±2 h (two tiers, hourly ticks)",
+    "LightTimeline",
+    "Title Row",
+    "Segmented Control",
+    "Segment / Sunset ±2 h"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 0
+  },
+  {
+   "seq": 25,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / No forecast: sky strip only/LightTimeline",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / No forecast: sky strip only",
+    "LightTimeline"
+   ],
+   "parentSeq": 22,
+   "html": "<div layer-name=\"SpotCard / Timeline\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:calc(var(--spacing-md) - var(--spacing-stroke-hairline));background:var(--color-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch\">\n  <div layer-name=\"Timeline Body\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n    <div layer-name=\"Readout\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;min-height:var(--spacing-size-badge-height)\">\n      <div layer-name=\"Readout Values\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;font-variant-numeric:tabular-nums\">07:37</div>\n      <div layer-name=\"Dot\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-secondary);white-space:nowrap\">·</div>\n      <div layer-name=\"Window Under Marker\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">Sunrise</div>\n      <div layer-name=\"Spacer\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0\"></div>\n      <div layer-name=\"Hint\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-tertiary);white-space:nowrap\">Hover or drag to read any time</div>\n    </div>\n    <div layer-name=\"Canvas / Light Timeline\" style=\"box-sizing:border-box;position:relative;width:868px;height:130px;flex-shrink:0\">\n      <div layer-name=\"Sky Band\" style=\"box-sizing:border-box;position:absolute;left:44px;top:56px;width:808px;height:56px;border-radius:var(--radius-badge);background:linear-gradient(90deg, var(--color-sky-night) 0%, var(--color-sky-night) 24.31%, color-mix(in srgb, var(--color-sky-blue-hour) 12.92%, var(--color-sky-night)) 25%, color-mix(in srgb, var(--color-sky-blue-hour) 29.18%, var(--color-sky-night)) 25.69%, color-mix(in srgb, var(--color-sky-blue-hour) 45.49%, var(--color-sky-night)) 26.39%, color-mix(in srgb, var(--color-sky-blue-hour) 61.84%, var(--color-sky-night)) 27.08%, color-mix(in srgb, var(--color-sky-blue-hour) 78.22%, var(--color-sky-night)) 27.78%, color-mix(in srgb, var(--color-sky-blue-hour) 94.63%, var(--color-sky-night)) 28.47%, var(--color-sky-blue-hour) 29.17%, var(--color-sky-blue-hour) 29.86%, color-mix(in srgb, var(--color-sky-golden) 22.75%, var(--color-sky-blue-hour)) 30.56%, var(--color-sky-golden) 31.25%, var(--color-sky-golden) 32.64%, color-mix(in srgb, var(--color-sky-day) 12.74%, var(--color-sky-golden)) 33.33%, color-mix(in srgb, var(--color-sky-day) 36.27%, var(--color-sky-golden)) 34.03%, color-mix(in srgb, var(--color-sky-day) 59.73%, var(--color-sky-golden)) 34.72%, color-mix(in srgb, var(--color-sky-day) 83.05%, var(--color-sky-golden)) 35.42%, var(--color-sky-day) 36.11%, var(--color-sky-day) 72.92%, color-mix(in srgb, var(--color-sky-day) 93.45%, var(--color-sky-golden)) 73.61%, color-mix(in srgb, var(--color-sky-day) 70.18%, var(--color-sky-golden)) 74.31%, color-mix(in srgb, var(--color-sky-day) 46.75%, var(--color-sky-golden)) 75%, color-mix(in srgb, var(--color-sky-day) 23.22%, var(--color-sky-golden)) 75.69%, var(--color-sky-golden) 76.39%, var(--color-sky-golden) 77.78%, color-mix(in srgb, var(--color-sky-golden) 81.5%, var(--color-sky-blue-hour)) 78.47%, var(--color-sky-blue-hour) 79.17%, var(--color-sky-blue-hour) 80.56%, color-mix(in srgb, var(--color-sky-blue-hour) 85.36%, var(--color-sky-night)) 81.25%, color-mix(in srgb, var(--color-sky-blue-hour) 68.94%, var(--color-sky-night)) 81.94%, color-mix(in srgb, var(--color-sky-blue-hour) 52.55%, var(--color-sky-night)) 82.64%, color-mix(in srgb, var(--color-sky-blue-hour) 36.19%, var(--color-sky-night)) 83.33%, color-mix(in srgb, var(--color-sky-blue-hour) 19.88%, var(--color-sky-night)) 84.03%, color-mix(in srgb, var(--color-sky-blue-hour) 3.61%, var(--color-sky-night)) 84.72%, var(--color-sky-night) 85.42%, var(--color-sky-night) 100%)\"></div>\n      <svg layer-name=\"Timeline Graphics\" xmlns=\"http://www.w3.org/2000/svg\" width=\"868\" height=\"130\" viewBox=\"0 0 868 130\" style=\"box-sizing:border-box;display:block;flex-shrink:0;position:absolute;left:0;top:0\"><path d=\"M44 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M145 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M246 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M347 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M448 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M549 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M650 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M751 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><path d=\"M852 112V116\" style=\"stroke:var(--color-text-secondary);stroke-width:1\" fill=\"none\"/><rect x=\"289.89\" y=\"55\" width=\"21.82\" height=\"58\" rx=\"3\" style=\"stroke:var(--color-background-window);stroke-width:4\" fill=\"none\"/><rect x=\"289.89\" y=\"55\" width=\"21.82\" height=\"58\" rx=\"3\" style=\"stroke:var(--color-accent-primary);stroke-width:2\" fill=\"none\"/><path d=\"M276.05 54V50H290.89V54\" style=\"stroke:var(--color-text-secondary);stroke-width:1.5\" fill=\"none\"/><path d=\"M290.89 54V50H310.71V54\" style=\"stroke:var(--color-accent-primary);stroke-width:2\" fill=\"none\"/><path d=\"M290.89 31V50\" style=\"stroke:var(--color-separator-default);stroke-width:0.5\" fill=\"none\"/><path d=\"M660.73 54V50H680.52V54\" style=\"stroke:var(--color-text-secondary);stroke-width:1.5\" fill=\"none\"/><path d=\"M680.52 54V50H695.35V54\" style=\"stroke:var(--color-text-secondary);stroke-width:1.5\" fill=\"none\"/><path d=\"M680.52 31V50\" style=\"stroke:var(--color-separator-default);stroke-width:0.5\" fill=\"none\"/><path d=\"M729.76 54V50H830.76V54\" style=\"stroke:var(--color-text-secondary);stroke-width:1.5\" fill=\"none\"/><path d=\"M300.8 56V112\" style=\"stroke:var(--color-background-window);stroke-width:3\" fill=\"none\"/><path d=\"M300.8 56V112\" style=\"stroke:var(--color-text-primary);stroke-width:1;stroke-dasharray:4 3\" fill=\"none\"/><circle cx=\"300.8\" cy=\"112\" r=\"4\" style=\"fill:var(--color-text-primary);stroke:var(--color-background-window);stroke-width:1\"/></svg>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 26,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / No forecast: sky strip only/LightTimeline/SpotCard / Timeline/Timeline Body/Canvas / Light Timeline",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / No forecast: sky strip only",
+    "LightTimeline",
+    "SpotCard / Timeline",
+    "Timeline Body",
+    "Canvas / Light Timeline"
+   ],
+   "parentSeq": 25,
+   "html": "<div layer-name=\"Hour 0\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:31.5px;top:116px;height:13px\">00</div>\n<div layer-name=\"Hour 3\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:132.5px;top:116px;height:13px\">03</div>\n<div layer-name=\"Hour 6\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:233.5px;top:116px;height:13px\">06</div>\n<div layer-name=\"Hour 9\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:334.5px;top:116px;height:13px\">09</div>\n<div layer-name=\"Hour 12\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:435.5px;top:116px;height:13px\">12</div>\n<div layer-name=\"Hour 15\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:536.5px;top:116px;height:13px\">15</div>\n<div layer-name=\"Hour 18\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:637.5px;top:116px;height:13px\">18</div>\n<div layer-name=\"Hour 21\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:738.5px;top:116px;height:13px\">21</div>\n<div layer-name=\"Hour 0\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);text-align:center;white-space:nowrap;width:25px;position:absolute;left:839.5px;top:116px;height:13px\">00</div>\n<div layer-name=\"Bracket Label / Blue AM\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);text-align:left;white-space:nowrap;width:47px;position:absolute;left:276.05px;top:32px;height:13px\">Blue AM</div>\n<div layer-name=\"Bracket Label / Sunrise\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);text-align:left;white-space:nowrap;width:49px;position:absolute;left:290.89px;top:16px;height:13px\">Sunrise</div>\n<div layer-name=\"Bracket Label / Sunset\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);text-align:left;white-space:nowrap;width:45px;position:absolute;left:660.73px;top:32px;height:13px\">Sunset</div>\n<div layer-name=\"Bracket Label / Blue PM\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);text-align:left;white-space:nowrap;width:47px;position:absolute;left:680.52px;top:16px;height:13px\">Blue PM</div>\n<div layer-name=\"Bracket Label / Night\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);text-align:left;white-space:nowrap;width:37px;position:absolute;left:729.76px;top:32px;height:13px\">Night</div>",
+   "lines": 14
+  },
+  {
+   "seq": 27,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / No forecast: sky strip only/LightTimeline/SpotCard / Timeline/Timeline Body",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / No forecast: sky strip only",
+    "LightTimeline",
+    "SpotCard / Timeline",
+    "Timeline Body"
+   ],
+   "parentSeq": 25,
+   "html": "<div layer-name=\"No Weather Note\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n  <div layer-name=\"Icon Slot (cloud.slash missing)\" style=\"box-sizing:border-box;width:8px;height:14px;flex-shrink:0\"></div>\n  <div layer-name=\"Reason\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">Weather isn't enabled for this build of Iter, so only sun and moon times are shown.</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 28,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border);width:934px\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Specimen / Full day, Mon 12 Oct (Sunrise selected)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n    <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap\">Full day, Mon 12 Oct (Sunrise selected)</div>\n    <div layer-name=\"LightTimeline\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n      <div layer-name=\"Title Row\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:baseline;justify-content:space-between\">\n        <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-dark-text-primary);white-space:nowrap\">Light through the day</div>\n        <div layer-name=\"Segmented Control\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-dark-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 29,
+   "kind": "clone",
+   "parentPath": "LightTimeline/Page/Appearances/Dark Appearance/Specimen / Full day, Mon 12 Oct (Sunrise selected)/LightTimeline/Title Row/Segmented Control",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Full day, Mon 12 Oct (Sunrise selected)",
+    "LightTimeline",
+    "Title Row",
+    "Segmented Control"
+   ],
+   "parentSeq": 28,
+   "sourceSeq": 12,
+   "sourcePath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunrise ±2 h (two tiers, hourly ticks)/LightTimeline/Title Row/Segmented Control/Segment / Sunset ±2 h",
+   "sourcePathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise ±2 h (two tiers, hourly ticks)",
+    "LightTimeline",
+    "Title Row",
+    "Segmented Control",
+    "Segment / Sunset ±2 h"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 1
+   }
+  },
+  {
+   "seq": 30,
+   "kind": "write",
+   "parentPath": "LightTimeline/Page/Appearances/Dark Appearance/Specimen / Full day, Mon 12 Oct (Sunrise selected)/LightTimeline/Title Row/Segmented Control",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Full day, Mon 12 Oct (Sunrise selected)",
+    "LightTimeline",
+    "Title Row",
+    "Segmented Control"
+   ],
+   "parentSeq": 28,
+   "html": "<div layer-name=\"Segment / Full day\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:103px;border-radius:999px;background:var(--color-dark-canvas-control-segmented-thumb);box-shadow:var(--shadow-dark-canvas-button);flex-shrink:0\">\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">Full day</div>\n</div>\n<div layer-name=\"Segment / Sunrise ±2 h\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:103px;border-radius:999px;flex-shrink:0\">\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap\">Sunrise ±2 h</div>\n</div>",
+   "lines": 6
+  },
+  {
+   "seq": 31,
+   "kind": "clone",
+   "parentPath": "LightTimeline/Page/Appearances/Dark Appearance/Specimen / Full day, Mon 12 Oct (Sunrise selected)/LightTimeline",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Full day, Mon 12 Oct (Sunrise selected)",
+    "LightTimeline"
+   ],
+   "parentSeq": 28,
+   "sourceSeq": 6,
+   "sourcePath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Full day, Mon 12 Oct (Sunrise selected)/LightTimeline/SpotCard / Timeline",
+   "sourcePathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Full day, Mon 12 Oct (Sunrise selected)",
+    "LightTimeline",
+    "SpotCard / Timeline"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 31
+   }
+  },
+  {
+   "seq": 32,
+   "kind": "clone",
+   "parentPath": "LightTimeline/Page/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 28,
+   "sourceSeq": 11,
+   "sourcePath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunrise ±2 h (two tiers, hourly ticks)",
+   "sourcePathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise ±2 h (two tiers, hourly ticks)"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 30
+   }
+  },
+  {
+   "seq": 33,
+   "kind": "clone",
+   "parentPath": "LightTimeline/Page/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 28,
+   "sourceSeq": 16,
+   "sourcePath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / Sunset ±2 h",
+   "sourcePathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunset ±2 h"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 31
+   }
+  },
+  {
+   "seq": 34,
+   "kind": "clone",
+   "parentPath": "LightTimeline/Page/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 28,
+   "sourceSeq": 22,
+   "sourcePath": "LightTimeline/Page/Appearances/Light Appearance/Specimen / No forecast: sky strip only",
+   "sourcePathArray": [
+    "LightTimeline",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / No forecast: sky strip only"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 28
+   }
+  }
+ ]
+}

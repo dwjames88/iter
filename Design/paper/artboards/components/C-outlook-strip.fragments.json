@@ -1,0 +1,1797 @@
+{
+ "artboard": {
+  "name": "OutlookStrip",
+  "page": "Components",
+  "width": 1000,
+  "height": 1944,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1000px",
+   "height": "1944px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 22,
+  "clones": 32,
+  "writesNoClone": 96,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "OutlookStrip",
+   "parentPathArray": [
+    "OutlookStrip"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">OutlookStrip</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">OutlookStrip · Spot/WhenToGoView.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">Ten days at a glance for the chosen intent, fading with confidence.</div>\n  </div>\n  <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;flex-wrap:wrap\">\n    <div layer-name=\"Note / Best tab colour\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:280px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n      <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Best tab colour</div>\n      <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">COMPONENTS.md says accent/primary; the source uses accent/emphasis. Source followed.</div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Notes",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Note / Hard-coded opacities\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:280px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n  <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Hard-coded opacities</div>\n  <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Window tints 0.2, selection 0.16, cloud 0.5, below-horizon 0.35, outlook fades 0.8 and 0.6 are literals in SpotLayout.swift (deviation 7); here they are the opacity tokens.</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border);width:934px\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Specimen / Sunrise, sample weather\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n      <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">Sunrise, sample weather</div>\n      <div layer-name=\"OutlookStrip\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n        <div layer-name=\"Outlook Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">10-day outlook for Sunrise</div>\n        <div layer-name=\"Outlook Cells\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Outlook Cell / Tue 6\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:center;flex:1 1 0;min-width:0;padding:var(--spacing-xs) 0;border-radius:var(--radius-control);border:var(--spacing-stroke-regular) solid transparent\">\n  <div layer-name=\"Best Tab Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;padding:0 var(--spacing-xs);border-radius:999px\">\n    <div layer-name=\"Best Tab\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-accent-on-accent);white-space:nowrap\"></div>\n  </div>\n  <div layer-name=\"Weekday\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Tue</div>\n  <div layer-name=\"Day Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap\">6</div>\n  <svg layer-name=\"NoForecastRing / 22\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"11\" cy=\"11\" r=\"10.25\" fill=\"none\" style=\"stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n  <div layer-name=\"Caption Slot\" style=\"box-sizing:border-box;min-height:var(--spacing-xl);display:flex;justify-content:center;align-items:flex-start\">\n    <div layer-name=\"Range or Reason\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);text-align:center;white-space:pre-wrap\">Passed</div>\n  </div>\n</div>",
+   "lines": 11
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Outlook Cell / Wed 7\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:center;flex:1 1 0;min-width:0;padding:var(--spacing-xs) 0;border-radius:var(--radius-control);border:var(--spacing-stroke-regular) solid transparent\">\n  <div layer-name=\"Best Tab Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;padding:0 var(--spacing-xs);border-radius:999px\">\n    <div layer-name=\"Best Tab\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-accent-on-accent);white-space:nowrap\"></div>\n  </div>\n  <div layer-name=\"Weekday\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Wed</div>\n  <div layer-name=\"Day Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap\">7</div>\n  <div layer-name=\"ScoreChip / regular / Good\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n    <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">68</div>\n  </div>\n  <div layer-name=\"Caption Slot\" style=\"box-sizing:border-box;min-height:var(--spacing-xl);display:flex;justify-content:center;align-items:flex-start\">\n    <div layer-name=\"Range or Reason\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);text-align:center;white-space:pre-wrap\"></div>\n  </div>\n</div>",
+   "lines": 13
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Outlook Cell / Thu 8\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:center;flex:1 1 0;min-width:0;padding:var(--spacing-xs) 0;border-radius:var(--radius-control);border:var(--spacing-stroke-regular) solid transparent;opacity:var(--opacity-outlook-fade-medium)\">\n  <div layer-name=\"Best Tab Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;padding:0 var(--spacing-xs);border-radius:999px\">\n    <div layer-name=\"Best Tab\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-accent-on-accent);white-space:nowrap\"></div>\n  </div>\n  <div layer-name=\"Weekday\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Thu</div>\n  <div layer-name=\"Day Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap\">8</div>\n  <div layer-name=\"ScoreChip / regular / Good\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n    <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">73</div>\n  </div>\n  <div layer-name=\"Caption Slot\" style=\"box-sizing:border-box;min-height:var(--spacing-xl);display:flex;justify-content:center;align-items:flex-start\">\n    <div layer-name=\"Range or Reason\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);text-align:center;white-space:pre-wrap\">65–81</div>\n  </div>\n</div>",
+   "lines": 13
+  },
+  {
+   "seq": 7,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 6,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Thu 8",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Thu 8"
+   ],
+   "styleOverrides": {
+    "./ScoreChip / regular / Good": {
+     "background": "var(--color-light-ramp-poor)",
+     "color": "var(--color-light-ramp-text-poor)"
+    }
+   },
+   "textOverrides": {
+    "./Weekday/#text0": "Fri",
+    "./Day Number/#text0": "9",
+    "./ScoreChip / regular / Good/Score/#text0": "5",
+    "./Caption Slot/Range or Reason/#text0": "0–13"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Fri 9",
+    "./ScoreChip / regular / Good": "ScoreChip / regular / Poor"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 8,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 6,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Thu 8",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Thu 8"
+   ],
+   "styleOverrides": {
+    ".": {
+     "opacity": "var(--opacity-outlook-fade-low)"
+    },
+    "./ScoreChip / regular / Good": {
+     "background": "var(--color-light-ramp-poor)",
+     "color": "var(--color-light-ramp-text-poor)"
+    }
+   },
+   "textOverrides": {
+    "./Weekday/#text0": "Sat",
+    "./Day Number/#text0": "10",
+    "./ScoreChip / regular / Good/Score/#text0": "5",
+    "./Caption Slot/Range or Reason/#text0": "0–20"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Sat 10",
+    "./ScoreChip / regular / Good": "ScoreChip / regular / Poor"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 9,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 6,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Thu 8",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Thu 8"
+   ],
+   "styleOverrides": {
+    ".": {
+     "opacity": "var(--opacity-outlook-fade-low)"
+    },
+    "./ScoreChip / regular / Good": {
+     "background": "var(--color-light-ramp-poor)",
+     "color": "var(--color-light-ramp-text-poor)"
+    }
+   },
+   "textOverrides": {
+    "./Weekday/#text0": "Sun",
+    "./Day Number/#text0": "11",
+    "./ScoreChip / regular / Good/Score/#text0": "5",
+    "./Caption Slot/Range or Reason/#text0": "0–20"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Sun 11",
+    "./ScoreChip / regular / Good": "ScoreChip / regular / Poor"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 10,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 6,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Thu 8",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Thu 8"
+   ],
+   "styleOverrides": {
+    ".": {
+     "opacity": "var(--opacity-outlook-fade-low)"
+    }
+   },
+   "textOverrides": {
+    "./Weekday/#text0": "Tue",
+    "./Day Number/#text0": "13",
+    "./ScoreChip / regular / Good/Score/#text0": "68",
+    "./Caption Slot/Range or Reason/#text0": "53–83"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Tue 13"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 11,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 6,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Thu 8",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Thu 8"
+   ],
+   "styleOverrides": {
+    ".": {
+     "opacity": "var(--opacity-outlook-fade-low)"
+    },
+    "./ScoreChip / regular / Good": {
+     "background": "var(--color-light-ramp-great)",
+     "color": "var(--color-light-ramp-text-great)"
+    }
+   },
+   "textOverrides": {
+    "./Weekday/#text0": "Wed",
+    "./Day Number/#text0": "14",
+    "./ScoreChip / regular / Good/Score/#text0": "74",
+    "./Caption Slot/Range or Reason/#text0": "59–89"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Wed 14",
+    "./ScoreChip / regular / Good": "ScoreChip / regular / Great"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 12,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 6,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Thu 8",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Thu 8"
+   ],
+   "styleOverrides": {
+    ".": {
+     "opacity": "var(--opacity-outlook-fade-low)"
+    },
+    "./ScoreChip / regular / Good": {
+     "background": "var(--color-light-ramp-poor)",
+     "color": "var(--color-light-ramp-text-poor)"
+    }
+   },
+   "textOverrides": {
+    "./Day Number/#text0": "15",
+    "./ScoreChip / regular / Good/Score/#text0": "5",
+    "./Caption Slot/Range or Reason/#text0": "0–20"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Thu 15",
+    "./ScoreChip / regular / Good": "ScoreChip / regular / Poor"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 13,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Outlook Cell / Mon 12\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:center;flex:1 1 0;min-width:0;padding:var(--spacing-xs) 0;border-radius:var(--radius-control);background:var(--color-selection-fill);border:var(--spacing-stroke-regular) solid var(--color-accent-primary);opacity:var(--opacity-outlook-fade-low)\">\n  <div layer-name=\"Best Tab Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;padding:0 var(--spacing-xs);border-radius:999px;background:var(--color-accent-emphasis)\">\n    <div layer-name=\"Best Tab\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-accent-on-accent);white-space:nowrap\">Best</div>\n  </div>\n  <div layer-name=\"Weekday\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Mon</div>\n  <div layer-name=\"Day Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap\">12</div>\n  <div layer-name=\"ScoreChip / regular / Great\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n    <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">87</div>\n  </div>\n  <div layer-name=\"Caption Slot\" style=\"box-sizing:border-box;min-height:var(--spacing-xl);display:flex;justify-content:center;align-items:flex-start\">\n    <div layer-name=\"Range or Reason\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);text-align:center;white-space:pre-wrap\">72–100</div>\n  </div>\n</div>",
+   "lines": 13
+  },
+  {
+   "seq": 14,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Outlook Key\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-tertiary);white-space:nowrap\">Fainter days are less certain. A dashed ring means no forecast.</div>",
+   "lines": 1
+  },
+  {
+   "seq": 15,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Specimen / Weather off\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n  <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">Weather off</div>\n  <div layer-name=\"OutlookStrip\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n    <div layer-name=\"Outlook Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-secondary);white-space:nowrap\">10-day outlook for Sunrise</div>\n    <div layer-name=\"Outlook Cells\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n      <div layer-name=\"Outlook Cell / Tue 6\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:center;flex:1 1 0;min-width:0;padding:var(--spacing-xs) 0;border-radius:var(--radius-control);background:var(--color-selection-fill);border:var(--spacing-stroke-regular) solid var(--color-accent-primary)\">\n        <div layer-name=\"Best Tab Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;padding:0 var(--spacing-xs);border-radius:999px\">\n          <div layer-name=\"Best Tab\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-accent-on-accent);white-space:nowrap\"></div>\n        </div>\n        <div layer-name=\"Weekday\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Tue</div>\n        <div layer-name=\"Day Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap\">6</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 16,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6"
+   ],
+   "parentSeq": 15,
+   "html": "<svg layer-name=\"NoForecastRing / 22\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"11\" cy=\"11\" r=\"10.25\" fill=\"none\" style=\"stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n<div layer-name=\"Caption Slot\" style=\"box-sizing:border-box;min-height:var(--spacing-xl);display:flex;justify-content:center;align-items:flex-start\">\n  <div layer-name=\"Range or Reason\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);text-align:center;white-space:pre-wrap\">Passed</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 17,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 15,
+   "sourceSeq": 4,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Weekday/#text0": "Wed",
+    "./Day Number/#text0": "7",
+    "./Caption Slot/Range or Reason/#text0": "Weather off"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Wed 7"
+   },
+   "lines": 4
+  },
+  {
+   "seq": 18,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 15,
+   "sourceSeq": 4,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Weekday/#text0": "Thu",
+    "./Day Number/#text0": "8",
+    "./Caption Slot/Range or Reason/#text0": "Weather off"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Thu 8"
+   },
+   "lines": 4
+  },
+  {
+   "seq": 19,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 15,
+   "sourceSeq": 4,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Weekday/#text0": "Fri",
+    "./Day Number/#text0": "9",
+    "./Caption Slot/Range or Reason/#text0": "Weather off"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Fri 9"
+   },
+   "lines": 4
+  },
+  {
+   "seq": 20,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 15,
+   "sourceSeq": 4,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Weekday/#text0": "Sat",
+    "./Day Number/#text0": "10",
+    "./Caption Slot/Range or Reason/#text0": "Weather off"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Sat 10"
+   },
+   "lines": 4
+  },
+  {
+   "seq": 21,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 15,
+   "sourceSeq": 4,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Weekday/#text0": "Sun",
+    "./Day Number/#text0": "11",
+    "./Caption Slot/Range or Reason/#text0": "Weather off"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Sun 11"
+   },
+   "lines": 4
+  },
+  {
+   "seq": 22,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 15,
+   "sourceSeq": 4,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Weekday/#text0": "Mon",
+    "./Day Number/#text0": "12",
+    "./Caption Slot/Range or Reason/#text0": "Weather off"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Mon 12"
+   },
+   "lines": 4
+  },
+  {
+   "seq": 23,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 15,
+   "sourceSeq": 4,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Day Number/#text0": "13",
+    "./Caption Slot/Range or Reason/#text0": "Weather off"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Tue 13"
+   },
+   "lines": 3
+  },
+  {
+   "seq": 24,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 15,
+   "sourceSeq": 4,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Weekday/#text0": "Wed",
+    "./Day Number/#text0": "14",
+    "./Caption Slot/Range or Reason/#text0": "Weather off"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Wed 14"
+   },
+   "lines": 4
+  },
+  {
+   "seq": 25,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 15,
+   "sourceSeq": 4,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Weekday/#text0": "Thu",
+    "./Day Number/#text0": "15",
+    "./Caption Slot/Range or Reason/#text0": "Weather off"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Thu 15"
+   },
+   "lines": 4
+  },
+  {
+   "seq": 26,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off/OutlookStrip",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off",
+    "OutlookStrip"
+   ],
+   "parentSeq": 15,
+   "html": "<div layer-name=\"Outlook Key\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-tertiary);white-space:nowrap\">Fainter days are less certain. A dashed ring means no forecast.</div>",
+   "lines": 1
+  },
+  {
+   "seq": 27,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 15,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Specimen Label/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Wed 7/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Thu 8/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Fri 9/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Sat 10/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Sun 11/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Mon 12/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Tue 13/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Wed 14/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Thu 15/Caption Slot/Range or Reason/#text0": "Offline"
+   },
+   "nameOverrides": {
+    ".": "Specimen / Offline"
+   },
+   "lines": 11
+  },
+  {
+   "seq": 28,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Specimen / Cell states\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n  <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">Cell states</div>\n  <div layer-name=\"Cells\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n    <div layer-name=\"Specimen / Selected + best (low conf.)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:96px;flex-shrink:0\">\n      <div layer-name=\"Outlook Cell / Mon 12\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:center;flex-shrink:0;width:80px;padding:var(--spacing-xs) 0;border-radius:var(--radius-control);background:var(--color-selection-fill);border:var(--spacing-stroke-regular) solid var(--color-accent-primary);opacity:var(--opacity-outlook-fade-low)\">\n        <div layer-name=\"Best Tab Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;padding:0 var(--spacing-xs);border-radius:999px;background:var(--color-accent-emphasis)\">\n          <div layer-name=\"Best Tab\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-accent-on-accent);white-space:nowrap\">Best</div>\n        </div>\n        <div layer-name=\"Weekday\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Mon</div>\n        <div layer-name=\"Day Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap\">12</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 29,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Cell states/Cells/Specimen / Selected + best (low conf.)/Outlook Cell / Mon 12",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Cell states",
+    "Cells",
+    "Specimen / Selected + best (low conf.)",
+    "Outlook Cell / Mon 12"
+   ],
+   "parentSeq": 28,
+   "sourceSeq": 16,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6/Caption Slot",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6",
+    "Caption Slot"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Range or Reason/#text0": "72–100"
+   },
+   "nameOverrides": {},
+   "lines": 1
+  },
+  {
+   "seq": 30,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Cell states/Cells/Specimen / Selected + best (low conf.)/Outlook Cell / Mon 12",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Cell states",
+    "Cells",
+    "Specimen / Selected + best (low conf.)",
+    "Outlook Cell / Mon 12"
+   ],
+   "parentSeq": 28,
+   "html": "<div layer-name=\"ScoreChip / regular / Great\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n  <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">87</div>\n</div>",
+   "lines": 3
+  },
+  {
+   "seq": 31,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Cell states/Cells/Specimen / Selected + best (low conf.)",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Cell states",
+    "Cells",
+    "Specimen / Selected + best (low conf.)"
+   ],
+   "parentSeq": 28,
+   "html": "<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Selected + best (low conf.)</div>",
+   "lines": 1
+  },
+  {
+   "seq": 32,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Cell states/Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Cell states",
+    "Cells"
+   ],
+   "parentSeq": 28,
+   "html": "<div layer-name=\"Specimen / Plain (high)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:96px;flex-shrink:0\">\n  <div layer-name=\"Outlook Cell / Wed 7\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:center;flex-shrink:0;width:80px;padding:var(--spacing-xs) 0;border-radius:var(--radius-control);border:var(--spacing-stroke-regular) solid transparent\">\n    <div layer-name=\"Best Tab Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;padding:0 var(--spacing-xs);border-radius:999px\">\n      <div layer-name=\"Best Tab\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-accent-on-accent);white-space:nowrap\"></div>\n    </div>\n    <div layer-name=\"Weekday\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Wed</div>\n    <div layer-name=\"Day Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap\">7</div>\n    <div layer-name=\"ScoreChip / regular / Good\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n      <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">68</div>\n    </div>\n    <div layer-name=\"Caption Slot\" style=\"box-sizing:border-box;min-height:var(--spacing-xl);display:flex;justify-content:center;align-items:flex-start\">\n      <div layer-name=\"Range or Reason\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);text-align:center;white-space:pre-wrap\"></div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 33,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Cell states/Cells/Specimen / Plain (high)",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Cell states",
+    "Cells",
+    "Specimen / Plain (high)"
+   ],
+   "parentSeq": 32,
+   "html": "<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Plain (high)</div>",
+   "lines": 1
+  },
+  {
+   "seq": 34,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Cell states/Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Cell states",
+    "Cells"
+   ],
+   "parentSeq": 28,
+   "html": "<div layer-name=\"Specimen / Medium fade 80%\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:96px;flex-shrink:0\">\n  <div layer-name=\"Outlook Cell / Thu 8\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:center;flex-shrink:0;width:80px;padding:var(--spacing-xs) 0;border-radius:var(--radius-control);border:var(--spacing-stroke-regular) solid transparent;opacity:var(--opacity-outlook-fade-medium)\">\n    <div layer-name=\"Best Tab Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;padding:0 var(--spacing-xs);border-radius:999px\">\n      <div layer-name=\"Best Tab\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-accent-on-accent);white-space:nowrap\"></div>\n    </div>\n    <div layer-name=\"Weekday\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Thu</div>\n    <div layer-name=\"Day Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap\">8</div>\n    <div layer-name=\"ScoreChip / regular / Good\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n      <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">73</div>\n    </div>\n    <div layer-name=\"Caption Slot\" style=\"box-sizing:border-box;min-height:var(--spacing-xl);display:flex;justify-content:center;align-items:flex-start\">\n      <div layer-name=\"Range or Reason\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);text-align:center;white-space:pre-wrap\">65–81</div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 35,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Cell states/Cells/Specimen / Medium fade 80%",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Cell states",
+    "Cells",
+    "Specimen / Medium fade 80%"
+   ],
+   "parentSeq": 34,
+   "html": "<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Medium fade 80%</div>",
+   "lines": 1
+  },
+  {
+   "seq": 36,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Cell states/Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Cell states",
+    "Cells"
+   ],
+   "parentSeq": 28,
+   "sourceSeq": 34,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Cell states/Cells/Specimen / Medium fade 80%",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Cell states",
+    "Cells",
+    "Specimen / Medium fade 80%"
+   ],
+   "styleOverrides": {
+    "./Outlook Cell / Thu 8": {
+     "opacity": "var(--opacity-outlook-fade-low)"
+    },
+    "./Outlook Cell / Thu 8/ScoreChip / regular / Good": {
+     "background": "var(--color-light-ramp-great)",
+     "color": "var(--color-light-ramp-text-great)"
+    }
+   },
+   "textOverrides": {
+    "./Outlook Cell / Thu 8/Weekday/#text0": "Mon",
+    "./Outlook Cell / Thu 8/Day Number/#text0": "12",
+    "./Outlook Cell / Thu 8/ScoreChip / regular / Good/Score/#text0": "87",
+    "./Outlook Cell / Thu 8/Caption Slot/Range or Reason/#text0": "72–100",
+    "./Caption/#text0": "Low fade 60%"
+   },
+   "nameOverrides": {
+    ".": "Specimen / Low fade 60%",
+    "./Outlook Cell / Thu 8": "Outlook Cell / Mon 12",
+    "./Outlook Cell / Thu 8/ScoreChip / regular / Good": "ScoreChip / regular / Great"
+   },
+   "lines": 10
+  },
+  {
+   "seq": 37,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Cell states/Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Cell states",
+    "Cells"
+   ],
+   "parentSeq": 28,
+   "html": "<div layer-name=\"Specimen / Passed (ring)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:96px;flex-shrink:0\">\n  <div layer-name=\"Outlook Cell / Tue 6\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:center;flex-shrink:0;width:80px;padding:var(--spacing-xs) 0;border-radius:var(--radius-control);border:var(--spacing-stroke-regular) solid transparent\">\n    <div layer-name=\"Best Tab Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;padding:0 var(--spacing-xs);border-radius:999px\">\n      <div layer-name=\"Best Tab\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-accent-on-accent);white-space:nowrap\"></div>\n    </div>\n    <div layer-name=\"Weekday\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Tue</div>\n    <div layer-name=\"Day Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap\">6</div>\n    <svg layer-name=\"NoForecastRing / 22\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"11\" cy=\"11\" r=\"10.25\" fill=\"none\" style=\"stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n    <div layer-name=\"Caption Slot\" style=\"box-sizing:border-box;min-height:var(--spacing-xl);display:flex;justify-content:center;align-items:flex-start\">\n      <div layer-name=\"Range or Reason\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);text-align:center;white-space:pre-wrap\">Passed</div>\n    </div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Passed (ring)</div>\n</div>",
+   "lines": 14
+  },
+  {
+   "seq": 38,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Cell states/Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Cell states",
+    "Cells"
+   ],
+   "parentSeq": 28,
+   "sourceSeq": 37,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Cell states/Cells/Specimen / Passed (ring)",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Cell states",
+    "Cells",
+    "Specimen / Passed (ring)"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Outlook Cell / Tue 6/Weekday/#text0": "Fri",
+    "./Outlook Cell / Tue 6/Day Number/#text0": "9",
+    "./Outlook Cell / Tue 6/Caption Slot/Range or Reason/#text0": "No window",
+    "./Caption/#text0": "No window"
+   },
+   "nameOverrides": {
+    ".": "Specimen / No window",
+    "./Outlook Cell / Tue 6": "Outlook Cell / Fri 9"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 39,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border);width:934px\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Specimen / Sunrise, sample weather\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n    <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap\">Sunrise, sample weather</div>\n    <div layer-name=\"OutlookStrip\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n      <div layer-name=\"Outlook Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-secondary);white-space:nowrap\">10-day outlook for Sunrise</div>\n      <div layer-name=\"Outlook Cells\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n        <div layer-name=\"Outlook Cell / Tue 6\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:center;flex:1 1 0;min-width:0;padding:var(--spacing-xs) 0;border-radius:var(--radius-control);border:var(--spacing-stroke-regular) solid transparent\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 40,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6"
+   ],
+   "parentSeq": 39,
+   "sourceSeq": 16,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6/Caption Slot",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6",
+    "Caption Slot"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 1
+   }
+  },
+  {
+   "seq": 41,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Tue 6",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Tue 6"
+   ],
+   "parentSeq": 39,
+   "html": "<div layer-name=\"Best Tab Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;padding:0 var(--spacing-xs);border-radius:999px\">\n  <div layer-name=\"Best Tab\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-accent-on-accent);white-space:nowrap\"></div>\n</div>\n<div layer-name=\"Weekday\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap\">Tue</div>\n<div layer-name=\"Day Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap\">6</div>\n<svg layer-name=\"NoForecastRing / 22\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"11\" cy=\"11\" r=\"10.25\" fill=\"none\" style=\"stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>",
+   "lines": 6
+  },
+  {
+   "seq": 42,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 39,
+   "sourceSeq": 5,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Wed 7",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Wed 7"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 5
+   }
+  },
+  {
+   "seq": 43,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 39,
+   "sourceSeq": 6,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Thu 8",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Thu 8"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 5
+   }
+  },
+  {
+   "seq": 44,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 39,
+   "sourceSeq": 6,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Thu 8",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Thu 8"
+   ],
+   "styleOverrides": {
+    "./ScoreChip / regular / Good": {
+     "background": "var(--color-dark-light-ramp-poor)",
+     "color": "var(--color-dark-light-ramp-text-poor)"
+    }
+   },
+   "textOverrides": {
+    "./Weekday/#text0": "Fri",
+    "./Day Number/#text0": "9",
+    "./ScoreChip / regular / Good/Score/#text0": "5",
+    "./Caption Slot/Range or Reason/#text0": "0–13"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Fri 9",
+    "./ScoreChip / regular / Good": "ScoreChip / regular / Poor"
+   },
+   "lines": 8,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 5
+   }
+  },
+  {
+   "seq": 45,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 39,
+   "sourceSeq": 6,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Thu 8",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Thu 8"
+   ],
+   "styleOverrides": {
+    ".": {
+     "opacity": "var(--opacity-outlook-fade-low)"
+    },
+    "./ScoreChip / regular / Good": {
+     "background": "var(--color-dark-light-ramp-poor)",
+     "color": "var(--color-dark-light-ramp-text-poor)"
+    }
+   },
+   "textOverrides": {
+    "./Weekday/#text0": "Sat",
+    "./Day Number/#text0": "10",
+    "./ScoreChip / regular / Good/Score/#text0": "5",
+    "./Caption Slot/Range or Reason/#text0": "0–20"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Sat 10",
+    "./ScoreChip / regular / Good": "ScoreChip / regular / Poor"
+   },
+   "lines": 9,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 5
+   }
+  },
+  {
+   "seq": 46,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 39,
+   "sourceSeq": 6,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Thu 8",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Thu 8"
+   ],
+   "styleOverrides": {
+    ".": {
+     "opacity": "var(--opacity-outlook-fade-low)"
+    },
+    "./ScoreChip / regular / Good": {
+     "background": "var(--color-dark-light-ramp-poor)",
+     "color": "var(--color-dark-light-ramp-text-poor)"
+    }
+   },
+   "textOverrides": {
+    "./Weekday/#text0": "Sun",
+    "./Day Number/#text0": "11",
+    "./ScoreChip / regular / Good/Score/#text0": "5",
+    "./Caption Slot/Range or Reason/#text0": "0–20"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Sun 11",
+    "./ScoreChip / regular / Good": "ScoreChip / regular / Poor"
+   },
+   "lines": 9,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 5
+   }
+  },
+  {
+   "seq": 47,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 39,
+   "sourceSeq": 13,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Mon 12",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Mon 12"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 7
+   }
+  },
+  {
+   "seq": 48,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 39,
+   "sourceSeq": 6,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Thu 8",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Thu 8"
+   ],
+   "styleOverrides": {
+    ".": {
+     "opacity": "var(--opacity-outlook-fade-low)"
+    }
+   },
+   "textOverrides": {
+    "./Weekday/#text0": "Tue",
+    "./Day Number/#text0": "13",
+    "./ScoreChip / regular / Good/Score/#text0": "68",
+    "./Caption Slot/Range or Reason/#text0": "53–83"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Tue 13"
+   },
+   "lines": 7,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 5
+   }
+  },
+  {
+   "seq": 49,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 39,
+   "sourceSeq": 6,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Thu 8",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Thu 8"
+   ],
+   "styleOverrides": {
+    ".": {
+     "opacity": "var(--opacity-outlook-fade-low)"
+    },
+    "./ScoreChip / regular / Good": {
+     "background": "var(--color-dark-light-ramp-great)",
+     "color": "var(--color-dark-light-ramp-text-great)"
+    }
+   },
+   "textOverrides": {
+    "./Weekday/#text0": "Wed",
+    "./Day Number/#text0": "14",
+    "./ScoreChip / regular / Good/Score/#text0": "74",
+    "./Caption Slot/Range or Reason/#text0": "59–89"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Wed 14",
+    "./ScoreChip / regular / Good": "ScoreChip / regular / Great"
+   },
+   "lines": 9,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 5
+   }
+  },
+  {
+   "seq": 50,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells"
+   ],
+   "parentSeq": 39,
+   "sourceSeq": 6,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Sunrise, sample weather/OutlookStrip/Outlook Cells/Outlook Cell / Thu 8",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip",
+    "Outlook Cells",
+    "Outlook Cell / Thu 8"
+   ],
+   "styleOverrides": {
+    ".": {
+     "opacity": "var(--opacity-outlook-fade-low)"
+    },
+    "./ScoreChip / regular / Good": {
+     "background": "var(--color-dark-light-ramp-poor)",
+     "color": "var(--color-dark-light-ramp-text-poor)"
+    }
+   },
+   "textOverrides": {
+    "./Day Number/#text0": "15",
+    "./ScoreChip / regular / Good/Score/#text0": "5",
+    "./Caption Slot/Range or Reason/#text0": "0–20"
+   },
+   "nameOverrides": {
+    ".": "Outlook Cell / Thu 15",
+    "./ScoreChip / regular / Good": "ScoreChip / regular / Poor"
+   },
+   "lines": 8,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 5
+   }
+  },
+  {
+   "seq": 51,
+   "kind": "write",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance/Specimen / Sunrise, sample weather/OutlookStrip",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Sunrise, sample weather",
+    "OutlookStrip"
+   ],
+   "parentSeq": 39,
+   "html": "<div layer-name=\"Outlook Key\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-tertiary);white-space:nowrap\">Fainter days are less certain. A dashed ring means no forecast.</div>",
+   "lines": 1
+  },
+  {
+   "seq": 52,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 39,
+   "sourceSeq": 15,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 44
+   }
+  },
+  {
+   "seq": 53,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 39,
+   "sourceSeq": 15,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Weather off",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Weather off"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Specimen Label/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Wed 7/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Thu 8/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Fri 9/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Sat 10/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Sun 11/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Mon 12/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Tue 13/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Wed 14/Caption Slot/Range or Reason/#text0": "Offline",
+    "./OutlookStrip/Outlook Cells/Outlook Cell / Thu 15/Caption Slot/Range or Reason/#text0": "Offline"
+   },
+   "nameOverrides": {
+    ".": "Specimen / Offline"
+   },
+   "lines": 12,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 44
+   }
+  },
+  {
+   "seq": 54,
+   "kind": "clone",
+   "parentPath": "OutlookStrip/Page/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 39,
+   "sourceSeq": 28,
+   "sourcePath": "OutlookStrip/Page/Appearances/Light Appearance/Specimen / Cell states",
+   "sourcePathArray": [
+    "OutlookStrip",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Cell states"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 37
+   }
+  }
+ ]
+}

@@ -1,0 +1,1988 @@
+{
+ "assumptions": [
+  "create_tokens takes <= 100 tokens per call (277 entries in tokens.paper.json -> 3 calls)",
+  "get_guide 1, get_basic_info 1, get_font_family_info 2, create_page 5, finish_working_on_nodes 1 per session (reserved in every budget)",
+  "artboard calls from artboards/calls.json (writes + clones + batched overrides + screenshots; dark twins are duplicate_nodes + batched update_styles)"
+ ],
+ "overhead": {
+  "get_guide": 1,
+  "get_basic_info": 1,
+  "get_font_family_info": 2,
+  "create_page": 5,
+  "create_tokens": 3,
+  "setup": 12,
+  "finish": 1
+ },
+ "stages": [
+  {
+   "n": 0,
+   "name": "Setup: guide, basic info, fonts, pages, tokens",
+   "calls": 12,
+   "cumulative": 13,
+   "artboards": []
+  },
+  {
+   "n": 1,
+   "name": "Foundations: colour, type, Light Index, spacing",
+   "calls": 244,
+   "cumulative": 257,
+   "artboards": [
+    {
+     "id": "F01-colour",
+     "theme": "light",
+     "name": "F01 Colour",
+     "file": "foundations/F01-colour.html",
+     "calls": 101
+    },
+    {
+     "id": "F02-type-scale",
+     "theme": "light",
+     "name": "F02 Type scale",
+     "file": "foundations/F02-type-scale.html",
+     "calls": 20
+    },
+    {
+     "id": "F03-spacing-radii",
+     "theme": "light",
+     "name": "F03 Spacing & radii",
+     "file": "foundations/F03-spacing-radii.html",
+     "calls": 58
+    },
+    {
+     "id": "F07-light-index",
+     "theme": "light",
+     "name": "F07 Light Index language",
+     "file": "foundations/F07-light-index.html",
+     "calls": 65
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "name": "Core components",
+   "calls": 214,
+   "cumulative": 471,
+   "artboards": [
+    {
+     "id": "C-light-badge",
+     "theme": "light",
+     "name": "LightBadge · Compact, Regular",
+     "file": "components/C-light-badge.html",
+     "calls": 52
+    },
+    {
+     "id": "C-light-badge-large",
+     "theme": "light",
+     "name": "LightBadge · Large, No forecast",
+     "file": "components/C-light-badge-large.html",
+     "calls": 42
+    },
+    {
+     "id": "C-score-chip",
+     "theme": "light",
+     "name": "ScoreChip",
+     "file": "components/C-score-chip.html",
+     "calls": 36
+    },
+    {
+     "id": "C-no-forecast-ring",
+     "theme": "light",
+     "name": "NoForecastRing",
+     "file": "components/C-no-forecast-ring.html",
+     "calls": 13
+    },
+    {
+     "id": "C-confidence-mark",
+     "theme": "light",
+     "name": "ConfidenceMark",
+     "file": "components/C-confidence-mark.html",
+     "calls": 17
+    },
+    {
+     "id": "C-sample-data-label",
+     "theme": "light",
+     "name": "SampleDataLabel",
+     "file": "components/C-sample-data-label.html",
+     "calls": 13
+    },
+    {
+     "id": "C-weather-attribution",
+     "theme": "light",
+     "name": "WeatherAttributionView",
+     "file": "components/C-weather-attribution.html",
+     "calls": 13
+    },
+    {
+     "id": "C-provenance-tag",
+     "theme": "light",
+     "name": "ProvenanceTag",
+     "file": "components/C-provenance-tag.html",
+     "calls": 9
+    },
+    {
+     "id": "C-warning-lines",
+     "theme": "light",
+     "name": "Warning lines",
+     "file": "components/C-warning-lines.html",
+     "calls": 19
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "name": "Key light screens",
+   "calls": 393,
+   "cumulative": 864,
+   "artboards": [
+    {
+     "id": "S-shell-default",
+     "theme": "light",
+     "name": "Shell · Default · Light · 1280",
+     "file": "screens/light/S-shell-default--light.html",
+     "calls": 11
+    },
+    {
+     "id": "S-trips-list",
+     "theme": "light",
+     "name": "All Trips · List · Light · 1280",
+     "file": "screens/light/S-trips-list--light.html",
+     "calls": 14
+    },
+    {
+     "id": "S-trip-builder-default",
+     "theme": "light",
+     "name": "Trip builder · Default · Light · 1280",
+     "file": "screens/light/S-trip-builder-default--light.html",
+     "calls": 35
+    },
+    {
+     "id": "S-explore-default",
+     "theme": "light",
+     "name": "Explore · Default · Light · 1280",
+     "file": "screens/light/S-explore-default--light.html",
+     "calls": 73
+    },
+    {
+     "id": "S-explore-selected",
+     "theme": "light",
+     "name": "Explore · Selected with place card · Light · 1280",
+     "file": "screens/light/S-explore-selected--light.html",
+     "calls": 80
+    },
+    {
+     "id": "S-spot-sample",
+     "theme": "light",
+     "name": "Spot page · Sample (scored) · Light · 1280",
+     "file": "screens/light/S-spot-sample--light.html",
+     "calls": 118
+    },
+    {
+     "id": "S-saved-list",
+     "theme": "light",
+     "name": "Saved · List · Light · 1280",
+     "file": "screens/light/S-saved-list--light.html",
+     "calls": 22
+    },
+    {
+     "id": "S-scout-results",
+     "theme": "light",
+     "name": "Scout · Results · Light · 1280",
+     "file": "screens/light/S-scout-results--light.html",
+     "calls": 40
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "name": "Dark twins of the key screens",
+   "calls": 48,
+   "cumulative": 912,
+   "artboards": [
+    {
+     "id": "S-shell-default",
+     "theme": "dark",
+     "name": "Shell · Default · Dark · 1280",
+     "file": "screens/dark/S-shell-default--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-trips-list",
+     "theme": "dark",
+     "name": "All Trips · List · Dark · 1280",
+     "file": "screens/dark/S-trips-list--dark.html",
+     "calls": 4
+    },
+    {
+     "id": "S-trip-builder-default",
+     "theme": "dark",
+     "name": "Trip builder · Default · Dark · 1280",
+     "file": "screens/dark/S-trip-builder-default--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-explore-default",
+     "theme": "dark",
+     "name": "Explore · Default · Dark · 1280",
+     "file": "screens/dark/S-explore-default--dark.html",
+     "calls": 7
+    },
+    {
+     "id": "S-explore-selected",
+     "theme": "dark",
+     "name": "Explore · Selected with place card · Dark · 1280",
+     "file": "screens/dark/S-explore-selected--dark.html",
+     "calls": 8
+    },
+    {
+     "id": "S-spot-sample",
+     "theme": "dark",
+     "name": "Spot page · Sample (scored) · Dark · 1280",
+     "file": "screens/dark/S-spot-sample--dark.html",
+     "calls": 11
+    },
+    {
+     "id": "S-saved-list",
+     "theme": "dark",
+     "name": "Saved · List · Dark · 1280",
+     "file": "screens/dark/S-saved-list--dark.html",
+     "calls": 4
+    },
+    {
+     "id": "S-scout-results",
+     "theme": "dark",
+     "name": "Scout · Results · Dark · 1280",
+     "file": "screens/dark/S-scout-results--dark.html",
+     "calls": 5
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "name": "Remaining domain components",
+   "calls": 1530,
+   "cumulative": 2442,
+   "artboards": [
+    {
+     "id": "C-add-to-trip-menu",
+     "theme": "light",
+     "name": "AddToTripMenu",
+     "file": "components/C-add-to-trip-menu.html",
+     "calls": 13
+    },
+    {
+     "id": "C-map-stand-in",
+     "theme": "light",
+     "name": "MapStandIn",
+     "file": "components/C-map-stand-in.html",
+     "calls": 69
+    },
+    {
+     "id": "C-spot-editor-sheet",
+     "theme": "light",
+     "name": "SpotEditorSheet",
+     "file": "components/C-spot-editor-sheet.html",
+     "calls": 50
+    },
+    {
+     "id": "C-spot-card",
+     "theme": "light",
+     "name": "SpotCard",
+     "file": "components/C-spot-card.html",
+     "calls": 13
+    },
+    {
+     "id": "C-trip-context-menu",
+     "theme": "light",
+     "name": "TripContextMenu",
+     "file": "components/C-trip-context-menu.html",
+     "calls": 19
+    },
+    {
+     "id": "C-trip-card",
+     "theme": "light",
+     "name": "TripCard",
+     "file": "components/C-trip-card.html",
+     "calls": 17
+    },
+    {
+     "id": "C-template-row",
+     "theme": "light",
+     "name": "TemplateRow",
+     "file": "components/C-template-row.html",
+     "calls": 11
+    },
+    {
+     "id": "C-trip-header",
+     "theme": "light",
+     "name": "TripHeader",
+     "file": "components/C-trip-header.html",
+     "calls": 18
+    },
+    {
+     "id": "C-trip-plan-list",
+     "theme": "light",
+     "name": "TripPlanList",
+     "file": "components/C-trip-plan-list.html",
+     "calls": 48
+    },
+    {
+     "id": "C-day-header",
+     "theme": "light",
+     "name": "DayHeader",
+     "file": "components/C-day-header.html",
+     "calls": 21
+    },
+    {
+     "id": "C-stop-row",
+     "theme": "light",
+     "name": "StopRow",
+     "file": "components/C-stop-row.html",
+     "calls": 45
+    },
+    {
+     "id": "C-stop-number-badge",
+     "theme": "light",
+     "name": "StopNumberBadge",
+     "file": "components/C-stop-number-badge.html",
+     "calls": 9
+    },
+    {
+     "id": "C-connector-row",
+     "theme": "light",
+     "name": "ConnectorRow",
+     "file": "components/C-connector-row.html",
+     "calls": 28
+    },
+    {
+     "id": "C-suggestion-banner",
+     "theme": "light",
+     "name": "SuggestionBanner",
+     "file": "components/C-suggestion-banner.html",
+     "calls": 17
+    },
+    {
+     "id": "C-trip-route-map",
+     "theme": "light",
+     "name": "TripRouteMap",
+     "file": "components/C-trip-route-map.html",
+     "calls": 40
+    },
+    {
+     "id": "C-add-stop-popover",
+     "theme": "light",
+     "name": "AddStopPopover",
+     "file": "components/C-add-stop-popover.html",
+     "calls": 42
+    },
+    {
+     "id": "C-explore-list-panel",
+     "theme": "light",
+     "name": "ExploreListPanel",
+     "file": "components/C-explore-list-panel.html",
+     "calls": 95
+    },
+    {
+     "id": "C-explore-row",
+     "theme": "light",
+     "name": "ExploreRow",
+     "file": "components/C-explore-row.html",
+     "calls": 38
+    },
+    {
+     "id": "C-explore-map-pane",
+     "theme": "light",
+     "name": "ExploreMapPane",
+     "file": "components/C-explore-map-pane.html",
+     "calls": 157
+    },
+    {
+     "id": "C-explore-pin",
+     "theme": "light",
+     "name": "ExplorePinView",
+     "file": "components/C-explore-pin.html",
+     "calls": 26
+    },
+    {
+     "id": "C-explore-place-card",
+     "theme": "light",
+     "name": "ExplorePlaceCard",
+     "file": "components/C-explore-place-card.html",
+     "calls": 40
+    },
+    {
+     "id": "C-add-spot-banner",
+     "theme": "light",
+     "name": "AddSpotBanner",
+     "file": "components/C-add-spot-banner.html",
+     "calls": 8
+    },
+    {
+     "id": "C-spot-header",
+     "theme": "light",
+     "name": "SpotHeader",
+     "file": "components/C-spot-header.html",
+     "calls": 27
+    },
+    {
+     "id": "C-when-to-go",
+     "theme": "light",
+     "name": "WhenToGoSection",
+     "file": "components/C-when-to-go.html",
+     "calls": 40
+    },
+    {
+     "id": "C-sun-times-line",
+     "theme": "light",
+     "name": "SunTimesLine",
+     "file": "components/C-sun-times-line.html",
+     "calls": 8
+    },
+    {
+     "id": "C-outlook-strip",
+     "theme": "light",
+     "name": "OutlookStrip",
+     "file": "components/C-outlook-strip.html",
+     "calls": 63
+    },
+    {
+     "id": "C-day-windows",
+     "theme": "light",
+     "name": "DayWindowsSection",
+     "file": "components/C-day-windows.html",
+     "calls": 40
+    },
+    {
+     "id": "C-window-row",
+     "theme": "light",
+     "name": "WindowRow",
+     "file": "components/C-window-row.html",
+     "calls": 44
+    },
+    {
+     "id": "C-reasons-grid",
+     "theme": "light",
+     "name": "ReasonsGrid",
+     "file": "components/C-reasons-grid.html",
+     "calls": 33
+    },
+    {
+     "id": "C-signed-bar",
+     "theme": "light",
+     "name": "SignedBar",
+     "file": "components/C-signed-bar.html",
+     "calls": 22
+    },
+    {
+     "id": "C-explain-block",
+     "theme": "light",
+     "name": "ExplainBlock",
+     "file": "components/C-explain-block.html",
+     "calls": 17
+    },
+    {
+     "id": "C-light-timeline",
+     "theme": "light",
+     "name": "LightTimeline",
+     "file": "components/C-light-timeline.html",
+     "calls": 39
+    },
+    {
+     "id": "C-sky-arc",
+     "theme": "light",
+     "name": "SkyArc",
+     "file": "components/C-sky-arc.html",
+     "calls": 33
+    },
+    {
+     "id": "C-hourly-strip",
+     "theme": "light",
+     "name": "HourlyStrip",
+     "file": "components/C-hourly-strip.html",
+     "calls": 141
+    },
+    {
+     "id": "C-spot-facts-row",
+     "theme": "light",
+     "name": "SpotFactsRow",
+     "file": "components/C-spot-facts-row.html",
+     "calls": 26
+    },
+    {
+     "id": "C-look-around",
+     "theme": "light",
+     "name": "LookAroundSection",
+     "file": "components/C-look-around.html",
+     "calls": 5
+    },
+    {
+     "id": "C-saved-row",
+     "theme": "light",
+     "name": "SavedRow",
+     "file": "components/C-saved-row.html",
+     "calls": 39
+    },
+    {
+     "id": "C-scout-result-row",
+     "theme": "light",
+     "name": "ScoutResultRow",
+     "file": "components/C-scout-result-row.html",
+     "calls": 34
+    },
+    {
+     "id": "C-scout-progress",
+     "theme": "light",
+     "name": "ScoutProgress",
+     "file": "components/C-scout-progress.html",
+     "calls": 20
+    },
+    {
+     "id": "C-system-components",
+     "theme": "light",
+     "name": "System components",
+     "file": "components/C-system-components.html",
+     "calls": 75
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "name": "Remaining light screens (1280 and other sizes)",
+   "calls": 2124,
+   "cumulative": 4566,
+   "artboards": [
+    {
+     "id": "S-shell-no-banner",
+     "theme": "light",
+     "name": "Shell · No sample banner · Light · 1280",
+     "file": "screens/light/S-shell-no-banner--light.html",
+     "calls": 10
+    },
+    {
+     "id": "S-trips-empty",
+     "theme": "light",
+     "name": "All Trips · Empty · Light · 1280",
+     "file": "screens/light/S-trips-empty--light.html",
+     "calls": 13
+    },
+    {
+     "id": "S-trips-all-passed",
+     "theme": "light",
+     "name": "All Trips · All sessions passed · Light · 1280",
+     "file": "screens/light/S-trips-all-passed--light.html",
+     "calls": 12
+    },
+    {
+     "id": "S-trips-import-error",
+     "theme": "light",
+     "name": "All Trips · Import error · Light · 1280",
+     "file": "screens/light/S-trips-import-error--light.html",
+     "calls": 15
+    },
+    {
+     "id": "S-new-trip-template",
+     "theme": "light",
+     "name": "New Trip sheet · Template chosen · Light · 1280",
+     "file": "screens/light/S-new-trip-template--light.html",
+     "calls": 20
+    },
+    {
+     "id": "S-new-trip-empty",
+     "theme": "light",
+     "name": "New Trip sheet · Empty trip · Light · 1280",
+     "file": "screens/light/S-new-trip-empty--light.html",
+     "calls": 20
+    },
+    {
+     "id": "S-change-dates",
+     "theme": "light",
+     "name": "Change Dates · Stops would move · Light · 1280",
+     "file": "screens/light/S-change-dates--light.html",
+     "calls": 19
+    },
+    {
+     "id": "S-trip-builder-add-stop",
+     "theme": "light",
+     "name": "Trip builder · Add Stop popover · Light · 1280",
+     "file": "screens/light/S-trip-builder-add-stop--light.html",
+     "calls": 48
+    },
+    {
+     "id": "S-trip-builder-noforecast",
+     "theme": "light",
+     "name": "Trip builder · No forecast · Light · 1280",
+     "file": "screens/light/S-trip-builder-noforecast--light.html",
+     "calls": 32
+    },
+    {
+     "id": "S-trip-builder-conflict",
+     "theme": "light",
+     "name": "Trip builder · Conflict · Light · 1280",
+     "file": "screens/light/S-trip-builder-conflict--light.html",
+     "calls": 37
+    },
+    {
+     "id": "S-trip-builder-missing",
+     "theme": "light",
+     "name": "Trip builder · Missing trip · Light · 1280",
+     "file": "screens/light/S-trip-builder-missing--light.html",
+     "calls": 10
+    },
+    {
+     "id": "S-trip-builder-stoprow",
+     "theme": "light",
+     "name": "Trip builder · A stop row · Light · 1280",
+     "file": "screens/light/S-trip-builder-stoprow--light.html",
+     "calls": 18
+    },
+    {
+     "id": "S-trip-builder-dragging",
+     "theme": "light",
+     "name": "Trip builder · Dragging a stop · Light · 1280",
+     "file": "screens/light/S-trip-builder-dragging--light.html",
+     "calls": 36
+    },
+    {
+     "id": "S-trip-builder-fetching",
+     "theme": "light",
+     "name": "Trip builder · Fetching drives · Light · 1280",
+     "file": "screens/light/S-trip-builder-fetching--light.html",
+     "calls": 36
+    },
+    {
+     "id": "S-trip-builder-estimated",
+     "theme": "light",
+     "name": "Trip builder · Estimated drive · Light · 1280",
+     "file": "screens/light/S-trip-builder-estimated--light.html",
+     "calls": 35
+    },
+    {
+     "id": "S-trip-builder-window-missing",
+     "theme": "light",
+     "name": "Trip builder · Window missing · Light · 1280",
+     "file": "screens/light/S-trip-builder-window-missing--light.html",
+     "calls": 37
+    },
+    {
+     "id": "S-explore-no-forecast",
+     "theme": "light",
+     "name": "Explore · No forecast · Light · 1280",
+     "file": "screens/light/S-explore-no-forecast--light.html",
+     "calls": 70
+    },
+    {
+     "id": "S-explore-filtered-empty",
+     "theme": "light",
+     "name": "Explore · Filtered empty · Light · 1280",
+     "file": "screens/light/S-explore-filtered-empty--light.html",
+     "calls": 22
+    },
+    {
+     "id": "S-explore-add-spot",
+     "theme": "light",
+     "name": "Explore · Add Spot mode · Light · 1280",
+     "file": "screens/light/S-explore-add-spot--light.html",
+     "calls": 74
+    },
+    {
+     "id": "S-explore-search-results",
+     "theme": "light",
+     "name": "Explore · Apple Maps results · Light · 1280",
+     "file": "screens/light/S-explore-search-results--light.html",
+     "calls": 48
+    },
+    {
+     "id": "S-explore-search-nothing",
+     "theme": "light",
+     "name": "Explore · Search found nothing · Light · 1280",
+     "file": "screens/light/S-explore-search-nothing--light.html",
+     "calls": 21
+    },
+    {
+     "id": "S-explore-search-failed",
+     "theme": "light",
+     "name": "Explore · Search failed · Light · 1280",
+     "file": "screens/light/S-explore-search-failed--light.html",
+     "calls": 73
+    },
+    {
+     "id": "S-explore-polar",
+     "theme": "light",
+     "name": "Explore · Polar day, no window · Light · 1280",
+     "file": "screens/light/S-explore-polar--light.html",
+     "calls": 48
+    },
+    {
+     "id": "S-explore-scored-card",
+     "theme": "light",
+     "name": "Explore · Scored place card · Light · 1280",
+     "file": "screens/light/S-explore-scored-card--light.html",
+     "calls": 83
+    },
+    {
+     "id": "S-spot-window-expanded",
+     "theme": "light",
+     "name": "Spot page · Window expanded · Light · 1280",
+     "file": "screens/light/S-spot-window-expanded--light.html",
+     "calls": 123
+    },
+    {
+     "id": "S-spot-no-forecast",
+     "theme": "light",
+     "name": "Spot page · No forecast · Light · 1280",
+     "file": "screens/light/S-spot-no-forecast--light.html",
+     "calls": 56
+    },
+    {
+     "id": "S-spot-failed",
+     "theme": "light",
+     "name": "Spot page · Failed · Light · 1280",
+     "file": "screens/light/S-spot-failed--light.html",
+     "calls": 56
+    },
+    {
+     "id": "S-spot-polar",
+     "theme": "light",
+     "name": "Spot page · Polar · Light · 1280",
+     "file": "screens/light/S-spot-polar--light.html",
+     "calls": 101
+    },
+    {
+     "id": "S-spot-user",
+     "theme": "light",
+     "name": "Spot page · User spot · Light · 1280",
+     "file": "screens/light/S-spot-user--light.html",
+     "calls": 116
+    },
+    {
+     "id": "S-spot-loading",
+     "theme": "light",
+     "name": "Spot page · Loading forecast · Light · 1280",
+     "file": "screens/light/S-spot-loading--light.html",
+     "calls": 56
+    },
+    {
+     "id": "S-spot-explanation",
+     "theme": "light",
+     "name": "Spot page · Explanation states · Light · 1280",
+     "file": "screens/light/S-spot-explanation--light.html",
+     "calls": 123
+    },
+    {
+     "id": "S-spot-zoomed",
+     "theme": "light",
+     "name": "Spot page · Zoomed timeline · Light · 1280",
+     "file": "screens/light/S-spot-zoomed--light.html",
+     "calls": 73
+    },
+    {
+     "id": "S-saved-empty",
+     "theme": "light",
+     "name": "Saved · Empty · Light · 1280",
+     "file": "screens/light/S-saved-empty--light.html",
+     "calls": 11
+    },
+    {
+     "id": "S-saved-no-forecast",
+     "theme": "light",
+     "name": "Saved · No forecast · Light · 1280",
+     "file": "screens/light/S-saved-no-forecast--light.html",
+     "calls": 21
+    },
+    {
+     "id": "S-saved-filter-empty",
+     "theme": "light",
+     "name": "Saved · Filter empty · Light · 1280",
+     "file": "screens/light/S-saved-filter-empty--light.html",
+     "calls": 12
+    },
+    {
+     "id": "S-saved-delete-confirm",
+     "theme": "light",
+     "name": "Saved · Delete confirmation · Light · 1280",
+     "file": "screens/light/S-saved-delete-confirm--light.html",
+     "calls": 25
+    },
+    {
+     "id": "S-editor-create",
+     "theme": "light",
+     "name": "Spot editor · Create · Light · 1280",
+     "file": "screens/light/S-editor-create--light.html",
+     "calls": 48
+    },
+    {
+     "id": "S-editor-edit",
+     "theme": "light",
+     "name": "Spot editor · Edit · Light · 1280",
+     "file": "screens/light/S-editor-edit--light.html",
+     "calls": 50
+    },
+    {
+     "id": "S-editor-lookup-failed",
+     "theme": "light",
+     "name": "Spot editor · Lookup failed · Light · 1280",
+     "file": "screens/light/S-editor-lookup-failed--light.html",
+     "calls": 48
+    },
+    {
+     "id": "S-editor-looking-up",
+     "theme": "light",
+     "name": "Spot editor · Looking up · Light · 1280",
+     "file": "screens/light/S-editor-looking-up--light.html",
+     "calls": 48
+    },
+    {
+     "id": "S-editor-validation",
+     "theme": "light",
+     "name": "Spot editor · Validation errors · Light · 1280",
+     "file": "screens/light/S-editor-validation--light.html",
+     "calls": 51
+    },
+    {
+     "id": "S-scout-idle",
+     "theme": "light",
+     "name": "Scout · Idle · Light · 1280",
+     "file": "screens/light/S-scout-idle--light.html",
+     "calls": 15
+    },
+    {
+     "id": "S-scout-running",
+     "theme": "light",
+     "name": "Scout · Running · Light · 1280",
+     "file": "screens/light/S-scout-running--light.html",
+     "calls": 15
+    },
+    {
+     "id": "S-scout-results-no-forecast",
+     "theme": "light",
+     "name": "Scout · Results, no forecast · Light · 1280",
+     "file": "screens/light/S-scout-results-no-forecast--light.html",
+     "calls": 38
+    },
+    {
+     "id": "S-scout-unavailable-off",
+     "theme": "light",
+     "name": "Scout · Apple Intelligence off · Light · 1280",
+     "file": "screens/light/S-scout-unavailable-off--light.html",
+     "calls": 11
+    },
+    {
+     "id": "S-scout-unavailable-device",
+     "theme": "light",
+     "name": "Scout · Unavailable, device · Light · 1280",
+     "file": "screens/light/S-scout-unavailable-device--light.html",
+     "calls": 11
+    },
+    {
+     "id": "S-scout-unavailable-downloading",
+     "theme": "light",
+     "name": "Scout · Unavailable, downloading · Light · 1280",
+     "file": "screens/light/S-scout-unavailable-downloading--light.html",
+     "calls": 11
+    },
+    {
+     "id": "S-scout-no-results",
+     "theme": "light",
+     "name": "Scout · No results · Light · 1280",
+     "file": "screens/light/S-scout-no-results--light.html",
+     "calls": 13
+    },
+    {
+     "id": "S-scout-guardrail",
+     "theme": "light",
+     "name": "Scout · Guardrail · Light · 1280",
+     "file": "screens/light/S-scout-guardrail--light.html",
+     "calls": 13
+    },
+    {
+     "id": "S-scout-other-failures",
+     "theme": "light",
+     "name": "Scout · Other failures · Light · 1280",
+     "file": "screens/light/S-scout-other-failures--light.html",
+     "calls": 21
+    },
+    {
+     "id": "S-scout-results-loading",
+     "theme": "light",
+     "name": "Scout · Checking the forecast · Light · 1280",
+     "file": "screens/light/S-scout-results-loading--light.html",
+     "calls": 40
+    },
+    {
+     "id": "S-settings-general",
+     "theme": "light",
+     "name": "Settings · General · Light · 552",
+     "file": "screens/light/S-settings-general--light.html",
+     "calls": 9
+    },
+    {
+     "id": "S-settings-weather-not-enabled",
+     "theme": "light",
+     "name": "Settings · Weather, not enabled · Light · 552",
+     "file": "screens/light/S-settings-weather-not-enabled--light.html",
+     "calls": 9
+    },
+    {
+     "id": "S-settings-weather-working",
+     "theme": "light",
+     "name": "Settings · Weather, working · Light · 552",
+     "file": "screens/light/S-settings-weather-working--light.html",
+     "calls": 8
+    },
+    {
+     "id": "S-settings-weather-checking",
+     "theme": "light",
+     "name": "Settings · Weather, checking · Light · 552",
+     "file": "screens/light/S-settings-weather-checking--light.html",
+     "calls": 6
+    },
+    {
+     "id": "S-settings-weather-failed",
+     "theme": "light",
+     "name": "Settings · Weather, failed · Light · 552",
+     "file": "screens/light/S-settings-weather-failed--light.html",
+     "calls": 8
+    },
+    {
+     "id": "S-settings-intelligence-unavailable",
+     "theme": "light",
+     "name": "Settings · Intelligence, unavailable · Light · 552",
+     "file": "screens/light/S-settings-intelligence-unavailable--light.html",
+     "calls": 7
+    },
+    {
+     "id": "S-settings-intelligence-device",
+     "theme": "light",
+     "name": "Settings · Intelligence, device · Light · 552",
+     "file": "screens/light/S-settings-intelligence-device--light.html",
+     "calls": 7
+    },
+    {
+     "id": "S-settings-intelligence-downloading",
+     "theme": "light",
+     "name": "Settings · Intelligence, downloading · Light · 552",
+     "file": "screens/light/S-settings-intelligence-downloading--light.html",
+     "calls": 7
+    },
+    {
+     "id": "S-settings-intelligence-off",
+     "theme": "light",
+     "name": "Settings · Intelligence, off · Light · 552",
+     "file": "screens/light/S-settings-intelligence-off--light.html",
+     "calls": 7
+    },
+    {
+     "id": "S-settings-intelligence-ready",
+     "theme": "light",
+     "name": "Settings · Intelligence, ready · Light · 552",
+     "file": "screens/light/S-settings-intelligence-ready--light.html",
+     "calls": 7
+    },
+    {
+     "id": "S-settings-about",
+     "theme": "light",
+     "name": "Settings · About · Light · 552",
+     "file": "screens/light/S-settings-about--light.html",
+     "calls": 6
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "name": "Remaining dark twins",
+   "calls": 371,
+   "cumulative": 4937,
+   "artboards": [
+    {
+     "id": "S-shell-no-banner",
+     "theme": "dark",
+     "name": "Shell · No sample banner · Dark · 1280",
+     "file": "screens/dark/S-shell-no-banner--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-trips-empty",
+     "theme": "dark",
+     "name": "All Trips · Empty · Dark · 1280",
+     "file": "screens/dark/S-trips-empty--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-trips-all-passed",
+     "theme": "dark",
+     "name": "All Trips · All sessions passed · Dark · 1280",
+     "file": "screens/dark/S-trips-all-passed--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-trips-import-error",
+     "theme": "dark",
+     "name": "All Trips · Import error · Dark · 1280",
+     "file": "screens/dark/S-trips-import-error--dark.html",
+     "calls": 4
+    },
+    {
+     "id": "S-new-trip-template",
+     "theme": "dark",
+     "name": "New Trip sheet · Template chosen · Dark · 1280",
+     "file": "screens/dark/S-new-trip-template--dark.html",
+     "calls": 4
+    },
+    {
+     "id": "S-new-trip-empty",
+     "theme": "dark",
+     "name": "New Trip sheet · Empty trip · Dark · 1280",
+     "file": "screens/dark/S-new-trip-empty--dark.html",
+     "calls": 4
+    },
+    {
+     "id": "S-change-dates",
+     "theme": "dark",
+     "name": "Change Dates · Stops would move · Dark · 1280",
+     "file": "screens/dark/S-change-dates--dark.html",
+     "calls": 4
+    },
+    {
+     "id": "S-trip-builder-add-stop",
+     "theme": "dark",
+     "name": "Trip builder · Add Stop popover · Dark · 1280",
+     "file": "screens/dark/S-trip-builder-add-stop--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-trip-builder-noforecast",
+     "theme": "dark",
+     "name": "Trip builder · No forecast · Dark · 1280",
+     "file": "screens/dark/S-trip-builder-noforecast--dark.html",
+     "calls": 5
+    },
+    {
+     "id": "S-trip-builder-conflict",
+     "theme": "dark",
+     "name": "Trip builder · Conflict · Dark · 1280",
+     "file": "screens/dark/S-trip-builder-conflict--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-trip-builder-missing",
+     "theme": "dark",
+     "name": "Trip builder · Missing trip · Dark · 1280",
+     "file": "screens/dark/S-trip-builder-missing--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-trip-builder-stoprow",
+     "theme": "dark",
+     "name": "Trip builder · A stop row · Dark · 1280",
+     "file": "screens/dark/S-trip-builder-stoprow--dark.html",
+     "calls": 5
+    },
+    {
+     "id": "S-trip-builder-dragging",
+     "theme": "dark",
+     "name": "Trip builder · Dragging a stop · Dark · 1280",
+     "file": "screens/dark/S-trip-builder-dragging--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-trip-builder-fetching",
+     "theme": "dark",
+     "name": "Trip builder · Fetching drives · Dark · 1280",
+     "file": "screens/dark/S-trip-builder-fetching--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-trip-builder-estimated",
+     "theme": "dark",
+     "name": "Trip builder · Estimated drive · Dark · 1280",
+     "file": "screens/dark/S-trip-builder-estimated--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-trip-builder-window-missing",
+     "theme": "dark",
+     "name": "Trip builder · Window missing · Dark · 1280",
+     "file": "screens/dark/S-trip-builder-window-missing--dark.html",
+     "calls": 5
+    },
+    {
+     "id": "S-explore-no-forecast",
+     "theme": "dark",
+     "name": "Explore · No forecast · Dark · 1280",
+     "file": "screens/dark/S-explore-no-forecast--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-explore-filtered-empty",
+     "theme": "dark",
+     "name": "Explore · Filtered empty · Dark · 1280",
+     "file": "screens/dark/S-explore-filtered-empty--dark.html",
+     "calls": 4
+    },
+    {
+     "id": "S-explore-add-spot",
+     "theme": "dark",
+     "name": "Explore · Add Spot mode · Dark · 1280",
+     "file": "screens/dark/S-explore-add-spot--dark.html",
+     "calls": 7
+    },
+    {
+     "id": "S-explore-search-results",
+     "theme": "dark",
+     "name": "Explore · Apple Maps results · Dark · 1280",
+     "file": "screens/dark/S-explore-search-results--dark.html",
+     "calls": 5
+    },
+    {
+     "id": "S-explore-search-nothing",
+     "theme": "dark",
+     "name": "Explore · Search found nothing · Dark · 1280",
+     "file": "screens/dark/S-explore-search-nothing--dark.html",
+     "calls": 4
+    },
+    {
+     "id": "S-explore-search-failed",
+     "theme": "dark",
+     "name": "Explore · Search failed · Dark · 1280",
+     "file": "screens/dark/S-explore-search-failed--dark.html",
+     "calls": 7
+    },
+    {
+     "id": "S-explore-polar",
+     "theme": "dark",
+     "name": "Explore · Polar day, no window · Dark · 1280",
+     "file": "screens/dark/S-explore-polar--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-explore-scored-card",
+     "theme": "dark",
+     "name": "Explore · Scored place card · Dark · 1280",
+     "file": "screens/dark/S-explore-scored-card--dark.html",
+     "calls": 8
+    },
+    {
+     "id": "S-spot-window-expanded",
+     "theme": "dark",
+     "name": "Spot page · Window expanded · Dark · 1280",
+     "file": "screens/dark/S-spot-window-expanded--dark.html",
+     "calls": 11
+    },
+    {
+     "id": "S-spot-no-forecast",
+     "theme": "dark",
+     "name": "Spot page · No forecast · Dark · 1280",
+     "file": "screens/dark/S-spot-no-forecast--dark.html",
+     "calls": 7
+    },
+    {
+     "id": "S-spot-failed",
+     "theme": "dark",
+     "name": "Spot page · Failed · Dark · 1280",
+     "file": "screens/dark/S-spot-failed--dark.html",
+     "calls": 7
+    },
+    {
+     "id": "S-spot-polar",
+     "theme": "dark",
+     "name": "Spot page · Polar · Dark · 1280",
+     "file": "screens/dark/S-spot-polar--dark.html",
+     "calls": 10
+    },
+    {
+     "id": "S-spot-user",
+     "theme": "dark",
+     "name": "Spot page · User spot · Dark · 1280",
+     "file": "screens/dark/S-spot-user--dark.html",
+     "calls": 10
+    },
+    {
+     "id": "S-spot-loading",
+     "theme": "dark",
+     "name": "Spot page · Loading forecast · Dark · 1280",
+     "file": "screens/dark/S-spot-loading--dark.html",
+     "calls": 7
+    },
+    {
+     "id": "S-spot-explanation",
+     "theme": "dark",
+     "name": "Spot page · Explanation states · Dark · 1280",
+     "file": "screens/dark/S-spot-explanation--dark.html",
+     "calls": 11
+    },
+    {
+     "id": "S-spot-zoomed",
+     "theme": "dark",
+     "name": "Spot page · Zoomed timeline · Dark · 1280",
+     "file": "screens/dark/S-spot-zoomed--dark.html",
+     "calls": 8
+    },
+    {
+     "id": "S-saved-empty",
+     "theme": "dark",
+     "name": "Saved · Empty · Dark · 1280",
+     "file": "screens/dark/S-saved-empty--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-saved-no-forecast",
+     "theme": "dark",
+     "name": "Saved · No forecast · Dark · 1280",
+     "file": "screens/dark/S-saved-no-forecast--dark.html",
+     "calls": 4
+    },
+    {
+     "id": "S-saved-filter-empty",
+     "theme": "dark",
+     "name": "Saved · Filter empty · Dark · 1280",
+     "file": "screens/dark/S-saved-filter-empty--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-saved-delete-confirm",
+     "theme": "dark",
+     "name": "Saved · Delete confirmation · Dark · 1280",
+     "file": "screens/dark/S-saved-delete-confirm--dark.html",
+     "calls": 4
+    },
+    {
+     "id": "S-editor-create",
+     "theme": "dark",
+     "name": "Spot editor · Create · Dark · 1280",
+     "file": "screens/dark/S-editor-create--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-editor-edit",
+     "theme": "dark",
+     "name": "Spot editor · Edit · Dark · 1280",
+     "file": "screens/dark/S-editor-edit--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-editor-lookup-failed",
+     "theme": "dark",
+     "name": "Spot editor · Lookup failed · Dark · 1280",
+     "file": "screens/dark/S-editor-lookup-failed--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-editor-looking-up",
+     "theme": "dark",
+     "name": "Spot editor · Looking up · Dark · 1280",
+     "file": "screens/dark/S-editor-looking-up--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-editor-validation",
+     "theme": "dark",
+     "name": "Spot editor · Validation errors · Dark · 1280",
+     "file": "screens/dark/S-editor-validation--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-scout-idle",
+     "theme": "dark",
+     "name": "Scout · Idle · Dark · 1280",
+     "file": "screens/dark/S-scout-idle--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-scout-running",
+     "theme": "dark",
+     "name": "Scout · Running · Dark · 1280",
+     "file": "screens/dark/S-scout-running--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-scout-results-no-forecast",
+     "theme": "dark",
+     "name": "Scout · Results, no forecast · Dark · 1280",
+     "file": "screens/dark/S-scout-results-no-forecast--dark.html",
+     "calls": 38
+    },
+    {
+     "id": "S-scout-unavailable-off",
+     "theme": "dark",
+     "name": "Scout · Apple Intelligence off · Dark · 1280",
+     "file": "screens/dark/S-scout-unavailable-off--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-scout-unavailable-device",
+     "theme": "dark",
+     "name": "Scout · Unavailable, device · Dark · 1280",
+     "file": "screens/dark/S-scout-unavailable-device--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-scout-unavailable-downloading",
+     "theme": "dark",
+     "name": "Scout · Unavailable, downloading · Dark · 1280",
+     "file": "screens/dark/S-scout-unavailable-downloading--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-scout-no-results",
+     "theme": "dark",
+     "name": "Scout · No results · Dark · 1280",
+     "file": "screens/dark/S-scout-no-results--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-scout-guardrail",
+     "theme": "dark",
+     "name": "Scout · Guardrail · Dark · 1280",
+     "file": "screens/dark/S-scout-guardrail--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-scout-other-failures",
+     "theme": "dark",
+     "name": "Scout · Other failures · Dark · 1280",
+     "file": "screens/dark/S-scout-other-failures--dark.html",
+     "calls": 4
+    },
+    {
+     "id": "S-scout-results-loading",
+     "theme": "dark",
+     "name": "Scout · Checking the forecast · Dark · 1280",
+     "file": "screens/dark/S-scout-results-loading--dark.html",
+     "calls": 40
+    },
+    {
+     "id": "S-settings-general",
+     "theme": "dark",
+     "name": "Settings · General · Dark · 552",
+     "file": "screens/dark/S-settings-general--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-settings-weather-not-enabled",
+     "theme": "dark",
+     "name": "Settings · Weather, not enabled · Dark · 552",
+     "file": "screens/dark/S-settings-weather-not-enabled--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-settings-weather-working",
+     "theme": "dark",
+     "name": "Settings · Weather, working · Dark · 552",
+     "file": "screens/dark/S-settings-weather-working--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-settings-weather-checking",
+     "theme": "dark",
+     "name": "Settings · Weather, checking · Dark · 552",
+     "file": "screens/dark/S-settings-weather-checking--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-settings-weather-failed",
+     "theme": "dark",
+     "name": "Settings · Weather, failed · Dark · 552",
+     "file": "screens/dark/S-settings-weather-failed--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-settings-intelligence-unavailable",
+     "theme": "dark",
+     "name": "Settings · Intelligence, unavailable · Dark · 552",
+     "file": "screens/dark/S-settings-intelligence-unavailable--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-settings-intelligence-device",
+     "theme": "dark",
+     "name": "Settings · Intelligence, device · Dark · 552",
+     "file": "screens/dark/S-settings-intelligence-device--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-settings-intelligence-downloading",
+     "theme": "dark",
+     "name": "Settings · Intelligence, downloading · Dark · 552",
+     "file": "screens/dark/S-settings-intelligence-downloading--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-settings-intelligence-off",
+     "theme": "dark",
+     "name": "Settings · Intelligence, off · Dark · 552",
+     "file": "screens/dark/S-settings-intelligence-off--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-settings-intelligence-ready",
+     "theme": "dark",
+     "name": "Settings · Intelligence, ready · Dark · 552",
+     "file": "screens/dark/S-settings-intelligence-ready--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-settings-about",
+     "theme": "dark",
+     "name": "Settings · About · Dark · 552",
+     "file": "screens/dark/S-settings-about--dark.html",
+     "calls": 3
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "name": "960 variants (light and dark)",
+   "calls": 335,
+   "cumulative": 5272,
+   "artboards": [
+    {
+     "id": "S-shell-default-960",
+     "theme": "light",
+     "name": "Shell · Default · Light · 960",
+     "file": "screens/light/S-shell-default-960--light.html",
+     "calls": 11
+    },
+    {
+     "id": "S-shell-no-banner-960",
+     "theme": "light",
+     "name": "Shell · No sample banner · Light · 960",
+     "file": "screens/light/S-shell-no-banner-960--light.html",
+     "calls": 10
+    },
+    {
+     "id": "S-trip-builder-default-960",
+     "theme": "light",
+     "name": "Trip builder · Default · Light · 960",
+     "file": "screens/light/S-trip-builder-default-960--light.html",
+     "calls": 31
+    },
+    {
+     "id": "S-trip-builder-noforecast-960",
+     "theme": "light",
+     "name": "Trip builder · No forecast · Light · 960",
+     "file": "screens/light/S-trip-builder-noforecast-960--light.html",
+     "calls": 30
+    },
+    {
+     "id": "S-trip-builder-conflict-960",
+     "theme": "light",
+     "name": "Trip builder · Conflict · Light · 960",
+     "file": "screens/light/S-trip-builder-conflict-960--light.html",
+     "calls": 35
+    },
+    {
+     "id": "S-explore-default-960",
+     "theme": "light",
+     "name": "Explore · Default · Light · 960",
+     "file": "screens/light/S-explore-default-960--light.html",
+     "calls": 68
+    },
+    {
+     "id": "S-spot-sample-960",
+     "theme": "light",
+     "name": "Spot page · Sample (scored) · Light · 960",
+     "file": "screens/light/S-spot-sample-960--light.html",
+     "calls": 113
+    },
+    {
+     "id": "S-shell-default-960",
+     "theme": "dark",
+     "name": "Shell · Default · Dark · 960",
+     "file": "screens/dark/S-shell-default-960--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-shell-no-banner-960",
+     "theme": "dark",
+     "name": "Shell · No sample banner · Dark · 960",
+     "file": "screens/dark/S-shell-no-banner-960--dark.html",
+     "calls": 3
+    },
+    {
+     "id": "S-trip-builder-default-960",
+     "theme": "dark",
+     "name": "Trip builder · Default · Dark · 960",
+     "file": "screens/dark/S-trip-builder-default-960--dark.html",
+     "calls": 5
+    },
+    {
+     "id": "S-trip-builder-noforecast-960",
+     "theme": "dark",
+     "name": "Trip builder · No forecast · Dark · 960",
+     "file": "screens/dark/S-trip-builder-noforecast-960--dark.html",
+     "calls": 5
+    },
+    {
+     "id": "S-trip-builder-conflict-960",
+     "theme": "dark",
+     "name": "Trip builder · Conflict · Dark · 960",
+     "file": "screens/dark/S-trip-builder-conflict-960--dark.html",
+     "calls": 5
+    },
+    {
+     "id": "S-explore-default-960",
+     "theme": "dark",
+     "name": "Explore · Default · Dark · 960",
+     "file": "screens/dark/S-explore-default-960--dark.html",
+     "calls": 6
+    },
+    {
+     "id": "S-spot-sample-960",
+     "theme": "dark",
+     "name": "Spot page · Sample (scored) · Dark · 960",
+     "file": "screens/dark/S-spot-sample-960--dark.html",
+     "calls": 10
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "name": "Menus, popovers and system boards",
+   "calls": 428,
+   "cumulative": 5700,
+   "artboards": [
+    {
+     "id": "C-trip-builder-menus",
+     "theme": "light",
+     "name": "Trip builder menus",
+     "file": "components/C-trip-builder-menus.html",
+     "calls": 26
+    },
+    {
+     "id": "M-share-sheet",
+     "theme": "light",
+     "name": "Share sheet",
+     "file": "components/M-share-sheet.html",
+     "calls": 23
+    },
+    {
+     "id": "M-file-panels",
+     "theme": "light",
+     "name": "File importer and exporter",
+     "file": "components/M-file-panels.html",
+     "calls": 25
+    },
+    {
+     "id": "M-alerts-dialogs",
+     "theme": "light",
+     "name": "Alerts and dialogs",
+     "file": "components/M-alerts-dialogs.html",
+     "calls": 26
+    },
+    {
+     "id": "M-window-toolbars",
+     "theme": "light",
+     "name": "Window title bar and toolbars",
+     "file": "components/M-window-toolbars.html",
+     "calls": 35
+    },
+    {
+     "id": "S-explore-menu-context",
+     "theme": "light",
+     "name": "Explore · Spot context menu · Light · 1280",
+     "file": "screens/light/S-explore-menu-context--light.html",
+     "calls": 81
+    },
+    {
+     "id": "S-explore-menu-filters",
+     "theme": "light",
+     "name": "Explore · Filters menu · Light · 1280",
+     "file": "screens/light/S-explore-menu-filters--light.html",
+     "calls": 84
+    },
+    {
+     "id": "S-explore-menu-sort",
+     "theme": "light",
+     "name": "Explore · Sort menu · Light · 1280",
+     "file": "screens/light/S-explore-menu-sort--light.html",
+     "calls": 76
+    },
+    {
+     "id": "S-saved-sort-menu",
+     "theme": "light",
+     "name": "Saved · Sort and filter menu · Light · 1280",
+     "file": "screens/light/S-saved-sort-menu--light.html",
+     "calls": 25
+    },
+    {
+     "id": "S-explore-menu-context",
+     "theme": "dark",
+     "name": "Explore · Spot context menu · Dark · 1280",
+     "file": "screens/dark/S-explore-menu-context--dark.html",
+     "calls": 8
+    },
+    {
+     "id": "S-explore-menu-filters",
+     "theme": "dark",
+     "name": "Explore · Filters menu · Dark · 1280",
+     "file": "screens/dark/S-explore-menu-filters--dark.html",
+     "calls": 8
+    },
+    {
+     "id": "S-explore-menu-sort",
+     "theme": "dark",
+     "name": "Explore · Sort menu · Dark · 1280",
+     "file": "screens/dark/S-explore-menu-sort--dark.html",
+     "calls": 7
+    },
+    {
+     "id": "S-saved-sort-menu",
+     "theme": "dark",
+     "name": "Saved · Sort and filter menu · Dark · 1280",
+     "file": "screens/dark/S-saved-sort-menu--dark.html",
+     "calls": 4
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "name": "Flows: overview and the four journeys",
+   "calls": 58,
+   "cumulative": 5758,
+   "artboards": [
+    {
+     "id": "F-flows-overview",
+     "theme": "light",
+     "name": "Flows · Overview",
+     "file": "flows/F-flows-overview.html",
+     "calls": 17
+    },
+    {
+     "id": "F-flow-plan-trip",
+     "theme": "light",
+     "name": "Flow · Plan a trip",
+     "file": "flows/F-flow-plan-trip.html",
+     "calls": 9
+    },
+    {
+     "id": "F-flow-explore-save",
+     "theme": "light",
+     "name": "Flow · Explore and save",
+     "file": "flows/F-flow-explore-save.html",
+     "calls": 11
+    },
+    {
+     "id": "F-flow-read-spot",
+     "theme": "light",
+     "name": "Flow · Read a spot",
+     "file": "flows/F-flow-read-spot.html",
+     "calls": 8
+    },
+    {
+     "id": "F-flow-scout",
+     "theme": "light",
+     "name": "Flow · Scout",
+     "file": "flows/F-flow-scout.html",
+     "calls": 13
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "name": "Note companions",
+   "calls": 66,
+   "cumulative": 5824,
+   "artboards": [
+    {
+     "id": "S-shell-default--notes",
+     "theme": "light",
+     "name": "Shell · Default · Notes",
+     "file": "screens/light/S-shell-default--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-trips-list--notes",
+     "theme": "light",
+     "name": "All Trips · List · Notes",
+     "file": "screens/light/S-trips-list--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-trips-import-error--notes",
+     "theme": "light",
+     "name": "All Trips · Import error · Notes",
+     "file": "screens/light/S-trips-import-error--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-new-trip-template--notes",
+     "theme": "light",
+     "name": "New Trip sheet · Template chosen · Notes",
+     "file": "screens/light/S-new-trip-template--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-change-dates--notes",
+     "theme": "light",
+     "name": "Change Dates · Stops would move · Notes",
+     "file": "screens/light/S-change-dates--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-trip-builder-default--notes",
+     "theme": "light",
+     "name": "Trip builder · Default · Notes",
+     "file": "screens/light/S-trip-builder-default--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-explore-default--notes",
+     "theme": "light",
+     "name": "Explore · Default · Notes",
+     "file": "screens/light/S-explore-default--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-explore-default-960--notes",
+     "theme": "light",
+     "name": "Explore · Default · Notes",
+     "file": "screens/light/S-explore-default-960--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-explore-selected--notes",
+     "theme": "light",
+     "name": "Explore · Selected with place card · Notes",
+     "file": "screens/light/S-explore-selected--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-explore-search-results--notes",
+     "theme": "light",
+     "name": "Explore · Apple Maps results · Notes",
+     "file": "screens/light/S-explore-search-results--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-explore-polar--notes",
+     "theme": "light",
+     "name": "Explore · Polar day, no window · Notes",
+     "file": "screens/light/S-explore-polar--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-explore-scored-card--notes",
+     "theme": "light",
+     "name": "Explore · Scored place card · Notes",
+     "file": "screens/light/S-explore-scored-card--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-saved-empty--notes",
+     "theme": "light",
+     "name": "Saved · Empty · Notes",
+     "file": "screens/light/S-saved-empty--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-saved-filter-empty--notes",
+     "theme": "light",
+     "name": "Saved · Filter empty · Notes",
+     "file": "screens/light/S-saved-filter-empty--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-saved-delete-confirm--notes",
+     "theme": "light",
+     "name": "Saved · Delete confirmation · Notes",
+     "file": "screens/light/S-saved-delete-confirm--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-editor-edit--notes",
+     "theme": "light",
+     "name": "Spot editor · Edit · Notes",
+     "file": "screens/light/S-editor-edit--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-editor-validation--notes",
+     "theme": "light",
+     "name": "Spot editor · Validation errors · Notes",
+     "file": "screens/light/S-editor-validation--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-scout-results--notes",
+     "theme": "light",
+     "name": "Scout · Results · Notes",
+     "file": "screens/light/S-scout-results--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-scout-other-failures--notes",
+     "theme": "light",
+     "name": "Scout · Other failures · Notes",
+     "file": "screens/light/S-scout-other-failures--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-settings-general--notes",
+     "theme": "light",
+     "name": "Settings · General · Notes",
+     "file": "screens/light/S-settings-general--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-settings-weather-not-enabled--notes",
+     "theme": "light",
+     "name": "Settings · Weather, not enabled · Notes",
+     "file": "screens/light/S-settings-weather-not-enabled--notes--light.html",
+     "calls": 3
+    },
+    {
+     "id": "S-settings-weather-failed--notes",
+     "theme": "light",
+     "name": "Settings · Weather, failed · Notes",
+     "file": "screens/light/S-settings-weather-failed--notes--light.html",
+     "calls": 3
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "name": "F04, F05, F06 and remaining foundations",
+   "calls": 184,
+   "cumulative": 6008,
+   "artboards": [
+    {
+     "id": "F04-elevation",
+     "theme": "light",
+     "name": "F04 Elevation & materials",
+     "file": "foundations/F04-elevation.html",
+     "calls": 20
+    },
+    {
+     "id": "F05-iconography",
+     "theme": "light",
+     "name": "F05 Iconography",
+     "file": "foundations/F05-iconography.html",
+     "calls": 146
+    },
+    {
+     "id": "F06-logo-app-icon",
+     "theme": "light",
+     "name": "F06 Logo & app icon",
+     "file": "foundations/F06-logo-app-icon.html",
+     "calls": 18
+    }
+   ]
+  }
+ ],
+ "total": {
+  "calls": 6008,
+  "artboards": 250
+ },
+ "budgets": [
+  {
+   "budget": 100,
+   "calls": 91,
+   "fullStages": [
+    0
+   ],
+   "partial": {
+    "stage": 1,
+    "name": "Foundations: colour, type, Light Index, spacing",
+    "included": [
+     "F02-type-scale (light)",
+     "F03-spacing-radii (light)"
+    ],
+    "excluded": [
+     "F01-colour (light)",
+     "F07-light-index (light)"
+    ]
+   },
+   "artboards": 2
+  },
+  {
+   "budget": 500,
+   "calls": 496,
+   "fullStages": [
+    0,
+    1,
+    2
+   ],
+   "partial": {
+    "stage": 3,
+    "name": "Key light screens",
+    "included": [
+     "S-shell-default (light)",
+     "S-trips-list (light)"
+    ],
+    "excluded": [
+     "S-trip-builder-default (light)",
+     "S-explore-default (light)",
+     "S-explore-selected (light)",
+     "S-spot-sample (light)",
+     "S-saved-list (light)",
+     "S-scout-results (light)"
+    ]
+   },
+   "artboards": 15
+  },
+  {
+   "budget": 2000,
+   "calls": 1996,
+   "fullStages": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "partial": {
+    "stage": 5,
+    "name": "Remaining domain components",
+    "included": [
+     "C-add-to-trip-menu (light)",
+     "C-map-stand-in (light)",
+     "C-spot-editor-sheet (light)",
+     "C-spot-card (light)",
+     "C-trip-context-menu (light)",
+     "C-trip-card (light)",
+     "C-template-row (light)",
+     "C-trip-header (light)",
+     "C-trip-plan-list (light)",
+     "C-day-header (light)",
+     "C-stop-row (light)",
+     "C-stop-number-badge (light)",
+     "C-connector-row (light)",
+     "C-suggestion-banner (light)",
+     "C-trip-route-map (light)",
+     "C-add-stop-popover (light)",
+     "C-explore-list-panel (light)",
+     "C-explore-row (light)",
+     "C-explore-map-pane (light)",
+     "C-explore-pin (light)",
+     "C-explore-place-card (light)",
+     "C-add-spot-banner (light)",
+     "C-spot-header (light)",
+     "C-when-to-go (light)",
+     "C-sun-times-line (light)",
+     "C-outlook-strip (light)",
+     "C-day-windows (light)",
+     "C-window-row (light)",
+     "C-reasons-grid (light)",
+     "C-look-around (light)"
+    ],
+    "excluded": [
+     "C-signed-bar (light)",
+     "C-explain-block (light)",
+     "C-light-timeline (light)",
+     "C-sky-arc (light)",
+     "C-hourly-strip (light)",
+     "C-spot-facts-row (light)",
+     "C-saved-row (light)",
+     "C-scout-result-row (light)",
+     "C-scout-progress (light)",
+     "C-system-components (light)"
+    ]
+   },
+   "artboards": 59
+  }
+ ],
+ "oneWritePerArtboard": {
+  "artboards": 250,
+  "calls": 763,
+  "note": "create_artboard + one write_html + one screenshot per artboard; ignores Paper's ~15-line-per-write guidance, comparison only"
+ }
+}

@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ScoreChip</title>
+<link rel="stylesheet" href="../../tokens.css">
+</head>
+<body style="margin:0;background:var(--color-canvas-artboard)">
+<div layer-name="ScoreChip" data-artboard style="box-sizing:border-box;width:1200px;height:1320px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:var(--color-canvas-artboard)">
+<div layer-name="Page" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0">
+<div layer-name="Artboard Header" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)">
+<div layer-name="Artboard Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap">ScoreChip</div>
+<div layer-name="Type and File" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap">ScoreChip · Components/LightBadge.swift</div>
+<div layer-name="Job" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px">The number on its band fill: one amber hue ordered by lightness, with a hairline so pale bands show against the window.</div>
+</div>
+<div layer-name="Content" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+<div layer-name="Notes" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start">
+<div layer-name="Note / Deviation 7: literal opacity 0.85" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Deviation 7: literal opacity 0.85</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Low confidence opacity 0.85 is hard-coded in ScoreChip (LightBadge.swift:124).</div>
+</div>
+<div layer-name="Note / Sizes" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Sizes</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">compact 18 high, regular 22 high, large 64 square (radius card). Text uses type/score/badge, medium and large with tabular numerals. Band colours are the Light Index ramp: never green, red or coral.</div>
+</div>
+</div>
+<div layer-name="Appearances" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start">
+<div layer-name="Light Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em">LIGHT</div>
+<div layer-name="Section / Compact" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Compact</div>
+<div layer-name="Column Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end">
+<div layer-name="Corner" style="box-sizing:border-box;width:88px;flex-shrink:0"></div>
+<div layer-name="Column / Normal" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:110px;flex-shrink:0">Normal</div>
+<div layer-name="Column / Low confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:110px;flex-shrink:0">Low confidence</div>
+</div>
+<div layer-name="Row / Poor" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Poor</div>
+<div layer-name="Specimen / compact poor" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+</div>
+<div layer-name="Specimen / compact poor low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Fair" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Fair</div>
+<div layer-name="Specimen / compact fair" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+</div>
+<div layer-name="Specimen / compact fair low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Good</div>
+<div layer-name="Specimen / compact good" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+</div>
+<div layer-name="Specimen / compact good low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Great" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Great</div>
+<div layer-name="Specimen / compact great" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+</div>
+<div layer-name="Specimen / compact great low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Epic" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Epic</div>
+<div layer-name="Specimen / compact epic" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+</div>
+<div layer-name="Specimen / compact epic low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Regular" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Regular</div>
+<div layer-name="Column Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end">
+<div layer-name="Corner" style="box-sizing:border-box;width:88px;flex-shrink:0"></div>
+<div layer-name="Column / Normal" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:110px;flex-shrink:0">Normal</div>
+<div layer-name="Column / Low confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:110px;flex-shrink:0">Low confidence</div>
+</div>
+<div layer-name="Row / Poor" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Poor</div>
+<div layer-name="Specimen / regular poor" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+</div>
+<div layer-name="Specimen / regular poor low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Fair" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Fair</div>
+<div layer-name="Specimen / regular fair" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+</div>
+<div layer-name="Specimen / regular fair low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Good</div>
+<div layer-name="Specimen / regular good" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+</div>
+<div layer-name="Specimen / regular good low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Great" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Great</div>
+<div layer-name="Specimen / regular great" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+</div>
+<div layer-name="Specimen / regular great low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Epic" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Epic</div>
+<div layer-name="Specimen / regular epic" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+</div>
+<div layer-name="Specimen / regular epic low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Large" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Large</div>
+<div layer-name="Column Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end">
+<div layer-name="Corner" style="box-sizing:border-box;width:88px;flex-shrink:0"></div>
+<div layer-name="Column / Normal" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Normal</div>
+<div layer-name="Column / Low confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Low confidence</div>
+</div>
+<div layer-name="Row / Poor" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Poor</div>
+<div layer-name="Specimen / large poor" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+</div>
+<div layer-name="Specimen / large poor low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Fair" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Fair</div>
+<div layer-name="Specimen / large fair" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+</div>
+<div layer-name="Specimen / large fair low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Good</div>
+<div layer-name="Specimen / large good" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+</div>
+<div layer-name="Specimen / large good low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Great" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Great</div>
+<div layer-name="Specimen / large great" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+</div>
+<div layer-name="Specimen / large great low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Epic" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Epic</div>
+<div layer-name="Specimen / large epic" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+</div>
+<div layer-name="Specimen / large epic low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Widths: one, two and three digits" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Widths: one, two and three digits</div>
+<div layer-name="Digits" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Specimen / digits 7" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Digits 7" style="box-sizing:border-box;display:flex;flex-direction:row;gap:12px;align-items:center">
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">7</div>
+</div>
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">7</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / digits 72" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Digits 72" style="box-sizing:border-box;display:flex;flex-direction:row;gap:12px;align-items:center">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">72</div>
+</div>
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">72</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / digits 100" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Digits 100" style="box-sizing:border-box;display:flex;flex-direction:row;gap:12px;align-items:center">
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">100</div>
+</div>
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-epic);color:var(--color-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">100</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Dark Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em">DARK</div>
+<div layer-name="Section / Compact" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Compact</div>
+<div layer-name="Column Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end">
+<div layer-name="Corner" style="box-sizing:border-box;width:88px;flex-shrink:0"></div>
+<div layer-name="Column / Normal" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:110px;flex-shrink:0">Normal</div>
+<div layer-name="Column / Low confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:110px;flex-shrink:0">Low confidence</div>
+</div>
+<div layer-name="Row / Poor" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Poor</div>
+<div layer-name="Specimen / compact poor" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+</div>
+<div layer-name="Specimen / compact poor low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Fair" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Fair</div>
+<div layer-name="Specimen / compact fair" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+</div>
+<div layer-name="Specimen / compact fair low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Good</div>
+<div layer-name="Specimen / compact good" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+</div>
+<div layer-name="Specimen / compact good low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Great" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Great</div>
+<div layer-name="Specimen / compact great" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+</div>
+<div layer-name="Specimen / compact great low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Epic" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Epic</div>
+<div layer-name="Specimen / compact epic" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+</div>
+<div layer-name="Specimen / compact epic low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Regular" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Regular</div>
+<div layer-name="Column Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end">
+<div layer-name="Corner" style="box-sizing:border-box;width:88px;flex-shrink:0"></div>
+<div layer-name="Column / Normal" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:110px;flex-shrink:0">Normal</div>
+<div layer-name="Column / Low confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:110px;flex-shrink:0">Low confidence</div>
+</div>
+<div layer-name="Row / Poor" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Poor</div>
+<div layer-name="Specimen / regular poor" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+</div>
+<div layer-name="Specimen / regular poor low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Fair" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Fair</div>
+<div layer-name="Specimen / regular fair" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+</div>
+<div layer-name="Specimen / regular fair low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Good</div>
+<div layer-name="Specimen / regular good" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+</div>
+<div layer-name="Specimen / regular good low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Great" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Great</div>
+<div layer-name="Specimen / regular great" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+</div>
+<div layer-name="Specimen / regular great low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Epic" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Epic</div>
+<div layer-name="Specimen / regular epic" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+</div>
+<div layer-name="Specimen / regular epic low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Large" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Large</div>
+<div layer-name="Column Headers" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end">
+<div layer-name="Corner" style="box-sizing:border-box;width:88px;flex-shrink:0"></div>
+<div layer-name="Column / Normal" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Normal</div>
+<div layer-name="Column / Low confidence" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Low confidence</div>
+</div>
+<div layer-name="Row / Poor" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Poor</div>
+<div layer-name="Specimen / large poor" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+</div>
+<div layer-name="Specimen / large poor low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">22</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Fair" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Fair</div>
+<div layer-name="Specimen / large fair" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+</div>
+<div layer-name="Specimen / large fair low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Fair" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-fair);color:var(--color-dark-light-ramp-text-fair);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">48</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Good</div>
+<div layer-name="Specimen / large good" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+</div>
+<div layer-name="Specimen / large good low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Great" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Great</div>
+<div layer-name="Specimen / large great" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+</div>
+<div layer-name="Specimen / large great low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">81</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Epic" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0">Epic</div>
+<div layer-name="Specimen / large epic" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+</div>
+<div layer-name="Specimen / large epic low" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:120px;flex-shrink:0">
+<div layer-name="ScoreChip / large / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--spacing-size-light-ring-large);height:var(--spacing-size-light-ring-large);padding:0;background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-large);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-large);font-variant-numeric:tabular-nums;white-space:nowrap">94</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Widths: one, two and three digits" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Widths: one, two and three digits</div>
+<div layer-name="Digits" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Specimen / digits 7" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Digits 7" style="box-sizing:border-box;display:flex;flex-direction:row;gap:12px;align-items:center">
+<div layer-name="ScoreChip / compact / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">7</div>
+</div>
+<div layer-name="ScoreChip / regular / Poor" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">7</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / digits 72" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Digits 72" style="box-sizing:border-box;display:flex;flex-direction:row;gap:12px;align-items:center">
+<div layer-name="ScoreChip / compact / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">72</div>
+</div>
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">72</div>
+</div>
+</div>
+</div>
+<div layer-name="Specimen / digits 100" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Digits 100" style="box-sizing:border-box;display:flex;flex-direction:row;gap:12px;align-items:center">
+<div layer-name="ScoreChip / compact / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap">100</div>
+</div>
+<div layer-name="ScoreChip / regular / Epic" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-epic);color:var(--color-dark-light-ramp-text-epic);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">100</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SpotEditorSheet</title>
+<link rel="stylesheet" href="../../tokens.css">
+</head>
+<body style="margin:0;background:var(--color-canvas-artboard)">
+<div layer-name="SpotEditorSheet" data-artboard style="box-sizing:border-box;width:2300px;height:1136px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:var(--color-canvas-artboard)">
+<div layer-name="Page" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0">
+<div layer-name="Artboard Header" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)">
+<div layer-name="Artboard Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap">SpotEditorSheet</div>
+<div layer-name="Type and File" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap">SpotEditorSheet · Components/SpotEditorSheet.swift</div>
+<div layer-name="Job" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px">Create a spot from a dropped pin, or edit one of your own. Anything you type is yours; a lookup never overwrites it. Fixed 520 x 750 pt.</div>
+</div>
+<div layer-name="Content" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+<div layer-name="Notes" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start">
+<div layer-name="Note / Create and edit" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Create and edit</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Left: create (lookup filled name, place and zone, no best light ticked, button &quot;Add Spot&quot;). Right: edit (values held, Sunrise and Night sky ticked, button &quot;Save&quot;).</div>
+</div>
+<div layer-name="Note / Form scrolls" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Form scrolls</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">The grouped form scrolls inside the fixed 520 x 750 frame. With errors, a lookup line or a multi-line Notes (3 to 6 lines) it is taller than the frame and is cut at the divider (see the screen states). The snapshot crops it the same way.</div>
+</div>
+<div layer-name="Note / Map and pin" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Map and pin</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">The pin map is 168 high, 12 pt corners and a hairline. The mappin symbol (largest title size, accent, small shadow) has its tip on the map centre; the map moves under it. The map itself is a placeholder to swap.</div>
+</div>
+</div>
+<div layer-name="Appearances" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start">
+<div layer-name="Light Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em">LIGHT</div>
+<div layer-name="Sheets" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start">
+<div layer-name="Sheet / New Spot" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0;width:520px;height:750px;overflow:hidden;background:var(--color-canvas-sheet-background);border-radius:26px;box-shadow:var(--shadow-canvas-sheet)">
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-text-primary);white-space:nowrap;padding:var(--spacing-lg) var(--spacing-lg) var(--spacing-sm);flex-shrink:0">New Spot</div>
+<div layer-name="Form Scroll (clipped)" style="box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0;overflow:hidden;min-height:0">
+<div layer-name="Form" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px 20px 20px;flex-shrink:0">
+<div layer-name="Section / Pin" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Group / Pin Map" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Map Inset" style="box-sizing:border-box;display:flex;flex-direction:column;padding:10px">
+<div layer-name="Pin Map Clip" style="box-sizing:border-box;display:flex;flex-direction:column;border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-separator-default);flex-shrink:0">
+<div layer-name="Map placeholder (swap)" style="box-sizing:border-box;position:relative;display:flex;overflow:hidden;background:var(--color-canvas-map-ground);height:168px;min-width:0;min-height:0;flex-shrink:0">
+<div layer-name="Map Art" style="box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;display:flex">
+<svg layer-name="Roads and Contours" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" style="box-sizing:border-box;display:block;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-20 520 C 160 470, 280 560, 430 500 S 700 380, 1020 430" style="stroke:var(--color-canvas-map-line-major)" stroke-width="5"/>
+<path d="M120 -20 C 180 150, 140 280, 260 380 S 380 600, 340 720" style="stroke:var(--color-canvas-map-line-major)" stroke-width="4"/>
+<path d="M-20 240 C 150 210, 300 260, 470 190 S 760 120, 1020 170" style="stroke:var(--color-canvas-map-line)" stroke-width="3"/>
+<path d="M560 -20 C 600 130, 540 260, 640 360 S 780 560, 740 720" style="stroke:var(--color-canvas-map-line)" stroke-width="3"/>
+<path d="M820 -20 C 800 100, 900 200, 860 330 S 940 520, 1020 600" style="stroke:var(--color-canvas-map-line)" stroke-width="2"/>
+<path d="M-20 650 C 200 620, 380 700, 600 640 S 880 600, 1020 690" style="stroke:var(--color-canvas-map-line)" stroke-width="2"/>
+<ellipse cx="760" cy="520" rx="210" ry="120" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="150" ry="82" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="90" ry="46" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="170" ry="90" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="100" ry="50" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+</g></svg>
+</div>
+<div layer-name="Map Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-canvas-map-label);white-space:nowrap;position:absolute;left:12px;bottom:10px">Map placeholder: swap for a map image</div>
+<div layer-name="Pin (tip at map centre)" style="box-sizing:border-box;position:absolute;left:calc(50% - 17px);top:calc(50% - 34px);display:flex;filter:drop-shadow(0 1px 1.5px color-mix(in srgb, var(--color-text-primary) 35%, transparent))">
+<svg layer-name="Icon / mappin" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 36.67 103.71" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-accent-primary)"><path d="M0 18.38C0 26.96 5.81 34.13 13.74 36.2L13.74 81.48C13.74 95.83 16.33 103.71 18.33 103.71C20.28 103.71 22.82 95.89 22.82 81.48L22.82 36.2C30.8 34.2 36.67 26.96 36.67 18.38C36.67 8.25 28.53 0 18.33 0C8.14 0 0 8.25 0 18.38ZM13.08 19.39C9.74 19.39 6.81 16.46 6.81 13.07C6.81 9.67 9.74 6.8 13.08 6.8C16.53 6.8 19.35 9.67 19.35 13.07C19.35 16.46 16.53 19.39 13.08 19.39Z"/></svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section Footer" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:0 10px;flex-shrink:0">
+<div layer-name="Hint" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-text-secondary);white-space:nowrap">Drag the map to move the pin.</div>
+<div layer-name="Coordinates" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-text-secondary);white-space:nowrap;font-variant-numeric:tabular-nums">36.5786, -118.2920</div>
+<div layer-name="Footer Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0"></div>
+</div>
+</div>
+<div layer-name="Group / Fields" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Row / Name" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0">Name</div>
+<div layer-name="Name Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center">
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;text-align:right">Dropped pin</div>
+</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Place" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0">Place</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;text-align:right">Moab, UT</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Category" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0">Category</div>
+<div layer-name="Category Picker" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<svg layer-name="Icon / mountain.2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 174.12 86.24" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary)"><path d="M11.46 86.24L89.14 86.24C98.43 86.24 100.61 77.29 95.36 70.8L58.7 25.37C56.16 22.25 53.23 20.67 50.3 20.67C47.4 20.67 44.46 22.25 41.91 25.37L5.2 70.8C0 77.29 2.18 86.24 11.46 86.24ZM12.65 78.39C10.96 78.39 10.44 76.86 11.43 75.65L47.98 30.33C48.71 29.51 49.53 29.05 50.3 29.05C51.08 29.05 51.9 29.51 52.6 30.33L89.17 75.65C90.13 76.86 89.59 78.39 87.96 78.39ZM36.02 55.72C43.34 55.72 46.25 49.87 50.3 49.87C54.37 49.87 57.29 55.72 64.58 55.72C69.55 55.72 72.48 51.06 75.06 48.49L71.52 44.57C68.75 47.16 66.66 50.32 64.58 50.32C60.76 50.32 57.31 44.53 50.3 44.53C43.31 44.53 39.81 50.32 36.02 50.32C33.94 50.32 31.86 47.16 29.11 44.57L25.56 48.49C28.14 51.06 31.06 55.72 36.02 55.72ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM61.24 78.39C59.44 78.39 58.92 76.91 59.85 75.65L110.05 9.72C111.34 7.98 113.56 8.04 114.8 9.67L164.99 75.6C165.98 76.86 165.46 78.39 163.61 78.39ZM96.54 43.8C104.65 43.8 107.97 37.39 112.43 37.39C116.94 37.39 120.21 43.8 128.32 43.8C133.32 43.8 136.58 39.75 139.32 36.75L135.55 32.19C132.81 35 130.67 37.86 128.32 37.86C124.07 37.86 120.21 31.45 112.43 31.45C104.65 31.45 100.85 37.86 96.54 37.86C94.21 37.86 92.02 34.96 89.25 32.15L85.46 36.71C88.31 39.72 91.51 43.8 96.54 43.8Z"/></svg>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Landscape</div>
+<div layer-name="Picker Chevrons" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:999px;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke)">
+<svg layer-name="Icon / chevron.up.chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 64.97 94.04" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:3.90;stroke-linejoin:round"><path d="M32.51 0C31.23 0 30.12 0.52 29.18 1.46L1.27 28.2C0.54 28.99 0 29.97 0 31.42C0 33.96 1.95 35.9 4.49 35.9C5.53 35.9 6.68 35.62 7.71 34.6L32.51 10.31L57.26 34.6C58.3 35.58 59.5 35.9 60.52 35.9C63.06 35.9 64.97 33.96 64.97 31.42C64.97 29.97 64.48 28.99 63.7 28.2L35.85 1.46C34.84 0.52 33.74 0 32.51 0ZM32.51 94.04C33.74 94.04 34.84 93.53 35.85 92.58L63.7 65.85C64.48 65.06 64.97 64.07 64.97 62.63C64.97 60.08 63.06 58.15 60.52 58.15C59.5 58.15 58.3 58.46 57.26 59.45L32.51 83.73L7.71 59.45C6.68 58.42 5.53 58.15 4.49 58.15C1.95 58.15 0 60.08 0 62.63C0 64.07 0.54 65.06 1.27 65.85L29.18 92.58C30.12 93.53 31.23 94.04 32.51 94.04Z"/></svg>
+</div>
+</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Time zone" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0">Time zone</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-secondary);white-space:nowrap">Mountain Time</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Best Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap;padding:0 10px">Best light (choose any)</div>
+<div layer-name="Group / Best Light" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Checkbox Grid" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);padding:var(--spacing-sm) 10px">
+<div layer-name="Checkbox Row 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0">
+<div layer-name="Cell / Sunrise" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Sunrise" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Sunrise</div>
+</div>
+</div>
+<div layer-name="Cell / Sunset" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Sunset" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Cell / Blue hour" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Blue hour" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Blue hour</div>
+</div>
+</div>
+</div>
+<div layer-name="Checkbox Row 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0">
+<div layer-name="Cell / Night sky" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Night sky" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Night sky</div>
+</div>
+</div>
+<div layer-name="Cell / Midday" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Midday" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Midday</div>
+</div>
+</div>
+<div layer-name="Cell / Overcast" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Overcast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Overcast</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section Footer" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:0 10px;flex-shrink:0">
+<div layer-name="Footer" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-text-secondary);white-space:nowrap">With none chosen, light is shown for sunset.</div>
+</div>
+</div>
+<div layer-name="Group / Walk-in and Notes" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Row / Walk-in (minutes)" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0">Walk-in (minutes)</div>
+<div layer-name="Placeholder" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-tertiary);white-space:nowrap;text-align:right">Optional</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Notes" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0">Notes</div>
+<div layer-name="Placeholder" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-tertiary);white-space:nowrap;text-align:right">Access, gear, crowds, permits</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Divider" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Sheet Buttons" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);padding:var(--spacing-lg);align-items:center;justify-content:flex-end;flex-shrink:0">
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Cancel</div>
+</div>
+<div layer-name="Button / Add Spot" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-accent-primary);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-accent-on-accent);white-space:nowrap">Add Spot</div>
+</div>
+</div>
+</div>
+<div layer-name="Sheet / Edit Spot" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0;width:520px;height:750px;overflow:hidden;background:var(--color-canvas-sheet-background);border-radius:26px;box-shadow:var(--shadow-canvas-sheet)">
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-text-primary);white-space:nowrap;padding:var(--spacing-lg) var(--spacing-lg) var(--spacing-sm);flex-shrink:0">Edit Spot</div>
+<div layer-name="Form Scroll (clipped)" style="box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0;overflow:hidden;min-height:0">
+<div layer-name="Form" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px 20px 20px;flex-shrink:0">
+<div layer-name="Section / Pin" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Group / Pin Map" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Map Inset" style="box-sizing:border-box;display:flex;flex-direction:column;padding:10px">
+<div layer-name="Pin Map Clip" style="box-sizing:border-box;display:flex;flex-direction:column;border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-separator-default);flex-shrink:0">
+<div layer-name="Map placeholder (swap)" style="box-sizing:border-box;position:relative;display:flex;overflow:hidden;background:var(--color-canvas-map-ground);height:168px;min-width:0;min-height:0;flex-shrink:0">
+<div layer-name="Map Art" style="box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;display:flex">
+<svg layer-name="Roads and Contours" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" style="box-sizing:border-box;display:block;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-20 520 C 160 470, 280 560, 430 500 S 700 380, 1020 430" style="stroke:var(--color-canvas-map-line-major)" stroke-width="5"/>
+<path d="M120 -20 C 180 150, 140 280, 260 380 S 380 600, 340 720" style="stroke:var(--color-canvas-map-line-major)" stroke-width="4"/>
+<path d="M-20 240 C 150 210, 300 260, 470 190 S 760 120, 1020 170" style="stroke:var(--color-canvas-map-line)" stroke-width="3"/>
+<path d="M560 -20 C 600 130, 540 260, 640 360 S 780 560, 740 720" style="stroke:var(--color-canvas-map-line)" stroke-width="3"/>
+<path d="M820 -20 C 800 100, 900 200, 860 330 S 940 520, 1020 600" style="stroke:var(--color-canvas-map-line)" stroke-width="2"/>
+<path d="M-20 650 C 200 620, 380 700, 600 640 S 880 600, 1020 690" style="stroke:var(--color-canvas-map-line)" stroke-width="2"/>
+<ellipse cx="760" cy="520" rx="210" ry="120" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="150" ry="82" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="90" ry="46" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="170" ry="90" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="100" ry="50" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+</g></svg>
+</div>
+<div layer-name="Map Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-canvas-map-label);white-space:nowrap;position:absolute;left:12px;bottom:10px">Map placeholder: swap for a map image</div>
+<div layer-name="Pin (tip at map centre)" style="box-sizing:border-box;position:absolute;left:calc(50% - 17px);top:calc(50% - 34px);display:flex;filter:drop-shadow(0 1px 1.5px color-mix(in srgb, var(--color-text-primary) 35%, transparent))">
+<svg layer-name="Icon / mappin" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 36.67 103.71" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-accent-primary)"><path d="M0 18.38C0 26.96 5.81 34.13 13.74 36.2L13.74 81.48C13.74 95.83 16.33 103.71 18.33 103.71C20.28 103.71 22.82 95.89 22.82 81.48L22.82 36.2C30.8 34.2 36.67 26.96 36.67 18.38C36.67 8.25 28.53 0 18.33 0C8.14 0 0 8.25 0 18.38ZM13.08 19.39C9.74 19.39 6.81 16.46 6.81 13.07C6.81 9.67 9.74 6.8 13.08 6.8C16.53 6.8 19.35 9.67 19.35 13.07C19.35 16.46 16.53 19.39 13.08 19.39Z"/></svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section Footer" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:0 10px;flex-shrink:0">
+<div layer-name="Hint" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-text-secondary);white-space:nowrap">Drag the map to move the pin.</div>
+<div layer-name="Coordinates" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-text-secondary);white-space:nowrap;font-variant-numeric:tabular-nums">36.5786, -118.2920</div>
+<div layer-name="Footer Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0"></div>
+</div>
+</div>
+<div layer-name="Group / Fields" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Row / Name" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0">Name</div>
+<div layer-name="Name Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center">
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;text-align:right">Back field at Lone Pine</div>
+</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Place" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0">Place</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;text-align:right">Lone Pine, CA</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Category" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0">Category</div>
+<div layer-name="Category Picker" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<svg layer-name="Icon / mountain.2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 174.12 86.24" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary)"><path d="M11.46 86.24L89.14 86.24C98.43 86.24 100.61 77.29 95.36 70.8L58.7 25.37C56.16 22.25 53.23 20.67 50.3 20.67C47.4 20.67 44.46 22.25 41.91 25.37L5.2 70.8C0 77.29 2.18 86.24 11.46 86.24ZM12.65 78.39C10.96 78.39 10.44 76.86 11.43 75.65L47.98 30.33C48.71 29.51 49.53 29.05 50.3 29.05C51.08 29.05 51.9 29.51 52.6 30.33L89.17 75.65C90.13 76.86 89.59 78.39 87.96 78.39ZM36.02 55.72C43.34 55.72 46.25 49.87 50.3 49.87C54.37 49.87 57.29 55.72 64.58 55.72C69.55 55.72 72.48 51.06 75.06 48.49L71.52 44.57C68.75 47.16 66.66 50.32 64.58 50.32C60.76 50.32 57.31 44.53 50.3 44.53C43.31 44.53 39.81 50.32 36.02 50.32C33.94 50.32 31.86 47.16 29.11 44.57L25.56 48.49C28.14 51.06 31.06 55.72 36.02 55.72ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM61.24 78.39C59.44 78.39 58.92 76.91 59.85 75.65L110.05 9.72C111.34 7.98 113.56 8.04 114.8 9.67L164.99 75.6C165.98 76.86 165.46 78.39 163.61 78.39ZM96.54 43.8C104.65 43.8 107.97 37.39 112.43 37.39C116.94 37.39 120.21 43.8 128.32 43.8C133.32 43.8 136.58 39.75 139.32 36.75L135.55 32.19C132.81 35 130.67 37.86 128.32 37.86C124.07 37.86 120.21 31.45 112.43 31.45C104.65 31.45 100.85 37.86 96.54 37.86C94.21 37.86 92.02 34.96 89.25 32.15L85.46 36.71C88.31 39.72 91.51 43.8 96.54 43.8Z"/></svg>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Landscape</div>
+<div layer-name="Picker Chevrons" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:999px;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke)">
+<svg layer-name="Icon / chevron.up.chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 64.97 94.04" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:3.90;stroke-linejoin:round"><path d="M32.51 0C31.23 0 30.12 0.52 29.18 1.46L1.27 28.2C0.54 28.99 0 29.97 0 31.42C0 33.96 1.95 35.9 4.49 35.9C5.53 35.9 6.68 35.62 7.71 34.6L32.51 10.31L57.26 34.6C58.3 35.58 59.5 35.9 60.52 35.9C63.06 35.9 64.97 33.96 64.97 31.42C64.97 29.97 64.48 28.99 63.7 28.2L35.85 1.46C34.84 0.52 33.74 0 32.51 0ZM32.51 94.04C33.74 94.04 34.84 93.53 35.85 92.58L63.7 65.85C64.48 65.06 64.97 64.07 64.97 62.63C64.97 60.08 63.06 58.15 60.52 58.15C59.5 58.15 58.3 58.46 57.26 59.45L32.51 83.73L7.71 59.45C6.68 58.42 5.53 58.15 4.49 58.15C1.95 58.15 0 60.08 0 62.63C0 64.07 0.54 65.06 1.27 65.85L29.18 92.58C30.12 93.53 31.23 94.04 32.51 94.04Z"/></svg>
+</div>
+</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Time zone" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0">Time zone</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-secondary);white-space:nowrap">Pacific Time</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Best Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap;padding:0 10px">Best light (choose any)</div>
+<div layer-name="Group / Best Light" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Checkbox Grid" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);padding:var(--spacing-sm) 10px">
+<div layer-name="Checkbox Row 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0">
+<div layer-name="Cell / Sunrise" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Sunrise" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-accent-primary);border:none">
+<svg layer-name="Icon / checkmark" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 84.11 83.42" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-accent-on-accent);stroke:var(--color-accent-on-accent);stroke-width:8.41;stroke-linejoin:round"><path d="M31.84 83.42C33.93 83.42 35.58 82.51 36.76 80.69L82.87 8.11C83.79 6.69 84.11 5.57 84.11 4.45C84.11 1.81 82.35 0 79.66 0C77.72 0 76.63 0.66 75.46 2.53L31.63 72.36L8.88 42.57C7.65 40.9 6.45 40.19 4.67 40.19C1.95 40.19 0 42.09 0 44.79C0 45.93 0.48 47.17 1.42 48.36L26.73 80.59C28.25 82.53 29.74 83.42 31.84 83.42Z"/></svg>
+</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Sunrise</div>
+</div>
+</div>
+<div layer-name="Cell / Sunset" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Sunset" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Cell / Blue hour" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Blue hour" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Blue hour</div>
+</div>
+</div>
+</div>
+<div layer-name="Checkbox Row 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0">
+<div layer-name="Cell / Night sky" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Night sky" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-accent-primary);border:none">
+<svg layer-name="Icon / checkmark" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 84.11 83.42" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-accent-on-accent);stroke:var(--color-accent-on-accent);stroke-width:8.41;stroke-linejoin:round"><path d="M31.84 83.42C33.93 83.42 35.58 82.51 36.76 80.69L82.87 8.11C83.79 6.69 84.11 5.57 84.11 4.45C84.11 1.81 82.35 0 79.66 0C77.72 0 76.63 0.66 75.46 2.53L31.63 72.36L8.88 42.57C7.65 40.9 6.45 40.19 4.67 40.19C1.95 40.19 0 42.09 0 44.79C0 45.93 0.48 47.17 1.42 48.36L26.73 80.59C28.25 82.53 29.74 83.42 31.84 83.42Z"/></svg>
+</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Night sky</div>
+</div>
+</div>
+<div layer-name="Cell / Midday" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Midday" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Midday</div>
+</div>
+</div>
+<div layer-name="Cell / Overcast" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Overcast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-canvas-control-checkbox);border:1px solid var(--color-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Overcast</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section Footer" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:0 10px;flex-shrink:0">
+<div layer-name="Footer" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-text-secondary);white-space:nowrap">With none chosen, light is shown for sunset.</div>
+</div>
+</div>
+<div layer-name="Group / Walk-in and Notes" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Row / Walk-in (minutes)" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0">Walk-in (minutes)</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;text-align:right">12</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Notes" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex-shrink:0">Notes</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;text-align:right">Park at the pullout; the gate is usually open before dawn.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Divider" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Sheet Buttons" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);padding:var(--spacing-lg);align-items:center;justify-content:flex-end;flex-shrink:0">
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Cancel</div>
+</div>
+<div layer-name="Button / Save" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-accent-primary);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-accent-on-accent);white-space:nowrap">Save</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Dark Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em">DARK</div>
+<div layer-name="Sheets" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start">
+<div layer-name="Sheet / New Spot" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0;width:520px;height:750px;overflow:hidden;background:var(--color-dark-canvas-sheet-background);border-radius:26px;box-shadow:var(--shadow-dark-canvas-sheet)">
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-dark-text-primary);white-space:nowrap;padding:var(--spacing-lg) var(--spacing-lg) var(--spacing-sm);flex-shrink:0">New Spot</div>
+<div layer-name="Form Scroll (clipped)" style="box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0;overflow:hidden;min-height:0">
+<div layer-name="Form" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px 20px 20px;flex-shrink:0">
+<div layer-name="Section / Pin" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Group / Pin Map" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Map Inset" style="box-sizing:border-box;display:flex;flex-direction:column;padding:10px">
+<div layer-name="Pin Map Clip" style="box-sizing:border-box;display:flex;flex-direction:column;border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);flex-shrink:0">
+<div layer-name="Map placeholder (swap)" style="box-sizing:border-box;position:relative;display:flex;overflow:hidden;background:var(--color-dark-canvas-map-ground);height:168px;min-width:0;min-height:0;flex-shrink:0">
+<div layer-name="Map Art" style="box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;display:flex">
+<svg layer-name="Roads and Contours" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" style="box-sizing:border-box;display:block;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-20 520 C 160 470, 280 560, 430 500 S 700 380, 1020 430" style="stroke:var(--color-dark-canvas-map-line-major)" stroke-width="5"/>
+<path d="M120 -20 C 180 150, 140 280, 260 380 S 380 600, 340 720" style="stroke:var(--color-dark-canvas-map-line-major)" stroke-width="4"/>
+<path d="M-20 240 C 150 210, 300 260, 470 190 S 760 120, 1020 170" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="3"/>
+<path d="M560 -20 C 600 130, 540 260, 640 360 S 780 560, 740 720" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="3"/>
+<path d="M820 -20 C 800 100, 900 200, 860 330 S 940 520, 1020 600" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="2"/>
+<path d="M-20 650 C 200 620, 380 700, 600 640 S 880 600, 1020 690" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="2"/>
+<ellipse cx="760" cy="520" rx="210" ry="120" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="150" ry="82" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="90" ry="46" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="170" ry="90" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="100" ry="50" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+</g></svg>
+</div>
+<div layer-name="Map Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-canvas-map-label);white-space:nowrap;position:absolute;left:12px;bottom:10px">Map placeholder: swap for a map image</div>
+<div layer-name="Pin (tip at map centre)" style="box-sizing:border-box;position:absolute;left:calc(50% - 17px);top:calc(50% - 34px);display:flex;filter:drop-shadow(0 1px 1.5px color-mix(in srgb, var(--color-dark-text-primary) 35%, transparent))">
+<svg layer-name="Icon / mappin" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 36.67 103.71" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-accent-primary)"><path d="M0 18.38C0 26.96 5.81 34.13 13.74 36.2L13.74 81.48C13.74 95.83 16.33 103.71 18.33 103.71C20.28 103.71 22.82 95.89 22.82 81.48L22.82 36.2C30.8 34.2 36.67 26.96 36.67 18.38C36.67 8.25 28.53 0 18.33 0C8.14 0 0 8.25 0 18.38ZM13.08 19.39C9.74 19.39 6.81 16.46 6.81 13.07C6.81 9.67 9.74 6.8 13.08 6.8C16.53 6.8 19.35 9.67 19.35 13.07C19.35 16.46 16.53 19.39 13.08 19.39Z"/></svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section Footer" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:0 10px;flex-shrink:0">
+<div layer-name="Hint" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-dark-text-secondary);white-space:nowrap">Drag the map to move the pin.</div>
+<div layer-name="Coordinates" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-dark-text-secondary);white-space:nowrap;font-variant-numeric:tabular-nums">36.5786, -118.2920</div>
+<div layer-name="Footer Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0"></div>
+</div>
+</div>
+<div layer-name="Group / Fields" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Row / Name" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0">Name</div>
+<div layer-name="Name Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center">
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;text-align:right">Dropped pin</div>
+</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Place" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0">Place</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;text-align:right">Moab, UT</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Category" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0">Category</div>
+<div layer-name="Category Picker" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<svg layer-name="Icon / mountain.2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 174.12 86.24" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary)"><path d="M11.46 86.24L89.14 86.24C98.43 86.24 100.61 77.29 95.36 70.8L58.7 25.37C56.16 22.25 53.23 20.67 50.3 20.67C47.4 20.67 44.46 22.25 41.91 25.37L5.2 70.8C0 77.29 2.18 86.24 11.46 86.24ZM12.65 78.39C10.96 78.39 10.44 76.86 11.43 75.65L47.98 30.33C48.71 29.51 49.53 29.05 50.3 29.05C51.08 29.05 51.9 29.51 52.6 30.33L89.17 75.65C90.13 76.86 89.59 78.39 87.96 78.39ZM36.02 55.72C43.34 55.72 46.25 49.87 50.3 49.87C54.37 49.87 57.29 55.72 64.58 55.72C69.55 55.72 72.48 51.06 75.06 48.49L71.52 44.57C68.75 47.16 66.66 50.32 64.58 50.32C60.76 50.32 57.31 44.53 50.3 44.53C43.31 44.53 39.81 50.32 36.02 50.32C33.94 50.32 31.86 47.16 29.11 44.57L25.56 48.49C28.14 51.06 31.06 55.72 36.02 55.72ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM61.24 78.39C59.44 78.39 58.92 76.91 59.85 75.65L110.05 9.72C111.34 7.98 113.56 8.04 114.8 9.67L164.99 75.6C165.98 76.86 165.46 78.39 163.61 78.39ZM96.54 43.8C104.65 43.8 107.97 37.39 112.43 37.39C116.94 37.39 120.21 43.8 128.32 43.8C133.32 43.8 136.58 39.75 139.32 36.75L135.55 32.19C132.81 35 130.67 37.86 128.32 37.86C124.07 37.86 120.21 31.45 112.43 31.45C104.65 31.45 100.85 37.86 96.54 37.86C94.21 37.86 92.02 34.96 89.25 32.15L85.46 36.71C88.31 39.72 91.51 43.8 96.54 43.8Z"/></svg>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Landscape</div>
+<div layer-name="Picker Chevrons" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:999px;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke)">
+<svg layer-name="Icon / chevron.up.chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 64.97 94.04" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:3.90;stroke-linejoin:round"><path d="M32.51 0C31.23 0 30.12 0.52 29.18 1.46L1.27 28.2C0.54 28.99 0 29.97 0 31.42C0 33.96 1.95 35.9 4.49 35.9C5.53 35.9 6.68 35.62 7.71 34.6L32.51 10.31L57.26 34.6C58.3 35.58 59.5 35.9 60.52 35.9C63.06 35.9 64.97 33.96 64.97 31.42C64.97 29.97 64.48 28.99 63.7 28.2L35.85 1.46C34.84 0.52 33.74 0 32.51 0ZM32.51 94.04C33.74 94.04 34.84 93.53 35.85 92.58L63.7 65.85C64.48 65.06 64.97 64.07 64.97 62.63C64.97 60.08 63.06 58.15 60.52 58.15C59.5 58.15 58.3 58.46 57.26 59.45L32.51 83.73L7.71 59.45C6.68 58.42 5.53 58.15 4.49 58.15C1.95 58.15 0 60.08 0 62.63C0 64.07 0.54 65.06 1.27 65.85L29.18 92.58C30.12 93.53 31.23 94.04 32.51 94.04Z"/></svg>
+</div>
+</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Time zone" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0">Time zone</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-secondary);white-space:nowrap">Mountain Time</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Best Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap;padding:0 10px">Best light (choose any)</div>
+<div layer-name="Group / Best Light" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Checkbox Grid" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);padding:var(--spacing-sm) 10px">
+<div layer-name="Checkbox Row 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0">
+<div layer-name="Cell / Sunrise" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Sunrise" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-dark-canvas-control-checkbox);border:1px solid var(--color-dark-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Sunrise</div>
+</div>
+</div>
+<div layer-name="Cell / Sunset" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Sunset" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-dark-canvas-control-checkbox);border:1px solid var(--color-dark-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Cell / Blue hour" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Blue hour" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-dark-canvas-control-checkbox);border:1px solid var(--color-dark-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Blue hour</div>
+</div>
+</div>
+</div>
+<div layer-name="Checkbox Row 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0">
+<div layer-name="Cell / Night sky" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Night sky" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-dark-canvas-control-checkbox);border:1px solid var(--color-dark-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Night sky</div>
+</div>
+</div>
+<div layer-name="Cell / Midday" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Midday" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-dark-canvas-control-checkbox);border:1px solid var(--color-dark-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Midday</div>
+</div>
+</div>
+<div layer-name="Cell / Overcast" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Overcast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-dark-canvas-control-checkbox);border:1px solid var(--color-dark-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Overcast</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section Footer" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:0 10px;flex-shrink:0">
+<div layer-name="Footer" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-dark-text-secondary);white-space:nowrap">With none chosen, light is shown for sunset.</div>
+</div>
+</div>
+<div layer-name="Group / Walk-in and Notes" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Row / Walk-in (minutes)" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0">Walk-in (minutes)</div>
+<div layer-name="Placeholder" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-tertiary);white-space:nowrap;text-align:right">Optional</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Notes" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0">Notes</div>
+<div layer-name="Placeholder" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-tertiary);white-space:nowrap;text-align:right">Access, gear, crowds, permits</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Divider" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Sheet Buttons" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);padding:var(--spacing-lg);align-items:center;justify-content:flex-end;flex-shrink:0">
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke);box-shadow:var(--shadow-dark-canvas-button);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Cancel</div>
+</div>
+<div layer-name="Button / Add Spot" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-accent-primary);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-accent-on-accent);white-space:nowrap">Add Spot</div>
+</div>
+</div>
+</div>
+<div layer-name="Sheet / Edit Spot" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0;width:520px;height:750px;overflow:hidden;background:var(--color-dark-canvas-sheet-background);border-radius:26px;box-shadow:var(--shadow-dark-canvas-sheet)">
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-dark-text-primary);white-space:nowrap;padding:var(--spacing-lg) var(--spacing-lg) var(--spacing-sm);flex-shrink:0">Edit Spot</div>
+<div layer-name="Form Scroll (clipped)" style="box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0;overflow:hidden;min-height:0">
+<div layer-name="Form" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px 20px 20px;flex-shrink:0">
+<div layer-name="Section / Pin" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Group / Pin Map" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Map Inset" style="box-sizing:border-box;display:flex;flex-direction:column;padding:10px">
+<div layer-name="Pin Map Clip" style="box-sizing:border-box;display:flex;flex-direction:column;border-radius:var(--radius-card);overflow:hidden;border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);flex-shrink:0">
+<div layer-name="Map placeholder (swap)" style="box-sizing:border-box;position:relative;display:flex;overflow:hidden;background:var(--color-dark-canvas-map-ground);height:168px;min-width:0;min-height:0;flex-shrink:0">
+<div layer-name="Map Art" style="box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;display:flex">
+<svg layer-name="Roads and Contours" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" style="box-sizing:border-box;display:block;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-20 520 C 160 470, 280 560, 430 500 S 700 380, 1020 430" style="stroke:var(--color-dark-canvas-map-line-major)" stroke-width="5"/>
+<path d="M120 -20 C 180 150, 140 280, 260 380 S 380 600, 340 720" style="stroke:var(--color-dark-canvas-map-line-major)" stroke-width="4"/>
+<path d="M-20 240 C 150 210, 300 260, 470 190 S 760 120, 1020 170" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="3"/>
+<path d="M560 -20 C 600 130, 540 260, 640 360 S 780 560, 740 720" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="3"/>
+<path d="M820 -20 C 800 100, 900 200, 860 330 S 940 520, 1020 600" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="2"/>
+<path d="M-20 650 C 200 620, 380 700, 600 640 S 880 600, 1020 690" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="2"/>
+<ellipse cx="760" cy="520" rx="210" ry="120" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="150" ry="82" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="90" ry="46" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="170" ry="90" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="100" ry="50" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+</g></svg>
+</div>
+<div layer-name="Map Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-canvas-map-label);white-space:nowrap;position:absolute;left:12px;bottom:10px">Map placeholder: swap for a map image</div>
+<div layer-name="Pin (tip at map centre)" style="box-sizing:border-box;position:absolute;left:calc(50% - 17px);top:calc(50% - 34px);display:flex;filter:drop-shadow(0 1px 1.5px color-mix(in srgb, var(--color-dark-text-primary) 35%, transparent))">
+<svg layer-name="Icon / mappin" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 36.67 103.71" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-accent-primary)"><path d="M0 18.38C0 26.96 5.81 34.13 13.74 36.2L13.74 81.48C13.74 95.83 16.33 103.71 18.33 103.71C20.28 103.71 22.82 95.89 22.82 81.48L22.82 36.2C30.8 34.2 36.67 26.96 36.67 18.38C36.67 8.25 28.53 0 18.33 0C8.14 0 0 8.25 0 18.38ZM13.08 19.39C9.74 19.39 6.81 16.46 6.81 13.07C6.81 9.67 9.74 6.8 13.08 6.8C16.53 6.8 19.35 9.67 19.35 13.07C19.35 16.46 16.53 19.39 13.08 19.39Z"/></svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section Footer" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:0 10px;flex-shrink:0">
+<div layer-name="Hint" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-dark-text-secondary);white-space:nowrap">Drag the map to move the pin.</div>
+<div layer-name="Coordinates" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-dark-text-secondary);white-space:nowrap;font-variant-numeric:tabular-nums">36.5786, -118.2920</div>
+<div layer-name="Footer Spacer" style="box-sizing:border-box;flex:1 1 0;min-width:0"></div>
+</div>
+</div>
+<div layer-name="Group / Fields" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Row / Name" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0">Name</div>
+<div layer-name="Name Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center">
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;text-align:right">Back field at Lone Pine</div>
+</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Place" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0">Place</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;text-align:right">Lone Pine, CA</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Category" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0">Category</div>
+<div layer-name="Category Picker" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<svg layer-name="Icon / mountain.2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 174.12 86.24" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary)"><path d="M11.46 86.24L89.14 86.24C98.43 86.24 100.61 77.29 95.36 70.8L58.7 25.37C56.16 22.25 53.23 20.67 50.3 20.67C47.4 20.67 44.46 22.25 41.91 25.37L5.2 70.8C0 77.29 2.18 86.24 11.46 86.24ZM12.65 78.39C10.96 78.39 10.44 76.86 11.43 75.65L47.98 30.33C48.71 29.51 49.53 29.05 50.3 29.05C51.08 29.05 51.9 29.51 52.6 30.33L89.17 75.65C90.13 76.86 89.59 78.39 87.96 78.39ZM36.02 55.72C43.34 55.72 46.25 49.87 50.3 49.87C54.37 49.87 57.29 55.72 64.58 55.72C69.55 55.72 72.48 51.06 75.06 48.49L71.52 44.57C68.75 47.16 66.66 50.32 64.58 50.32C60.76 50.32 57.31 44.53 50.3 44.53C43.31 44.53 39.81 50.32 36.02 50.32C33.94 50.32 31.86 47.16 29.11 44.57L25.56 48.49C28.14 51.06 31.06 55.72 36.02 55.72ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM61.24 78.39C59.44 78.39 58.92 76.91 59.85 75.65L110.05 9.72C111.34 7.98 113.56 8.04 114.8 9.67L164.99 75.6C165.98 76.86 165.46 78.39 163.61 78.39ZM96.54 43.8C104.65 43.8 107.97 37.39 112.43 37.39C116.94 37.39 120.21 43.8 128.32 43.8C133.32 43.8 136.58 39.75 139.32 36.75L135.55 32.19C132.81 35 130.67 37.86 128.32 37.86C124.07 37.86 120.21 31.45 112.43 31.45C104.65 31.45 100.85 37.86 96.54 37.86C94.21 37.86 92.02 34.96 89.25 32.15L85.46 36.71C88.31 39.72 91.51 43.8 96.54 43.8Z"/></svg>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Landscape</div>
+<div layer-name="Picker Chevrons" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:999px;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke)">
+<svg layer-name="Icon / chevron.up.chevron.down" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 64.97 94.04" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:3.90;stroke-linejoin:round"><path d="M32.51 0C31.23 0 30.12 0.52 29.18 1.46L1.27 28.2C0.54 28.99 0 29.97 0 31.42C0 33.96 1.95 35.9 4.49 35.9C5.53 35.9 6.68 35.62 7.71 34.6L32.51 10.31L57.26 34.6C58.3 35.58 59.5 35.9 60.52 35.9C63.06 35.9 64.97 33.96 64.97 31.42C64.97 29.97 64.48 28.99 63.7 28.2L35.85 1.46C34.84 0.52 33.74 0 32.51 0ZM32.51 94.04C33.74 94.04 34.84 93.53 35.85 92.58L63.7 65.85C64.48 65.06 64.97 64.07 64.97 62.63C64.97 60.08 63.06 58.15 60.52 58.15C59.5 58.15 58.3 58.46 57.26 59.45L32.51 83.73L7.71 59.45C6.68 58.42 5.53 58.15 4.49 58.15C1.95 58.15 0 60.08 0 62.63C0 64.07 0.54 65.06 1.27 65.85L29.18 92.58C30.12 93.53 31.23 94.04 32.51 94.04Z"/></svg>
+</div>
+</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Time zone" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0">Time zone</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-secondary);white-space:nowrap">Pacific Time</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Best Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)">
+<div layer-name="Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap;padding:0 10px">Best light (choose any)</div>
+<div layer-name="Group / Best Light" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Checkbox Grid" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);padding:var(--spacing-sm) 10px">
+<div layer-name="Checkbox Row 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0">
+<div layer-name="Cell / Sunrise" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Sunrise" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-dark-accent-primary);border:none">
+<svg layer-name="Icon / checkmark" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 84.11 83.42" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-accent-on-accent);stroke:var(--color-dark-accent-on-accent);stroke-width:8.41;stroke-linejoin:round"><path d="M31.84 83.42C33.93 83.42 35.58 82.51 36.76 80.69L82.87 8.11C83.79 6.69 84.11 5.57 84.11 4.45C84.11 1.81 82.35 0 79.66 0C77.72 0 76.63 0.66 75.46 2.53L31.63 72.36L8.88 42.57C7.65 40.9 6.45 40.19 4.67 40.19C1.95 40.19 0 42.09 0 44.79C0 45.93 0.48 47.17 1.42 48.36L26.73 80.59C28.25 82.53 29.74 83.42 31.84 83.42Z"/></svg>
+</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Sunrise</div>
+</div>
+</div>
+<div layer-name="Cell / Sunset" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Sunset" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-dark-canvas-control-checkbox);border:1px solid var(--color-dark-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+</div>
+</div>
+<div layer-name="Cell / Blue hour" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Blue hour" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-dark-canvas-control-checkbox);border:1px solid var(--color-dark-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Blue hour</div>
+</div>
+</div>
+</div>
+<div layer-name="Checkbox Row 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0">
+<div layer-name="Cell / Night sky" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Night sky" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-dark-accent-primary);border:none">
+<svg layer-name="Icon / checkmark" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 84.11 83.42" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-accent-on-accent);stroke:var(--color-dark-accent-on-accent);stroke-width:8.41;stroke-linejoin:round"><path d="M31.84 83.42C33.93 83.42 35.58 82.51 36.76 80.69L82.87 8.11C83.79 6.69 84.11 5.57 84.11 4.45C84.11 1.81 82.35 0 79.66 0C77.72 0 76.63 0.66 75.46 2.53L31.63 72.36L8.88 42.57C7.65 40.9 6.45 40.19 4.67 40.19C1.95 40.19 0 42.09 0 44.79C0 45.93 0.48 47.17 1.42 48.36L26.73 80.59C28.25 82.53 29.74 83.42 31.84 83.42Z"/></svg>
+</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Night sky</div>
+</div>
+</div>
+<div layer-name="Cell / Midday" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Midday" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-dark-canvas-control-checkbox);border:1px solid var(--color-dark-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Midday</div>
+</div>
+</div>
+<div layer-name="Cell / Overcast" style="box-sizing:border-box;flex:1 1 0;min-width:0;display:flex">
+<div layer-name="Checkbox / Overcast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="Box" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px;height:16px;border-radius:4px;background:var(--color-dark-canvas-control-checkbox);border:1px solid var(--color-dark-canvas-control-checkbox-stroke)"></div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Overcast</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section Footer" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;padding:0 10px;flex-shrink:0">
+<div layer-name="Footer" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-footnote);font-weight:var(--font-weight-regular);line-height:var(--leading-footnote);color:var(--color-dark-text-secondary);white-space:nowrap">With none chosen, light is shown for sunset.</div>
+</div>
+</div>
+<div layer-name="Group / Walk-in and Notes" style="box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-dark-canvas-control-group);border-radius:12px;overflow:hidden;flex-shrink:0">
+<div layer-name="Row / Walk-in (minutes)" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0">Walk-in (minutes)</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;text-align:right">12</div>
+</div>
+<div layer-name="Row Separator" style="box-sizing:border-box;padding:0 10px;display:flex;flex-direction:column">
+<div layer-name="Separator" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+<div layer-name="Row / Notes" style="box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Row Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);align-items:center;justify-content:space-between;min-height:36px;padding:var(--spacing-xs) 10px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex-shrink:0">Notes</div>
+<div layer-name="Value" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;text-align:right">Park at the pullout; the gate is usually open before dawn.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Divider" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Sheet Buttons" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);padding:var(--spacing-lg);align-items:center;justify-content:flex-end;flex-shrink:0">
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke);box-shadow:var(--shadow-dark-canvas-button);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Cancel</div>
+</div>
+<div layer-name="Button / Save" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height);align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-accent-primary);padding:0 14px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-accent-on-accent);white-space:nowrap">Save</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

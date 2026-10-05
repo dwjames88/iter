@@ -1,0 +1,5990 @@
+[
+ {
+  "id": "C-add-spot-banner",
+  "name": "AddSpotBanner",
+  "baseName": "AddSpotBanner",
+  "section": "components",
+  "file": "components/C-add-spot-banner.html",
+  "width": 1200,
+  "height": 464,
+  "theme": "light",
+  "covers": [
+   "Component/AddSpotBanner"
+  ],
+  "notes": [],
+  "bytes": 11190,
+  "page": "Components",
+  "source": "src/components/explore/explore.mjs",
+  "fragments": {
+   "writes": 6,
+   "clones": 0,
+   "writesNoClone": 6,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-add-stop-popover",
+  "name": "AddStopPopover",
+  "baseName": "AddStopPopover",
+  "section": "components",
+  "file": "components/C-add-stop-popover.html",
+  "width": 1200,
+  "height": 1496,
+  "theme": "light",
+  "covers": [
+   "Component/AddStopPopover",
+   "Menus/AddStopPopover"
+  ],
+  "notes": [],
+  "bytes": 82985,
+  "page": "Components",
+  "source": "src/components/trip-builder/components.mjs",
+  "fragments": {
+   "writes": 26,
+   "clones": 12,
+   "writesNoClone": 55,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-add-to-trip-menu",
+  "name": "AddToTripMenu",
+  "baseName": "AddToTripMenu",
+  "section": "components",
+  "file": "components/C-add-to-trip-menu.html",
+  "width": 1680,
+  "height": 640,
+  "theme": "light",
+  "covers": [
+   "Component/AddToTripMenu",
+   "Menus/AddToTripMenu"
+  ],
+  "notes": [
+   "Day label strings differ from COMPONENTS.md"
+  ],
+  "bytes": 28136,
+  "page": "Components",
+  "source": "src/components/explore/explore.mjs",
+  "fragments": {
+   "writes": 8,
+   "clones": 2,
+   "writesNoClone": 12,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-confidence-mark",
+  "name": "ConfidenceMark",
+  "baseName": "ConfidenceMark",
+  "section": "components",
+  "file": "components/C-confidence-mark.html",
+  "width": 1200,
+  "height": 552,
+  "theme": "light",
+  "covers": [
+   "Component/ConfidenceMark"
+  ],
+  "notes": [],
+  "bytes": 26910,
+  "page": "Components",
+  "source": "src/components/core/light-index.mjs",
+  "fragments": {
+   "writes": 10,
+   "clones": 4,
+   "writesNoClone": 17,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-connector-row",
+  "name": "ConnectorRow",
+  "baseName": "ConnectorRow",
+  "section": "components",
+  "file": "components/C-connector-row.html",
+  "width": 1200,
+  "height": 832,
+  "theme": "light",
+  "covers": [
+   "Component/ConnectorRow"
+  ],
+  "notes": [],
+  "bytes": 60054,
+  "page": "Components",
+  "source": "src/components/trip-builder/components.mjs",
+  "fragments": {
+   "writes": 21,
+   "clones": 4,
+   "writesNoClone": 35,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-day-header",
+  "name": "DayHeader",
+  "baseName": "DayHeader",
+  "section": "components",
+  "file": "components/C-day-header.html",
+  "width": 1200,
+  "height": 696,
+  "theme": "light",
+  "covers": [
+   "Component/DayHeader"
+  ],
+  "notes": [],
+  "bytes": 36729,
+  "page": "Components",
+  "source": "src/components/trip-builder/components.mjs",
+  "fragments": {
+   "writes": 14,
+   "clones": 4,
+   "writesNoClone": 27,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-day-windows",
+  "name": "DayWindowsSection",
+  "baseName": "DayWindowsSection",
+  "section": "components",
+  "file": "components/C-day-windows.html",
+  "width": 1000,
+  "height": 1816,
+  "theme": "light",
+  "covers": [
+   "Component/DayWindowsSection"
+  ],
+  "notes": [
+   "Chevron drawn open"
+  ],
+  "bytes": 97056,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 24,
+   "clones": 11,
+   "writesNoClone": 75,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-explain-block",
+  "name": "ExplainBlock",
+  "baseName": "ExplainBlock",
+  "section": "components",
+  "file": "components/C-explain-block.html",
+  "width": 1200,
+  "height": 688,
+  "theme": "light",
+  "covers": [
+   "Component/ExplainBlock"
+  ],
+  "notes": [],
+  "bytes": 47713,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 5,
+   "writesNoClone": 15,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-explore-list-panel",
+  "name": "ExploreListPanel",
+  "baseName": "ExploreListPanel",
+  "section": "components",
+  "file": "components/C-explore-list-panel.html",
+  "width": 1704,
+  "height": 3128,
+  "theme": "light",
+  "covers": [
+   "Component/ExploreListPanel"
+  ],
+  "notes": [],
+  "bytes": 411717,
+  "page": "Components",
+  "source": "src/components/explore/explore.mjs",
+  "fragments": {
+   "writes": 52,
+   "clones": 31,
+   "writesNoClone": 395,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-explore-map-pane",
+  "name": "ExploreMapPane",
+  "baseName": "ExploreMapPane",
+  "section": "components",
+  "file": "components/C-explore-map-pane.html",
+  "width": 1304,
+  "height": 2368,
+  "theme": "light",
+  "covers": [
+   "Component/ExploreMapPane"
+  ],
+  "notes": [],
+  "bytes": 303227,
+  "page": "Components",
+  "source": "src/components/explore/explore.mjs",
+  "fragments": {
+   "writes": 155,
+   "clones": 0,
+   "writesNoClone": 155,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-explore-pin",
+  "name": "ExplorePinView",
+  "baseName": "ExplorePinView",
+  "section": "components",
+  "file": "components/C-explore-pin.html",
+  "width": 1400,
+  "height": 624,
+  "theme": "light",
+  "covers": [
+   "Component/ExplorePinView"
+  ],
+  "notes": [
+   "COMPONENTS.md says the selected pin is accent/primary; source uses map/pin"
+  ],
+  "bytes": 43735,
+  "page": "Components",
+  "source": "src/components/explore/explore.mjs",
+  "fragments": {
+   "writes": 16,
+   "clones": 7,
+   "writesNoClone": 26,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-explore-place-card",
+  "name": "ExplorePlaceCard",
+  "baseName": "ExplorePlaceCard",
+  "section": "components",
+  "file": "components/C-explore-place-card.html",
+  "width": 1800,
+  "height": 752,
+  "theme": "light",
+  "covers": [
+   "Component/ExplorePlaceCard"
+  ],
+  "notes": [
+   "Save symbol: bookmark, not star"
+  ],
+  "bytes": 90486,
+  "page": "Components",
+  "source": "src/components/explore/explore.mjs",
+  "fragments": {
+   "writes": 29,
+   "clones": 7,
+   "writesNoClone": 55,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-explore-row",
+  "name": "ExploreRow",
+  "baseName": "ExploreRow",
+  "section": "components",
+  "file": "components/C-explore-row.html",
+  "width": 1720,
+  "height": 944,
+  "theme": "light",
+  "covers": [
+   "Component/ExploreRow"
+  ],
+  "notes": [],
+  "bytes": 68105,
+  "page": "Components",
+  "source": "src/components/explore/explore.mjs",
+  "fragments": {
+   "writes": 23,
+   "clones": 11,
+   "writesNoClone": 54,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-hourly-strip",
+  "name": "HourlyStrip",
+  "baseName": "HourlyStrip",
+  "section": "components",
+  "file": "components/C-hourly-strip.html",
+  "width": 1000,
+  "height": 1952,
+  "theme": "light",
+  "covers": [
+   "Component/HourlyStrip"
+  ],
+  "notes": [
+   "Symbols are single-colour",
+   "Hard-coded opacities"
+  ],
+  "bytes": 485461,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 69,
+   "clones": 62,
+   "writesNoClone": 246,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-light-badge",
+  "name": "LightBadge · Compact, Regular",
+  "baseName": "LightBadge · Compact, Regular",
+  "section": "components",
+  "file": "components/C-light-badge.html",
+  "width": 1632,
+  "height": 1128,
+  "theme": "light",
+  "covers": [
+   "Component/LightBadge"
+  ],
+  "notes": [
+   "Deviation 1: no band word in compact",
+   "Deviation 7: literal opacity 0.85"
+  ],
+  "bytes": 190327,
+  "page": "Components",
+  "source": "src/components/core/light-index.mjs",
+  "fragments": {
+   "writes": 17,
+   "clones": 25,
+   "writesNoClone": 128,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-light-badge-large",
+  "name": "LightBadge · Large, No forecast",
+  "baseName": "LightBadge · Large, No forecast",
+  "section": "components",
+  "file": "components/C-light-badge-large.html",
+  "width": 1872,
+  "height": 1504,
+  "theme": "light",
+  "covers": [
+   "Component/LightBadge"
+  ],
+  "notes": [],
+  "bytes": 163348,
+  "page": "Components",
+  "source": "src/components/core/light-index.mjs",
+  "fragments": {
+   "writes": 16,
+   "clones": 16,
+   "writesNoClone": 86,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-light-timeline",
+  "name": "LightTimeline",
+  "baseName": "LightTimeline",
+  "section": "components",
+  "file": "components/C-light-timeline.html",
+  "width": 1000,
+  "height": 3224,
+  "theme": "light",
+  "covers": [
+   "Component/LightTimeline"
+  ],
+  "notes": [
+   "cloud.slash does not exist",
+   "Hard-coded opacities",
+   "Fixtures"
+  ],
+  "bytes": 147345,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 22,
+   "clones": 12,
+   "writesNoClone": 50,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-look-around",
+  "name": "LookAroundSection",
+  "baseName": "LookAroundSection",
+  "section": "components",
+  "file": "components/C-look-around.html",
+  "width": 1000,
+  "height": 968,
+  "theme": "light",
+  "covers": [
+   "Component/LookAroundSection"
+  ],
+  "notes": [
+   "Absent in snapshots"
+  ],
+  "bytes": 6116,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 3,
+   "clones": 0,
+   "writesNoClone": 3,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-map-stand-in",
+  "name": "MapStandIn",
+  "baseName": "MapStandIn",
+  "section": "components",
+  "file": "components/C-map-stand-in.html",
+  "width": 1304,
+  "height": 1312,
+  "theme": "light",
+  "covers": [
+   "Component/MapStandIn"
+  ],
+  "notes": [],
+  "bytes": 132790,
+  "page": "Components",
+  "source": "src/components/explore/explore.mjs",
+  "fragments": {
+   "writes": 67,
+   "clones": 0,
+   "writesNoClone": 67,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-no-forecast-ring",
+  "name": "NoForecastRing",
+  "baseName": "NoForecastRing",
+  "section": "components",
+  "file": "components/C-no-forecast-ring.html",
+  "width": 1564,
+  "height": 640,
+  "theme": "light",
+  "covers": [
+   "Component/NoForecastRing"
+  ],
+  "notes": [],
+  "bytes": 20421,
+  "page": "Components",
+  "source": "src/components/core/light-index.mjs",
+  "fragments": {
+   "writes": 11,
+   "clones": 0,
+   "writesNoClone": 11,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-outlook-strip",
+  "name": "OutlookStrip",
+  "baseName": "OutlookStrip",
+  "section": "components",
+  "file": "components/C-outlook-strip.html",
+  "width": 1000,
+  "height": 1944,
+  "theme": "light",
+  "covers": [
+   "Component/OutlookStrip"
+  ],
+  "notes": [
+   "Best tab colour",
+   "Hard-coded opacities"
+  ],
+  "bytes": 181628,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 22,
+   "clones": 32,
+   "writesNoClone": 96,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-provenance-tag",
+  "name": "ProvenanceTag",
+  "baseName": "ProvenanceTag",
+  "section": "components",
+  "file": "components/C-provenance-tag.html",
+  "width": 1264,
+  "height": 408,
+  "theme": "light",
+  "covers": [
+   "Component/ProvenanceTag"
+  ],
+  "notes": [],
+  "bytes": 11398,
+  "page": "Components",
+  "source": "src/components/core/honesty.mjs",
+  "fragments": {
+   "writes": 7,
+   "clones": 0,
+   "writesNoClone": 7,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-reasons-grid",
+  "name": "ReasonsGrid",
+  "baseName": "ReasonsGrid",
+  "section": "components",
+  "file": "components/C-reasons-grid.html",
+  "width": 1000,
+  "height": 1488,
+  "theme": "light",
+  "covers": [
+   "Component/ReasonsGrid"
+  ],
+  "notes": [
+   "Signed bars are grey",
+   "Fixtures"
+  ],
+  "bytes": 70307,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 16,
+   "clones": 12,
+   "writesNoClone": 39,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-sample-data-label",
+  "name": "SampleDataLabel",
+  "baseName": "SampleDataLabel",
+  "section": "components",
+  "file": "components/C-sample-data-label.html",
+  "width": 1448,
+  "height": 544,
+  "theme": "light",
+  "covers": [
+   "Component/SampleDataLabel"
+  ],
+  "notes": [
+   "Deviation 2: Sample data can appear twice"
+  ],
+  "bytes": 22651,
+  "page": "Components",
+  "source": "src/components/core/honesty.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 1,
+   "writesNoClone": 13,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-saved-row",
+  "name": "SavedRow",
+  "baseName": "SavedRow",
+  "section": "components",
+  "file": "components/C-saved-row.html",
+  "width": 1560,
+  "height": 880,
+  "theme": "light",
+  "covers": [
+   "Component/SavedRow"
+  ],
+  "notes": [
+   "Doc vs source: name-to-locality gap"
+  ],
+  "bytes": 91519,
+  "page": "Components",
+  "source": "src/components/saved-scout/saved-scout.mjs",
+  "fragments": {
+   "writes": 20,
+   "clones": 15,
+   "writesNoClone": 46,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-score-chip",
+  "name": "ScoreChip",
+  "baseName": "ScoreChip",
+  "section": "components",
+  "file": "components/C-score-chip.html",
+  "width": 1200,
+  "height": 1320,
+  "theme": "light",
+  "covers": [
+   "Component/ScoreChip"
+  ],
+  "notes": [
+   "Deviation 7: literal opacity 0.85"
+  ],
+  "bytes": 90370,
+  "page": "Components",
+  "source": "src/components/core/light-index.mjs",
+  "fragments": {
+   "writes": 11,
+   "clones": 17,
+   "writesNoClone": 48,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-scout-progress",
+  "name": "ScoutProgress",
+  "baseName": "ScoutProgress",
+  "section": "components",
+  "file": "components/C-scout-progress.html",
+  "width": 1160,
+  "height": 1144,
+  "theme": "light",
+  "covers": [
+   "Component/ScoutProgress"
+  ],
+  "notes": [],
+  "bytes": 43425,
+  "page": "Components",
+  "source": "src/components/saved-scout/saved-scout.mjs",
+  "fragments": {
+   "writes": 11,
+   "clones": 6,
+   "writesNoClone": 20,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-scout-result-row",
+  "name": "ScoutResultRow",
+  "baseName": "ScoutResultRow",
+  "section": "components",
+  "file": "components/C-scout-result-row.html",
+  "width": 1160,
+  "height": 1120,
+  "theme": "light",
+  "covers": [
+   "Component/ScoutResultRow"
+  ],
+  "notes": [],
+  "bytes": 103478,
+  "page": "Components",
+  "source": "src/components/saved-scout/saved-scout.mjs",
+  "fragments": {
+   "writes": 18,
+   "clones": 12,
+   "writesNoClone": 40,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-signed-bar",
+  "name": "SignedBar",
+  "baseName": "SignedBar",
+  "section": "components",
+  "file": "components/C-signed-bar.html",
+  "width": 1000,
+  "height": 744,
+  "theme": "light",
+  "covers": [
+   "Component/SignedBar"
+  ],
+  "notes": [
+   "Signed bars are grey"
+  ],
+  "bytes": 36573,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 20,
+   "clones": 0,
+   "writesNoClone": 20,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-sky-arc",
+  "name": "SkyArc",
+  "baseName": "SkyArc",
+  "section": "components",
+  "file": "components/C-sky-arc.html",
+  "width": 1000,
+  "height": 3648,
+  "theme": "light",
+  "covers": [
+   "Component/SkyArc"
+  ],
+  "notes": [
+   "Arc does not zoom",
+   "Fixtures"
+  ],
+  "bytes": 110686,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 20,
+   "clones": 9,
+   "writesNoClone": 32,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-spot-card",
+  "name": "SpotCard",
+  "baseName": "SpotCard",
+  "section": "components",
+  "file": "components/C-spot-card.html",
+  "width": 1200,
+  "height": 448,
+  "theme": "light",
+  "covers": [
+   "Component/SpotCard"
+  ],
+  "notes": [],
+  "bytes": 16503,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 7,
+   "clones": 3,
+   "writesNoClone": 11,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-spot-editor-sheet",
+  "name": "SpotEditorSheet",
+  "baseName": "SpotEditorSheet",
+  "section": "components",
+  "file": "components/C-spot-editor-sheet.html",
+  "width": 2300,
+  "height": 1136,
+  "theme": "light",
+  "covers": [
+   "Component/SpotEditorSheet"
+  ],
+  "notes": [],
+  "bytes": 104479,
+  "page": "Components",
+  "source": "src/components/saved-scout/spot-editor-sheet.mjs",
+  "fragments": {
+   "writes": 27,
+   "clones": 18,
+   "writesNoClone": 68,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-spot-facts-row",
+  "name": "SpotFactsRow",
+  "baseName": "SpotFactsRow",
+  "section": "components",
+  "file": "components/C-spot-facts-row.html",
+  "width": 1000,
+  "height": 1328,
+  "theme": "light",
+  "covers": [
+   "Component/SpotFactsRow"
+  ],
+  "notes": [],
+  "bytes": 62894,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 17,
+   "clones": 6,
+   "writesNoClone": 25,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-spot-header",
+  "name": "SpotHeader",
+  "baseName": "SpotHeader",
+  "section": "components",
+  "file": "components/C-spot-header.html",
+  "width": 1000,
+  "height": 1472,
+  "theme": "light",
+  "covers": [
+   "Component/SpotHeader"
+  ],
+  "notes": [
+   "Add to Trip"
+  ],
+  "bytes": 117578,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 18,
+   "clones": 5,
+   "writesNoClone": 33,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-stop-number-badge",
+  "name": "StopNumberBadge",
+  "baseName": "StopNumberBadge",
+  "section": "components",
+  "file": "components/C-stop-number-badge.html",
+  "width": 880,
+  "height": 408,
+  "theme": "light",
+  "covers": [
+   "Component/StopNumberBadge"
+  ],
+  "notes": [],
+  "bytes": 13228,
+  "page": "Components",
+  "source": "src/components/trip-builder/components.mjs",
+  "fragments": {
+   "writes": 7,
+   "clones": 0,
+   "writesNoClone": 7,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-stop-row",
+  "name": "StopRow",
+  "baseName": "StopRow",
+  "section": "components",
+  "file": "components/C-stop-row.html",
+  "width": 1400,
+  "height": 3032,
+  "theme": "light",
+  "covers": [
+   "Component/StopRow"
+  ],
+  "notes": [],
+  "bytes": 124397,
+  "page": "Components",
+  "source": "src/components/trip-builder/components.mjs",
+  "fragments": {
+   "writes": 25,
+   "clones": 14,
+   "writesNoClone": 61,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-suggestion-banner",
+  "name": "SuggestionBanner",
+  "baseName": "SuggestionBanner",
+  "section": "components",
+  "file": "components/C-suggestion-banner.html",
+  "width": 1200,
+  "height": 544,
+  "theme": "light",
+  "covers": [
+   "Component/SuggestionBanner"
+  ],
+  "notes": [],
+  "bytes": 22407,
+  "page": "Components",
+  "source": "src/components/trip-builder/components.mjs",
+  "fragments": {
+   "writes": 11,
+   "clones": 3,
+   "writesNoClone": 15,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-sun-times-line",
+  "name": "SunTimesLine",
+  "baseName": "SunTimesLine",
+  "section": "components",
+  "file": "components/C-sun-times-line.html",
+  "width": 1400,
+  "height": 392,
+  "theme": "light",
+  "covers": [
+   "Component/SunTimesLine"
+  ],
+  "notes": [],
+  "bytes": 25650,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 6,
+   "clones": 0,
+   "writesNoClone": 6,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-system-components",
+  "name": "System components",
+  "baseName": "System components",
+  "section": "components",
+  "file": "components/C-system-components.html",
+  "width": 2432,
+  "height": 2512,
+  "theme": "light",
+  "covers": [
+   "Component/System components"
+  ],
+  "notes": [],
+  "bytes": 187969,
+  "page": "Components",
+  "source": "src/components/system/system.mjs",
+  "fragments": {
+   "writes": 73,
+   "clones": 0,
+   "writesNoClone": 73,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-template-row",
+  "name": "TemplateRow",
+  "baseName": "TemplateRow",
+  "section": "components",
+  "file": "components/C-template-row.html",
+  "width": 1304,
+  "height": 640,
+  "theme": "light",
+  "covers": [
+   "Component/TemplateRow"
+  ],
+  "notes": [],
+  "bytes": 18300,
+  "page": "Components",
+  "source": "src/components/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-trip-builder-menus",
+  "name": "Trip builder menus",
+  "baseName": "Trip builder menus",
+  "section": "components",
+  "file": "components/C-trip-builder-menus.html",
+  "width": 1264,
+  "height": 880,
+  "theme": "light",
+  "covers": [
+   "Menus/Set-up time popover",
+   "Menus/Session menu",
+   "Menus/Trip actions menu",
+   "Menus/Stop context menu"
+  ],
+  "notes": [],
+  "bytes": 37629,
+  "page": "Components",
+  "source": "src/components/trip-builder/components.mjs",
+  "fragments": {
+   "writes": 17,
+   "clones": 6,
+   "writesNoClone": 28,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-trip-card",
+  "name": "TripCard",
+  "baseName": "TripCard",
+  "section": "components",
+  "file": "components/C-trip-card.html",
+  "width": 1368,
+  "height": 1176,
+  "theme": "light",
+  "covers": [
+   "Component/TripCard"
+  ],
+  "notes": [],
+  "bytes": 47740,
+  "page": "Components",
+  "source": "src/components/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 15,
+   "clones": 0,
+   "writesNoClone": 15,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-trip-context-menu",
+  "name": "TripContextMenu",
+  "baseName": "TripContextMenu",
+  "section": "components",
+  "file": "components/C-trip-context-menu.html",
+  "width": 1016,
+  "height": 1008,
+  "theme": "light",
+  "covers": [
+   "Component/TripContextMenu",
+   "Menus/Trip context menu"
+  ],
+  "notes": [],
+  "bytes": 31736,
+  "page": "Components",
+  "source": "src/components/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 17,
+   "clones": 0,
+   "writesNoClone": 17,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-trip-header",
+  "name": "TripHeader",
+  "baseName": "TripHeader",
+  "section": "components",
+  "file": "components/C-trip-header.html",
+  "width": 1200,
+  "height": 1136,
+  "theme": "light",
+  "covers": [
+   "Component/TripHeader"
+  ],
+  "notes": [],
+  "bytes": 36350,
+  "page": "Components",
+  "source": "src/components/trip-builder/components.mjs",
+  "fragments": {
+   "writes": 13,
+   "clones": 2,
+   "writesNoClone": 18,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-trip-plan-list",
+  "name": "TripPlanList",
+  "baseName": "TripPlanList",
+  "section": "components",
+  "file": "components/C-trip-plan-list.html",
+  "width": 1200,
+  "height": 2264,
+  "theme": "light",
+  "covers": [
+   "Component/TripPlanList"
+  ],
+  "notes": [],
+  "bytes": 172077,
+  "page": "Components",
+  "source": "src/components/trip-builder/components.mjs",
+  "fragments": {
+   "writes": 26,
+   "clones": 16,
+   "writesNoClone": 82,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-trip-route-map",
+  "name": "TripRouteMap",
+  "baseName": "TripRouteMap",
+  "section": "components",
+  "file": "components/C-trip-route-map.html",
+  "width": 1200,
+  "height": 2272,
+  "theme": "light",
+  "covers": [
+   "Component/TripRouteMap"
+  ],
+  "notes": [
+   "Deviation: active pin token is accent/emphasis in source"
+  ],
+  "bytes": 90414,
+  "page": "Components",
+  "source": "src/components/trip-builder/components.mjs",
+  "fragments": {
+   "writes": 24,
+   "clones": 12,
+   "writesNoClone": 50,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-warning-lines",
+  "name": "Warning lines",
+  "baseName": "Warning lines",
+  "section": "components",
+  "file": "components/C-warning-lines.html",
+  "width": 1264,
+  "height": 664,
+  "theme": "light",
+  "covers": [
+   "Component/Warning lines"
+  ],
+  "notes": [],
+  "bytes": 29822,
+  "page": "Components",
+  "source": "src/components/core/honesty.mjs",
+  "fragments": {
+   "writes": 17,
+   "clones": 0,
+   "writesNoClone": 17,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-weather-attribution",
+  "name": "WeatherAttributionView",
+  "baseName": "WeatherAttributionView",
+  "section": "components",
+  "file": "components/C-weather-attribution.html",
+  "width": 1376,
+  "height": 584,
+  "theme": "light",
+  "covers": [
+   "Component/WeatherAttributionView"
+  ],
+  "notes": [],
+  "bytes": 16172,
+  "page": "Components",
+  "source": "src/components/core/honesty.mjs",
+  "fragments": {
+   "writes": 11,
+   "clones": 0,
+   "writesNoClone": 11,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-when-to-go",
+  "name": "WhenToGoSection",
+  "baseName": "WhenToGoSection",
+  "section": "components",
+  "file": "components/C-when-to-go.html",
+  "width": 1000,
+  "height": 1944,
+  "theme": "light",
+  "covers": [
+   "Component/WhenToGoSection"
+  ],
+  "notes": [
+   "Best tab colour"
+  ],
+  "bytes": 122899,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 21,
+   "clones": 14,
+   "writesNoClone": 49,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "C-window-row",
+  "name": "WindowRow",
+  "baseName": "WindowRow",
+  "section": "components",
+  "file": "components/C-window-row.html",
+  "width": 1000,
+  "height": 2000,
+  "theme": "light",
+  "covers": [
+   "Component/WindowRow"
+  ],
+  "notes": [
+   "Chevron drawn open",
+   "Signed bars are grey"
+  ],
+  "bytes": 90624,
+  "page": "Components",
+  "source": "src/components/spot/spot-boards.mjs",
+  "fragments": {
+   "writes": 30,
+   "clones": 10,
+   "writesNoClone": 60,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "M-alerts-dialogs",
+  "name": "Alerts and dialogs",
+  "baseName": "Alerts and dialogs",
+  "section": "components",
+  "file": "components/M-alerts-dialogs.html",
+  "width": 1152,
+  "height": 1600,
+  "theme": "light",
+  "covers": [
+   "Menus/Alerts and dialogs"
+  ],
+  "notes": [],
+  "bytes": 40733,
+  "page": "Components",
+  "source": "src/screens/system/system.mjs",
+  "fragments": {
+   "writes": 15,
+   "clones": 7,
+   "writesNoClone": 30,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "M-file-panels",
+  "name": "File importer and exporter",
+  "baseName": "File importer and exporter",
+  "section": "components",
+  "file": "components/M-file-panels.html",
+  "width": 1264,
+  "height": 1176,
+  "theme": "light",
+  "covers": [
+   "Menus/File importer and exporter"
+  ],
+  "notes": [],
+  "bytes": 40036,
+  "page": "Components",
+  "source": "src/screens/system/system.mjs",
+  "fragments": {
+   "writes": 16,
+   "clones": 6,
+   "writesNoClone": 25,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "M-share-sheet",
+  "name": "Share sheet",
+  "baseName": "Share sheet",
+  "section": "components",
+  "file": "components/M-share-sheet.html",
+  "width": 1408,
+  "height": 680,
+  "theme": "light",
+  "covers": [
+   "Menus/Share sheet"
+  ],
+  "notes": [],
+  "bytes": 32774,
+  "page": "Components",
+  "source": "src/screens/system/system.mjs",
+  "fragments": {
+   "writes": 21,
+   "clones": 0,
+   "writesNoClone": 21,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "M-window-toolbars",
+  "name": "Window title bar and toolbars",
+  "baseName": "Window title bar and toolbars",
+  "section": "components",
+  "file": "components/M-window-toolbars.html",
+  "width": 1160,
+  "height": 1752,
+  "theme": "light",
+  "covers": [
+   "Menus/Window title bar and toolbars"
+  ],
+  "notes": [],
+  "bytes": 100636,
+  "page": "Components",
+  "source": "src/screens/system/system.mjs",
+  "fragments": {
+   "writes": 23,
+   "clones": 8,
+   "writesNoClone": 44,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "F-flow-explore-save",
+  "name": "Flow · Explore and save",
+  "baseName": "Flow · Explore and save",
+  "section": "flows",
+  "file": "flows/F-flow-explore-save.html",
+  "width": 1584,
+  "height": 832,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 20183,
+  "page": "Flows",
+  "source": "src/flows/flows.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "F-flow-plan-trip",
+  "name": "Flow · Plan a trip",
+  "baseName": "Flow · Plan a trip",
+  "section": "flows",
+  "file": "flows/F-flow-plan-trip.html",
+  "width": 2368,
+  "height": 472,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 16913,
+  "page": "Flows",
+  "source": "src/flows/flows.mjs",
+  "fragments": {
+   "writes": 7,
+   "clones": 0,
+   "writesNoClone": 7,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "F-flow-read-spot",
+  "name": "Flow · Read a spot",
+  "baseName": "Flow · Read a spot",
+  "section": "flows",
+  "file": "flows/F-flow-read-spot.html",
+  "width": 1976,
+  "height": 472,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 14074,
+  "page": "Flows",
+  "source": "src/flows/flows.mjs",
+  "fragments": {
+   "writes": 6,
+   "clones": 0,
+   "writesNoClone": 6,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "F-flow-scout",
+  "name": "Flow · Scout",
+  "baseName": "Flow · Scout",
+  "section": "flows",
+  "file": "flows/F-flow-scout.html",
+  "width": 1584,
+  "height": 1184,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 23667,
+  "page": "Flows",
+  "source": "src/flows/flows.mjs",
+  "fragments": {
+   "writes": 11,
+   "clones": 0,
+   "writesNoClone": 11,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "F-flows-overview",
+  "name": "Flows · Overview",
+  "baseName": "Flows · Overview",
+  "section": "flows",
+  "file": "flows/F-flows-overview.html",
+  "width": 960,
+  "height": 704,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 34595,
+  "page": "Flows",
+  "source": "src/flows/flows.mjs",
+  "fragments": {
+   "writes": 4,
+   "clones": 9,
+   "writesNoClone": 16,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "F01-colour",
+  "name": "F01 Colour",
+  "baseName": "F01 Colour",
+  "section": "foundations",
+  "file": "foundations/F01-colour.html",
+  "width": 1480,
+  "height": 5384,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 271007,
+  "page": "Foundations",
+  "source": "src/foundations/colour.mjs",
+  "fragments": {
+   "writes": 27,
+   "clones": 61,
+   "writesNoClone": 134,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "F02-type-scale",
+  "name": "F02 Type scale",
+  "baseName": "F02 Type scale",
+  "section": "foundations",
+  "file": "foundations/F02-type-scale.html",
+  "width": 1640,
+  "height": 1424,
+  "theme": "light",
+  "covers": [],
+  "notes": [
+   "Deviation 5: serif beyond place names"
+  ],
+  "bytes": 54292,
+  "page": "Foundations",
+  "source": "src/foundations/type.mjs",
+  "fragments": {
+   "writes": 18,
+   "clones": 0,
+   "writesNoClone": 18,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "F03-spacing-radii",
+  "name": "F03 Spacing & radii",
+  "baseName": "F03 Spacing & radii",
+  "section": "foundations",
+  "file": "foundations/F03-spacing-radii.html",
+  "width": 1640,
+  "height": 2408,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 92426,
+  "page": "Foundations",
+  "source": "src/foundations/spacing.mjs",
+  "fragments": {
+   "writes": 56,
+   "clones": 0,
+   "writesNoClone": 56,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "F04-elevation",
+  "name": "F04 Elevation & materials",
+  "baseName": "F04 Elevation & materials",
+  "section": "foundations",
+  "file": "foundations/F04-elevation.html",
+  "width": 1480,
+  "height": 1368,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 34061,
+  "page": "Foundations",
+  "source": "src/foundations/elevation.mjs",
+  "fragments": {
+   "writes": 12,
+   "clones": 5,
+   "writesNoClone": 20,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "F05-iconography",
+  "name": "F05 Iconography",
+  "baseName": "F05 Iconography",
+  "section": "foundations",
+  "file": "foundations/F05-iconography.html",
+  "width": 1640,
+  "height": 2704,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 372602,
+  "page": "Foundations",
+  "source": "src/foundations/icons.mjs",
+  "fragments": {
+   "writes": 144,
+   "clones": 0,
+   "writesNoClone": 144,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "F06-logo-app-icon",
+  "name": "F06 Logo & app icon",
+  "baseName": "F06 Logo & app icon",
+  "section": "foundations",
+  "file": "foundations/F06-logo-app-icon.html",
+  "width": 1640,
+  "height": 1416,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 58575,
+  "page": "Foundations",
+  "source": "src/foundations/logo.mjs",
+  "fragments": {
+   "writes": 16,
+   "clones": 0,
+   "writesNoClone": 16,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "F07-light-index",
+  "name": "F07 Light Index language",
+  "baseName": "F07 Light Index language",
+  "section": "foundations",
+  "file": "foundations/F07-light-index.html",
+  "width": 1736,
+  "height": 1824,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 184581,
+  "page": "Foundations",
+  "source": "src/foundations/lightindex.mjs",
+  "fragments": {
+   "writes": 23,
+   "clones": 32,
+   "writesNoClone": 98,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-change-dates",
+  "name": "Change Dates · Stops would move · Dark · 1280",
+  "baseName": "Change Dates · Stops would move",
+  "section": "screens",
+  "file": "screens/dark/S-change-dates--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "New Trip sheet (and Change Dates sheet)/Change Dates, stops would move"
+  ],
+  "notes": [
+   "Ends is formatted like the trip dates (\"Fri, Oct 9\", en_US), not \"Fri 9 Oct\" as SCREENS.md says. Drawn over the trip builder window chrome; see the Trip builder artboards for that screen."
+  ],
+  "bytes": 38623,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 17,
+   "clones": 0,
+   "writesNoClone": 17,
+   "duplicateOf": "S-change-dates"
+  }
+ },
+ {
+  "id": "S-change-dates",
+  "name": "Change Dates · Stops would move · Light · 1280",
+  "baseName": "Change Dates · Stops would move",
+  "section": "screens",
+  "file": "screens/light/S-change-dates--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "New Trip sheet (and Change Dates sheet)/Change Dates, stops would move"
+  ],
+  "notes": [
+   "Ends is formatted like the trip dates (\"Fri, Oct 9\", en_US), not \"Fri 9 Oct\" as SCREENS.md says. Drawn over the trip builder window chrome; see the Trip builder artboards for that screen."
+  ],
+  "bytes": 38180,
+  "page": "Screens (Light)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 17,
+   "clones": 0,
+   "writesNoClone": 17,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-change-dates--notes",
+  "name": "Change Dates · Stops would move · Notes",
+  "baseName": "Change Dates · Stops would move · Notes",
+  "section": "screens",
+  "file": "screens/light/S-change-dates--notes--light.html",
+  "width": 320,
+  "height": 168,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1630,
+  "page": "Screens (Light)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "companionOf": "S-change-dates",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-editor-create",
+  "name": "Spot editor · Create · Dark · 1280",
+  "baseName": "Spot editor · Create",
+  "section": "screens",
+  "file": "screens/dark/S-editor-create--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Spot editor sheet/Create"
+  ],
+  "snapshot": "snapshots/editor-create-dark-1280x820.png",
+  "notes": [],
+  "bytes": 94133,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot-editor/spot-editor.mjs",
+  "fragments": {
+   "writes": 36,
+   "clones": 9,
+   "writesNoClone": 54,
+   "duplicateOf": "S-editor-create"
+  }
+ },
+ {
+  "id": "S-editor-create",
+  "name": "Spot editor · Create · Light · 1280",
+  "baseName": "Spot editor · Create",
+  "section": "screens",
+  "file": "screens/light/S-editor-create--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Spot editor sheet/Create"
+  ],
+  "snapshot": "snapshots/editor-create-light-1280x820.png",
+  "notes": [],
+  "bytes": 92845,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot-editor/spot-editor.mjs",
+  "fragments": {
+   "writes": 36,
+   "clones": 9,
+   "writesNoClone": 54,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-editor-edit",
+  "name": "Spot editor · Edit · Dark · 1280",
+  "baseName": "Spot editor · Edit",
+  "section": "screens",
+  "file": "screens/dark/S-editor-edit--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Spot editor sheet/Edit"
+  ],
+  "snapshot": "snapshots/editor-edit-dark-1280x820.png",
+  "notes": [
+   "Edit opens from Saved or the Spot page; it is drawn over Explore here to share one backdrop with the other states."
+  ],
+  "bytes": 95352,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot-editor/spot-editor.mjs",
+  "fragments": {
+   "writes": 38,
+   "clones": 9,
+   "writesNoClone": 56,
+   "duplicateOf": "S-editor-edit"
+  }
+ },
+ {
+  "id": "S-editor-edit",
+  "name": "Spot editor · Edit · Light · 1280",
+  "baseName": "Spot editor · Edit",
+  "section": "screens",
+  "file": "screens/light/S-editor-edit--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Spot editor sheet/Edit"
+  ],
+  "snapshot": "snapshots/editor-edit-light-1280x820.png",
+  "notes": [
+   "Edit opens from Saved or the Spot page; it is drawn over Explore here to share one backdrop with the other states."
+  ],
+  "bytes": 94054,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot-editor/spot-editor.mjs",
+  "fragments": {
+   "writes": 38,
+   "clones": 9,
+   "writesNoClone": 56,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-editor-edit--notes",
+  "name": "Spot editor · Edit · Notes",
+  "baseName": "Spot editor · Edit · Notes",
+  "section": "screens",
+  "file": "screens/light/S-editor-edit--notes--light.html",
+  "width": 320,
+  "height": 144,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1511,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot-editor/spot-editor.mjs",
+  "companionOf": "S-editor-edit",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-editor-looking-up",
+  "name": "Spot editor · Looking up · Dark · 1280",
+  "baseName": "Spot editor · Looking up",
+  "section": "screens",
+  "file": "screens/dark/S-editor-looking-up--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Spot editor sheet/Looking up"
+  ],
+  "notes": [],
+  "bytes": 97923,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot-editor/spot-editor.mjs",
+  "fragments": {
+   "writes": 36,
+   "clones": 9,
+   "writesNoClone": 54,
+   "duplicateOf": "S-editor-looking-up"
+  }
+ },
+ {
+  "id": "S-editor-looking-up",
+  "name": "Spot editor · Looking up · Light · 1280",
+  "baseName": "Spot editor · Looking up",
+  "section": "screens",
+  "file": "screens/light/S-editor-looking-up--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Spot editor sheet/Looking up"
+  ],
+  "notes": [],
+  "bytes": 96615,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot-editor/spot-editor.mjs",
+  "fragments": {
+   "writes": 36,
+   "clones": 9,
+   "writesNoClone": 54,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-editor-lookup-failed",
+  "name": "Spot editor · Lookup failed · Dark · 1280",
+  "baseName": "Spot editor · Lookup failed",
+  "section": "screens",
+  "file": "screens/dark/S-editor-lookup-failed--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Spot editor sheet/Create, lookup failed"
+  ],
+  "snapshot": "snapshots/editor-create-lookup-failed-dark-1280x820.png",
+  "notes": [],
+  "bytes": 96029,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot-editor/spot-editor.mjs",
+  "fragments": {
+   "writes": 36,
+   "clones": 9,
+   "writesNoClone": 54,
+   "duplicateOf": "S-editor-lookup-failed"
+  }
+ },
+ {
+  "id": "S-editor-lookup-failed",
+  "name": "Spot editor · Lookup failed · Light · 1280",
+  "baseName": "Spot editor · Lookup failed",
+  "section": "screens",
+  "file": "screens/light/S-editor-lookup-failed--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Spot editor sheet/Create, lookup failed"
+  ],
+  "snapshot": "snapshots/editor-create-lookup-failed-light-1280x820.png",
+  "notes": [],
+  "bytes": 94731,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot-editor/spot-editor.mjs",
+  "fragments": {
+   "writes": 36,
+   "clones": 9,
+   "writesNoClone": 54,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-editor-validation",
+  "name": "Spot editor · Validation errors · Dark · 1280",
+  "baseName": "Spot editor · Validation errors",
+  "section": "screens",
+  "file": "screens/dark/S-editor-validation--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Spot editor sheet/Validation errors"
+  ],
+  "notes": [
+   "Shown after a failed save: blank name and an invalid walk-in. The pin has also been moved, so Reset Pin appears."
+  ],
+  "bytes": 97359,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot-editor/spot-editor.mjs",
+  "fragments": {
+   "writes": 38,
+   "clones": 10,
+   "writesNoClone": 57,
+   "duplicateOf": "S-editor-validation"
+  }
+ },
+ {
+  "id": "S-editor-validation",
+  "name": "Spot editor · Validation errors · Light · 1280",
+  "baseName": "Spot editor · Validation errors",
+  "section": "screens",
+  "file": "screens/light/S-editor-validation--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Spot editor sheet/Validation errors"
+  ],
+  "notes": [
+   "Shown after a failed save: blank name and an invalid walk-in. The pin has also been moved, so Reset Pin appears."
+  ],
+  "bytes": 96046,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot-editor/spot-editor.mjs",
+  "fragments": {
+   "writes": 38,
+   "clones": 10,
+   "writesNoClone": 57,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-editor-validation--notes",
+  "name": "Spot editor · Validation errors · Notes",
+  "baseName": "Spot editor · Validation errors · Notes",
+  "section": "screens",
+  "file": "screens/light/S-editor-validation--notes--light.html",
+  "width": 320,
+  "height": 128,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1550,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot-editor/spot-editor.mjs",
+  "companionOf": "S-editor-validation",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-add-spot",
+  "name": "Explore · Add Spot mode · Dark · 1280",
+  "baseName": "Explore · Add Spot mode",
+  "section": "screens",
+  "file": "screens/dark/S-explore-add-spot--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Explore/Add Spot mode"
+  ],
+  "snapshot": "snapshots/explore-addspot-mode-dark-1280x820.png",
+  "notes": [],
+  "bytes": 125598,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 38,
+   "clones": 31,
+   "writesNoClone": 89,
+   "duplicateOf": "S-explore-add-spot"
+  }
+ },
+ {
+  "id": "S-explore-add-spot",
+  "name": "Explore · Add Spot mode · Light · 1280",
+  "baseName": "Explore · Add Spot mode",
+  "section": "screens",
+  "file": "screens/light/S-explore-add-spot--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Explore/Add Spot mode"
+  ],
+  "snapshot": "snapshots/explore-addspot-mode-light-1280x820.png",
+  "notes": [],
+  "bytes": 123750,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 38,
+   "clones": 31,
+   "writesNoClone": 89,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-default",
+  "name": "Explore · Default · Dark · 1280",
+  "baseName": "Explore · Default",
+  "section": "screens",
+  "file": "screens/dark/S-explore-default--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Explore/Default"
+  ],
+  "snapshot": "snapshots/explore-default-dark-1280x820.png",
+  "notes": [
+   "List width: the source frames the list column 300 min / 360 ideal / 520 max; the snapshots show it at 520 (the max). Drawn at the 360 ideal. Owner to decide."
+  ],
+  "bytes": 122667,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 37,
+   "clones": 31,
+   "writesNoClone": 88,
+   "duplicateOf": "S-explore-default"
+  }
+ },
+ {
+  "id": "S-explore-default",
+  "name": "Explore · Default · Light · 1280",
+  "baseName": "Explore · Default",
+  "section": "screens",
+  "file": "screens/light/S-explore-default--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Explore/Default"
+  ],
+  "snapshot": "snapshots/explore-default-light-1280x820.png",
+  "notes": [
+   "List width: the source frames the list column 300 min / 360 ideal / 520 max; the snapshots show it at 520 (the max). Drawn at the 360 ideal. Owner to decide."
+  ],
+  "bytes": 120864,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 37,
+   "clones": 31,
+   "writesNoClone": 88,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-default--notes",
+  "name": "Explore · Default · Notes",
+  "baseName": "Explore · Default · Notes",
+  "section": "screens",
+  "file": "screens/light/S-explore-default--notes--light.html",
+  "width": 320,
+  "height": 160,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1552,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "companionOf": "S-explore-default",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-default-960",
+  "name": "Explore · Default · Dark · 960",
+  "baseName": "Explore · Default",
+  "section": "screens",
+  "file": "screens/dark/S-explore-default-960--dark.html",
+  "width": 960,
+  "height": 640,
+  "theme": "dark",
+  "covers": [
+   "Explore/Default"
+  ],
+  "snapshot": "snapshots/explore-default-dark-960x640.png",
+  "notes": [
+   "Toolbar overflow is inferred (the snapshot draws grey blocks): items that do not fit (the search field) collapse into the trailing overflow capsule. The list column is at its 300 minimum; the map is narrower. The capsule holds the chevron.right.2 symbol."
+  ],
+  "bytes": 104877,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 37,
+   "clones": 27,
+   "writesNoClone": 68,
+   "duplicateOf": "S-explore-default-960"
+  }
+ },
+ {
+  "id": "S-explore-default-960",
+  "name": "Explore · Default · Light · 960",
+  "baseName": "Explore · Default",
+  "section": "screens",
+  "file": "screens/light/S-explore-default-960--light.html",
+  "width": 960,
+  "height": 640,
+  "theme": "light",
+  "covers": [
+   "Explore/Default"
+  ],
+  "snapshot": "snapshots/explore-default-light-960x640.png",
+  "notes": [
+   "Toolbar overflow is inferred (the snapshot draws grey blocks): items that do not fit (the search field) collapse into the trailing overflow capsule. The list column is at its 300 minimum; the map is narrower. The capsule holds the chevron.right.2 symbol."
+  ],
+  "bytes": 103319,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 37,
+   "clones": 27,
+   "writesNoClone": 68,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-default-960--notes",
+  "name": "Explore · Default · Notes",
+  "baseName": "Explore · Default · Notes",
+  "section": "screens",
+  "file": "screens/light/S-explore-default-960--notes--light.html",
+  "width": 320,
+  "height": 184,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1649,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "companionOf": "S-explore-default-960",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-filtered-empty",
+  "name": "Explore · Filtered empty · Dark · 1280",
+  "baseName": "Explore · Filtered empty",
+  "section": "screens",
+  "file": "screens/dark/S-explore-filtered-empty--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Explore/Filtered empty"
+  ],
+  "snapshot": "snapshots/explore-filtered-empty-dark-1280x820.png",
+  "notes": [],
+  "bytes": 48387,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 20,
+   "clones": 0,
+   "writesNoClone": 20,
+   "duplicateOf": "S-explore-filtered-empty"
+  }
+ },
+ {
+  "id": "S-explore-filtered-empty",
+  "name": "Explore · Filtered empty · Light · 1280",
+  "baseName": "Explore · Filtered empty",
+  "section": "screens",
+  "file": "screens/light/S-explore-filtered-empty--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Explore/Filtered empty"
+  ],
+  "snapshot": "snapshots/explore-filtered-empty-light-1280x820.png",
+  "notes": [],
+  "bytes": 47769,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 20,
+   "clones": 0,
+   "writesNoClone": 20,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-menu-context",
+  "name": "Explore · Spot context menu · Dark · 1280",
+  "baseName": "Explore · Spot context menu",
+  "section": "screens",
+  "file": "screens/dark/S-explore-menu-context--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Menus/Spot and pin context menu",
+   "Menus/AddToTripMenu"
+  ],
+  "notes": [],
+  "bytes": 138274,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 46,
+   "clones": 31,
+   "writesNoClone": 94,
+   "duplicateOf": "S-explore-menu-context"
+  }
+ },
+ {
+  "id": "S-explore-menu-context",
+  "name": "Explore · Spot context menu · Light · 1280",
+  "baseName": "Explore · Spot context menu",
+  "section": "screens",
+  "file": "screens/light/S-explore-menu-context--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Menus/Spot and pin context menu",
+   "Menus/AddToTripMenu"
+  ],
+  "notes": [],
+  "bytes": 136296,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 46,
+   "clones": 31,
+   "writesNoClone": 94,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-menu-filters",
+  "name": "Explore · Filters menu · Dark · 1280",
+  "baseName": "Explore · Filters menu",
+  "section": "screens",
+  "file": "screens/dark/S-explore-menu-filters--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Menus/Explore filters and sort menus"
+  ],
+  "notes": [],
+  "bytes": 135058,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 41,
+   "clones": 38,
+   "writesNoClone": 94,
+   "duplicateOf": "S-explore-menu-filters"
+  }
+ },
+ {
+  "id": "S-explore-menu-filters",
+  "name": "Explore · Filters menu · Light · 1280",
+  "baseName": "Explore · Filters menu",
+  "section": "screens",
+  "file": "screens/light/S-explore-menu-filters--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Menus/Explore filters and sort menus"
+  ],
+  "notes": [],
+  "bytes": 133095,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 41,
+   "clones": 38,
+   "writesNoClone": 94,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-menu-sort",
+  "name": "Explore · Sort menu · Dark · 1280",
+  "baseName": "Explore · Sort menu",
+  "section": "screens",
+  "file": "screens/dark/S-explore-menu-sort--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Menus/Explore filters and sort menus"
+  ],
+  "notes": [],
+  "bytes": 126857,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 39,
+   "clones": 32,
+   "writesNoClone": 90,
+   "duplicateOf": "S-explore-menu-sort"
+  }
+ },
+ {
+  "id": "S-explore-menu-sort",
+  "name": "Explore · Sort menu · Light · 1280",
+  "baseName": "Explore · Sort menu",
+  "section": "screens",
+  "file": "screens/light/S-explore-menu-sort--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Menus/Explore filters and sort menus"
+  ],
+  "notes": [],
+  "bytes": 124999,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 39,
+   "clones": 32,
+   "writesNoClone": 90,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-no-forecast",
+  "name": "Explore · No forecast · Dark · 1280",
+  "baseName": "Explore · No forecast",
+  "section": "screens",
+  "file": "screens/dark/S-explore-no-forecast--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Explore/No forecast"
+  ],
+  "snapshot": "snapshots/explore-noforecast-dark-1280x820.png",
+  "notes": [],
+  "bytes": 109144,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 68,
+   "clones": 0,
+   "writesNoClone": 68,
+   "duplicateOf": "S-explore-no-forecast"
+  }
+ },
+ {
+  "id": "S-explore-no-forecast",
+  "name": "Explore · No forecast · Light · 1280",
+  "baseName": "Explore · No forecast",
+  "section": "screens",
+  "file": "screens/light/S-explore-no-forecast--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Explore/No forecast"
+  ],
+  "snapshot": "snapshots/explore-noforecast-light-1280x820.png",
+  "notes": [],
+  "bytes": 107606,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 68,
+   "clones": 0,
+   "writesNoClone": 68,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-polar",
+  "name": "Explore · Polar day, no window · Dark · 1280",
+  "baseName": "Explore · Polar day, no window",
+  "section": "screens",
+  "file": "screens/dark/S-explore-polar--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Explore/Polar day, no window"
+  ],
+  "notes": [
+   "Not in the snapshots. Illustrative: no curated spot is polar, so Night on 21 Jun stands in for a window that does not occur."
+  ],
+  "bytes": 92212,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 46,
+   "clones": 0,
+   "writesNoClone": 46,
+   "duplicateOf": "S-explore-polar"
+  }
+ },
+ {
+  "id": "S-explore-polar",
+  "name": "Explore · Polar day, no window · Light · 1280",
+  "baseName": "Explore · Polar day, no window",
+  "section": "screens",
+  "file": "screens/light/S-explore-polar--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Explore/Polar day, no window"
+  ],
+  "notes": [
+   "Not in the snapshots. Illustrative: no curated spot is polar, so Night on 21 Jun stands in for a window that does not occur."
+  ],
+  "bytes": 90859,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 46,
+   "clones": 0,
+   "writesNoClone": 46,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-polar--notes",
+  "name": "Explore · Polar day, no window · Notes",
+  "baseName": "Explore · Polar day, no window · Notes",
+  "section": "screens",
+  "file": "screens/light/S-explore-polar--notes--light.html",
+  "width": 320,
+  "height": 128,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1569,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "companionOf": "S-explore-polar",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-scored-card",
+  "name": "Explore · Scored place card · Dark · 1280",
+  "baseName": "Explore · Scored place card",
+  "section": "screens",
+  "file": "screens/dark/S-explore-scored-card--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Explore/Scored place card"
+  ],
+  "notes": [
+   "Not in the snapshots (the fixtures select Mesa Arch, whose window has passed)."
+  ],
+  "bytes": 138106,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 48,
+   "clones": 31,
+   "writesNoClone": 96,
+   "duplicateOf": "S-explore-scored-card"
+  }
+ },
+ {
+  "id": "S-explore-scored-card",
+  "name": "Explore · Scored place card · Light · 1280",
+  "baseName": "Explore · Scored place card",
+  "section": "screens",
+  "file": "screens/light/S-explore-scored-card--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Explore/Scored place card"
+  ],
+  "notes": [
+   "Not in the snapshots (the fixtures select Mesa Arch, whose window has passed)."
+  ],
+  "bytes": 136093,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 48,
+   "clones": 31,
+   "writesNoClone": 96,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-scored-card--notes",
+  "name": "Explore · Scored place card · Notes",
+  "baseName": "Explore · Scored place card · Notes",
+  "section": "screens",
+  "file": "screens/light/S-explore-scored-card--notes--light.html",
+  "width": 320,
+  "height": 128,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1493,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "companionOf": "S-explore-scored-card",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-search-failed",
+  "name": "Explore · Search failed · Dark · 1280",
+  "baseName": "Explore · Search failed",
+  "section": "screens",
+  "file": "screens/dark/S-explore-search-failed--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Explore/Search failed"
+  ],
+  "notes": [],
+  "bytes": 125147,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 37,
+   "clones": 31,
+   "writesNoClone": 88,
+   "duplicateOf": "S-explore-search-failed"
+  }
+ },
+ {
+  "id": "S-explore-search-failed",
+  "name": "Explore · Search failed · Light · 1280",
+  "baseName": "Explore · Search failed",
+  "section": "screens",
+  "file": "screens/light/S-explore-search-failed--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Explore/Search failed"
+  ],
+  "notes": [],
+  "bytes": 123314,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 37,
+   "clones": 31,
+   "writesNoClone": 88,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-search-nothing",
+  "name": "Explore · Search found nothing · Dark · 1280",
+  "baseName": "Explore · Search found nothing",
+  "section": "screens",
+  "file": "screens/dark/S-explore-search-nothing--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Explore/Search found nothing"
+  ],
+  "notes": [],
+  "bytes": 47445,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 19,
+   "clones": 0,
+   "writesNoClone": 19,
+   "duplicateOf": "S-explore-search-nothing"
+  }
+ },
+ {
+  "id": "S-explore-search-nothing",
+  "name": "Explore · Search found nothing · Light · 1280",
+  "baseName": "Explore · Search found nothing",
+  "section": "screens",
+  "file": "screens/light/S-explore-search-nothing--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Explore/Search found nothing"
+  ],
+  "notes": [],
+  "bytes": 46852,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 19,
+   "clones": 0,
+   "writesNoClone": 19,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-search-results",
+  "name": "Explore · Apple Maps results · Dark · 1280",
+  "baseName": "Explore · Apple Maps results",
+  "section": "screens",
+  "file": "screens/dark/S-explore-search-results--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Explore/Apple Maps search results"
+  ],
+  "notes": [
+   "Not in the snapshots. Apple Maps rows carry no provenance tag in the source (SCREENS.md says they are tagged). Place names and scores are illustrative."
+  ],
+  "bytes": 77583,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 40,
+   "clones": 5,
+   "writesNoClone": 50,
+   "duplicateOf": "S-explore-search-results"
+  }
+ },
+ {
+  "id": "S-explore-search-results",
+  "name": "Explore · Apple Maps results · Light · 1280",
+  "baseName": "Explore · Apple Maps results",
+  "section": "screens",
+  "file": "screens/light/S-explore-search-results--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Explore/Apple Maps search results"
+  ],
+  "notes": [
+   "Not in the snapshots. Apple Maps rows carry no provenance tag in the source (SCREENS.md says they are tagged). Place names and scores are illustrative."
+  ],
+  "bytes": 76545,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 40,
+   "clones": 5,
+   "writesNoClone": 50,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-search-results--notes",
+  "name": "Explore · Apple Maps results · Notes",
+  "baseName": "Explore · Apple Maps results · Notes",
+  "section": "screens",
+  "file": "screens/light/S-explore-search-results--notes--light.html",
+  "width": 320,
+  "height": 160,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1568,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "companionOf": "S-explore-search-results",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-selected",
+  "name": "Explore · Selected with place card · Dark · 1280",
+  "baseName": "Explore · Selected with place card",
+  "section": "screens",
+  "file": "screens/dark/S-explore-selected--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Explore/Selected, with place card"
+  ],
+  "snapshot": "snapshots/explore-selected-dark-1280x820.png",
+  "notes": [
+   "Save symbol: the card shows bookmark.fill (\"Saved\"); SCREENS.md says a filled star"
+  ],
+  "bytes": 134849,
+  "page": "Screens (Dark)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 44,
+   "clones": 31,
+   "writesNoClone": 95,
+   "duplicateOf": "S-explore-selected"
+  }
+ },
+ {
+  "id": "S-explore-selected",
+  "name": "Explore · Selected with place card · Light · 1280",
+  "baseName": "Explore · Selected with place card",
+  "section": "screens",
+  "file": "screens/light/S-explore-selected--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Explore/Selected, with place card"
+  ],
+  "snapshot": "snapshots/explore-selected-light-1280x820.png",
+  "notes": [
+   "Save symbol: the card shows bookmark.fill (\"Saved\"); SCREENS.md says a filled star"
+  ],
+  "bytes": 132881,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "fragments": {
+   "writes": 44,
+   "clones": 31,
+   "writesNoClone": 95,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-explore-selected--notes",
+  "name": "Explore · Selected with place card · Notes",
+  "baseName": "Explore · Selected with place card · Notes",
+  "section": "screens",
+  "file": "screens/light/S-explore-selected--notes--light.html",
+  "width": 320,
+  "height": 128,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1522,
+  "page": "Screens (Light)",
+  "source": "src/screens/explore/explore.mjs",
+  "companionOf": "S-explore-selected",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-new-trip-empty",
+  "name": "New Trip sheet · Empty trip · Dark · 1280",
+  "baseName": "New Trip sheet · Empty trip",
+  "section": "screens",
+  "file": "screens/dark/S-new-trip-empty--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "New Trip sheet (and Change Dates sheet)/New Trip, empty"
+  ],
+  "notes": [],
+  "bytes": 47855,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 18,
+   "clones": 0,
+   "writesNoClone": 18,
+   "duplicateOf": "S-new-trip-empty"
+  }
+ },
+ {
+  "id": "S-new-trip-empty",
+  "name": "New Trip sheet · Empty trip · Light · 1280",
+  "baseName": "New Trip sheet · Empty trip",
+  "section": "screens",
+  "file": "screens/light/S-new-trip-empty--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "New Trip sheet (and Change Dates sheet)/New Trip, empty"
+  ],
+  "notes": [],
+  "bytes": 47292,
+  "page": "Screens (Light)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 18,
+   "clones": 0,
+   "writesNoClone": 18,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-new-trip-template",
+  "name": "New Trip sheet · Template chosen · Dark · 1280",
+  "baseName": "New Trip sheet · Template chosen",
+  "section": "screens",
+  "file": "screens/dark/S-new-trip-template--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "New Trip sheet (and Change Dates sheet)/New Trip, template chosen"
+  ],
+  "snapshot": "snapshots/trip-new-sheet-dark-1280x820.png",
+  "notes": [
+   "Sheet is 680 wide (listIdeal + inspectorIdeal) and sized to its content, as in the app. The snapshot draws a larger frame with empty space and a 12 pt panel; the source is followed (macOS 26 sheet radius)."
+  ],
+  "bytes": 48634,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 18,
+   "clones": 0,
+   "writesNoClone": 18,
+   "duplicateOf": "S-new-trip-template"
+  }
+ },
+ {
+  "id": "S-new-trip-template",
+  "name": "New Trip sheet · Template chosen · Light · 1280",
+  "baseName": "New Trip sheet · Template chosen",
+  "section": "screens",
+  "file": "screens/light/S-new-trip-template--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "New Trip sheet (and Change Dates sheet)/New Trip, template chosen"
+  ],
+  "snapshot": "snapshots/trip-new-sheet-light-1280x820.png",
+  "notes": [
+   "Sheet is 680 wide (listIdeal + inspectorIdeal) and sized to its content, as in the app. The snapshot draws a larger frame with empty space and a 12 pt panel; the source is followed (macOS 26 sheet radius)."
+  ],
+  "bytes": 48061,
+  "page": "Screens (Light)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 18,
+   "clones": 0,
+   "writesNoClone": 18,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-new-trip-template--notes",
+  "name": "New Trip sheet · Template chosen · Notes",
+  "baseName": "New Trip sheet · Template chosen · Notes",
+  "section": "screens",
+  "file": "screens/light/S-new-trip-template--notes--light.html",
+  "width": 320,
+  "height": 168,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1630,
+  "page": "Screens (Light)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "companionOf": "S-new-trip-template",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-saved-delete-confirm",
+  "name": "Saved · Delete confirmation · Dark · 1280",
+  "baseName": "Saved · Delete confirmation",
+  "section": "screens",
+  "file": "screens/dark/S-saved-delete-confirm--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Saved/Delete confirmation"
+  ],
+  "notes": [
+   "A system confirmation dialog; drawn with the shared alert panel."
+  ],
+  "bytes": 47590,
+  "page": "Screens (Dark)",
+  "source": "src/screens/saved/saved.mjs",
+  "fragments": {
+   "writes": 23,
+   "clones": 0,
+   "writesNoClone": 23,
+   "duplicateOf": "S-saved-delete-confirm"
+  }
+ },
+ {
+  "id": "S-saved-delete-confirm",
+  "name": "Saved · Delete confirmation · Light · 1280",
+  "baseName": "Saved · Delete confirmation",
+  "section": "screens",
+  "file": "screens/light/S-saved-delete-confirm--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Saved/Delete confirmation"
+  ],
+  "notes": [
+   "A system confirmation dialog; drawn with the shared alert panel."
+  ],
+  "bytes": 47097,
+  "page": "Screens (Light)",
+  "source": "src/screens/saved/saved.mjs",
+  "fragments": {
+   "writes": 23,
+   "clones": 0,
+   "writesNoClone": 23,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-saved-delete-confirm--notes",
+  "name": "Saved · Delete confirmation · Notes",
+  "baseName": "Saved · Delete confirmation · Notes",
+  "section": "screens",
+  "file": "screens/light/S-saved-delete-confirm--notes--light.html",
+  "width": 320,
+  "height": 128,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1479,
+  "page": "Screens (Light)",
+  "source": "src/screens/saved/saved.mjs",
+  "companionOf": "S-saved-delete-confirm",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-saved-empty",
+  "name": "Saved · Empty · Dark · 1280",
+  "baseName": "Saved · Empty",
+  "section": "screens",
+  "file": "screens/dark/S-saved-empty--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Saved/Empty"
+  ],
+  "snapshot": "snapshots/saved-empty-dark-1280x820.png",
+  "notes": [
+   "The toolbar search and Sort and Filter menu belong to the list, so the empty state shows no toolbar items."
+  ],
+  "bytes": 22323,
+  "page": "Screens (Dark)",
+  "source": "src/screens/saved/saved.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": "S-saved-empty"
+  }
+ },
+ {
+  "id": "S-saved-empty",
+  "name": "Saved · Empty · Light · 1280",
+  "baseName": "Saved · Empty",
+  "section": "screens",
+  "file": "screens/light/S-saved-empty--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Saved/Empty"
+  ],
+  "snapshot": "snapshots/saved-empty-light-1280x820.png",
+  "notes": [
+   "The toolbar search and Sort and Filter menu belong to the list, so the empty state shows no toolbar items."
+  ],
+  "bytes": 22075,
+  "page": "Screens (Light)",
+  "source": "src/screens/saved/saved.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-saved-empty--notes",
+  "name": "Saved · Empty · Notes",
+  "baseName": "Saved · Empty · Notes",
+  "section": "screens",
+  "file": "screens/light/S-saved-empty--notes--light.html",
+  "width": 320,
+  "height": 144,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1493,
+  "page": "Screens (Light)",
+  "source": "src/screens/saved/saved.mjs",
+  "companionOf": "S-saved-empty",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-saved-filter-empty",
+  "name": "Saved · Filter empty · Dark · 1280",
+  "baseName": "Saved · Filter empty",
+  "section": "screens",
+  "file": "screens/dark/S-saved-filter-empty--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Saved/Filter or search empty"
+  ],
+  "notes": [
+   "A search with no match shows the system search-empty view (\"No Results for “query”\") instead of this one."
+  ],
+  "bytes": 26963,
+  "page": "Screens (Dark)",
+  "source": "src/screens/saved/saved.mjs",
+  "fragments": {
+   "writes": 10,
+   "clones": 0,
+   "writesNoClone": 10,
+   "duplicateOf": "S-saved-filter-empty"
+  }
+ },
+ {
+  "id": "S-saved-filter-empty",
+  "name": "Saved · Filter empty · Light · 1280",
+  "baseName": "Saved · Filter empty",
+  "section": "screens",
+  "file": "screens/light/S-saved-filter-empty--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Saved/Filter or search empty"
+  ],
+  "notes": [
+   "A search with no match shows the system search-empty view (\"No Results for “query”\") instead of this one."
+  ],
+  "bytes": 26675,
+  "page": "Screens (Light)",
+  "source": "src/screens/saved/saved.mjs",
+  "fragments": {
+   "writes": 10,
+   "clones": 0,
+   "writesNoClone": 10,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-saved-filter-empty--notes",
+  "name": "Saved · Filter empty · Notes",
+  "baseName": "Saved · Filter empty · Notes",
+  "section": "screens",
+  "file": "screens/light/S-saved-filter-empty--notes--light.html",
+  "width": 320,
+  "height": 144,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1520,
+  "page": "Screens (Light)",
+  "source": "src/screens/saved/saved.mjs",
+  "companionOf": "S-saved-filter-empty",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-saved-list",
+  "name": "Saved · List · Dark · 1280",
+  "baseName": "Saved · List",
+  "section": "screens",
+  "file": "screens/dark/S-saved-list--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Saved/List"
+  ],
+  "snapshot": "snapshots/saved-list-dark-1280x820.png",
+  "notes": [],
+  "bytes": 44558,
+  "page": "Screens (Dark)",
+  "source": "src/screens/saved/saved.mjs",
+  "fragments": {
+   "writes": 20,
+   "clones": 0,
+   "writesNoClone": 20,
+   "duplicateOf": "S-saved-list"
+  }
+ },
+ {
+  "id": "S-saved-list",
+  "name": "Saved · List · Light · 1280",
+  "baseName": "Saved · List",
+  "section": "screens",
+  "file": "screens/light/S-saved-list--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Saved/List"
+  ],
+  "snapshot": "snapshots/saved-list-light-1280x820.png",
+  "notes": [],
+  "bytes": 44130,
+  "page": "Screens (Light)",
+  "source": "src/screens/saved/saved.mjs",
+  "fragments": {
+   "writes": 20,
+   "clones": 0,
+   "writesNoClone": 20,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-saved-no-forecast",
+  "name": "Saved · No forecast · Dark · 1280",
+  "baseName": "Saved · No forecast",
+  "section": "screens",
+  "file": "screens/dark/S-saved-no-forecast--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Saved/No forecast"
+  ],
+  "snapshot": "snapshots/saved-noforecast-dark-1280x820.png",
+  "notes": [],
+  "bytes": 40462,
+  "page": "Screens (Dark)",
+  "source": "src/screens/saved/saved.mjs",
+  "fragments": {
+   "writes": 19,
+   "clones": 0,
+   "writesNoClone": 19,
+   "duplicateOf": "S-saved-no-forecast"
+  }
+ },
+ {
+  "id": "S-saved-no-forecast",
+  "name": "Saved · No forecast · Light · 1280",
+  "baseName": "Saved · No forecast",
+  "section": "screens",
+  "file": "screens/light/S-saved-no-forecast--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Saved/No forecast"
+  ],
+  "snapshot": "snapshots/saved-noforecast-light-1280x820.png",
+  "notes": [],
+  "bytes": 40084,
+  "page": "Screens (Light)",
+  "source": "src/screens/saved/saved.mjs",
+  "fragments": {
+   "writes": 19,
+   "clones": 0,
+   "writesNoClone": 19,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-saved-sort-menu",
+  "name": "Saved · Sort and filter menu · Dark · 1280",
+  "baseName": "Saved · Sort and filter menu",
+  "section": "screens",
+  "file": "screens/dark/S-saved-sort-menu--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Menus/Saved sort and filter menu"
+  ],
+  "notes": [],
+  "bytes": 51797,
+  "page": "Screens (Dark)",
+  "source": "src/screens/saved/saved.mjs",
+  "fragments": {
+   "writes": 23,
+   "clones": 0,
+   "writesNoClone": 23,
+   "duplicateOf": "S-saved-sort-menu"
+  }
+ },
+ {
+  "id": "S-saved-sort-menu",
+  "name": "Saved · Sort and filter menu · Light · 1280",
+  "baseName": "Saved · Sort and filter menu",
+  "section": "screens",
+  "file": "screens/light/S-saved-sort-menu--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Menus/Saved sort and filter menu"
+  ],
+  "notes": [],
+  "bytes": 51284,
+  "page": "Screens (Light)",
+  "source": "src/screens/saved/saved.mjs",
+  "fragments": {
+   "writes": 23,
+   "clones": 0,
+   "writesNoClone": 23,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-guardrail",
+  "name": "Scout · Guardrail · Dark · 1280",
+  "baseName": "Scout · Guardrail",
+  "section": "screens",
+  "file": "screens/dark/S-scout-guardrail--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Scout/Guardrail"
+  ],
+  "snapshot": "snapshots/scout-guardrail-dark-1280x820.png",
+  "notes": [],
+  "bytes": 25016,
+  "page": "Screens (Dark)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 11,
+   "clones": 0,
+   "writesNoClone": 11,
+   "duplicateOf": "S-scout-guardrail"
+  }
+ },
+ {
+  "id": "S-scout-guardrail",
+  "name": "Scout · Guardrail · Light · 1280",
+  "baseName": "Scout · Guardrail",
+  "section": "screens",
+  "file": "screens/light/S-scout-guardrail--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Scout/Guardrail"
+  ],
+  "snapshot": "snapshots/scout-guardrail-light-1280x820.png",
+  "notes": [],
+  "bytes": 24738,
+  "page": "Screens (Light)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 11,
+   "clones": 0,
+   "writesNoClone": 11,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-idle",
+  "name": "Scout · Idle · Dark · 1280",
+  "baseName": "Scout · Idle",
+  "section": "screens",
+  "file": "screens/dark/S-scout-idle--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Scout/Idle"
+  ],
+  "snapshot": "snapshots/scout-idle-dark-1280x820.png",
+  "notes": [],
+  "bytes": 29400,
+  "page": "Screens (Dark)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 13,
+   "clones": 0,
+   "writesNoClone": 13,
+   "duplicateOf": "S-scout-idle"
+  }
+ },
+ {
+  "id": "S-scout-idle",
+  "name": "Scout · Idle · Light · 1280",
+  "baseName": "Scout · Idle",
+  "section": "screens",
+  "file": "screens/light/S-scout-idle--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Scout/Idle"
+  ],
+  "snapshot": "snapshots/scout-idle-light-1280x820.png",
+  "notes": [],
+  "bytes": 29072,
+  "page": "Screens (Light)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 13,
+   "clones": 0,
+   "writesNoClone": 13,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-no-results",
+  "name": "Scout · No results · Dark · 1280",
+  "baseName": "Scout · No results",
+  "section": "screens",
+  "file": "screens/dark/S-scout-no-results--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Scout/No results"
+  ],
+  "snapshot": "snapshots/scout-no-results-dark-1280x820.png",
+  "notes": [],
+  "bytes": 24040,
+  "page": "Screens (Dark)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 11,
+   "clones": 0,
+   "writesNoClone": 11,
+   "duplicateOf": "S-scout-no-results"
+  }
+ },
+ {
+  "id": "S-scout-no-results",
+  "name": "Scout · No results · Light · 1280",
+  "baseName": "Scout · No results",
+  "section": "screens",
+  "file": "screens/light/S-scout-no-results--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Scout/No results"
+  ],
+  "snapshot": "snapshots/scout-no-results-light-1280x820.png",
+  "notes": [],
+  "bytes": 23762,
+  "page": "Screens (Light)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 11,
+   "clones": 0,
+   "writesNoClone": 11,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-other-failures",
+  "name": "Scout · Other failures · Dark · 1280",
+  "baseName": "Scout · Other failures",
+  "section": "screens",
+  "file": "screens/dark/S-scout-other-failures--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Scout/Other failures"
+  ],
+  "notes": [
+   "The four \"other failure\" empty states share one layout, so they are shown together in a 2 x 2 grid with a label each (labels are annotations, not UI). In the app each fills the content area alone, with the request bar shown except for \"unavailable\"."
+  ],
+  "bytes": 37479,
+  "page": "Screens (Dark)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 19,
+   "clones": 0,
+   "writesNoClone": 19,
+   "duplicateOf": "S-scout-other-failures"
+  }
+ },
+ {
+  "id": "S-scout-other-failures",
+  "name": "Scout · Other failures · Light · 1280",
+  "baseName": "Scout · Other failures",
+  "section": "screens",
+  "file": "screens/light/S-scout-other-failures--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Scout/Other failures"
+  ],
+  "notes": [
+   "The four \"other failure\" empty states share one layout, so they are shown together in a 2 x 2 grid with a label each (labels are annotations, not UI). In the app each fills the content area alone, with the request bar shown except for \"unavailable\"."
+  ],
+  "bytes": 37001,
+  "page": "Screens (Light)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 19,
+   "clones": 0,
+   "writesNoClone": 19,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-other-failures--notes",
+  "name": "Scout · Other failures · Notes",
+  "baseName": "Scout · Other failures · Notes",
+  "section": "screens",
+  "file": "screens/light/S-scout-other-failures--notes--light.html",
+  "width": 320,
+  "height": 184,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1674,
+  "page": "Screens (Light)",
+  "source": "src/screens/scout/scout.mjs",
+  "companionOf": "S-scout-other-failures",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-results",
+  "name": "Scout · Results · Dark · 1280",
+  "baseName": "Scout · Results",
+  "section": "screens",
+  "file": "screens/dark/S-scout-results--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Scout/Results"
+  ],
+  "snapshot": "snapshots/scout-results-dark-1280x820.png",
+  "notes": [
+   "Map markers: the source draws MapKit Markers tinted accent for every result (selected is larger). The snapshot stand-in draws the selected pin accent and the others grey; the source is followed.",
+   "The list is 360 wide (listIdeal) beside the sidebar; the snapshot, which has no sidebar, fills 520."
+  ],
+  "bytes": 89345,
+  "page": "Screens (Dark)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 38,
+   "clones": 0,
+   "writesNoClone": 38,
+   "duplicateOf": "S-scout-results"
+  }
+ },
+ {
+  "id": "S-scout-results",
+  "name": "Scout · Results · Light · 1280",
+  "baseName": "Scout · Results",
+  "section": "screens",
+  "file": "screens/light/S-scout-results--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Scout/Results"
+  ],
+  "snapshot": "snapshots/scout-results-light-1280x820.png",
+  "notes": [
+   "Map markers: the source draws MapKit Markers tinted accent for every result (selected is larger). The snapshot stand-in draws the selected pin accent and the others grey; the source is followed.",
+   "The list is 360 wide (listIdeal) beside the sidebar; the snapshot, which has no sidebar, fills 520."
+  ],
+  "bytes": 88312,
+  "page": "Screens (Light)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 38,
+   "clones": 0,
+   "writesNoClone": 38,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-results--notes",
+  "name": "Scout · Results · Notes",
+  "baseName": "Scout · Results · Notes",
+  "section": "screens",
+  "file": "screens/light/S-scout-results--notes--light.html",
+  "width": 320,
+  "height": 264,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 2484,
+  "page": "Screens (Light)",
+  "source": "src/screens/scout/scout.mjs",
+  "companionOf": "S-scout-results",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-results-loading",
+  "name": "Scout · Checking the forecast · Dark · 1280",
+  "baseName": "Scout · Checking the forecast",
+  "section": "screens",
+  "file": "screens/dark/S-scout-results-loading--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Scout/Checking the forecast"
+  ],
+  "notes": [],
+  "bytes": 89815,
+  "page": "Screens (Dark)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 38,
+   "clones": 0,
+   "writesNoClone": 38,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-results-loading",
+  "name": "Scout · Checking the forecast · Light · 1280",
+  "baseName": "Scout · Checking the forecast",
+  "section": "screens",
+  "file": "screens/light/S-scout-results-loading--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Scout/Checking the forecast"
+  ],
+  "notes": [],
+  "bytes": 88797,
+  "page": "Screens (Light)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 38,
+   "clones": 0,
+   "writesNoClone": 38,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-results-no-forecast",
+  "name": "Scout · Results, no forecast · Dark · 1280",
+  "baseName": "Scout · Results, no forecast",
+  "section": "screens",
+  "file": "screens/dark/S-scout-results-no-forecast--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Scout/Results, no forecast"
+  ],
+  "snapshot": "snapshots/scout-results-noforecast-dark-1280x820.png",
+  "notes": [],
+  "bytes": 80803,
+  "page": "Screens (Dark)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 36,
+   "clones": 0,
+   "writesNoClone": 36,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-results-no-forecast",
+  "name": "Scout · Results, no forecast · Light · 1280",
+  "baseName": "Scout · Results, no forecast",
+  "section": "screens",
+  "file": "screens/light/S-scout-results-no-forecast--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Scout/Results, no forecast"
+  ],
+  "snapshot": "snapshots/scout-results-noforecast-light-1280x820.png",
+  "notes": [],
+  "bytes": 79875,
+  "page": "Screens (Light)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 36,
+   "clones": 0,
+   "writesNoClone": 36,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-running",
+  "name": "Scout · Running · Dark · 1280",
+  "baseName": "Scout · Running",
+  "section": "screens",
+  "file": "screens/dark/S-scout-running--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Scout/Running"
+  ],
+  "snapshot": "snapshots/scout-running-dark-1280x820.png",
+  "notes": [],
+  "bytes": 25818,
+  "page": "Screens (Dark)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 13,
+   "clones": 0,
+   "writesNoClone": 13,
+   "duplicateOf": "S-scout-running"
+  }
+ },
+ {
+  "id": "S-scout-running",
+  "name": "Scout · Running · Light · 1280",
+  "baseName": "Scout · Running",
+  "section": "screens",
+  "file": "screens/light/S-scout-running--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Scout/Running"
+  ],
+  "snapshot": "snapshots/scout-running-light-1280x820.png",
+  "notes": [],
+  "bytes": 25510,
+  "page": "Screens (Light)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 13,
+   "clones": 0,
+   "writesNoClone": 13,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-unavailable-device",
+  "name": "Scout · Unavailable, device · Dark · 1280",
+  "baseName": "Scout · Unavailable, device",
+  "section": "screens",
+  "file": "screens/dark/S-scout-unavailable-device--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Scout/Unavailable: device"
+  ],
+  "snapshot": "snapshots/scout-unavailable-device-dark-1280x820.png",
+  "notes": [],
+  "bytes": 22433,
+  "page": "Screens (Dark)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": "S-scout-unavailable-device"
+  }
+ },
+ {
+  "id": "S-scout-unavailable-device",
+  "name": "Scout · Unavailable, device · Light · 1280",
+  "baseName": "Scout · Unavailable, device",
+  "section": "screens",
+  "file": "screens/light/S-scout-unavailable-device--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Scout/Unavailable: device"
+  ],
+  "snapshot": "snapshots/scout-unavailable-device-light-1280x820.png",
+  "notes": [],
+  "bytes": 22195,
+  "page": "Screens (Light)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-unavailable-downloading",
+  "name": "Scout · Unavailable, downloading · Dark · 1280",
+  "baseName": "Scout · Unavailable, downloading",
+  "section": "screens",
+  "file": "screens/dark/S-scout-unavailable-downloading--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Scout/Unavailable: downloading"
+  ],
+  "snapshot": "snapshots/scout-unavailable-downloading-dark-1280x820.png",
+  "notes": [],
+  "bytes": 22285,
+  "page": "Screens (Dark)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": "S-scout-unavailable-downloading"
+  }
+ },
+ {
+  "id": "S-scout-unavailable-downloading",
+  "name": "Scout · Unavailable, downloading · Light · 1280",
+  "baseName": "Scout · Unavailable, downloading",
+  "section": "screens",
+  "file": "screens/light/S-scout-unavailable-downloading--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Scout/Unavailable: downloading"
+  ],
+  "snapshot": "snapshots/scout-unavailable-downloading-light-1280x820.png",
+  "notes": [],
+  "bytes": 22047,
+  "page": "Screens (Light)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-scout-unavailable-off",
+  "name": "Scout · Apple Intelligence off · Dark · 1280",
+  "baseName": "Scout · Apple Intelligence off",
+  "section": "screens",
+  "file": "screens/dark/S-scout-unavailable-off--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Scout/Unavailable: Apple Intelligence off"
+  ],
+  "snapshot": "snapshots/scout-unavailable-not-enabled-dark-1280x820.png",
+  "notes": [],
+  "bytes": 23288,
+  "page": "Screens (Dark)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": "S-scout-unavailable-off"
+  }
+ },
+ {
+  "id": "S-scout-unavailable-off",
+  "name": "Scout · Apple Intelligence off · Light · 1280",
+  "baseName": "Scout · Apple Intelligence off",
+  "section": "screens",
+  "file": "screens/light/S-scout-unavailable-off--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Scout/Unavailable: Apple Intelligence off"
+  ],
+  "snapshot": "snapshots/scout-unavailable-not-enabled-light-1280x820.png",
+  "notes": [],
+  "bytes": 23040,
+  "page": "Screens (Light)",
+  "source": "src/screens/scout/scout.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-about",
+  "name": "Settings · About · Dark · 552",
+  "baseName": "Settings · About",
+  "section": "screens",
+  "file": "screens/dark/S-settings-about--dark.html",
+  "width": 552,
+  "height": 368,
+  "theme": "dark",
+  "covers": [
+   "Settings/About"
+  ],
+  "snapshot": "snapshots/settings-about-dark-1280x820.png",
+  "notes": [],
+  "bytes": 14926,
+  "page": "Screens (Dark)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 4,
+   "clones": 0,
+   "writesNoClone": 4,
+   "duplicateOf": "S-settings-about"
+  }
+ },
+ {
+  "id": "S-settings-about",
+  "name": "Settings · About · Light · 552",
+  "baseName": "Settings · About",
+  "section": "screens",
+  "file": "screens/light/S-settings-about--light.html",
+  "width": 552,
+  "height": 368,
+  "theme": "light",
+  "covers": [
+   "Settings/About"
+  ],
+  "snapshot": "snapshots/settings-about-light-1280x820.png",
+  "notes": [],
+  "bytes": 14798,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 4,
+   "clones": 0,
+   "writesNoClone": 4,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-general",
+  "name": "Settings · General · Dark · 552",
+  "baseName": "Settings · General",
+  "section": "screens",
+  "file": "screens/dark/S-settings-general--dark.html",
+  "width": 552,
+  "height": 320,
+  "theme": "dark",
+  "covers": [
+   "Settings/General"
+  ],
+  "snapshot": "snapshots/settings-general-dark-1280x820.png",
+  "notes": [
+   "The snapshot renders the tab bar as a blank strip with a black blob (offscreen artefact); drawn here as the standard macOS 26 Settings toolbar tabs."
+  ],
+  "bytes": 20950,
+  "page": "Screens (Dark)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 7,
+   "clones": 0,
+   "writesNoClone": 7,
+   "duplicateOf": "S-settings-general"
+  }
+ },
+ {
+  "id": "S-settings-general",
+  "name": "Settings · General · Light · 552",
+  "baseName": "Settings · General",
+  "section": "screens",
+  "file": "screens/light/S-settings-general--light.html",
+  "width": 552,
+  "height": 320,
+  "theme": "light",
+  "covers": [
+   "Settings/General"
+  ],
+  "snapshot": "snapshots/settings-general-light-1280x820.png",
+  "notes": [
+   "The snapshot renders the tab bar as a blank strip with a black blob (offscreen artefact); drawn here as the standard macOS 26 Settings toolbar tabs."
+  ],
+  "bytes": 20722,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 7,
+   "clones": 0,
+   "writesNoClone": 7,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-general--notes",
+  "name": "Settings · General · Notes",
+  "baseName": "Settings · General · Notes",
+  "section": "screens",
+  "file": "screens/light/S-settings-general--notes--light.html",
+  "width": 320,
+  "height": 160,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1545,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "companionOf": "S-settings-general",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-intelligence-device",
+  "name": "Settings · Intelligence, device · Dark · 552",
+  "baseName": "Settings · Intelligence, device",
+  "section": "screens",
+  "file": "screens/dark/S-settings-intelligence-device--dark.html",
+  "width": 552,
+  "height": 264,
+  "theme": "dark",
+  "covers": [
+   "Settings/Apple Intelligence: ready, off, device, downloading"
+  ],
+  "notes": [],
+  "bytes": 15702,
+  "page": "Screens (Dark)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 5,
+   "clones": 0,
+   "writesNoClone": 5,
+   "duplicateOf": "S-settings-intelligence-device"
+  }
+ },
+ {
+  "id": "S-settings-intelligence-device",
+  "name": "Settings · Intelligence, device · Light · 552",
+  "baseName": "Settings · Intelligence, device",
+  "section": "screens",
+  "file": "screens/light/S-settings-intelligence-device--light.html",
+  "width": 552,
+  "height": 264,
+  "theme": "light",
+  "covers": [
+   "Settings/Apple Intelligence: ready, off, device, downloading"
+  ],
+  "notes": [],
+  "bytes": 15574,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 5,
+   "clones": 0,
+   "writesNoClone": 5,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-intelligence-downloading",
+  "name": "Settings · Intelligence, downloading · Dark · 552",
+  "baseName": "Settings · Intelligence, downloading",
+  "section": "screens",
+  "file": "screens/dark/S-settings-intelligence-downloading--dark.html",
+  "width": 552,
+  "height": 264,
+  "theme": "dark",
+  "covers": [
+   "Settings/Apple Intelligence: ready, off, device, downloading"
+  ],
+  "notes": [],
+  "bytes": 15554,
+  "page": "Screens (Dark)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 5,
+   "clones": 0,
+   "writesNoClone": 5,
+   "duplicateOf": "S-settings-intelligence-downloading"
+  }
+ },
+ {
+  "id": "S-settings-intelligence-downloading",
+  "name": "Settings · Intelligence, downloading · Light · 552",
+  "baseName": "Settings · Intelligence, downloading",
+  "section": "screens",
+  "file": "screens/light/S-settings-intelligence-downloading--light.html",
+  "width": 552,
+  "height": 264,
+  "theme": "light",
+  "covers": [
+   "Settings/Apple Intelligence: ready, off, device, downloading"
+  ],
+  "notes": [],
+  "bytes": 15426,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 5,
+   "clones": 0,
+   "writesNoClone": 5,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-intelligence-off",
+  "name": "Settings · Intelligence, off · Dark · 552",
+  "baseName": "Settings · Intelligence, off",
+  "section": "screens",
+  "file": "screens/dark/S-settings-intelligence-off--dark.html",
+  "width": 552,
+  "height": 288,
+  "theme": "dark",
+  "covers": [
+   "Settings/Apple Intelligence: ready, off, device, downloading"
+  ],
+  "notes": [],
+  "bytes": 17121,
+  "page": "Screens (Dark)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 5,
+   "clones": 0,
+   "writesNoClone": 5,
+   "duplicateOf": "S-settings-intelligence-off"
+  }
+ },
+ {
+  "id": "S-settings-intelligence-off",
+  "name": "Settings · Intelligence, off · Light · 552",
+  "baseName": "Settings · Intelligence, off",
+  "section": "screens",
+  "file": "screens/light/S-settings-intelligence-off--light.html",
+  "width": 552,
+  "height": 288,
+  "theme": "light",
+  "covers": [
+   "Settings/Apple Intelligence: ready, off, device, downloading"
+  ],
+  "notes": [],
+  "bytes": 16968,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 5,
+   "clones": 0,
+   "writesNoClone": 5,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-intelligence-ready",
+  "name": "Settings · Intelligence, ready · Dark · 552",
+  "baseName": "Settings · Intelligence, ready",
+  "section": "screens",
+  "file": "screens/dark/S-settings-intelligence-ready--dark.html",
+  "width": 552,
+  "height": 264,
+  "theme": "dark",
+  "covers": [
+   "Settings/Apple Intelligence: ready, off, device, downloading"
+  ],
+  "notes": [],
+  "bytes": 15344,
+  "page": "Screens (Dark)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 5,
+   "clones": 0,
+   "writesNoClone": 5,
+   "duplicateOf": "S-settings-intelligence-ready"
+  }
+ },
+ {
+  "id": "S-settings-intelligence-ready",
+  "name": "Settings · Intelligence, ready · Light · 552",
+  "baseName": "Settings · Intelligence, ready",
+  "section": "screens",
+  "file": "screens/light/S-settings-intelligence-ready--light.html",
+  "width": 552,
+  "height": 264,
+  "theme": "light",
+  "covers": [
+   "Settings/Apple Intelligence: ready, off, device, downloading"
+  ],
+  "notes": [],
+  "bytes": 15216,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 5,
+   "clones": 0,
+   "writesNoClone": 5,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-intelligence-unavailable",
+  "name": "Settings · Intelligence, unavailable · Dark · 552",
+  "baseName": "Settings · Intelligence, unavailable",
+  "section": "screens",
+  "file": "screens/dark/S-settings-intelligence-unavailable--dark.html",
+  "width": 552,
+  "height": 248,
+  "theme": "dark",
+  "covers": [
+   "Settings/Apple Intelligence: unavailable"
+  ],
+  "snapshot": "snapshots/settings-intelligence-dark-1280x820.png",
+  "notes": [],
+  "bytes": 15512,
+  "page": "Screens (Dark)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 5,
+   "clones": 0,
+   "writesNoClone": 5,
+   "duplicateOf": "S-settings-intelligence-unavailable"
+  }
+ },
+ {
+  "id": "S-settings-intelligence-unavailable",
+  "name": "Settings · Intelligence, unavailable · Light · 552",
+  "baseName": "Settings · Intelligence, unavailable",
+  "section": "screens",
+  "file": "screens/light/S-settings-intelligence-unavailable--light.html",
+  "width": 552,
+  "height": 248,
+  "theme": "light",
+  "covers": [
+   "Settings/Apple Intelligence: unavailable"
+  ],
+  "snapshot": "snapshots/settings-intelligence-light-1280x820.png",
+  "notes": [],
+  "bytes": 15384,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 5,
+   "clones": 0,
+   "writesNoClone": 5,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-weather-checking",
+  "name": "Settings · Weather, checking · Dark · 552",
+  "baseName": "Settings · Weather, checking",
+  "section": "screens",
+  "file": "screens/dark/S-settings-weather-checking--dark.html",
+  "width": 552,
+  "height": 208,
+  "theme": "dark",
+  "covers": [
+   "Settings/Weather: checking"
+  ],
+  "notes": [],
+  "bytes": 15119,
+  "page": "Screens (Dark)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 4,
+   "clones": 0,
+   "writesNoClone": 4,
+   "duplicateOf": "S-settings-weather-checking"
+  }
+ },
+ {
+  "id": "S-settings-weather-checking",
+  "name": "Settings · Weather, checking · Light · 552",
+  "baseName": "Settings · Weather, checking",
+  "section": "screens",
+  "file": "screens/light/S-settings-weather-checking--light.html",
+  "width": 552,
+  "height": 208,
+  "theme": "light",
+  "covers": [
+   "Settings/Weather: checking"
+  ],
+  "notes": [],
+  "bytes": 15001,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 4,
+   "clones": 0,
+   "writesNoClone": 4,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-weather-failed",
+  "name": "Settings · Weather, failed · Dark · 552",
+  "baseName": "Settings · Weather, failed",
+  "section": "screens",
+  "file": "screens/dark/S-settings-weather-failed--dark.html",
+  "width": 552,
+  "height": 272,
+  "theme": "dark",
+  "covers": [
+   "Settings/Weather: failed"
+  ],
+  "notes": [
+   "Detail text is illustrative: it is the service error string."
+  ],
+  "bytes": 16226,
+  "page": "Screens (Dark)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 6,
+   "clones": 0,
+   "writesNoClone": 6,
+   "duplicateOf": "S-settings-weather-failed"
+  }
+ },
+ {
+  "id": "S-settings-weather-failed",
+  "name": "Settings · Weather, failed · Light · 552",
+  "baseName": "Settings · Weather, failed",
+  "section": "screens",
+  "file": "screens/light/S-settings-weather-failed--light.html",
+  "width": 552,
+  "height": 272,
+  "theme": "light",
+  "covers": [
+   "Settings/Weather: failed"
+  ],
+  "notes": [
+   "Detail text is illustrative: it is the service error string."
+  ],
+  "bytes": 16073,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 6,
+   "clones": 0,
+   "writesNoClone": 6,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-weather-failed--notes",
+  "name": "Settings · Weather, failed · Notes",
+  "baseName": "Settings · Weather, failed · Notes",
+  "section": "screens",
+  "file": "screens/light/S-settings-weather-failed--notes--light.html",
+  "width": 320,
+  "height": 112,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1490,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "companionOf": "S-settings-weather-failed",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-weather-not-enabled",
+  "name": "Settings · Weather, not enabled · Dark · 552",
+  "baseName": "Settings · Weather, not enabled",
+  "section": "screens",
+  "file": "screens/dark/S-settings-weather-not-enabled--dark.html",
+  "width": 552,
+  "height": 352,
+  "theme": "dark",
+  "covers": [
+   "Settings/Weather: not enabled"
+  ],
+  "snapshot": "snapshots/settings-weather-dark-1280x820.png",
+  "notes": [
+   "The snapshot renders the tab bar as a blank strip with a black blob (offscreen artefact); drawn here as the standard macOS 26 Settings toolbar tabs."
+  ],
+  "bytes": 18666,
+  "page": "Screens (Dark)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 7,
+   "clones": 0,
+   "writesNoClone": 7,
+   "duplicateOf": "S-settings-weather-not-enabled"
+  }
+ },
+ {
+  "id": "S-settings-weather-not-enabled",
+  "name": "Settings · Weather, not enabled · Light · 552",
+  "baseName": "Settings · Weather, not enabled",
+  "section": "screens",
+  "file": "screens/light/S-settings-weather-not-enabled--light.html",
+  "width": 552,
+  "height": 352,
+  "theme": "light",
+  "covers": [
+   "Settings/Weather: not enabled"
+  ],
+  "snapshot": "snapshots/settings-weather-light-1280x820.png",
+  "notes": [
+   "The snapshot renders the tab bar as a blank strip with a black blob (offscreen artefact); drawn here as the standard macOS 26 Settings toolbar tabs."
+  ],
+  "bytes": 18493,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 7,
+   "clones": 0,
+   "writesNoClone": 7,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-weather-not-enabled--notes",
+  "name": "Settings · Weather, not enabled · Notes",
+  "baseName": "Settings · Weather, not enabled · Notes",
+  "section": "screens",
+  "file": "screens/light/S-settings-weather-not-enabled--notes--light.html",
+  "width": 320,
+  "height": 160,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1571,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "companionOf": "S-settings-weather-not-enabled",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-settings-weather-working",
+  "name": "Settings · Weather, working · Dark · 552",
+  "baseName": "Settings · Weather, working",
+  "section": "screens",
+  "file": "screens/dark/S-settings-weather-working--dark.html",
+  "width": 552,
+  "height": 336,
+  "theme": "dark",
+  "covers": [
+   "Settings/Weather: working (with sample data on)"
+  ],
+  "snapshot": "snapshots/settings-weather-working-dark-1280x820.png",
+  "notes": [],
+  "bytes": 20171,
+  "page": "Screens (Dark)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 6,
+   "clones": 0,
+   "writesNoClone": 6,
+   "duplicateOf": "S-settings-weather-working"
+  }
+ },
+ {
+  "id": "S-settings-weather-working",
+  "name": "Settings · Weather, working · Light · 552",
+  "baseName": "Settings · Weather, working",
+  "section": "screens",
+  "file": "screens/light/S-settings-weather-working--light.html",
+  "width": 552,
+  "height": 336,
+  "theme": "light",
+  "covers": [
+   "Settings/Weather: working (with sample data on)"
+  ],
+  "snapshot": "snapshots/settings-weather-working-light-1280x820.png",
+  "notes": [],
+  "bytes": 20003,
+  "page": "Screens (Light)",
+  "source": "src/screens/settings/settings.mjs",
+  "fragments": {
+   "writes": 6,
+   "clones": 0,
+   "writesNoClone": 6,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-shell-default",
+  "name": "Shell · Default · Dark · 1280",
+  "baseName": "Shell · Default",
+  "section": "screens",
+  "file": "screens/dark/S-shell-default--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Shell: sidebar and detail/Default (sample data on)",
+   "Shell: sidebar and detail/Trip renamed or created"
+  ],
+  "snapshot": "snapshots/shell-default-dark-1280x820.png",
+  "notes": [
+   "Sidebar rows follow the store, so \"Trip renamed or created\" is this artboard with a different row label."
+  ],
+  "bytes": 24900,
+  "page": "Screens (Dark)",
+  "source": "src/screens/shell/shell.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": "S-shell-default"
+  }
+ },
+ {
+  "id": "S-shell-default",
+  "name": "Shell · Default · Light · 1280",
+  "baseName": "Shell · Default",
+  "section": "screens",
+  "file": "screens/light/S-shell-default--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Shell: sidebar and detail/Default (sample data on)",
+   "Shell: sidebar and detail/Trip renamed or created"
+  ],
+  "snapshot": "snapshots/shell-default-light-1280x820.png",
+  "notes": [
+   "Sidebar rows follow the store, so \"Trip renamed or created\" is this artboard with a different row label."
+  ],
+  "bytes": 24632,
+  "page": "Screens (Light)",
+  "source": "src/screens/shell/shell.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-shell-default--notes",
+  "name": "Shell · Default · Notes",
+  "baseName": "Shell · Default · Notes",
+  "section": "screens",
+  "file": "screens/light/S-shell-default--notes--light.html",
+  "width": 320,
+  "height": 144,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1505,
+  "page": "Screens (Light)",
+  "source": "src/screens/shell/shell.mjs",
+  "companionOf": "S-shell-default",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-shell-default-960",
+  "name": "Shell · Default · Dark · 960",
+  "baseName": "Shell · Default",
+  "section": "screens",
+  "file": "screens/dark/S-shell-default-960--dark.html",
+  "width": 960,
+  "height": 640,
+  "theme": "dark",
+  "covers": [
+   "Shell: sidebar and detail/Default (sample data on)"
+  ],
+  "snapshot": "snapshots/shell-default-dark-960x640.png",
+  "notes": [],
+  "bytes": 24882,
+  "page": "Screens (Dark)",
+  "source": "src/screens/shell/shell.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": "S-shell-default-960"
+  }
+ },
+ {
+  "id": "S-shell-default-960",
+  "name": "Shell · Default · Light · 960",
+  "baseName": "Shell · Default",
+  "section": "screens",
+  "file": "screens/light/S-shell-default-960--light.html",
+  "width": 960,
+  "height": 640,
+  "theme": "light",
+  "covers": [
+   "Shell: sidebar and detail/Default (sample data on)"
+  ],
+  "snapshot": "snapshots/shell-default-light-960x640.png",
+  "notes": [],
+  "bytes": 24614,
+  "page": "Screens (Light)",
+  "source": "src/screens/shell/shell.mjs",
+  "fragments": {
+   "writes": 9,
+   "clones": 0,
+   "writesNoClone": 9,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-shell-no-banner",
+  "name": "Shell · No sample banner · Dark · 1280",
+  "baseName": "Shell · No sample banner",
+  "section": "screens",
+  "file": "screens/dark/S-shell-no-banner--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Shell: sidebar and detail/No sample banner"
+  ],
+  "notes": [],
+  "bytes": 22543,
+  "page": "Screens (Dark)",
+  "source": "src/screens/shell/shell.mjs",
+  "fragments": {
+   "writes": 8,
+   "clones": 0,
+   "writesNoClone": 8,
+   "duplicateOf": "S-shell-no-banner"
+  }
+ },
+ {
+  "id": "S-shell-no-banner",
+  "name": "Shell · No sample banner · Light · 1280",
+  "baseName": "Shell · No sample banner",
+  "section": "screens",
+  "file": "screens/light/S-shell-no-banner--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Shell: sidebar and detail/No sample banner"
+  ],
+  "notes": [],
+  "bytes": 22300,
+  "page": "Screens (Light)",
+  "source": "src/screens/shell/shell.mjs",
+  "fragments": {
+   "writes": 8,
+   "clones": 0,
+   "writesNoClone": 8,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-shell-no-banner-960",
+  "name": "Shell · No sample banner · Dark · 960",
+  "baseName": "Shell · No sample banner",
+  "section": "screens",
+  "file": "screens/dark/S-shell-no-banner-960--dark.html",
+  "width": 960,
+  "height": 640,
+  "theme": "dark",
+  "covers": [
+   "Shell: sidebar and detail/No sample banner"
+  ],
+  "notes": [],
+  "bytes": 22525,
+  "page": "Screens (Dark)",
+  "source": "src/screens/shell/shell.mjs",
+  "fragments": {
+   "writes": 8,
+   "clones": 0,
+   "writesNoClone": 8,
+   "duplicateOf": "S-shell-no-banner-960"
+  }
+ },
+ {
+  "id": "S-shell-no-banner-960",
+  "name": "Shell · No sample banner · Light · 960",
+  "baseName": "Shell · No sample banner",
+  "section": "screens",
+  "file": "screens/light/S-shell-no-banner-960--light.html",
+  "width": 960,
+  "height": 640,
+  "theme": "light",
+  "covers": [
+   "Shell: sidebar and detail/No sample banner"
+  ],
+  "notes": [],
+  "bytes": 22282,
+  "page": "Screens (Light)",
+  "source": "src/screens/shell/shell.mjs",
+  "fragments": {
+   "writes": 8,
+   "clones": 0,
+   "writesNoClone": 8,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-spot-explanation",
+  "name": "Spot page · Explanation states · Dark · 1280",
+  "baseName": "Spot page · Explanation states",
+  "section": "screens",
+  "file": "screens/dark/S-spot-explanation--dark.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "dark",
+  "covers": [
+   "Spot page/Explanation states"
+  ],
+  "snapshot": "snapshots/spot-window-expanded-dark-1280x2600.png",
+  "notes": [
+   "Explanation text is illustrative"
+  ],
+  "bytes": 265820,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 84,
+   "clones": 35,
+   "writesNoClone": 127,
+   "duplicateOf": "S-spot-explanation"
+  }
+ },
+ {
+  "id": "S-spot-explanation",
+  "name": "Spot page · Explanation states · Light · 1280",
+  "baseName": "Spot page · Explanation states",
+  "section": "screens",
+  "file": "screens/light/S-spot-explanation--light.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "light",
+  "covers": [
+   "Spot page/Explanation states"
+  ],
+  "snapshot": "snapshots/spot-window-expanded-light-1280x2600.png",
+  "notes": [
+   "Explanation text is illustrative"
+  ],
+  "bytes": 262672,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 84,
+   "clones": 35,
+   "writesNoClone": 127,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-spot-failed",
+  "name": "Spot page · Failed · Dark · 1280",
+  "baseName": "Spot page · Failed",
+  "section": "screens",
+  "file": "screens/dark/S-spot-failed--dark.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "dark",
+  "covers": [
+   "Spot page/Failed"
+  ],
+  "snapshot": "snapshots/spot-failed-dark-1280x2600.png",
+  "notes": [
+   "cloud.slash does not exist"
+  ],
+  "bytes": 125942,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 42,
+   "clones": 11,
+   "writesNoClone": 55,
+   "duplicateOf": "S-spot-failed"
+  }
+ },
+ {
+  "id": "S-spot-failed",
+  "name": "Spot page · Failed · Light · 1280",
+  "baseName": "Spot page · Failed",
+  "section": "screens",
+  "file": "screens/light/S-spot-failed--light.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "light",
+  "covers": [
+   "Spot page/Failed"
+  ],
+  "snapshot": "snapshots/spot-failed-light-1280x2600.png",
+  "notes": [
+   "cloud.slash does not exist"
+  ],
+  "bytes": 124104,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 42,
+   "clones": 11,
+   "writesNoClone": 55,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-spot-loading",
+  "name": "Spot page · Loading forecast · Dark · 1280",
+  "baseName": "Spot page · Loading forecast",
+  "section": "screens",
+  "file": "screens/dark/S-spot-loading--dark.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "dark",
+  "covers": [
+   "Spot page/Loading forecast"
+  ],
+  "snapshot": "snapshots/spot-noforecast-dark-1280x2600.png",
+  "notes": [
+   "cloud.slash does not exist"
+  ],
+  "bytes": 124772,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 42,
+   "clones": 11,
+   "writesNoClone": 55,
+   "duplicateOf": "S-spot-loading"
+  }
+ },
+ {
+  "id": "S-spot-loading",
+  "name": "Spot page · Loading forecast · Light · 1280",
+  "baseName": "Spot page · Loading forecast",
+  "section": "screens",
+  "file": "screens/light/S-spot-loading--light.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "light",
+  "covers": [
+   "Spot page/Loading forecast"
+  ],
+  "snapshot": "snapshots/spot-noforecast-light-1280x2600.png",
+  "notes": [
+   "cloud.slash does not exist"
+  ],
+  "bytes": 122969,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 42,
+   "clones": 11,
+   "writesNoClone": 55,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-spot-no-forecast",
+  "name": "Spot page · No forecast · Dark · 1280",
+  "baseName": "Spot page · No forecast",
+  "section": "screens",
+  "file": "screens/dark/S-spot-no-forecast--dark.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "dark",
+  "covers": [
+   "Spot page/No forecast"
+  ],
+  "snapshot": "snapshots/spot-noforecast-dark-1280x2600.png",
+  "notes": [
+   "cloud.slash does not exist"
+  ],
+  "bytes": 124372,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 42,
+   "clones": 11,
+   "writesNoClone": 55,
+   "duplicateOf": "S-spot-no-forecast"
+  }
+ },
+ {
+  "id": "S-spot-no-forecast",
+  "name": "Spot page · No forecast · Light · 1280",
+  "baseName": "Spot page · No forecast",
+  "section": "screens",
+  "file": "screens/light/S-spot-no-forecast--light.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "light",
+  "covers": [
+   "Spot page/No forecast"
+  ],
+  "snapshot": "snapshots/spot-noforecast-light-1280x2600.png",
+  "notes": [
+   "cloud.slash does not exist"
+  ],
+  "bytes": 122559,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 42,
+   "clones": 11,
+   "writesNoClone": 55,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-spot-polar",
+  "name": "Spot page · Polar · Dark · 1280",
+  "baseName": "Spot page · Polar",
+  "section": "screens",
+  "file": "screens/dark/S-spot-polar--dark.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "dark",
+  "covers": [
+   "Spot page/Polar"
+  ],
+  "snapshot": "snapshots/spot-polar-dark-1280x2600.png",
+  "notes": [],
+  "bytes": 218071,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 66,
+   "clones": 31,
+   "writesNoClone": 106,
+   "duplicateOf": "S-spot-polar"
+  }
+ },
+ {
+  "id": "S-spot-polar",
+  "name": "Spot page · Polar · Light · 1280",
+  "baseName": "Spot page · Polar",
+  "section": "screens",
+  "file": "screens/light/S-spot-polar--light.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "light",
+  "covers": [
+   "Spot page/Polar"
+  ],
+  "snapshot": "snapshots/spot-polar-light-1280x2600.png",
+  "notes": [],
+  "bytes": 215348,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 66,
+   "clones": 31,
+   "writesNoClone": 106,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-spot-sample",
+  "name": "Spot page · Sample (scored) · Dark · 1280",
+  "baseName": "Spot page · Sample (scored)",
+  "section": "screens",
+  "file": "screens/dark/S-spot-sample--dark.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "dark",
+  "covers": [
+   "Spot page/Sample (scored)"
+  ],
+  "snapshot": "snapshots/spot-sample-dark-1280x2600.png",
+  "notes": [
+   "Intent picker: names only",
+   "Add to Trip is prominent",
+   "Best tab colour",
+   "Weather symbols are single-colour here",
+   "\"Updated 09:00\"",
+   "Look Around is absent"
+  ],
+  "bytes": 252238,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 78,
+   "clones": 36,
+   "writesNoClone": 120,
+   "duplicateOf": "S-spot-sample"
+  }
+ },
+ {
+  "id": "S-spot-sample",
+  "name": "Spot page · Sample (scored) · Light · 1280",
+  "baseName": "Spot page · Sample (scored)",
+  "section": "screens",
+  "file": "screens/light/S-spot-sample--light.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "light",
+  "covers": [
+   "Spot page/Sample (scored)"
+  ],
+  "snapshot": "snapshots/spot-sample-light-1280x2600.png",
+  "notes": [
+   "Intent picker: names only",
+   "Add to Trip is prominent",
+   "Best tab colour",
+   "Weather symbols are single-colour here",
+   "\"Updated 09:00\"",
+   "Look Around is absent"
+  ],
+  "bytes": 249180,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 78,
+   "clones": 36,
+   "writesNoClone": 120,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-spot-sample-960",
+  "name": "Spot page · Sample (scored) · Dark · 960",
+  "baseName": "Spot page · Sample (scored)",
+  "section": "screens",
+  "file": "screens/dark/S-spot-sample-960--dark.html",
+  "width": 960,
+  "height": 2200,
+  "theme": "dark",
+  "covers": [
+   "Spot page/Sample (scored)"
+  ],
+  "snapshot": "snapshots/spot-sample-dark-960x640.png",
+  "notes": [],
+  "bytes": 245597,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 75,
+   "clones": 34,
+   "writesNoClone": 117,
+   "duplicateOf": "S-spot-sample-960"
+  }
+ },
+ {
+  "id": "S-spot-sample-960",
+  "name": "Spot page · Sample (scored) · Light · 960",
+  "baseName": "Spot page · Sample (scored)",
+  "section": "screens",
+  "file": "screens/light/S-spot-sample-960--light.html",
+  "width": 960,
+  "height": 2200,
+  "theme": "light",
+  "covers": [
+   "Spot page/Sample (scored)"
+  ],
+  "snapshot": "snapshots/spot-sample-light-960x640.png",
+  "notes": [],
+  "bytes": 242674,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 75,
+   "clones": 34,
+   "writesNoClone": 117,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-spot-user",
+  "name": "Spot page · User spot · Dark · 1280",
+  "baseName": "Spot page · User spot",
+  "section": "screens",
+  "file": "screens/dark/S-spot-user--dark.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "dark",
+  "covers": [
+   "Spot page/User spot"
+  ],
+  "snapshot": "snapshots/spot-user-dark-1280x2600.png",
+  "notes": [],
+  "bytes": 245406,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 78,
+   "clones": 34,
+   "writesNoClone": 117,
+   "duplicateOf": "S-spot-user"
+  }
+ },
+ {
+  "id": "S-spot-user",
+  "name": "Spot page · User spot · Light · 1280",
+  "baseName": "Spot page · User spot",
+  "section": "screens",
+  "file": "screens/light/S-spot-user--light.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "light",
+  "covers": [
+   "Spot page/User spot"
+  ],
+  "snapshot": "snapshots/spot-user-light-1280x2600.png",
+  "notes": [],
+  "bytes": 242508,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 78,
+   "clones": 34,
+   "writesNoClone": 117,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-spot-window-expanded",
+  "name": "Spot page · Window expanded · Dark · 1280",
+  "baseName": "Spot page · Window expanded",
+  "section": "screens",
+  "file": "screens/dark/S-spot-window-expanded--dark.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "dark",
+  "covers": [
+   "Spot page/Window expanded"
+  ],
+  "snapshot": "snapshots/spot-window-expanded-dark-1280x2600.png",
+  "notes": [
+   "Chevron drawn open",
+   "Signed bars are grey"
+  ],
+  "bytes": 263349,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 84,
+   "clones": 35,
+   "writesNoClone": 127,
+   "duplicateOf": "S-spot-window-expanded"
+  }
+ },
+ {
+  "id": "S-spot-window-expanded",
+  "name": "Spot page · Window expanded · Light · 1280",
+  "baseName": "Spot page · Window expanded",
+  "section": "screens",
+  "file": "screens/light/S-spot-window-expanded--light.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "light",
+  "covers": [
+   "Spot page/Window expanded"
+  ],
+  "snapshot": "snapshots/spot-window-expanded-light-1280x2600.png",
+  "notes": [
+   "Chevron drawn open",
+   "Signed bars are grey"
+  ],
+  "bytes": 260196,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 84,
+   "clones": 35,
+   "writesNoClone": 127,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-spot-zoomed",
+  "name": "Spot page · Zoomed timeline · Dark · 1280",
+  "baseName": "Spot page · Zoomed timeline",
+  "section": "screens",
+  "file": "screens/dark/S-spot-zoomed--dark.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "dark",
+  "covers": [
+   "Spot page/Zoomed timeline"
+  ],
+  "snapshot": "snapshots/spot-sample-dark-1280x2600.png",
+  "notes": [
+   "Arc does not zoom"
+  ],
+  "bytes": 160349,
+  "page": "Screens (Dark)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 54,
+   "clones": 15,
+   "writesNoClone": 78,
+   "duplicateOf": "S-spot-zoomed"
+  }
+ },
+ {
+  "id": "S-spot-zoomed",
+  "name": "Spot page · Zoomed timeline · Light · 1280",
+  "baseName": "Spot page · Zoomed timeline",
+  "section": "screens",
+  "file": "screens/light/S-spot-zoomed--light.html",
+  "width": 1280,
+  "height": 2600,
+  "theme": "light",
+  "covers": [
+   "Spot page/Zoomed timeline"
+  ],
+  "snapshot": "snapshots/spot-sample-light-1280x2600.png",
+  "notes": [
+   "Arc does not zoom"
+  ],
+  "bytes": 158146,
+  "page": "Screens (Light)",
+  "source": "src/screens/spot/spot-page.mjs",
+  "fragments": {
+   "writes": 54,
+   "clones": 15,
+   "writesNoClone": 78,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-add-stop",
+  "name": "Trip builder · Add Stop popover · Dark · 1280",
+  "baseName": "Trip builder · Add Stop popover",
+  "section": "screens",
+  "file": "screens/dark/S-trip-builder-add-stop--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [],
+  "notes": [],
+  "bytes": 116557,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 38,
+   "clones": 7,
+   "writesNoClone": 54,
+   "duplicateOf": "S-trip-builder-add-stop"
+  }
+ },
+ {
+  "id": "S-trip-builder-add-stop",
+  "name": "Trip builder · Add Stop popover · Light · 1280",
+  "baseName": "Trip builder · Add Stop popover",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-add-stop--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 115179,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 38,
+   "clones": 7,
+   "writesNoClone": 54,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-conflict",
+  "name": "Trip builder · Conflict · Dark · 1280",
+  "baseName": "Trip builder · Conflict",
+  "section": "screens",
+  "file": "screens/dark/S-trip-builder-conflict--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Trip builder/Conflict and suggestion"
+  ],
+  "snapshot": "snapshots/trip-builder-conflict-dark-1280x820.png",
+  "notes": [],
+  "bytes": 88191,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 30,
+   "clones": 4,
+   "writesNoClone": 38,
+   "duplicateOf": "S-trip-builder-conflict"
+  }
+ },
+ {
+  "id": "S-trip-builder-conflict",
+  "name": "Trip builder · Conflict · Light · 1280",
+  "baseName": "Trip builder · Conflict",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-conflict--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Trip builder/Conflict and suggestion"
+  ],
+  "snapshot": "snapshots/trip-builder-conflict-light-1280x820.png",
+  "notes": [],
+  "bytes": 87128,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 30,
+   "clones": 4,
+   "writesNoClone": 38,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-conflict-960",
+  "name": "Trip builder · Conflict · Dark · 960",
+  "baseName": "Trip builder · Conflict",
+  "section": "screens",
+  "file": "screens/dark/S-trip-builder-conflict-960--dark.html",
+  "width": 960,
+  "height": 640,
+  "theme": "dark",
+  "covers": [
+   "Trip builder/Conflict and suggestion"
+  ],
+  "snapshot": "snapshots/trip-builder-conflict-dark-960x640.png",
+  "notes": [],
+  "bytes": 75953,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 30,
+   "clones": 2,
+   "writesNoClone": 33,
+   "duplicateOf": "S-trip-builder-conflict-960"
+  }
+ },
+ {
+  "id": "S-trip-builder-conflict-960",
+  "name": "Trip builder · Conflict · Light · 960",
+  "baseName": "Trip builder · Conflict",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-conflict-960--light.html",
+  "width": 960,
+  "height": 640,
+  "theme": "light",
+  "covers": [
+   "Trip builder/Conflict and suggestion"
+  ],
+  "snapshot": "snapshots/trip-builder-conflict-light-960x640.png",
+  "notes": [],
+  "bytes": 75035,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 30,
+   "clones": 2,
+   "writesNoClone": 33,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-default",
+  "name": "Trip builder · Default · Dark · 1280",
+  "baseName": "Trip builder · Default",
+  "section": "screens",
+  "file": "screens/dark/S-trip-builder-default--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Trip builder/Default, sample weather"
+  ],
+  "snapshot": "snapshots/trip-builder-dark-1280x820.png",
+  "notes": [
+   "Active pin is accent/emphasis in source (COMPONENTS.md says map/pin).",
+   "Days 3 and 4 are not in the snapshots; their times and scores are illustrative."
+  ],
+  "bytes": 89011,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 28,
+   "clones": 4,
+   "writesNoClone": 38,
+   "duplicateOf": "S-trip-builder-default"
+  }
+ },
+ {
+  "id": "S-trip-builder-default",
+  "name": "Trip builder · Default · Light · 1280",
+  "baseName": "Trip builder · Default",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-default--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Trip builder/Default, sample weather"
+  ],
+  "snapshot": "snapshots/trip-builder-light-1280x820.png",
+  "notes": [
+   "Active pin is accent/emphasis in source (COMPONENTS.md says map/pin).",
+   "Days 3 and 4 are not in the snapshots; their times and scores are illustrative."
+  ],
+  "bytes": 87948,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 28,
+   "clones": 4,
+   "writesNoClone": 38,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-default--notes",
+  "name": "Trip builder · Default · Notes",
+  "baseName": "Trip builder · Default · Notes",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-default--notes--light.html",
+  "width": 320,
+  "height": 208,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 2352,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "companionOf": "S-trip-builder-default",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-default-960",
+  "name": "Trip builder · Default · Dark · 960",
+  "baseName": "Trip builder · Default",
+  "section": "screens",
+  "file": "screens/dark/S-trip-builder-default-960--dark.html",
+  "width": 960,
+  "height": 640,
+  "theme": "dark",
+  "covers": [
+   "Trip builder/Default, sample weather"
+  ],
+  "snapshot": "snapshots/trip-builder-dark-960x640.png",
+  "notes": [],
+  "bytes": 71644,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 27,
+   "clones": 1,
+   "writesNoClone": 31,
+   "duplicateOf": "S-trip-builder-default-960"
+  }
+ },
+ {
+  "id": "S-trip-builder-default-960",
+  "name": "Trip builder · Default · Light · 960",
+  "baseName": "Trip builder · Default",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-default-960--light.html",
+  "width": 960,
+  "height": 640,
+  "theme": "light",
+  "covers": [
+   "Trip builder/Default, sample weather"
+  ],
+  "snapshot": "snapshots/trip-builder-light-960x640.png",
+  "notes": [],
+  "bytes": 70756,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 27,
+   "clones": 1,
+   "writesNoClone": 31,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-dragging",
+  "name": "Trip builder · Dragging a stop · Dark · 1280",
+  "baseName": "Trip builder · Dragging a stop",
+  "section": "screens",
+  "file": "screens/dark/S-trip-builder-dragging--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Trip builder/Dragging"
+  ],
+  "notes": [],
+  "bytes": 89235,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 29,
+   "clones": 4,
+   "writesNoClone": 39,
+   "duplicateOf": "S-trip-builder-dragging"
+  }
+ },
+ {
+  "id": "S-trip-builder-dragging",
+  "name": "Trip builder · Dragging a stop · Light · 1280",
+  "baseName": "Trip builder · Dragging a stop",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-dragging--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Trip builder/Dragging"
+  ],
+  "notes": [],
+  "bytes": 88167,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 29,
+   "clones": 4,
+   "writesNoClone": 39,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-estimated",
+  "name": "Trip builder · Estimated drive · Dark · 1280",
+  "baseName": "Trip builder · Estimated drive",
+  "section": "screens",
+  "file": "screens/dark/S-trip-builder-estimated--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Trip builder/Estimated drive"
+  ],
+  "notes": [],
+  "bytes": 89590,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 28,
+   "clones": 4,
+   "writesNoClone": 38,
+   "duplicateOf": "S-trip-builder-estimated"
+  }
+ },
+ {
+  "id": "S-trip-builder-estimated",
+  "name": "Trip builder · Estimated drive · Light · 1280",
+  "baseName": "Trip builder · Estimated drive",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-estimated--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Trip builder/Estimated drive"
+  ],
+  "notes": [],
+  "bytes": 88517,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 28,
+   "clones": 4,
+   "writesNoClone": 38,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-fetching",
+  "name": "Trip builder · Fetching drives · Dark · 1280",
+  "baseName": "Trip builder · Fetching drives",
+  "section": "screens",
+  "file": "screens/dark/S-trip-builder-fetching--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Trip builder/Fetching drives"
+  ],
+  "notes": [],
+  "bytes": 90600,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 29,
+   "clones": 4,
+   "writesNoClone": 39,
+   "duplicateOf": "S-trip-builder-fetching"
+  }
+ },
+ {
+  "id": "S-trip-builder-fetching",
+  "name": "Trip builder · Fetching drives · Light · 1280",
+  "baseName": "Trip builder · Fetching drives",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-fetching--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Trip builder/Fetching drives"
+  ],
+  "notes": [],
+  "bytes": 89532,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 29,
+   "clones": 4,
+   "writesNoClone": 39,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-missing",
+  "name": "Trip builder · Missing trip · Dark · 1280",
+  "baseName": "Trip builder · Missing trip",
+  "section": "screens",
+  "file": "screens/dark/S-trip-builder-missing--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Trip builder/Missing trip"
+  ],
+  "snapshot": "snapshots/trip-builder-missing-dark-1280x820.png",
+  "notes": [],
+  "bytes": 19653,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 8,
+   "clones": 0,
+   "writesNoClone": 8,
+   "duplicateOf": "S-trip-builder-missing"
+  }
+ },
+ {
+  "id": "S-trip-builder-missing",
+  "name": "Trip builder · Missing trip · Light · 1280",
+  "baseName": "Trip builder · Missing trip",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-missing--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Trip builder/Missing trip"
+  ],
+  "snapshot": "snapshots/trip-builder-missing-light-1280x820.png",
+  "notes": [],
+  "bytes": 19435,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 8,
+   "clones": 0,
+   "writesNoClone": 8,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-noforecast",
+  "name": "Trip builder · No forecast · Dark · 1280",
+  "baseName": "Trip builder · No forecast",
+  "section": "screens",
+  "file": "screens/dark/S-trip-builder-noforecast--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Trip builder/No forecast"
+  ],
+  "snapshot": "snapshots/trip-builder-noforecast-dark-1280x820.png",
+  "notes": [],
+  "bytes": 74626,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 26,
+   "clones": 3,
+   "writesNoClone": 33,
+   "duplicateOf": "S-trip-builder-noforecast"
+  }
+ },
+ {
+  "id": "S-trip-builder-noforecast",
+  "name": "Trip builder · No forecast · Light · 1280",
+  "baseName": "Trip builder · No forecast",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-noforecast--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Trip builder/No forecast"
+  ],
+  "snapshot": "snapshots/trip-builder-noforecast-light-1280x820.png",
+  "notes": [],
+  "bytes": 73708,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 26,
+   "clones": 3,
+   "writesNoClone": 33,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-noforecast-960",
+  "name": "Trip builder · No forecast · Dark · 960",
+  "baseName": "Trip builder · No forecast",
+  "section": "screens",
+  "file": "screens/dark/S-trip-builder-noforecast-960--dark.html",
+  "width": 960,
+  "height": 640,
+  "theme": "dark",
+  "covers": [
+   "Trip builder/No forecast"
+  ],
+  "snapshot": "snapshots/trip-builder-noforecast-dark-960x640.png",
+  "notes": [],
+  "bytes": 67072,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 26,
+   "clones": 1,
+   "writesNoClone": 29,
+   "duplicateOf": "S-trip-builder-noforecast-960"
+  }
+ },
+ {
+  "id": "S-trip-builder-noforecast-960",
+  "name": "Trip builder · No forecast · Light · 960",
+  "baseName": "Trip builder · No forecast",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-noforecast-960--light.html",
+  "width": 960,
+  "height": 640,
+  "theme": "light",
+  "covers": [
+   "Trip builder/No forecast"
+  ],
+  "snapshot": "snapshots/trip-builder-noforecast-light-960x640.png",
+  "notes": [],
+  "bytes": 66254,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 26,
+   "clones": 1,
+   "writesNoClone": 29,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-stoprow",
+  "name": "Trip builder · A stop row · Dark · 1280",
+  "baseName": "Trip builder · A stop row",
+  "section": "screens",
+  "file": "screens/dark/S-trip-builder-stoprow--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Trip builder/A stop row (detail)"
+  ],
+  "snapshot": "snapshots/trip-stoprow-dark-1280x820.png",
+  "notes": [],
+  "bytes": 50900,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 10,
+   "clones": 5,
+   "writesNoClone": 22,
+   "duplicateOf": "S-trip-builder-stoprow"
+  }
+ },
+ {
+  "id": "S-trip-builder-stoprow",
+  "name": "Trip builder · A stop row · Light · 1280",
+  "baseName": "Trip builder · A stop row",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-stoprow--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Trip builder/A stop row (detail)"
+  ],
+  "snapshot": "snapshots/trip-stoprow-light-1280x820.png",
+  "notes": [],
+  "bytes": 50272,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 10,
+   "clones": 5,
+   "writesNoClone": 22,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trip-builder-window-missing",
+  "name": "Trip builder · Window missing · Dark · 1280",
+  "baseName": "Trip builder · Window missing",
+  "section": "screens",
+  "file": "screens/dark/S-trip-builder-window-missing--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "Trip builder/Window missing"
+  ],
+  "notes": [],
+  "bytes": 87928,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 30,
+   "clones": 4,
+   "writesNoClone": 37,
+   "duplicateOf": "S-trip-builder-window-missing"
+  }
+ },
+ {
+  "id": "S-trip-builder-window-missing",
+  "name": "Trip builder · Window missing · Light · 1280",
+  "baseName": "Trip builder · Window missing",
+  "section": "screens",
+  "file": "screens/light/S-trip-builder-window-missing--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "Trip builder/Window missing"
+  ],
+  "notes": [],
+  "bytes": 86895,
+  "page": "Screens (Light)",
+  "source": "src/screens/trip-builder/trip-builder.mjs",
+  "fragments": {
+   "writes": 30,
+   "clones": 4,
+   "writesNoClone": 37,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trips-all-passed",
+  "name": "All Trips · All sessions passed · Dark · 1280",
+  "baseName": "All Trips · All sessions passed",
+  "section": "screens",
+  "file": "screens/dark/S-trips-all-passed--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "All Trips/Card, all sessions passed"
+  ],
+  "notes": [],
+  "bytes": 29901,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 10,
+   "clones": 0,
+   "writesNoClone": 10,
+   "duplicateOf": "S-trips-all-passed"
+  }
+ },
+ {
+  "id": "S-trips-all-passed",
+  "name": "All Trips · All sessions passed · Light · 1280",
+  "baseName": "All Trips · All sessions passed",
+  "section": "screens",
+  "file": "screens/light/S-trips-all-passed--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "All Trips/Card, all sessions passed"
+  ],
+  "notes": [],
+  "bytes": 29583,
+  "page": "Screens (Light)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 10,
+   "clones": 0,
+   "writesNoClone": 10,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trips-empty",
+  "name": "All Trips · Empty · Dark · 1280",
+  "baseName": "All Trips · Empty",
+  "section": "screens",
+  "file": "screens/dark/S-trips-empty--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "All Trips/Empty"
+  ],
+  "snapshot": "snapshots/trips-empty-dark-1280x820.png",
+  "notes": [],
+  "bytes": 25187,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 11,
+   "clones": 0,
+   "writesNoClone": 11,
+   "duplicateOf": "S-trips-empty"
+  }
+ },
+ {
+  "id": "S-trips-empty",
+  "name": "All Trips · Empty · Light · 1280",
+  "baseName": "All Trips · Empty",
+  "section": "screens",
+  "file": "screens/light/S-trips-empty--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "All Trips/Empty"
+  ],
+  "snapshot": "snapshots/trips-empty-light-1280x820.png",
+  "notes": [],
+  "bytes": 24859,
+  "page": "Screens (Light)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 11,
+   "clones": 0,
+   "writesNoClone": 11,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trips-import-error",
+  "name": "All Trips · Import error · Dark · 1280",
+  "baseName": "All Trips · Import error",
+  "section": "screens",
+  "file": "screens/dark/S-trips-import-error--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "All Trips/Import error"
+  ],
+  "notes": [
+   "System alert drawn with the shared alert panel; the real alert is the system SwiftUI .alert (app icon, bold title, message, OK)."
+  ],
+  "bytes": 38593,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 13,
+   "clones": 0,
+   "writesNoClone": 13,
+   "duplicateOf": "S-trips-import-error"
+  }
+ },
+ {
+  "id": "S-trips-import-error",
+  "name": "All Trips · Import error · Light · 1280",
+  "baseName": "All Trips · Import error",
+  "section": "screens",
+  "file": "screens/light/S-trips-import-error--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "All Trips/Import error"
+  ],
+  "notes": [
+   "System alert drawn with the shared alert panel; the real alert is the system SwiftUI .alert (app icon, bold title, message, OK)."
+  ],
+  "bytes": 38180,
+  "page": "Screens (Light)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 13,
+   "clones": 0,
+   "writesNoClone": 13,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trips-import-error--notes",
+  "name": "All Trips · Import error · Notes",
+  "baseName": "All Trips · Import error · Notes",
+  "section": "screens",
+  "file": "screens/light/S-trips-import-error--notes--light.html",
+  "width": 320,
+  "height": 144,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1537,
+  "page": "Screens (Light)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "companionOf": "S-trips-import-error",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trips-list",
+  "name": "All Trips · List · Dark · 1280",
+  "baseName": "All Trips · List",
+  "section": "screens",
+  "file": "screens/dark/S-trips-list--dark.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "dark",
+  "covers": [
+   "All Trips/List"
+  ],
+  "snapshot": "snapshots/trips-list-dark-1280x820.png",
+  "notes": [
+   "Three cards: no stops, two with a Next line. The snapshot draws no toolbar contents; the New Trip plus button is drawn from the source."
+  ],
+  "bytes": 36271,
+  "page": "Screens (Dark)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 12,
+   "clones": 0,
+   "writesNoClone": 12,
+   "duplicateOf": "S-trips-list"
+  }
+ },
+ {
+  "id": "S-trips-list",
+  "name": "All Trips · List · Light · 1280",
+  "baseName": "All Trips · List",
+  "section": "screens",
+  "file": "screens/light/S-trips-list--light.html",
+  "width": 1280,
+  "height": 820,
+  "theme": "light",
+  "covers": [
+   "All Trips/List"
+  ],
+  "snapshot": "snapshots/trips-list-light-1280x820.png",
+  "notes": [
+   "Three cards: no stops, two with a Next line. The snapshot draws no toolbar contents; the New Trip plus button is drawn from the source."
+  ],
+  "bytes": 35903,
+  "page": "Screens (Light)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "fragments": {
+   "writes": 12,
+   "clones": 0,
+   "writesNoClone": 12,
+   "duplicateOf": null
+  }
+ },
+ {
+  "id": "S-trips-list--notes",
+  "name": "All Trips · List · Notes",
+  "baseName": "All Trips · List · Notes",
+  "section": "screens",
+  "file": "screens/light/S-trips-list--notes--light.html",
+  "width": 320,
+  "height": 144,
+  "theme": "light",
+  "covers": [],
+  "notes": [],
+  "bytes": 1529,
+  "page": "Screens (Light)",
+  "source": "src/screens/trips-home/trips-home.mjs",
+  "companionOf": "S-trips-list",
+  "fragments": {
+   "writes": 1,
+   "clones": 0,
+   "writesNoClone": 1,
+   "duplicateOf": null
+  }
+ }
+]

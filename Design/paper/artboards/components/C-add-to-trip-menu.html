@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AddToTripMenu</title>
+<link rel="stylesheet" href="../../tokens.css">
+</head>
+<body style="margin:0;background:var(--color-canvas-artboard)">
+<div layer-name="AddToTripMenu" data-artboard style="box-sizing:border-box;width:1680px;height:640px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:var(--color-canvas-artboard)">
+<div layer-name="Page" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0">
+<div layer-name="Artboard Header" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)">
+<div layer-name="Artboard Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap">AddToTripMenu</div>
+<div layer-name="Type and File" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap">AddToTripMenu · Components/AddToTripMenu.swift</div>
+<div layer-name="Job" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px">Add a spot to a trip day, where the choice of day is a light decision.</div>
+</div>
+<div layer-name="Content" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+<div layer-name="Notes" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start">
+<div layer-name="Note / Day label" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Day label</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Source: &quot;Day 2 · Thu, Oct 8, 2026 · Sunrise · 64&quot; (TimeText.day and LightText.headline &quot;Sunset · 64&quot;). COMPONENTS.md shows &quot;Day 2 · Wed 7 Oct · Sunset 64&quot;; neither the date nor the middle dot in the headline matches the source. Scores shown are illustrative.</div>
+</div>
+<div layer-name="Note / New Trip with This Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">New Trip with This Spot</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Creates a one-day trip &quot;Trip to &lt;spot&gt;&quot; starting tomorrow, adds the stop and opens the trip.</div>
+</div>
+</div>
+<div layer-name="Appearances" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start">
+<div layer-name="Light Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border);width:760px">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em">LIGHT</div>
+<div layer-name="Menu Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:40px;align-items:flex-start">
+<div layer-name="Specimen / button" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="AddToTripMenu / button" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0;height:var(--spacing-size-control-height);padding:0 var(--spacing-md);border-radius:999px;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button)">
+<svg layer-name="Icon / plus.circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 99.6 99.54" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary)"><path d="M49.77 99.54C77.27 99.54 99.6 77.27 99.6 49.77C99.6 22.26 77.27 0 49.77 0C22.33 0 0 22.26 0 49.77C0 77.27 22.33 99.54 49.77 99.54ZM49.77 91.27C26.83 91.27 8.31 72.71 8.31 49.77C8.31 26.83 26.83 8.27 49.77 8.27C72.72 8.27 91.28 26.83 91.28 49.77C91.28 72.71 72.72 91.27 49.77 91.27ZM53.81 68.22L53.81 31.25C53.81 28.76 52.16 27.06 49.66 27.06C47.29 27.06 45.62 28.77 45.62 31.25L45.62 68.22C45.62 70.65 47.29 72.35 49.66 72.35C52.16 72.35 53.81 70.66 53.81 68.22ZM31.32 53.8L68.23 53.8C70.67 53.8 72.36 52.14 72.36 49.77C72.36 47.33 70.68 45.61 68.23 45.61L31.32 45.61C28.82 45.61 27.12 47.33 27.12 49.77C27.12 52.14 28.83 53.8 31.32 53.8Z"/></svg>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Add to Trip</div>
+<svg layer-name="Icon / chevron.down" xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 84.8 47.73" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:8.48;stroke-linejoin:round"><path d="M42.42 47.73C43.66 47.73 44.86 47.26 45.71 46.3L83.49 7.63C84.31 6.81 84.8 5.74 84.8 4.49C84.8 1.95 82.9 0 80.36 0C79.16 0 77.98 0.52 77.15 1.29L39.79 39.46L45.02 39.46L7.64 1.29C6.83 0.52 5.73 0 4.49 0C1.95 0 0 1.95 0 4.49C0 5.74 0.5 6.81 1.32 7.64L39.14 46.31C40.04 47.27 41.14 47.73 42.42 47.73Z"/></svg>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">Button style (place card, bordered)</div>
+</div>
+<div layer-name="Menu Open" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-items:flex-start">
+<div layer-name="Open Menus" style="box-sizing:border-box;display:flex;flex-direction:row;gap:6px;align-items:flex-start">
+<div layer-name="Menu / Add to Trip" style="box-sizing:border-box;display:flex;flex-direction:column;padding:6px;border-radius:14px;flex-shrink:0;min-width:180px;background:var(--color-canvas-menu-background);backdrop-filter:blur(30px) saturate(1.6);border:1px solid var(--color-canvas-menu-stroke);box-shadow:var(--shadow-canvas-menu)">
+<div layer-name="Menu Item / Canyon Country" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0;background:var(--color-canvas-menu-highlight)">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-accent-on-accent);white-space:nowrap;flex:1 1 0;min-width:0">Canyon Country</div>
+<svg layer-name="Icon / chevron.right" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 47.72 84.72" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-accent-on-accent);stroke:var(--color-accent-on-accent);stroke-width:2.86;stroke-linejoin:round"><path d="M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z"/></svg>
+</div>
+<div layer-name="Menu Divider" style="box-sizing:border-box;padding:5px 8px;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Divider" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+<div layer-name="Menu Item / New Trip with This Spot" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex:1 1 0;min-width:0">New Trip with This Spot</div>
+</div>
+</div>
+<div layer-name="Submenu / Canyon Country days" style="box-sizing:border-box;display:flex;flex-direction:column;padding:6px;border-radius:14px;flex-shrink:0;min-width:180px;background:var(--color-canvas-menu-background);backdrop-filter:blur(30px) saturate(1.6);border:1px solid var(--color-canvas-menu-stroke);box-shadow:var(--shadow-canvas-menu)">
+<div layer-name="Menu Item / Day 1 · Wed, Oct 7, 2026 · Sunrise · 7" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex:1 1 0;min-width:0">Day 1 · Wed, Oct 7, 2026 · Sunrise · 71</div>
+</div>
+<div layer-name="Menu Item / Day 2 · Thu, Oct 8, 2026 · Sunrise · 6" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex:1 1 0;min-width:0">Day 2 · Thu, Oct 8, 2026 · Sunrise · 64</div>
+</div>
+<div layer-name="Menu Item / Day 3 · Fri, Oct 9, 2026 · Sunrise · 5" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex:1 1 0;min-width:0">Day 3 · Fri, Oct 9, 2026 · Sunrise · 58</div>
+</div>
+<div layer-name="Menu Item / Day 4 · Sat, Oct 10, 2026 · Sunrise · " style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap;flex:1 1 0;min-width:0">Day 4 · Sat, Oct 10, 2026 · Sunrise · No forecast</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Menu row in context menus" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Menu row in context menus</div>
+<div layer-name="Specimen / menu row" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Menu" style="box-sizing:border-box;display:flex;flex-direction:column;padding:6px;border-radius:14px;flex-shrink:0;min-width:180px;background:var(--color-canvas-menu-background);backdrop-filter:blur(30px) saturate(1.6);border:1px solid var(--color-canvas-menu-stroke);box-shadow:var(--shadow-canvas-menu)">
+<div layer-name="Menu Item / Add to Trip" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0;background:var(--color-canvas-menu-highlight)">
+<div layer-name="Leading Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px">
+<svg layer-name="Icon / plus.circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 99.6 99.54" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-accent-on-accent)"><path d="M49.77 99.54C77.27 99.54 99.6 77.27 99.6 49.77C99.6 22.26 77.27 0 49.77 0C22.33 0 0 22.26 0 49.77C0 77.27 22.33 99.54 49.77 99.54ZM49.77 91.27C26.83 91.27 8.31 72.71 8.31 49.77C8.31 26.83 26.83 8.27 49.77 8.27C72.72 8.27 91.28 26.83 91.28 49.77C91.28 72.71 72.72 91.27 49.77 91.27ZM53.81 68.22L53.81 31.25C53.81 28.76 52.16 27.06 49.66 27.06C47.29 27.06 45.62 28.77 45.62 31.25L45.62 68.22C45.62 70.65 47.29 72.35 49.66 72.35C52.16 72.35 53.81 70.66 53.81 68.22ZM31.32 53.8L68.23 53.8C70.67 53.8 72.36 52.14 72.36 49.77C72.36 47.33 70.68 45.61 68.23 45.61L31.32 45.61C28.82 45.61 27.12 47.33 27.12 49.77C27.12 52.14 28.83 53.8 31.32 53.8Z"/></svg>
+</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-accent-on-accent);white-space:nowrap;flex:1 1 0;min-width:0">Add to Trip</div>
+<svg layer-name="Icon / chevron.right" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 47.72 84.72" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-accent-on-accent);stroke:var(--color-accent-on-accent);stroke-width:2.86;stroke-linejoin:round"><path d="M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z"/></svg>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">Spot and pin context menu, Saved context menu</div>
+</div>
+</div>
+</div>
+<div layer-name="Dark Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border);width:760px">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em">DARK</div>
+<div layer-name="Menu Row" style="box-sizing:border-box;display:flex;flex-direction:row;gap:40px;align-items:flex-start">
+<div layer-name="Specimen / button" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="AddToTripMenu / button" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0;height:var(--spacing-size-control-height);padding:0 var(--spacing-md);border-radius:999px;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke);box-shadow:var(--shadow-dark-canvas-button)">
+<svg layer-name="Icon / plus.circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 99.6 99.54" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary)"><path d="M49.77 99.54C77.27 99.54 99.6 77.27 99.6 49.77C99.6 22.26 77.27 0 49.77 0C22.33 0 0 22.26 0 49.77C0 77.27 22.33 99.54 49.77 99.54ZM49.77 91.27C26.83 91.27 8.31 72.71 8.31 49.77C8.31 26.83 26.83 8.27 49.77 8.27C72.72 8.27 91.28 26.83 91.28 49.77C91.28 72.71 72.72 91.27 49.77 91.27ZM53.81 68.22L53.81 31.25C53.81 28.76 52.16 27.06 49.66 27.06C47.29 27.06 45.62 28.77 45.62 31.25L45.62 68.22C45.62 70.65 47.29 72.35 49.66 72.35C52.16 72.35 53.81 70.66 53.81 68.22ZM31.32 53.8L68.23 53.8C70.67 53.8 72.36 52.14 72.36 49.77C72.36 47.33 70.68 45.61 68.23 45.61L31.32 45.61C28.82 45.61 27.12 47.33 27.12 49.77C27.12 52.14 28.83 53.8 31.32 53.8Z"/></svg>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Add to Trip</div>
+<svg layer-name="Icon / chevron.down" xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 84.8 47.73" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:8.48;stroke-linejoin:round"><path d="M42.42 47.73C43.66 47.73 44.86 47.26 45.71 46.3L83.49 7.63C84.31 6.81 84.8 5.74 84.8 4.49C84.8 1.95 82.9 0 80.36 0C79.16 0 77.98 0.52 77.15 1.29L39.79 39.46L45.02 39.46L7.64 1.29C6.83 0.52 5.73 0 4.49 0C1.95 0 0 1.95 0 4.49C0 5.74 0.5 6.81 1.32 7.64L39.14 46.31C40.04 47.27 41.14 47.73 42.42 47.73Z"/></svg>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">Button style (place card, bordered)</div>
+</div>
+<div layer-name="Menu Open" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-items:flex-start">
+<div layer-name="Open Menus" style="box-sizing:border-box;display:flex;flex-direction:row;gap:6px;align-items:flex-start">
+<div layer-name="Menu / Add to Trip" style="box-sizing:border-box;display:flex;flex-direction:column;padding:6px;border-radius:14px;flex-shrink:0;min-width:180px;background:var(--color-dark-canvas-menu-background);backdrop-filter:blur(30px) saturate(1.6);border:1px solid var(--color-dark-canvas-menu-stroke);box-shadow:var(--shadow-dark-canvas-menu)">
+<div layer-name="Menu Item / Canyon Country" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0;background:var(--color-dark-canvas-menu-highlight)">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-accent-on-accent);white-space:nowrap;flex:1 1 0;min-width:0">Canyon Country</div>
+<svg layer-name="Icon / chevron.right" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 47.72 84.72" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-accent-on-accent);stroke:var(--color-dark-accent-on-accent);stroke-width:2.86;stroke-linejoin:round"><path d="M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z"/></svg>
+</div>
+<div layer-name="Menu Divider" style="box-sizing:border-box;padding:5px 8px;display:flex;flex-direction:column;flex-shrink:0">
+<div layer-name="Divider" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+<div layer-name="Menu Item / New Trip with This Spot" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex:1 1 0;min-width:0">New Trip with This Spot</div>
+</div>
+</div>
+<div layer-name="Submenu / Canyon Country days" style="box-sizing:border-box;display:flex;flex-direction:column;padding:6px;border-radius:14px;flex-shrink:0;min-width:180px;background:var(--color-dark-canvas-menu-background);backdrop-filter:blur(30px) saturate(1.6);border:1px solid var(--color-dark-canvas-menu-stroke);box-shadow:var(--shadow-dark-canvas-menu)">
+<div layer-name="Menu Item / Day 1 · Wed, Oct 7, 2026 · Sunrise · 7" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex:1 1 0;min-width:0">Day 1 · Wed, Oct 7, 2026 · Sunrise · 71</div>
+</div>
+<div layer-name="Menu Item / Day 2 · Thu, Oct 8, 2026 · Sunrise · 6" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex:1 1 0;min-width:0">Day 2 · Thu, Oct 8, 2026 · Sunrise · 64</div>
+</div>
+<div layer-name="Menu Item / Day 3 · Fri, Oct 9, 2026 · Sunrise · 5" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex:1 1 0;min-width:0">Day 3 · Fri, Oct 9, 2026 · Sunrise · 58</div>
+</div>
+<div layer-name="Menu Item / Day 4 · Sat, Oct 10, 2026 · Sunrise · " style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap;flex:1 1 0;min-width:0">Day 4 · Sat, Oct 10, 2026 · Sunrise · No forecast</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Section / Menu row in context menus" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Menu row in context menus</div>
+<div layer-name="Specimen / menu row" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Menu" style="box-sizing:border-box;display:flex;flex-direction:column;padding:6px;border-radius:14px;flex-shrink:0;min-width:180px;background:var(--color-dark-canvas-menu-background);backdrop-filter:blur(30px) saturate(1.6);border:1px solid var(--color-dark-canvas-menu-stroke);box-shadow:var(--shadow-dark-canvas-menu)">
+<div layer-name="Menu Item / Add to Trip" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;height:26px;padding:0 10px;border-radius:8px;flex-shrink:0;background:var(--color-dark-canvas-menu-highlight)">
+<div layer-name="Leading Slot" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:16px">
+<svg layer-name="Icon / plus.circle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 99.6 99.54" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-accent-on-accent)"><path d="M49.77 99.54C77.27 99.54 99.6 77.27 99.6 49.77C99.6 22.26 77.27 0 49.77 0C22.33 0 0 22.26 0 49.77C0 77.27 22.33 99.54 49.77 99.54ZM49.77 91.27C26.83 91.27 8.31 72.71 8.31 49.77C8.31 26.83 26.83 8.27 49.77 8.27C72.72 8.27 91.28 26.83 91.28 49.77C91.28 72.71 72.72 91.27 49.77 91.27ZM53.81 68.22L53.81 31.25C53.81 28.76 52.16 27.06 49.66 27.06C47.29 27.06 45.62 28.77 45.62 31.25L45.62 68.22C45.62 70.65 47.29 72.35 49.66 72.35C52.16 72.35 53.81 70.66 53.81 68.22ZM31.32 53.8L68.23 53.8C70.67 53.8 72.36 52.14 72.36 49.77C72.36 47.33 70.68 45.61 68.23 45.61L31.32 45.61C28.82 45.61 27.12 47.33 27.12 49.77C27.12 52.14 28.83 53.8 31.32 53.8Z"/></svg>
+</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-accent-on-accent);white-space:nowrap;flex:1 1 0;min-width:0">Add to Trip</div>
+<svg layer-name="Icon / chevron.right" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 47.72 84.72" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-accent-on-accent);stroke:var(--color-dark-accent-on-accent);stroke-width:2.86;stroke-linejoin:round"><path d="M47.72 42.36C47.72 41.14 47.28 40.06 46.34 39.13L7.65 1.3C6.83 0.43 5.74 0 4.49 0C1.96 0 0 1.9 0 4.44C0 5.64 0.54 6.77 1.29 7.63L36.83 42.36L1.29 77.09C0.54 77.95 0 79.03 0 80.28C0 82.82 1.96 84.72 4.49 84.72C5.74 84.72 6.83 84.29 7.65 83.42L46.34 45.59C47.28 44.66 47.72 43.58 47.72 42.36Z"/></svg>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">Spot and pin context menu, Saved context menu</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

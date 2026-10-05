@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Alerts and dialogs</title>
+<link rel="stylesheet" href="../../tokens.css">
+</head>
+<body style="margin:0;background:var(--color-canvas-artboard)">
+<div layer-name="Alerts and dialogs" data-artboard style="box-sizing:border-box;width:1152px;height:1600px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:var(--color-canvas-artboard)">
+<div layer-name="Page" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0">
+<div layer-name="Artboard Header" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)">
+<div layer-name="Artboard Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap">Alerts and dialogs</div>
+<div layer-name="Type and File" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap">System alerts and confirmation dialogs · AppCommands, RootView, TripFlows, TripBuilderView, SavedView, SpotHeaderView</div>
+<div layer-name="Job" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px">Every alert and confirmation dialog in the app. All are system chrome (NSAlert and SwiftUI .alert / .confirmationDialog); strings are the app's.</div>
+</div>
+<div layer-name="Content" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+<div layer-name="Notes" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start">
+<div layer-name="Note / System UI" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:340px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">System UI</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Drawn with the shared alert panel (app icon stand-in, bold title, grey message, full-width buttons). The real alerts are macOS system dialogs; confirmation dialogs attach to the window as sheets.</div>
+</div>
+<div layer-name="Note / Delete spot: two wordings" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:340px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Delete spot: two wordings</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Spot page: &quot;Delete “name”?&quot;, &quot;…You can undo this with Edit &gt; Undo.&quot;, button Delete. Saved: same title, &quot;…You can undo this.&quot;, button Delete Spot. Reproduced as built.</div>
+</div>
+<div layer-name="Note / Reset All Data…" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:340px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Reset All Data…</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Debug menu only. NSAlert with the critical style: the first button (Delete Everything) is the destructive default.</div>
+</div>
+</div>
+<div layer-name="Appearances" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+<div layer-name="Light Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em">LIGHT</div>
+<div layer-name="Alert Grid" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl)">
+<div layer-name="Row 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xl);align-items:flex-start">
+<div layer-name="Specimen / reset all data" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0">
+<div layer-name="Alert / Delete all trips and spots?" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-canvas-sheet);border-radius:26px">
+<div layer-name="App Icon (swap)" style="box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<div layer-name="Dot" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-accent-on-accent)"></div>
+</div>
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);text-align:center">Delete all trips and spots?</div>
+<div layer-name="Message" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);text-align:center">This can't be undone.</div>
+<div layer-name="Alert Buttons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px">
+<div layer-name="Button / Delete Everything" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-status-danger);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-accent-on-accent);white-space:nowrap">Delete Everything</div>
+</div>
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-text-primary);white-space:nowrap">Cancel</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">Debug &gt; Reset All Data…</div>
+</div>
+<div layer-name="Specimen / import trip failed" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0">
+<div layer-name="Alert / Couldn't Import Trip" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-canvas-sheet);border-radius:26px">
+<div layer-name="App Icon (swap)" style="box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<div layer-name="Dot" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-accent-on-accent)"></div>
+</div>
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);text-align:center">Couldn't Import Trip</div>
+<div layer-name="Message" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);text-align:center">This file isn't an Iter trip, or it is damaged. Nothing was imported.</div>
+<div layer-name="Alert Buttons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px">
+<div layer-name="Button / OK" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-accent-primary);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-accent-on-accent);white-space:nowrap">OK</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">Import Trip… (⌘O). Other reasons: newer file format; &quot;Iter couldn't read that file.&quot;</div>
+</div>
+<div layer-name="Specimen / couldnt open trip" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0">
+<div layer-name="Alert / Couldn't open this trip" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-canvas-sheet);border-radius:26px">
+<div layer-name="App Icon (swap)" style="box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<div layer-name="Dot" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-accent-on-accent)"></div>
+</div>
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);text-align:center">Couldn't open this trip</div>
+<div layer-name="Message" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);text-align:center">The file isn't a readable Iter trip.</div>
+<div layer-name="Alert Buttons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px">
+<div layer-name="Button / OK" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-accent-primary);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-accent-on-accent);white-space:nowrap">OK</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">A .iter file opened from Finder. Other: &quot;It was made by a newer version of Iter.&quot;</div>
+</div>
+</div>
+<div layer-name="Row 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xl);align-items:flex-start">
+<div layer-name="Specimen / couldnt export trip" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0">
+<div layer-name="Alert / Couldn't Export Trip" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-canvas-sheet);border-radius:26px">
+<div layer-name="App Icon (swap)" style="box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<div layer-name="Dot" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-accent-on-accent)"></div>
+</div>
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);text-align:center">Couldn't Export Trip</div>
+<div layer-name="Message" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);text-align:center">The trip couldn't be saved to that location.</div>
+<div layer-name="Alert Buttons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px">
+<div layer-name="Button / OK" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-accent-primary);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-accent-on-accent);white-space:nowrap">OK</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">Trip actions &gt; Export…</div>
+</div>
+<div layer-name="Specimen / delete spot page" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0">
+<div layer-name="Alert / Delete “Roadside Pullout”?" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-canvas-sheet);border-radius:26px">
+<div layer-name="App Icon (swap)" style="box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<div layer-name="Dot" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-accent-on-accent)"></div>
+</div>
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);text-align:center">Delete “Roadside Pullout”?</div>
+<div layer-name="Message" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);text-align:center">It is also removed from 2 trip stops. You can undo this with Edit &gt; Undo.</div>
+<div layer-name="Alert Buttons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px">
+<div layer-name="Button / Delete" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-status-danger);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-accent-on-accent);white-space:nowrap">Delete</div>
+</div>
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-text-primary);white-space:nowrap">Cancel</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">Spot page, your own spot</div>
+</div>
+<div layer-name="Specimen / delete spot saved" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0">
+<div layer-name="Alert / Delete “Roadside Pullout”?" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-canvas-sheet);border-radius:26px">
+<div layer-name="App Icon (swap)" style="box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<div layer-name="Dot" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-accent-on-accent)"></div>
+</div>
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);text-align:center">Delete “Roadside Pullout”?</div>
+<div layer-name="Message" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);text-align:center">It is also removed from 2 trip stops. You can undo this.</div>
+<div layer-name="Alert Buttons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px">
+<div layer-name="Button / Delete Spot" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-status-danger);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-accent-on-accent);white-space:nowrap">Delete Spot</div>
+</div>
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-text-primary);white-space:nowrap">Cancel</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">Saved list, your own spot</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Dark Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em">DARK</div>
+<div layer-name="Alert Grid" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl)">
+<div layer-name="Row 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xl);align-items:flex-start">
+<div layer-name="Specimen / reset all data" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0">
+<div layer-name="Alert / Delete all trips and spots?" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-dark-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-dark-canvas-sheet);border-radius:26px">
+<div layer-name="App Icon (swap)" style="box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-dark-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<div layer-name="Dot" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-dark-accent-on-accent)"></div>
+</div>
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);text-align:center">Delete all trips and spots?</div>
+<div layer-name="Message" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);text-align:center">This can't be undone.</div>
+<div layer-name="Alert Buttons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px">
+<div layer-name="Button / Delete Everything" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-status-danger);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-dark-accent-on-accent);white-space:nowrap">Delete Everything</div>
+</div>
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke);box-shadow:var(--shadow-dark-canvas-button);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-dark-text-primary);white-space:nowrap">Cancel</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">Debug &gt; Reset All Data…</div>
+</div>
+<div layer-name="Specimen / import trip failed" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0">
+<div layer-name="Alert / Couldn't Import Trip" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-dark-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-dark-canvas-sheet);border-radius:26px">
+<div layer-name="App Icon (swap)" style="box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-dark-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<div layer-name="Dot" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-dark-accent-on-accent)"></div>
+</div>
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);text-align:center">Couldn't Import Trip</div>
+<div layer-name="Message" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);text-align:center">This file isn't an Iter trip, or it is damaged. Nothing was imported.</div>
+<div layer-name="Alert Buttons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px">
+<div layer-name="Button / OK" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-accent-primary);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-dark-accent-on-accent);white-space:nowrap">OK</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">Import Trip… (⌘O). Other reasons: newer file format; &quot;Iter couldn't read that file.&quot;</div>
+</div>
+<div layer-name="Specimen / couldnt open trip" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0">
+<div layer-name="Alert / Couldn't open this trip" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-dark-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-dark-canvas-sheet);border-radius:26px">
+<div layer-name="App Icon (swap)" style="box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-dark-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<div layer-name="Dot" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-dark-accent-on-accent)"></div>
+</div>
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);text-align:center">Couldn't open this trip</div>
+<div layer-name="Message" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);text-align:center">The file isn't a readable Iter trip.</div>
+<div layer-name="Alert Buttons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px">
+<div layer-name="Button / OK" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-accent-primary);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-dark-accent-on-accent);white-space:nowrap">OK</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">A .iter file opened from Finder. Other: &quot;It was made by a newer version of Iter.&quot;</div>
+</div>
+</div>
+<div layer-name="Row 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xl);align-items:flex-start">
+<div layer-name="Specimen / couldnt export trip" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0">
+<div layer-name="Alert / Couldn't Export Trip" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-dark-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-dark-canvas-sheet);border-radius:26px">
+<div layer-name="App Icon (swap)" style="box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-dark-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<div layer-name="Dot" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-dark-accent-on-accent)"></div>
+</div>
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);text-align:center">Couldn't Export Trip</div>
+<div layer-name="Message" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);text-align:center">The trip couldn't be saved to that location.</div>
+<div layer-name="Alert Buttons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px">
+<div layer-name="Button / OK" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-accent-primary);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-dark-accent-on-accent);white-space:nowrap">OK</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">Trip actions &gt; Export…</div>
+</div>
+<div layer-name="Specimen / delete spot page" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0">
+<div layer-name="Alert / Delete “Roadside Pullout”?" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-dark-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-dark-canvas-sheet);border-radius:26px">
+<div layer-name="App Icon (swap)" style="box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-dark-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<div layer-name="Dot" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-dark-accent-on-accent)"></div>
+</div>
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);text-align:center">Delete “Roadside Pullout”?</div>
+<div layer-name="Message" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);text-align:center">It is also removed from 2 trip stops. You can undo this with Edit &gt; Undo.</div>
+<div layer-name="Alert Buttons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px">
+<div layer-name="Button / Delete" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-status-danger);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-dark-accent-on-accent);white-space:nowrap">Delete</div>
+</div>
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke);box-shadow:var(--shadow-dark-canvas-button);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-dark-text-primary);white-space:nowrap">Cancel</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">Spot page, your own spot</div>
+</div>
+<div layer-name="Specimen / delete spot saved" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0">
+<div layer-name="Alert / Delete “Roadside Pullout”?" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-dark-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-dark-canvas-sheet);border-radius:26px">
+<div layer-name="App Icon (swap)" style="box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-dark-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<div layer-name="Dot" style="box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-dark-accent-on-accent)"></div>
+</div>
+<div layer-name="Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);text-align:center">Delete “Roadside Pullout”?</div>
+<div layer-name="Message" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);text-align:center">It is also removed from 2 trip stops. You can undo this.</div>
+<div layer-name="Alert Buttons" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px">
+<div layer-name="Button / Delete Spot" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-status-danger);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-dark-accent-on-accent);white-space:nowrap">Delete Spot</div>
+</div>
+<div layer-name="Button / Cancel" style="box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke);box-shadow:var(--shadow-dark-canvas-button);padding:0 18px">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-dark-text-primary);white-space:nowrap">Cancel</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">Saved list, your own spot</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

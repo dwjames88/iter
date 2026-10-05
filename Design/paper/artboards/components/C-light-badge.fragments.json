@@ -1,0 +1,1539 @@
+{
+ "artboard": {
+  "name": "LightBadge · Compact, Regular",
+  "page": "Components",
+  "width": 1632,
+  "height": 1128,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1632px",
+   "height": "1128px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 17,
+  "clones": 25,
+  "writesNoClone": 128,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">LightBadge · Compact and Regular</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">LightBadge · Components/LightBadge.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">One Light Index window: the window name always beside the number, the band word and confidence; or a hollow dashed ring and the reason when there is no forecast.</div>\n  </div>\n  <div layer-name=\"Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n      <div layer-name=\"Note / Deviation 1: no band word in compact\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n        <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Deviation 1: no band word in compact</div>\n        <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Compact badges (map pins, Saved, Scout and Add Stop rows) show the number and short window name but not the band word. The VoiceOver label includes it. Reproduced as built; the design pass decides on a word, a glyph or nothing.</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Notes",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Note / Deviation 7: literal opacity 0.85\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n  <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Deviation 7: literal opacity 0.85</div>\n  <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Low confidence fades the whole chip to 85% opacity. 0.85 is a literal in LightBadge.swift, not a token (here --opacity-low-confidence in canvas-tokens.json).</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 3,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Notes",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "sourceSeq": 2,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Notes/Note / Deviation 7: literal opacity 0.85",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Notes",
+    "Note / Deviation 7: literal opacity 0.85"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Note Title/#text0": "Chip width vs doc",
+    "./Note Body/#text0": "COMPONENTS.md says min width 28 (regular) and 18 (compact). In SwiftUI the horizontal padding sits outside the min-width frame, so built chips are 36 and 26 wide at minimum. Built size is drawn."
+   },
+   "nameOverrides": {
+    ".": "Note / Chip width vs doc"
+   },
+   "lines": 3
+  },
+  {
+   "seq": 4,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Notes",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "sourceSeq": 2,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Notes/Note / Deviation 7: literal opacity 0.85",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Notes",
+    "Note / Deviation 7: literal opacity 0.85"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Note Title/#text0": "Rule: never alone",
+    "./Note Body/#text0": "Every score names its window. No forecast is a ring and a reason, never a number and never a low score."
+   },
+   "nameOverrides": {
+    ".": "Note / Rule: never alone"
+   },
+   "lines": 3
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Section / Compact · scored\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n      <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Compact · scored</div>\n      <div layer-name=\"Column Headers\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end\">\n        <div layer-name=\"Corner\" style=\"box-sizing:border-box;width:88px;flex-shrink:0\"></div>\n        <div layer-name=\"Column / High confidence\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0\">High confidence</div>\n        <div layer-name=\"Column / Medium confidence\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0\">Medium confidence</div>\n        <div layer-name=\"Column / Low (85% opacity)\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0\">Low (85% opacity)</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored"
+   ],
+   "parentSeq": 5,
+   "html": "<div layer-name=\"Row / Poor\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center\">\n  <div layer-name=\"Row Header\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0\">Poor</div>\n  <div layer-name=\"Specimen / compact poor high\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0\">\n    <div layer-name=\"LightBadge / compact / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n      <div layer-name=\"ScoreChip / compact / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n        <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap\">22</div>\n      </div>\n      <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Sunset</div>\n    </div>\n  </div>\n  <div layer-name=\"Specimen / compact poor medium\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0\"></div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored/Row / Poor/Specimen / compact poor medium",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored",
+    "Row / Poor",
+    "Specimen / compact poor medium"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"LightBadge / compact / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"ScoreChip / compact / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n    <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap\">22</div>\n  </div>\n  <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Sunset</div>\n</div>",
+   "lines": 6
+  },
+  {
+   "seq": 8,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored/Row / Poor",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored",
+    "Row / Poor"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"Specimen / compact poor low\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0\">\n  <div layer-name=\"LightBadge / compact / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n    <div layer-name=\"ScoreChip / compact / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)\">\n      <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap\">22</div>\n    </div>\n    <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Sunset</div>\n  </div>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 9,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored"
+   ],
+   "parentSeq": 5,
+   "sourceSeq": 6,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored/Row / Poor",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-fair)",
+     "color": "var(--color-light-ramp-text-fair)"
+    },
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-fair)",
+     "color": "var(--color-light-ramp-text-fair)"
+    },
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-fair)",
+     "color": "var(--color-light-ramp-text-fair)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Fair",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "48",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "48",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "48"
+   },
+   "nameOverrides": {
+    ".": "Row / Fair",
+    "./Specimen / compact poor high": "Specimen / compact fair high",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Fair",
+    "./Specimen / compact poor medium": "Specimen / compact fair medium",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Fair",
+    "./Specimen / compact poor low": "Specimen / compact fair low",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Fair"
+   },
+   "lines": 14
+  },
+  {
+   "seq": 10,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored"
+   ],
+   "parentSeq": 5,
+   "sourceSeq": 6,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored/Row / Poor",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-good)",
+     "color": "var(--color-light-ramp-text-good)"
+    },
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-good)",
+     "color": "var(--color-light-ramp-text-good)"
+    },
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-good)",
+     "color": "var(--color-light-ramp-text-good)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Good",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "66",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "66",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "66"
+   },
+   "nameOverrides": {
+    ".": "Row / Good",
+    "./Specimen / compact poor high": "Specimen / compact good high",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Good",
+    "./Specimen / compact poor medium": "Specimen / compact good medium",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Good",
+    "./Specimen / compact poor low": "Specimen / compact good low",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Good"
+   },
+   "lines": 14
+  },
+  {
+   "seq": 11,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored"
+   ],
+   "parentSeq": 5,
+   "sourceSeq": 6,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored/Row / Poor",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-great)",
+     "color": "var(--color-light-ramp-text-great)"
+    },
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-great)",
+     "color": "var(--color-light-ramp-text-great)"
+    },
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-great)",
+     "color": "var(--color-light-ramp-text-great)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Great",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "81",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "81",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "81"
+   },
+   "nameOverrides": {
+    ".": "Row / Great",
+    "./Specimen / compact poor high": "Specimen / compact great high",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Great",
+    "./Specimen / compact poor medium": "Specimen / compact great medium",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Great",
+    "./Specimen / compact poor low": "Specimen / compact great low",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Great"
+   },
+   "lines": 14
+  },
+  {
+   "seq": 12,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored"
+   ],
+   "parentSeq": 5,
+   "sourceSeq": 6,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored/Row / Poor",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-epic)",
+     "color": "var(--color-light-ramp-text-epic)"
+    },
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-epic)",
+     "color": "var(--color-light-ramp-text-epic)"
+    },
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-epic)",
+     "color": "var(--color-light-ramp-text-epic)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Epic",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "94",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "94",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "94"
+   },
+   "nameOverrides": {
+    ".": "Row / Epic",
+    "./Specimen / compact poor high": "Specimen / compact epic high",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Epic",
+    "./Specimen / compact poor medium": "Specimen / compact epic medium",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Epic",
+    "./Specimen / compact poor low": "Specimen / compact epic low",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Epic"
+   },
+   "lines": 14
+  },
+  {
+   "seq": 13,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 5,
+   "html": "<div layer-name=\"Section / Regular · scored\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Regular · scored</div>\n  <div layer-name=\"Column Headers\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end\">\n    <div layer-name=\"Corner\" style=\"box-sizing:border-box;width:88px;flex-shrink:0\"></div>\n    <div layer-name=\"Column / High confidence\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0\">High confidence</div>\n    <div layer-name=\"Column / Medium confidence\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0\">Medium confidence</div>\n    <div layer-name=\"Column / Low (85% opacity)\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0\">Low (85% opacity)</div>\n  </div>\n  <div layer-name=\"Row / Poor\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center\">\n    <div layer-name=\"Row Header\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0\">Poor</div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 14,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Poor",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Poor"
+   ],
+   "parentSeq": 13,
+   "html": "<div layer-name=\"Specimen / regular poor high\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0\">\n  <div layer-name=\"LightBadge / regular / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n    <div layer-name=\"ScoreChip / regular / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n      <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">22</div>\n    </div>\n    <div layer-name=\"Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start\">\n      <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap\">Sunset</div>\n      <div layer-name=\"Band Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n        <div layer-name=\"Band\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Poor</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 15,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Poor/Specimen / regular poor high/LightBadge / regular / Scored/Text/Band Line",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Poor",
+    "Specimen / regular poor high",
+    "LightBadge / regular / Scored",
+    "Text",
+    "Band Line"
+   ],
+   "parentSeq": 14,
+   "html": "<div layer-name=\"ConfidenceMark / High\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)\">\n  <div layer-name=\"Bar 1\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n  <div layer-name=\"Bar 2\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n  <div layer-name=\"Bar 3\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n</div>",
+   "lines": 5
+  },
+  {
+   "seq": 16,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Poor",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Poor"
+   ],
+   "parentSeq": 13,
+   "sourceSeq": 14,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Poor/Specimen / regular poor high",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Poor",
+    "Specimen / regular poor high"
+   ],
+   "styleOverrides": {
+    "./LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 3": {
+     "background": "var(--color-separator-default)"
+    }
+   },
+   "textOverrides": {},
+   "nameOverrides": {
+    ".": "Specimen / regular poor medium",
+    "./LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High": "ConfidenceMark / Medium"
+   },
+   "lines": 3
+  },
+  {
+   "seq": 17,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Poor",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Poor"
+   ],
+   "parentSeq": 13,
+   "html": "<div layer-name=\"Specimen / regular poor low\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0\">\n  <div layer-name=\"LightBadge / regular / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n    <div layer-name=\"ScoreChip / regular / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)\">\n      <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">22</div>\n    </div>\n    <div layer-name=\"Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start\">\n      <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap\">Sunset</div>\n      <div layer-name=\"Band Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n        <div layer-name=\"Band\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Poor</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 18,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Poor/Specimen / regular poor low/LightBadge / regular / Scored/Text/Band Line",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Poor",
+    "Specimen / regular poor low",
+    "LightBadge / regular / Scored",
+    "Text",
+    "Band Line"
+   ],
+   "parentSeq": 17,
+   "sourceSeq": 15,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Poor/Specimen / regular poor high/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Poor",
+    "Specimen / regular poor high",
+    "LightBadge / regular / Scored",
+    "Text",
+    "Band Line",
+    "ConfidenceMark / High"
+   ],
+   "styleOverrides": {
+    "./Bar 2": {
+     "background": "var(--color-separator-default)"
+    },
+    "./Bar 3": {
+     "background": "var(--color-separator-default)"
+    }
+   },
+   "textOverrides": {},
+   "nameOverrides": {
+    ".": "ConfidenceMark / Low"
+   },
+   "lines": 3
+  },
+  {
+   "seq": 19,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored"
+   ],
+   "parentSeq": 13,
+   "html": "<div layer-name=\"Row / Fair\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center\">\n  <div layer-name=\"Row Header\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0\">Fair</div>\n  <div layer-name=\"Specimen / regular fair high\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0\">\n    <div layer-name=\"LightBadge / regular / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n      <div layer-name=\"ScoreChip / regular / Fair\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-fair);color:var(--color-light-ramp-text-fair);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n        <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">48</div>\n      </div>\n      <div layer-name=\"Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start\">\n        <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap\">Sunset</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 20,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Fair/Specimen / regular fair high/LightBadge / regular / Scored/Text",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Fair",
+    "Specimen / regular fair high",
+    "LightBadge / regular / Scored",
+    "Text"
+   ],
+   "parentSeq": 19,
+   "html": "<div layer-name=\"Band Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n  <div layer-name=\"Band\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Fair</div>\n  <div layer-name=\"ConfidenceMark / High\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)\">\n    <div layer-name=\"Bar 1\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n    <div layer-name=\"Bar 2\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n    <div layer-name=\"Bar 3\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n  </div>\n</div>",
+   "lines": 8
+  },
+  {
+   "seq": 21,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Fair",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Fair"
+   ],
+   "parentSeq": 19,
+   "sourceSeq": 14,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Poor/Specimen / regular poor high",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Poor",
+    "Specimen / regular poor high"
+   ],
+   "styleOverrides": {
+    "./LightBadge / regular / Scored/ScoreChip / regular / Poor": {
+     "background": "var(--color-light-ramp-fair)",
+     "color": "var(--color-light-ramp-text-fair)"
+    },
+    "./LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 3": {
+     "background": "var(--color-separator-default)"
+    }
+   },
+   "textOverrides": {
+    "./LightBadge / regular / Scored/ScoreChip / regular / Poor/Score/#text0": "48",
+    "./LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Fair"
+   },
+   "nameOverrides": {
+    ".": "Specimen / regular fair medium",
+    "./LightBadge / regular / Scored/ScoreChip / regular / Poor": "ScoreChip / regular / Fair",
+    "./LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High": "ConfidenceMark / Medium"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 22,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Fair",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Fair"
+   ],
+   "parentSeq": 19,
+   "sourceSeq": 17,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Poor/Specimen / regular poor low",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Poor",
+    "Specimen / regular poor low"
+   ],
+   "styleOverrides": {
+    "./LightBadge / regular / Scored/ScoreChip / regular / Poor": {
+     "background": "var(--color-light-ramp-fair)",
+     "color": "var(--color-light-ramp-text-fair)"
+    }
+   },
+   "textOverrides": {
+    "./LightBadge / regular / Scored/ScoreChip / regular / Poor/Score/#text0": "48",
+    "./LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Fair"
+   },
+   "nameOverrides": {
+    ".": "Specimen / regular fair low",
+    "./LightBadge / regular / Scored/ScoreChip / regular / Poor": "ScoreChip / regular / Fair"
+   },
+   "lines": 5
+  },
+  {
+   "seq": 23,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored"
+   ],
+   "parentSeq": 13,
+   "sourceSeq": 19,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Fair",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Fair"
+   ],
+   "styleOverrides": {
+    "./Specimen / regular fair high/LightBadge / regular / Scored/ScoreChip / regular / Fair": {
+     "background": "var(--color-light-ramp-good)",
+     "color": "var(--color-light-ramp-text-good)"
+    },
+    "./Specimen / regular fair medium/LightBadge / regular / Scored/ScoreChip / regular / Fair": {
+     "background": "var(--color-light-ramp-good)",
+     "color": "var(--color-light-ramp-text-good)"
+    },
+    "./Specimen / regular fair low/LightBadge / regular / Scored/ScoreChip / regular / Fair": {
+     "background": "var(--color-light-ramp-good)",
+     "color": "var(--color-light-ramp-text-good)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Good",
+    "./Specimen / regular fair high/LightBadge / regular / Scored/ScoreChip / regular / Fair/Score/#text0": "66",
+    "./Specimen / regular fair high/LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Good",
+    "./Specimen / regular fair medium/LightBadge / regular / Scored/ScoreChip / regular / Fair/Score/#text0": "66",
+    "./Specimen / regular fair medium/LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Good",
+    "./Specimen / regular fair low/LightBadge / regular / Scored/ScoreChip / regular / Fair/Score/#text0": "66",
+    "./Specimen / regular fair low/LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Good"
+   },
+   "nameOverrides": {
+    ".": "Row / Good",
+    "./Specimen / regular fair high": "Specimen / regular good high",
+    "./Specimen / regular fair high/LightBadge / regular / Scored/ScoreChip / regular / Fair": "ScoreChip / regular / Good",
+    "./Specimen / regular fair medium": "Specimen / regular good medium",
+    "./Specimen / regular fair medium/LightBadge / regular / Scored/ScoreChip / regular / Fair": "ScoreChip / regular / Good",
+    "./Specimen / regular fair low": "Specimen / regular good low",
+    "./Specimen / regular fair low/LightBadge / regular / Scored/ScoreChip / regular / Fair": "ScoreChip / regular / Good"
+   },
+   "lines": 17
+  },
+  {
+   "seq": 24,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored"
+   ],
+   "parentSeq": 13,
+   "sourceSeq": 19,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Fair",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Fair"
+   ],
+   "styleOverrides": {
+    "./Specimen / regular fair high/LightBadge / regular / Scored/ScoreChip / regular / Fair": {
+     "background": "var(--color-light-ramp-great)",
+     "color": "var(--color-light-ramp-text-great)"
+    },
+    "./Specimen / regular fair medium/LightBadge / regular / Scored/ScoreChip / regular / Fair": {
+     "background": "var(--color-light-ramp-great)",
+     "color": "var(--color-light-ramp-text-great)"
+    },
+    "./Specimen / regular fair low/LightBadge / regular / Scored/ScoreChip / regular / Fair": {
+     "background": "var(--color-light-ramp-great)",
+     "color": "var(--color-light-ramp-text-great)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Great",
+    "./Specimen / regular fair high/LightBadge / regular / Scored/ScoreChip / regular / Fair/Score/#text0": "81",
+    "./Specimen / regular fair high/LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Great",
+    "./Specimen / regular fair medium/LightBadge / regular / Scored/ScoreChip / regular / Fair/Score/#text0": "81",
+    "./Specimen / regular fair medium/LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Great",
+    "./Specimen / regular fair low/LightBadge / regular / Scored/ScoreChip / regular / Fair/Score/#text0": "81",
+    "./Specimen / regular fair low/LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Great"
+   },
+   "nameOverrides": {
+    ".": "Row / Great",
+    "./Specimen / regular fair high": "Specimen / regular great high",
+    "./Specimen / regular fair high/LightBadge / regular / Scored/ScoreChip / regular / Fair": "ScoreChip / regular / Great",
+    "./Specimen / regular fair medium": "Specimen / regular great medium",
+    "./Specimen / regular fair medium/LightBadge / regular / Scored/ScoreChip / regular / Fair": "ScoreChip / regular / Great",
+    "./Specimen / regular fair low": "Specimen / regular great low",
+    "./Specimen / regular fair low/LightBadge / regular / Scored/ScoreChip / regular / Fair": "ScoreChip / regular / Great"
+   },
+   "lines": 17
+  },
+  {
+   "seq": 25,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored"
+   ],
+   "parentSeq": 13,
+   "sourceSeq": 19,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Fair",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Fair"
+   ],
+   "styleOverrides": {
+    "./Specimen / regular fair high/LightBadge / regular / Scored/ScoreChip / regular / Fair": {
+     "background": "var(--color-light-ramp-epic)",
+     "color": "var(--color-light-ramp-text-epic)"
+    },
+    "./Specimen / regular fair medium/LightBadge / regular / Scored/ScoreChip / regular / Fair": {
+     "background": "var(--color-light-ramp-epic)",
+     "color": "var(--color-light-ramp-text-epic)"
+    },
+    "./Specimen / regular fair low/LightBadge / regular / Scored/ScoreChip / regular / Fair": {
+     "background": "var(--color-light-ramp-epic)",
+     "color": "var(--color-light-ramp-text-epic)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Epic",
+    "./Specimen / regular fair high/LightBadge / regular / Scored/ScoreChip / regular / Fair/Score/#text0": "94",
+    "./Specimen / regular fair high/LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Epic",
+    "./Specimen / regular fair medium/LightBadge / regular / Scored/ScoreChip / regular / Fair/Score/#text0": "94",
+    "./Specimen / regular fair medium/LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Epic",
+    "./Specimen / regular fair low/LightBadge / regular / Scored/ScoreChip / regular / Fair/Score/#text0": "94",
+    "./Specimen / regular fair low/LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Epic"
+   },
+   "nameOverrides": {
+    ".": "Row / Epic",
+    "./Specimen / regular fair high": "Specimen / regular epic high",
+    "./Specimen / regular fair high/LightBadge / regular / Scored/ScoreChip / regular / Fair": "ScoreChip / regular / Epic",
+    "./Specimen / regular fair medium": "Specimen / regular epic medium",
+    "./Specimen / regular fair medium/LightBadge / regular / Scored/ScoreChip / regular / Fair": "ScoreChip / regular / Epic",
+    "./Specimen / regular fair low": "Specimen / regular epic low",
+    "./Specimen / regular fair low/LightBadge / regular / Scored/ScoreChip / regular / Fair": "ScoreChip / regular / Epic"
+   },
+   "lines": 17
+  },
+  {
+   "seq": 26,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 5,
+   "html": "<div layer-name=\"Section / Windows (good band, high confidence)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Windows (good band, high confidence)</div>\n  <div layer-name=\"Column Headers\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end\">\n    <div layer-name=\"Corner\" style=\"box-sizing:border-box;width:88px;flex-shrink:0\"></div>\n    <div layer-name=\"Column / Compact\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:190px;flex-shrink:0\">Compact</div>\n    <div layer-name=\"Column / Regular\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:220px;flex-shrink:0\">Regular</div>\n  </div>\n  <div layer-name=\"Row / Blue AM\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center\">\n    <div layer-name=\"Row Header\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0\">Blue AM</div>\n    <div layer-name=\"Specimen / compact blueMorning\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0\"></div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 27,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Windows (good band, high confidence)/Row / Blue AM/Specimen / compact blueMorning",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Windows (good band, high confidence)",
+    "Row / Blue AM",
+    "Specimen / compact blueMorning"
+   ],
+   "parentSeq": 26,
+   "sourceSeq": 7,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored/Row / Poor/Specimen / compact poor medium/LightBadge / compact / Scored",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored",
+    "Row / Poor",
+    "Specimen / compact poor medium",
+    "LightBadge / compact / Scored"
+   ],
+   "styleOverrides": {
+    "./ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-good)",
+     "color": "var(--color-light-ramp-text-good)"
+    }
+   },
+   "textOverrides": {
+    "./ScoreChip / compact / Poor/Score/#text0": "66",
+    "./Window Name/#text0": "Blue AM"
+   },
+   "nameOverrides": {
+    "./ScoreChip / compact / Poor": "ScoreChip / compact / Good"
+   },
+   "lines": 4
+  },
+  {
+   "seq": 28,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Windows (good band, high confidence)/Row / Blue AM",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Windows (good band, high confidence)",
+    "Row / Blue AM"
+   ],
+   "parentSeq": 26,
+   "sourceSeq": 14,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored/Row / Poor/Specimen / regular poor high",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored",
+    "Row / Poor",
+    "Specimen / regular poor high"
+   ],
+   "styleOverrides": {
+    ".": {
+     "width": "220px"
+    },
+    "./LightBadge / regular / Scored/ScoreChip / regular / Poor": {
+     "background": "var(--color-light-ramp-good)",
+     "color": "var(--color-light-ramp-text-good)"
+    }
+   },
+   "textOverrides": {
+    "./LightBadge / regular / Scored/ScoreChip / regular / Poor/Score/#text0": "66",
+    "./LightBadge / regular / Scored/Text/Window Name/#text0": "Morning blue hour",
+    "./LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Good"
+   },
+   "nameOverrides": {
+    ".": "Specimen / regular blueMorning",
+    "./LightBadge / regular / Scored/ScoreChip / regular / Poor": "ScoreChip / regular / Good"
+   },
+   "lines": 7
+  },
+  {
+   "seq": 29,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Windows (good band, high confidence)",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Windows (good band, high confidence)"
+   ],
+   "parentSeq": 26,
+   "html": "<div layer-name=\"Row / Sunrise\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center\">\n  <div layer-name=\"Row Header\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0\">Sunrise</div>\n  <div layer-name=\"Specimen / compact goldenMorning\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:190px;flex-shrink:0\">\n    <div layer-name=\"LightBadge / compact / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n      <div layer-name=\"ScoreChip / compact / Good\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n        <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap\">66</div>\n      </div>\n      <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Sunrise</div>\n    </div>\n  </div>\n  <div layer-name=\"Specimen / regular goldenMorning\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:220px;flex-shrink:0\"></div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 30,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Windows (good band, high confidence)/Row / Sunrise/Specimen / regular goldenMorning",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Windows (good band, high confidence)",
+    "Row / Sunrise",
+    "Specimen / regular goldenMorning"
+   ],
+   "parentSeq": 29,
+   "html": "<div layer-name=\"LightBadge / regular / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n  <div layer-name=\"ScoreChip / regular / Good\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n    <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">66</div>\n  </div>\n  <div layer-name=\"Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start\">\n    <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap\">Sunrise</div>\n    <div layer-name=\"Band Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n      <div layer-name=\"Band\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Good</div>\n      <div layer-name=\"ConfidenceMark / High\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)\">\n        <div layer-name=\"Bar 1\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n        <div layer-name=\"Bar 2\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 31,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Windows (good band, high confidence)/Row / Sunrise/Specimen / regular goldenMorning/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Windows (good band, high confidence)",
+    "Row / Sunrise",
+    "Specimen / regular goldenMorning",
+    "LightBadge / regular / Scored",
+    "Text",
+    "Band Line",
+    "ConfidenceMark / High"
+   ],
+   "parentSeq": 30,
+   "html": "<div layer-name=\"Bar 3\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>",
+   "lines": 1
+  },
+  {
+   "seq": 32,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Windows (good band, high confidence)",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Windows (good band, high confidence)"
+   ],
+   "parentSeq": 26,
+   "sourceSeq": 29,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Windows (good band, high confidence)/Row / Sunrise",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Windows (good band, high confidence)",
+    "Row / Sunrise"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Row Header/#text0": "Sunset",
+    "./Specimen / compact goldenMorning/LightBadge / compact / Scored/Window Name/#text0": "Sunset",
+    "./Specimen / regular goldenMorning/LightBadge / regular / Scored/Text/Window Name/#text0": "Sunset"
+   },
+   "nameOverrides": {
+    ".": "Row / Sunset",
+    "./Specimen / compact goldenMorning": "Specimen / compact goldenEvening",
+    "./Specimen / regular goldenMorning": "Specimen / regular goldenEvening"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 33,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Windows (good band, high confidence)",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Windows (good band, high confidence)"
+   ],
+   "parentSeq": 26,
+   "sourceSeq": 29,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Windows (good band, high confidence)/Row / Sunrise",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Windows (good band, high confidence)",
+    "Row / Sunrise"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Row Header/#text0": "Blue PM",
+    "./Specimen / compact goldenMorning/LightBadge / compact / Scored/Window Name/#text0": "Blue PM",
+    "./Specimen / regular goldenMorning/LightBadge / regular / Scored/Text/Window Name/#text0": "Evening blue hour"
+   },
+   "nameOverrides": {
+    ".": "Row / Blue PM",
+    "./Specimen / compact goldenMorning": "Specimen / compact blueEvening",
+    "./Specimen / regular goldenMorning": "Specimen / regular blueEvening"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 34,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Windows (good band, high confidence)",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Windows (good band, high confidence)"
+   ],
+   "parentSeq": 26,
+   "sourceSeq": 29,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Windows (good band, high confidence)/Row / Sunrise",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Windows (good band, high confidence)",
+    "Row / Sunrise"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Row Header/#text0": "Night",
+    "./Specimen / compact goldenMorning/LightBadge / compact / Scored/Window Name/#text0": "Night",
+    "./Specimen / regular goldenMorning/LightBadge / regular / Scored/Text/Window Name/#text0": "Night"
+   },
+   "nameOverrides": {
+    ".": "Row / Night",
+    "./Specimen / compact goldenMorning": "Specimen / compact night",
+    "./Specimen / regular goldenMorning": "Specimen / regular night"
+   },
+   "lines": 6
+  },
+  {
+   "seq": 35,
+   "kind": "write",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances"
+   ],
+   "parentSeq": 5,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Section / Compact · scored\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Compact · scored</div>\n    <div layer-name=\"Column Headers\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end\">\n      <div layer-name=\"Corner\" style=\"box-sizing:border-box;width:88px;flex-shrink:0\"></div>\n      <div layer-name=\"Column / High confidence\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:190px;flex-shrink:0\">High confidence</div>\n      <div layer-name=\"Column / Medium confidence\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:190px;flex-shrink:0\">Medium confidence</div>\n      <div layer-name=\"Column / Low (85% opacity)\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:190px;flex-shrink:0\">Low (85% opacity)</div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 36,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Dark Appearance/Section / Compact · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Compact · scored"
+   ],
+   "parentSeq": 35,
+   "sourceSeq": 6,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored/Row / Poor",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored",
+    "Row / Poor"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 7
+   }
+  },
+  {
+   "seq": 37,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Dark Appearance/Section / Compact · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Compact · scored"
+   ],
+   "parentSeq": 35,
+   "sourceSeq": 6,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored/Row / Poor",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-fair)",
+     "color": "var(--color-dark-light-ramp-text-fair)"
+    },
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-fair)",
+     "color": "var(--color-dark-light-ramp-text-fair)"
+    },
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-fair)",
+     "color": "var(--color-dark-light-ramp-text-fair)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Fair",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "48",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "48",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "48"
+   },
+   "nameOverrides": {
+    ".": "Row / Fair",
+    "./Specimen / compact poor high": "Specimen / compact fair high",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Fair",
+    "./Specimen / compact poor medium": "Specimen / compact fair medium",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Fair",
+    "./Specimen / compact poor low": "Specimen / compact fair low",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Fair"
+   },
+   "lines": 15,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 7
+   }
+  },
+  {
+   "seq": 38,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Dark Appearance/Section / Compact · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Compact · scored"
+   ],
+   "parentSeq": 35,
+   "sourceSeq": 6,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored/Row / Poor",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-good)",
+     "color": "var(--color-dark-light-ramp-text-good)"
+    },
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-good)",
+     "color": "var(--color-dark-light-ramp-text-good)"
+    },
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-good)",
+     "color": "var(--color-dark-light-ramp-text-good)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Good",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "66",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "66",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "66"
+   },
+   "nameOverrides": {
+    ".": "Row / Good",
+    "./Specimen / compact poor high": "Specimen / compact good high",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Good",
+    "./Specimen / compact poor medium": "Specimen / compact good medium",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Good",
+    "./Specimen / compact poor low": "Specimen / compact good low",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Good"
+   },
+   "lines": 15,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 7
+   }
+  },
+  {
+   "seq": 39,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Dark Appearance/Section / Compact · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Compact · scored"
+   ],
+   "parentSeq": 35,
+   "sourceSeq": 6,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored/Row / Poor",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-great)",
+     "color": "var(--color-dark-light-ramp-text-great)"
+    },
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-great)",
+     "color": "var(--color-dark-light-ramp-text-great)"
+    },
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-great)",
+     "color": "var(--color-dark-light-ramp-text-great)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Great",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "81",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "81",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "81"
+   },
+   "nameOverrides": {
+    ".": "Row / Great",
+    "./Specimen / compact poor high": "Specimen / compact great high",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Great",
+    "./Specimen / compact poor medium": "Specimen / compact great medium",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Great",
+    "./Specimen / compact poor low": "Specimen / compact great low",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Great"
+   },
+   "lines": 15,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 7
+   }
+  },
+  {
+   "seq": 40,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Dark Appearance/Section / Compact · scored",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Compact · scored"
+   ],
+   "parentSeq": 35,
+   "sourceSeq": 6,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Compact · scored/Row / Poor",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact · scored",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-epic)",
+     "color": "var(--color-dark-light-ramp-text-epic)"
+    },
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-epic)",
+     "color": "var(--color-dark-light-ramp-text-epic)"
+    },
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-epic)",
+     "color": "var(--color-dark-light-ramp-text-epic)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Epic",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "94",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "94",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor/Score/#text0": "94"
+   },
+   "nameOverrides": {
+    ".": "Row / Epic",
+    "./Specimen / compact poor high": "Specimen / compact epic high",
+    "./Specimen / compact poor high/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Epic",
+    "./Specimen / compact poor medium": "Specimen / compact epic medium",
+    "./Specimen / compact poor medium/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Epic",
+    "./Specimen / compact poor low": "Specimen / compact epic low",
+    "./Specimen / compact poor low/LightBadge / compact / Scored/ScoreChip / compact / Poor": "ScoreChip / compact / Epic"
+   },
+   "lines": 15,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 7
+   }
+  },
+  {
+   "seq": 41,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 35,
+   "sourceSeq": 13,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Regular · scored",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular · scored"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 99
+   }
+  },
+  {
+   "seq": 42,
+   "kind": "clone",
+   "parentPath": "LightBadge · Compact, Regular/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 35,
+   "sourceSeq": 26,
+   "sourcePath": "LightBadge · Compact, Regular/Page/Content/Appearances/Light Appearance/Section / Windows (good band, high confidence)",
+   "sourcePathArray": [
+    "LightBadge · Compact, Regular",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Windows (good band, high confidence)"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 48
+   }
+  }
+ ]
+}

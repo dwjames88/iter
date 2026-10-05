@@ -1,0 +1,574 @@
+{
+ "artboard": {
+  "name": "Alerts and dialogs",
+  "page": "Components",
+  "width": 1152,
+  "height": 1600,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1152px",
+   "height": "1600px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 15,
+  "clones": 7,
+  "writesNoClone": 30,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs",
+   "parentPathArray": [
+    "Alerts and dialogs"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">Alerts and dialogs</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">System alerts and confirmation dialogs · AppCommands, RootView, TripFlows, TripBuilderView, SavedView, SpotHeaderView</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">Every alert and confirmation dialog in the app. All are system chrome (NSAlert and SwiftUI .alert / .confirmationDialog); strings are the app's.</div>\n  </div>\n  <div layer-name=\"Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n      <div layer-name=\"Note / System UI\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:340px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n        <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">System UI</div>\n        <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Drawn with the shared alert panel (app icon stand-in, bold title, grey message, full-width buttons). The real alerts are macOS system dialogs; confirmation dialogs attach to the window as sheets.</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content/Notes",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Note / Delete spot: two wordings\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:340px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n  <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Delete spot: two wordings</div>\n  <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Spot page: \"Delete “name”?\", \"…You can undo this with Edit &gt; Undo.\", button Delete. Saved: same title, \"…You can undo this.\", button Delete Spot. Reproduced as built.</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 3,
+   "kind": "clone",
+   "parentPath": "Alerts and dialogs/Page/Content/Notes",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "sourceSeq": 2,
+   "sourcePath": "Alerts and dialogs/Page/Content/Notes/Note / Delete spot: two wordings",
+   "sourcePathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Notes",
+    "Note / Delete spot: two wordings"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Note Title/#text0": "Reset All Data…",
+    "./Note Body/#text0": "Debug menu only. NSAlert with the critical style: the first button (Delete Everything) is the destructive default."
+   },
+   "nameOverrides": {
+    ".": "Note / Reset All Data…"
+   },
+   "lines": 3
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Alert Grid\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl)\">\n      <div layer-name=\"Row 1\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xl);align-items:flex-start\">\n        <div layer-name=\"Specimen / reset all data\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0\">\n          <div layer-name=\"Alert / Delete all trips and spots?\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-canvas-sheet);border-radius:26px\"></div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 1/Specimen / reset all data/Alert / Delete all trips and spots?",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 1",
+    "Specimen / reset all data",
+    "Alert / Delete all trips and spots?"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"App Icon (swap)\" style=\"box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n  <div layer-name=\"Dot\" style=\"box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-accent-on-accent)\"></div>\n</div>\n<div layer-name=\"Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);text-align:center\">Delete all trips and spots?</div>\n<div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);text-align:center\">This can't be undone.</div>\n<div layer-name=\"Alert Buttons\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px\">\n  <div layer-name=\"Button / Delete Everything\" style=\"box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-status-danger);padding:0 18px\">\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-accent-on-accent);white-space:nowrap\">Delete Everything</div>\n  </div>\n  <div layer-name=\"Button / Cancel\" style=\"box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button);padding:0 18px\">\n    <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-text-primary);white-space:nowrap\">Cancel</div>\n  </div>\n</div>",
+   "lines": 13
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 1/Specimen / reset all data",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 1",
+    "Specimen / reset all data"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Debug &gt; Reset All Data…</div>",
+   "lines": 1
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 1",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 1"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Specimen / import trip failed\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0\">\n  <div layer-name=\"Alert / Couldn't Import Trip\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-canvas-sheet);border-radius:26px\">\n    <div layer-name=\"App Icon (swap)\" style=\"box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n      <div layer-name=\"Dot\" style=\"box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-accent-on-accent)\"></div>\n    </div>\n    <div layer-name=\"Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);text-align:center\">Couldn't Import Trip</div>\n    <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);text-align:center\">This file isn't an Iter trip, or it is damaged. Nothing was imported.</div>\n    <div layer-name=\"Alert Buttons\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px\">\n      <div layer-name=\"Button / OK\" style=\"box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-accent-primary);padding:0 18px\">\n        <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-accent-on-accent);white-space:nowrap\">OK</div>\n      </div>\n    </div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Import Trip… (⌘O). Other reasons: newer file format; \"Iter couldn't read that file.\"</div>\n</div>",
+   "lines": 15
+  },
+  {
+   "seq": 8,
+   "kind": "clone",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 1",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 1"
+   ],
+   "parentSeq": 4,
+   "sourceSeq": 7,
+   "sourcePath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 1/Specimen / import trip failed",
+   "sourcePathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 1",
+    "Specimen / import trip failed"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Alert / Couldn't Import Trip/Title/#text0": "Couldn't open this trip",
+    "./Alert / Couldn't Import Trip/Message/#text0": "The file isn't a readable Iter trip.",
+    "./Caption/#text0": "A .iter file opened from Finder. Other: \"It was made by a newer version of Iter.\""
+   },
+   "nameOverrides": {
+    ".": "Specimen / couldnt open trip",
+    "./Alert / Couldn't Import Trip": "Alert / Couldn't open this trip"
+   },
+   "lines": 5
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Row 2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xl);align-items:flex-start\">\n  <div layer-name=\"Specimen / couldnt export trip\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0\">\n    <div layer-name=\"Alert / Couldn't Export Trip\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-canvas-sheet);border-radius:26px\">\n      <div layer-name=\"App Icon (swap)\" style=\"box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n        <div layer-name=\"Dot\" style=\"box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-accent-on-accent)\"></div>\n      </div>\n      <div layer-name=\"Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);text-align:center\">Couldn't Export Trip</div>\n      <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);text-align:center\">The trip couldn't be saved to that location.</div>\n      <div layer-name=\"Alert Buttons\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px\"></div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 10,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 2/Specimen / couldnt export trip/Alert / Couldn't Export Trip/Alert Buttons",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 2",
+    "Specimen / couldnt export trip",
+    "Alert / Couldn't Export Trip",
+    "Alert Buttons"
+   ],
+   "parentSeq": 9,
+   "html": "<div layer-name=\"Button / OK\" style=\"box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-accent-primary);padding:0 18px\">\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-accent-on-accent);white-space:nowrap\">OK</div>\n</div>",
+   "lines": 3
+  },
+  {
+   "seq": 11,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 2/Specimen / couldnt export trip",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 2",
+    "Specimen / couldnt export trip"
+   ],
+   "parentSeq": 9,
+   "html": "<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Trip actions &gt; Export…</div>",
+   "lines": 1
+  },
+  {
+   "seq": 12,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 2",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 2"
+   ],
+   "parentSeq": 9,
+   "html": "<div layer-name=\"Specimen / delete spot page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0\">\n  <div layer-name=\"Alert / Delete “Roadside Pullout”?\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-canvas-sheet);border-radius:26px\">\n    <div layer-name=\"App Icon (swap)\" style=\"box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n      <div layer-name=\"Dot\" style=\"box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-accent-on-accent)\"></div>\n    </div>\n    <div layer-name=\"Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);text-align:center\">Delete “Roadside Pullout”?</div>\n    <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);text-align:center\">It is also removed from 2 trip stops. You can undo this with Edit &gt; Undo.</div>\n    <div layer-name=\"Alert Buttons\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px\">\n      <div layer-name=\"Button / Delete\" style=\"box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-status-danger);padding:0 18px\">\n        <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-accent-on-accent);white-space:nowrap\">Delete</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 13,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 2/Specimen / delete spot page/Alert / Delete “Roadside Pullout”?/Alert Buttons",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 2",
+    "Specimen / delete spot page",
+    "Alert / Delete “Roadside Pullout”?",
+    "Alert Buttons"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"Button / Cancel\" style=\"box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button);padding:0 18px\">\n  <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-text-primary);white-space:nowrap\">Cancel</div>\n</div>",
+   "lines": 3
+  },
+  {
+   "seq": 14,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 2/Specimen / delete spot page",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 2",
+    "Specimen / delete spot page"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Spot page, your own spot</div>",
+   "lines": 1
+  },
+  {
+   "seq": 15,
+   "kind": "clone",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 2",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 2"
+   ],
+   "parentSeq": 9,
+   "sourceSeq": 12,
+   "sourcePath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 2/Specimen / delete spot page",
+   "sourcePathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 2",
+    "Specimen / delete spot page"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Alert / Delete “Roadside Pullout”?/Message/#text0": "It is also removed from 2 trip stops. You can undo this.",
+    "./Alert / Delete “Roadside Pullout”?/Alert Buttons/Button / Delete/Label/#text0": "Delete Spot",
+    "./Caption/#text0": "Saved list, your own spot"
+   },
+   "nameOverrides": {
+    ".": "Specimen / delete spot saved",
+    "./Alert / Delete “Roadside Pullout”?/Alert Buttons/Button / Delete": "Button / Delete Spot"
+   },
+   "lines": 5
+  },
+  {
+   "seq": 16,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Alert Grid\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl)\">\n    <div layer-name=\"Row 1\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xl);align-items:flex-start\">\n      <div layer-name=\"Specimen / reset all data\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0\">\n        <div layer-name=\"Alert / Delete all trips and spots?\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-dark-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-dark-canvas-sheet);border-radius:26px\">\n          <div layer-name=\"App Icon (swap)\" style=\"box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-dark-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n            <div layer-name=\"Dot\" style=\"box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-dark-accent-on-accent)\"></div>\n          </div>\n          <div layer-name=\"Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);text-align:center\">Delete all trips and spots?</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 17,
+   "kind": "clone",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Dark Appearance/Alert Grid/Row 1/Specimen / reset all data/Alert / Delete all trips and spots?",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Alert Grid",
+    "Row 1",
+    "Specimen / reset all data",
+    "Alert / Delete all trips and spots?"
+   ],
+   "parentSeq": 16,
+   "sourceSeq": 5,
+   "sourcePath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 1/Specimen / reset all data/Alert / Delete all trips and spots?/Alert Buttons",
+   "sourcePathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 1",
+    "Specimen / reset all data",
+    "Alert / Delete all trips and spots?",
+    "Alert Buttons"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 4
+   }
+  },
+  {
+   "seq": 18,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Dark Appearance/Alert Grid/Row 1/Specimen / reset all data/Alert / Delete all trips and spots?",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Alert Grid",
+    "Row 1",
+    "Specimen / reset all data",
+    "Alert / Delete all trips and spots?"
+   ],
+   "parentSeq": 16,
+   "html": "<div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-secondary);text-align:center\">This can't be undone.</div>",
+   "lines": 1
+  },
+  {
+   "seq": 19,
+   "kind": "write",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Dark Appearance/Alert Grid/Row 1/Specimen / reset all data",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Alert Grid",
+    "Row 1",
+    "Specimen / reset all data"
+   ],
+   "parentSeq": 16,
+   "html": "<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)\">Debug &gt; Reset All Data…</div>",
+   "lines": 1
+  },
+  {
+   "seq": 20,
+   "kind": "clone",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Dark Appearance/Alert Grid/Row 1",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Alert Grid",
+    "Row 1"
+   ],
+   "parentSeq": 16,
+   "sourceSeq": 7,
+   "sourcePath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 1/Specimen / import trip failed",
+   "sourcePathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 1",
+    "Specimen / import trip failed"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 8
+   }
+  },
+  {
+   "seq": 21,
+   "kind": "clone",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Dark Appearance/Alert Grid/Row 1",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Alert Grid",
+    "Row 1"
+   ],
+   "parentSeq": 16,
+   "sourceSeq": 7,
+   "sourcePath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 1/Specimen / import trip failed",
+   "sourcePathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 1",
+    "Specimen / import trip failed"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Alert / Couldn't Import Trip/Title/#text0": "Couldn't open this trip",
+    "./Alert / Couldn't Import Trip/Message/#text0": "The file isn't a readable Iter trip.",
+    "./Caption/#text0": "A .iter file opened from Finder. Other: \"It was made by a newer version of Iter.\""
+   },
+   "nameOverrides": {
+    ".": "Specimen / couldnt open trip",
+    "./Alert / Couldn't Import Trip": "Alert / Couldn't open this trip"
+   },
+   "lines": 6,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 8
+   }
+  },
+  {
+   "seq": 22,
+   "kind": "clone",
+   "parentPath": "Alerts and dialogs/Page/Content/Appearances/Dark Appearance/Alert Grid",
+   "parentPathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Alert Grid"
+   ],
+   "parentSeq": 16,
+   "sourceSeq": 9,
+   "sourcePath": "Alerts and dialogs/Page/Content/Appearances/Light Appearance/Alert Grid/Row 2",
+   "sourcePathArray": [
+    "Alerts and dialogs",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Alert Grid",
+    "Row 2"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 28
+   }
+  }
+ ]
+}

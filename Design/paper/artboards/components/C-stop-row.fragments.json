@@ -1,0 +1,1090 @@
+{
+ "artboard": {
+  "name": "StopRow",
+  "page": "Components",
+  "width": 1400,
+  "height": 3032,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1400px",
+   "height": "3032px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 25,
+  "clones": 14,
+  "writesNoClone": 61,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "StopRow",
+   "parentPathArray": [
+    "StopRow"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">StopRow</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">StopRowView · Trips/StopRow.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">One stop: when to leave and be set up first, then the session, the light, and the note.</div>\n  </div>\n  <div layer-name=\"Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n      <div layer-name=\"Note / Schedule leads\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n        <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Schedule leads</div>\n        <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Headline (bodyEmphasis): \"Leave · park · set up by\"; no \"park\" when walk-in is unknown; \"Set up by\" for the first stop of a trip. The leave time is in the previous stop's time zone.</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Notes",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Note / Window missing\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n  <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Window missing</div>\n  <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">No badge (the row has no session window); a violet line \"No Sunrise window on this day at this place\"; the menu reads \"Sunrise · no window this day\".</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Section / Scored · default\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n      <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Scored · default</div>\n      <div layer-name=\"Specimen / default\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n        <div layer-name=\"List 560\" style=\"box-sizing:border-box;display:flex;flex-direction:column;width:560px;background:var(--color-background-content);padding:var(--spacing-sm) var(--spacing-lg);border-radius:var(--radius-control)\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · default/Specimen / default/List 560",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · default",
+    "Specimen / default",
+    "List 560"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"StopRow / Monument Valley\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;padding:var(--spacing-sm) 0;border-radius:var(--radius-control)\">\n  <div layer-name=\"StopNumberBadge / 2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-text-primary) 12%, transparent)\">\n    <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap\">2</div>\n  </div>\n  <div layer-name=\"Stop Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex:1 1 0;min-width:0\">\n    <div layer-name=\"Title Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:flex-start\">\n      <div layer-name=\"Name and Locality\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0\">\n        <div layer-name=\"Spot Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary)\">Monument Valley</div>\n        <div layer-name=\"Locality\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis\">Navajo Nation, AZ/UT</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · default/Specimen / default/List 560/StopRow / Monument Valley/Stop Content/Title Line",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · default",
+    "Specimen / default",
+    "List 560",
+    "StopRow / Monument Valley",
+    "Stop Content",
+    "Title Line"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"LightBadge / regular / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n  <div layer-name=\"ScoreChip / regular / Great\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n    <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">74</div>\n  </div>\n  <div layer-name=\"Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start\">\n    <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap\">Sunrise</div>\n    <div layer-name=\"Band Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n      <div layer-name=\"Band\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Great</div>\n      <div layer-name=\"ConfidenceMark / High\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)\">\n        <div layer-name=\"Bar 1\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n        <div layer-name=\"Bar 2\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · default/Specimen / default/List 560/StopRow / Monument Valley/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · default",
+    "Specimen / default",
+    "List 560",
+    "StopRow / Monument Valley",
+    "Stop Content",
+    "Title Line",
+    "LightBadge / regular / Scored",
+    "Text",
+    "Band Line",
+    "ConfidenceMark / High"
+   ],
+   "parentSeq": 5,
+   "html": "<div layer-name=\"Bar 3\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>",
+   "lines": 1
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · default/Specimen / default/List 560/StopRow / Monument Valley/Stop Content",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · default",
+    "Specimen / default",
+    "List 560",
+    "StopRow / Monument Valley",
+    "Stop Content"
+   ],
+   "parentSeq": 4,
+   "html": "<div layer-name=\"Schedule\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);font-variant-numeric:tabular-nums;color:var(--color-text-primary)\">Leave 03:42 · set up by 07:01</div>\n<div layer-name=\"Session Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center\">\n  <div layer-name=\"Session Menu\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0;height:22px;padding:0 var(--spacing-sm) 0 var(--spacing-md);border-radius:999px;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button)\">\n    <div layer-name=\"Session\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap\">Sunrise · 07:21–07:56 · 74</div>\n    <svg layer-name=\"Icon / chevron.up.chevron.down\" xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 64.97 94.04\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:3.90;stroke-linejoin:round\"><path d=\"M32.51 0C31.23 0 30.12 0.52 29.18 1.46L1.27 28.2C0.54 28.99 0 29.97 0 31.42C0 33.96 1.95 35.9 4.49 35.9C5.53 35.9 6.68 35.62 7.71 34.6L32.51 10.31L57.26 34.6C58.3 35.58 59.5 35.9 60.52 35.9C63.06 35.9 64.97 33.96 64.97 31.42C64.97 29.97 64.48 28.99 63.7 28.2L35.85 1.46C34.84 0.52 33.74 0 32.51 0ZM32.51 94.04C33.74 94.04 34.84 93.53 35.85 92.58L63.7 65.85C64.48 65.06 64.97 64.07 64.97 62.63C64.97 60.08 63.06 58.15 60.52 58.15C59.5 58.15 58.3 58.46 57.26 59.45L32.51 83.73L7.71 59.45C6.68 58.42 5.53 58.15 4.49 58.15C1.95 58.15 0 60.08 0 62.63C0 64.07 0.54 65.06 1.27 65.85L29.18 92.58C30.12 93.53 31.23 94.04 32.51 94.04Z\"/></svg>\n  </div>\n  <div layer-name=\"Walk-in\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis\">walk-in unknown</div>\n  <div layer-name=\"Dot\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0\">·</div>\n  <div layer-name=\"Set-up\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);flex:0 1 auto;min-width:0\">20 min set-up</div>\n</div>\n<div layer-name=\"Note Placeholder\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-tertiary);white-space:nowrap\">Add a note</div>",
+   "lines": 11
+  },
+  {
+   "seq": 8,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Section / Scored · first stop of a trip (no drive)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Scored · first stop of a trip (no drive)</div>\n  <div layer-name=\"Specimen / first\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n    <div layer-name=\"List 560\" style=\"box-sizing:border-box;display:flex;flex-direction:column;width:560px;background:var(--color-background-content);padding:var(--spacing-sm) var(--spacing-lg);border-radius:var(--radius-control)\">\n      <div layer-name=\"StopRow / Horseshoe Bend\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;padding:var(--spacing-sm) 0;border-radius:var(--radius-control)\">\n        <div layer-name=\"StopNumberBadge / 1\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-text-primary) 12%, transparent)\">\n          <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap\">1</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · first stop of a trip (no drive)/Specimen / first/List 560/StopRow / Horseshoe Bend",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · first stop of a trip (no drive)",
+    "Specimen / first",
+    "List 560",
+    "StopRow / Horseshoe Bend"
+   ],
+   "parentSeq": 8,
+   "html": "<div layer-name=\"Stop Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex:1 1 0;min-width:0\">\n  <div layer-name=\"Title Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:flex-start\">\n    <div layer-name=\"Name and Locality\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0\">\n      <div layer-name=\"Spot Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary)\">Horseshoe Bend</div>\n      <div layer-name=\"Locality\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis\">Page, AZ</div>\n    </div>\n    <div layer-name=\"LightBadge / regular / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n      <div layer-name=\"ScoreChip / regular / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n        <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">7</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 10,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · first stop of a trip (no drive)/Specimen / first/List 560/StopRow / Horseshoe Bend/Stop Content/Title Line/LightBadge / regular / Scored",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · first stop of a trip (no drive)",
+    "Specimen / first",
+    "List 560",
+    "StopRow / Horseshoe Bend",
+    "Stop Content",
+    "Title Line",
+    "LightBadge / regular / Scored"
+   ],
+   "parentSeq": 9,
+   "html": "<div layer-name=\"Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start\">\n  <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap\">Sunset</div>\n  <div layer-name=\"Band Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n    <div layer-name=\"Band\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">Poor</div>\n    <div layer-name=\"ConfidenceMark / Medium\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)\">\n      <div layer-name=\"Bar 1\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n      <div layer-name=\"Bar 2\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0\"></div>\n      <div layer-name=\"Bar 3\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0\"></div>\n    </div>\n  </div>\n</div>",
+   "lines": 11
+  },
+  {
+   "seq": 11,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · first stop of a trip (no drive)/Specimen / first/List 560/StopRow / Horseshoe Bend/Stop Content",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · first stop of a trip (no drive)",
+    "Specimen / first",
+    "List 560",
+    "StopRow / Horseshoe Bend",
+    "Stop Content"
+   ],
+   "parentSeq": 9,
+   "sourceSeq": 7,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · default/Specimen / default/List 560/StopRow / Monument Valley/Stop Content/Session Line",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · default",
+    "Specimen / default",
+    "List 560",
+    "StopRow / Monument Valley",
+    "Stop Content",
+    "Session Line"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Session Menu/Session/#text0": "Sunset · 17:25–18:00 · 7",
+    "./Walk-in/#text0": "25 min walk-in"
+   },
+   "nameOverrides": {},
+   "lines": 2
+  },
+  {
+   "seq": 12,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · first stop of a trip (no drive)/Specimen / first/List 560/StopRow / Horseshoe Bend/Stop Content",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · first stop of a trip (no drive)",
+    "Specimen / first",
+    "List 560",
+    "StopRow / Horseshoe Bend",
+    "Stop Content"
+   ],
+   "parentSeq": 9,
+   "html": "<div layer-name=\"Schedule\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);font-variant-numeric:tabular-nums;color:var(--color-text-primary)\">Set up by 17:05</div>\n<div layer-name=\"Note Placeholder\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-tertiary);white-space:nowrap\">Add a note</div>",
+   "lines": 2
+  },
+  {
+   "seq": 13,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Section / Selected (system list selection)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Selected (system list selection)</div>\n  <div layer-name=\"Specimen / selected\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n    <div layer-name=\"List 560\" style=\"box-sizing:border-box;display:flex;flex-direction:column;width:560px;background:var(--color-background-content);padding:var(--spacing-sm) var(--spacing-lg);border-radius:var(--radius-control)\">\n      <div layer-name=\"Selected Row\" style=\"box-sizing:border-box;display:flex;flex-direction:column;background:var(--color-canvas-selection-tint);border-radius:var(--radius-control);padding:0 var(--spacing-sm)\">\n        <div layer-name=\"StopRow / Monument Valley\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;padding:var(--spacing-sm) 0;border-radius:var(--radius-control)\">\n          <div layer-name=\"StopNumberBadge / 2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-text-primary) 12%, transparent)\">\n            <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap\">2</div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 14,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Selected (system list selection)/Specimen / selected/List 560/Selected Row/StopRow / Monument Valley",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Selected (system list selection)",
+    "Specimen / selected",
+    "List 560",
+    "Selected Row",
+    "StopRow / Monument Valley"
+   ],
+   "parentSeq": 13,
+   "sourceSeq": 9,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · first stop of a trip (no drive)/Specimen / first/List 560/StopRow / Horseshoe Bend/Stop Content",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · first stop of a trip (no drive)",
+    "Specimen / first",
+    "List 560",
+    "StopRow / Horseshoe Bend",
+    "Stop Content"
+   ],
+   "styleOverrides": {
+    "./Title Line/LightBadge / regular / Scored/ScoreChip / regular / Poor": {
+     "background": "var(--color-light-ramp-great)",
+     "color": "var(--color-light-ramp-text-great)"
+    },
+    "./Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / Medium/Bar 3": {
+     "background": "var(--color-text-secondary)"
+    }
+   },
+   "textOverrides": {
+    "./Title Line/Name and Locality/Spot Name/#text0": "Monument Valley",
+    "./Title Line/Name and Locality/Locality/#text0": "Navajo Nation, AZ/UT",
+    "./Title Line/LightBadge / regular / Scored/ScoreChip / regular / Poor/Score/#text0": "74",
+    "./Title Line/LightBadge / regular / Scored/Text/Window Name/#text0": "Sunrise",
+    "./Title Line/LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Great",
+    "./Schedule/#text0": "Leave 03:42 · set up by 07:01",
+    "./Session Line/Session Menu/Session/#text0": "Sunrise · 07:21–07:56 · 74",
+    "./Session Line/Walk-in/#text0": "walk-in unknown"
+   },
+   "nameOverrides": {
+    "./Title Line/LightBadge / regular / Scored/ScoreChip / regular / Poor": "ScoreChip / regular / Great",
+    "./Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / Medium": "ConfidenceMark / High"
+   },
+   "lines": 12
+  },
+  {
+   "seq": 15,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Section / Out of order (violet line)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Out of order (violet line)</div>\n  <div layer-name=\"Specimen / out of order\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n    <div layer-name=\"List 560\" style=\"box-sizing:border-box;display:flex;flex-direction:column;width:560px;background:var(--color-background-content);padding:var(--spacing-sm) var(--spacing-lg);border-radius:var(--radius-control)\">\n      <div layer-name=\"StopRow / Mesa Arch\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;padding:var(--spacing-sm) 0;border-radius:var(--radius-control)\">\n        <div layer-name=\"StopNumberBadge / 2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-text-primary) 12%, transparent)\">\n          <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap\">2</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 16,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Out of order (violet line)/Specimen / out of order/List 560/StopRow / Mesa Arch",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Out of order (violet line)",
+    "Specimen / out of order",
+    "List 560",
+    "StopRow / Mesa Arch"
+   ],
+   "parentSeq": 15,
+   "html": "<div layer-name=\"Stop Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex:1 1 0;min-width:0\">\n  <div layer-name=\"Title Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:flex-start\">\n    <div layer-name=\"Name and Locality\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0\">\n      <div layer-name=\"Spot Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary)\">Mesa Arch</div>\n      <div layer-name=\"Locality\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis\">Canyonlands National Park, UT</div>\n    </div>\n    <div layer-name=\"LightBadge / regular / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n      <div layer-name=\"ScoreChip / regular / Good\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n        <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">68</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 17,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Out of order (violet line)/Specimen / out of order/List 560/StopRow / Mesa Arch/Stop Content/Title Line/LightBadge / regular / Scored",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Out of order (violet line)",
+    "Specimen / out of order",
+    "List 560",
+    "StopRow / Mesa Arch",
+    "Stop Content",
+    "Title Line",
+    "LightBadge / regular / Scored"
+   ],
+   "parentSeq": 16,
+   "sourceSeq": 10,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · first stop of a trip (no drive)/Specimen / first/List 560/StopRow / Horseshoe Bend/Stop Content/Title Line/LightBadge / regular / Scored/Text",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · first stop of a trip (no drive)",
+    "Specimen / first",
+    "List 560",
+    "StopRow / Horseshoe Bend",
+    "Stop Content",
+    "Title Line",
+    "LightBadge / regular / Scored",
+    "Text"
+   ],
+   "styleOverrides": {
+    "./Band Line/ConfidenceMark / Medium/Bar 3": {
+     "background": "var(--color-text-secondary)"
+    }
+   },
+   "textOverrides": {
+    "./Window Name/#text0": "Sunrise",
+    "./Band Line/Band/#text0": "Good"
+   },
+   "nameOverrides": {
+    "./Band Line/ConfidenceMark / Medium": "ConfidenceMark / High"
+   },
+   "lines": 4
+  },
+  {
+   "seq": 18,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Out of order (violet line)/Specimen / out of order/List 560/StopRow / Mesa Arch/Stop Content",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Out of order (violet line)",
+    "Specimen / out of order",
+    "List 560",
+    "StopRow / Mesa Arch",
+    "Stop Content"
+   ],
+   "parentSeq": 16,
+   "sourceSeq": 7,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · default/Specimen / default/List 560/StopRow / Monument Valley/Stop Content/Session Line",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · default",
+    "Specimen / default",
+    "List 560",
+    "StopRow / Monument Valley",
+    "Stop Content",
+    "Session Line"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Session Menu/Session/#text0": "Sunrise · 07:20–07:56 · 68",
+    "./Walk-in/#text0": "10 min walk-in"
+   },
+   "nameOverrides": {},
+   "lines": 2
+  },
+  {
+   "seq": 19,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Out of order (violet line)/Specimen / out of order/List 560/StopRow / Mesa Arch/Stop Content",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Out of order (violet line)",
+    "Specimen / out of order",
+    "List 560",
+    "StopRow / Mesa Arch",
+    "Stop Content"
+   ],
+   "parentSeq": 16,
+   "html": "<div layer-name=\"Schedule\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);font-variant-numeric:tabular-nums;color:var(--color-text-primary)\">Leave 05:54 · park 06:50 · set up by 07:00</div>\n<div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n    <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n  </div>\n  <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-status-warning);flex:1 1 0;min-width:0\">Out of order: this Sunrise is earlier than the previous stop's Sunset</div>\n</div>\n<div layer-name=\"Note Placeholder\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-tertiary);white-space:nowrap\">Add a note</div>",
+   "lines": 8
+  },
+  {
+   "seq": 20,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Section / No forecast (ring, &quot;Weather off&quot;)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">No forecast (ring, \"Weather off\")</div>\n  <div layer-name=\"Specimen / no forecast\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n    <div layer-name=\"List 560\" style=\"box-sizing:border-box;display:flex;flex-direction:column;width:560px;background:var(--color-background-content);padding:var(--spacing-sm) var(--spacing-lg);border-radius:var(--radius-control)\">\n      <div layer-name=\"StopRow / Monument Valley\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;padding:var(--spacing-sm) 0;border-radius:var(--radius-control)\">\n        <div layer-name=\"StopNumberBadge / 2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-text-primary) 12%, transparent)\">\n          <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap\">2</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 21,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / No forecast (ring, \"Weather off\")/Specimen / no forecast/List 560/StopRow / Monument Valley",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / No forecast (ring, \"Weather off\")",
+    "Specimen / no forecast",
+    "List 560",
+    "StopRow / Monument Valley"
+   ],
+   "parentSeq": 20,
+   "html": "<div layer-name=\"Stop Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex:1 1 0;min-width:0\">\n  <div layer-name=\"Title Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:flex-start\">\n    <div layer-name=\"Name and Locality\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0\">\n      <div layer-name=\"Spot Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary)\">Monument Valley</div>\n      <div layer-name=\"Locality\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis\">Navajo Nation, AZ/UT</div>\n    </div>\n    <div layer-name=\"LightBadge / regular / No forecast\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n      <svg layer-name=\"NoForecastRing / 22\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><circle cx=\"11\" cy=\"11\" r=\"10.25\" fill=\"none\" style=\"stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)\"/></svg>\n      <div layer-name=\"Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start\">\n        <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap\">Sunrise</div>\n        <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap\">No forecast</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 22,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / No forecast (ring, \"Weather off\")/Specimen / no forecast/List 560/StopRow / Monument Valley/Stop Content",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / No forecast (ring, \"Weather off\")",
+    "Specimen / no forecast",
+    "List 560",
+    "StopRow / Monument Valley",
+    "Stop Content"
+   ],
+   "parentSeq": 21,
+   "sourceSeq": 7,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · default/Specimen / default/List 560/StopRow / Monument Valley/Stop Content/Session Line",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · default",
+    "Specimen / default",
+    "List 560",
+    "StopRow / Monument Valley",
+    "Stop Content",
+    "Session Line"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Session Menu/Session/#text0": "Sunrise · 07:21–07:56 · Weather off"
+   },
+   "nameOverrides": {},
+   "lines": 1
+  },
+  {
+   "seq": 23,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / No forecast (ring, \"Weather off\")/Specimen / no forecast/List 560/StopRow / Monument Valley/Stop Content",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / No forecast (ring, \"Weather off\")",
+    "Specimen / no forecast",
+    "List 560",
+    "StopRow / Monument Valley",
+    "Stop Content"
+   ],
+   "parentSeq": 21,
+   "html": "<div layer-name=\"Schedule\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);font-variant-numeric:tabular-nums;color:var(--color-text-primary)\">Leave 03:42 · set up by 07:01</div>\n<div layer-name=\"Note Placeholder\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-tertiary);white-space:nowrap\">Add a note</div>",
+   "lines": 2
+  },
+  {
+   "seq": 24,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Section / Window missing\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Window missing</div>\n  <div layer-name=\"Specimen / missing\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n    <div layer-name=\"List 560\" style=\"box-sizing:border-box;display:flex;flex-direction:column;width:560px;background:var(--color-background-content);padding:var(--spacing-sm) var(--spacing-lg);border-radius:var(--radius-control)\">\n      <div layer-name=\"StopRow / Monument Valley\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;padding:var(--spacing-sm) 0;border-radius:var(--radius-control)\">\n        <div layer-name=\"StopNumberBadge / 2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-text-primary) 12%, transparent)\">\n          <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap\">2</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 25,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Window missing/Specimen / missing/List 560/StopRow / Monument Valley",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Window missing",
+    "Specimen / missing",
+    "List 560",
+    "StopRow / Monument Valley"
+   ],
+   "parentSeq": 24,
+   "html": "<div layer-name=\"Stop Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex:1 1 0;min-width:0\">\n  <div layer-name=\"Title Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:flex-start\">\n    <div layer-name=\"Name and Locality\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0\">\n      <div layer-name=\"Spot Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary)\">Monument Valley</div>\n      <div layer-name=\"Locality\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis\">Navajo Nation, AZ/UT</div>\n    </div>\n  </div>\n  <div layer-name=\"Schedule\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);font-variant-numeric:tabular-nums;color:var(--color-text-primary)\">Leave 03:42 · set up by 07:01</div>\n  <div layer-name=\"Session Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center\">\n    <div layer-name=\"Session Menu\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0;height:22px;padding:0 var(--spacing-sm) 0 var(--spacing-md);border-radius:999px;background:var(--color-canvas-control-button);border:1px solid var(--color-canvas-control-button-stroke);box-shadow:var(--shadow-canvas-button)\">\n      <div layer-name=\"Session\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap\">Sunrise · no window this day</div>\n      <svg layer-name=\"Icon / chevron.up.chevron.down\" xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 64.97 94.04\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary);stroke:var(--color-text-secondary);stroke-width:3.90;stroke-linejoin:round\"><path d=\"M32.51 0C31.23 0 30.12 0.52 29.18 1.46L1.27 28.2C0.54 28.99 0 29.97 0 31.42C0 33.96 1.95 35.9 4.49 35.9C5.53 35.9 6.68 35.62 7.71 34.6L32.51 10.31L57.26 34.6C58.3 35.58 59.5 35.9 60.52 35.9C63.06 35.9 64.97 33.96 64.97 31.42C64.97 29.97 64.48 28.99 63.7 28.2L35.85 1.46C34.84 0.52 33.74 0 32.51 0ZM32.51 94.04C33.74 94.04 34.84 93.53 35.85 92.58L63.7 65.85C64.48 65.06 64.97 64.07 64.97 62.63C64.97 60.08 63.06 58.15 60.52 58.15C59.5 58.15 58.3 58.46 57.26 59.45L32.51 83.73L7.71 59.45C6.68 58.42 5.53 58.15 4.49 58.15C1.95 58.15 0 60.08 0 62.63C0 64.07 0.54 65.06 1.27 65.85L29.18 92.58C30.12 93.53 31.23 94.04 32.51 94.04Z\"/></svg>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 26,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Window missing/Specimen / missing/List 560/StopRow / Monument Valley/Stop Content/Session Line",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Window missing",
+    "Specimen / missing",
+    "List 560",
+    "StopRow / Monument Valley",
+    "Stop Content",
+    "Session Line"
+   ],
+   "parentSeq": 25,
+   "html": "<div layer-name=\"Walk-in\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis\">walk-in unknown</div>\n<div layer-name=\"Dot\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0\">·</div>\n<div layer-name=\"Set-up\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);flex:0 1 auto;min-width:0\">20 min set-up</div>",
+   "lines": 3
+  },
+  {
+   "seq": 27,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Window missing/Specimen / missing/List 560/StopRow / Monument Valley/Stop Content",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Window missing",
+    "Specimen / missing",
+    "List 560",
+    "StopRow / Monument Valley",
+    "Stop Content"
+   ],
+   "parentSeq": 25,
+   "sourceSeq": 19,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Out of order (violet line)/Specimen / out of order/List 560/StopRow / Mesa Arch/Stop Content/WarningLine",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Out of order (violet line)",
+    "Specimen / out of order",
+    "List 560",
+    "StopRow / Mesa Arch",
+    "Stop Content",
+    "WarningLine"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Message/#text0": "No Sunrise window on this day at this place"
+   },
+   "nameOverrides": {},
+   "lines": 1
+  },
+  {
+   "seq": 28,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Window missing/Specimen / missing/List 560/StopRow / Monument Valley/Stop Content",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Window missing",
+    "Specimen / missing",
+    "List 560",
+    "StopRow / Monument Valley",
+    "Stop Content"
+   ],
+   "parentSeq": 25,
+   "html": "<div layer-name=\"Note Placeholder\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-tertiary);white-space:nowrap\">Add a note</div>",
+   "lines": 1
+  },
+  {
+   "seq": 29,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Section / Narrow (960 window, left column 418)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Narrow (960 window, left column 418)</div>\n  <div layer-name=\"Specimen / narrow\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n    <div layer-name=\"List 386\" style=\"box-sizing:border-box;display:flex;flex-direction:column;width:386px;background:var(--color-background-content);padding:var(--spacing-sm) var(--spacing-lg);border-radius:var(--radius-control)\">\n      <div layer-name=\"StopRow / Horseshoe Bend\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;padding:var(--spacing-sm) 0;border-radius:var(--radius-control)\">\n        <div layer-name=\"StopNumberBadge / 1\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-text-primary) 12%, transparent)\">\n          <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap\">1</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 30,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Narrow (960 window, left column 418)/Specimen / narrow/List 386/StopRow / Horseshoe Bend",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Narrow (960 window, left column 418)",
+    "Specimen / narrow",
+    "List 386",
+    "StopRow / Horseshoe Bend"
+   ],
+   "parentSeq": 29,
+   "sourceSeq": 9,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · first stop of a trip (no drive)/Specimen / first/List 560/StopRow / Horseshoe Bend/Stop Content",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · first stop of a trip (no drive)",
+    "Specimen / first",
+    "List 560",
+    "StopRow / Horseshoe Bend",
+    "Stop Content"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 0
+  },
+  {
+   "seq": 31,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Narrow (960 window, left column 418)/Specimen / narrow",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Narrow (960 window, left column 418)",
+    "Specimen / narrow"
+   ],
+   "parentSeq": 29,
+   "html": "<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">\"25 min walk-in\" truncates and \"20 min set-up\" wraps, as in the 960 snapshot.</div>",
+   "lines": 1
+  },
+  {
+   "seq": 32,
+   "kind": "write",
+   "parentPath": "StopRow/Page/Content/Appearances",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Section / Scored · default\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Scored · default</div>\n    <div layer-name=\"Specimen / default\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n      <div layer-name=\"List 560\" style=\"box-sizing:border-box;display:flex;flex-direction:column;width:560px;background:var(--color-dark-background-content);padding:var(--spacing-sm) var(--spacing-lg);border-radius:var(--radius-control)\">\n        <div layer-name=\"StopRow / Monument Valley\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;padding:var(--spacing-sm) 0;border-radius:var(--radius-control)\">\n          <div layer-name=\"StopNumberBadge / 2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-dark-text-primary) 12%, transparent)\">\n            <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap\">2</div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 33,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Dark Appearance/Section / Scored · default/Specimen / default/List 560/StopRow / Monument Valley",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Scored · default",
+    "Specimen / default",
+    "List 560",
+    "StopRow / Monument Valley"
+   ],
+   "parentSeq": 32,
+   "sourceSeq": 9,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · first stop of a trip (no drive)/Specimen / first/List 560/StopRow / Horseshoe Bend/Stop Content",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · first stop of a trip (no drive)",
+    "Specimen / first",
+    "List 560",
+    "StopRow / Horseshoe Bend",
+    "Stop Content"
+   ],
+   "styleOverrides": {
+    "./Title Line/LightBadge / regular / Scored/ScoreChip / regular / Poor": {
+     "background": "var(--color-dark-light-ramp-great)",
+     "color": "var(--color-dark-light-ramp-text-great)"
+    },
+    "./Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / Medium/Bar 3": {
+     "background": "var(--color-dark-text-secondary)"
+    }
+   },
+   "textOverrides": {
+    "./Title Line/Name and Locality/Spot Name/#text0": "Monument Valley",
+    "./Title Line/Name and Locality/Locality/#text0": "Navajo Nation, AZ/UT",
+    "./Title Line/LightBadge / regular / Scored/ScoreChip / regular / Poor/Score/#text0": "74",
+    "./Title Line/LightBadge / regular / Scored/Text/Window Name/#text0": "Sunrise",
+    "./Title Line/LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Great",
+    "./Schedule/#text0": "Leave 03:42 · set up by 07:01",
+    "./Session Line/Session Menu/Session/#text0": "Sunrise · 07:21–07:56 · 74",
+    "./Session Line/Walk-in/#text0": "walk-in unknown"
+   },
+   "nameOverrides": {
+    "./Title Line/LightBadge / regular / Scored/ScoreChip / regular / Poor": "ScoreChip / regular / Great",
+    "./Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / Medium": "ConfidenceMark / High"
+   },
+   "lines": 13,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 15
+   }
+  },
+  {
+   "seq": 34,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 32,
+   "sourceSeq": 8,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Scored · first stop of a trip (no drive)",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Scored · first stop of a trip (no drive)"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 20
+   }
+  },
+  {
+   "seq": 35,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 32,
+   "sourceSeq": 13,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Selected (system list selection)",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Selected (system list selection)"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 21
+   }
+  },
+  {
+   "seq": 36,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 32,
+   "sourceSeq": 15,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Out of order (violet line)",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Out of order (violet line)"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 22
+   }
+  },
+  {
+   "seq": 37,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 32,
+   "sourceSeq": 20,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / No forecast (ring, \"Weather off\")",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / No forecast (ring, \"Weather off\")"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 16
+   }
+  },
+  {
+   "seq": 38,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 32,
+   "sourceSeq": 24,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Window missing",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Window missing"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 16
+   }
+  },
+  {
+   "seq": 39,
+   "kind": "clone",
+   "parentPath": "StopRow/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 32,
+   "sourceSeq": 29,
+   "sourcePath": "StopRow/Page/Content/Appearances/Light Appearance/Section / Narrow (960 window, left column 418)",
+   "sourcePathArray": [
+    "StopRow",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Narrow (960 window, left column 418)"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 21
+   }
+  }
+ ]
+}

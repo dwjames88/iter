@@ -1,0 +1,493 @@
+{
+ "artboard": {
+  "name": "Trip builder · A stop row · Dark · 1280",
+  "page": "Screens (Dark)",
+  "width": 1280,
+  "height": 820,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1280px",
+   "height": "820px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-dark-canvas-desktop)"
+  }
+ },
+ "stats": {
+  "writes": 10,
+  "clones": 5,
+  "writesNoClone": 22,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "Trip builder · A stop row · Dark · 1280",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Study Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 0;min-width:0;background:var(--color-dark-background-window);min-height:0\">\n  <div layer-name=\"Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-dark-canvas-label-title);white-space:nowrap\">A stop row (detail)</div>\n  <div layer-name=\"Study Body\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:32px;align-items:flex-start\">\n    <div layer-name=\"Plan Column 560\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex-shrink:0;width:560px;padding:var(--spacing-lg);background:var(--color-dark-background-content);border-radius:var(--radius-card)\">\n      <div layer-name=\"ConnectorRow / Loading\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;padding:var(--spacing-xs) 0\">\n        <div layer-name=\"Rail\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height)\">\n          <div layer-name=\"Rail Bar\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:var(--spacing-size-icon-medium);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-route-active);flex-shrink:0\"></div>\n        </div>\n        <div layer-name=\"Spacer\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"StopRow / Delicate Arch\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;padding:var(--spacing-sm) 0;border-radius:var(--radius-control)\">\n  <div layer-name=\"StopNumberBadge / 1\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-dark-text-primary) 12%, transparent)\">\n    <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap\">1</div>\n  </div>\n  <div layer-name=\"Stop Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex:1 1 0;min-width:0\">\n    <div layer-name=\"Title Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:flex-start\">\n      <div layer-name=\"Name and Locality\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0\">\n        <div layer-name=\"Spot Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary)\">Delicate Arch</div>\n        <div layer-name=\"Locality\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis\">Arches National Park, UT</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Title Line",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560",
+    "StopRow / Delicate Arch",
+    "Stop Content",
+    "Title Line"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"LightBadge / regular / Scored\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0\">\n  <div layer-name=\"ScoreChip / regular / Good\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)\">\n    <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">73</div>\n  </div>\n  <div layer-name=\"Text\" style=\"box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start\">\n    <div layer-name=\"Window Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap\">Sunset</div>\n    <div layer-name=\"Band Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n      <div layer-name=\"Band\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap\">Good</div>\n      <div layer-name=\"ConfidenceMark / High\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)\">\n        <div layer-name=\"Bar 1\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0\"></div>\n        <div layer-name=\"Bar 2\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560",
+    "StopRow / Delicate Arch",
+    "Stop Content",
+    "Title Line",
+    "LightBadge / regular / Scored",
+    "Text",
+    "Band Line",
+    "ConfidenceMark / High"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Bar 3\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0\"></div>",
+   "lines": 1
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560",
+    "StopRow / Delicate Arch",
+    "Stop Content"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Schedule\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary)\">Set up by 17:55</div>\n<div layer-name=\"Session Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center\">\n  <div layer-name=\"Session Menu\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0;height:22px;padding:0 var(--spacing-sm) 0 var(--spacing-md);border-radius:999px;background:var(--color-dark-canvas-control-button);border:1px solid var(--color-dark-canvas-control-button-stroke);box-shadow:var(--shadow-dark-canvas-button)\">\n    <div layer-name=\"Session\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap\">Sunset · 18:15–18:51 · 73</div>\n    <svg layer-name=\"Icon / chevron.up.chevron.down\" xmlns=\"http://www.w3.org/2000/svg\" width=\"9\" height=\"9\" viewBox=\"0 0 64.97 94.04\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary);stroke:var(--color-dark-text-secondary);stroke-width:3.90;stroke-linejoin:round\"><path d=\"M32.51 0C31.23 0 30.12 0.52 29.18 1.46L1.27 28.2C0.54 28.99 0 29.97 0 31.42C0 33.96 1.95 35.9 4.49 35.9C5.53 35.9 6.68 35.62 7.71 34.6L32.51 10.31L57.26 34.6C58.3 35.58 59.5 35.9 60.52 35.9C63.06 35.9 64.97 33.96 64.97 31.42C64.97 29.97 64.48 28.99 63.7 28.2L35.85 1.46C34.84 0.52 33.74 0 32.51 0ZM32.51 94.04C33.74 94.04 34.84 93.53 35.85 92.58L63.7 65.85C64.48 65.06 64.97 64.07 64.97 62.63C64.97 60.08 63.06 58.15 60.52 58.15C59.5 58.15 58.3 58.46 57.26 59.45L32.51 83.73L7.71 59.45C6.68 58.42 5.53 58.15 4.49 58.15C1.95 58.15 0 60.08 0 62.63C0 64.07 0.54 65.06 1.27 65.85L29.18 92.58C30.12 93.53 31.23 94.04 32.51 94.04Z\"/></svg>\n  </div>\n  <div layer-name=\"Walk-in\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis\">50 min walk-in</div>\n  <div layer-name=\"Dot\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;flex-shrink:0\">·</div>\n  <div layer-name=\"Set-up\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);flex:0 1 auto;min-width:0\">20 min set-up</div>\n</div>\n<div layer-name=\"Note Placeholder\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-tertiary);white-space:nowrap\">Add a note</div>",
+   "lines": 11
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"ConnectorRow / Doesn't Fit\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;padding:var(--spacing-xs) 0\">\n  <div layer-name=\"Rail\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height)\">\n    <div layer-name=\"Rail Bar\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:var(--spacing-size-icon-medium);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-status-warning);flex-shrink:0\"></div>\n  </div>\n  <div layer-name=\"Drive\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / car.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 115.52 90.52\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary)\"><path d=\"M20.15 27.88C21.28 22.51 23.68 15.54 25.29 12.75C26.58 10.43 28.01 9.43 30.67 9.08C34.34 8.59 42.67 8.25 57.77 8.25C72.85 8.25 81.18 8.48 84.86 9.08C87.46 9.48 88.85 10.43 90.24 12.75C91.9 15.48 94.08 22.51 95.39 27.88C95.84 29.68 95.06 30.38 93.16 30.26C85.05 29.74 75.41 29.22 57.77 29.22C40.13 29.22 30.44 29.74 22.37 30.26C20.47 30.38 19.74 29.68 20.15 27.88ZM22.56 63.92C18.1 63.92 14.73 60.54 14.73 56.07C14.73 51.6 18.1 48.22 22.56 48.22C27.02 48.22 30.41 51.6 30.41 56.07C30.41 60.54 27.02 63.92 22.56 63.92ZM44.85 62.01C41.52 62.01 39.22 59.67 39.22 56.34C39.22 53.01 41.52 50.7 44.85 50.7L70.69 50.7C74.02 50.7 76.31 53.01 76.31 56.34C76.31 59.67 74.02 62.01 70.69 62.01ZM92.97 63.92C88.5 63.92 85.13 60.54 85.13 56.07C85.13 51.6 88.5 48.22 92.97 48.22C97.43 48.22 100.82 51.6 100.82 56.07C100.82 60.54 97.43 63.92 92.97 63.92ZM57.77 77.09C74.19 77.09 95.97 76.28 105.23 75.22C111.82 74.48 115.52 70.84 115.52 64.59L115.52 55.99C115.52 47.75 113.85 43.15 109.33 37.29L105.22 31.93C103.43 23.15 100.19 13.92 98.51 10.31C95.9 4.84 90.83 1.53 84.36 0.69C81.05 0.25 70.39 0 57.77 0C45.14 0 34.43 0.3 31.16 0.69C24.72 1.47 19.63 4.84 17.03 10.31C15.34 13.92 12.1 23.15 10.31 31.93L6.21 37.29C1.67 43.15 0 47.75 0 55.99L0 64.59C0 70.84 3.72 74.48 10.29 75.22C19.56 76.28 41.35 77.09 57.77 77.09ZM6.45 90.52L12.22 90.52C15.89 90.52 18.71 87.75 18.71 84.13L18.71 71.97L0 63.06L0 84.13C0 87.75 2.82 90.52 6.45 90.52ZM103.32 90.52L109.03 90.52C112.71 90.52 115.52 87.75 115.52 84.13L115.52 63.06L96.81 71.97L96.81 84.13C96.81 87.75 99.65 90.52 103.32 90.52Z\"/></svg>\n    <div layer-name=\"Drive Time and Distance\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap\">57 min · 41 mi</div>\n    <div layer-name=\"Dot\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap\">·</div>\n    <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n    <div layer-name=\"Does Not Fit\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-status-warning);white-space:nowrap\">Drive doesn't fit: 12 hr, 57 min short</div>\n  </div>\n  <div layer-name=\"Spacer\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;min-height:0\"></div>\n</div>",
+   "lines": 13
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"StopRow / Mesa Arch\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;padding:var(--spacing-sm) 0;border-radius:var(--radius-control)\">\n  <div layer-name=\"StopNumberBadge / 2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-dark-text-primary) 12%, transparent)\">\n    <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap\">2</div>\n  </div>\n  <div layer-name=\"Stop Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);flex:1 1 0;min-width:0\">\n    <div layer-name=\"Title Line\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:flex-start\">\n      <div layer-name=\"Name and Locality\" style=\"box-sizing:border-box;display:flex;flex-direction:column;flex:1 1 0;min-width:0\">\n        <div layer-name=\"Spot Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary)\">Mesa Arch</div>\n        <div layer-name=\"Locality\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis\">Canyonlands National Park, UT</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 8,
+   "kind": "clone",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Title Line",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560",
+    "StopRow / Mesa Arch",
+    "Stop Content",
+    "Title Line"
+   ],
+   "parentSeq": 7,
+   "sourceSeq": 3,
+   "sourcePath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Title Line/LightBadge / regular / Scored",
+   "sourcePathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560",
+    "StopRow / Delicate Arch",
+    "Stop Content",
+    "Title Line",
+    "LightBadge / regular / Scored"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./ScoreChip / regular / Good/Score/#text0": "68",
+    "./Text/Window Name/#text0": "Sunrise"
+   },
+   "nameOverrides": {},
+   "lines": 2
+  },
+  {
+   "seq": 9,
+   "kind": "clone",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560",
+    "StopRow / Mesa Arch",
+    "Stop Content"
+   ],
+   "parentSeq": 7,
+   "sourceSeq": 5,
+   "sourcePath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Session Line",
+   "sourcePathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560",
+    "StopRow / Delicate Arch",
+    "Stop Content",
+    "Session Line"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Session Menu/Session/#text0": "Sunrise · 07:20–07:56 · 68",
+    "./Walk-in/#text0": "10 min walk-in"
+   },
+   "nameOverrides": {},
+   "lines": 2
+  },
+  {
+   "seq": 10,
+   "kind": "write",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560",
+    "StopRow / Mesa Arch",
+    "Stop Content"
+   ],
+   "parentSeq": 7,
+   "html": "<div layer-name=\"Schedule\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary)\">Leave 05:54 · park 06:50 · set up by 07:00</div>\n<div layer-name=\"WarningLine\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:13px;flex-shrink:0\">\n    <svg layer-name=\"Icon / exclamationmark.triangle.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 102.33 92.76\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-status-warning)\"><path d=\"M13.32 92.76L89.01 92.76C97.29 92.76 102.33 86.97 102.33 79.48C102.33 77.21 101.66 74.82 100.42 72.64L62.54 6.67C60 2.26 55.65 0 51.17 0C46.68 0 42.28 2.26 39.79 6.67L1.91 72.64C0.61 74.87 0 77.21 0 79.48C0 86.97 5.03 92.76 13.32 92.76ZM51.17 60.13C48.64 60.13 47.2 58.66 47.15 56.1L46.53 29.53C46.48 26.91 48.39 25.08 51.11 25.08C53.78 25.08 55.81 26.96 55.74 29.58L55.02 56.1C54.99 58.71 53.59 60.13 51.17 60.13ZM51.17 76.47C48.23 76.47 45.68 74.15 45.68 71.24C45.68 68.31 48.18 65.96 51.17 65.96C54.09 65.96 56.61 68.31 56.61 71.24C56.61 74.2 54.09 76.47 51.17 76.47Z\"/></svg>\n  </div>\n  <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-status-warning);flex:1 1 0;min-width:0\">Out of order: this Sunrise is earlier than the previous stop's Sunset</div>\n</div>\n<div layer-name=\"Note Placeholder\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-tertiary);white-space:nowrap\">Add a note</div>",
+   "lines": 8
+  },
+  {
+   "seq": 11,
+   "kind": "clone",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560"
+   ],
+   "parentSeq": 1,
+   "sourceSeq": 2,
+   "sourcePath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch",
+   "sourcePathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560",
+    "StopRow / Delicate Arch"
+   ],
+   "styleOverrides": {
+    "./Stop Content/Title Line/LightBadge / regular / Scored/ScoreChip / regular / Good": {
+     "background": "var(--color-dark-light-ramp-great)",
+     "color": "var(--color-dark-light-ramp-text-great)"
+    }
+   },
+   "textOverrides": {
+    "./StopNumberBadge / 1/Number/#text0": "3",
+    "./Stop Content/Title Line/Name and Locality/Spot Name/#text0": "Monument Valley",
+    "./Stop Content/Title Line/Name and Locality/Locality/#text0": "Navajo Nation, AZ/UT",
+    "./Stop Content/Title Line/LightBadge / regular / Scored/ScoreChip / regular / Good/Score/#text0": "74",
+    "./Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Great",
+    "./Stop Content/Schedule/#text0": "Leave 15:02 · set up by 17:58",
+    "./Stop Content/Session Line/Session Menu/Session/#text0": "Sunset · 18:18–18:53 · 74",
+    "./Stop Content/Session Line/Walk-in/#text0": "walk-in unknown"
+   },
+   "nameOverrides": {
+    ".": "StopRow / Monument Valley",
+    "./StopNumberBadge / 1": "StopNumberBadge / 3",
+    "./Stop Content/Title Line/LightBadge / regular / Scored/ScoreChip / regular / Good": "ScoreChip / regular / Great"
+   },
+   "lines": 12
+  },
+  {
+   "seq": 12,
+   "kind": "clone",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560"
+   ],
+   "parentSeq": 1,
+   "sourceSeq": 6,
+   "sourcePath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560/ConnectorRow / Doesn't Fit",
+   "sourcePathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560",
+    "ConnectorRow / Doesn't Fit"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Drive/Drive Time and Distance/#text0": "2 hr, 19 min · 101 mi",
+    "./Drive/Does Not Fit/#text0": "Drive doesn't fit: 2 hr, 58 min short"
+   },
+   "nameOverrides": {},
+   "lines": 2
+  },
+  {
+   "seq": 13,
+   "kind": "clone",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560"
+   ],
+   "parentSeq": 1,
+   "sourceSeq": 2,
+   "sourcePath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch",
+   "sourcePathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560",
+    "StopRow / Delicate Arch"
+   ],
+   "styleOverrides": {
+    "./Stop Content/Title Line/LightBadge / regular / Scored/ScoreChip / regular / Good": {
+     "background": "var(--color-dark-light-ramp-great)",
+     "color": "var(--color-dark-light-ramp-text-great)"
+    }
+   },
+   "textOverrides": {
+    "./StopNumberBadge / 1/Number/#text0": "4",
+    "./Stop Content/Title Line/Name and Locality/Spot Name/#text0": "Horseshoe Bend",
+    "./Stop Content/Title Line/Name and Locality/Locality/#text0": "Page, AZ",
+    "./Stop Content/Title Line/LightBadge / regular / Scored/ScoreChip / regular / Good/Score/#text0": "76",
+    "./Stop Content/Title Line/LightBadge / regular / Scored/Text/Window Name/#text0": "Evening blue hour",
+    "./Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/Band/#text0": "Great",
+    "./Stop Content/Schedule/#text0": "Leave 15:54 · park 17:13 · set up by 17:38",
+    "./Stop Content/Session Line/Session Menu/Session/#text0": "Evening blue hour · 17:58–18:24 · 76",
+    "./Stop Content/Session Line/Walk-in/#text0": "25 min walk-in"
+   },
+   "nameOverrides": {
+    ".": "StopRow / Horseshoe Bend",
+    "./StopNumberBadge / 1": "StopNumberBadge / 4",
+    "./Stop Content/Title Line/LightBadge / regular / Scored/ScoreChip / regular / Good": "ScoreChip / regular / Great"
+   },
+   "lines": 13
+  },
+  {
+   "seq": 14,
+   "kind": "write",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body/Plan Column 560",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body",
+    "Plan Column 560"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"ConnectorRow / Overnight\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;padding:var(--spacing-xs) 0\">\n  <div layer-name=\"Rail\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height)\">\n    <div layer-name=\"Rail Bar\" style=\"box-sizing:border-box;width:var(--spacing-stroke-thick);height:var(--spacing-size-icon-medium);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-route-active);flex-shrink:0\"></div>\n  </div>\n  <div layer-name=\"Overnight Label\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / moon.stars\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 97.67 101.67\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary)\"><path d=\"M78.9 56.74C79.77 56.74 80.44 56.09 80.55 55.16C82.11 42.11 82.75 41.78 95.98 39.61C97.06 39.45 97.67 38.96 97.67 37.96C97.67 37.06 97.06 36.48 96.19 36.37C82.86 33.79 82.11 33.88 80.55 20.83C80.44 19.83 79.77 19.24 78.9 19.24C77.98 19.24 77.36 19.83 77.25 20.78C75.52 34.01 75.08 34.45 61.56 36.37C60.73 36.43 60.06 37.06 60.06 37.96C60.06 38.91 60.73 39.45 61.56 39.61C75.08 42.19 75.48 42.22 77.25 55.26C77.36 56.09 77.98 56.74 78.9 56.74ZM55.55 23.7C56.09 23.7 56.42 23.37 56.53 22.81C58.07 14.7 57.98 14.48 66.49 12.86C67 12.74 67.38 12.45 67.38 11.85C67.38 11.23 67 10.95 66.49 10.84C57.99 9.14 58.23 8.93 56.53 0.88C56.42 0.33 56.09 0 55.55 0C54.94 0 54.62 0.33 54.51 0.88C52.8 8.93 53.09 9.14 44.59 10.84C44.03 10.95 43.66 11.23 43.66 11.85C43.66 12.45 44.03 12.74 44.59 12.86C53.09 14.56 53 14.7 54.51 22.81C54.62 23.37 54.94 23.7 55.55 23.7ZM42.07 101.67C59.61 101.67 73.82 91.06 80.07 77.64C81.48 74.77 79.67 72.93 77.01 73.71C74.01 74.72 69.12 75.65 64.58 75.65C40.5 75.65 26.65 61.87 26.65 37.74C26.65 33.2 27.67 28.06 29.11 24.52C30.32 21.45 28.2 19.66 25.34 20.93C10.94 27.15 0 41.99 0 59.55C0 82.83 18.85 101.67 42.07 101.67ZM42.07 94.59C22.74 94.59 6.97 78.88 6.97 59.55C6.97 48.1 12.61 38.44 20.19 32.37C19.82 34.16 19.68 35.87 19.68 37.74C19.68 65.71 36.54 82.73 64.58 82.73C66.05 82.73 67.44 82.53 68.63 82.26C62.49 89.65 53.04 94.59 42.07 94.59Z\"/></svg>\n    <div layer-name=\"Overnight\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap\">Overnight</div>\n  </div>\n  <div layer-name=\"Hairline\" style=\"box-sizing:border-box;flex:1 1 0;min-width:0;height:var(--spacing-stroke-hairline);background:var(--color-dark-separator-default)\"></div>\n  <div layer-name=\"Drive\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / car.fill\" xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 115.52 90.52\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary)\"><path d=\"M20.15 27.88C21.28 22.51 23.68 15.54 25.29 12.75C26.58 10.43 28.01 9.43 30.67 9.08C34.34 8.59 42.67 8.25 57.77 8.25C72.85 8.25 81.18 8.48 84.86 9.08C87.46 9.48 88.85 10.43 90.24 12.75C91.9 15.48 94.08 22.51 95.39 27.88C95.84 29.68 95.06 30.38 93.16 30.26C85.05 29.74 75.41 29.22 57.77 29.22C40.13 29.22 30.44 29.74 22.37 30.26C20.47 30.38 19.74 29.68 20.15 27.88ZM22.56 63.92C18.1 63.92 14.73 60.54 14.73 56.07C14.73 51.6 18.1 48.22 22.56 48.22C27.02 48.22 30.41 51.6 30.41 56.07C30.41 60.54 27.02 63.92 22.56 63.92ZM44.85 62.01C41.52 62.01 39.22 59.67 39.22 56.34C39.22 53.01 41.52 50.7 44.85 50.7L70.69 50.7C74.02 50.7 76.31 53.01 76.31 56.34C76.31 59.67 74.02 62.01 70.69 62.01ZM92.97 63.92C88.5 63.92 85.13 60.54 85.13 56.07C85.13 51.6 88.5 48.22 92.97 48.22C97.43 48.22 100.82 51.6 100.82 56.07C100.82 60.54 97.43 63.92 92.97 63.92ZM57.77 77.09C74.19 77.09 95.97 76.28 105.23 75.22C111.82 74.48 115.52 70.84 115.52 64.59L115.52 55.99C115.52 47.75 113.85 43.15 109.33 37.29L105.22 31.93C103.43 23.15 100.19 13.92 98.51 10.31C95.9 4.84 90.83 1.53 84.36 0.69C81.05 0.25 70.39 0 57.77 0C45.14 0 34.43 0.3 31.16 0.69C24.72 1.47 19.63 4.84 17.03 10.31C15.34 13.92 12.1 23.15 10.31 31.93L6.21 37.29C1.67 43.15 0 47.75 0 55.99L0 64.59C0 70.84 3.72 74.48 10.29 75.22C19.56 76.28 41.35 77.09 57.77 77.09ZM6.45 90.52L12.22 90.52C15.89 90.52 18.71 87.75 18.71 84.13L18.71 71.97L0 63.06L0 84.13C0 87.75 2.82 90.52 6.45 90.52ZM103.32 90.52L109.03 90.52C112.71 90.52 115.52 87.75 115.52 84.13L115.52 63.06L96.81 71.97L96.81 84.13C96.81 87.75 99.65 90.52 103.32 90.52Z\"/></svg>\n    <div layer-name=\"Drive Time and Distance\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap\">2 hr, 56 min · 128 mi</div>\n  </div>\n</div>",
+   "lines": 14
+  },
+  {
+   "seq": 15,
+   "kind": "write",
+   "parentPath": "Trip builder · A stop row · Dark · 1280/Study Page/Study Body",
+   "parentPathArray": [
+    "Trip builder · A stop row · Dark · 1280",
+    "Study Page",
+    "Study Body"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Study Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);flex-shrink:0\">\n  <div layer-name=\"Note / What it shows\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:280px;background:var(--color-dark-canvas-note-background);border:1px solid var(--color-dark-canvas-note-border);border-radius:var(--radius-control)\">\n    <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-dark-canvas-note-text)\">What it shows</div>\n    <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-canvas-note-text)\">First stop with \"Set up by\" only (no drive) under a connector with no drive text yet (loading); \"Leave · park · set up by\"; \"walk-in unknown\"; an out-of-order line; the Overnight connector; an infeasible drive; the Evening blue hour window.</div>\n  </div>\n  <div layer-name=\"Note / Snapshot crop\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:280px;background:var(--color-dark-canvas-note-background);border:1px solid var(--color-dark-canvas-note-border);border-radius:var(--radius-control)\">\n    <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-dark-canvas-note-text)\">Snapshot crop</div>\n    <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-canvas-note-text)\">The snapshot is the same column cropped from a taller list. The first connector there is the rail alone: MapKit has not answered yet.</div>\n  </div>\n</div>",
+   "lines": 10
+  }
+ ],
+ "duplicateOf": {
+  "artboard": "Trip builder · A stop row · Light · 1280",
+  "id": "S-trip-builder-stoprow",
+  "rule": {
+   "replaceVarPrefix": [
+    [
+     "--color-",
+     "--color-dark-"
+    ],
+    [
+     "--shadow-",
+     "--shadow-dark-"
+    ]
+   ]
+  },
+  "changedNodes": [
+   ".",
+   "./Study Page",
+   "./Study Page/Title",
+   "./Study Page/Study Body/Plan Column 560",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Loading/Rail/Rail Bar",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/StopNumberBadge / 1",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/StopNumberBadge / 1/Number",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Title Line/Name and Locality/Spot Name",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Title Line/Name and Locality/Locality",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Title Line/LightBadge / regular / Scored/ScoreChip / regular / Good",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Title Line/LightBadge / regular / Scored/Text/Window Name",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/Band",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 1",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 2",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 3",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Schedule",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Session Line/Session Menu",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Session Line/Session Menu/Session",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Session Line/Session Menu/Icon / chevron.up.chevron.down",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Session Line/Walk-in",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Session Line/Dot",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Session Line/Set-up",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Delicate Arch/Stop Content/Note Placeholder",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Doesn't Fit/Rail/Rail Bar",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Doesn't Fit/Drive/Icon / car.fill",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Doesn't Fit/Drive/Drive Time and Distance",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Doesn't Fit/Drive/Dot",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Doesn't Fit/Drive/Icon / exclamationmark.triangle.fill",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Doesn't Fit/Drive/Does Not Fit",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/StopNumberBadge / 2",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/StopNumberBadge / 2/Number",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Title Line/Name and Locality/Spot Name",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Title Line/Name and Locality/Locality",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Title Line/LightBadge / regular / Scored/ScoreChip / regular / Good",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Title Line/LightBadge / regular / Scored/Text/Window Name",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/Band",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 1",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 2",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 3",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Schedule",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Session Line/Session Menu",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Session Line/Session Menu/Session",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Session Line/Session Menu/Icon / chevron.up.chevron.down",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Session Line/Walk-in",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Session Line/Dot",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Session Line/Set-up",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/WarningLine/Icon Slot/Icon / exclamationmark.triangle.fill",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/WarningLine/Message",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Mesa Arch/Stop Content/Note Placeholder",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Overnight/Rail/Rail Bar",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Overnight/Overnight Label/Icon / moon.stars",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Overnight/Overnight Label/Overnight",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Overnight/Hairline",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Overnight/Drive/Icon / car.fill",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Overnight/Drive/Drive Time and Distance",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/StopNumberBadge / 3",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/StopNumberBadge / 3/Number",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Title Line/Name and Locality/Spot Name",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Title Line/Name and Locality/Locality",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Title Line/LightBadge / regular / Scored/ScoreChip / regular / Great",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Title Line/LightBadge / regular / Scored/Text/Window Name",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/Band",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 1",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 2",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 3",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Schedule",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Session Line/Session Menu",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Session Line/Session Menu/Session",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Session Line/Session Menu/Icon / chevron.up.chevron.down",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Session Line/Walk-in",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Session Line/Dot",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Session Line/Set-up",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Monument Valley/Stop Content/Note Placeholder",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Doesn't Fit#2/Rail/Rail Bar",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Doesn't Fit#2/Drive/Icon / car.fill",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Doesn't Fit#2/Drive/Drive Time and Distance",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Doesn't Fit#2/Drive/Dot",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Doesn't Fit#2/Drive/Icon / exclamationmark.triangle.fill",
+   "./Study Page/Study Body/Plan Column 560/ConnectorRow / Doesn't Fit#2/Drive/Does Not Fit",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/StopNumberBadge / 4",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/StopNumberBadge / 4/Number",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Title Line/Name and Locality/Spot Name",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Title Line/Name and Locality/Locality",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Title Line/LightBadge / regular / Scored/ScoreChip / regular / Great",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Title Line/LightBadge / regular / Scored/Text/Window Name",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/Band",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 1",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 2",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Title Line/LightBadge / regular / Scored/Text/Band Line/ConfidenceMark / High/Bar 3",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Schedule",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Session Line/Session Menu",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Session Line/Session Menu/Session",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Session Line/Session Menu/Icon / chevron.up.chevron.down",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Session Line/Walk-in",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Session Line/Dot",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Session Line/Set-up",
+   "./Study Page/Study Body/Plan Column 560/StopRow / Horseshoe Bend/Stop Content/Note Placeholder",
+   "./Study Page/Study Body/Study Notes/Note / What it shows",
+   "./Study Page/Study Body/Study Notes/Note / What it shows/Note Title",
+   "./Study Page/Study Body/Study Notes/Note / What it shows/Note Body",
+   "./Study Page/Study Body/Study Notes/Note / Snapshot crop",
+   "./Study Page/Study Body/Study Notes/Note / Snapshot crop/Note Title",
+   "./Study Page/Study Body/Study Notes/Note / Snapshot crop/Note Body"
+  ],
+  "exceptions": [],
+  "textChanges": [],
+  "svgChanged": [],
+  "nameChanges": [
+   {
+    "path": ".",
+    "name": "Trip builder · A stop row · Dark · 1280"
+   }
+  ],
+  "changedCount": 103,
+  "updateStylesCalls": 3
+ }
+}

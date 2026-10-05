@@ -1,0 +1,167 @@
+{
+ "artboard": {
+  "name": "Flow · Explore and save",
+  "page": "Flows",
+  "width": 1584,
+  "height": 832,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1584px",
+   "height": "832px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 9,
+  "clones": 0,
+  "writesNoClone": 9,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "Flow · Explore and save",
+   "parentPathArray": [
+    "Flow · Explore and save"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:28px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">Explore and save</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">Find a spot on the Explore map, open its place card and spot page, and save it. The side branch adds your own spot with Add Spot mode and ends up in the same Saved list.</div>\n  </div>\n  <div layer-name=\"Journey\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n    <div layer-name=\"Main Journey\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:flex-start\">\n      <div layer-name=\"Step 1 / Explore · Default\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:12px;flex-shrink:0;width:344px;height:316px;background:var(--color-canvas-specimen-background);border-radius:var(--radius-card);border:1px solid var(--color-canvas-specimen-border)\">\n        <div layer-name=\"Thumb Frame\" style=\"box-sizing:border-box;display:flex;flex-direction:row;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid var(--color-canvas-specimen-border);width:322px;height:207px\">\n          <img layer-name=\"Thumb / Explore · Default\" data-asset=\"thumbs/S-explore-default.png\" src=\"paper-asset:///path/to/Iter/Design/paper/assets/thumbs/S-explore-default.png\" style=\"box-sizing:border-box;display:block;flex-shrink:0;width:320px;height:205px;object-fit:cover\"/>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true,
+   "hasAsset": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "Flow · Explore and save/Page/Journey/Main Journey/Step 1 / Explore · Default",
+   "parentPathArray": [
+    "Flow · Explore and save",
+    "Page",
+    "Journey",
+    "Main Journey",
+    "Step 1 / Explore · Default"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Step Title\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center\">\n  <div layer-name=\"Step Number\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:11px;border:1.5px solid var(--color-canvas-flow-arrow)\">\n    <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">1</div>\n  </div>\n  <div layer-name=\"Screen Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Explore · Default</div>\n</div>\n<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Click a pin or a row to select it.</div>",
+   "lines": 7
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "Flow · Explore and save/Page/Journey/Main Journey",
+   "parentPathArray": [
+    "Flow · Explore and save",
+    "Page",
+    "Journey",
+    "Main Journey"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Arrow Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:107px 0 0 0;flex-shrink:0;width:48px\">\n  <svg layer-name=\"Arrow / Explore · Default → Explore · Selected\" xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"16\" viewBox=\"0 0 48 16\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><path d=\"M4 8 H45\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/><path d=\"M38 2 L45 8 L38 14\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/></svg>\n</div>\n<div layer-name=\"Step 2 / Explore · Selected\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:12px;flex-shrink:0;width:344px;height:316px;background:var(--color-canvas-specimen-background);border-radius:var(--radius-card);border:1px solid var(--color-canvas-specimen-border)\">\n  <div layer-name=\"Thumb Frame\" style=\"box-sizing:border-box;display:flex;flex-direction:row;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid var(--color-canvas-specimen-border);width:322px;height:207px\">\n    <img layer-name=\"Thumb / Explore · Selected\" data-asset=\"thumbs/S-explore-selected.png\" src=\"paper-asset:///path/to/Iter/Design/paper/assets/thumbs/S-explore-selected.png\" style=\"box-sizing:border-box;display:block;flex-shrink:0;width:320px;height:205px;object-fit:cover\"/>\n  </div>\n  <div layer-name=\"Step Title\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center\">\n    <div layer-name=\"Step Number\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:11px;border:1.5px solid var(--color-canvas-flow-arrow)\">\n      <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">2</div>\n    </div>\n    <div layer-name=\"Screen Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Explore · Selected</div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Double-click the row, or press Return, to open the spot page.</div>\n</div>",
+   "lines": 15,
+   "hasAsset": true
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "Flow · Explore and save/Page/Journey/Main Journey",
+   "parentPathArray": [
+    "Flow · Explore and save",
+    "Page",
+    "Journey",
+    "Main Journey"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Arrow Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:107px 0 0 0;flex-shrink:0;width:48px\">\n  <svg layer-name=\"Arrow / Explore · Selected → Spot page · Sample\" xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"16\" viewBox=\"0 0 48 16\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><path d=\"M4 8 H45\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/><path d=\"M38 2 L45 8 L38 14\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/></svg>\n</div>\n<div layer-name=\"Step 3 / Spot page · Sample\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:12px;flex-shrink:0;width:344px;height:316px;background:var(--color-canvas-specimen-background);border-radius:var(--radius-card);border:1px solid var(--color-canvas-specimen-border)\">\n  <div layer-name=\"Thumb Frame\" style=\"box-sizing:border-box;display:flex;flex-direction:row;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid var(--color-canvas-specimen-border);width:322px;height:207px\">\n    <img layer-name=\"Thumb / Spot page · Sample\" data-asset=\"thumbs/S-spot-sample.png\" src=\"paper-asset:///path/to/Iter/Design/paper/assets/thumbs/S-spot-sample.png\" style=\"box-sizing:border-box;display:block;flex-shrink:0;width:320px;height:205px;object-fit:cover\"/>\n  </div>\n  <div layer-name=\"Step Title\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center\">\n    <div layer-name=\"Step Number\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:11px;border:1.5px solid var(--color-canvas-flow-arrow)\">\n      <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">3</div>\n    </div>\n    <div layer-name=\"Screen Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Spot page · Sample</div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Click Save in the header to keep the spot.</div>\n</div>",
+   "lines": 15,
+   "hasAsset": true
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "Flow · Explore and save/Page/Journey/Main Journey",
+   "parentPathArray": [
+    "Flow · Explore and save",
+    "Page",
+    "Journey",
+    "Main Journey"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Arrow Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:107px 0 0 0;flex-shrink:0;width:48px\">\n  <svg layer-name=\"Arrow / Spot page · Sample → Saved · List\" xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"16\" viewBox=\"0 0 48 16\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><path d=\"M4 8 H45\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/><path d=\"M38 2 L45 8 L38 14\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/></svg>\n</div>\n<div layer-name=\"Step 4 / Saved · List\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:12px;flex-shrink:0;width:344px;height:316px;background:var(--color-canvas-specimen-background);border-radius:var(--radius-card);border:1px solid var(--color-canvas-specimen-border)\">\n  <div layer-name=\"Thumb Frame\" style=\"box-sizing:border-box;display:flex;flex-direction:row;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid var(--color-canvas-specimen-border);width:322px;height:207px\">\n    <img layer-name=\"Thumb / Saved · List\" data-asset=\"thumbs/S-saved-list.png\" src=\"paper-asset:///path/to/Iter/Design/paper/assets/thumbs/S-saved-list.png\" style=\"box-sizing:border-box;display:block;flex-shrink:0;width:320px;height:205px;object-fit:cover\"/>\n  </div>\n  <div layer-name=\"Step Title\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center\">\n    <div layer-name=\"Step Number\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:11px;border:1.5px solid var(--color-canvas-flow-arrow)\">\n      <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">4</div>\n    </div>\n    <div layer-name=\"Screen Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Saved · List</div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Double-click a row to reopen its spot page.</div>\n</div>",
+   "lines": 15,
+   "hasAsset": true
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "Flow · Explore and save/Page/Journey",
+   "parentPathArray": [
+    "Flow · Explore and save",
+    "Page",
+    "Journey"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Branches\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0;position:relative;padding-left:0px\">\n  <svg layer-name=\"Arrow / Explore · Default → Explore · Add Spot mod\" xmlns=\"http://www.w3.org/2000/svg\" width=\"220\" height=\"198\" viewBox=\"0 0 220 198\" style=\"box-sizing:border-box;display:block;flex-shrink:0;position:absolute;left:171px;top:0\"><path d=\"M1 0 V197.5 H217\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/><path d=\"M210 191.5 L217 197.5 L210 203.5\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/></svg>\n  <div layer-name=\"Branch / Side branch: add your own spot\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:flex-start\">\n    <div layer-name=\"Offset\" style=\"box-sizing:border-box;width:392px;flex-shrink:0\"></div>\n    <div layer-name=\"Branch Cards\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:0 0 0 0;flex-shrink:0\">\n      <div layer-name=\"Branch Label\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;height:40px\">\n        <div layer-name=\"Branch Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">Side branch: add your own spot</div>\n      </div>\n      <div layer-name=\"Cards\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:flex-start\"></div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "Flow · Explore and save/Page/Journey/Branches/Branch / Side branch: add your own spot/Branch Cards/Cards",
+   "parentPathArray": [
+    "Flow · Explore and save",
+    "Page",
+    "Journey",
+    "Branches",
+    "Branch / Side branch: add your own spot",
+    "Branch Cards",
+    "Cards"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"Step 5 / Explore · Add Spot mode\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:12px;flex-shrink:0;width:344px;height:316px;background:var(--color-canvas-specimen-background);border-radius:var(--radius-card);border:1px solid var(--color-canvas-specimen-border)\">\n  <div layer-name=\"Thumb Frame\" style=\"box-sizing:border-box;display:flex;flex-direction:row;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid var(--color-canvas-specimen-border);width:322px;height:207px\">\n    <img layer-name=\"Thumb / Explore · Add Spot mode\" data-asset=\"thumbs/S-explore-add-spot.png\" src=\"paper-asset:///path/to/Iter/Design/paper/assets/thumbs/S-explore-add-spot.png\" style=\"box-sizing:border-box;display:block;flex-shrink:0;width:320px;height:205px;object-fit:cover\"/>\n  </div>\n  <div layer-name=\"Step Title\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center\">\n    <div layer-name=\"Step Number\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:11px;border:1.5px solid var(--color-canvas-flow-arrow)\">\n      <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">5</div>\n    </div>\n    <div layer-name=\"Screen Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Explore · Add Spot mode</div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">File &gt; Add Spot on Map (⇧⌘N), then click the map to drop a pin.</div>\n</div>\n<div layer-name=\"Arrow Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:107px 0 0 0;flex-shrink:0;width:48px\">\n  <svg layer-name=\"Arrow / Explore · Add Spot mode → Spot editor · Cr\" xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"16\" viewBox=\"0 0 48 16\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><path d=\"M4 8 H45\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/><path d=\"M38 2 L45 8 L38 14\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/></svg>\n</div>",
+   "lines": 15,
+   "hasAsset": true
+  },
+  {
+   "seq": 8,
+   "kind": "write",
+   "parentPath": "Flow · Explore and save/Page/Journey/Branches/Branch / Side branch: add your own spot/Branch Cards/Cards",
+   "parentPathArray": [
+    "Flow · Explore and save",
+    "Page",
+    "Journey",
+    "Branches",
+    "Branch / Side branch: add your own spot",
+    "Branch Cards",
+    "Cards"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"Step 6 / Spot editor · Create\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:12px;flex-shrink:0;width:344px;height:316px;background:var(--color-canvas-specimen-background);border-radius:var(--radius-card);border:1px solid var(--color-canvas-specimen-border)\">\n  <div layer-name=\"Thumb Frame\" style=\"box-sizing:border-box;display:flex;flex-direction:row;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid var(--color-canvas-specimen-border);width:322px;height:207px\">\n    <img layer-name=\"Thumb / Spot editor · Create\" data-asset=\"thumbs/S-editor-create.png\" src=\"paper-asset:///path/to/Iter/Design/paper/assets/thumbs/S-editor-create.png\" style=\"box-sizing:border-box;display:block;flex-shrink:0;width:320px;height:205px;object-fit:cover\"/>\n  </div>\n  <div layer-name=\"Step Title\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center\">\n    <div layer-name=\"Step Number\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:11px;border:1.5px solid var(--color-canvas-flow-arrow)\">\n      <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">6</div>\n    </div>\n    <div layer-name=\"Screen Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Spot editor · Create</div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Fill in the name and details, then click Save.</div>\n</div>\n<div layer-name=\"Arrow Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:107px 0 0 0;flex-shrink:0;width:48px\">\n  <svg layer-name=\"Arrow / Spot editor · Create → Saved · List\" xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"16\" viewBox=\"0 0 48 16\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><path d=\"M4 8 H45\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/><path d=\"M38 2 L45 8 L38 14\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/></svg>\n</div>",
+   "lines": 15,
+   "hasAsset": true
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "Flow · Explore and save/Page/Journey/Branches/Branch / Side branch: add your own spot/Branch Cards/Cards",
+   "parentPathArray": [
+    "Flow · Explore and save",
+    "Page",
+    "Journey",
+    "Branches",
+    "Branch / Side branch: add your own spot",
+    "Branch Cards",
+    "Cards"
+   ],
+   "parentSeq": 6,
+   "html": "<div layer-name=\"Step 7 / Saved · List\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:12px;flex-shrink:0;width:344px;height:316px;background:var(--color-canvas-specimen-background);border-radius:var(--radius-card);border:1px solid var(--color-canvas-specimen-border)\">\n  <div layer-name=\"Thumb Frame\" style=\"box-sizing:border-box;display:flex;flex-direction:row;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid var(--color-canvas-specimen-border);width:322px;height:207px\">\n    <img layer-name=\"Thumb / Saved · List\" data-asset=\"thumbs/S-saved-list.png\" src=\"paper-asset:///path/to/Iter/Design/paper/assets/thumbs/S-saved-list.png\" style=\"box-sizing:border-box;display:block;flex-shrink:0;width:320px;height:205px;object-fit:cover\"/>\n  </div>\n  <div layer-name=\"Step Title\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center\">\n    <div layer-name=\"Step Number\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:11px;border:1.5px solid var(--color-canvas-flow-arrow)\">\n      <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">7</div>\n    </div>\n    <div layer-name=\"Screen Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Saved · List</div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Your spot lives in Saved too, tagged Added by you.</div>\n</div>",
+   "lines": 12,
+   "hasAsset": true
+  }
+ ]
+}

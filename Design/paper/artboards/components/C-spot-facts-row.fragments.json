@@ -1,0 +1,562 @@
+{
+ "artboard": {
+  "name": "SpotFactsRow",
+  "page": "Components",
+  "width": 1000,
+  "height": 1328,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1000px",
+   "height": "1328px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 17,
+  "clones": 6,
+  "writesNoClone": 25,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "SpotFactsRow",
+   "parentPathArray": [
+    "SpotFactsRow"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">SpotFactsRow</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">SpotFactsSection · Spot/SpotFactsView.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">The practical facts: walk-in, elevation, facing, best light, time zone; then the blurb and notes.</div>\n  </div>\n  <div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border);width:934px\">\n      <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Specimen / Curated: all five facts, blurb and note\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n  <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">Curated: all five facts, blurb and notes</div>\n  <div layer-name=\"SpotFactsRow\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-text-primary);white-space:nowrap\">Good to know</div>\n    <div layer-name=\"SpotCard / Facts\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:calc(var(--spacing-md) - var(--spacing-stroke-hairline));background:var(--color-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch\">\n      <div layer-name=\"Facts Body\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n        <div layer-name=\"Facts Grid\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:flex-start;flex-wrap:wrap\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Curated: all five facts, blurb and note/SpotFactsRow/SpotCard / Facts/Facts Body/Facts Grid",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Curated: all five facts, blurb and note",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Facts Grid"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Fact / 10 min walk-in\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / figure.walk\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 72.47 114.6\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary)\"><path d=\"M12.02 109.73L27.42 91.38C28.89 89.65 29.08 89.18 29.69 87.34L30.98 83.54L22.71 73.19L20.15 85.05L4.92 103.11C0 108.82 7.96 114.47 12.02 109.73ZM49.5 108.2C52.65 114.6 62.14 110.69 58.67 103.76L48.22 82.53C47.44 80.95 46.3 79.26 45.34 77.88L38.7 68.41L39.19 67.03C41 61.79 41.6 58.56 41.97 53.3L43.02 38.51C43.52 31.43 39.35 26.09 32.13 26.09C26.76 26.09 23.09 28.85 18.12 33.71L10.27 41.44C7.73 43.93 6.89 46.03 6.64 49.31L5.73 61.45C5.49 64.51 7.18 66.64 9.99 66.75C12.85 66.94 14.59 65.25 14.89 62.01L16 48.73L19.76 45.35C21.12 44.11 22.98 44.94 22.85 46.31L21.99 57.55C21.56 63.24 22.85 65.92 26.77 70.83L37.14 83.83C38.2 85.14 38.33 85.68 38.75 86.49ZM67.35 46.12L55.5 46.12L47.74 37.53L46.94 50.05L50.11 53.14C51.8 54.84 53.25 55.34 56.31 55.34L67.35 55.34C70.4 55.34 72.47 53.58 72.47 50.72C72.47 47.93 70.35 46.12 67.35 46.12ZM37.9 21.49C43.84 21.49 48.62 16.69 48.62 10.77C48.62 4.81 43.84 0 37.9 0C31.94 0 27.12 4.81 27.12 10.77C27.12 16.69 31.94 21.49 37.9 21.49Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);flex:1 1 0;min-width:0\">10 min walk-in</div>\n</div>\n<div layer-name=\"Fact / 6,102 ft elevation\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / mountain.2\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 174.12 86.24\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary)\"><path d=\"M11.46 86.24L89.14 86.24C98.43 86.24 100.61 77.29 95.36 70.8L58.7 25.37C56.16 22.25 53.23 20.67 50.3 20.67C47.4 20.67 44.46 22.25 41.91 25.37L5.2 70.8C0 77.29 2.18 86.24 11.46 86.24ZM12.65 78.39C10.96 78.39 10.44 76.86 11.43 75.65L47.98 30.33C48.71 29.51 49.53 29.05 50.3 29.05C51.08 29.05 51.9 29.51 52.6 30.33L89.17 75.65C90.13 76.86 89.59 78.39 87.96 78.39ZM36.02 55.72C43.34 55.72 46.25 49.87 50.3 49.87C54.37 49.87 57.29 55.72 64.58 55.72C69.55 55.72 72.48 51.06 75.06 48.49L71.52 44.57C68.75 47.16 66.66 50.32 64.58 50.32C60.76 50.32 57.31 44.53 50.3 44.53C43.31 44.53 39.81 50.32 36.02 50.32C33.94 50.32 31.86 47.16 29.11 44.57L25.56 48.49C28.14 51.06 31.06 55.72 36.02 55.72ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM61.24 78.39C59.44 78.39 58.92 76.91 59.85 75.65L110.05 9.72C111.34 7.98 113.56 8.04 114.8 9.67L164.99 75.6C165.98 76.86 165.46 78.39 163.61 78.39ZM96.54 43.8C104.65 43.8 107.97 37.39 112.43 37.39C116.94 37.39 120.21 43.8 128.32 43.8C133.32 43.8 136.58 39.75 139.32 36.75L135.55 32.19C132.81 35 130.67 37.86 128.32 37.86C124.07 37.86 120.21 31.45 112.43 31.45C104.65 31.45 100.85 37.86 96.54 37.86C94.21 37.86 92.02 34.96 89.25 32.15L85.46 36.71C88.31 39.72 91.51 43.8 96.54 43.8Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);flex:1 1 0;min-width:0\">6,102 ft elevation</div>\n</div>",
+   "lines": 12
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Curated: all five facts, blurb and note/SpotFactsRow/SpotCard / Facts/Facts Body/Facts Grid",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Curated: all five facts, blurb and note",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Facts Grid"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Fact / Faces 100° E\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / safari\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 99.6 99.54\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary)\"><path d=\"M49.77 99.54C77.27 99.54 99.6 77.27 99.6 49.77C99.6 22.26 77.27 0 49.77 0C22.33 0 0 22.26 0 49.77C0 77.27 22.33 99.54 49.77 99.54ZM49.77 91.27C26.83 91.27 8.31 72.71 8.31 49.77C8.31 26.83 26.83 8.27 49.77 8.27C72.72 8.27 91.28 26.83 91.28 49.77C91.28 72.71 72.72 91.27 49.77 91.27ZM29.37 74.41L57.37 60.68C58.91 59.96 59.98 58.85 60.75 57.31L74.38 29.36C75.95 26.06 73.6 23.49 70.12 25.15L42.22 38.76C40.69 39.47 39.69 40.52 38.84 42.2L25.16 70.21C23.59 73.39 26.1 75.95 29.37 74.41ZM49.77 55.79C46.47 55.79 43.79 53.11 43.79 49.81C43.79 46.51 46.47 43.83 49.77 43.83C53.07 43.83 55.75 46.51 55.75 49.81C55.75 53.11 53.07 55.79 49.77 55.79Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);flex:1 1 0;min-width:0\">Faces 100° E</div>\n</div>\n<div layer-name=\"Fact / Best at sunrise\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / sun.horizon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 125.11 79.62\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary)\"><path d=\"M42.24 73.45L55.07 73.45C48.45 70.62 43.72 63.99 43.72 56.32C43.72 46.01 52.23 37.49 62.55 37.49C72.87 37.49 81.39 46.01 81.39 56.32C81.39 63.99 76.66 70.62 70.04 73.45L82.87 73.45C86.87 68.84 89.23 62.85 89.23 56.32C89.23 41.7 77.12 29.59 62.55 29.59C47.99 29.59 35.88 41.7 35.88 56.32C35.88 62.85 38.23 68.84 42.24 73.45ZM10.6 59.05L22.61 59.05C25.15 59.05 27.03 57.25 26.98 55.08C26.93 52.9 25.09 51.12 22.61 51.12L10.6 51.12C8.08 51.12 6.23 52.9 6.23 55.08C6.23 57.25 8.08 59.05 10.6 59.05ZM37.38 31.15C38.9 29.58 38.9 27.02 37.09 25.27L28.59 16.77C26.8 14.92 24.32 14.99 22.74 16.51C21.16 18.04 21.15 20.58 22.98 22.35L31.49 30.86C33.25 32.67 35.87 32.72 37.38 31.15ZM87.72 31.15C89.31 32.67 91.86 32.67 93.62 30.86L102.12 22.35C103.96 20.58 103.9 18.09 102.37 16.51C100.85 14.94 98.31 14.92 96.52 16.77L88.02 25.27C86.21 27.02 86.14 29.63 87.72 31.15ZM102.5 59.05L114.51 59.05C117.04 59.05 118.88 57.25 118.88 55.08C118.88 52.9 117.04 51.12 114.51 51.12L102.5 51.12C100.03 51.12 98.08 52.9 98.13 55.08C98.18 57.25 100.03 59.05 102.5 59.05ZM62.55 20.75C64.72 20.7 66.52 18.85 66.52 16.33L66.52 4.31C66.52 1.83 64.72 0 62.55 0C60.39 0 58.58 1.83 58.58 4.31L58.58 16.33C58.58 18.85 60.39 20.81 62.55 20.75ZM4.26 79.62L120.85 79.62C123.15 79.62 125.11 77.85 125.11 75.72C125.11 73.59 123.15 71.81 120.85 71.81L4.26 71.81C1.96 71.81 0 73.59 0 75.72C0 77.85 1.96 79.62 4.26 79.62Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);flex:1 1 0;min-width:0\">Best at sunrise</div>\n</div>",
+   "lines": 12
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Curated: all five facts, blurb and note/SpotFactsRow/SpotCard / Facts/Facts Body/Facts Grid",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Curated: all five facts, blurb and note",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Facts Grid"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Fact / Mountain Time · 1 h ahead of you\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / clock\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 99.6 99.54\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary)\"><path d=\"M49.77 99.54C77.27 99.54 99.6 77.27 99.6 49.77C99.6 22.26 77.27 0 49.77 0C22.33 0 0 22.26 0 49.77C0 77.27 22.33 99.54 49.77 99.54ZM49.77 91.27C26.83 91.27 8.31 72.71 8.31 49.77C8.31 26.83 26.83 8.27 49.77 8.27C72.72 8.27 91.28 26.83 91.28 49.77C91.28 72.71 72.72 91.27 49.77 91.27ZM24.23 55.02L49.72 55.02C51.65 55.02 53.14 53.54 53.14 51.65L53.14 18.76C53.14 16.84 51.65 15.36 49.72 15.36C47.87 15.36 46.37 16.84 46.37 18.76L46.37 48.25L24.23 48.25C22.3 48.25 20.88 49.74 20.88 51.65C20.88 53.54 22.3 55.02 24.23 55.02Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);flex:1 1 0;min-width:0\">Mountain Time · 1 h ahead of you</div>\n</div>",
+   "lines": 6
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Curated: all five facts, blurb and note/SpotFactsRow/SpotCard / Facts/Facts Body",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Curated: all five facts, blurb and note",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Blurb\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary)\">The underside of the arch glows orange for about ten minutes after sunrise. Bring a wide lens and patience.</div>\n<div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n  <div layer-name=\"Notes Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">Notes</div>\n  <div layer-name=\"Notes Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary)\">0.5 mi loop from the lot. 20+ photographers most mornings — be there 60 min before sunrise. Starburst at f/16 as the sun clears the La Sals.</div>\n</div>",
+   "lines": 5
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Specimen / Added by you: notes only, facing unknow\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n  <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">Added by you: notes only, facing unknown</div>\n  <div layer-name=\"SpotFactsRow\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-text-primary);white-space:nowrap\">Good to know</div>\n    <div layer-name=\"SpotCard / Facts\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:calc(var(--spacing-md) - var(--spacing-stroke-hairline));background:var(--color-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch\">\n      <div layer-name=\"Facts Body\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n        <div layer-name=\"Facts Grid\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:flex-start;flex-wrap:wrap\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 8,
+   "kind": "clone",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Added by you: notes only, facing unknow/SpotFactsRow/SpotCard / Facts/Facts Body/Facts Grid",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Added by you: notes only, facing unknow",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Facts Grid"
+   ],
+   "parentSeq": 7,
+   "sourceSeq": 3,
+   "sourcePath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Curated: all five facts, blurb and note/SpotFactsRow/SpotCard / Facts/Facts Body/Facts Grid/Fact / 10 min walk-in",
+   "sourcePathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Curated: all five facts, blurb and note",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Facts Grid",
+    "Fact / 10 min walk-in"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Fact Text/#text0": "12 min walk-in"
+   },
+   "nameOverrides": {
+    ".": "Fact / 12 min walk-in"
+   },
+   "lines": 2
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Added by you: notes only, facing unknow/SpotFactsRow/SpotCard / Facts/Facts Body/Facts Grid",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Added by you: notes only, facing unknow",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Facts Grid"
+   ],
+   "parentSeq": 7,
+   "html": "<div layer-name=\"Fact / Facing unknown\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / safari\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 99.6 99.54\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary)\"><path d=\"M49.77 99.54C77.27 99.54 99.6 77.27 99.6 49.77C99.6 22.26 77.27 0 49.77 0C22.33 0 0 22.26 0 49.77C0 77.27 22.33 99.54 49.77 99.54ZM49.77 91.27C26.83 91.27 8.31 72.71 8.31 49.77C8.31 26.83 26.83 8.27 49.77 8.27C72.72 8.27 91.28 26.83 91.28 49.77C91.28 72.71 72.72 91.27 49.77 91.27ZM29.37 74.41L57.37 60.68C58.91 59.96 59.98 58.85 60.75 57.31L74.38 29.36C75.95 26.06 73.6 23.49 70.12 25.15L42.22 38.76C40.69 39.47 39.69 40.52 38.84 42.2L25.16 70.21C23.59 73.39 26.1 75.95 29.37 74.41ZM49.77 55.79C46.47 55.79 43.79 53.11 43.79 49.81C43.79 46.51 46.47 43.83 49.77 43.83C53.07 43.83 55.75 46.51 55.75 49.81C55.75 53.11 53.07 55.79 49.77 55.79Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);flex:1 1 0;min-width:0\">Facing unknown</div>\n</div>\n<div layer-name=\"Fact / Best at sunset\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / sun.horizon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 125.11 79.62\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary)\"><path d=\"M42.24 73.45L55.07 73.45C48.45 70.62 43.72 63.99 43.72 56.32C43.72 46.01 52.23 37.49 62.55 37.49C72.87 37.49 81.39 46.01 81.39 56.32C81.39 63.99 76.66 70.62 70.04 73.45L82.87 73.45C86.87 68.84 89.23 62.85 89.23 56.32C89.23 41.7 77.12 29.59 62.55 29.59C47.99 29.59 35.88 41.7 35.88 56.32C35.88 62.85 38.23 68.84 42.24 73.45ZM10.6 59.05L22.61 59.05C25.15 59.05 27.03 57.25 26.98 55.08C26.93 52.9 25.09 51.12 22.61 51.12L10.6 51.12C8.08 51.12 6.23 52.9 6.23 55.08C6.23 57.25 8.08 59.05 10.6 59.05ZM37.38 31.15C38.9 29.58 38.9 27.02 37.09 25.27L28.59 16.77C26.8 14.92 24.32 14.99 22.74 16.51C21.16 18.04 21.15 20.58 22.98 22.35L31.49 30.86C33.25 32.67 35.87 32.72 37.38 31.15ZM87.72 31.15C89.31 32.67 91.86 32.67 93.62 30.86L102.12 22.35C103.96 20.58 103.9 18.09 102.37 16.51C100.85 14.94 98.31 14.92 96.52 16.77L88.02 25.27C86.21 27.02 86.14 29.63 87.72 31.15ZM102.5 59.05L114.51 59.05C117.04 59.05 118.88 57.25 118.88 55.08C118.88 52.9 117.04 51.12 114.51 51.12L102.5 51.12C100.03 51.12 98.08 52.9 98.13 55.08C98.18 57.25 100.03 59.05 102.5 59.05ZM62.55 20.75C64.72 20.7 66.52 18.85 66.52 16.33L66.52 4.31C66.52 1.83 64.72 0 62.55 0C60.39 0 58.58 1.83 58.58 4.31L58.58 16.33C58.58 18.85 60.39 20.81 62.55 20.75ZM4.26 79.62L120.85 79.62C123.15 79.62 125.11 77.85 125.11 75.72C125.11 73.59 123.15 71.81 120.85 71.81L4.26 71.81C1.96 71.81 0 73.59 0 75.72C0 77.85 1.96 79.62 4.26 79.62Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);flex:1 1 0;min-width:0\">Best at sunset</div>\n</div>",
+   "lines": 12
+  },
+  {
+   "seq": 10,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Added by you: notes only, facing unknow/SpotFactsRow/SpotCard / Facts/Facts Body/Facts Grid",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Added by you: notes only, facing unknow",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Facts Grid"
+   ],
+   "parentSeq": 7,
+   "html": "<div layer-name=\"Fact / Mountain Time · 1 h ahead of you\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / clock\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 99.6 99.54\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary)\"><path d=\"M49.77 99.54C77.27 99.54 99.6 77.27 99.6 49.77C99.6 22.26 77.27 0 49.77 0C22.33 0 0 22.26 0 49.77C0 77.27 22.33 99.54 49.77 99.54ZM49.77 91.27C26.83 91.27 8.31 72.71 8.31 49.77C8.31 26.83 26.83 8.27 49.77 8.27C72.72 8.27 91.28 26.83 91.28 49.77C91.28 72.71 72.72 91.27 49.77 91.27ZM24.23 55.02L49.72 55.02C51.65 55.02 53.14 53.54 53.14 51.65L53.14 18.76C53.14 16.84 51.65 15.36 49.72 15.36C47.87 15.36 46.37 16.84 46.37 18.76L46.37 48.25L24.23 48.25C22.3 48.25 20.88 49.74 20.88 51.65C20.88 53.54 22.3 55.02 24.23 55.02Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);flex:1 1 0;min-width:0\">Mountain Time · 1 h ahead of you</div>\n</div>",
+   "lines": 6
+  },
+  {
+   "seq": 11,
+   "kind": "clone",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Added by you: notes only, facing unknow/SpotFactsRow/SpotCard / Facts/Facts Body",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Added by you: notes only, facing unknow",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body"
+   ],
+   "parentSeq": 7,
+   "sourceSeq": 6,
+   "sourcePath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Curated: all five facts, blurb and note/SpotFactsRow/SpotCard / Facts/Facts Body/Notes",
+   "sourcePathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Curated: all five facts, blurb and note",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Notes"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {
+    "./Notes Text/#text0": "Pull-off 200 m past the cattle guard. Soft light on the cliffs after the sun drops."
+   },
+   "nameOverrides": {},
+   "lines": 1
+  },
+  {
+   "seq": 12,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Specimen / Apple Maps: walk-in and facing unknown,\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n  <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">Apple Maps: walk-in and facing unknown, other time zone</div>\n  <div layer-name=\"SpotFactsRow\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-text-primary);white-space:nowrap\">Good to know</div>\n    <div layer-name=\"SpotCard / Facts\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:calc(var(--spacing-md) - var(--spacing-stroke-hairline));background:var(--color-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);align-self:stretch\">\n      <div layer-name=\"Facts Body\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n        <div layer-name=\"Facts Grid\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:flex-start;flex-wrap:wrap\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 13,
+   "kind": "clone",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Apple Maps: walk-in and facing unknown,/SpotFactsRow/SpotCard / Facts/Facts Body/Facts Grid",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Apple Maps: walk-in and facing unknown,",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Facts Grid"
+   ],
+   "parentSeq": 12,
+   "sourceSeq": 3,
+   "sourcePath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Curated: all five facts, blurb and note/SpotFactsRow/SpotCard / Facts/Facts Body/Facts Grid/Fact / 10 min walk-in",
+   "sourcePathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Curated: all five facts, blurb and note",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Facts Grid",
+    "Fact / 10 min walk-in"
+   ],
+   "styleOverrides": {
+    "./Fact Text": {
+     "color": "var(--color-text-secondary)"
+    }
+   },
+   "textOverrides": {
+    "./Fact Text/#text0": "Walk-in unknown"
+   },
+   "nameOverrides": {
+    ".": "Fact / Walk-in unknown"
+   },
+   "lines": 3
+  },
+  {
+   "seq": 14,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Apple Maps: walk-in and facing unknown,/SpotFactsRow/SpotCard / Facts/Facts Body/Facts Grid",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Apple Maps: walk-in and facing unknown,",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Facts Grid"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"Fact / Facing unknown\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / safari\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 99.6 99.54\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary)\"><path d=\"M49.77 99.54C77.27 99.54 99.6 77.27 99.6 49.77C99.6 22.26 77.27 0 49.77 0C22.33 0 0 22.26 0 49.77C0 77.27 22.33 99.54 49.77 99.54ZM49.77 91.27C26.83 91.27 8.31 72.71 8.31 49.77C8.31 26.83 26.83 8.27 49.77 8.27C72.72 8.27 91.28 26.83 91.28 49.77C91.28 72.71 72.72 91.27 49.77 91.27ZM29.37 74.41L57.37 60.68C58.91 59.96 59.98 58.85 60.75 57.31L74.38 29.36C75.95 26.06 73.6 23.49 70.12 25.15L42.22 38.76C40.69 39.47 39.69 40.52 38.84 42.2L25.16 70.21C23.59 73.39 26.1 75.95 29.37 74.41ZM49.77 55.79C46.47 55.79 43.79 53.11 43.79 49.81C43.79 46.51 46.47 43.83 49.77 43.83C53.07 43.83 55.75 46.51 55.75 49.81C55.75 53.11 53.07 55.79 49.77 55.79Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);flex:1 1 0;min-width:0\">Facing unknown</div>\n</div>\n<div layer-name=\"Fact / Best at night sky\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / sun.horizon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 125.11 79.62\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary)\"><path d=\"M42.24 73.45L55.07 73.45C48.45 70.62 43.72 63.99 43.72 56.32C43.72 46.01 52.23 37.49 62.55 37.49C72.87 37.49 81.39 46.01 81.39 56.32C81.39 63.99 76.66 70.62 70.04 73.45L82.87 73.45C86.87 68.84 89.23 62.85 89.23 56.32C89.23 41.7 77.12 29.59 62.55 29.59C47.99 29.59 35.88 41.7 35.88 56.32C35.88 62.85 38.23 68.84 42.24 73.45ZM10.6 59.05L22.61 59.05C25.15 59.05 27.03 57.25 26.98 55.08C26.93 52.9 25.09 51.12 22.61 51.12L10.6 51.12C8.08 51.12 6.23 52.9 6.23 55.08C6.23 57.25 8.08 59.05 10.6 59.05ZM37.38 31.15C38.9 29.58 38.9 27.02 37.09 25.27L28.59 16.77C26.8 14.92 24.32 14.99 22.74 16.51C21.16 18.04 21.15 20.58 22.98 22.35L31.49 30.86C33.25 32.67 35.87 32.72 37.38 31.15ZM87.72 31.15C89.31 32.67 91.86 32.67 93.62 30.86L102.12 22.35C103.96 20.58 103.9 18.09 102.37 16.51C100.85 14.94 98.31 14.92 96.52 16.77L88.02 25.27C86.21 27.02 86.14 29.63 87.72 31.15ZM102.5 59.05L114.51 59.05C117.04 59.05 118.88 57.25 118.88 55.08C118.88 52.9 117.04 51.12 114.51 51.12L102.5 51.12C100.03 51.12 98.08 52.9 98.13 55.08C98.18 57.25 100.03 59.05 102.5 59.05ZM62.55 20.75C64.72 20.7 66.52 18.85 66.52 16.33L66.52 4.31C66.52 1.83 64.72 0 62.55 0C60.39 0 58.58 1.83 58.58 4.31L58.58 16.33C58.58 18.85 60.39 20.81 62.55 20.75ZM4.26 79.62L120.85 79.62C123.15 79.62 125.11 77.85 125.11 75.72C125.11 73.59 123.15 71.81 120.85 71.81L4.26 71.81C1.96 71.81 0 73.59 0 75.72C0 77.85 1.96 79.62 4.26 79.62Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);flex:1 1 0;min-width:0\">Best at night sky</div>\n</div>",
+   "lines": 12
+  },
+  {
+   "seq": 15,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Apple Maps: walk-in and facing unknown,/SpotFactsRow/SpotCard / Facts/Facts Body/Facts Grid",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Apple Maps: walk-in and facing unknown,",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Facts Grid"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"Fact / Central European Time · 9 h ahead of you\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / clock\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 99.6 99.54\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-secondary)\"><path d=\"M49.77 99.54C77.27 99.54 99.6 77.27 99.6 49.77C99.6 22.26 77.27 0 49.77 0C22.33 0 0 22.26 0 49.77C0 77.27 22.33 99.54 49.77 99.54ZM49.77 91.27C26.83 91.27 8.31 72.71 8.31 49.77C8.31 26.83 26.83 8.27 49.77 8.27C72.72 8.27 91.28 26.83 91.28 49.77C91.28 72.71 72.72 91.27 49.77 91.27ZM24.23 55.02L49.72 55.02C51.65 55.02 53.14 53.54 53.14 51.65L53.14 18.76C53.14 16.84 51.65 15.36 49.72 15.36C47.87 15.36 46.37 16.84 46.37 18.76L46.37 48.25L24.23 48.25C22.3 48.25 20.88 49.74 20.88 51.65C20.88 53.54 22.3 55.02 24.23 55.02Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-primary);flex:1 1 0;min-width:0\">Central European Time · 9 h ahead of you</div>\n</div>",
+   "lines": 6
+  },
+  {
+   "seq": 16,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border);width:934px\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Specimen / Curated: all five facts, blurb and note\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n    <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap\">Curated: all five facts, blurb and notes</div>\n    <div layer-name=\"SpotFactsRow\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n      <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-dark-text-primary);white-space:nowrap\">Good to know</div>\n      <div layer-name=\"SpotCard / Facts\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:calc(var(--spacing-md) - var(--spacing-stroke-hairline));background:var(--color-dark-background-control);border-radius:var(--radius-card);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);align-self:stretch\">\n        <div layer-name=\"Facts Body\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 17,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Dark Appearance/Specimen / Curated: all five facts, blurb and note/SpotFactsRow/SpotCard / Facts/Facts Body",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Curated: all five facts, blurb and note",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body"
+   ],
+   "parentSeq": 16,
+   "html": "<div layer-name=\"Facts Grid\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:flex-start;flex-wrap:wrap\">\n  <div layer-name=\"Fact / 10 min walk-in\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n    <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n      <svg layer-name=\"Icon / figure.walk\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 72.47 114.6\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary)\"><path d=\"M12.02 109.73L27.42 91.38C28.89 89.65 29.08 89.18 29.69 87.34L30.98 83.54L22.71 73.19L20.15 85.05L4.92 103.11C0 108.82 7.96 114.47 12.02 109.73ZM49.5 108.2C52.65 114.6 62.14 110.69 58.67 103.76L48.22 82.53C47.44 80.95 46.3 79.26 45.34 77.88L38.7 68.41L39.19 67.03C41 61.79 41.6 58.56 41.97 53.3L43.02 38.51C43.52 31.43 39.35 26.09 32.13 26.09C26.76 26.09 23.09 28.85 18.12 33.71L10.27 41.44C7.73 43.93 6.89 46.03 6.64 49.31L5.73 61.45C5.49 64.51 7.18 66.64 9.99 66.75C12.85 66.94 14.59 65.25 14.89 62.01L16 48.73L19.76 45.35C21.12 44.11 22.98 44.94 22.85 46.31L21.99 57.55C21.56 63.24 22.85 65.92 26.77 70.83L37.14 83.83C38.2 85.14 38.33 85.68 38.75 86.49ZM67.35 46.12L55.5 46.12L47.74 37.53L46.94 50.05L50.11 53.14C51.8 54.84 53.25 55.34 56.31 55.34L67.35 55.34C70.4 55.34 72.47 53.58 72.47 50.72C72.47 47.93 70.35 46.12 67.35 46.12ZM37.9 21.49C43.84 21.49 48.62 16.69 48.62 10.77C48.62 4.81 43.84 0 37.9 0C31.94 0 27.12 4.81 27.12 10.77C27.12 16.69 31.94 21.49 37.9 21.49Z\"/></svg>\n    </div>\n    <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary);flex:1 1 0;min-width:0\">10 min walk-in</div>\n  </div>\n  <div layer-name=\"Fact / 6,102 ft elevation\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n    <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n      <svg layer-name=\"Icon / mountain.2\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 174.12 86.24\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary)\"><path d=\"M11.46 86.24L89.14 86.24C98.43 86.24 100.61 77.29 95.36 70.8L58.7 25.37C56.16 22.25 53.23 20.67 50.3 20.67C47.4 20.67 44.46 22.25 41.91 25.37L5.2 70.8C0 77.29 2.18 86.24 11.46 86.24ZM12.65 78.39C10.96 78.39 10.44 76.86 11.43 75.65L47.98 30.33C48.71 29.51 49.53 29.05 50.3 29.05C51.08 29.05 51.9 29.51 52.6 30.33L89.17 75.65C90.13 76.86 89.59 78.39 87.96 78.39ZM36.02 55.72C43.34 55.72 46.25 49.87 50.3 49.87C54.37 49.87 57.29 55.72 64.58 55.72C69.55 55.72 72.48 51.06 75.06 48.49L71.52 44.57C68.75 47.16 66.66 50.32 64.58 50.32C60.76 50.32 57.31 44.53 50.3 44.53C43.31 44.53 39.81 50.32 36.02 50.32C33.94 50.32 31.86 47.16 29.11 44.57L25.56 48.49C28.14 51.06 31.06 55.72 36.02 55.72ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM59.6 86.24L165.31 86.24C174.13 86.24 176.3 77.5 171.94 71.73L120.91 4.77C116.13 -1.54 108.83 -1.64 103.95 4.77L52.96 71.78C48.53 77.55 50.7 86.24 59.6 86.24ZM61.24 78.39C59.44 78.39 58.92 76.91 59.85 75.65L110.05 9.72C111.34 7.98 113.56 8.04 114.8 9.67L164.99 75.6C165.98 76.86 165.46 78.39 163.61 78.39ZM96.54 43.8C104.65 43.8 107.97 37.39 112.43 37.39C116.94 37.39 120.21 43.8 128.32 43.8C133.32 43.8 136.58 39.75 139.32 36.75L135.55 32.19C132.81 35 130.67 37.86 128.32 37.86C124.07 37.86 120.21 31.45 112.43 31.45C104.65 31.45 100.85 37.86 96.54 37.86C94.21 37.86 92.02 34.96 89.25 32.15L85.46 36.71C88.31 39.72 91.51 43.8 96.54 43.8Z\"/></svg>\n    </div>\n    <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary);flex:1 1 0;min-width:0\">6,102 ft elevation</div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 18,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Dark Appearance/Specimen / Curated: all five facts, blurb and note/SpotFactsRow/SpotCard / Facts/Facts Body/Facts Grid",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Curated: all five facts, blurb and note",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Facts Grid"
+   ],
+   "parentSeq": 17,
+   "html": "<div layer-name=\"Fact / Faces 100° E\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / safari\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 99.6 99.54\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary)\"><path d=\"M49.77 99.54C77.27 99.54 99.6 77.27 99.6 49.77C99.6 22.26 77.27 0 49.77 0C22.33 0 0 22.26 0 49.77C0 77.27 22.33 99.54 49.77 99.54ZM49.77 91.27C26.83 91.27 8.31 72.71 8.31 49.77C8.31 26.83 26.83 8.27 49.77 8.27C72.72 8.27 91.28 26.83 91.28 49.77C91.28 72.71 72.72 91.27 49.77 91.27ZM29.37 74.41L57.37 60.68C58.91 59.96 59.98 58.85 60.75 57.31L74.38 29.36C75.95 26.06 73.6 23.49 70.12 25.15L42.22 38.76C40.69 39.47 39.69 40.52 38.84 42.2L25.16 70.21C23.59 73.39 26.1 75.95 29.37 74.41ZM49.77 55.79C46.47 55.79 43.79 53.11 43.79 49.81C43.79 46.51 46.47 43.83 49.77 43.83C53.07 43.83 55.75 46.51 55.75 49.81C55.75 53.11 53.07 55.79 49.77 55.79Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary);flex:1 1 0;min-width:0\">Faces 100° E</div>\n</div>\n<div layer-name=\"Fact / Best at sunrise\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / sun.horizon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 125.11 79.62\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary)\"><path d=\"M42.24 73.45L55.07 73.45C48.45 70.62 43.72 63.99 43.72 56.32C43.72 46.01 52.23 37.49 62.55 37.49C72.87 37.49 81.39 46.01 81.39 56.32C81.39 63.99 76.66 70.62 70.04 73.45L82.87 73.45C86.87 68.84 89.23 62.85 89.23 56.32C89.23 41.7 77.12 29.59 62.55 29.59C47.99 29.59 35.88 41.7 35.88 56.32C35.88 62.85 38.23 68.84 42.24 73.45ZM10.6 59.05L22.61 59.05C25.15 59.05 27.03 57.25 26.98 55.08C26.93 52.9 25.09 51.12 22.61 51.12L10.6 51.12C8.08 51.12 6.23 52.9 6.23 55.08C6.23 57.25 8.08 59.05 10.6 59.05ZM37.38 31.15C38.9 29.58 38.9 27.02 37.09 25.27L28.59 16.77C26.8 14.92 24.32 14.99 22.74 16.51C21.16 18.04 21.15 20.58 22.98 22.35L31.49 30.86C33.25 32.67 35.87 32.72 37.38 31.15ZM87.72 31.15C89.31 32.67 91.86 32.67 93.62 30.86L102.12 22.35C103.96 20.58 103.9 18.09 102.37 16.51C100.85 14.94 98.31 14.92 96.52 16.77L88.02 25.27C86.21 27.02 86.14 29.63 87.72 31.15ZM102.5 59.05L114.51 59.05C117.04 59.05 118.88 57.25 118.88 55.08C118.88 52.9 117.04 51.12 114.51 51.12L102.5 51.12C100.03 51.12 98.08 52.9 98.13 55.08C98.18 57.25 100.03 59.05 102.5 59.05ZM62.55 20.75C64.72 20.7 66.52 18.85 66.52 16.33L66.52 4.31C66.52 1.83 64.72 0 62.55 0C60.39 0 58.58 1.83 58.58 4.31L58.58 16.33C58.58 18.85 60.39 20.81 62.55 20.75ZM4.26 79.62L120.85 79.62C123.15 79.62 125.11 77.85 125.11 75.72C125.11 73.59 123.15 71.81 120.85 71.81L4.26 71.81C1.96 71.81 0 73.59 0 75.72C0 77.85 1.96 79.62 4.26 79.62Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary);flex:1 1 0;min-width:0\">Best at sunrise</div>\n</div>",
+   "lines": 12
+  },
+  {
+   "seq": 19,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Dark Appearance/Specimen / Curated: all five facts, blurb and note/SpotFactsRow/SpotCard / Facts/Facts Body/Facts Grid",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Curated: all five facts, blurb and note",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Facts Grid"
+   ],
+   "parentSeq": 17,
+   "html": "<div layer-name=\"Fact / Mountain Time · 1 h ahead of you\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0;width:166px\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;width:16px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n    <svg layer-name=\"Icon / clock\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 99.6 99.54\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary)\"><path d=\"M49.77 99.54C77.27 99.54 99.6 77.27 99.6 49.77C99.6 22.26 77.27 0 49.77 0C22.33 0 0 22.26 0 49.77C0 77.27 22.33 99.54 49.77 99.54ZM49.77 91.27C26.83 91.27 8.31 72.71 8.31 49.77C8.31 26.83 26.83 8.27 49.77 8.27C72.72 8.27 91.28 26.83 91.28 49.77C91.28 72.71 72.72 91.27 49.77 91.27ZM24.23 55.02L49.72 55.02C51.65 55.02 53.14 53.54 53.14 51.65L53.14 18.76C53.14 16.84 51.65 15.36 49.72 15.36C47.87 15.36 46.37 16.84 46.37 18.76L46.37 48.25L24.23 48.25C22.3 48.25 20.88 49.74 20.88 51.65C20.88 53.54 22.3 55.02 24.23 55.02Z\"/></svg>\n  </div>\n  <div layer-name=\"Fact Text\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-dark-text-primary);flex:1 1 0;min-width:0\">Mountain Time · 1 h ahead of you</div>\n</div>",
+   "lines": 6
+  },
+  {
+   "seq": 20,
+   "kind": "clone",
+   "parentPath": "SpotFactsRow/Page/Appearances/Dark Appearance/Specimen / Curated: all five facts, blurb and note/SpotFactsRow/SpotCard / Facts/Facts Body",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Curated: all five facts, blurb and note",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body"
+   ],
+   "parentSeq": 16,
+   "sourceSeq": 6,
+   "sourcePath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Curated: all five facts, blurb and note/SpotFactsRow/SpotCard / Facts/Facts Body/Notes",
+   "sourcePathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Curated: all five facts, blurb and note",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body",
+    "Notes"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 2
+   }
+  },
+  {
+   "seq": 21,
+   "kind": "write",
+   "parentPath": "SpotFactsRow/Page/Appearances/Dark Appearance/Specimen / Curated: all five facts, blurb and note/SpotFactsRow/SpotCard / Facts/Facts Body",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Curated: all five facts, blurb and note",
+    "SpotFactsRow",
+    "SpotCard / Facts",
+    "Facts Body"
+   ],
+   "parentSeq": 16,
+   "html": "<div layer-name=\"Blurb\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary)\">The underside of the arch glows orange for about ten minutes after sunrise. Bring a wide lens and patience.</div>",
+   "lines": 1
+  },
+  {
+   "seq": 22,
+   "kind": "clone",
+   "parentPath": "SpotFactsRow/Page/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 16,
+   "sourceSeq": 7,
+   "sourcePath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Added by you: notes only, facing unknow",
+   "sourcePathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Added by you: notes only, facing unknow"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 13
+   }
+  },
+  {
+   "seq": 23,
+   "kind": "clone",
+   "parentPath": "SpotFactsRow/Page/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 16,
+   "sourceSeq": 12,
+   "sourcePath": "SpotFactsRow/Page/Appearances/Light Appearance/Specimen / Apple Maps: walk-in and facing unknown,",
+   "sourcePathArray": [
+    "SpotFactsRow",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Apple Maps: walk-in and facing unknown,"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 11
+   }
+  }
+ ]
+}

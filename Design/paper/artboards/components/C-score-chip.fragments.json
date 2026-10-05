@@ -1,0 +1,1391 @@
+{
+ "artboard": {
+  "name": "ScoreChip",
+  "page": "Components",
+  "width": 1200,
+  "height": 1320,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1200px",
+   "height": "1320px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 11,
+  "clones": 17,
+  "writesNoClone": 48,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "ScoreChip",
+   "parentPathArray": [
+    "ScoreChip"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">ScoreChip</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">ScoreChip · Components/LightBadge.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">The number on its band fill: one amber hue ordered by lightness, with a hairline so pale bands show against the window.</div>\n  </div>\n  <div layer-name=\"Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n      <div layer-name=\"Note / Deviation 7: literal opacity 0.85\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n        <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Deviation 7: literal opacity 0.85</div>\n        <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Low confidence opacity 0.85 is hard-coded in ScoreChip (LightBadge.swift:124).</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "ScoreChip/Page/Content/Notes",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Notes"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Note / Sizes\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n  <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Sizes</div>\n  <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">compact 18 high, regular 22 high, large 64 square (radius card). Text uses type/score/badge, medium and large with tabular numerals. Band colours are the Light Index ramp: never green, red or coral.</div>\n</div>",
+   "lines": 4
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "ScoreChip/Page/Content",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Section / Compact\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n      <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Compact</div>\n      <div layer-name=\"Column Headers\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end\">\n        <div layer-name=\"Corner\" style=\"box-sizing:border-box;width:88px;flex-shrink:0\"></div>\n        <div layer-name=\"Column / Normal\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:110px;flex-shrink:0\">Normal</div>\n        <div layer-name=\"Column / Low confidence\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:110px;flex-shrink:0\">Low confidence</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Row / Poor\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center\">\n  <div layer-name=\"Row Header\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0\">Poor</div>\n  <div layer-name=\"Specimen / compact poor\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0\">\n    <div layer-name=\"ScoreChip / compact / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n      <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap\">22</div>\n    </div>\n  </div>\n  <div layer-name=\"Specimen / compact poor low\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0\">\n    <div layer-name=\"ScoreChip / compact / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)\">\n      <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap\">22</div>\n    </div>\n  </div>\n</div>",
+   "lines": 13
+  },
+  {
+   "seq": 5,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 4,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact/Row / Poor",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-fair)",
+     "color": "var(--color-light-ramp-text-fair)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-fair)",
+     "color": "var(--color-light-ramp-text-fair)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Fair",
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score/#text0": "48",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score/#text0": "48"
+   },
+   "nameOverrides": {
+    ".": "Row / Fair",
+    "./Specimen / compact poor": "Specimen / compact fair",
+    "./Specimen / compact poor/ScoreChip / compact / Poor": "ScoreChip / compact / Fair",
+    "./Specimen / compact poor low": "Specimen / compact fair low",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": "ScoreChip / compact / Fair"
+   },
+   "lines": 10
+  },
+  {
+   "seq": 6,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 4,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact/Row / Poor",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-good)",
+     "color": "var(--color-light-ramp-text-good)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-good)",
+     "color": "var(--color-light-ramp-text-good)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Good",
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score/#text0": "66",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score/#text0": "66"
+   },
+   "nameOverrides": {
+    ".": "Row / Good",
+    "./Specimen / compact poor": "Specimen / compact good",
+    "./Specimen / compact poor/ScoreChip / compact / Poor": "ScoreChip / compact / Good",
+    "./Specimen / compact poor low": "Specimen / compact good low",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": "ScoreChip / compact / Good"
+   },
+   "lines": 10
+  },
+  {
+   "seq": 7,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 4,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact/Row / Poor",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-great)",
+     "color": "var(--color-light-ramp-text-great)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-great)",
+     "color": "var(--color-light-ramp-text-great)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Great",
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score/#text0": "81",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score/#text0": "81"
+   },
+   "nameOverrides": {
+    ".": "Row / Great",
+    "./Specimen / compact poor": "Specimen / compact great",
+    "./Specimen / compact poor/ScoreChip / compact / Poor": "ScoreChip / compact / Great",
+    "./Specimen / compact poor low": "Specimen / compact great low",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": "ScoreChip / compact / Great"
+   },
+   "lines": 10
+  },
+  {
+   "seq": 8,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 4,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact/Row / Poor",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-epic)",
+     "color": "var(--color-light-ramp-text-epic)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": {
+     "background": "var(--color-light-ramp-epic)",
+     "color": "var(--color-light-ramp-text-epic)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Epic",
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score/#text0": "94",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score/#text0": "94"
+   },
+   "nameOverrides": {
+    ".": "Row / Epic",
+    "./Specimen / compact poor": "Specimen / compact epic",
+    "./Specimen / compact poor/ScoreChip / compact / Poor": "ScoreChip / compact / Epic",
+    "./Specimen / compact poor low": "Specimen / compact epic low",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": "ScoreChip / compact / Epic"
+   },
+   "lines": 10
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Section / Regular\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Regular</div>\n  <div layer-name=\"Column Headers\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end\">\n    <div layer-name=\"Corner\" style=\"box-sizing:border-box;width:88px;flex-shrink:0\"></div>\n    <div layer-name=\"Column / Normal\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:110px;flex-shrink:0\">Normal</div>\n    <div layer-name=\"Column / Low confidence\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;width:110px;flex-shrink:0\">Low confidence</div>\n  </div>\n  <div layer-name=\"Row / Poor\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center\">\n    <div layer-name=\"Row Header\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:88px;flex-shrink:0\">Poor</div>\n    <div layer-name=\"Specimen / regular poor\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0\"></div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 10,
+   "kind": "write",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Regular/Row / Poor/Specimen / regular poor",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular",
+    "Row / Poor",
+    "Specimen / regular poor"
+   ],
+   "parentSeq": 9,
+   "html": "<div layer-name=\"ScoreChip / regular / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n  <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">22</div>\n</div>",
+   "lines": 3
+  },
+  {
+   "seq": 11,
+   "kind": "write",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Regular/Row / Poor",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular",
+    "Row / Poor"
+   ],
+   "parentSeq": 9,
+   "html": "<div layer-name=\"Specimen / regular poor low\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0\">\n  <div layer-name=\"ScoreChip / regular / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)\">\n    <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">22</div>\n  </div>\n</div>",
+   "lines": 5
+  },
+  {
+   "seq": 12,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Regular",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular"
+   ],
+   "parentSeq": 9,
+   "sourceSeq": 4,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact/Row / Poor",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor/ScoreChip / compact / Poor": {
+     "min-width": "36px",
+     "height": "var(--spacing-size-badge-height)",
+     "background": "var(--color-light-ramp-fair)",
+     "color": "var(--color-light-ramp-text-fair)"
+    },
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score": {
+     "font-size": "var(--text-score-medium)",
+     "line-height": "var(--leading-score-medium)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": {
+     "min-width": "36px",
+     "height": "var(--spacing-size-badge-height)",
+     "background": "var(--color-light-ramp-fair)",
+     "color": "var(--color-light-ramp-text-fair)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score": {
+     "font-size": "var(--text-score-medium)",
+     "line-height": "var(--leading-score-medium)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Fair",
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score/#text0": "48",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score/#text0": "48"
+   },
+   "nameOverrides": {
+    ".": "Row / Fair",
+    "./Specimen / compact poor": "Specimen / regular fair",
+    "./Specimen / compact poor/ScoreChip / compact / Poor": "ScoreChip / regular / Fair",
+    "./Specimen / compact poor low": "Specimen / regular fair low",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": "ScoreChip / regular / Fair"
+   },
+   "lines": 12
+  },
+  {
+   "seq": 13,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Regular",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular"
+   ],
+   "parentSeq": 9,
+   "sourceSeq": 4,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact/Row / Poor",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor/ScoreChip / compact / Poor": {
+     "min-width": "36px",
+     "height": "var(--spacing-size-badge-height)",
+     "background": "var(--color-light-ramp-good)",
+     "color": "var(--color-light-ramp-text-good)"
+    },
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score": {
+     "font-size": "var(--text-score-medium)",
+     "line-height": "var(--leading-score-medium)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": {
+     "min-width": "36px",
+     "height": "var(--spacing-size-badge-height)",
+     "background": "var(--color-light-ramp-good)",
+     "color": "var(--color-light-ramp-text-good)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score": {
+     "font-size": "var(--text-score-medium)",
+     "line-height": "var(--leading-score-medium)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Good",
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score/#text0": "66",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score/#text0": "66"
+   },
+   "nameOverrides": {
+    ".": "Row / Good",
+    "./Specimen / compact poor": "Specimen / regular good",
+    "./Specimen / compact poor/ScoreChip / compact / Poor": "ScoreChip / regular / Good",
+    "./Specimen / compact poor low": "Specimen / regular good low",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": "ScoreChip / regular / Good"
+   },
+   "lines": 12
+  },
+  {
+   "seq": 14,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Regular",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular"
+   ],
+   "parentSeq": 9,
+   "sourceSeq": 4,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact/Row / Poor",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor/ScoreChip / compact / Poor": {
+     "min-width": "36px",
+     "height": "var(--spacing-size-badge-height)",
+     "background": "var(--color-light-ramp-great)",
+     "color": "var(--color-light-ramp-text-great)"
+    },
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score": {
+     "font-size": "var(--text-score-medium)",
+     "line-height": "var(--leading-score-medium)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": {
+     "min-width": "36px",
+     "height": "var(--spacing-size-badge-height)",
+     "background": "var(--color-light-ramp-great)",
+     "color": "var(--color-light-ramp-text-great)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score": {
+     "font-size": "var(--text-score-medium)",
+     "line-height": "var(--leading-score-medium)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Great",
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score/#text0": "81",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score/#text0": "81"
+   },
+   "nameOverrides": {
+    ".": "Row / Great",
+    "./Specimen / compact poor": "Specimen / regular great",
+    "./Specimen / compact poor/ScoreChip / compact / Poor": "ScoreChip / regular / Great",
+    "./Specimen / compact poor low": "Specimen / regular great low",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": "ScoreChip / regular / Great"
+   },
+   "lines": 12
+  },
+  {
+   "seq": 15,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Regular",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular"
+   ],
+   "parentSeq": 9,
+   "sourceSeq": 4,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact/Row / Poor",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor/ScoreChip / compact / Poor": {
+     "min-width": "36px",
+     "height": "var(--spacing-size-badge-height)",
+     "background": "var(--color-light-ramp-epic)",
+     "color": "var(--color-light-ramp-text-epic)"
+    },
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score": {
+     "font-size": "var(--text-score-medium)",
+     "line-height": "var(--leading-score-medium)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": {
+     "min-width": "36px",
+     "height": "var(--spacing-size-badge-height)",
+     "background": "var(--color-light-ramp-epic)",
+     "color": "var(--color-light-ramp-text-epic)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score": {
+     "font-size": "var(--text-score-medium)",
+     "line-height": "var(--leading-score-medium)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Epic",
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score/#text0": "94",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score/#text0": "94"
+   },
+   "nameOverrides": {
+    ".": "Row / Epic",
+    "./Specimen / compact poor": "Specimen / regular epic",
+    "./Specimen / compact poor/ScoreChip / compact / Poor": "ScoreChip / regular / Epic",
+    "./Specimen / compact poor low": "Specimen / regular epic low",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": "ScoreChip / regular / Epic"
+   },
+   "lines": 12
+  },
+  {
+   "seq": 16,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "sourceSeq": 9,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Regular",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular"
+   ],
+   "styleOverrides": {
+    "./Column Headers/Column / Normal": {
+     "width": "120px"
+    },
+    "./Column Headers/Column / Low confidence": {
+     "width": "120px"
+    },
+    "./Row / Poor/Specimen / regular poor": {
+     "width": "120px"
+    },
+    "./Row / Poor/Specimen / regular poor/ScoreChip / regular / Poor": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Poor/Specimen / regular poor/ScoreChip / regular / Poor/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Poor/Specimen / regular poor low": {
+     "width": "120px"
+    },
+    "./Row / Poor/Specimen / regular poor low/ScoreChip / regular / Poor": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Poor/Specimen / regular poor low/ScoreChip / regular / Poor/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Fair/Specimen / regular fair": {
+     "width": "120px"
+    },
+    "./Row / Fair/Specimen / regular fair/ScoreChip / regular / Fair": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Fair/Specimen / regular fair/ScoreChip / regular / Fair/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Fair/Specimen / regular fair low": {
+     "width": "120px"
+    },
+    "./Row / Fair/Specimen / regular fair low/ScoreChip / regular / Fair": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Fair/Specimen / regular fair low/ScoreChip / regular / Fair/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Good/Specimen / regular good": {
+     "width": "120px"
+    },
+    "./Row / Good/Specimen / regular good/ScoreChip / regular / Good": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Good/Specimen / regular good/ScoreChip / regular / Good/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Good/Specimen / regular good low": {
+     "width": "120px"
+    },
+    "./Row / Good/Specimen / regular good low/ScoreChip / regular / Good": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Good/Specimen / regular good low/ScoreChip / regular / Good/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Great/Specimen / regular great": {
+     "width": "120px"
+    },
+    "./Row / Great/Specimen / regular great/ScoreChip / regular / Great": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Great/Specimen / regular great/ScoreChip / regular / Great/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Great/Specimen / regular great low": {
+     "width": "120px"
+    },
+    "./Row / Great/Specimen / regular great low/ScoreChip / regular / Great": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Great/Specimen / regular great low/ScoreChip / regular / Great/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Epic/Specimen / regular epic": {
+     "width": "120px"
+    },
+    "./Row / Epic/Specimen / regular epic/ScoreChip / regular / Epic": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Epic/Specimen / regular epic/ScoreChip / regular / Epic/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Epic/Specimen / regular epic low": {
+     "width": "120px"
+    },
+    "./Row / Epic/Specimen / regular epic low/ScoreChip / regular / Epic": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Epic/Specimen / regular epic low/ScoreChip / regular / Epic/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    }
+   },
+   "textOverrides": {
+    "./Section Title/#text0": "Large"
+   },
+   "nameOverrides": {
+    ".": "Section / Large",
+    "./Row / Poor/Specimen / regular poor": "Specimen / large poor",
+    "./Row / Poor/Specimen / regular poor/ScoreChip / regular / Poor": "ScoreChip / large / Poor",
+    "./Row / Poor/Specimen / regular poor low": "Specimen / large poor low",
+    "./Row / Poor/Specimen / regular poor low/ScoreChip / regular / Poor": "ScoreChip / large / Poor",
+    "./Row / Fair/Specimen / regular fair": "Specimen / large fair",
+    "./Row / Fair/Specimen / regular fair/ScoreChip / regular / Fair": "ScoreChip / large / Fair",
+    "./Row / Fair/Specimen / regular fair low": "Specimen / large fair low",
+    "./Row / Fair/Specimen / regular fair low/ScoreChip / regular / Fair": "ScoreChip / large / Fair",
+    "./Row / Good/Specimen / regular good": "Specimen / large good",
+    "./Row / Good/Specimen / regular good/ScoreChip / regular / Good": "ScoreChip / large / Good",
+    "./Row / Good/Specimen / regular good low": "Specimen / large good low",
+    "./Row / Good/Specimen / regular good low/ScoreChip / regular / Good": "ScoreChip / large / Good",
+    "./Row / Great/Specimen / regular great": "Specimen / large great",
+    "./Row / Great/Specimen / regular great/ScoreChip / regular / Great": "ScoreChip / large / Great",
+    "./Row / Great/Specimen / regular great low": "Specimen / large great low",
+    "./Row / Great/Specimen / regular great low/ScoreChip / regular / Great": "ScoreChip / large / Great",
+    "./Row / Epic/Specimen / regular epic": "Specimen / large epic",
+    "./Row / Epic/Specimen / regular epic/ScoreChip / regular / Epic": "ScoreChip / large / Epic",
+    "./Row / Epic/Specimen / regular epic low": "Specimen / large epic low",
+    "./Row / Epic/Specimen / regular epic low/ScoreChip / regular / Epic": "ScoreChip / large / Epic"
+   },
+   "lines": 54
+  },
+  {
+   "seq": 17,
+   "kind": "write",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Section / Widths: one, two and three digits\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n  <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Widths: one, two and three digits</div>\n  <div layer-name=\"Digits\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center\">\n    <div layer-name=\"Specimen / digits 7\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n      <div layer-name=\"Digits 7\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:12px;align-items:center\">\n        <div layer-name=\"ScoreChip / compact / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n          <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap\">7</div>\n        </div>\n        <div layer-name=\"ScoreChip / regular / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-poor);color:var(--color-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n          <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">7</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 18,
+   "kind": "write",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Widths: one, two and three digits/Digits",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Widths: one, two and three digits",
+    "Digits"
+   ],
+   "parentSeq": 17,
+   "html": "<div layer-name=\"Specimen / digits 72\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"Digits 72\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:12px;align-items:center\">\n    <div layer-name=\"ScoreChip / compact / Good\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n      <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap\">72</div>\n    </div>\n    <div layer-name=\"ScoreChip / regular / Good\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)\">\n      <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap\">72</div>\n    </div>\n  </div>\n</div>",
+   "lines": 10
+  },
+  {
+   "seq": 19,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Widths: one, two and three digits/Digits",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Widths: one, two and three digits",
+    "Digits"
+   ],
+   "parentSeq": 17,
+   "sourceSeq": 18,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Widths: one, two and three digits/Digits/Specimen / digits 72",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Widths: one, two and three digits",
+    "Digits",
+    "Specimen / digits 72"
+   ],
+   "styleOverrides": {
+    "./Digits 72/ScoreChip / compact / Good": {
+     "background": "var(--color-light-ramp-epic)",
+     "color": "var(--color-light-ramp-text-epic)"
+    },
+    "./Digits 72/ScoreChip / regular / Good": {
+     "background": "var(--color-light-ramp-epic)",
+     "color": "var(--color-light-ramp-text-epic)"
+    }
+   },
+   "textOverrides": {
+    "./Digits 72/ScoreChip / compact / Good/Score/#text0": "100",
+    "./Digits 72/ScoreChip / regular / Good/Score/#text0": "100"
+   },
+   "nameOverrides": {
+    ".": "Specimen / digits 100",
+    "./Digits 72": "Digits 100",
+    "./Digits 72/ScoreChip / compact / Good": "ScoreChip / compact / Epic",
+    "./Digits 72/ScoreChip / regular / Good": "ScoreChip / regular / Epic"
+   },
+   "lines": 8
+  },
+  {
+   "seq": 20,
+   "kind": "write",
+   "parentPath": "ScoreChip/Page/Content/Appearances",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances"
+   ],
+   "parentSeq": 3,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Section / Compact\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Compact</div>\n    <div layer-name=\"Column Headers\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-end\">\n      <div layer-name=\"Corner\" style=\"box-sizing:border-box;width:88px;flex-shrink:0\"></div>\n      <div layer-name=\"Column / Normal\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:110px;flex-shrink:0\">Normal</div>\n      <div layer-name=\"Column / Low confidence\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;width:110px;flex-shrink:0\">Low confidence</div>\n    </div>\n    <div layer-name=\"Row / Poor\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:0;align-items:center\">\n      <div layer-name=\"Row Header\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:88px;flex-shrink:0\">Poor</div>\n    </div>\n  </div>\n</div>",
+   "lines": 14,
+   "partial": true
+  },
+  {
+   "seq": 21,
+   "kind": "write",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Dark Appearance/Section / Compact/Row / Poor",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Compact",
+    "Row / Poor"
+   ],
+   "parentSeq": 20,
+   "html": "<div layer-name=\"Specimen / compact poor\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0\">\n  <div layer-name=\"ScoreChip / compact / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)\">\n    <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap\">22</div>\n  </div>\n</div>\n<div layer-name=\"Specimen / compact poor low\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:110px;flex-shrink:0\">\n  <div layer-name=\"ScoreChip / compact / Poor\" style=\"box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:26px;height:var(--spacing-size-badge-height-compact);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-poor);color:var(--color-dark-light-ramp-text-poor);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)\">\n    <div layer-name=\"Score\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-badge);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-badge);font-variant-numeric:tabular-nums;white-space:nowrap\">22</div>\n  </div>\n</div>",
+   "lines": 10
+  },
+  {
+   "seq": 22,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Dark Appearance/Section / Compact",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Compact"
+   ],
+   "parentSeq": 20,
+   "sourceSeq": 4,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact/Row / Poor",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-fair)",
+     "color": "var(--color-dark-light-ramp-text-fair)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-fair)",
+     "color": "var(--color-dark-light-ramp-text-fair)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Fair",
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score/#text0": "48",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score/#text0": "48"
+   },
+   "nameOverrides": {
+    ".": "Row / Fair",
+    "./Specimen / compact poor": "Specimen / compact fair",
+    "./Specimen / compact poor/ScoreChip / compact / Poor": "ScoreChip / compact / Fair",
+    "./Specimen / compact poor low": "Specimen / compact fair low",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": "ScoreChip / compact / Fair"
+   },
+   "lines": 11,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 3
+   }
+  },
+  {
+   "seq": 23,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Dark Appearance/Section / Compact",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Compact"
+   ],
+   "parentSeq": 20,
+   "sourceSeq": 4,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact/Row / Poor",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-good)",
+     "color": "var(--color-dark-light-ramp-text-good)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-good)",
+     "color": "var(--color-dark-light-ramp-text-good)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Good",
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score/#text0": "66",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score/#text0": "66"
+   },
+   "nameOverrides": {
+    ".": "Row / Good",
+    "./Specimen / compact poor": "Specimen / compact good",
+    "./Specimen / compact poor/ScoreChip / compact / Poor": "ScoreChip / compact / Good",
+    "./Specimen / compact poor low": "Specimen / compact good low",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": "ScoreChip / compact / Good"
+   },
+   "lines": 11,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 3
+   }
+  },
+  {
+   "seq": 24,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Dark Appearance/Section / Compact",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Compact"
+   ],
+   "parentSeq": 20,
+   "sourceSeq": 4,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact/Row / Poor",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-great)",
+     "color": "var(--color-dark-light-ramp-text-great)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-great)",
+     "color": "var(--color-dark-light-ramp-text-great)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Great",
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score/#text0": "81",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score/#text0": "81"
+   },
+   "nameOverrides": {
+    ".": "Row / Great",
+    "./Specimen / compact poor": "Specimen / compact great",
+    "./Specimen / compact poor/ScoreChip / compact / Poor": "ScoreChip / compact / Great",
+    "./Specimen / compact poor low": "Specimen / compact great low",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": "ScoreChip / compact / Great"
+   },
+   "lines": 11,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 3
+   }
+  },
+  {
+   "seq": 25,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Dark Appearance/Section / Compact",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Compact"
+   ],
+   "parentSeq": 20,
+   "sourceSeq": 4,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Compact/Row / Poor",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Compact",
+    "Row / Poor"
+   ],
+   "styleOverrides": {
+    "./Specimen / compact poor/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-epic)",
+     "color": "var(--color-dark-light-ramp-text-epic)"
+    },
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": {
+     "background": "var(--color-dark-light-ramp-epic)",
+     "color": "var(--color-dark-light-ramp-text-epic)"
+    }
+   },
+   "textOverrides": {
+    "./Row Header/#text0": "Epic",
+    "./Specimen / compact poor/ScoreChip / compact / Poor/Score/#text0": "94",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor/Score/#text0": "94"
+   },
+   "nameOverrides": {
+    ".": "Row / Epic",
+    "./Specimen / compact poor": "Specimen / compact epic",
+    "./Specimen / compact poor/ScoreChip / compact / Poor": "ScoreChip / compact / Epic",
+    "./Specimen / compact poor low": "Specimen / compact epic low",
+    "./Specimen / compact poor low/ScoreChip / compact / Poor": "ScoreChip / compact / Epic"
+   },
+   "lines": 11,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 3
+   }
+  },
+  {
+   "seq": 26,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 20,
+   "sourceSeq": 9,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Regular",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 18
+   }
+  },
+  {
+   "seq": 27,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 20,
+   "sourceSeq": 9,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Regular",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Regular"
+   ],
+   "styleOverrides": {
+    "./Column Headers/Column / Normal": {
+     "width": "120px"
+    },
+    "./Column Headers/Column / Low confidence": {
+     "width": "120px"
+    },
+    "./Row / Poor/Specimen / regular poor": {
+     "width": "120px"
+    },
+    "./Row / Poor/Specimen / regular poor/ScoreChip / regular / Poor": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Poor/Specimen / regular poor/ScoreChip / regular / Poor/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Poor/Specimen / regular poor low": {
+     "width": "120px"
+    },
+    "./Row / Poor/Specimen / regular poor low/ScoreChip / regular / Poor": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Poor/Specimen / regular poor low/ScoreChip / regular / Poor/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Fair/Specimen / regular fair": {
+     "width": "120px"
+    },
+    "./Row / Fair/Specimen / regular fair/ScoreChip / regular / Fair": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Fair/Specimen / regular fair/ScoreChip / regular / Fair/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Fair/Specimen / regular fair low": {
+     "width": "120px"
+    },
+    "./Row / Fair/Specimen / regular fair low/ScoreChip / regular / Fair": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Fair/Specimen / regular fair low/ScoreChip / regular / Fair/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Good/Specimen / regular good": {
+     "width": "120px"
+    },
+    "./Row / Good/Specimen / regular good/ScoreChip / regular / Good": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Good/Specimen / regular good/ScoreChip / regular / Good/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Good/Specimen / regular good low": {
+     "width": "120px"
+    },
+    "./Row / Good/Specimen / regular good low/ScoreChip / regular / Good": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Good/Specimen / regular good low/ScoreChip / regular / Good/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Great/Specimen / regular great": {
+     "width": "120px"
+    },
+    "./Row / Great/Specimen / regular great/ScoreChip / regular / Great": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Great/Specimen / regular great/ScoreChip / regular / Great/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Great/Specimen / regular great low": {
+     "width": "120px"
+    },
+    "./Row / Great/Specimen / regular great low/ScoreChip / regular / Great": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Great/Specimen / regular great low/ScoreChip / regular / Great/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Epic/Specimen / regular epic": {
+     "width": "120px"
+    },
+    "./Row / Epic/Specimen / regular epic/ScoreChip / regular / Epic": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Epic/Specimen / regular epic/ScoreChip / regular / Epic/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    },
+    "./Row / Epic/Specimen / regular epic low": {
+     "width": "120px"
+    },
+    "./Row / Epic/Specimen / regular epic low/ScoreChip / regular / Epic": {
+     "min-width": "var(--spacing-size-light-ring-large)",
+     "height": "var(--spacing-size-light-ring-large)",
+     "padding": "0",
+     "border-radius": "var(--radius-card)"
+    },
+    "./Row / Epic/Specimen / regular epic low/ScoreChip / regular / Epic/Score": {
+     "font-size": "var(--text-score-large)",
+     "line-height": "var(--leading-score-large)"
+    }
+   },
+   "textOverrides": {
+    "./Section Title/#text0": "Large"
+   },
+   "nameOverrides": {
+    ".": "Section / Large",
+    "./Row / Poor/Specimen / regular poor": "Specimen / large poor",
+    "./Row / Poor/Specimen / regular poor/ScoreChip / regular / Poor": "ScoreChip / large / Poor",
+    "./Row / Poor/Specimen / regular poor low": "Specimen / large poor low",
+    "./Row / Poor/Specimen / regular poor low/ScoreChip / regular / Poor": "ScoreChip / large / Poor",
+    "./Row / Fair/Specimen / regular fair": "Specimen / large fair",
+    "./Row / Fair/Specimen / regular fair/ScoreChip / regular / Fair": "ScoreChip / large / Fair",
+    "./Row / Fair/Specimen / regular fair low": "Specimen / large fair low",
+    "./Row / Fair/Specimen / regular fair low/ScoreChip / regular / Fair": "ScoreChip / large / Fair",
+    "./Row / Good/Specimen / regular good": "Specimen / large good",
+    "./Row / Good/Specimen / regular good/ScoreChip / regular / Good": "ScoreChip / large / Good",
+    "./Row / Good/Specimen / regular good low": "Specimen / large good low",
+    "./Row / Good/Specimen / regular good low/ScoreChip / regular / Good": "ScoreChip / large / Good",
+    "./Row / Great/Specimen / regular great": "Specimen / large great",
+    "./Row / Great/Specimen / regular great/ScoreChip / regular / Great": "ScoreChip / large / Great",
+    "./Row / Great/Specimen / regular great low": "Specimen / large great low",
+    "./Row / Great/Specimen / regular great low/ScoreChip / regular / Great": "ScoreChip / large / Great",
+    "./Row / Epic/Specimen / regular epic": "Specimen / large epic",
+    "./Row / Epic/Specimen / regular epic/ScoreChip / regular / Epic": "ScoreChip / large / Epic",
+    "./Row / Epic/Specimen / regular epic low": "Specimen / large epic low",
+    "./Row / Epic/Specimen / regular epic low/ScoreChip / regular / Epic": "ScoreChip / large / Epic"
+   },
+   "lines": 55,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 18
+   }
+  },
+  {
+   "seq": 28,
+   "kind": "clone",
+   "parentPath": "ScoreChip/Page/Content/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 20,
+   "sourceSeq": 17,
+   "sourcePath": "ScoreChip/Page/Content/Appearances/Light Appearance/Section / Widths: one, two and three digits",
+   "sourcePathArray": [
+    "ScoreChip",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Widths: one, two and three digits"
+   ],
+   "styleOverrides": {},
+   "textOverrides": {},
+   "nameOverrides": {},
+   "lines": 1,
+   "varRule": {
+    "replaceVarPrefix": [
+     [
+      "--color-",
+      "--color-dark-"
+     ],
+     [
+      "--shadow-",
+      "--shadow-dark-"
+     ]
+    ],
+    "nodes": 7
+   }
+  }
+ ]
+}

@@ -1,0 +1,129 @@
+{
+ "artboard": {
+  "name": "Flow · Plan a trip",
+  "page": "Flows",
+  "width": 2368,
+  "height": 472,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "2368px",
+   "height": "472px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 7,
+  "clones": 0,
+  "writesNoClone": 7,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "Flow · Plan a trip",
+   "parentPathArray": [
+    "Flow · Plan a trip"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:28px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">Plan a trip</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">Start from an empty All Trips, create a trip from a template, add a stop, resolve a light-order conflict with the suggestion banner, then move the dates.</div>\n  </div>\n  <div layer-name=\"Journey\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n    <div layer-name=\"Main Journey\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:flex-start\">\n      <div layer-name=\"Step 1 / All Trips · Empty\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:12px;flex-shrink:0;width:344px;height:316px;background:var(--color-canvas-specimen-background);border-radius:var(--radius-card);border:1px solid var(--color-canvas-specimen-border)\">\n        <div layer-name=\"Thumb Frame\" style=\"box-sizing:border-box;display:flex;flex-direction:row;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid var(--color-canvas-specimen-border);width:322px;height:207px\">\n          <img layer-name=\"Thumb / All Trips · Empty\" data-asset=\"thumbs/S-trips-empty.png\" src=\"paper-asset:///path/to/Iter/Design/paper/assets/thumbs/S-trips-empty.png\" style=\"box-sizing:border-box;display:block;flex-shrink:0;width:320px;height:205px;object-fit:cover\"/>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true,
+   "hasAsset": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "Flow · Plan a trip/Page/Journey/Main Journey/Step 1 / All Trips · Empty",
+   "parentPathArray": [
+    "Flow · Plan a trip",
+    "Page",
+    "Journey",
+    "Main Journey",
+    "Step 1 / All Trips · Empty"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Step Title\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center\">\n  <div layer-name=\"Step Number\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:11px;border:1.5px solid var(--color-canvas-flow-arrow)\">\n    <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">1</div>\n  </div>\n  <div layer-name=\"Screen Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">All Trips · Empty</div>\n</div>\n<div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Click New Trip (⌘N), or a template row, to open the New Trip sheet.</div>",
+   "lines": 7
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "Flow · Plan a trip/Page/Journey/Main Journey",
+   "parentPathArray": [
+    "Flow · Plan a trip",
+    "Page",
+    "Journey",
+    "Main Journey"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Arrow Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:107px 0 0 0;flex-shrink:0;width:48px\">\n  <svg layer-name=\"Arrow / All Trips · Empty → New Trip sheet · Templ\" xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"16\" viewBox=\"0 0 48 16\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><path d=\"M4 8 H45\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/><path d=\"M38 2 L45 8 L38 14\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/></svg>\n</div>\n<div layer-name=\"Step 2 / New Trip sheet · Template\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:12px;flex-shrink:0;width:344px;height:316px;background:var(--color-canvas-specimen-background);border-radius:var(--radius-card);border:1px solid var(--color-canvas-specimen-border)\">\n  <div layer-name=\"Thumb Frame\" style=\"box-sizing:border-box;display:flex;flex-direction:row;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid var(--color-canvas-specimen-border);width:322px;height:207px\">\n    <img layer-name=\"Thumb / New Trip sheet · Template\" data-asset=\"thumbs/S-new-trip-template.png\" src=\"paper-asset:///path/to/Iter/Design/paper/assets/thumbs/S-new-trip-template.png\" style=\"box-sizing:border-box;display:block;flex-shrink:0;width:320px;height:205px;object-fit:cover\"/>\n  </div>\n  <div layer-name=\"Step Title\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center\">\n    <div layer-name=\"Step Number\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:11px;border:1.5px solid var(--color-canvas-flow-arrow)\">\n      <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">2</div>\n    </div>\n    <div layer-name=\"Screen Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">New Trip sheet · Template</div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Check the name, start date and length, then click Create. The trip opens in the sidebar.</div>\n</div>",
+   "lines": 15,
+   "hasAsset": true
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "Flow · Plan a trip/Page/Journey/Main Journey",
+   "parentPathArray": [
+    "Flow · Plan a trip",
+    "Page",
+    "Journey",
+    "Main Journey"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Arrow Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:107px 0 0 0;flex-shrink:0;width:48px\">\n  <svg layer-name=\"Arrow / New Trip sheet · Template → Trip builder ·\" xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"16\" viewBox=\"0 0 48 16\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><path d=\"M4 8 H45\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/><path d=\"M38 2 L45 8 L38 14\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/></svg>\n</div>\n<div layer-name=\"Step 3 / Trip builder · Default\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:12px;flex-shrink:0;width:344px;height:316px;background:var(--color-canvas-specimen-background);border-radius:var(--radius-card);border:1px solid var(--color-canvas-specimen-border)\">\n  <div layer-name=\"Thumb Frame\" style=\"box-sizing:border-box;display:flex;flex-direction:row;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid var(--color-canvas-specimen-border);width:322px;height:207px\">\n    <img layer-name=\"Thumb / Trip builder · Default\" data-asset=\"thumbs/S-trip-builder-default.png\" src=\"paper-asset:///path/to/Iter/Design/paper/assets/thumbs/S-trip-builder-default.png\" style=\"box-sizing:border-box;display:block;flex-shrink:0;width:320px;height:205px;object-fit:cover\"/>\n  </div>\n  <div layer-name=\"Step Title\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center\">\n    <div layer-name=\"Step Number\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:11px;border:1.5px solid var(--color-canvas-flow-arrow)\">\n      <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">3</div>\n    </div>\n    <div layer-name=\"Screen Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Trip builder · Default</div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Click the Add Stop row under a day to open the Add Stop popover.</div>\n</div>",
+   "lines": 15,
+   "hasAsset": true
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "Flow · Plan a trip/Page/Journey/Main Journey",
+   "parentPathArray": [
+    "Flow · Plan a trip",
+    "Page",
+    "Journey",
+    "Main Journey"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Arrow Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:107px 0 0 0;flex-shrink:0;width:48px\">\n  <svg layer-name=\"Arrow / Trip builder · Default → Trip builder · Ad\" xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"16\" viewBox=\"0 0 48 16\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><path d=\"M4 8 H45\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/><path d=\"M38 2 L45 8 L38 14\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/></svg>\n</div>\n<div layer-name=\"Step 4 / Trip builder · Add Stop\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:12px;flex-shrink:0;width:344px;height:316px;background:var(--color-canvas-specimen-background);border-radius:var(--radius-card);border:1px solid var(--color-canvas-specimen-border)\">\n  <div layer-name=\"Thumb Frame\" style=\"box-sizing:border-box;display:flex;flex-direction:row;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid var(--color-canvas-specimen-border);width:322px;height:207px\">\n    <img layer-name=\"Thumb / Trip builder · Add Stop\" data-asset=\"thumbs/S-trip-builder-add-stop.png\" src=\"paper-asset:///path/to/Iter/Design/paper/assets/thumbs/S-trip-builder-add-stop.png\" style=\"box-sizing:border-box;display:block;flex-shrink:0;width:320px;height:205px;object-fit:cover\"/>\n  </div>\n  <div layer-name=\"Step Title\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center\">\n    <div layer-name=\"Step Number\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:11px;border:1.5px solid var(--color-canvas-flow-arrow)\">\n      <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">4</div>\n    </div>\n    <div layer-name=\"Screen Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Trip builder · Add Stop</div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Search and pick a spot; it joins the end of the day. Stops that clash show a conflict.</div>\n</div>",
+   "lines": 15,
+   "hasAsset": true
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "Flow · Plan a trip/Page/Journey/Main Journey",
+   "parentPathArray": [
+    "Flow · Plan a trip",
+    "Page",
+    "Journey",
+    "Main Journey"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Arrow Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:107px 0 0 0;flex-shrink:0;width:48px\">\n  <svg layer-name=\"Arrow / Trip builder · Add Stop → Trip builder · C\" xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"16\" viewBox=\"0 0 48 16\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><path d=\"M4 8 H45\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/><path d=\"M38 2 L45 8 L38 14\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/></svg>\n</div>\n<div layer-name=\"Step 5 / Trip builder · Conflict\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:12px;flex-shrink:0;width:344px;height:316px;background:var(--color-canvas-specimen-background);border-radius:var(--radius-card);border:1px solid var(--color-canvas-specimen-border)\">\n  <div layer-name=\"Thumb Frame\" style=\"box-sizing:border-box;display:flex;flex-direction:row;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid var(--color-canvas-specimen-border);width:322px;height:207px\">\n    <img layer-name=\"Thumb / Trip builder · Conflict\" data-asset=\"thumbs/S-trip-builder-conflict.png\" src=\"paper-asset:///path/to/Iter/Design/paper/assets/thumbs/S-trip-builder-conflict.png\" style=\"box-sizing:border-box;display:block;flex-shrink:0;width:320px;height:205px;object-fit:cover\"/>\n  </div>\n  <div layer-name=\"Step Title\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center\">\n    <div layer-name=\"Step Number\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:11px;border:1.5px solid var(--color-canvas-flow-arrow)\">\n      <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">5</div>\n    </div>\n    <div layer-name=\"Screen Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Trip builder · Conflict</div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Click Apply on the suggestion to reorder by light, or click the header date button.</div>\n</div>",
+   "lines": 15,
+   "hasAsset": true
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "Flow · Plan a trip/Page/Journey/Main Journey",
+   "parentPathArray": [
+    "Flow · Plan a trip",
+    "Page",
+    "Journey",
+    "Main Journey"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Arrow Slot\" style=\"box-sizing:border-box;display:flex;flex-direction:column;padding:107px 0 0 0;flex-shrink:0;width:48px\">\n  <svg layer-name=\"Arrow / Trip builder · Conflict → Change Dates · S\" xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"16\" viewBox=\"0 0 48 16\" style=\"box-sizing:border-box;display:block;flex-shrink:0\"><path d=\"M4 8 H45\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/><path d=\"M38 2 L45 8 L38 14\" style=\"fill:none;stroke:var(--color-canvas-flow-arrow);stroke-width:2;stroke-linecap:round;stroke-linejoin:round\"/></svg>\n</div>\n<div layer-name=\"Step 6 / Change Dates · Stops move\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:8px;padding:12px;flex-shrink:0;width:344px;height:316px;background:var(--color-canvas-specimen-background);border-radius:var(--radius-card);border:1px solid var(--color-canvas-specimen-border)\">\n  <div layer-name=\"Thumb Frame\" style=\"box-sizing:border-box;display:flex;flex-direction:row;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid var(--color-canvas-specimen-border);width:322px;height:207px\">\n    <img layer-name=\"Thumb / Change Dates · Stops move\" data-asset=\"thumbs/S-change-dates.png\" src=\"paper-asset:///path/to/Iter/Design/paper/assets/thumbs/S-change-dates.png\" style=\"box-sizing:border-box;display:block;flex-shrink:0;width:320px;height:205px;object-fit:cover\"/>\n  </div>\n  <div layer-name=\"Step Title\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:8px;align-items:center\">\n    <div layer-name=\"Step Number\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:22px;height:22px;border-radius:11px;border:1.5px solid var(--color-canvas-flow-arrow)\">\n      <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-primary);white-space:nowrap\">6</div>\n    </div>\n    <div layer-name=\"Screen Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Change Dates · Stops move</div>\n  </div>\n  <div layer-name=\"Caption\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)\">Pick the new dates and confirm. Moved stops are listed first, and Edit &gt; Undo reverses it.</div>\n</div>",
+   "lines": 15,
+   "hasAsset": true
+  }
+ ]
+}

@@ -1,0 +1,37 @@
+{
+ "artboard": {
+  "name": "Explore · Scored place card · Notes",
+  "page": "Screens (Light)",
+  "width": 320,
+  "height": 128,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "320px",
+   "height": "128px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 1,
+  "clones": 0,
+  "writesNoClone": 1,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "Explore · Scored place card · Notes",
+   "parentPathArray": [
+    "Explore · Scored place card · Notes"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:12px;padding:16px\">\n  <div layer-name=\"Note / Note\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:288px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n    <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Note</div>\n    <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Not in the snapshots (the fixtures select Mesa Arch, whose window has passed).</div>\n  </div>\n</div>",
+   "lines": 6
+  }
+ ]
+}

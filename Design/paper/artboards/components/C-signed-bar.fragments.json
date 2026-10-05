@@ -1,0 +1,336 @@
+{
+ "artboard": {
+  "name": "SignedBar",
+  "page": "Components",
+  "width": 1000,
+  "height": 744,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "1000px",
+   "height": "744px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 20,
+  "clones": 0,
+  "writesNoClone": 20,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "SignedBar",
+   "parentPathArray": [
+    "SignedBar"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">SignedBar</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">SignedBar (private) · Spot/DayWindowsView.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">A factor's points, right helps and left hurts; the sign is printed so colour is never the only cue.</div>\n  </div>\n  <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start;flex-wrap:wrap\">\n    <div layer-name=\"Note / Signed bars are grey\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:280px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n      <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Signed bars are grey</div>\n      <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">COMPONENTS.md says helps = accent/primary, hurts = status/warning. The source fills every bar text/secondary so colour never reads as good or bad. Source followed.</div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "SignedBar/Page",
+   "parentPathArray": [
+    "SignedBar",
+    "Page"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border);width:456px\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Specimen / Scale 21 (largest factor)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n      <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">Scale 21 (largest factor)</div>\n      <div layer-name=\"Bars A\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n        <div layer-name=\"SignedBar / +21\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\"></div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 11,
+   "partial": true
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Light Appearance/Specimen / Scale 21 (largest factor)/Bars A/SignedBar / +21",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Scale 21 (largest factor)",
+    "Bars A",
+    "SignedBar / +21"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n  <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n  <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:36px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)\"></div>\n</div>\n<div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+21</div>",
+   "lines": 5
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Light Appearance/Specimen / Scale 21 (largest factor)/Bars A",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Scale 21 (largest factor)",
+    "Bars A"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"SignedBar / +10\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:17.142857142857142px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+10</div>\n</div>\n<div layer-name=\"SignedBar / +4\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:6.857142857142857px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+4</div>\n</div>",
+   "lines": 14
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Light Appearance/Specimen / Scale 21 (largest factor)/Bars A",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Scale 21 (largest factor)",
+    "Bars A"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"SignedBar / +2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:3.4285714285714284px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+2</div>\n</div>\n<div layer-name=\"SignedBar / 0\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">0</div>\n</div>",
+   "lines": 13
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Light Appearance/Specimen / Scale 21 (largest factor)/Bars A",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Scale 21 (largest factor)",
+    "Bars A"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"SignedBar / −4\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:29.142857142857142px;top:3px;width:6.857142857142857px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">−4</div>\n</div>\n<div layer-name=\"SignedBar / −10\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:18.857142857142858px;top:3px;width:17.142857142857142px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">−10</div>\n</div>",
+   "lines": 14
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Light Appearance/Specimen / Scale 21 (largest factor)/Bars A",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Scale 21 (largest factor)",
+    "Bars A"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"SignedBar / −21\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:0;top:3px;width:36px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">−21</div>\n</div>",
+   "lines": 7
+  },
+  {
+   "seq": 8,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Light Appearance",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Light Appearance"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Specimen / Scale 10 (minimum scale)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n  <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap\">Scale 10 (minimum scale)</div>\n  <div layer-name=\"Bars B\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n    <div layer-name=\"SignedBar / +10\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n      <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n        <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n        <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:36px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)\"></div>\n      </div>\n      <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+10</div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 9,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Light Appearance/Specimen / Scale 10 (minimum scale)/Bars B",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Scale 10 (minimum scale)",
+    "Bars B"
+   ],
+   "parentSeq": 8,
+   "html": "<div layer-name=\"SignedBar / +5\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:18px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+5</div>\n</div>\n<div layer-name=\"SignedBar / +2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:7.2px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+2</div>\n</div>",
+   "lines": 14
+  },
+  {
+   "seq": 10,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Light Appearance/Specimen / Scale 10 (minimum scale)/Bars B",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Scale 10 (minimum scale)",
+    "Bars B"
+   ],
+   "parentSeq": 8,
+   "html": "<div layer-name=\"SignedBar / 0\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">0</div>\n</div>\n<div layer-name=\"SignedBar / −2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:28.8px;top:3px;width:7.2px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">−2</div>\n</div>",
+   "lines": 13
+  },
+  {
+   "seq": 11,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Light Appearance/Specimen / Scale 10 (minimum scale)/Bars B",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Light Appearance",
+    "Specimen / Scale 10 (minimum scale)",
+    "Bars B"
+   ],
+   "parentSeq": 8,
+   "html": "<div layer-name=\"SignedBar / −5\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:18px;top:3px;width:18px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">−5</div>\n</div>\n<div layer-name=\"SignedBar / −10\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:0;top:3px;width:36px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">−10</div>\n</div>",
+   "lines": 14
+  },
+  {
+   "seq": 12,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border);width:456px\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Specimen / Scale 21 (largest factor)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n    <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap\">Scale 21 (largest factor)</div>\n    <div layer-name=\"Bars A\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n      <div layer-name=\"SignedBar / +21\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n        <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n          <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n          <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:36px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)\"></div>\n        </div>\n        <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+21</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 13,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Dark Appearance/Specimen / Scale 21 (largest factor)/Bars A",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Scale 21 (largest factor)",
+    "Bars A"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"SignedBar / +10\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:17.142857142857142px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+10</div>\n</div>\n<div layer-name=\"SignedBar / +4\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:6.857142857142857px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+4</div>\n</div>",
+   "lines": 14
+  },
+  {
+   "seq": 14,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Dark Appearance/Specimen / Scale 21 (largest factor)/Bars A",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Scale 21 (largest factor)",
+    "Bars A"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"SignedBar / +2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:3.4285714285714284px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+2</div>\n</div>\n<div layer-name=\"SignedBar / 0\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">0</div>\n</div>",
+   "lines": 13
+  },
+  {
+   "seq": 15,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Dark Appearance/Specimen / Scale 21 (largest factor)/Bars A",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Scale 21 (largest factor)",
+    "Bars A"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"SignedBar / −4\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:29.142857142857142px;top:3px;width:6.857142857142857px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">−4</div>\n</div>\n<div layer-name=\"SignedBar / −10\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:18.857142857142858px;top:3px;width:17.142857142857142px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">−10</div>\n</div>",
+   "lines": 14
+  },
+  {
+   "seq": 16,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Dark Appearance/Specimen / Scale 21 (largest factor)/Bars A",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Scale 21 (largest factor)",
+    "Bars A"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"SignedBar / −21\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:0;top:3px;width:36px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">−21</div>\n</div>",
+   "lines": 7
+  },
+  {
+   "seq": 17,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Dark Appearance",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Dark Appearance"
+   ],
+   "parentSeq": 12,
+   "html": "<div layer-name=\"Specimen / Scale 10 (minimum scale)\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch\">\n  <div layer-name=\"Specimen Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap\">Scale 10 (minimum scale)</div>\n  <div layer-name=\"Bars B\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm)\">\n    <div layer-name=\"SignedBar / +10\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n      <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n        <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n        <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:36px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)\"></div>\n      </div>\n      <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+10</div>\n    </div>\n  </div>\n</div>",
+   "lines": 12,
+   "partial": true
+  },
+  {
+   "seq": 18,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Dark Appearance/Specimen / Scale 10 (minimum scale)/Bars B",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Scale 10 (minimum scale)",
+    "Bars B"
+   ],
+   "parentSeq": 17,
+   "html": "<div layer-name=\"SignedBar / +5\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:18px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+5</div>\n</div>\n<div layer-name=\"SignedBar / +2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:36px;top:3px;width:7.2px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">+2</div>\n</div>",
+   "lines": 14
+  },
+  {
+   "seq": 19,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Dark Appearance/Specimen / Scale 10 (minimum scale)/Bars B",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Scale 10 (minimum scale)",
+    "Bars B"
+   ],
+   "parentSeq": 17,
+   "html": "<div layer-name=\"SignedBar / 0\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">0</div>\n</div>\n<div layer-name=\"SignedBar / −2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:28.8px;top:3px;width:7.2px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">−2</div>\n</div>",
+   "lines": 13
+  },
+  {
+   "seq": 20,
+   "kind": "write",
+   "parentPath": "SignedBar/Page/Appearances/Dark Appearance/Specimen / Scale 10 (minimum scale)/Bars B",
+   "parentPathArray": [
+    "SignedBar",
+    "Page",
+    "Appearances",
+    "Dark Appearance",
+    "Specimen / Scale 10 (minimum scale)",
+    "Bars B"
+   ],
+   "parentSeq": 17,
+   "html": "<div layer-name=\"SignedBar / −5\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:18px;top:3px;width:18px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">−5</div>\n</div>\n<div layer-name=\"SignedBar / −10\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;flex-shrink:0\">\n  <div layer-name=\"Track\" style=\"box-sizing:border-box;position:relative;width:72px;height:var(--spacing-size-icon-small);flex-shrink:0\">\n    <div layer-name=\"Centre Line\" style=\"box-sizing:border-box;position:absolute;left:35.5px;top:0;width:var(--spacing-stroke-thin);height:100%;background:var(--color-dark-separator-default)\"></div>\n    <div layer-name=\"Bar\" style=\"box-sizing:border-box;position:absolute;left:0;top:3px;width:36px;height:var(--spacing-sm);border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary)\"></div>\n  </div>\n  <div layer-name=\"Points\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap;width:28px;flex-shrink:0\">−10</div>\n</div>",
+   "lines": 14
+  }
+ ]
+}

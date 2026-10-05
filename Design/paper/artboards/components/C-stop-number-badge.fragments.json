@@ -1,0 +1,135 @@
+{
+ "artboard": {
+  "name": "StopNumberBadge",
+  "page": "Components",
+  "width": 880,
+  "height": 408,
+  "styles": {
+   "boxSizing": "border-box",
+   "width": "880px",
+   "height": "408px",
+   "overflow": "hidden",
+   "position": "relative",
+   "display": "flex",
+   "flexDirection": "column",
+   "background": "var(--color-canvas-artboard)"
+  }
+ },
+ "stats": {
+  "writes": 7,
+  "clones": 0,
+  "writesNoClone": 7,
+  "topLevel": 1
+ },
+ "fragments": [
+  {
+   "seq": 1,
+   "kind": "write",
+   "parentPath": "StopNumberBadge",
+   "parentPathArray": [
+    "StopNumberBadge"
+   ],
+   "parentSeq": 0,
+   "html": "<div layer-name=\"Page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0\">\n  <div layer-name=\"Artboard Header\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)\">\n    <div layer-name=\"Artboard Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap\">StopNumberBadge</div>\n    <div layer-name=\"Type and File\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap\">StopNumberBadge · Trips/StopRow.swift</div>\n    <div layer-name=\"Job\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px\">The stop's number, matching its map pin: a 22 pt circle on the system quaternary fill, number in captionStrong.</div>\n  </div>\n  <div layer-name=\"Content\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start\">\n    <div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start\">\n      <div layer-name=\"Note / Quaternary fill\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n        <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Quaternary fill</div>\n        <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">SwiftUI .quaternary is about 10 to 15% of the label colour; drawn as 12% of text/primary. Hidden from VoiceOver (the row label carries the number).</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 2,
+   "kind": "write",
+   "parentPath": "StopNumberBadge/Page/Content",
+   "parentPathArray": [
+    "StopNumberBadge",
+    "Page",
+    "Content"
+   ],
+   "parentSeq": 1,
+   "html": "<div layer-name=\"Appearances\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start\">\n  <div layer-name=\"Light Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)\">\n    <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em\">LIGHT</div>\n    <div layer-name=\"Section / Numbers\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n      <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap\">Numbers</div>\n      <div layer-name=\"Badges\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px\">\n        <div layer-name=\"Specimen / badge 1\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n          <div layer-name=\"StopNumberBadge / 1\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-text-primary) 12%, transparent)\">\n            <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap\">1</div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 15,
+   "partial": true
+  },
+  {
+   "seq": 3,
+   "kind": "write",
+   "parentPath": "StopNumberBadge/Page/Content/Appearances/Light Appearance/Section / Numbers/Badges",
+   "parentPathArray": [
+    "StopNumberBadge",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Numbers",
+    "Badges"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Specimen / badge 2\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"StopNumberBadge / 2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-text-primary) 12%, transparent)\">\n    <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap\">2</div>\n  </div>\n</div>\n<div layer-name=\"Specimen / badge 3\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"StopNumberBadge / 3\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-text-primary) 12%, transparent)\">\n    <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap\">3</div>\n  </div>\n</div>\n<div layer-name=\"Specimen / badge 6\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"StopNumberBadge / 6\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-text-primary) 12%, transparent)\">\n    <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap\">6</div>\n  </div>\n</div>",
+   "lines": 15
+  },
+  {
+   "seq": 4,
+   "kind": "write",
+   "parentPath": "StopNumberBadge/Page/Content/Appearances/Light Appearance/Section / Numbers/Badges",
+   "parentPathArray": [
+    "StopNumberBadge",
+    "Page",
+    "Content",
+    "Appearances",
+    "Light Appearance",
+    "Section / Numbers",
+    "Badges"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Specimen / badge 10\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"StopNumberBadge / 10\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-text-primary) 12%, transparent)\">\n    <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-text-primary);white-space:nowrap\">10</div>\n  </div>\n</div>",
+   "lines": 5
+  },
+  {
+   "seq": 5,
+   "kind": "write",
+   "parentPath": "StopNumberBadge/Page/Content/Appearances",
+   "parentPathArray": [
+    "StopNumberBadge",
+    "Page",
+    "Content",
+    "Appearances"
+   ],
+   "parentSeq": 2,
+   "html": "<div layer-name=\"Dark Appearance\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)\">\n  <div layer-name=\"Appearance Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em\">DARK</div>\n  <div layer-name=\"Section / Numbers\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)\">\n    <div layer-name=\"Section Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap\">Numbers</div>\n    <div layer-name=\"Badges\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:24px\">\n      <div layer-name=\"Specimen / badge 1\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n        <div layer-name=\"StopNumberBadge / 1\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-dark-text-primary) 12%, transparent)\">\n          <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap\">1</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "lines": 13,
+   "partial": true
+  },
+  {
+   "seq": 6,
+   "kind": "write",
+   "parentPath": "StopNumberBadge/Page/Content/Appearances/Dark Appearance/Section / Numbers/Badges",
+   "parentPathArray": [
+    "StopNumberBadge",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Numbers",
+    "Badges"
+   ],
+   "parentSeq": 5,
+   "html": "<div layer-name=\"Specimen / badge 2\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"StopNumberBadge / 2\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-dark-text-primary) 12%, transparent)\">\n    <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap\">2</div>\n  </div>\n</div>\n<div layer-name=\"Specimen / badge 3\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"StopNumberBadge / 3\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-dark-text-primary) 12%, transparent)\">\n    <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap\">3</div>\n  </div>\n</div>\n<div layer-name=\"Specimen / badge 6\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"StopNumberBadge / 6\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-dark-text-primary) 12%, transparent)\">\n    <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap\">6</div>\n  </div>\n</div>",
+   "lines": 15
+  },
+  {
+   "seq": 7,
+   "kind": "write",
+   "parentPath": "StopNumberBadge/Page/Content/Appearances/Dark Appearance/Section / Numbers/Badges",
+   "parentPathArray": [
+    "StopNumberBadge",
+    "Page",
+    "Content",
+    "Appearances",
+    "Dark Appearance",
+    "Section / Numbers",
+    "Badges"
+   ],
+   "parentSeq": 5,
+   "html": "<div layer-name=\"Specimen / badge 10\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0\">\n  <div layer-name=\"StopNumberBadge / 10\" style=\"box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;flex-shrink:0;width:var(--spacing-size-badge-height);height:var(--spacing-size-badge-height);border-radius:999px;background:color-mix(in srgb, var(--color-dark-text-primary) 12%, transparent)\">\n    <div layer-name=\"Number\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-text-primary);white-space:nowrap\">10</div>\n  </div>\n</div>",
+   "lines": 5
+  }
+ ]
+}

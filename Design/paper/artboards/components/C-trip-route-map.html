@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TripRouteMap</title>
+<link rel="stylesheet" href="../../tokens.css">
+</head>
+<body style="margin:0;background:var(--color-canvas-artboard)">
+<div layer-name="TripRouteMap" data-artboard style="box-sizing:border-box;width:1200px;height:2272px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:var(--color-canvas-artboard)">
+<div layer-name="Page" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0">
+<div layer-name="Artboard Header" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)">
+<div layer-name="Artboard Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap">TripRouteMap</div>
+<div layer-name="Type and File" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap">TripRouteMap · Trips/TripRouteMap.swift</div>
+<div layer-name="Job" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px">The route sanity check: numbered pins, the active day in the route colour, other days quieter.</div>
+</div>
+<div layer-name="Content" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+<div layer-name="Notes" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start">
+<div layer-name="Note / Live map vs stand-in" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Live map vs stand-in</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Only the selected stop is 36 pt; other active-day pins are 28 pt in accent/emphasis; pins of other days are 28 pt map/pinInactive. The snapshot stand-in draws every active-day pin large.</div>
+</div>
+<div layer-name="Note / Deviation: pin token" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Deviation: pin token</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">TripRouteMap.swift fills active pins with accent/emphasis; COMPONENTS.md names map/pin. The source is drawn.</div>
+</div>
+<div layer-name="Note / Placeholder" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Placeholder</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">The map is a placeholder; Apple's cartography, compass and scale are not drawn (zoom stepper shown).</div>
+</div>
+</div>
+<div layer-name="Appearances" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+<div layer-name="Light Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border)">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em">LIGHT</div>
+<div layer-name="Maps" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start">
+<div layer-name="Specimen / day 1" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Map placeholder (swap)" style="box-sizing:border-box;position:relative;display:flex;overflow:hidden;background:var(--color-canvas-map-ground);width:520px;height:420px;min-width:0;min-height:0;flex-shrink:0">
+<div layer-name="Map Art" style="box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;display:flex">
+<svg layer-name="Roads and Contours" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" style="box-sizing:border-box;display:block;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-20 520 C 160 470, 280 560, 430 500 S 700 380, 1020 430" style="stroke:var(--color-canvas-map-line-major)" stroke-width="5"/>
+<path d="M120 -20 C 180 150, 140 280, 260 380 S 380 600, 340 720" style="stroke:var(--color-canvas-map-line-major)" stroke-width="4"/>
+<path d="M-20 240 C 150 210, 300 260, 470 190 S 760 120, 1020 170" style="stroke:var(--color-canvas-map-line)" stroke-width="3"/>
+<path d="M560 -20 C 600 130, 540 260, 640 360 S 780 560, 740 720" style="stroke:var(--color-canvas-map-line)" stroke-width="3"/>
+<path d="M820 -20 C 800 100, 900 200, 860 330 S 940 520, 1020 600" style="stroke:var(--color-canvas-map-line)" stroke-width="2"/>
+<path d="M-20 650 C 200 620, 380 700, 600 640 S 880 600, 1020 690" style="stroke:var(--color-canvas-map-line)" stroke-width="2"/>
+<ellipse cx="760" cy="520" rx="210" ry="120" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="150" ry="82" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="90" ry="46" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="170" ry="90" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="100" ry="50" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+</g></svg>
+</div>
+<div layer-name="Map Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-canvas-map-label);white-space:nowrap;position:absolute;left:12px;bottom:10px">Map placeholder: swap for a map image</div>
+<svg layer-name="Routes" xmlns="http://www.w3.org/2000/svg" width="520" height="420" viewBox="0 0 520 420" style="box-sizing:border-box;display:block;flex-shrink:0;position:absolute;top:0;left:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M74.4 359.9 Q204.9 378.0 332.3 344.4" style="stroke:var(--color-route-inactive)" stroke-width="3"/><path d="M332.3 344.4 Q389.0 239.1 400.9 120.1" style="stroke:var(--color-route-inactive)" stroke-width="3"/><path d="M400.9 120.1 Q388.0 123.9 377.5 132.3" style="stroke:var(--color-route-inactive)" stroke-width="3"/><path d="M377.5 132.3 Q417.0 112.2 445.6 78.5" style="stroke:var(--color-route-inactive)" stroke-width="3"/><path d="M445.6 78.5 Q331.5 69.3 222.6 104.6" style="stroke:var(--color-route-inactive)" stroke-width="3"/></g></svg>
+<div layer-name="Pin / 1 · Horseshoe Bend" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:60px;top:346px;border-radius:999px;background:var(--color-accent-emphasis);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-accent-on-accent);white-space:nowrap">1</div>
+</div>
+<div layer-name="Pin / 2 · Monument Valley" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:318px;top:330px;border-radius:999px;background:var(--color-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-background-window);white-space:nowrap">2</div>
+</div>
+<div layer-name="Pin / 3 · Dead Horse Point" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:387px;top:106px;border-radius:999px;background:var(--color-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-background-window);white-space:nowrap">3</div>
+</div>
+<div layer-name="Pin / 4 · Mesa Arch" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:364px;top:118px;border-radius:999px;background:var(--color-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-background-window);white-space:nowrap">4</div>
+</div>
+<div layer-name="Pin / 5 · Delicate Arch" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:432px;top:65px;border-radius:999px;background:var(--color-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-background-window);white-space:nowrap">5</div>
+</div>
+<div layer-name="Pin / 6 · Goblin Valley" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:209px;top:91px;border-radius:999px;background:var(--color-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-background-window);white-space:nowrap">6</div>
+</div>
+<div layer-name="Day Picker Position" style="box-sizing:border-box;position:absolute;top:12px;left:12px;display:flex">
+<div layer-name="Day Picker" style="box-sizing:border-box;display:flex;flex-direction:row;padding:var(--spacing-xs);align-items:center;flex-shrink:0;background:var(--color-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-canvas-material-stroke);box-shadow:var(--shadow-canvas-material)">
+<div layer-name="Segmented Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch">
+<div layer-name="Segment / Day 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;background:var(--color-canvas-control-segmented-thumb);box-shadow:var(--shadow-canvas-button);flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 1</div>
+</div>
+<div layer-name="Segment / Day 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 2</div>
+</div>
+<div layer-name="Segment / Day 3" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 3</div>
+</div>
+<div layer-name="Segment / Day 4" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 4</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Zoom Stepper" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:center;flex-shrink:0;position:absolute;top:12px;right:12px;width:28px;background:var(--color-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-canvas-material-stroke);box-shadow:var(--shadow-canvas-material);padding:2px 0">
+<div layer-name="Zoom In" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;height:26px">
+<svg layer-name="Icon / plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 80.54 80.59" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary);stroke:var(--color-text-primary);stroke-width:4.83;stroke-linejoin:round"><path d="M44.63 76.2L44.63 4.39C44.63 2.05 42.67 0 40.29 0C37.91 0 35.91 2.05 35.91 4.39L35.91 76.2C35.91 78.54 37.91 80.59 40.29 80.59C42.67 80.59 44.63 78.54 44.63 76.2ZM4.39 44.68L76.2 44.68C78.54 44.68 80.54 42.67 80.54 40.29C80.54 37.91 78.54 35.9 76.2 35.9L4.39 35.9C2 35.9 0 37.91 0 40.29C0 42.67 2 44.68 4.39 44.68Z"/></svg>
+</div>
+<div layer-name="Stepper Divider" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Zoom Out" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;height:26px">
+<svg layer-name="Icon / minus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 80.54 8.78" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary);stroke:var(--color-text-primary);stroke-width:4.83;stroke-linejoin:round"><path d="M4.39 8.78L76.2 8.78C78.54 8.78 80.54 6.77 80.54 4.39C80.54 2.01 78.54 0 76.2 0L4.39 0C2 0 0 2.01 0 4.39C0 6.77 2 8.78 4.39 8.78Z"/></svg>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">Day 1 active, nothing selected</div>
+</div>
+<div layer-name="Specimen / day 2 selected" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Map placeholder (swap)" style="box-sizing:border-box;position:relative;display:flex;overflow:hidden;background:var(--color-canvas-map-ground);width:520px;height:420px;min-width:0;min-height:0;flex-shrink:0">
+<div layer-name="Map Art" style="box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;display:flex">
+<svg layer-name="Roads and Contours" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" style="box-sizing:border-box;display:block;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-20 520 C 160 470, 280 560, 430 500 S 700 380, 1020 430" style="stroke:var(--color-canvas-map-line-major)" stroke-width="5"/>
+<path d="M120 -20 C 180 150, 140 280, 260 380 S 380 600, 340 720" style="stroke:var(--color-canvas-map-line-major)" stroke-width="4"/>
+<path d="M-20 240 C 150 210, 300 260, 470 190 S 760 120, 1020 170" style="stroke:var(--color-canvas-map-line)" stroke-width="3"/>
+<path d="M560 -20 C 600 130, 540 260, 640 360 S 780 560, 740 720" style="stroke:var(--color-canvas-map-line)" stroke-width="3"/>
+<path d="M820 -20 C 800 100, 900 200, 860 330 S 940 520, 1020 600" style="stroke:var(--color-canvas-map-line)" stroke-width="2"/>
+<path d="M-20 650 C 200 620, 380 700, 600 640 S 880 600, 1020 690" style="stroke:var(--color-canvas-map-line)" stroke-width="2"/>
+<ellipse cx="760" cy="520" rx="210" ry="120" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="150" ry="82" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="90" ry="46" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="170" ry="90" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="100" ry="50" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+</g></svg>
+</div>
+<div layer-name="Map Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-canvas-map-label);white-space:nowrap;position:absolute;left:12px;bottom:10px">Map placeholder: swap for a map image</div>
+<svg layer-name="Routes" xmlns="http://www.w3.org/2000/svg" width="520" height="420" viewBox="0 0 520 420" style="box-sizing:border-box;display:block;flex-shrink:0;position:absolute;top:0;left:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M400.9 120.1 Q388.0 123.9 377.5 132.3" style="stroke:var(--color-route-inactive)" stroke-width="3"/><path d="M377.5 132.3 Q417.0 112.2 445.6 78.5" style="stroke:var(--color-route-inactive)" stroke-width="3"/><path d="M445.6 78.5 Q331.5 69.3 222.6 104.6" style="stroke:var(--color-route-inactive)" stroke-width="3"/><path d="M74.4 359.9 Q204.9 378.0 332.3 344.4" style="stroke:var(--color-background-window)" stroke-width="7"/><path d="M332.3 344.4 Q389.0 239.1 400.9 120.1" style="stroke:var(--color-background-window)" stroke-width="7"/><path d="M74.4 359.9 Q204.9 378.0 332.3 344.4" style="stroke:var(--color-route-active)" stroke-width="4"/><path d="M332.3 344.4 Q389.0 239.1 400.9 120.1" style="stroke:var(--color-route-active)" stroke-width="4"/></g></svg>
+<div layer-name="Pin / 1 · Horseshoe Bend" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:60px;top:346px;border-radius:999px;background:var(--color-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-background-window);white-space:nowrap">1</div>
+</div>
+<div layer-name="Pin / 2 · Monument Valley" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:318px;top:330px;border-radius:999px;background:var(--color-accent-emphasis);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-accent-on-accent);white-space:nowrap">2</div>
+</div>
+<div layer-name="Pin / 3 · Dead Horse Point" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:36px;height:36px;position:absolute;left:383px;top:102px;border-radius:999px;background:var(--color-accent-emphasis);border:var(--spacing-stroke-thick) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-accent-on-accent);white-space:nowrap">3</div>
+</div>
+<div layer-name="Pin / 4 · Mesa Arch" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:364px;top:118px;border-radius:999px;background:var(--color-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-background-window);white-space:nowrap">4</div>
+</div>
+<div layer-name="Pin / 5 · Delicate Arch" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:432px;top:65px;border-radius:999px;background:var(--color-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-background-window);white-space:nowrap">5</div>
+</div>
+<div layer-name="Pin / 6 · Goblin Valley" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:209px;top:91px;border-radius:999px;background:var(--color-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-background-window);white-space:nowrap">6</div>
+</div>
+<div layer-name="Day Picker Position" style="box-sizing:border-box;position:absolute;top:12px;left:12px;display:flex">
+<div layer-name="Day Picker" style="box-sizing:border-box;display:flex;flex-direction:row;padding:var(--spacing-xs);align-items:center;flex-shrink:0;background:var(--color-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-canvas-material-stroke);box-shadow:var(--shadow-canvas-material)">
+<div layer-name="Segmented Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch">
+<div layer-name="Segment / Day 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 1</div>
+</div>
+<div layer-name="Segment / Day 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;background:var(--color-canvas-control-segmented-thumb);box-shadow:var(--shadow-canvas-button);flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 2</div>
+</div>
+<div layer-name="Segment / Day 3" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 3</div>
+</div>
+<div layer-name="Segment / Day 4" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 4</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Zoom Stepper" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:center;flex-shrink:0;position:absolute;top:12px;right:12px;width:28px;background:var(--color-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-canvas-material-stroke);box-shadow:var(--shadow-canvas-material);padding:2px 0">
+<div layer-name="Zoom In" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;height:26px">
+<svg layer-name="Icon / plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 80.54 80.59" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary);stroke:var(--color-text-primary);stroke-width:4.83;stroke-linejoin:round"><path d="M44.63 76.2L44.63 4.39C44.63 2.05 42.67 0 40.29 0C37.91 0 35.91 2.05 35.91 4.39L35.91 76.2C35.91 78.54 37.91 80.59 40.29 80.59C42.67 80.59 44.63 78.54 44.63 76.2ZM4.39 44.68L76.2 44.68C78.54 44.68 80.54 42.67 80.54 40.29C80.54 37.91 78.54 35.9 76.2 35.9L4.39 35.9C2 35.9 0 37.91 0 40.29C0 42.67 2 44.68 4.39 44.68Z"/></svg>
+</div>
+<div layer-name="Stepper Divider" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Zoom Out" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;height:26px">
+<svg layer-name="Icon / minus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 80.54 8.78" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary);stroke:var(--color-text-primary);stroke-width:4.83;stroke-linejoin:round"><path d="M4.39 8.78L76.2 8.78C78.54 8.78 80.54 6.77 80.54 4.39C80.54 2.01 78.54 0 76.2 0L4.39 0C2 0 0 2.01 0 4.39C0 6.77 2 8.78 4.39 8.78Z"/></svg>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">Day 2 active, stop 3 selected (36 pt, 2 pt border)</div>
+</div>
+</div>
+<div layer-name="Maps 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start">
+<div layer-name="Specimen / conflict" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Map placeholder (swap)" style="box-sizing:border-box;position:relative;display:flex;overflow:hidden;background:var(--color-canvas-map-ground);width:520px;height:420px;min-width:0;min-height:0;flex-shrink:0">
+<div layer-name="Map Art" style="box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;display:flex">
+<svg layer-name="Roads and Contours" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" style="box-sizing:border-box;display:block;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-20 520 C 160 470, 280 560, 430 500 S 700 380, 1020 430" style="stroke:var(--color-canvas-map-line-major)" stroke-width="5"/>
+<path d="M120 -20 C 180 150, 140 280, 260 380 S 380 600, 340 720" style="stroke:var(--color-canvas-map-line-major)" stroke-width="4"/>
+<path d="M-20 240 C 150 210, 300 260, 470 190 S 760 120, 1020 170" style="stroke:var(--color-canvas-map-line)" stroke-width="3"/>
+<path d="M560 -20 C 600 130, 540 260, 640 360 S 780 560, 740 720" style="stroke:var(--color-canvas-map-line)" stroke-width="3"/>
+<path d="M820 -20 C 800 100, 900 200, 860 330 S 940 520, 1020 600" style="stroke:var(--color-canvas-map-line)" stroke-width="2"/>
+<path d="M-20 650 C 200 620, 380 700, 600 640 S 880 600, 1020 690" style="stroke:var(--color-canvas-map-line)" stroke-width="2"/>
+<ellipse cx="760" cy="520" rx="210" ry="120" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="150" ry="82" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="90" ry="46" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="170" ry="90" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="100" ry="50" style="stroke:var(--color-canvas-map-line)" stroke-width="1.5"/>
+</g></svg>
+</div>
+<div layer-name="Map Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-canvas-map-label);white-space:nowrap;position:absolute;left:12px;bottom:10px">Map placeholder: swap for a map image</div>
+<svg layer-name="Routes" xmlns="http://www.w3.org/2000/svg" width="520" height="420" viewBox="0 0 520 420" style="box-sizing:border-box;display:block;flex-shrink:0;position:absolute;top:0;left:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M377.5 132.3 Q333.7 233.8 332.3 344.4" style="stroke:var(--color-route-inactive)" stroke-width="3"/><path d="M332.3 344.4 Q201.8 326.4 74.4 359.9" style="stroke:var(--color-route-inactive)" stroke-width="3"/><path d="M445.6 78.5 Q406.2 98.6 377.5 132.3" style="stroke:var(--color-background-window)" stroke-width="7"/><path d="M445.6 78.5 Q406.2 98.6 377.5 132.3" style="stroke:var(--color-route-active)" stroke-width="4"/></g></svg>
+<div layer-name="Pin / 1 · Delicate Arch" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:432px;top:65px;border-radius:999px;background:var(--color-accent-emphasis);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-accent-on-accent);white-space:nowrap">1</div>
+</div>
+<div layer-name="Pin / 2 · Mesa Arch" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:364px;top:118px;border-radius:999px;background:var(--color-accent-emphasis);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-accent-on-accent);white-space:nowrap">2</div>
+</div>
+<div layer-name="Pin / 3 · Monument Valley" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:318px;top:330px;border-radius:999px;background:var(--color-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-background-window);white-space:nowrap">3</div>
+</div>
+<div layer-name="Pin / 4 · Horseshoe Bend" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:60px;top:346px;border-radius:999px;background:var(--color-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-background-window);white-space:nowrap">4</div>
+</div>
+<div layer-name="Day Picker Position" style="box-sizing:border-box;position:absolute;top:12px;left:12px;display:flex">
+<div layer-name="Day Picker" style="box-sizing:border-box;display:flex;flex-direction:row;padding:var(--spacing-xs);align-items:center;flex-shrink:0;background:var(--color-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-canvas-material-stroke);box-shadow:var(--shadow-canvas-material)">
+<div layer-name="Segmented Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch">
+<div layer-name="Segment / Day 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;background:var(--color-canvas-control-segmented-thumb);box-shadow:var(--shadow-canvas-button);flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 1</div>
+</div>
+<div layer-name="Segment / Day 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 2</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Zoom Stepper" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:center;flex-shrink:0;position:absolute;top:12px;right:12px;width:28px;background:var(--color-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-canvas-material-stroke);box-shadow:var(--shadow-canvas-material);padding:2px 0">
+<div layer-name="Zoom In" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;height:26px">
+<svg layer-name="Icon / plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 80.54 80.59" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary);stroke:var(--color-text-primary);stroke-width:4.83;stroke-linejoin:round"><path d="M44.63 76.2L44.63 4.39C44.63 2.05 42.67 0 40.29 0C37.91 0 35.91 2.05 35.91 4.39L35.91 76.2C35.91 78.54 37.91 80.59 40.29 80.59C42.67 80.59 44.63 78.54 44.63 76.2ZM4.39 44.68L76.2 44.68C78.54 44.68 80.54 42.67 80.54 40.29C80.54 37.91 78.54 35.9 76.2 35.9L4.39 35.9C2 35.9 0 37.91 0 40.29C0 42.67 2 44.68 4.39 44.68Z"/></svg>
+</div>
+<div layer-name="Stepper Divider" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Zoom Out" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;height:26px">
+<svg layer-name="Icon / minus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 80.54 8.78" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-text-primary);stroke:var(--color-text-primary);stroke-width:4.83;stroke-linejoin:round"><path d="M4.39 8.78L76.2 8.78C78.54 8.78 80.54 6.77 80.54 4.39C80.54 2.01 78.54 0 76.2 0L4.39 0C2 0 0 2.01 0 4.39C0 6.77 2 8.78 4.39 8.78Z"/></svg>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">Conflict fixture: Day 1 route in route/active over a casing</div>
+</div>
+<div layer-name="Specimen / picker" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Picker Specimens" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Day Picker" style="box-sizing:border-box;display:flex;flex-direction:row;padding:var(--spacing-xs);align-items:center;flex-shrink:0;background:var(--color-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-canvas-material-stroke);box-shadow:var(--shadow-canvas-material)">
+<div layer-name="Segmented Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch">
+<div layer-name="Segment / Day 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;background:var(--color-canvas-control-segmented-thumb);box-shadow:var(--shadow-canvas-button);flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 1</div>
+</div>
+<div layer-name="Segment / Day 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 2</div>
+</div>
+<div layer-name="Segment / Day 3" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 3</div>
+</div>
+<div layer-name="Segment / Day 4" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 4</div>
+</div>
+</div>
+</div>
+<div layer-name="Day Picker" style="box-sizing:border-box;display:flex;flex-direction:row;padding:var(--spacing-xs);align-items:center;flex-shrink:0;background:var(--color-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-canvas-material-stroke);box-shadow:var(--shadow-canvas-material)">
+<div layer-name="Segmented Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch">
+<div layer-name="Segment / Day 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 1</div>
+</div>
+<div layer-name="Segment / Day 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 2</div>
+</div>
+<div layer-name="Segment / Day 3" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;background:var(--color-canvas-control-segmented-thumb);box-shadow:var(--shadow-canvas-button);flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 3</div>
+</div>
+<div layer-name="Segment / Day 4" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 4</div>
+</div>
+</div>
+</div>
+<div layer-name="Day Picker" style="box-sizing:border-box;display:flex;flex-direction:row;padding:var(--spacing-xs);align-items:center;flex-shrink:0;background:var(--color-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-canvas-material-stroke);box-shadow:var(--shadow-canvas-material)">
+<div layer-name="Segmented Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch">
+<div layer-name="Segment / Day 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 1</div>
+</div>
+<div layer-name="Segment / Day 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;background:var(--color-canvas-control-segmented-thumb);box-shadow:var(--shadow-canvas-button);flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-text-primary);white-space:nowrap">Day 2</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary)">Day picker: regularMaterial pill; a menu beyond five days; hidden with one day</div>
+</div>
+</div>
+</div>
+<div layer-name="Dark Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border)">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em">DARK</div>
+<div layer-name="Maps" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start">
+<div layer-name="Specimen / day 1" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Map placeholder (swap)" style="box-sizing:border-box;position:relative;display:flex;overflow:hidden;background:var(--color-dark-canvas-map-ground);width:520px;height:420px;min-width:0;min-height:0;flex-shrink:0">
+<div layer-name="Map Art" style="box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;display:flex">
+<svg layer-name="Roads and Contours" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" style="box-sizing:border-box;display:block;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-20 520 C 160 470, 280 560, 430 500 S 700 380, 1020 430" style="stroke:var(--color-dark-canvas-map-line-major)" stroke-width="5"/>
+<path d="M120 -20 C 180 150, 140 280, 260 380 S 380 600, 340 720" style="stroke:var(--color-dark-canvas-map-line-major)" stroke-width="4"/>
+<path d="M-20 240 C 150 210, 300 260, 470 190 S 760 120, 1020 170" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="3"/>
+<path d="M560 -20 C 600 130, 540 260, 640 360 S 780 560, 740 720" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="3"/>
+<path d="M820 -20 C 800 100, 900 200, 860 330 S 940 520, 1020 600" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="2"/>
+<path d="M-20 650 C 200 620, 380 700, 600 640 S 880 600, 1020 690" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="2"/>
+<ellipse cx="760" cy="520" rx="210" ry="120" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="150" ry="82" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="90" ry="46" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="170" ry="90" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="100" ry="50" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+</g></svg>
+</div>
+<div layer-name="Map Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-canvas-map-label);white-space:nowrap;position:absolute;left:12px;bottom:10px">Map placeholder: swap for a map image</div>
+<svg layer-name="Routes" xmlns="http://www.w3.org/2000/svg" width="520" height="420" viewBox="0 0 520 420" style="box-sizing:border-box;display:block;flex-shrink:0;position:absolute;top:0;left:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M74.4 359.9 Q204.9 378.0 332.3 344.4" style="stroke:var(--color-dark-route-inactive)" stroke-width="3"/><path d="M332.3 344.4 Q389.0 239.1 400.9 120.1" style="stroke:var(--color-dark-route-inactive)" stroke-width="3"/><path d="M400.9 120.1 Q388.0 123.9 377.5 132.3" style="stroke:var(--color-dark-route-inactive)" stroke-width="3"/><path d="M377.5 132.3 Q417.0 112.2 445.6 78.5" style="stroke:var(--color-dark-route-inactive)" stroke-width="3"/><path d="M445.6 78.5 Q331.5 69.3 222.6 104.6" style="stroke:var(--color-dark-route-inactive)" stroke-width="3"/></g></svg>
+<div layer-name="Pin / 1 · Horseshoe Bend" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:60px;top:346px;border-radius:999px;background:var(--color-dark-accent-emphasis);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-accent-on-accent);white-space:nowrap">1</div>
+</div>
+<div layer-name="Pin / 2 · Monument Valley" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:318px;top:330px;border-radius:999px;background:var(--color-dark-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-background-window);white-space:nowrap">2</div>
+</div>
+<div layer-name="Pin / 3 · Dead Horse Point" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:387px;top:106px;border-radius:999px;background:var(--color-dark-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-background-window);white-space:nowrap">3</div>
+</div>
+<div layer-name="Pin / 4 · Mesa Arch" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:364px;top:118px;border-radius:999px;background:var(--color-dark-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-background-window);white-space:nowrap">4</div>
+</div>
+<div layer-name="Pin / 5 · Delicate Arch" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:432px;top:65px;border-radius:999px;background:var(--color-dark-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-background-window);white-space:nowrap">5</div>
+</div>
+<div layer-name="Pin / 6 · Goblin Valley" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:209px;top:91px;border-radius:999px;background:var(--color-dark-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-background-window);white-space:nowrap">6</div>
+</div>
+<div layer-name="Day Picker Position" style="box-sizing:border-box;position:absolute;top:12px;left:12px;display:flex">
+<div layer-name="Day Picker" style="box-sizing:border-box;display:flex;flex-direction:row;padding:var(--spacing-xs);align-items:center;flex-shrink:0;background:var(--color-dark-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-dark-canvas-material-stroke);box-shadow:var(--shadow-dark-canvas-material)">
+<div layer-name="Segmented Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-dark-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch">
+<div layer-name="Segment / Day 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;background:var(--color-dark-canvas-control-segmented-thumb);box-shadow:var(--shadow-dark-canvas-button);flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 1</div>
+</div>
+<div layer-name="Segment / Day 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 2</div>
+</div>
+<div layer-name="Segment / Day 3" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 3</div>
+</div>
+<div layer-name="Segment / Day 4" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 4</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Zoom Stepper" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:center;flex-shrink:0;position:absolute;top:12px;right:12px;width:28px;background:var(--color-dark-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-dark-canvas-material-stroke);box-shadow:var(--shadow-dark-canvas-material);padding:2px 0">
+<div layer-name="Zoom In" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;height:26px">
+<svg layer-name="Icon / plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 80.54 80.59" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary);stroke:var(--color-dark-text-primary);stroke-width:4.83;stroke-linejoin:round"><path d="M44.63 76.2L44.63 4.39C44.63 2.05 42.67 0 40.29 0C37.91 0 35.91 2.05 35.91 4.39L35.91 76.2C35.91 78.54 37.91 80.59 40.29 80.59C42.67 80.59 44.63 78.54 44.63 76.2ZM4.39 44.68L76.2 44.68C78.54 44.68 80.54 42.67 80.54 40.29C80.54 37.91 78.54 35.9 76.2 35.9L4.39 35.9C2 35.9 0 37.91 0 40.29C0 42.67 2 44.68 4.39 44.68Z"/></svg>
+</div>
+<div layer-name="Stepper Divider" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Zoom Out" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;height:26px">
+<svg layer-name="Icon / minus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 80.54 8.78" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary);stroke:var(--color-dark-text-primary);stroke-width:4.83;stroke-linejoin:round"><path d="M4.39 8.78L76.2 8.78C78.54 8.78 80.54 6.77 80.54 4.39C80.54 2.01 78.54 0 76.2 0L4.39 0C2 0 0 2.01 0 4.39C0 6.77 2 8.78 4.39 8.78Z"/></svg>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">Day 1 active, nothing selected</div>
+</div>
+<div layer-name="Specimen / day 2 selected" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Map placeholder (swap)" style="box-sizing:border-box;position:relative;display:flex;overflow:hidden;background:var(--color-dark-canvas-map-ground);width:520px;height:420px;min-width:0;min-height:0;flex-shrink:0">
+<div layer-name="Map Art" style="box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;display:flex">
+<svg layer-name="Roads and Contours" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" style="box-sizing:border-box;display:block;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-20 520 C 160 470, 280 560, 430 500 S 700 380, 1020 430" style="stroke:var(--color-dark-canvas-map-line-major)" stroke-width="5"/>
+<path d="M120 -20 C 180 150, 140 280, 260 380 S 380 600, 340 720" style="stroke:var(--color-dark-canvas-map-line-major)" stroke-width="4"/>
+<path d="M-20 240 C 150 210, 300 260, 470 190 S 760 120, 1020 170" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="3"/>
+<path d="M560 -20 C 600 130, 540 260, 640 360 S 780 560, 740 720" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="3"/>
+<path d="M820 -20 C 800 100, 900 200, 860 330 S 940 520, 1020 600" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="2"/>
+<path d="M-20 650 C 200 620, 380 700, 600 640 S 880 600, 1020 690" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="2"/>
+<ellipse cx="760" cy="520" rx="210" ry="120" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="150" ry="82" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="90" ry="46" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="170" ry="90" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="100" ry="50" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+</g></svg>
+</div>
+<div layer-name="Map Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-canvas-map-label);white-space:nowrap;position:absolute;left:12px;bottom:10px">Map placeholder: swap for a map image</div>
+<svg layer-name="Routes" xmlns="http://www.w3.org/2000/svg" width="520" height="420" viewBox="0 0 520 420" style="box-sizing:border-box;display:block;flex-shrink:0;position:absolute;top:0;left:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M400.9 120.1 Q388.0 123.9 377.5 132.3" style="stroke:var(--color-dark-route-inactive)" stroke-width="3"/><path d="M377.5 132.3 Q417.0 112.2 445.6 78.5" style="stroke:var(--color-dark-route-inactive)" stroke-width="3"/><path d="M445.6 78.5 Q331.5 69.3 222.6 104.6" style="stroke:var(--color-dark-route-inactive)" stroke-width="3"/><path d="M74.4 359.9 Q204.9 378.0 332.3 344.4" style="stroke:var(--color-dark-background-window)" stroke-width="7"/><path d="M332.3 344.4 Q389.0 239.1 400.9 120.1" style="stroke:var(--color-dark-background-window)" stroke-width="7"/><path d="M74.4 359.9 Q204.9 378.0 332.3 344.4" style="stroke:var(--color-dark-route-active)" stroke-width="4"/><path d="M332.3 344.4 Q389.0 239.1 400.9 120.1" style="stroke:var(--color-dark-route-active)" stroke-width="4"/></g></svg>
+<div layer-name="Pin / 1 · Horseshoe Bend" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:60px;top:346px;border-radius:999px;background:var(--color-dark-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-background-window);white-space:nowrap">1</div>
+</div>
+<div layer-name="Pin / 2 · Monument Valley" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:318px;top:330px;border-radius:999px;background:var(--color-dark-accent-emphasis);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-accent-on-accent);white-space:nowrap">2</div>
+</div>
+<div layer-name="Pin / 3 · Dead Horse Point" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:36px;height:36px;position:absolute;left:383px;top:102px;border-radius:999px;background:var(--color-dark-accent-emphasis);border:var(--spacing-stroke-thick) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-accent-on-accent);white-space:nowrap">3</div>
+</div>
+<div layer-name="Pin / 4 · Mesa Arch" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:364px;top:118px;border-radius:999px;background:var(--color-dark-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-background-window);white-space:nowrap">4</div>
+</div>
+<div layer-name="Pin / 5 · Delicate Arch" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:432px;top:65px;border-radius:999px;background:var(--color-dark-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-background-window);white-space:nowrap">5</div>
+</div>
+<div layer-name="Pin / 6 · Goblin Valley" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:209px;top:91px;border-radius:999px;background:var(--color-dark-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-background-window);white-space:nowrap">6</div>
+</div>
+<div layer-name="Day Picker Position" style="box-sizing:border-box;position:absolute;top:12px;left:12px;display:flex">
+<div layer-name="Day Picker" style="box-sizing:border-box;display:flex;flex-direction:row;padding:var(--spacing-xs);align-items:center;flex-shrink:0;background:var(--color-dark-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-dark-canvas-material-stroke);box-shadow:var(--shadow-dark-canvas-material)">
+<div layer-name="Segmented Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-dark-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch">
+<div layer-name="Segment / Day 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 1</div>
+</div>
+<div layer-name="Segment / Day 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;background:var(--color-dark-canvas-control-segmented-thumb);box-shadow:var(--shadow-dark-canvas-button);flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 2</div>
+</div>
+<div layer-name="Segment / Day 3" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 3</div>
+</div>
+<div layer-name="Segment / Day 4" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 4</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Zoom Stepper" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:center;flex-shrink:0;position:absolute;top:12px;right:12px;width:28px;background:var(--color-dark-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-dark-canvas-material-stroke);box-shadow:var(--shadow-dark-canvas-material);padding:2px 0">
+<div layer-name="Zoom In" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;height:26px">
+<svg layer-name="Icon / plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 80.54 80.59" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary);stroke:var(--color-dark-text-primary);stroke-width:4.83;stroke-linejoin:round"><path d="M44.63 76.2L44.63 4.39C44.63 2.05 42.67 0 40.29 0C37.91 0 35.91 2.05 35.91 4.39L35.91 76.2C35.91 78.54 37.91 80.59 40.29 80.59C42.67 80.59 44.63 78.54 44.63 76.2ZM4.39 44.68L76.2 44.68C78.54 44.68 80.54 42.67 80.54 40.29C80.54 37.91 78.54 35.9 76.2 35.9L4.39 35.9C2 35.9 0 37.91 0 40.29C0 42.67 2 44.68 4.39 44.68Z"/></svg>
+</div>
+<div layer-name="Stepper Divider" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Zoom Out" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;height:26px">
+<svg layer-name="Icon / minus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 80.54 8.78" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary);stroke:var(--color-dark-text-primary);stroke-width:4.83;stroke-linejoin:round"><path d="M4.39 8.78L76.2 8.78C78.54 8.78 80.54 6.77 80.54 4.39C80.54 2.01 78.54 0 76.2 0L4.39 0C2 0 0 2.01 0 4.39C0 6.77 2 8.78 4.39 8.78Z"/></svg>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">Day 2 active, stop 3 selected (36 pt, 2 pt border)</div>
+</div>
+</div>
+<div layer-name="Maps 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start">
+<div layer-name="Specimen / conflict" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Map placeholder (swap)" style="box-sizing:border-box;position:relative;display:flex;overflow:hidden;background:var(--color-dark-canvas-map-ground);width:520px;height:420px;min-width:0;min-height:0;flex-shrink:0">
+<div layer-name="Map Art" style="box-sizing:border-box;position:absolute;top:0;left:0;right:0;bottom:0;display:flex">
+<svg layer-name="Roads and Contours" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" style="box-sizing:border-box;display:block;flex-shrink:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M-20 520 C 160 470, 280 560, 430 500 S 700 380, 1020 430" style="stroke:var(--color-dark-canvas-map-line-major)" stroke-width="5"/>
+<path d="M120 -20 C 180 150, 140 280, 260 380 S 380 600, 340 720" style="stroke:var(--color-dark-canvas-map-line-major)" stroke-width="4"/>
+<path d="M-20 240 C 150 210, 300 260, 470 190 S 760 120, 1020 170" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="3"/>
+<path d="M560 -20 C 600 130, 540 260, 640 360 S 780 560, 740 720" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="3"/>
+<path d="M820 -20 C 800 100, 900 200, 860 330 S 940 520, 1020 600" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="2"/>
+<path d="M-20 650 C 200 620, 380 700, 600 640 S 880 600, 1020 690" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="2"/>
+<ellipse cx="760" cy="520" rx="210" ry="120" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="150" ry="82" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="760" cy="520" rx="90" ry="46" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="170" ry="90" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+<ellipse cx="270" cy="170" rx="100" ry="50" style="stroke:var(--color-dark-canvas-map-line)" stroke-width="1.5"/>
+</g></svg>
+</div>
+<div layer-name="Map Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-canvas-map-label);white-space:nowrap;position:absolute;left:12px;bottom:10px">Map placeholder: swap for a map image</div>
+<svg layer-name="Routes" xmlns="http://www.w3.org/2000/svg" width="520" height="420" viewBox="0 0 520 420" style="box-sizing:border-box;display:block;flex-shrink:0;position:absolute;top:0;left:0"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M377.5 132.3 Q333.7 233.8 332.3 344.4" style="stroke:var(--color-dark-route-inactive)" stroke-width="3"/><path d="M332.3 344.4 Q201.8 326.4 74.4 359.9" style="stroke:var(--color-dark-route-inactive)" stroke-width="3"/><path d="M445.6 78.5 Q406.2 98.6 377.5 132.3" style="stroke:var(--color-dark-background-window)" stroke-width="7"/><path d="M445.6 78.5 Q406.2 98.6 377.5 132.3" style="stroke:var(--color-dark-route-active)" stroke-width="4"/></g></svg>
+<div layer-name="Pin / 1 · Delicate Arch" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:432px;top:65px;border-radius:999px;background:var(--color-dark-accent-emphasis);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-accent-on-accent);white-space:nowrap">1</div>
+</div>
+<div layer-name="Pin / 2 · Mesa Arch" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:364px;top:118px;border-radius:999px;background:var(--color-dark-accent-emphasis);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-accent-on-accent);white-space:nowrap">2</div>
+</div>
+<div layer-name="Pin / 3 · Monument Valley" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:318px;top:330px;border-radius:999px;background:var(--color-dark-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-background-window);white-space:nowrap">3</div>
+</div>
+<div layer-name="Pin / 4 · Horseshoe Bend" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;width:28px;height:28px;position:absolute;left:60px;top:346px;border-radius:999px;background:var(--color-dark-map-pin-inactive);border:var(--spacing-stroke-thin) solid var(--color-dark-background-window)">
+<div layer-name="Number" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);font-variant-numeric:tabular-nums;color:var(--color-dark-background-window);white-space:nowrap">4</div>
+</div>
+<div layer-name="Day Picker Position" style="box-sizing:border-box;position:absolute;top:12px;left:12px;display:flex">
+<div layer-name="Day Picker" style="box-sizing:border-box;display:flex;flex-direction:row;padding:var(--spacing-xs);align-items:center;flex-shrink:0;background:var(--color-dark-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-dark-canvas-material-stroke);box-shadow:var(--shadow-dark-canvas-material)">
+<div layer-name="Segmented Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-dark-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch">
+<div layer-name="Segment / Day 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;background:var(--color-dark-canvas-control-segmented-thumb);box-shadow:var(--shadow-dark-canvas-button);flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 1</div>
+</div>
+<div layer-name="Segment / Day 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 2</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Zoom Stepper" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:center;flex-shrink:0;position:absolute;top:12px;right:12px;width:28px;background:var(--color-dark-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-dark-canvas-material-stroke);box-shadow:var(--shadow-dark-canvas-material);padding:2px 0">
+<div layer-name="Zoom In" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;height:26px">
+<svg layer-name="Icon / plus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 80.54 80.59" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary);stroke:var(--color-dark-text-primary);stroke-width:4.83;stroke-linejoin:round"><path d="M44.63 76.2L44.63 4.39C44.63 2.05 42.67 0 40.29 0C37.91 0 35.91 2.05 35.91 4.39L35.91 76.2C35.91 78.54 37.91 80.59 40.29 80.59C42.67 80.59 44.63 78.54 44.63 76.2ZM4.39 44.68L76.2 44.68C78.54 44.68 80.54 42.67 80.54 40.29C80.54 37.91 78.54 35.9 76.2 35.9L4.39 35.9C2 35.9 0 37.91 0 40.29C0 42.67 2 44.68 4.39 44.68Z"/></svg>
+</div>
+<div layer-name="Stepper Divider" style="box-sizing:border-box;height:var(--spacing-stroke-hairline);align-self:stretch;background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Zoom Out" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;justify-content:center;height:26px">
+<svg layer-name="Icon / minus" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 80.54 8.78" preserveAspectRatio="xMidYMid meet" style="box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-primary);stroke:var(--color-dark-text-primary);stroke-width:4.83;stroke-linejoin:round"><path d="M4.39 8.78L76.2 8.78C78.54 8.78 80.54 6.77 80.54 4.39C80.54 2.01 78.54 0 76.2 0L4.39 0C2 0 0 2.01 0 4.39C0 6.77 2 8.78 4.39 8.78Z"/></svg>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">Conflict fixture: Day 1 route in route/active over a casing</div>
+</div>
+<div layer-name="Specimen / picker" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;flex-shrink:0">
+<div layer-name="Picker Specimens" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Day Picker" style="box-sizing:border-box;display:flex;flex-direction:row;padding:var(--spacing-xs);align-items:center;flex-shrink:0;background:var(--color-dark-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-dark-canvas-material-stroke);box-shadow:var(--shadow-dark-canvas-material)">
+<div layer-name="Segmented Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-dark-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch">
+<div layer-name="Segment / Day 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;background:var(--color-dark-canvas-control-segmented-thumb);box-shadow:var(--shadow-dark-canvas-button);flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 1</div>
+</div>
+<div layer-name="Segment / Day 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 2</div>
+</div>
+<div layer-name="Segment / Day 3" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 3</div>
+</div>
+<div layer-name="Segment / Day 4" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 4</div>
+</div>
+</div>
+</div>
+<div layer-name="Day Picker" style="box-sizing:border-box;display:flex;flex-direction:row;padding:var(--spacing-xs);align-items:center;flex-shrink:0;background:var(--color-dark-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-dark-canvas-material-stroke);box-shadow:var(--shadow-dark-canvas-material)">
+<div layer-name="Segmented Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-dark-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch">
+<div layer-name="Segment / Day 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 1</div>
+</div>
+<div layer-name="Segment / Day 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 2</div>
+</div>
+<div layer-name="Segment / Day 3" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;background:var(--color-dark-canvas-control-segmented-thumb);box-shadow:var(--shadow-dark-canvas-button);flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 3</div>
+</div>
+<div layer-name="Segment / Day 4" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 4</div>
+</div>
+</div>
+</div>
+<div layer-name="Day Picker" style="box-sizing:border-box;display:flex;flex-direction:row;padding:var(--spacing-xs);align-items:center;flex-shrink:0;background:var(--color-dark-canvas-material-regular);border-radius:var(--radius-control);border:1px solid var(--color-dark-canvas-material-stroke);box-shadow:var(--shadow-dark-canvas-material)">
+<div layer-name="Segmented Control" style="box-sizing:border-box;display:flex;flex-direction:row;gap:0;padding:2px;flex-shrink:0;background:var(--color-dark-canvas-control-segmented-track);border-radius:999px;height:var(--spacing-size-control-height);align-items:stretch">
+<div layer-name="Segment / Day 1" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 1</div>
+</div>
+<div layer-name="Segment / Day 2" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;justify-content:center;width:57px;border-radius:999px;background:var(--color-dark-canvas-control-segmented-thumb);box-shadow:var(--shadow-dark-canvas-button);flex-shrink:0">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-dark-text-primary);white-space:nowrap">Day 2</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Caption" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary)">Day picker: regularMaterial pill; a menu beyond five days; hidden with one day</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

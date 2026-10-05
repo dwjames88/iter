@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ExploreRow</title>
+<link rel="stylesheet" href="../../tokens.css">
+</head>
+<body style="margin:0;background:var(--color-canvas-artboard)">
+<div layer-name="ExploreRow" data-artboard style="box-sizing:border-box;width:1720px;height:944px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:var(--color-canvas-artboard)">
+<div layer-name="Page" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;padding:32px;flex:1 1 auto;min-width:0;min-height:0">
+<div layer-name="Artboard Header" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs)">
+<div layer-name="Artboard Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:22px;font-weight:var(--font-weight-semibold);line-height:28px;color:var(--color-canvas-label-title);white-space:nowrap">ExploreRow</div>
+<div layer-name="Type and File" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap">ExploreRowView · Explore/ExploreListPanel.swift</div>
+<div layer-name="Job" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body);font-weight:var(--font-weight-regular);line-height:var(--leading-body);color:var(--color-canvas-label-title);max-width:900px">One spot and its light on the chosen day: name over locality at left; badge and window start time at right.</div>
+</div>
+<div layer-name="Content" style="box-sizing:border-box;display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+<div layer-name="Notes" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:flex-start">
+<div layer-name="Note / Anatomy" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Anatomy</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Gap space/md, vertical padding space/xs inside the system List row (about 10 px each side as drawn). Name type/bodyEmphasis; locality type/caption; time type/timeSmall with monospaced digits. The badge column is a fixed 112 px slot here so columns align; the app sizes it to content and right-aligns it.</div>
+</div>
+<div layer-name="Note / Provenance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Provenance</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Only &quot;Added by you&quot; rows carry a ProvenanceTag; Curated and Apple Maps rows do not (SCREENS.md says Apple Maps rows are tagged: the source does not).</div>
+</div>
+<div layer-name="Note / Hover" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:260px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)">
+<div layer-name="Note Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">Hover</div>
+<div layer-name="Note Body" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)">The row has no hover style; hovering gives the map pin a chip.</div>
+</div>
+</div>
+<div layer-name="Appearances" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:flex-start">
+<div layer-name="Light Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-background-window);border-radius:16px;border:1px solid var(--color-canvas-specimen-border);width:780px">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-text-secondary);white-space:nowrap;letter-spacing:0.08em">LIGHT</div>
+<div layer-name="Section / Light states" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);white-space:nowrap">Light states</div>
+<div layer-name="Row / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Scored</div>
+<div layer-name="Specimen / row scored" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / Ancient Bristlecone Pine Forest" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px 0">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Ancient Bristlecone Pine Forest</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">White Mountains, CA</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">86</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Night</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Start Time" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap">19:54</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Scored, good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Scored, good</div>
+<div layer-name="Specimen / row good" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / Hopi Point" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px 0">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Hopi Point</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">Grand Canyon National Park, AZ</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">73</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Start Time" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap">17:30</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Low confidence" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Low confidence</div>
+<div layer-name="Specimen / row low confidence" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / McWay Falls" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px 0">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">McWay Falls</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">Julia Pfeiffer Burns State Park, CA</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">73</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Start Time" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap">18:08</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / No forecast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">No forecast</div>
+<div layer-name="Specimen / row no forecast" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / Badwater Basin" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px 0">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Badwater Basin</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">Death Valley National Park, CA</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="LightBadge / regular / No forecast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunrise</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">No forecast</div>
+</div>
+</div>
+<div layer-name="Start Time" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap">06:46</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / No such light today" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">No such light today</div>
+<div layer-name="Specimen / row no window" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / Haystack Rock" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px 0">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Haystack Rock</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">Cannon Beach, OR</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="No Window Today" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">No such light today</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Your own spot" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Your own spot</div>
+<div layer-name="Specimen / row yours" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / Backyard Ridge" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px 0">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Backyard Ridge</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">Boulder, CO</div>
+<div layer-name="ProvenanceTag / Added by you" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;padding:var(--spacing-xxs) var(--spacing-xs);border-radius:999px;border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Added by you</div>
+</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-good);color:var(--color-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Start Time" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap">17:48</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Selected" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Selected</div>
+<div layer-name="Specimen / row selected" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / Palouse Falls" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px var(--spacing-sm);background:var(--color-canvas-selection-tint);border-radius:var(--radius-control)">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Palouse Falls</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">Palouse Falls State Park, WA</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-light-ramp-great);color:var(--color-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">79</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Start Time" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-text-secondary);white-space:nowrap">17:42</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Dark Appearance" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xl);padding:20px;flex-shrink:0;background:var(--color-dark-background-window);border-radius:16px;border:1px solid var(--color-dark-canvas-specimen-border);width:780px">
+<div layer-name="Appearance Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption-strong);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption-strong);color:var(--color-dark-text-secondary);white-space:nowrap;letter-spacing:0.08em">DARK</div>
+<div layer-name="Section / Light states" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md)">
+<div layer-name="Section Title" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-dark-text-primary);white-space:nowrap">Light states</div>
+<div layer-name="Row / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Scored</div>
+<div layer-name="Specimen / row scored" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / Ancient Bristlecone Pine Forest" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px 0">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Ancient Bristlecone Pine Forest</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">White Mountains, CA</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">86</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Night</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Start Time" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap">19:54</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Scored, good" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Scored, good</div>
+<div layer-name="Specimen / row good" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / Hopi Point" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px 0">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Hopi Point</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">Grand Canyon National Park, AZ</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">73</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Start Time" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap">17:30</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Low confidence" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Low confidence</div>
+<div layer-name="Specimen / row low confidence" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / McWay Falls" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px 0">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">McWay Falls</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">Julia Pfeiffer Burns State Park, CA</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default);opacity:var(--opacity-low-confidence)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">73</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / Low" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Start Time" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap">18:08</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / No forecast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">No forecast</div>
+<div layer-name="Specimen / row no forecast" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / Badwater Basin" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px 0">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Badwater Basin</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">Death Valley National Park, CA</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="LightBadge / regular / No forecast" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<svg layer-name="NoForecastRing / 22" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" style="box-sizing:border-box;display:block;flex-shrink:0"><circle cx="11" cy="11" r="10.25" fill="none" style="stroke:var(--color-dark-status-no-forecast);stroke-width:var(--spacing-stroke-regular);stroke-dasharray:var(--spacing-stroke-dash-length) var(--spacing-stroke-dash-gap)"/></svg>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunrise</div>
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">No forecast</div>
+</div>
+</div>
+<div layer-name="Start Time" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap">06:46</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / No such light today" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">No such light today</div>
+<div layer-name="Specimen / row no window" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / Haystack Rock" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px 0">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Haystack Rock</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">Cannon Beach, OR</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="No Window Today" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">No such light today</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Your own spot" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Your own spot</div>
+<div layer-name="Specimen / row yours" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / Backyard Ridge" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px 0">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Backyard Ridge</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">Boulder, CO</div>
+<div layer-name="ProvenanceTag / Added by you" style="box-sizing:border-box;display:flex;flex-direction:row;align-items:center;flex-shrink:0;padding:var(--spacing-xxs) var(--spacing-xs);border-radius:999px;border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Label" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Added by you</div>
+</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Good" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-good);color:var(--color-dark-light-ramp-text-good);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">66</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Good</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Start Time" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap">17:48</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Row / Selected" style="box-sizing:border-box;display:flex;flex-direction:row;gap:24px;align-items:center">
+<div layer-name="Row Header" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;width:120px;flex-shrink:0">Selected</div>
+<div layer-name="Specimen / row selected" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:480px;flex-shrink:0">
+<div layer-name="ExploreRow / Palouse Falls" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-md);align-items:center;flex-shrink:0;width:480px;padding:8px var(--spacing-sm);background:var(--color-dark-canvas-selection-tint);border-radius:var(--radius-control)">
+<div layer-name="Spot" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);flex:1 1 0;min-width:0">
+<div layer-name="Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-dark-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Palouse Falls</div>
+<div layer-name="Locality Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center;min-width:0">
+<div layer-name="Locality" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">Palouse Falls State Park, WA</div>
+</div>
+</div>
+<div layer-name="Light Slot" style="box-sizing:border-box;width:112px;flex-shrink:0;display:flex;justify-content:flex-start">
+<div layer-name="Light" style="box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xxs);align-items:flex-start">
+<div layer-name="LightBadge / regular / Scored" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);align-items:center;flex-shrink:0">
+<div layer-name="ScoreChip / regular / Great" style="box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:36px;height:var(--spacing-size-badge-height);padding:0 var(--spacing-xs);background:var(--color-dark-light-ramp-great);color:var(--color-dark-light-ramp-text-great);border-radius:var(--radius-badge);border:var(--spacing-stroke-hairline) solid var(--color-dark-separator-default)">
+<div layer-name="Score" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-score-medium);font-weight:var(--font-weight-semibold);line-height:var(--leading-score-medium);font-variant-numeric:tabular-nums;white-space:nowrap">79</div>
+</div>
+<div layer-name="Text" style="box-sizing:border-box;display:flex;flex-direction:column;align-items:flex-start">
+<div layer-name="Window Name" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-primary);white-space:nowrap">Sunset</div>
+<div layer-name="Band Line" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center">
+<div layer-name="Band" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-regular);line-height:var(--leading-caption);color:var(--color-dark-text-secondary);white-space:nowrap">Great</div>
+<div layer-name="ConfidenceMark / Medium" style="box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-stroke-thin);align-items:flex-end;flex-shrink:0;height:var(--spacing-size-confidence-mark)">
+<div layer-name="Bar 1" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:4.666666666666667px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 2" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:9.333333333333334px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-text-secondary);flex-shrink:0"></div>
+<div layer-name="Bar 3" style="box-sizing:border-box;width:var(--spacing-stroke-thick);height:14px;border-radius:var(--spacing-stroke-thin);background:var(--color-dark-separator-default);flex-shrink:0"></div>
+</div>
+</div>
+</div>
+</div>
+<div layer-name="Start Time" style="box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time-small);font-weight:var(--font-weight-regular);line-height:var(--leading-time-small);font-variant-numeric:tabular-nums;color:var(--color-dark-text-secondary);white-space:nowrap">17:42</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
