@@ -1,6 +1,7 @@
 import SwiftUI
 import IterCore
 import IterDesign
+import IterData
 import IterFeatures
 
 /// The main window: sidebar and detail (plan 6.1-A, pattern #14).
@@ -26,8 +27,36 @@ struct RootView: View {
             restoreSelection()
         }
         .onChange(of: undoManager) { _, new in model.store.undoManager = new }
+        // A .iter file opened from Finder (or dropped on the Dock icon) lands here as a new trip.
+        .handlesExternalEvents(preferring: ["*"], allowing: ["*"])
+        .onOpenURL { url in importTrip(from: url) }
+        .alert(String(localized: "Couldn't open this trip", comment: "Alert title"), isPresented: $showsImportError) {
+            Button(String(localized: "OK", comment: "Alert button")) {}
+        } message: {
+            Text(importError)
+        }
         .onChange(of: navigation.selection) { _, new in
             storedSelection = try? JSONEncoder().encode(new)
+        }
+    }
+
+    @State private var showsImportError = false
+    @State private var importError = ""
+
+    private func importTrip(from url: URL) {
+        guard url.isFileURL else { return }
+        let scoped = url.startAccessingSecurityScopedResource()
+        defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+        do {
+            let document = try TripDocument.decode(Data(contentsOf: url))
+            let trip = model.store.importTrip(document)
+            navigation.show(.trip(trip.id))
+        } catch TripDocument.DocumentError.unsupportedVersion {
+            importError = String(localized: "It was made by a newer version of Iter.", comment: "Import error")
+            showsImportError = true
+        } catch {
+            importError = String(localized: "The file isn't a readable Iter trip.", comment: "Import error")
+            showsImportError = true
         }
     }
 
