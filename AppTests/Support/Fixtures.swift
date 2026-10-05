@@ -20,6 +20,8 @@ enum Fixtures {
         let store = IterStore(container: container)
         store.actionName = StoreActionText.name
         let defaults = UserDefaults(suiteName: "IterFixtures-\(UUID().uuidString)")!
+        // Sample weather is only ever shown in Sample Data mode, so the fixture switches the mode on like the app does.
+        defaults.set(weather == .sample, forKey: AppModel.sampleDataKey)
         let clock: @Sendable () -> Date = { now }
         let sample = CachedWeatherService(wrapping: SampleWeatherService(now: clock))
         let live: any WeatherProviding
