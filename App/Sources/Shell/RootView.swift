@@ -20,6 +20,7 @@ struct RootView: View {
         .environment(navigation)
         .frame(minWidth: IterSize.mainWindowMinWidth, minHeight: IterSize.windowMinHeight)
         .focusedSceneValue(\.navigation, navigation)
+        .appliesStoredPreferences()
         .onAppear {
             model.store.undoManager = undoManager
             restoreSelection()

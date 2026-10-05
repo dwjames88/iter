@@ -9,8 +9,9 @@ struct LightBadge: View {
 
     let window: LightWindow
     var style: Style = .regular
-    /// Show "Sample data" beside a score made from sample weather.
-    var showsSource = true
+    /// Show "Sample data" beside a score made from sample weather. Off by default for rows and pins: lists say it
+    /// once in their header (and the sidebar banner says it on every screen), so it does not repeat on every row.
+    var showsSource = false
 
     var body: some View {
         content

@@ -237,10 +237,14 @@ private struct ScoutResultsView: View {
 
     private var list: some View {
         VStack(spacing: 0) {
-            Text("\(found.count) places for \u{201C}\(model.submittedRequest)\u{201D}", comment: "Scout results header, with the request")
-                .font(IterFont.subheadline)
-                .foregroundStyle(IterColor.textSecondary)
-                .lineLimit(2)
+            HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
+                Text("\(found.count) places for \u{201C}\(model.submittedRequest)\u{201D}", comment: "Scout results header, with the request")
+                    .font(IterFont.subheadline)
+                    .foregroundStyle(IterColor.textSecondary)
+                    .lineLimit(2)
+                Spacer(minLength: 0)
+                if app.sampleDataEnabled { SampleDataLabel(style: .inline) }
+            }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, IterSpace.lg)
                 .padding(.vertical, IterSpace.sm)
@@ -355,7 +359,6 @@ private struct ScoutResultRow: View {
             HStack(spacing: IterSpace.sm) {
                 LightBadge(window: window, style: .compact)
                 Text(TimeText.day(day)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-                if window.assessment.lightScore?.source == .sample { SampleDataLabel(style: .inline) }
             }
         case .noForecast(let reason):
             HStack(spacing: IterSpace.sm) {
