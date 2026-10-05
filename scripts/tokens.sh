@@ -13,7 +13,7 @@ SCRATCH=()
 if [ -n "${ITER_SCRATCH:-}" ]; then SCRATCH=(--scratch-path "$ITER_SCRATCH"); fi
 
 case "${1:-export}" in
-  export) swift run "${SCRATCH[@]}" --package-path "$PKG" iter-tokens export --json "$JSON" --assets "$ASSETS" ;;
-  import) swift run "${SCRATCH[@]}" --package-path "$PKG" iter-tokens import --json "$JSON" --swift "$SWIFT" ;;
+  export) swift run ${SCRATCH[@]+"${SCRATCH[@]}"} --package-path "$PKG" iter-tokens export --json "$JSON" --assets "$ASSETS" ;;
+  import) swift run ${SCRATCH[@]+"${SCRATCH[@]}"} --package-path "$PKG" iter-tokens import --json "$JSON" --swift "$SWIFT" ;;
   *) echo "usage: scripts/tokens.sh [export|import]" >&2; exit 2 ;;
 esac

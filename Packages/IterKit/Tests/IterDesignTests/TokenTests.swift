@@ -234,10 +234,11 @@ struct ContrastTests {
         #expect((max(good, epic) + 0.05) / (min(good, epic) + 0.05) >= 1.8)
     }
 
+    // `brand/dot` is excluded: it is part of the logo, which WCAG 1.4.11 exempts, and it keeps the chosen file's gold.
     @Test(arguments: Mode.allCases) func graphicsAreAtLeast3To1OnTheWindow(_ mode: Mode) {
         let window = mode.hex("background/window")
         let control = mode.hex("background/control")
-        for n in ["accent/primary", "route/active", "route/inactive", "focus/ring", "status/noForecast", "map/moon", "brand/dot", "map/sun",
+        for n in ["accent/primary", "route/active", "route/inactive", "focus/ring", "status/noForecast", "map/moon", "map/sun",
                   "status/warning", "status/danger"] {
             #expect(contrast(mode.hex(n), window) >= 3, "\(n) \(mode) on window: \(contrast(mode.hex(n), window))")
             #expect(contrast(mode.hex(n), control) >= 3, "\(n) \(mode) on control: \(contrast(mode.hex(n), control))")

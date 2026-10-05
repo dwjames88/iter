@@ -10,7 +10,7 @@ Do not edit the generated files by hand. Edit `TokenValues.swift` (or `tokens.js
 
 ## The identity, in one paragraph (option C)
 
-Alpine is the land and the journey: the interface accent, route lines and connectors. First Light's coral is the light moment only: the logo dot and the sun marker. The Light Index is a single-hue ramp from neutral sand to deep amber, ordered by lightness, and the band word is always printed beside it. Status colours have their own hues and always come with an icon. Window, sidebar, list and control colours are the system's, not ours: text, separators and backgrounds are aliases of `labelColor`, `separatorColor`, `windowBackgroundColor` and friends.
+Alpine is the land and the journey: the interface accent, route lines and connectors. First Light's coral is the light moment only: the sun marker. The logo dot stays the gold of the chosen Step files until the owner decides on option C. The Light Index is a single-hue ramp from neutral sand to deep amber, ordered by lightness, and the band word is always printed beside it. Status colours have their own hues and always come with an icon. Window, sidebar, list and control colours are the system's, not ours: text, separators and backgrounds are aliases of `labelColor`, `separatorColor`, `windowBackgroundColor` and friends.
 
 ## Colour role rules (what each colour must never be used for)
 
@@ -19,7 +19,8 @@ Alpine is the land and the journey: the interface accent, route lines and connec
 | `accent/primary` (Alpine glacier teal) | Selection, primary actions, focus, icons that act | A score, a rating, "good", "done" or "success". Body text on a light background (use `accent/text`). |
 | `accent/text` | Accent-coloured words | A fill. |
 | `route/active`, `route/inactive` | Route lines, trip connectors, the switchback device | Pin colours for data, or any rating. Teal means "the way", never "good light". |
-| `brand/dot`, `map/sun` (First Light coral) | The logo dot and one sun marker | A score, a status, a button, a map pin, a large fill, text. At most one coral mark per view. It is not part of the ramp (we chose not to put coral at the top of it). |
+| `brand/dot` (the Step file's gold) | The logo dot | Anything but the logo. |
+| `map/sun` (First Light coral) | One sun marker | A score, a status, a button, a map pin, a large fill, text. At most one coral mark per view. It is not part of the ramp (we chose not to put coral at the top of it). |
 | `map/moon` | The moon marker | A status. |
 | `light/ramp/*` | The Light Index fill for a band | Green, red or coral. Shown without the band word or number. Used for anything that is not a Light Index value. |
 | `light/rampText/*` | Text and icons on the matching ramp fill | Text on any other ground. |
@@ -57,7 +58,8 @@ Window grounds: light `#ECECEC`, dark `#1E1E1E` (the resolved values of `windowB
 | `route/active` | 4.31 | 10.31 | graphic, 3:1 |
 | `route/inactive` | 3.73 | 5.33 | graphic, 3:1 |
 | `focus/ring` | 4.31 | 10.31 | graphic, 3:1 |
-| `brand/dot`, `map/sun` | 3.73 | 7.18 | graphic, 3:1 |
+| `map/sun` | 3.73 | 7.18 | graphic, 3:1 |
+| `brand/dot` | logo, exempt | logo, exempt | WCAG 1.4.11 exempts logos |
 | `map/moon` | 4.53 | 11.01 | graphic, 3:1 |
 | `status/warning` | 5.54 | 7.59 | text, 4.5:1 |
 | `status/danger` | 5.24 | 6.71 | text, 4.5:1 |
@@ -80,7 +82,7 @@ Every token, its values and its one job. Generated from the registry.
 | `focus/ring` | `#0A7C6E` | `#5FE0C8` |  | Keyboard focus ring on custom controls (3:1 or better against the window). Standard controls keep the system ring. |
 | `route/active` | `#0A7C6E` | `#5FE0C8` |  | The route line, trip connectors and the switchback device for the leg being looked at. Not a rating. |
 | `route/inactive` | `#5C7F79` | `#6F9A92` |  | Route lines and connectors for legs that are not selected. Still 3:1 against the window. |
-| `brand/dot` | `#D9431A` | `#FF8A5C` |  | First Light coral. The logo's dot and the sun marker on the arc: the light moment. Never a score, a status or a button. |
+| `brand/dot` | `#F5B72B` | `#F5B72B` |  | The logo's dot, as drawn in the chosen Step files (gold). Graphic only, never text. Whether it becomes First Light coral (option C) is the owner's call. |
 | `map/sun` | `#D9431A` | `#FF8A5C` |  | The sun marker on the sky arc and the timeline. One small mark; never a fill behind text. |
 | `map/moon` | `#5B6B8C` | `#C8D2EA` |  | The moon marker on the sky arc and the timeline. |
 | `status/warning` | `#7A3EB8` | `#C79BFF` |  | Something needs attention (a tight schedule, stale forecast). Violet, always with a warning icon. Never amber, coral or green. |

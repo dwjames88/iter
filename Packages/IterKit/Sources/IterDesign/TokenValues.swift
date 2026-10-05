@@ -13,7 +13,7 @@ public enum TokenValues {
         ColorToken("focus/ring", light: "#0A7C6E", dark: "#5FE0C8", "Keyboard focus ring on custom controls (3:1 or better against the window). Standard controls keep the system ring."),
         ColorToken("route/active", light: "#0A7C6E", dark: "#5FE0C8", "The route line, trip connectors and the switchback device for the leg being looked at. Not a rating."),
         ColorToken("route/inactive", light: "#5C7F79", dark: "#6F9A92", "Route lines and connectors for legs that are not selected. Still 3:1 against the window."),
-        ColorToken("brand/dot", light: "#D9431A", dark: "#FF8A5C", "First Light coral. The logo's dot and the sun marker on the arc: the light moment. Never a score, a status or a button."),
+        ColorToken("brand/dot", light: "#F5B72B", dark: "#F5B72B", "The logo's dot, as drawn in the chosen Step files (gold). Graphic only, never text. Whether it becomes First Light coral (option C) is the owner's call."),
         ColorToken("map/sun", light: "#D9431A", dark: "#FF8A5C", "The sun marker on the sky arc and the timeline. One small mark; never a fill behind text."),
         ColorToken("map/moon", light: "#5B6B8C", dark: "#C8D2EA", "The moon marker on the sky arc and the timeline."),
         ColorToken("status/warning", light: "#7A3EB8", dark: "#C79BFF", "Something needs attention (a tight schedule, stale forecast). Violet, always with a warning icon. Never amber, coral or green."),
