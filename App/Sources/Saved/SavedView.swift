@@ -30,11 +30,11 @@ struct SavedView: View {
         .sheet(item: $editing) { record in
             SpotEditorSheet(mode: .edit(record))
         }
-        .confirmationDialog(deleteTitle, isPresented: Binding(get: { pendingDelete != nil }, set: { if !$0 { pendingDelete = nil } }),
+        .confirmationDialog(LightText.deleteTitle(pendingDelete?.name ?? ""), isPresented: Binding(get: { pendingDelete != nil }, set: { if !$0 { pendingDelete = nil } }),
                             titleVisibility: .visible, presenting: pendingDelete) { record in
-            Button(role: .destructive) { delete(record) } label: { Text("Delete Spot", comment: "Button") }
+            Button(role: .destructive) { delete(record) } label: { Text(LightText.deleteSpot) }
         } message: { record in
-            Text("It is also removed from \(record.stops?.count ?? 0) trip stops. You can undo this.", comment: "Delete spot warning; number of trip stops using it")
+            Text(LightText.deleteMessage(stops: record.stops?.count ?? 0))
         }
     }
 
@@ -48,10 +48,6 @@ struct SavedView: View {
             let score = SavedLight.headline(model, spot)?.window.score
             return SavedItem(id: record.id, spot: spot, todayScore: score)
         }
-    }
-
-    private var deleteTitle: String {
-        String(localized: "Delete \u{201C}\(pendingDelete?.name ?? "")\u{201D}?", comment: "Delete spot confirmation title")
     }
 
     // MARK: Empty

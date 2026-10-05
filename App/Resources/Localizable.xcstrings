@@ -822,10 +822,27 @@
       "comment" : "WeatherKit setup step"
     },
     "It is also removed from %lld trip stops. You can undo this with Edit > Undo." : {
-      "comment" : "Delete spot confirmation message"
-    },
-    "It is also removed from %lld trip stops. You can undo this." : {
-      "comment" : "Delete spot warning; number of trip stops using it"
+      "comment" : "Delete spot confirmation message",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "It is also removed from %lld trip stop. You can undo this with Edit > Undo."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "It is also removed from %lld trip stops. You can undo this with Edit > Undo."
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "It was made by a newer version of Iter." : {
       "comment" : "Import error"

@@ -299,6 +299,8 @@ extension LightText {
     static let edit = String(localized: "Edit", comment: "Button")
     static let delete = String(localized: "Delete", comment: "Button")
 
+    static let deleteSpot = String(localized: "Delete Spot", comment: "Button")
+
     static func deleteTitle(_ name: String) -> String {
         String(localized: "Delete “\(name)”?", comment: "Delete spot confirmation title")
     }

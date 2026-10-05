@@ -42,7 +42,7 @@ struct SpotHeaderView: View {
             SpotEditorSheet(mode: .edit(record))
         }
         .confirmationDialog(LightText.deleteTitle(spot.name), isPresented: $confirmingDelete, titleVisibility: .visible) {
-            Button(LightText.delete, role: .destructive) { deleteSpot() }
+            Button(LightText.deleteSpot, role: .destructive) { deleteSpot() }
         } message: {
             Text(LightText.deleteMessage(stops: record?.stops?.count ?? 0))
         }
