@@ -54,7 +54,7 @@ case "idle":
 case "keysdown":
     var down: [String] = []
     let f = CGEventSource.flagsState(.combinedSessionState)
-    let names: [(CGEventFlags, String)] = [(.maskShift, "shift"), (.maskControl, "control"), (.maskAlternate, "alt"), (.maskCommand, "command"), (.maskSecondaryFn, "fn")]
+    let names: [(CGEventFlags, String)] = [(.maskShift, "shift"), (.maskControl, "control"), (.maskAlternate, "alt"), (.maskCommand, "command")]  // fn omitted: synthetic arrow keys leave it set in the combined state
     for (m, n) in names where f.contains(m) { down.append(n) }
     for k in 0...127 where CGEventSource.keyState(.combinedSessionState, key: CGKeyCode(k)) { down.append("key\(k)") }
     for (b, n) in [(CGMouseButton.left, "mouseLeft"), (.right, "mouseRight"), (.center, "mouseCenter")] where CGEventSource.buttonState(.combinedSessionState, button: b) { down.append(n) }

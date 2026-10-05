@@ -1,4 +1,3 @@
-paste/foundations/001-F01-colour.html
 paste/foundations/003-F03-spacing-radii.html
 paste/foundations/004-F04-elevation.html
 paste/foundations/005-F05-iconography.html

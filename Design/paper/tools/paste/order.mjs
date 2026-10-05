@@ -5,7 +5,8 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '../..'); // Design/paper
 const pages = ['foundations', 'components', 'screens-light', 'screens-dark', 'flows'];
-const skip = new Set(['paste/foundations/002-F02-type-scale.html']);
+// F02 is on the canvas (reviewed); F01 is partial on the canvas and stays for the owner to delete or the agent to finish after the reset.
+const skip = new Set(['paste/foundations/001-F01-colour.html', 'paste/foundations/002-F02-type-scale.html']);
 const out = [];
 let total = 0;
 for (const p of pages) {

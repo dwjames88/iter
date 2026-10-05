@@ -112,6 +112,12 @@ case "$cmd" in
     "$BIN/paperctl" waitfront "$PAPER_BID" 3 >/dev/null || { log "ABORT Paper not frontmost"; exit 5; }
     log "Paper frontmost"
     require_title
+    # deselect first (trial 2: a pasted artboard stays selected; Escape after the paste settles clears it,
+    # so the next paste lands at top level instead of possibly inside the previous board)
+    if [[ "$(front_bid)" != "$PAPER_BID" ]] || ! keys_none; then log "ABORT focus/keys before Escape"; exit 5; fi
+    /usr/bin/osascript -e 'tell application "System Events" to key code 53' || { log "ABORT osascript failed"; exit 5; }
+    log "KEY escape sent (deselect)"
+    sleep 0.6
     # (e) last-moment checks, then keystroke
     if [[ "$(front_bid)" != "$PAPER_BID" ]] || ! keys_none; then
       log "ABORT focus changed or keys down before keystroke"; print -u2 "ABORT focus/keys before keystroke"; exit 5
@@ -148,6 +154,29 @@ case "$cmd" in
     done
     sleep 2
     shoot "undo" undo
+    ;;
+
+  key) # key escape|right  (deselect / one nudge test only; never text)
+    k="${1:?usage: key escape|right}"
+    case "$k" in escape) code=53 ;; right) code=124 ;; *) print -u2 "only escape|right"; exit 2 ;; esac
+    require_title
+    guard_owner 1.0
+    if [[ "$(front_bid)" != "$PAPER_BID" ]] || ! keys_none; then log "ABORT focus/keys before key $k"; print -u2 "ABORT"; exit 5; fi
+    /usr/bin/osascript -e "tell application \"System Events\" to key code $code" || { log "ABORT osascript failed"; exit 5; }
+    log "KEY $k sent"
+    sleep 1.5
+    shoot "key-$k" key
+    ;;
+
+  click) # click <winX> <winY>  window-relative points, on a spot confirmed empty from a screenshot (deselect only)
+    cx="${1:?usage: click <winX> <winY>}"; cy="${2:?}"
+    require_title
+    guard_owner 1.0
+    if [[ "$(front_bid)" != "$PAPER_BID" ]] || ! keys_none; then log "ABORT focus/keys before click"; print -u2 "ABORT"; exit 5; fi
+    "$BIN/paperctl" click $((WX + cx)) $((WY + cy)) >/dev/null || { log "ABORT click failed"; exit 5; }
+    log "CLICK window-relative $cx,$cy (screen $((WX + cx)),$((WY + cy)))"
+    sleep 1.5
+    shoot "click" click
     ;;
 
   back)
