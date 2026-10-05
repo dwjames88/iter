@@ -10,14 +10,12 @@ CAT="$ROOT/App/Resources/Assets.xcassets"
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
-# Brand colours: First Light (firstlight-deep). The source SVGs in Brand/logo keep #F5B72B as a placeholder dot colour (and
-# currentColor for the ink) that this script substitutes; the app icon source keeps #0A0A0A ground, #FFFFFF mark, #F5B72B dot.
-INK_LIGHT="#1E0F0A"; INK_DARK="#FFF4E8"; DOT_LIGHT="#D9431A"; DOT_DARK="#FF8A5C"
-ICON_GROUND="#1E0F0A"; ICON_MARK="#FFF4E8"; ICON_DOT="#FF8A5C"
+# The Brand/logo SVGs are First Light already (ground #1E0F0A, ink/mark #1E0F0A light or #FFF4E8 dark, dot #D9431A light or
+# #FF8A5C dark), so nothing is recoloured here. The only edits: the icon loses its rounded corners, and the Mono files, which
+# are currentColor only, are written out as black templates. The retired gold files live in Brand/logo/_retired (not read).
 
-# --- App icon: full-bleed square (drop the rounded rect), First Light ground, mark and dot -----------------------------------
-sed -e 's/ rx="[0-9.]*"//' -e "s/fill=\"#0A0A0A\"/fill=\"$ICON_GROUND\"/g" -e "s/fill=\"#FFFFFF\"/fill=\"$ICON_MARK\"/g" \
-    -e "s/fill=\"#F5B72B\"/fill=\"$ICON_DOT\"/g" "$LOGO/app-icon.svg" > "$WORK/app-icon-square.svg"
+# --- App icon: full-bleed square (drop the rounded rect rx); ground, mark and dot come from the file ---------------------------
+sed -e 's/ rx="[0-9.]*"//' "$LOGO/app-icon.svg" > "$WORK/app-icon-square.svg"
 
 cat > "$WORK/render.swift" <<'SWIFT'
 import AppKit
@@ -63,7 +61,7 @@ open(sys.argv[1], "a").write("\n")
 PY
 
 # --- In-app logo image sets (vector, single scale) --------------------------------------------------------------------
-# currentColor does not survive an asset catalog, so the colours are written out. Logo/Symbol have a light file and a
+# currentColor does not survive an asset catalog, so the Logo/Symbol files carry written-out colours. Logo/Symbol have a light file and a
 # dark-appearance file; the Mono sets are black template images that tint to whatever the view's foreground style is.
 imageset() { # name, light svg, dark svg (or empty), template (yes/no)
   local dir="$CAT/$1.imageset"; rm -rf "$dir"; mkdir -p "$dir"
@@ -82,14 +80,12 @@ open(path, "a").write("\n")
 PY
   if [ -n "${3:-}" ]; then cp "$3" "$dir/$1-dark.svg"; fi
 }
-recolor() { sed -e "s/currentColor/$1/g" -e "s/#F5B72B/$2/g" "$3"; }
+recolor() { sed -e "s/currentColor/$1/g" "$2"; }
 for name in lockup symbol; do
-  recolor "$INK_LIGHT" "$DOT_LIGHT" "$LOGO/$name.svg" > "$WORK/$name-light.svg"
-  recolor "$INK_DARK" "$DOT_DARK" "$LOGO/$name.svg" > "$WORK/$name-dark.svg"
-  recolor "#000000" "#000000" "$LOGO/$name-mono.svg" > "$WORK/$name-mono.svg"
+  recolor "#000000" "$LOGO/$name-mono.svg" > "$WORK/$name-mono.svg"
 done
-imageset Logo "$WORK/lockup-light.svg" "$WORK/lockup-dark.svg" no
-imageset Symbol "$WORK/symbol-light.svg" "$WORK/symbol-dark.svg" no
+imageset Logo "$LOGO/lockup.svg" "$LOGO/lockup-dark.svg" no
+imageset Symbol "$LOGO/symbol.svg" "$LOGO/symbol-dark.svg" no
 imageset LogoMono "$WORK/lockup-mono.svg" "" yes
 imageset SymbolMono "$WORK/symbol-mono.svg" "" yes
 echo "icon and logo assets written to $CAT"
