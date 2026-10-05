@@ -8,7 +8,7 @@ import IterFeatures
 @MainActor
 @Suite(.serialized) struct ExploreSnapshotTests {
     private func screen(_ model: AppModel, configure: (@MainActor (ExploreModel) -> Void)? = nil) -> some View {
-        Fixtures.host(NavigationStack { ExploreView(configure: configure).spotDestination() }, model: model)
+        Fixtures.host(Fixtures.inDetailColumn(NavigationStack { ExploreView(configure: configure).spotDestination() }), model: model)
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func defaultState() async throws {

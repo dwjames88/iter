@@ -4,6 +4,7 @@ import IterCore
 import IterData
 import IterServices
 import IterFeatures
+import IterDesign
 @testable import Iter
 
 /// Deterministic app states for snapshots and app tests: in-memory store, fixed clock, sample or absent weather,
@@ -43,6 +44,23 @@ enum Fixtures {
             .environment(model)
             .environment(navigation)
             .modelContainer(model.store.container)
+    }
+}
+
+extension Fixtures {
+    /// `view` as the detail column of the real window: a flat stand-in for the sidebar (its ideal width, 240) on the
+    /// left and the view in the remaining width. Screens that split their own width (Explore and Scout results use
+    /// a list of 300...520 beside a map) lay out differently in a full-width bare window than beside the sidebar,
+    /// most of all in the compact window (list 479 wide bare, 360 in the real shell).
+    static func inDetailColumn<V: View>(_ view: V) -> some View {
+        GeometryReader { geo in
+            HStack(spacing: 0) {
+                IterColor.backgroundSystemWindow
+                    .frame(width: IterSize.sidebarIdeal)
+                    .overlay(alignment: .trailing) { Divider() }
+                view.frame(width: max(0, geo.size.width - IterSize.sidebarIdeal))
+            }
+        }
     }
 }
 

@@ -89,11 +89,11 @@ private struct FailingGeocoder: Geocoding {
         let running = scoutModel(model, state: .running(stage: .searching("Portland, Oregon"), started: Fixtures.now.addingTimeInterval(-14)), request: Self.request)
         try await Snapshot.render(Fixtures.host(Self.screen(ScoutView(model: running)), model: model), screen: "scout", state: "running")
         let results = scoutModel(model, state: .results(Self.suggestions()), request: Self.request)
-        try await Snapshot.render(Fixtures.host(Self.screen(ScoutView(model: results)), model: model), screen: "scout", state: "results", settle: .seconds(1))
+        try await Snapshot.render(Fixtures.host(Fixtures.inDetailColumn(Self.screen(ScoutView(model: results))), model: model), screen: "scout", state: "results", settle: .seconds(1))
 
         let bare = Fixtures.model(weather: .notEnabled)
         let noForecast = scoutModel(bare, state: .results(Self.suggestions()), request: Self.request)
-        try await Snapshot.render(Fixtures.host(Self.screen(ScoutView(model: noForecast)), model: bare), screen: "scout", state: "results-noforecast", settle: .seconds(1))
+        try await Snapshot.render(Fixtures.host(Fixtures.inDetailColumn(Self.screen(ScoutView(model: noForecast))), model: bare), screen: "scout", state: "results-noforecast", settle: .seconds(1))
 
         let unavailable: [(String, ScoutAvailability)] = [("unavailable-not-enabled", .appleIntelligenceNotEnabled),
                                                           ("unavailable-device", .deviceNotEligible),
