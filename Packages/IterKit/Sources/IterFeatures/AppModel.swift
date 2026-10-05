@@ -30,6 +30,7 @@ public final class AppModel {
     public var now: () -> Date
 
     @ObservationIgnored private let liveWeather: any WeatherProviding
+    @ObservationIgnored private let sampleWeather: any WeatherProviding
     @ObservationIgnored private let defaults: UserDefaults
     public static let sampleDataKey = "IterSampleDataEnabled"
 
@@ -39,11 +40,13 @@ public final class AppModel {
                 geocoder: any Geocoding,
                 drives: any DriveTimeProviding,
                 scout: (any Scouting)?,
+                sampleWeather: any WeatherProviding = CachedWeatherService(wrapping: SampleWeatherService()),
                 ephemeris: any Ephemeris = Astronomy(),
                 defaults: UserDefaults = .standard,
                 now: @escaping () -> Date = { Date() }) {
         self.store = store
         self.liveWeather = weather
+        self.sampleWeather = sampleWeather
         self.search = search
         self.geocoder = geocoder
         self.drives = drives
@@ -54,7 +57,7 @@ public final class AppModel {
         self.scheduler = TripScheduler(engine: engine)
         let sample = defaults.bool(forKey: Self.sampleDataKey)
         self.sampleDataEnabled = sample
-        self.forecasts = ForecastCenter(provider: sample ? CachedWeatherService(wrapping: SampleWeatherService()) : weather)
+        self.forecasts = ForecastCenter(provider: sample ? sampleWeather : weather)
     }
 
     public var ephemeris: any Ephemeris { engine.ephemeris }
@@ -73,7 +76,7 @@ public final class AppModel {
         guard enabled != sampleDataEnabled else { return }
         sampleDataEnabled = enabled
         defaults.set(enabled, forKey: Self.sampleDataKey)
-        forecasts.replaceProvider(enabled ? CachedWeatherService(wrapping: SampleWeatherService()) : liveWeather)
+        forecasts.replaceProvider(enabled ? sampleWeather : liveWeather)
     }
 
     public func loadAttribution() async {
