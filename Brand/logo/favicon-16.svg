@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+<!-- 16px grid; stem, dot and 1px step snapped to whole pixels -->
+<path fill="currentColor" d="M6 15V10H7V5H10V10H9V15Z"/>
+<path fill="#F5B72B" d="M7 2.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0Z"/>
+</svg>

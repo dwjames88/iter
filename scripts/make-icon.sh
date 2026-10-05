@@ -10,12 +10,14 @@ CAT="$ROOT/App/Resources/Assets.xcassets"
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
-# Brand colours: Alpine ink for the wordmark (it is currentColor in the source); the dot keeps the chosen Step file's gold.
-# Option C (coral for the light moment) would set DOT_LIGHT="#D9431A" DOT_DARK="#FF8A5C"; that is the owner's call.
-INK_LIGHT="#0F2A20"; INK_DARK="#EEF4F1"; DOT_LIGHT="#F5B72B"; DOT_DARK="#F5B72B"
+# Brand colours: First Light (firstlight-deep). The source SVGs in Brand/logo keep #F5B72B as a placeholder dot colour (and
+# currentColor for the ink) that this script substitutes; the app icon source keeps #0A0A0A ground, #FFFFFF mark, #F5B72B dot.
+INK_LIGHT="#1E0F0A"; INK_DARK="#FFF4E8"; DOT_LIGHT="#D9431A"; DOT_DARK="#FF8A5C"
+ICON_GROUND="#1E0F0A"; ICON_MARK="#FFF4E8"; ICON_DOT="#FF8A5C"
 
-# --- App icon: full-bleed square (drop the rounded rect), the file's gold dot on the near-black ground -------------------------
-sed -e 's/ rx="[0-9.]*"//' -e "s/#F5B72B/$DOT_DARK/g" "$LOGO/app-icon.svg" > "$WORK/app-icon-square.svg"
+# --- App icon: full-bleed square (drop the rounded rect), First Light ground, mark and dot -----------------------------------
+sed -e 's/ rx="[0-9.]*"//' -e "s/fill=\"#0A0A0A\"/fill=\"$ICON_GROUND\"/g" -e "s/fill=\"#FFFFFF\"/fill=\"$ICON_MARK\"/g" \
+    -e "s/fill=\"#F5B72B\"/fill=\"$ICON_DOT\"/g" "$LOGO/app-icon.svg" > "$WORK/app-icon-square.svg"
 
 cat > "$WORK/render.swift" <<'SWIFT'
 import AppKit
