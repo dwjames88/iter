@@ -1,0 +1,595 @@
+{
+ "apple.intelligence": [
+  "App/Sources/Spot/DayWindowsView.swift:213",
+  "App/Sources/Spot/DayWindowsView.swift:231",
+  "Design/SCREENS.md:346",
+  "Design/SCREENS.md:352",
+  "Design/COMPONENTS.md:413",
+  "Design/COMPONENTS.md:413"
+ ],
+ "arrow.clockwise": [
+  "App/Sources/Spot/WhenToGoView.swift:89",
+  "App/Sources/Spot/DayWindowsView.swift:108",
+  "Design/SCREENS.md:348",
+  "Design/COMPONENTS.md:366"
+ ],
+ "arrow.down.circle": [
+  "App/Sources/Scout/ScoutText.swift:87",
+  "Design/SCREENS.md:444"
+ ],
+ "arrow.right.circle": [
+  "App/Sources/Saved/SavedView.swift:147",
+  "App/Sources/Explore/ExploreActions.swift:40"
+ ],
+ "arrow.up.arrow.down": [
+  "App/Sources/Explore/ExploreView.swift:196",
+  "App/Sources/Trips/TripPlanList.swift:198",
+  "Design/SCREENS.md:281",
+  "Design/COMPONENTS.md:267"
+ ],
+ "arrow.uturn.backward": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "arrowtriangle.down.fill": [
+  "App/Sources/Explore/ExplorePinView.swift:66"
+ ],
+ "binoculars": [
+  "App/Sources/Shell/SidebarView.swift:27",
+  "Design/SCREENS.md:110"
+ ],
+ "bookmark": [
+  "App/Sources/Saved/SavedView.swift:61",
+  "App/Sources/Shell/SidebarView.swift:29",
+  "App/Sources/Scout/ScoutView.swift:343",
+  "App/Sources/Explore/ExploreActions.swift:50",
+  "App/Sources/Explore/ExplorePlaceCard.swift:107",
+  "App/Sources/Spot/SpotHeaderView.swift:65",
+  "Design/SCREENS.md:110",
+  "Design/SCREENS.md:319",
+  "Design/SCREENS.md:374",
+  "Design/COMPONENTS.md:486"
+ ],
+ "bookmark.fill": [
+  "App/Sources/Scout/ScoutView.swift:343",
+  "App/Sources/Explore/ExplorePlaceCard.swift:105",
+  "App/Sources/Trips/AddStopPopover.swift:80",
+  "App/Sources/Spot/SpotHeaderView.swift:65",
+  "Design/SCREENS.md:319",
+  "Design/COMPONENTS.md:283",
+  "Design/COMPONENTS.md:353",
+  "Design/COMPONENTS.md:486"
+ ],
+ "bookmark.slash": [
+  "App/Sources/Saved/SavedView.swift:154",
+  "App/Sources/Saved/SavedView.swift:158",
+  "App/Sources/Explore/ExploreActions.swift:48"
+ ],
+ "building.2": [
+  "App/Sources/Text/LightText.swift:258"
+ ],
+ "building.columns": [
+  "App/Sources/Text/LightText.swift:251"
+ ],
+ "calendar": [
+  "App/Sources/Trips/TripBuilderView.swift:157",
+  "Design/SCREENS.md:205",
+  "Design/COMPONENTS.md:210"
+ ],
+ "car": [
+  "App/Sources/Scout/ScoutView.swift:324",
+  "Design/COMPONENTS.md:486"
+ ],
+ "car.fill": [
+  "App/Sources/Trips/StopRow.swift:255",
+  "Design/COMPONENTS.md:257"
+ ],
+ "character.bubble": [
+  "App/Sources/Scout/ScoutText.swift:119",
+  "Design/SCREENS.md:447"
+ ],
+ "checkmark": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "checkmark.circle": [
+  "App/Sources/Settings/SettingsView.swift:137",
+  "App/Sources/Settings/SettingsView.swift:208",
+  "App/Sources/Trips/TripsHomeView.swift:204",
+  "Design/SCREENS.md:157",
+  "Design/SCREENS.md:462",
+  "Design/SCREENS.md:472",
+  "Design/COMPONENTS.md:193"
+ ],
+ "checkmark.circle.fill": [
+  "App/Sources/Trips/AddStopPopover.swift:88",
+  "Design/COMPONENTS.md:283"
+ ],
+ "chevron.down": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "chevron.forward.2": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "chevron.left": [
+  "App/Sources/Explore/ExploreView.swift:113",
+  "Design/SCREENS.md:278"
+ ],
+ "chevron.right": [
+  "App/Sources/Explore/ExploreView.swift:130",
+  "App/Sources/Trips/TripsHomeView.swift:113",
+  "App/Sources/Spot/DayWindowsView.swift:60",
+  "Design/SCREENS.md:278",
+  "Design/COMPONENTS.md:202",
+  "Design/COMPONENTS.md:392"
+ ],
+ "chevron.right.2": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "chevron.up": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "chevron.up.chevron.down": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "clock": [
+  "App/Sources/Spot/SpotFactsView.swift:28",
+  "Design/COMPONENTS.md:461"
+ ],
+ "cloud": [
+  "Packages/IterKit/Sources/IterServices/Weather/SampleWeatherService.swift:178",
+  "Packages/IterKit/Sources/IterServices/Weather/SampleWeatherService.swift:181"
+ ],
+ "cloud.bolt.rain": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "cloud.bolt.rain.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "cloud.drizzle": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "cloud.drizzle.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "cloud.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "cloud.fog": [
+  "Packages/IterKit/Sources/IterServices/Weather/SampleWeatherService.swift:180"
+ ],
+ "cloud.fog.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "cloud.heavyrain.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "cloud.moon": [
+  "Packages/IterKit/Sources/IterServices/Weather/SampleWeatherService.swift:176",
+  "Packages/IterKit/Sources/IterServices/Weather/SampleWeatherService.swift:177"
+ ],
+ "cloud.moon.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "cloud.rain": [
+  "Packages/IterKit/Sources/IterServices/Weather/SampleWeatherService.swift:179"
+ ],
+ "cloud.rain.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "cloud.slash": [
+  "App/Sources/Explore/ExploreListPanel.swift:54",
+  "App/Sources/Spot/LightTimelineView.swift:132",
+  "Design/SCREENS.md:265",
+  "Design/SCREENS.md:296",
+  "Design/SCREENS.md:347",
+  "Design/COMPONENTS.md:295",
+  "Design/COMPONENTS.md:427"
+ ],
+ "cloud.sleet.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "cloud.snow": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "cloud.snow.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "cloud.sun": [
+  "App/Sources/Settings/SettingsView.swift:24",
+  "Packages/IterKit/Sources/IterServices/Weather/SampleWeatherService.swift:176",
+  "Packages/IterKit/Sources/IterServices/Weather/SampleWeatherService.swift:177",
+  "Design/SCREENS.md:456"
+ ],
+ "cloud.sun.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "desktopcomputer": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "doc": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "doc.on.doc": [
+  "App/Sources/Explore/ExploreActions.swift:64"
+ ],
+ "dot.radiowaves.left.and.right": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "drop": [
+  "App/Sources/Text/LightText.swift:256"
+ ],
+ "ellipsis": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "ellipsis.circle": [
+  "App/Sources/Trips/TripBuilderView.swift:125",
+  "Design/SCREENS.md:219"
+ ],
+ "envelope": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "exclamationmark.triangle": [
+  "App/Sources/Scout/ScoutText.swift:92",
+  "App/Sources/Scout/ScoutText.swift:123",
+  "App/Sources/Explore/ExploreListPanel.swift:82",
+  "App/Sources/Components/SpotEditorSheet.swift:219",
+  "Design/SCREENS.md:284",
+  "Design/SCREENS.md:447",
+  "Design/SCREENS.md:475",
+  "Design/COMPONENTS.md:133"
+ ],
+ "exclamationmark.triangle.fill": [
+  "App/Sources/Settings/SettingsView.swift:141",
+  "App/Sources/Settings/SettingsView.swift:146",
+  "App/Sources/Components/SpotEditorSheet.swift:229",
+  "App/Sources/Trips/ChangeDatesSheet.swift:48",
+  "App/Sources/Trips/StopRow.swift:144",
+  "App/Sources/Trips/StopRow.swift:263",
+  "Design/SCREENS.md:177",
+  "Design/SCREENS.md:397",
+  "Design/SCREENS.md:471",
+  "Design/COMPONENTS.md:133",
+  "Design/COMPONENTS.md:135"
+ ],
+ "externaldrive": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "figure.walk": [
+  "App/Sources/Text/LightText.swift:252",
+  "App/Sources/Spot/SpotFactsView.swift:19",
+  "Design/COMPONENTS.md:461"
+ ],
+ "flask": [
+  "App/Sources/Components/SampleDataLabel.swift:12",
+  "App/Sources/Components/SampleDataLabel.swift:27",
+  "Design/COMPONENTS.md:106",
+  "Design/COMPONENTS.md:107"
+ ],
+ "folder": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "gearshape": [
+  "App/Sources/Settings/SettingsView.swift:21",
+  "Design/SCREENS.md:456"
+ ],
+ "globe": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "hand.raised": [
+  "App/Sources/Scout/ScoutText.swift:110",
+  "Design/SCREENS.md:446"
+ ],
+ "icloud.slash": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "info.circle": [
+  "App/Sources/Settings/SettingsView.swift:30",
+  "Design/SCREENS.md:456"
+ ],
+ "line.3.horizontal": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "line.3.horizontal.decrease.circle": [
+  "App/Sources/Saved/SavedView.swift:129",
+  "App/Sources/Saved/SavedView.swift:136",
+  "App/Sources/Explore/ExploreView.swift:178",
+  "App/Sources/Explore/ExploreListPanel.swift:182",
+  "Design/SCREENS.md:280",
+  "Design/SCREENS.md:297",
+  "Design/SCREENS.md:363"
+ ],
+ "line.3.horizontal.decrease.circle.fill": [
+  "App/Sources/Explore/ExploreView.swift:178"
+ ],
+ "link": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "list.bullet": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "location": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "location.north.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "location.north.line": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "lock": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "macbook.slash": [
+  "App/Sources/Scout/ScoutText.swift:77",
+  "Design/SCREENS.md:443"
+ ],
+ "magnifyingglass": [
+  "App/Sources/Scout/ScoutText.swift:105",
+  "App/Sources/Explore/ExploreListPanel.swift:95",
+  "App/Sources/Trips/AddStopPopover.swift:48"
+ ],
+ "map": [
+  "App/Sources/Shell/SidebarView.swift:16",
+  "App/Sources/Explore/ExploreActions.swift:59",
+  "App/Sources/Trips/TripBuilderView.swift:41",
+  "App/Sources/Spot/SpotHeaderView.swift:71",
+  "Design/SCREENS.md:109",
+  "Design/SCREENS.md:319"
+ ],
+ "mappin": [
+  "App/Sources/Components/SpotEditorSheet.swift:126",
+  "Design/COMPONENTS.md:161"
+ ],
+ "mappin.and.ellipse": [
+  "App/Sources/Explore/ExploreView.swift:100",
+  "App/Sources/Explore/ExploreMapPane.swift:151",
+  "Design/SCREENS.md:282",
+  "Design/SCREENS.md:298",
+  "Design/COMPONENTS.md:340"
+ ],
+ "mappin.circle.fill": [
+  "App/Sources/Explore/ExploreMapPane.swift:56",
+  "App/Sources/Explore/ExploreMapPane.swift:184",
+  "Design/COMPONENTS.md:310"
+ ],
+ "mappin.slash": [
+  "App/Sources/Explore/ExploreListPanel.swift:172",
+  "Design/SCREENS.md:300"
+ ],
+ "message": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "minus": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "minus.magnifyingglass": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "moon.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "moon.haze": [
+  "App/Sources/Text/LightText.swift:45",
+  "App/Sources/Text/LightText.swift:54"
+ ],
+ "moon.stars": [
+  "App/Sources/Text/LightText.swift:46",
+  "App/Sources/Text/LightText.swift:55",
+  "App/Sources/Trips/StopRow.swift:229",
+  "App/Sources/Spot/WhenToGoView.swift:110",
+  "App/Sources/Spot/DayWindowsView.swift:30",
+  "Packages/IterKit/Sources/IterServices/Weather/SampleWeatherService.swift:175",
+  "Design/SCREENS.md:349",
+  "Design/COMPONENTS.md:258",
+  "Design/COMPONENTS.md:372",
+  "Design/COMPONENTS.md:386"
+ ],
+ "moon.stars.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "moonphase.first.quarter": [
+  "App/Sources/Spot/SpotText.swift:223"
+ ],
+ "moonphase.full.moon": [
+  "App/Sources/Spot/SpotText.swift:225"
+ ],
+ "moonphase.last.quarter": [
+  "App/Sources/Spot/SpotText.swift:227"
+ ],
+ "moonphase.new.moon": [
+  "App/Sources/Spot/SpotText.swift:221"
+ ],
+ "moonphase.waning.crescent": [
+  "App/Sources/Spot/SpotText.swift:228"
+ ],
+ "moonphase.waning.gibbous": [
+  "App/Sources/Spot/SpotText.swift:226"
+ ],
+ "moonphase.waxing.crescent": [
+  "App/Sources/Spot/SpotText.swift:222"
+ ],
+ "moonphase.waxing.gibbous": [
+  "App/Sources/Spot/SpotText.swift:224"
+ ],
+ "mountain.2": [
+  "App/Sources/Text/LightText.swift:249",
+  "App/Sources/Spot/SpotFactsView.swift:21",
+  "Design/COMPONENTS.md:461"
+ ],
+ "note.text": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "pawprint": [
+  "App/Sources/Text/LightText.swift:254"
+ ],
+ "pencil": [
+  "App/Sources/Saved/SavedView.swift:151",
+  "App/Sources/Spot/SpotHeaderView.swift:80",
+  "Design/SCREENS.md:319"
+ ],
+ "person.crop.circle": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "photo": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "plus": [
+  "App/Sources/Shell/SidebarView.swift:50",
+  "App/Sources/Trips/TripPlanList.swift:75",
+  "App/Sources/Trips/TripsHomeView.swift:37",
+  "Design/SCREENS.md:112",
+  "Design/SCREENS.md:137",
+  "Design/SCREENS.md:215",
+  "Design/COMPONENTS.md:218"
+ ],
+ "plus.circle": [
+  "App/Sources/Components/AddToTripMenu.swift:36",
+  "App/Sources/Trips/AddStopPopover.swift:88",
+  "App/Sources/Trips/TripsHomeView.swift:196",
+  "Design/SCREENS.md:156",
+  "Design/SCREENS.md:319",
+  "Design/SCREENS.md:489",
+  "Design/COMPONENTS.md:146",
+  "Design/COMPONENTS.md:193",
+  "Design/COMPONENTS.md:283"
+ ],
+ "plus.magnifyingglass": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "point.topleft.down.to.point.bottomright.curvepath": [
+  "App/Sources/Shell/SidebarView.swift:19",
+  "Design/SCREENS.md:109"
+ ],
+ "safari": [
+  "App/Sources/Spot/SpotFactsView.swift:23",
+  "Design/COMPONENTS.md:461"
+ ],
+ "scope": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "sidebar.left": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "sidebar.right": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "smoke.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "snowflake": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "sparkle.magnifyingglass": [
+  "App/Sources/Shell/SidebarView.swift:31",
+  "Design/SCREENS.md:110"
+ ],
+ "sparkles": [
+  "App/Sources/Settings/SettingsView.swift:27",
+  "App/Sources/Scout/ScoutView.swift:331",
+  "App/Sources/Scout/ScoutText.swift:72",
+  "App/Sources/Scout/ScoutText.swift:82",
+  "App/Sources/Text/LightText.swift:250",
+  "Design/SCREENS.md:442",
+  "Design/SCREENS.md:456",
+  "Design/COMPONENTS.md:486"
+ ],
+ "square.and.arrow.down": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "square.and.arrow.up": [
+  "App/Sources/Trips/TripBuilderView.swift:102",
+  "App/Sources/Spot/SpotHeaderView.swift:75",
+  "Design/SCREENS.md:219",
+  "Design/SCREENS.md:319"
+ ],
+ "square.on.square": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "star": [
+  "Design/COMPONENTS.md:332"
+ ],
+ "star.fill": [
+  "Design/COMPONENTS.md:332"
+ ],
+ "sun.dust": [
+  "App/Sources/Text/LightText.swift:255"
+ ],
+ "sun.haze.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "sun.horizon": [
+  "App/Sources/Explore/ExploreView.swift:149",
+  "App/Sources/Text/LightText.swift:42",
+  "App/Sources/Trips/TripPlanList.swift:169",
+  "App/Sources/Spot/SpotFactsView.swift:25",
+  "Design/SCREENS.md:279",
+  "Design/COMPONENTS.md:226",
+  "Design/COMPONENTS.md:461"
+ ],
+ "sun.horizon.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "sun.max": [
+  "App/Sources/Spot/WhenToGoView.swift:112",
+  "App/Sources/Spot/DayWindowsView.swift:30",
+  "Packages/IterKit/Sources/IterServices/Weather/SampleWeatherService.swift:175",
+  "Design/SCREENS.md:349",
+  "Design/COMPONENTS.md:372",
+  "Design/COMPONENTS.md:386"
+ ],
+ "sun.max.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "sunrise": [
+  "App/Sources/Text/LightText.swift:43",
+  "App/Sources/Text/LightText.swift:52",
+  "App/Sources/Spot/WhenToGoView.swift:116",
+  "Design/COMPONENTS.md:193",
+  "Design/COMPONENTS.md:372"
+ ],
+ "sunrise.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "sunset": [
+  "App/Sources/Text/LightText.swift:44",
+  "App/Sources/Text/LightText.swift:53",
+  "App/Sources/Spot/WhenToGoView.swift:119",
+  "Design/COMPONENTS.md:193",
+  "Design/COMPONENTS.md:372"
+ ],
+ "sunset.fill": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "text.line.first.and.arrowtriangle.forward": [
+  "App/Sources/Scout/ScoutText.swift:114",
+  "Design/SCREENS.md:447"
+ ],
+ "text.magnifyingglass": [
+  "App/Sources/Scout/ScoutView.swift:113",
+  "Design/SCREENS.md:438"
+ ],
+ "trash": [
+  "App/Sources/Saved/SavedView.swift:152",
+  "App/Sources/Spot/SpotHeaderView.swift:83",
+  "Design/SCREENS.md:319"
+ ],
+ "tree": [
+  "App/Sources/Text/LightText.swift:257"
+ ],
+ "water.waves": [
+  "App/Sources/Text/LightText.swift:253"
+ ],
+ "wind": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "wind.snow": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "xmark": [
+  "added: design chrome / weather mapping (not literal in source)"
+ ],
+ "xmark.circle.fill": [
+  "App/Sources/Explore/ExplorePlaceCard.swift:36",
+  "App/Sources/Trips/AddStopPopover.swift:52",
+  "Design/COMPONENTS.md:332"
+ ]
+}

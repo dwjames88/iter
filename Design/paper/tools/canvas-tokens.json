@@ -1,0 +1,351 @@
+{
+  "$comment": "Canvas-only values: things Iter's tokens.json does not hold because macOS draws them (window chrome, glass, materials, system control fills, map placeholder) plus the canvas furniture around artboards (labels, notes, specimen frames). Edit here, then run `node Design/paper/tools/gen-tokens.mjs`. A colour is {light, dark}; each side is a CSS colour string or {\"from\": \"<tokens.json colour name>\", \"alpha\": 0.16} which gen-tokens resolves from tokens.json (so a retheme flows through). Keys starting with 'shadow/' are box-shadow strings (not sent to Paper). Values are chosen to match macOS 26 (Tahoe) light and dark appearance. Materials are drawn translucent with a backdrop blur (materialSurface() in lib/chrome.mjs); backdrop-filter support in Paper is unconfirmed, so the fill opacity alone must read acceptably: material fills are 92-96% opaque.",
+  "$lineHeightsComment": "Line heights are not in tokens.json. These are Apple's default macOS leading per text style (Human Interface Guidelines, 'Typography', macOS built-in text styles table: size/leading in points).",
+  "lineHeights": {
+    "largeTitle": {
+      "size": 26,
+      "lineHeight": 32
+    },
+    "title": {
+      "size": 22,
+      "lineHeight": 26
+    },
+    "title2": {
+      "size": 17,
+      "lineHeight": 22
+    },
+    "title3": {
+      "size": 15,
+      "lineHeight": 20
+    },
+    "headline": {
+      "size": 13,
+      "lineHeight": 16
+    },
+    "body": {
+      "size": 13,
+      "lineHeight": 16
+    },
+    "callout": {
+      "size": 12,
+      "lineHeight": 15
+    },
+    "subheadline": {
+      "size": 11,
+      "lineHeight": 14
+    },
+    "footnote": {
+      "size": 10,
+      "lineHeight": 13
+    },
+    "caption": {
+      "size": 10,
+      "lineHeight": 13
+    }
+  },
+  "fontFamilies": {
+    "sans": "\"SF Pro\", \"SF Pro Text\", -apple-system, system-ui, sans-serif",
+    "serif": "\"New York\", ui-serif, serif"
+  },
+  "colors": {
+    "desktop": {
+      "light": "#D4D6DC",
+      "dark": "#0E0F12",
+      "$description": "Desktop/canvas behind a window (visible in the window's rounded corners)."
+    },
+    "artboard": {
+      "light": "#F4F4F6",
+      "dark": "#151517",
+      "$description": "Background of foundations and component artboards."
+    },
+    "label/title": {
+      "light": "#1D1D1F",
+      "dark": "#F5F5F7",
+      "$description": "Artboard title on component sheets."
+    },
+    "label/body": {
+      "light": "#6E6E73",
+      "dark": "#98989D",
+      "$description": "Artboard captions, column headers, specimen labels."
+    },
+    "flow/arrow": {
+      "light": "#8E8E93",
+      "dark": "#8E8E93",
+      "$description": "Arrows and connectors on flow artboards."
+    },
+    "specimen/background": {
+      "light": "#FFFFFF",
+      "dark": "#1E1E1E",
+      "$description": "Specimen frame fill on component sheets."
+    },
+    "specimen/border": {
+      "light": "rgba(0,0,0,0.10)",
+      "dark": "rgba(255,255,255,0.12)",
+      "$description": "Specimen frame outline."
+    },
+    "window/outline": {
+      "light": "rgba(0,0,0,0.20)",
+      "dark": "rgba(255,255,255,0.20)",
+      "$description": "1px window frame outline."
+    },
+    "shadow/window": {
+      "light": "0 0 0 0.5px rgba(0,0,0,0.22), 0 22px 70px 4px rgba(0,0,0,0.30)",
+      "dark": "0 0 0 0.5px rgba(0,0,0,0.9), 0 22px 70px 4px rgba(0,0,0,0.60)",
+      "$description": "Window drop shadow."
+    },
+    "traffic/close": {
+      "light": "#FF5F57",
+      "dark": "#FF5F57",
+      "$description": "Traffic light: close."
+    },
+    "traffic/close-stroke": {
+      "light": "#E2463F",
+      "dark": "#E2463F"
+    },
+    "traffic/minimize": {
+      "light": "#FEBC2E",
+      "dark": "#FEBC2E",
+      "$description": "Traffic light: minimise."
+    },
+    "traffic/minimize-stroke": {
+      "light": "#DEA123",
+      "dark": "#DEA123"
+    },
+    "traffic/zoom": {
+      "light": "#28C840",
+      "dark": "#28C840",
+      "$description": "Traffic light: zoom."
+    },
+    "traffic/zoom-stroke": {
+      "light": "#1AAB29",
+      "dark": "#1AAB29"
+    },
+    "chrome/titlebar": {
+      "light": "rgba(236,236,236,0.0)",
+      "dark": "rgba(30,30,30,0.0)",
+      "$description": "Title bar / toolbar glass fill. macOS 26 draws it clear over the content."
+    },
+    "chrome/sidebar": {
+      "light": "rgba(250,250,250,0.72)",
+      "dark": "rgba(255,255,255,0.07)",
+      "$description": "Floating sidebar glass panel fill (over background/window)."
+    },
+    "chrome/sidebar-stroke": {
+      "light": "rgba(0,0,0,0.06)",
+      "dark": "rgba(255,255,255,0.08)",
+      "$description": "Sidebar panel hairline."
+    },
+    "chrome/control": {
+      "light": "rgba(255,255,255,0.78)",
+      "dark": "rgba(255,255,255,0.11)",
+      "$description": "Toolbar control capsule (glass button) fill."
+    },
+    "chrome/control-stroke": {
+      "light": "rgba(0,0,0,0.08)",
+      "dark": "rgba(255,255,255,0.10)",
+      "$description": "Toolbar control capsule outline."
+    },
+    "chrome/control-active": {
+      "light": "rgba(0,0,0,0.10)",
+      "dark": "rgba(255,255,255,0.20)",
+      "$description": "Toggled toolbar control fill."
+    },
+    "shadow/control": {
+      "light": "0 1px 3px rgba(0,0,0,0.12), 0 0 0 0.5px rgba(0,0,0,0.04)",
+      "dark": "0 1px 3px rgba(0,0,0,0.35)",
+      "$description": "Toolbar control shadow."
+    },
+    "material/regular": {
+      "light": "rgba(246,246,246,0.93)",
+      "dark": "rgba(46,46,48,0.92)",
+      "$description": "regularMaterial (place card, Add Spot banner, route day picker)."
+    },
+    "material/bar": {
+      "light": "rgba(236,236,236,0.95)",
+      "dark": "rgba(36,36,38,0.95)",
+      "$description": "bar material (Saved footer)."
+    },
+    "material/stroke": {
+      "light": "rgba(0,0,0,0.08)",
+      "dark": "rgba(255,255,255,0.10)",
+      "$description": "Hairline around materials."
+    },
+    "shadow/material": {
+      "light": "0 2px 12px rgba(0,0,0,0.14)",
+      "dark": "0 2px 14px rgba(0,0,0,0.45)",
+      "$description": "Floating material shadow."
+    },
+    "scrim/sheet": {
+      "light": "rgba(0,0,0,0.16)",
+      "dark": "rgba(0,0,0,0.40)",
+      "$description": "Dimming scrim behind a sheet."
+    },
+    "sheet/background": {
+      "light": "#F2F2F2",
+      "dark": "#2A2A2C",
+      "$description": "Sheet and alert panel fill. Opaque enough to read without blur."
+    },
+    "shadow/sheet": {
+      "light": "0 0 0 0.5px rgba(0,0,0,0.18), 0 18px 60px rgba(0,0,0,0.30)",
+      "dark": "0 0 0 0.5px rgba(255,255,255,0.14), 0 18px 60px rgba(0,0,0,0.60)",
+      "$description": "Sheet shadow."
+    },
+    "menu/background": {
+      "light": "rgba(248,248,248,0.96)",
+      "dark": "rgba(48,48,50,0.96)",
+      "$description": "Menu and popover glass fill."
+    },
+    "menu/stroke": {
+      "light": "rgba(0,0,0,0.12)",
+      "dark": "rgba(255,255,255,0.16)",
+      "$description": "Menu and popover outline."
+    },
+    "menu/highlight": {
+      "light": {
+        "from": "accent/primary",
+        "alpha": 1
+      },
+      "dark": {
+        "from": "accent/primary",
+        "alpha": 1
+      },
+      "$description": "Highlighted menu item fill (system accent)."
+    },
+    "shadow/menu": {
+      "light": "0 8px 30px rgba(0,0,0,0.24), 0 0 0 0.5px rgba(0,0,0,0.10)",
+      "dark": "0 8px 30px rgba(0,0,0,0.55), 0 0 0 0.5px rgba(0,0,0,0.6)",
+      "$description": "Menu and popover shadow."
+    },
+    "map/ground": {
+      "light": "#ECEBE6",
+      "dark": "#232426",
+      "$description": "Map placeholder ground."
+    },
+    "map/line": {
+      "light": "rgba(0,0,0,0.08)",
+      "dark": "rgba(255,255,255,0.08)",
+      "$description": "Faint roads and contours on the map placeholder."
+    },
+    "map/line-major": {
+      "light": "rgba(0,0,0,0.13)",
+      "dark": "rgba(255,255,255,0.13)",
+      "$description": "Slightly stronger road on the map placeholder."
+    },
+    "map/label": {
+      "light": "rgba(60,60,67,0.45)",
+      "dark": "rgba(235,235,245,0.38)",
+      "$description": "Map placeholder caption."
+    },
+    "selection/tint": {
+      "light": {
+        "from": "accent/primary",
+        "alpha": 0.16
+      },
+      "dark": {
+        "from": "accent/primary",
+        "alpha": 0.16
+      },
+      "$description": "Selection tint: accent at 16% (sidebar pill, list selection)."
+    },
+    "control/button": {
+      "light": "#FFFFFF",
+      "dark": "rgba(255,255,255,0.13)",
+      "$description": "Bordered button, pop-up button and stepper fill."
+    },
+    "control/button-stroke": {
+      "light": "rgba(0,0,0,0.12)",
+      "dark": "rgba(255,255,255,0.10)",
+      "$description": "Bordered button outline."
+    },
+    "shadow/button": {
+      "light": "0 0.5px 1.5px rgba(0,0,0,0.14)",
+      "dark": "0 0.5px 1.5px rgba(0,0,0,0.4)",
+      "$description": "Bordered button shadow."
+    },
+    "control/segmented-track": {
+      "light": "rgba(0,0,0,0.07)",
+      "dark": "rgba(255,255,255,0.10)",
+      "$description": "Segmented control track."
+    },
+    "control/segmented-thumb": {
+      "light": "#FFFFFF",
+      "dark": "rgba(255,255,255,0.20)",
+      "$description": "Segmented control selected segment."
+    },
+    "control/field": {
+      "light": "#FFFFFF",
+      "dark": "rgba(255,255,255,0.06)",
+      "$description": "Text field fill."
+    },
+    "control/field-stroke": {
+      "light": "rgba(0,0,0,0.14)",
+      "dark": "rgba(255,255,255,0.14)",
+      "$description": "Text field outline."
+    },
+    "control/checkbox": {
+      "light": "#FFFFFF",
+      "dark": "rgba(255,255,255,0.10)",
+      "$description": "Unchecked checkbox fill."
+    },
+    "control/checkbox-stroke": {
+      "light": "rgba(0,0,0,0.28)",
+      "dark": "rgba(255,255,255,0.28)",
+      "$description": "Checkbox outline."
+    },
+    "control/group": {
+      "light": "#FFFFFF",
+      "dark": "rgba(255,255,255,0.06)",
+      "$description": "Grouped form section fill."
+    },
+    "note/background": {
+      "light": "#FFF7D1",
+      "dark": "#3B3515",
+      "$description": "Annotation note card fill."
+    },
+    "note/border": {
+      "light": "#E6D27A",
+      "dark": "#6E6128",
+      "$description": "Annotation note card border."
+    },
+    "note/text": {
+      "light": "#473D0E",
+      "dark": "#F1E7B0",
+      "$description": "Annotation note card text."
+    }
+  },
+  "opacities": {
+    "$comment": "Opacity literals the app hard-codes (COMPONENTS.md deviation 7: not tokens in the app yet). Source: ScoreChip in App/Sources/Components/LightBadge.swift, SpotLayout.swift, WhenToGoView.fade(). CANVAS-ONLY: not in Design/tokens.json.",
+    "low-confidence": {
+      "value": 0.85,
+      "$description": "Low-confidence ScoreChip opacity (LightBadge.swift)."
+    },
+    "selection-tint": {
+      "value": 0.16,
+      "$description": "Selection fill opacity (SpotLayout.selectedFillOpacity)."
+    },
+    "window-tint": {
+      "value": 0.2,
+      "$description": "Timeline window tint (SpotLayout.windowTintOpacity)."
+    },
+    "cloud-fill": {
+      "value": 0.5,
+      "$description": "Cloud layer fill (SpotLayout.cloudFillOpacity)."
+    },
+    "below-horizon": {
+      "value": 0.35,
+      "$description": "Sky arc below the horizon (SpotLayout.belowHorizonOpacity)."
+    },
+    "outlook-fade-medium": {
+      "value": 0.8,
+      "$description": "Outlook cell fade, days 4-7 (WhenToGoView.fade)."
+    },
+    "outlook-fade-low": {
+      "value": 0.6,
+      "$description": "Outlook cell fade, later days (WhenToGoView.fade)."
+    },
+    "disabled": {
+      "value": 0.4,
+      "$description": "Disabled system control (canvas approximation)."
+    }
+  }
+}

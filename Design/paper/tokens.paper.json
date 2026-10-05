@@ -1,0 +1,1664 @@
+[
+  {
+    "type": "color",
+    "name": "color-text-primary",
+    "value": "#1E0F0A",
+    "description": "Primary text: First Light ink (espresso / warm cream)."
+  },
+  {
+    "type": "color",
+    "name": "color-text-secondary",
+    "value": "#6B5A51",
+    "description": "Secondary text, 4.5:1 or better on paper, cards and the system window."
+  },
+  {
+    "type": "color",
+    "name": "color-text-tertiary",
+    "value": "#A6958B",
+    "description": "Decoration and placeholders only; never information."
+  },
+  {
+    "type": "color",
+    "name": "color-text-quaternary",
+    "value": "#CDBDB2",
+    "description": "Disabled text."
+  },
+  {
+    "type": "color",
+    "name": "color-separator-default",
+    "value": "#E6D6C8",
+    "description": "Hairlines and dividers, warm."
+  },
+  {
+    "type": "color",
+    "name": "color-background-window",
+    "value": "#FFF8F0",
+    "description": "First Light paper: the ground of the app's own content (spot page, trip builder, trips home, list panels)."
+  },
+  {
+    "type": "color",
+    "name": "color-background-control",
+    "value": "#FFFDF9",
+    "description": "Cards and lifted surfaces on paper."
+  },
+  {
+    "type": "color",
+    "name": "color-background-content",
+    "value": "#FFFDF9",
+    "description": "Lists, text areas and pin labels on paper."
+  },
+  {
+    "type": "color",
+    "name": "color-background-system-window",
+    "value": "#ECECEC",
+    "description": "The system window colour, for snapshot stand-ins of system-drawn surfaces (sidebar, settings). Not for the app's own content."
+  },
+  {
+    "type": "color",
+    "name": "color-accent-primary",
+    "value": "#D9431A",
+    "description": "First Light coral. Interface accent: fills, icons, selection tint, focus, large text. Not small text on paper (4.18:1; use accent/text). Never a score, a status or an error."
+  },
+  {
+    "type": "color",
+    "name": "color-accent-text",
+    "value": "#B5360F",
+    "description": "Accent as words (links, small labels) on paper or cards: 5.70:1 light, 8.30:1 dark."
+  },
+  {
+    "type": "color",
+    "name": "color-accent-hover",
+    "value": "#C83D17",
+    "description": "Accent fill while the pointer is over a custom control."
+  },
+  {
+    "type": "color",
+    "name": "color-accent-pressed",
+    "value": "#B23510",
+    "description": "Accent fill while a custom control is pressed."
+  },
+  {
+    "type": "color",
+    "name": "color-accent-disabled",
+    "value": "#EBC3B2",
+    "description": "Accent fill or icon on a disabled custom control. Decorative contrast by design; pair with text/quaternary."
+  },
+  {
+    "type": "color",
+    "name": "color-accent-emphasis",
+    "value": "#B5360F",
+    "description": "Accent fill behind small text (the Best tag, stop numbers): accent/onAccent on it is 6.0:1 light, 8.3:1 dark."
+  },
+  {
+    "type": "color",
+    "name": "color-accent-on-accent",
+    "value": "#FFFFFF",
+    "description": "Text or icon on accent/emphasis (any size) or on accent/primary (icons and large text only: 4.40:1 light)."
+  },
+  {
+    "type": "color",
+    "name": "color-focus-ring",
+    "value": "#D9431A",
+    "description": "Keyboard focus ring on custom controls (3:1 or better against the window). Standard controls keep the system ring."
+  },
+  {
+    "type": "color",
+    "name": "color-route-active",
+    "value": "#D9431A",
+    "description": "The route line, trip connectors and the switchback device for the leg being looked at. Not a rating."
+  },
+  {
+    "type": "color",
+    "name": "color-route-inactive",
+    "value": "#9C7B70",
+    "description": "Route lines and connectors for legs that are not selected. Warm grey-coral, 3:1 or better on paper."
+  },
+  {
+    "type": "color",
+    "name": "color-status-warning",
+    "value": "#7A3EB8",
+    "description": "Something needs attention (a tight schedule, stale forecast). Violet, always with a warning icon. Never amber, coral or green."
+  },
+  {
+    "type": "color",
+    "name": "color-status-danger",
+    "value": "#A3115C",
+    "description": "A destructive action or a failure. Raspberry, always with an icon and words. Kept 40+ deg (OKLCH) from the coral accent so it never reads as the brand."
+  },
+  {
+    "type": "color",
+    "name": "color-status-no-forecast",
+    "value": "#6E6E73",
+    "description": "No forecast: the hollow ring and dashed arc. Neutral by design; it is never a score colour."
+  },
+  {
+    "type": "color",
+    "name": "color-light-ramp-poor",
+    "value": "#E4DCCB",
+    "description": "Light Index fill, Poor band. Sand. Single hue ramp, ordered by lightness. Always printed with the band word."
+  },
+  {
+    "type": "color",
+    "name": "color-light-ramp-fair",
+    "value": "#D8C08E",
+    "description": "Light Index fill, Fair band."
+  },
+  {
+    "type": "color",
+    "name": "color-light-ramp-good",
+    "value": "#D9A646",
+    "description": "Light Index fill, Good band. Amber, not green."
+  },
+  {
+    "type": "color",
+    "name": "color-light-ramp-great",
+    "value": "#986808",
+    "description": "Light Index fill, Great band."
+  },
+  {
+    "type": "color",
+    "name": "color-light-ramp-epic",
+    "value": "#6B3800",
+    "description": "Light Index fill, Epic band. Deepest amber in light mode, brightest in dark mode."
+  },
+  {
+    "type": "color",
+    "name": "color-light-ramp-text-poor",
+    "value": "#2B2112",
+    "description": "Band word or number on light/ramp/poor (4.5:1 or better)."
+  },
+  {
+    "type": "color",
+    "name": "color-light-ramp-text-fair",
+    "value": "#2B2112",
+    "description": "Band word or number on light/ramp/fair."
+  },
+  {
+    "type": "color",
+    "name": "color-light-ramp-text-good",
+    "value": "#2B1A00",
+    "description": "Band word or number on light/ramp/good."
+  },
+  {
+    "type": "color",
+    "name": "color-light-ramp-text-great",
+    "value": "#FFFFFF",
+    "description": "Band word or number on light/ramp/great."
+  },
+  {
+    "type": "color",
+    "name": "color-light-ramp-text-epic",
+    "value": "#FFFFFF",
+    "description": "Band word or number on light/ramp/epic."
+  },
+  {
+    "type": "color",
+    "name": "color-sky-night",
+    "value": "#0B1530",
+    "description": "Timeline band: night."
+  },
+  {
+    "type": "color",
+    "name": "color-sky-blue-hour",
+    "value": "#3A4FA0",
+    "description": "Timeline band: blue hour and twilight."
+  },
+  {
+    "type": "color",
+    "name": "color-sky-golden",
+    "value": "#F0B35A",
+    "description": "Timeline band: golden hour. Sky only; the Light Index uses light/ramp."
+  },
+  {
+    "type": "color",
+    "name": "color-sky-day",
+    "value": "#CFE3F2",
+    "description": "Timeline band: daylight."
+  },
+  {
+    "type": "color",
+    "name": "color-cloud-low",
+    "value": "#8A94A3",
+    "description": "Low cloud layer fill in the cloud-by-altitude chart."
+  },
+  {
+    "type": "color",
+    "name": "color-cloud-mid",
+    "value": "#B4BCC8",
+    "description": "Mid cloud layer fill."
+  },
+  {
+    "type": "color",
+    "name": "color-cloud-high",
+    "value": "#DCE1E8",
+    "description": "High cloud layer fill."
+  },
+  {
+    "type": "color",
+    "name": "color-map-pin",
+    "value": "#D9431A",
+    "description": "Selected spot pin and trip stop pins for the day being looked at."
+  },
+  {
+    "type": "color",
+    "name": "color-map-pin-inactive",
+    "value": "#857369",
+    "description": "Trip stop pins outside the day being looked at, and unselected stand-in pins."
+  },
+  {
+    "type": "color",
+    "name": "color-map-sun",
+    "value": "#D9431A",
+    "description": "The sun marker on the sky arc and the timeline. The light moment; never a fill behind text."
+  },
+  {
+    "type": "color",
+    "name": "color-map-moon",
+    "value": "#5B6B8C",
+    "description": "The moon marker on the sky arc and the timeline."
+  },
+  {
+    "type": "color",
+    "name": "color-brand-dot",
+    "value": "#D9431A",
+    "description": "The logo's dot (First Light coral). Graphic only, never text."
+  },
+  {
+    "type": "color",
+    "name": "color-selection-fill",
+    "value": "#FBE6DB",
+    "description": "Selected row, day or window in the app's own views, with an accent/primary stroke. Text on it keeps text/* colours: text/primary 15.47:1 and text/secondary 5.44:1 light, 13.81:1 and 6.62:1 dark; accent/text 4.98:1 light."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-desktop",
+    "value": "#D4D6DC",
+    "description": "Desktop/canvas behind a window (visible in the window's rounded corners)."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-artboard",
+    "value": "#F4F4F6",
+    "description": "Background of foundations and component artboards."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-label-title",
+    "value": "#1D1D1F",
+    "description": "Artboard title on component sheets."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-label-body",
+    "value": "#6E6E73",
+    "description": "Artboard captions, column headers, specimen labels."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-flow-arrow",
+    "value": "#8E8E93",
+    "description": "Arrows and connectors on flow artboards."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-specimen-background",
+    "value": "#FFFFFF",
+    "description": "Specimen frame fill on component sheets."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-specimen-border",
+    "value": "rgba(0,0,0,0.10)",
+    "description": "Specimen frame outline."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-window-outline",
+    "value": "rgba(0,0,0,0.20)",
+    "description": "1px window frame outline."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-traffic-close",
+    "value": "#FF5F57",
+    "description": "Traffic light: close."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-traffic-close-stroke",
+    "value": "#E2463F",
+    "description": ""
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-traffic-minimize",
+    "value": "#FEBC2E",
+    "description": "Traffic light: minimise."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-traffic-minimize-stroke",
+    "value": "#DEA123",
+    "description": ""
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-traffic-zoom",
+    "value": "#28C840",
+    "description": "Traffic light: zoom."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-traffic-zoom-stroke",
+    "value": "#1AAB29",
+    "description": ""
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-chrome-titlebar",
+    "value": "rgba(236,236,236,0.0)",
+    "description": "Title bar / toolbar glass fill. macOS 26 draws it clear over the content."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-chrome-sidebar",
+    "value": "rgba(250,250,250,0.72)",
+    "description": "Floating sidebar glass panel fill (over background/window)."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-chrome-sidebar-stroke",
+    "value": "rgba(0,0,0,0.06)",
+    "description": "Sidebar panel hairline."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-chrome-control",
+    "value": "rgba(255,255,255,0.78)",
+    "description": "Toolbar control capsule (glass button) fill."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-chrome-control-stroke",
+    "value": "rgba(0,0,0,0.08)",
+    "description": "Toolbar control capsule outline."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-chrome-control-active",
+    "value": "rgba(0,0,0,0.10)",
+    "description": "Toggled toolbar control fill."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-material-regular",
+    "value": "rgba(246,246,246,0.93)",
+    "description": "regularMaterial (place card, Add Spot banner, route day picker)."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-material-bar",
+    "value": "rgba(236,236,236,0.95)",
+    "description": "bar material (Saved footer)."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-material-stroke",
+    "value": "rgba(0,0,0,0.08)",
+    "description": "Hairline around materials."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-scrim-sheet",
+    "value": "rgba(0,0,0,0.16)",
+    "description": "Dimming scrim behind a sheet."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-sheet-background",
+    "value": "#F2F2F2",
+    "description": "Sheet and alert panel fill. Opaque enough to read without blur."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-menu-background",
+    "value": "rgba(248,248,248,0.96)",
+    "description": "Menu and popover glass fill."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-menu-stroke",
+    "value": "rgba(0,0,0,0.12)",
+    "description": "Menu and popover outline."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-menu-highlight",
+    "value": "var(--color-accent-primary)",
+    "description": "Highlighted menu item fill (system accent)."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-map-ground",
+    "value": "#ECEBE6",
+    "description": "Map placeholder ground."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-map-line",
+    "value": "rgba(0,0,0,0.08)",
+    "description": "Faint roads and contours on the map placeholder."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-map-line-major",
+    "value": "rgba(0,0,0,0.13)",
+    "description": "Slightly stronger road on the map placeholder."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-map-label",
+    "value": "rgba(60,60,67,0.45)",
+    "description": "Map placeholder caption."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-selection-tint",
+    "value": "color-mix(in srgb, var(--color-accent-primary) 16%, transparent)",
+    "description": "Selection tint: accent at 16% (sidebar pill, list selection)."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-control-button",
+    "value": "#FFFFFF",
+    "description": "Bordered button, pop-up button and stepper fill."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-control-button-stroke",
+    "value": "rgba(0,0,0,0.12)",
+    "description": "Bordered button outline."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-control-segmented-track",
+    "value": "rgba(0,0,0,0.07)",
+    "description": "Segmented control track."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-control-segmented-thumb",
+    "value": "#FFFFFF",
+    "description": "Segmented control selected segment."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-control-field",
+    "value": "#FFFFFF",
+    "description": "Text field fill."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-control-field-stroke",
+    "value": "rgba(0,0,0,0.14)",
+    "description": "Text field outline."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-control-checkbox",
+    "value": "#FFFFFF",
+    "description": "Unchecked checkbox fill."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-control-checkbox-stroke",
+    "value": "rgba(0,0,0,0.28)",
+    "description": "Checkbox outline."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-control-group",
+    "value": "#FFFFFF",
+    "description": "Grouped form section fill."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-note-background",
+    "value": "#FFF7D1",
+    "description": "Annotation note card fill."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-note-border",
+    "value": "#E6D27A",
+    "description": "Annotation note card border."
+  },
+  {
+    "type": "color",
+    "name": "color-canvas-note-text",
+    "value": "#473D0E",
+    "description": "Annotation note card text."
+  },
+  {
+    "type": "color",
+    "name": "color-dark-text-primary",
+    "value": "#FFF4E8",
+    "description": "Primary text: First Light ink (espresso / warm cream). (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-text-secondary",
+    "value": "#BBA99D",
+    "description": "Secondary text, 4.5:1 or better on paper, cards and the system window. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-text-tertiary",
+    "value": "#7A685E",
+    "description": "Decoration and placeholders only; never information. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-text-quaternary",
+    "value": "#4F423B",
+    "description": "Disabled text. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-separator-default",
+    "value": "#3A2C26",
+    "description": "Hairlines and dividers, warm. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-background-window",
+    "value": "#150C0A",
+    "description": "First Light paper: the ground of the app's own content (spot page, trip builder, trips home, list panels). (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-background-control",
+    "value": "#1F1512",
+    "description": "Cards and lifted surfaces on paper. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-background-content",
+    "value": "#1F1512",
+    "description": "Lists, text areas and pin labels on paper. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-background-system-window",
+    "value": "#1E1E1E",
+    "description": "The system window colour, for snapshot stand-ins of system-drawn surfaces (sidebar, settings). Not for the app's own content. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-accent-primary",
+    "value": "#FF8A5C",
+    "description": "First Light coral. Interface accent: fills, icons, selection tint, focus, large text. Not small text on paper (4.18:1; use accent/text). Never a score, a status or an error. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-accent-text",
+    "value": "#FF8A5C",
+    "description": "Accent as words (links, small labels) on paper or cards: 5.70:1 light, 8.30:1 dark. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-accent-hover",
+    "value": "#FF9E78",
+    "description": "Accent fill while the pointer is over a custom control. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-accent-pressed",
+    "value": "#F07A4C",
+    "description": "Accent fill while a custom control is pressed. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-accent-disabled",
+    "value": "#5E3426",
+    "description": "Accent fill or icon on a disabled custom control. Decorative contrast by design; pair with text/quaternary. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-accent-emphasis",
+    "value": "#FF8A5C",
+    "description": "Accent fill behind small text (the Best tag, stop numbers): accent/onAccent on it is 6.0:1 light, 8.3:1 dark. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-accent-on-accent",
+    "value": "#150C0A",
+    "description": "Text or icon on accent/emphasis (any size) or on accent/primary (icons and large text only: 4.40:1 light). (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-focus-ring",
+    "value": "#FF8A5C",
+    "description": "Keyboard focus ring on custom controls (3:1 or better against the window). Standard controls keep the system ring. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-route-active",
+    "value": "#FF8A5C",
+    "description": "The route line, trip connectors and the switchback device for the leg being looked at. Not a rating. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-route-inactive",
+    "value": "#8F6E62",
+    "description": "Route lines and connectors for legs that are not selected. Warm grey-coral, 3:1 or better on paper. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-status-warning",
+    "value": "#C79BFF",
+    "description": "Something needs attention (a tight schedule, stale forecast). Violet, always with a warning icon. Never amber, coral or green. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-status-danger",
+    "value": "#FF77AE",
+    "description": "A destructive action or a failure. Raspberry, always with an icon and words. Kept 40+ deg (OKLCH) from the coral accent so it never reads as the brand. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-status-no-forecast",
+    "value": "#9A9AA0",
+    "description": "No forecast: the hollow ring and dashed arc. Neutral by design; it is never a score colour. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-light-ramp-poor",
+    "value": "#3A362F",
+    "description": "Light Index fill, Poor band. Sand. Single hue ramp, ordered by lightness. Always printed with the band word. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-light-ramp-fair",
+    "value": "#5C4F36",
+    "description": "Light Index fill, Fair band. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-light-ramp-good",
+    "value": "#8F6A21",
+    "description": "Light Index fill, Good band. Amber, not green. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-light-ramp-great",
+    "value": "#D49E2E",
+    "description": "Light Index fill, Great band. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-light-ramp-epic",
+    "value": "#FFC05A",
+    "description": "Light Index fill, Epic band. Deepest amber in light mode, brightest in dark mode. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-light-ramp-text-poor",
+    "value": "#F2EBDD",
+    "description": "Band word or number on light/ramp/poor (4.5:1 or better). (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-light-ramp-text-fair",
+    "value": "#FFF3DA",
+    "description": "Band word or number on light/ramp/fair. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-light-ramp-text-good",
+    "value": "#FFFFFF",
+    "description": "Band word or number on light/ramp/good. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-light-ramp-text-great",
+    "value": "#1F1300",
+    "description": "Band word or number on light/ramp/great. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-light-ramp-text-epic",
+    "value": "#1F1300",
+    "description": "Band word or number on light/ramp/epic. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-sky-night",
+    "value": "#070D1F",
+    "description": "Timeline band: night. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-sky-blue-hour",
+    "value": "#34468F",
+    "description": "Timeline band: blue hour and twilight. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-sky-golden",
+    "value": "#C98A2E",
+    "description": "Timeline band: golden hour. Sky only; the Light Index uses light/ramp. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-sky-day",
+    "value": "#5E87A8",
+    "description": "Timeline band: daylight. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-cloud-low",
+    "value": "#9AA3B2",
+    "description": "Low cloud layer fill in the cloud-by-altitude chart. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-cloud-mid",
+    "value": "#6F7888",
+    "description": "Mid cloud layer fill. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-cloud-high",
+    "value": "#4A5160",
+    "description": "High cloud layer fill. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-map-pin",
+    "value": "#FF8A5C",
+    "description": "Selected spot pin and trip stop pins for the day being looked at. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-map-pin-inactive",
+    "value": "#8F7D73",
+    "description": "Trip stop pins outside the day being looked at, and unselected stand-in pins. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-map-sun",
+    "value": "#FF8A5C",
+    "description": "The sun marker on the sky arc and the timeline. The light moment; never a fill behind text. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-map-moon",
+    "value": "#C8D2EA",
+    "description": "The moon marker on the sky arc and the timeline. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-brand-dot",
+    "value": "#FF8A5C",
+    "description": "The logo's dot (First Light coral). Graphic only, never text. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-selection-fill",
+    "value": "#36221B",
+    "description": "Selected row, day or window in the app's own views, with an accent/primary stroke. Text on it keeps text/* colours: text/primary 15.47:1 and text/secondary 5.44:1 light, 13.81:1 and 6.62:1 dark; accent/text 4.98:1 light. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-desktop",
+    "value": "#0E0F12",
+    "description": "Desktop/canvas behind a window (visible in the window's rounded corners). (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-artboard",
+    "value": "#151517",
+    "description": "Background of foundations and component artboards. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-label-title",
+    "value": "#F5F5F7",
+    "description": "Artboard title on component sheets. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-label-body",
+    "value": "#98989D",
+    "description": "Artboard captions, column headers, specimen labels. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-flow-arrow",
+    "value": "#8E8E93",
+    "description": "Arrows and connectors on flow artboards. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-specimen-background",
+    "value": "#1E1E1E",
+    "description": "Specimen frame fill on component sheets. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-specimen-border",
+    "value": "rgba(255,255,255,0.12)",
+    "description": "Specimen frame outline. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-window-outline",
+    "value": "rgba(255,255,255,0.20)",
+    "description": "1px window frame outline. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-traffic-close",
+    "value": "#FF5F57",
+    "description": "Traffic light: close. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-traffic-close-stroke",
+    "value": "#E2463F",
+    "description": "(dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-traffic-minimize",
+    "value": "#FEBC2E",
+    "description": "Traffic light: minimise. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-traffic-minimize-stroke",
+    "value": "#DEA123",
+    "description": "(dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-traffic-zoom",
+    "value": "#28C840",
+    "description": "Traffic light: zoom. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-traffic-zoom-stroke",
+    "value": "#1AAB29",
+    "description": "(dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-chrome-titlebar",
+    "value": "rgba(30,30,30,0.0)",
+    "description": "Title bar / toolbar glass fill. macOS 26 draws it clear over the content. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-chrome-sidebar",
+    "value": "rgba(255,255,255,0.07)",
+    "description": "Floating sidebar glass panel fill (over background/window). (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-chrome-sidebar-stroke",
+    "value": "rgba(255,255,255,0.08)",
+    "description": "Sidebar panel hairline. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-chrome-control",
+    "value": "rgba(255,255,255,0.11)",
+    "description": "Toolbar control capsule (glass button) fill. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-chrome-control-stroke",
+    "value": "rgba(255,255,255,0.10)",
+    "description": "Toolbar control capsule outline. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-chrome-control-active",
+    "value": "rgba(255,255,255,0.20)",
+    "description": "Toggled toolbar control fill. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-material-regular",
+    "value": "rgba(46,46,48,0.92)",
+    "description": "regularMaterial (place card, Add Spot banner, route day picker). (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-material-bar",
+    "value": "rgba(36,36,38,0.95)",
+    "description": "bar material (Saved footer). (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-material-stroke",
+    "value": "rgba(255,255,255,0.10)",
+    "description": "Hairline around materials. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-scrim-sheet",
+    "value": "rgba(0,0,0,0.40)",
+    "description": "Dimming scrim behind a sheet. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-sheet-background",
+    "value": "#2A2A2C",
+    "description": "Sheet and alert panel fill. Opaque enough to read without blur. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-menu-background",
+    "value": "rgba(48,48,50,0.96)",
+    "description": "Menu and popover glass fill. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-menu-stroke",
+    "value": "rgba(255,255,255,0.16)",
+    "description": "Menu and popover outline. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-menu-highlight",
+    "value": "var(--color-dark-accent-primary)",
+    "description": "Highlighted menu item fill (system accent). (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-map-ground",
+    "value": "#232426",
+    "description": "Map placeholder ground. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-map-line",
+    "value": "rgba(255,255,255,0.08)",
+    "description": "Faint roads and contours on the map placeholder. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-map-line-major",
+    "value": "rgba(255,255,255,0.13)",
+    "description": "Slightly stronger road on the map placeholder. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-map-label",
+    "value": "rgba(235,235,245,0.38)",
+    "description": "Map placeholder caption. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-selection-tint",
+    "value": "color-mix(in srgb, var(--color-dark-accent-primary) 16%, transparent)",
+    "description": "Selection tint: accent at 16% (sidebar pill, list selection). (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-control-button",
+    "value": "rgba(255,255,255,0.13)",
+    "description": "Bordered button, pop-up button and stepper fill. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-control-button-stroke",
+    "value": "rgba(255,255,255,0.10)",
+    "description": "Bordered button outline. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-control-segmented-track",
+    "value": "rgba(255,255,255,0.10)",
+    "description": "Segmented control track. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-control-segmented-thumb",
+    "value": "rgba(255,255,255,0.20)",
+    "description": "Segmented control selected segment. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-control-field",
+    "value": "rgba(255,255,255,0.06)",
+    "description": "Text field fill. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-control-field-stroke",
+    "value": "rgba(255,255,255,0.14)",
+    "description": "Text field outline. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-control-checkbox",
+    "value": "rgba(255,255,255,0.10)",
+    "description": "Unchecked checkbox fill. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-control-checkbox-stroke",
+    "value": "rgba(255,255,255,0.28)",
+    "description": "Checkbox outline. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-control-group",
+    "value": "rgba(255,255,255,0.06)",
+    "description": "Grouped form section fill. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-note-background",
+    "value": "#3B3515",
+    "description": "Annotation note card fill. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-note-border",
+    "value": "#6E6128",
+    "description": "Annotation note card border. (dark appearance)"
+  },
+  {
+    "type": "color",
+    "name": "color-dark-canvas-note-text",
+    "value": "#F1E7B0",
+    "description": "Annotation note card text. (dark appearance)"
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-stroke-hairline",
+    "value": "0.5px",
+    "description": "Hairline border on cards and badges."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-stroke-thin",
+    "value": "1px",
+    "description": "Thin stroke: chart axes, outlines."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-stroke-regular",
+    "value": "1.5px",
+    "description": "Regular stroke: icons, ring tracks."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-xxs",
+    "value": "2px",
+    "description": "Half step: icon to label inside a badge."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-stroke-thick",
+    "value": "2px",
+    "description": "Thick stroke: arcs, markers, score rings."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-stroke-focus-ring-offset",
+    "value": "2px",
+    "description": "Gap between a control and its focus ring."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-stroke-route-inactive",
+    "value": "3px",
+    "description": "Route line width, inactive leg."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-stroke-dash-gap",
+    "value": "3px",
+    "description": "Dash gap of the no-forecast arc."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-stroke-focus-ring-width",
+    "value": "3px",
+    "description": "Focus ring width."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-xs",
+    "value": "4px",
+    "description": "Tight gap: inline items."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-chart-window-min-width",
+    "value": "4px",
+    "description": "Narrowest a light window may be drawn on the timeline."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-stroke-route",
+    "value": "4px",
+    "description": "Route line width, active leg."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-stroke-dash-length",
+    "value": "4px",
+    "description": "Dash length of the no-forecast arc."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-stroke-route-casing",
+    "value": "7px",
+    "description": "Casing drawn under the route line so it reads over the map."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-sm",
+    "value": "8px",
+    "description": "Default gap between related items."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-md",
+    "value": "12px",
+    "description": "Padding inside cards and rows."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-icon-small",
+    "value": "14px",
+    "description": "Small symbol size."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-confidence-mark",
+    "value": "14px",
+    "description": "Confidence mark diameter."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-chart-arc-marker",
+    "value": "14px",
+    "description": "Sun and moon marker diameter on the arc."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-lg",
+    "value": "16px",
+    "description": "Gap between groups; content margin."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-icon-medium",
+    "value": "16px",
+    "description": "Default symbol size."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-badge-height-compact",
+    "value": "18px",
+    "description": "Light Index badge height in dense lists."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-chart-timeline-axis-height",
+    "value": "18px",
+    "description": "Height of the timeline's hour axis."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-icon-large",
+    "value": "20px",
+    "description": "Large symbol size."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-badge-height",
+    "value": "22px",
+    "description": "Light Index badge height, default."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-xl",
+    "value": "24px",
+    "description": "Gap between sections."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-badge-height-large",
+    "value": "28px",
+    "description": "Light Index badge height in headers."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-badge-min-width",
+    "value": "28px",
+    "description": "Smallest badge width so two-digit scores line up."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-map-pin",
+    "value": "28px",
+    "description": "Map pin diameter."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-control-height",
+    "value": "28px",
+    "description": "Custom control height on macOS."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-hit-target",
+    "value": "28px",
+    "description": "Smallest click target for any control."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-xxl",
+    "value": "32px",
+    "description": "Page-level margin and large separations."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-light-ring-small",
+    "value": "32px",
+    "description": "Score ring in rows."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-map-pin-selected",
+    "value": "36px",
+    "description": "Selected map pin diameter."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-control-height-large",
+    "value": "36px",
+    "description": "Large custom control height."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-chart-hourly-tint-height",
+    "value": "40px",
+    "description": "Height of the hourly tint strip."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-light-ring-medium",
+    "value": "44px",
+    "description": "Score ring on cards."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-chart-timeline-height",
+    "value": "56px",
+    "description": "Height of the sky-gradient light timeline."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-size-light-ring-large",
+    "value": "64px",
+    "description": "Score ring in headers."
+  },
+  {
+    "type": "spacing",
+    "name": "spacing-chart-arc-height",
+    "value": "168px",
+    "description": "Height of the sun and moon arc chart."
+  },
+  {
+    "type": "radius",
+    "name": "radius-badge",
+    "value": "6px",
+    "description": "Corner radius of Light Index badges and chips."
+  },
+  {
+    "type": "radius",
+    "name": "radius-control",
+    "value": "8px",
+    "description": "Corner radius of custom controls."
+  },
+  {
+    "type": "radius",
+    "name": "radius-card",
+    "value": "12px",
+    "description": "Corner radius of cards and thumbnails."
+  },
+  {
+    "type": "radius",
+    "name": "radius-panel",
+    "value": "16px",
+    "description": "Corner radius of floating panels over the map."
+  },
+  {
+    "type": "container",
+    "name": "container-layout-sidebar-min",
+    "value": "200px",
+    "description": "Sidebar minimum width."
+  },
+  {
+    "type": "container",
+    "name": "container-layout-sidebar-ideal",
+    "value": "240px",
+    "description": "Sidebar ideal width."
+  },
+  {
+    "type": "container",
+    "name": "container-layout-inspector-min",
+    "value": "280px",
+    "description": "Inspector minimum width."
+  },
+  {
+    "type": "container",
+    "name": "container-layout-list-min",
+    "value": "300px",
+    "description": "Content list minimum width."
+  },
+  {
+    "type": "container",
+    "name": "container-layout-sidebar-max",
+    "value": "320px",
+    "description": "Sidebar maximum width."
+  },
+  {
+    "type": "container",
+    "name": "container-layout-inspector-ideal",
+    "value": "320px",
+    "description": "Inspector ideal width."
+  },
+  {
+    "type": "container",
+    "name": "container-layout-list-ideal",
+    "value": "360px",
+    "description": "Content list ideal width."
+  },
+  {
+    "type": "container",
+    "name": "container-layout-inspector-max",
+    "value": "420px",
+    "description": "Inspector maximum width."
+  },
+  {
+    "type": "container",
+    "name": "container-layout-list-max",
+    "value": "520px",
+    "description": "Content list maximum width."
+  },
+  {
+    "type": "container",
+    "name": "container-layout-window-min-height",
+    "value": "600px",
+    "description": "Main window minimum height."
+  },
+  {
+    "type": "container",
+    "name": "container-layout-window-min-width",
+    "value": "900px",
+    "description": "Main window minimum width."
+  },
+  {
+    "type": "fontFamily",
+    "name": "font-serif",
+    "value": "\"New York\", ui-serif, serif",
+    "description": "New York: spot and trip title voice"
+  },
+  {
+    "type": "fontFamily",
+    "name": "font-sans",
+    "value": "\"SF Pro\", \"SF Pro Text\", -apple-system, system-ui, sans-serif",
+    "description": "SF Pro: system font"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-footnote",
+    "value": "10px",
+    "description": "Footnotes and forecast age. (footnote)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-caption",
+    "value": "10px",
+    "description": "Captions. (caption)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-caption-strong",
+    "value": "10px",
+    "description": "Emphasised captions and badge words. (caption)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-score-badge",
+    "value": "10px",
+    "description": "Number inside a badge. (caption)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-time-small",
+    "value": "10px",
+    "description": "Small times and chart axes. (footnote)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-subheadline",
+    "value": "11px",
+    "description": "Secondary lines. (subheadline)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-callout",
+    "value": "12px",
+    "description": "Explanations and reasons. (callout)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-headline",
+    "value": "13px",
+    "description": "Row and card titles. (headline)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-body",
+    "value": "13px",
+    "description": "Running text. (body)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-body-emphasis",
+    "value": "13px",
+    "description": "Emphasised running text. (body)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-time",
+    "value": "13px",
+    "description": "Clock times and durations. (body)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-score-medium",
+    "value": "15px",
+    "description": "Light Index number on cards. (title3)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-title-section",
+    "value": "17px",
+    "description": "Section titles. (title2)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-title-spot",
+    "value": "22px",
+    "description": "Spot and trip title voice. New York. Place names only. (title)"
+  },
+  {
+    "type": "fontSize",
+    "name": "text-score-large",
+    "value": "26px",
+    "description": "Headline Light Index number. (largeTitle)"
+  },
+  {
+    "type": "fontWeight",
+    "name": "font-weight-regular",
+    "value": "400",
+    "description": "Weight 400"
+  },
+  {
+    "type": "fontWeight",
+    "name": "font-weight-semibold",
+    "value": "600",
+    "description": "Weight 600"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-footnote",
+    "value": "13px",
+    "description": "Line height for type/footnote: Apple macOS default leading for footnote"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-caption",
+    "value": "13px",
+    "description": "Line height for type/caption: Apple macOS default leading for caption"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-caption-strong",
+    "value": "13px",
+    "description": "Line height for type/captionStrong: Apple macOS default leading for caption"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-score-badge",
+    "value": "13px",
+    "description": "Line height for type/score/badge: Apple macOS default leading for caption"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-time-small",
+    "value": "13px",
+    "description": "Line height for type/timeSmall: Apple macOS default leading for footnote"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-subheadline",
+    "value": "14px",
+    "description": "Line height for type/subheadline: Apple macOS default leading for subheadline"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-callout",
+    "value": "15px",
+    "description": "Line height for type/callout: Apple macOS default leading for callout"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-headline",
+    "value": "16px",
+    "description": "Line height for type/headline: Apple macOS default leading for headline"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-body",
+    "value": "16px",
+    "description": "Line height for type/body: Apple macOS default leading for body"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-body-emphasis",
+    "value": "16px",
+    "description": "Line height for type/bodyEmphasis: Apple macOS default leading for body"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-time",
+    "value": "16px",
+    "description": "Line height for type/time: Apple macOS default leading for body"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-score-medium",
+    "value": "20px",
+    "description": "Line height for type/score/medium: Apple macOS default leading for title3"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-title-section",
+    "value": "22px",
+    "description": "Line height for type/title/section: Apple macOS default leading for title2"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-title-spot",
+    "value": "26px",
+    "description": "Line height for type/title/spot: Apple macOS default leading for title"
+  },
+  {
+    "type": "lineHeight",
+    "name": "leading-score-large",
+    "value": "32px",
+    "description": "Line height for type/score/large: Apple macOS default leading for largeTitle"
+  },
+  {
+    "type": "opacity",
+    "name": "opacity-selection-tint",
+    "value": "0.16",
+    "description": "Selection fill opacity (SpotLayout.selectedFillOpacity)."
+  },
+  {
+    "type": "opacity",
+    "name": "opacity-window-tint",
+    "value": "0.2",
+    "description": "Timeline window tint (SpotLayout.windowTintOpacity)."
+  },
+  {
+    "type": "opacity",
+    "name": "opacity-below-horizon",
+    "value": "0.35",
+    "description": "Sky arc below the horizon (SpotLayout.belowHorizonOpacity)."
+  },
+  {
+    "type": "opacity",
+    "name": "opacity-disabled",
+    "value": "0.4",
+    "description": "Disabled system control (canvas approximation)."
+  },
+  {
+    "type": "opacity",
+    "name": "opacity-cloud-fill",
+    "value": "0.5",
+    "description": "Cloud layer fill (SpotLayout.cloudFillOpacity)."
+  },
+  {
+    "type": "opacity",
+    "name": "opacity-outlook-fade-low",
+    "value": "0.6",
+    "description": "Outlook cell fade, later days (WhenToGoView.fade)."
+  },
+  {
+    "type": "opacity",
+    "name": "opacity-outlook-fade-medium",
+    "value": "0.8",
+    "description": "Outlook cell fade, days 4-7 (WhenToGoView.fade)."
+  },
+  {
+    "type": "opacity",
+    "name": "opacity-low-confidence",
+    "value": "0.85",
+    "description": "Low-confidence ScoreChip opacity (LightBadge.swift)."
+  }
+]
