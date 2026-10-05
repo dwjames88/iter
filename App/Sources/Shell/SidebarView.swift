@@ -35,6 +35,7 @@ struct SidebarView: View {
             }
         }
         .listStyle(.sidebar)
+        .snapshotOpaqueBackground()
         .safeAreaInset(edge: .bottom) {
             if model.sampleDataEnabled {
                 SampleDataLabel(style: .banner).padding(IterSpace.sm)

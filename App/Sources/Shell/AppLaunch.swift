@@ -1,6 +1,8 @@
 import Foundation
 import OSLog
 import IterCore
+import IterData
+import IterServices
 import IterFeatures
 
 /// Launch-time switches. `-IterInMemoryStore YES` runs on a throwaway store; `-IterSmokeTest YES` walks the main
@@ -13,8 +15,11 @@ enum AppLaunch {
         || ProcessInfo.processInfo.environment["XCTestBundlePath"] != nil }
     static var smokeTest: Bool { UserDefaults.standard.bool(forKey: "IterSmokeTest") }
 
-    /// Replaced when the scout module is wired in.
-    static func makeScout() -> (any Scouting)? { nil }
+    /// The Apple Intelligence scout over MapKit and the curated set. It reports its own availability at run time.
+    static func makeScout() -> (any Scouting)? {
+        AppleIntelligenceScout(search: MapKitPlaceSearch(), geocoder: MapKitGeocoder(), drives: MapKitDriveTimes(),
+                               curated: CuratedSpots.all)
+    }
 
     @MainActor
     static func runSmokeHookIfRequested(_ model: AppModel) async {

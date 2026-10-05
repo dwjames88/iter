@@ -15,7 +15,9 @@ enum Snapshot {
     static let sizes = [regular, compact]
 
     static var outputDirectory: URL {
-        FileManager.default.temporaryDirectory.appendingPathComponent("IterSnapshots", isDirectory: true)
+        // One folder per run so parallel runs from different checkouts (same bundle ID, same container) don't collide.
+        let run = ProcessInfo.processInfo.environment["ITER_SNAPSHOT_RUN"] ?? "default"
+        return FileManager.default.temporaryDirectory.appendingPathComponent("IterSnapshots/\(run)", isDirectory: true)
     }
 
     /// Renders `view` at every appearance and size. `settle` lets async work (forecast loads) finish first.
@@ -69,7 +71,11 @@ enum Snapshot {
             layer.render(in: ctx)
         }
         guard let cg = ctx.makeImage() else { throw SnapshotError.render }
-        let rep = NSBitmapImageRep(cgImage: cg)
+        var rep = NSBitmapImageRep(cgImage: cg)
+        if ProcessInfo.processInfo.environment["ITER_SNAPSHOT_CACHE"] == "1", let r2 = host.bitmapImageRepForCachingDisplay(in: host.bounds) {
+            nsAppearance.performAsCurrentDrawingAppearance { host.cacheDisplay(in: host.bounds, to: r2) }
+            rep = r2
+        }
         window.orderOut(nil)
         guard let data = rep.representation(using: .png, properties: [:]) else { throw SnapshotError.render }
         return data
