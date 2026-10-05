@@ -35,8 +35,12 @@ public struct AppleIntelligenceScout: Scouting {
     /// Step 2: a fresh session, no tools, sees only the registered candidates and answers in a fixed shape.
     static let pickingInstructions = """
     You choose photography locations. Pick only from the candidate list, and refer to each by its ID exactly as listed. \
-    Never invent a place, an ID or a coordinate. Choose at most 6, best first, and skip candidates that do not fit. \
-    For each give one short, specific reason tied to the request (for example fog, forest, or which way the sun rises) and the best light. \
+    Never invent a place, an ID or a coordinate. Choose at most 6, best first. \
+    Pick a candidate only if its name, kind or details clearly match the request: a waterfall request needs "falls" or a \
+    waterfall kind; a forest request needs a forest, woods, trail or wilderness; skip city parks, plazas and streets that \
+    do not clearly match. Fewer good picks are better than many weak ones. \
+    For each, write one short reason using only what the candidate's name, kind and details say. Do not claim fog, \
+    mist, colour or weather: you cannot know them. You may say which light the place suits. \
     If nothing fits, return no picks.
     """
 
@@ -59,14 +63,31 @@ public struct AppleIntelligenceScout: Scouting {
 
             // Step 1: gather. A model that keeps calling tools can overflow its small context; if it already
             // found candidates that is not fatal, the answer step works from the registry.
-            do {
-                let gatherer = LanguageModelSession(model: .default, tools: tools, instructions: Self.gatheringInstructions)
-                _ = try await gatherer.respond(to: request, options: GenerationOptions(maximumResponseTokens: 40))
-            } catch {
-                guard let mapped = ScoutError.map(error) else { throw CancellationError() }
-                let found = await registry.candidateRows(limit: 1)
-                if mapped != .contextTooLong || found.isEmpty { throw mapped }
-                Self.log.notice("Gathering ran out of context; answering from what it found")
+            // Tool-call arguments occasionally fail to parse (a `ParsingError`, seen live): if candidates were already
+            // found the answer step uses them; if not, gathering is retried once with greedy sampling.
+            var gatherAttempt = 0
+            while true {
+                gatherAttempt += 1
+                do {
+                    let gatherer = LanguageModelSession(model: .default, tools: tools, instructions: Self.gatheringInstructions)
+                    let options = gatherAttempt == 1 ? GenerationOptions(maximumResponseTokens: 40)
+                                                     : GenerationOptions(samplingMode: .greedy, maximumResponseTokens: 40)
+                    _ = try await gatherer.respond(to: request, options: options)
+                    break
+                } catch {
+                    guard let mapped = ScoutError.map(error) else { throw CancellationError() }
+                    let found = await registry.candidateRows(limit: 1)
+                    let recoverable: Bool = {
+                        switch mapped { case .contextTooLong, .failed: true; default: false }
+                    }()
+                    guard recoverable else { throw mapped }
+                    if !found.isEmpty {
+                        Self.log.notice("Gathering stopped early (\(String(describing: mapped), privacy: .public)); answering from what it found")
+                        break
+                    }
+                    if gatherAttempt >= 2 { throw mapped }
+                    Self.log.notice("Gathering failed before finding anything (\(String(describing: mapped), privacy: .public)); retrying")
+                }
             }
             try Task.checkCancellation()
 
