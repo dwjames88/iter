@@ -27,11 +27,13 @@ struct ScoredWindow: Equatable {
     var usedLayerFallback: Bool
 }
 
-/// Pure scoring heuristics. A score is a neutral baseline of 60 plus signed points per factor, clamped 0...100.
+/// Pure scoring heuristics. A score is a neutral baseline of 60 plus signed points per factor, clamped 5...100.
+/// The floor is 5, not 0: a real but terrible forecast must never look like missing data ("0" reads as "nothing").
 /// Every curve is piecewise linear, so a small change in weather moves the score a small amount.
 /// There is no "best at" boost and no placeholder value: the inputs are the weather and the moon, nothing else.
 enum WindowScorer {
     static let baseline = 60.0
+    static let floor = 5.0
 
     // MARK: Curves (x, y). Cloud fractions are 0...1; visibility x is kilometres.
 
@@ -124,11 +126,11 @@ enum WindowScorer {
         }
 
         let unclamped = raw
-        let value = Int(min(100, max(0, unclamped)).rounded())
+        let value = Int(min(100, max(Self.floor, unclamped)).rounded())
 
         // Round each contributor, then put any rounding residue on the largest so the bars sum to the score.
         var rounded = parts.map { (factor: $0.0, points: Int($0.1.rounded()), value: $0.2) }
-        if unclamped >= 0, unclamped <= 100 {
+        if unclamped >= Self.floor, unclamped <= 100 {
             let residue = value - (Int(baseline) + rounded.reduce(0) { $0 + $1.points })
             if residue != 0, let i = rounded.indices.max(by: { abs(rounded[$0].points) < abs(rounded[$1].points) }) {
                 rounded[i].points += residue

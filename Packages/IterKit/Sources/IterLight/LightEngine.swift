@@ -21,18 +21,43 @@ public struct LightEngine: Sendable {
     /// - blueEvening: sunset to civil dusk.
     /// - night: astronomical dusk to the earlier of three hours later and the next day's astronomical dawn.
     ///   No astronomical dusk (high-latitude summer) means no night window.
-    /// - Polar day and polar night (`SunEvents.kind != .normal`): no windows at all.
+    /// - Polar night (the sun never rises): the civil-twilight blue hour around noon still exists, as
+    ///   blueMorning = civil dawn to solar noon and blueEvening = solar noon to civil dusk; night as above.
+    /// - Polar day (midnight sun): no sunrise or sunset, so no blue hours; when the sun dips below +6° the low
+    ///   sun is a golden window: goldenEvening = the +6° crossing to the next day's +6° rise (capped at 8 hours).
     public func windows(for spot: Spot, on day: LocalDay) -> [(kind: LightWindowKind, span: TimeSpan)] {
         let sun = ephemeris.sunEvents(on: day, at: spot.coordinate, in: spot.timeZone)
         return geometry(sun: sun, spot: spot, day: day)
     }
 
     private func geometry(sun: SunEvents, spot: Spot, day: LocalDay) -> [(kind: LightWindowKind, span: TimeSpan)] {
-        guard sun.kind == .normal else { return [] }
         var out: [(kind: LightWindowKind, span: TimeSpan)] = []
         func add(_ kind: LightWindowKind, _ start: Date?, _ end: Date?) {
             guard let start, let end, end > start else { return }
             out.append((kind, TimeSpan(start: start, end: end)))
+        }
+        func addNight() {
+            if let dusk = sun.astronomicalDusk {
+                let cap = dusk.addingTimeInterval(3 * 3600)
+                let nextDawn = ephemeris.sunEvents(on: day.adding(days: 1), at: spot.coordinate, in: spot.timeZone).astronomicalDawn
+                add(.night, dusk, min(cap, nextDawn ?? cap))
+            }
+        }
+        switch sun.kind {
+        case .polarNight:
+            add(.blueMorning, sun.civilDawn, sun.civilDawn.map { _ in sun.solarNoon })
+            add(.blueEvening, sun.civilDusk.map { _ in sun.solarNoon }, sun.civilDusk)
+            addNight()
+            return out
+        case .polarDay:
+            if let start = sun.goldenEveningStart {
+                let nextRise = ephemeris.sunEvents(on: day.adding(days: 1), at: spot.coordinate, in: spot.timeZone).goldenMorningEnd
+                let cap = start.addingTimeInterval(8 * 3600)
+                add(.goldenEvening, start, min(cap, nextRise ?? cap))
+            }
+            return out
+        case .normal:
+            break
         }
         add(.blueMorning, sun.civilDawn, sun.sunrise)
         if sun.sunrise != nil {
@@ -42,11 +67,7 @@ public struct LightEngine: Sendable {
             add(.goldenEvening, sun.goldenEveningStart ?? sun.solarNoon, sun.sunset)
         }
         add(.blueEvening, sun.sunset, sun.civilDusk)
-        if let dusk = sun.astronomicalDusk {
-            let cap = dusk.addingTimeInterval(3 * 3600)
-            let nextDawn = ephemeris.sunEvents(on: day.adding(days: 1), at: spot.coordinate, in: spot.timeZone).astronomicalDawn
-            add(.night, dusk, min(cap, nextDawn ?? cap))
-        }
+        addNight()
         return out
     }
 

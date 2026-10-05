@@ -50,9 +50,9 @@ extension LightText {
 
     // MARK: Sun times
 
-    static let polarNight = String(localized: "The sun doesn't rise here on this day. There are no golden or blue hours.",
+    static let polarNight = String(localized: "The sun doesn't rise here on this day. The light is the blue hour either side of noon.",
                                     comment: "Polar night: no sunrise")
-    static let polarDay = String(localized: "The sun doesn't set here on this day. There are no golden or blue hours.",
+    static let polarDay = String(localized: "The sun doesn't set here on this day. No blue hour, but a long golden window while the sun is low.",
                                  comment: "Midnight sun: no sunset")
 
     static func nextSunrise(_ time: String) -> String {

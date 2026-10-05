@@ -220,19 +220,16 @@ private let tromso = Spot(id: "tromso", name: "Tromsø harbour", locality: "Trom
 
     // MARK: Polar
 
-    @Test func polarNightHasNoWindowsAndNothingScored() async throws {
+    @Test func polarNightOffersOnlyTheNoonBlueHour() async throws {
         let now = LocalDay(year: 2026, month: 12, day: 10).at(hour: 10, in: TimeZone(identifier: "Europe/Oslo")!)
         let app = try makeApp(.sample, now: now)
         let model = SpotModel(app: app, spot: tromso, explainer: FakeExplainer())
         await model.start()
         #expect(model.dayLight.sun.kind == .polarNight)
-        #expect(model.dayLight.windows.isEmpty)
-        #expect(model.best == nil)
-        #expect(model.selectedWindow == nil)
-        #expect(model.availableFoci == [.fullDay])
+        #expect(model.dayLight.windows.allSatisfy { !$0.kind.isGolden })
+        #expect(model.dayLight.windows.contains { $0.kind.isBlue })
         #expect(model.nextSunTimes.kind == .polarNight)
         #expect(model.nextSunTimes.sunrise == nil)
-        #expect(model.markerTime == model.dayLight.sun.solarNoon)
     }
 
     // MARK: Explanation
