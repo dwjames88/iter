@@ -71,7 +71,7 @@
     "Group / Accent"
    ],
    "parentSeq": 3,
-   "html": "<div layer-name=\"Token / accent/primary\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n  <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n    <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n      <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-accent-primary);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n    </div>\n    <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n      <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-accent-primary);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n    </div>\n  </div>\n  <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">accent/primary</div>\n  <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;D9431A</div>\n  <div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;FF8A5C</div>\n  <div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n  <div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">First Light coral. Interface accent: fills, icons, selection tint, focus, large text. Not small text on paper (4.18:1; use accent/text). Never a score, a status or an error.</div>\n</div>",
+   "html": "<div layer-name=\"Token / accent/primary\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n  <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n    <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n      <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-accent-primary);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n    </div>\n    <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n      <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-accent-primary);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n    </div>\n  </div>\n  <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">accent/primary</div>\n  <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#D9431A</div>\n  <div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#FF8A5C</div>\n  <div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n  <div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">First Light coral. Interface accent: fills, icons, selection tint, focus, large text. Not small text on paper (4.18:1; use accent/text). Never a score, a status or an error.</div>\n</div>",
    "lines": 15
   },
   {
@@ -104,7 +104,7 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "accent/text",
-    "./Light Hex/#text0": "&#35;B5360F",
+    "./Light Hex/#text0": "#B5360F",
     "./Role/#text0": "Accent as words (links, small labels) on paper or cards: 5.70:1 light, 8.30:1 dark."
    },
    "nameOverrides": {
@@ -142,8 +142,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "accent/hover",
-    "./Light Hex/#text0": "&#35;C83D17",
-    "./Dark Hex/#text0": "&#35;FF9E78",
+    "./Light Hex/#text0": "#C83D17",
+    "./Dark Hex/#text0": "#FF9E78",
     "./Role/#text0": "Accent fill while the pointer is over a custom control."
    },
    "nameOverrides": {
@@ -181,8 +181,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "accent/pressed",
-    "./Light Hex/#text0": "&#35;B23510",
-    "./Dark Hex/#text0": "&#35;F07A4C",
+    "./Light Hex/#text0": "#B23510",
+    "./Dark Hex/#text0": "#F07A4C",
     "./Role/#text0": "Accent fill while a custom control is pressed."
    },
    "nameOverrides": {
@@ -220,8 +220,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "accent/disabled",
-    "./Light Hex/#text0": "&#35;EBC3B2",
-    "./Dark Hex/#text0": "&#35;5E3426",
+    "./Light Hex/#text0": "#EBC3B2",
+    "./Dark Hex/#text0": "#5E3426",
     "./Role/#text0": "Accent fill or icon on a disabled custom control. Decorative contrast by design; pair with text/quaternary."
    },
    "nameOverrides": {
@@ -259,7 +259,7 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "accent/emphasis",
-    "./Light Hex/#text0": "&#35;B5360F",
+    "./Light Hex/#text0": "#B5360F",
     "./Role/#text0": "Accent fill behind small text (the Best tag, stop numbers): accent/onAccent on it is 6.0:1 light, 8.3:1 dark."
    },
    "nameOverrides": {
@@ -297,8 +297,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "accent/onAccent",
-    "./Light Hex/#text0": "&#35;FFFFFF",
-    "./Dark Hex/#text0": "&#35;150C0A",
+    "./Light Hex/#text0": "#FFFFFF",
+    "./Dark Hex/#text0": "#150C0A",
     "./Role/#text0": "Text or icon on accent/emphasis (any size) or on accent/primary (icons and large text only: 4.40:1 light)."
    },
    "nameOverrides": {
@@ -316,7 +316,7 @@
     "Colour Tokens"
    ],
    "parentSeq": 3,
-   "html": "<div layer-name=\"Group / Selection\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Selection</div>\n  <div layer-name=\"Token / selection/fill\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-selection-fill);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-selection-fill);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">selection/fill</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;FBE6DB</div>\n  </div>\n</div>",
+   "html": "<div layer-name=\"Group / Selection\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Selection</div>\n  <div layer-name=\"Token / selection/fill\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-selection-fill);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-selection-fill);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">selection/fill</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#FBE6DB</div>\n  </div>\n</div>",
    "lines": 15,
    "partial": true
   },
@@ -332,7 +332,7 @@
     "Token / selection/fill"
    ],
    "parentSeq": 11,
-   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;36221B</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">Selected row, day or window in the app's own views, with an accent/primary stroke. Text on it keeps text/* colours: text/primary 15.47:1 and text/secondary 5.44:1 light, 13.81:1 and 6.62:1 dark; accent/text 4.98:1 light.</div>",
+   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#36221B</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">Selected row, day or window in the app's own views, with an accent/primary stroke. Text on it keeps text/* colours: text/primary 15.47:1 and text/secondary 5.44:1 light, 13.81:1 and 6.62:1 dark; accent/text 4.98:1 light.</div>",
    "lines": 3
   },
   {
@@ -364,8 +364,8 @@
    "textOverrides": {
     "./Group Title/#text0": "Focus",
     "./Token / selection/fill/Token Name/#text0": "focus/ring",
-    "./Token / selection/fill/Light Hex/#text0": "&#35;D9431A",
-    "./Token / selection/fill/Dark Hex/#text0": "&#35;FF8A5C",
+    "./Token / selection/fill/Light Hex/#text0": "#D9431A",
+    "./Token / selection/fill/Dark Hex/#text0": "#FF8A5C",
     "./Token / selection/fill/Role/#text0": "Keyboard focus ring on custom controls (3:1 or better against the window). Standard controls keep the system ring."
    },
    "nameOverrides": {
@@ -384,7 +384,7 @@
     "Colour Tokens"
    ],
    "parentSeq": 3,
-   "html": "<div layer-name=\"Group / Route\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Route</div>\n  <div layer-name=\"Token / route/active\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-route-active);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-route-active);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">route/active</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;D9431A</div>\n  </div>\n</div>",
+   "html": "<div layer-name=\"Group / Route\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Route</div>\n  <div layer-name=\"Token / route/active\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-route-active);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-route-active);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">route/active</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#D9431A</div>\n  </div>\n</div>",
    "lines": 15,
    "partial": true
   },
@@ -400,7 +400,7 @@
     "Token / route/active"
    ],
    "parentSeq": 14,
-   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;FF8A5C</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">The route line, trip connectors and the switchback device for the leg being looked at. Not a rating.</div>",
+   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#FF8A5C</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">The route line, trip connectors and the switchback device for the leg being looked at. Not a rating.</div>",
    "lines": 3
   },
   {
@@ -433,8 +433,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "route/inactive",
-    "./Light Hex/#text0": "&#35;9C7B70",
-    "./Dark Hex/#text0": "&#35;8F6E62",
+    "./Light Hex/#text0": "#9C7B70",
+    "./Dark Hex/#text0": "#8F6E62",
     "./Role/#text0": "Route lines and connectors for legs that are not selected. Warm grey-coral, 3:1 or better on paper."
    },
    "nameOverrides": {
@@ -471,8 +471,8 @@
    "textOverrides": {
     "./Group Title/#text0": "Brand",
     "./Token / selection/fill/Token Name/#text0": "brand/dot",
-    "./Token / selection/fill/Light Hex/#text0": "&#35;D9431A",
-    "./Token / selection/fill/Dark Hex/#text0": "&#35;FF8A5C",
+    "./Token / selection/fill/Light Hex/#text0": "#D9431A",
+    "./Token / selection/fill/Dark Hex/#text0": "#FF8A5C",
     "./Token / selection/fill/Role/#text0": "The logo's dot (First Light coral). Graphic only, never text."
    },
    "nameOverrides": {
@@ -491,7 +491,7 @@
     "Colour Tokens"
    ],
    "parentSeq": 3,
-   "html": "<div layer-name=\"Group / Map\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Map</div>\n  <div layer-name=\"Token / map/pin\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-map-pin);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-map-pin);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">map/pin</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;D9431A</div>\n  </div>\n</div>",
+   "html": "<div layer-name=\"Group / Map\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Map</div>\n  <div layer-name=\"Token / map/pin\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-map-pin);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-map-pin);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">map/pin</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#D9431A</div>\n  </div>\n</div>",
    "lines": 15,
    "partial": true
   },
@@ -507,7 +507,7 @@
     "Token / map/pin"
    ],
    "parentSeq": 18,
-   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;FF8A5C</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">Selected spot pin and trip stop pins for the day being looked at.</div>",
+   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#FF8A5C</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">Selected spot pin and trip stop pins for the day being looked at.</div>",
    "lines": 3
   },
   {
@@ -540,8 +540,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "map/pinInactive",
-    "./Light Hex/#text0": "&#35;857369",
-    "./Dark Hex/#text0": "&#35;8F7D73",
+    "./Light Hex/#text0": "#857369",
+    "./Dark Hex/#text0": "#8F7D73",
     "./Role/#text0": "Trip stop pins outside the day being looked at, and unselected stand-in pins."
    },
    "nameOverrides": {
@@ -616,8 +616,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "map/moon",
-    "./Light Hex/#text0": "&#35;5B6B8C",
-    "./Dark Hex/#text0": "&#35;C8D2EA",
+    "./Light Hex/#text0": "#5B6B8C",
+    "./Dark Hex/#text0": "#C8D2EA",
     "./Role/#text0": "The moon marker on the sky arc and the timeline."
    },
    "nameOverrides": {
@@ -635,7 +635,7 @@
     "Colour Tokens"
    ],
    "parentSeq": 3,
-   "html": "<div layer-name=\"Group / Status\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Status</div>\n  <div layer-name=\"Token / status/warning\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-status-warning);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-status-warning);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">status/warning</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;7A3EB8</div>\n  </div>\n</div>",
+   "html": "<div layer-name=\"Group / Status\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Status</div>\n  <div layer-name=\"Token / status/warning\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-status-warning);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-status-warning);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">status/warning</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#7A3EB8</div>\n  </div>\n</div>",
    "lines": 15,
    "partial": true
   },
@@ -651,7 +651,7 @@
     "Token / status/warning"
    ],
    "parentSeq": 23,
-   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;C79BFF</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">Something needs attention (a tight schedule, stale forecast). Violet, always with a warning icon. Never amber, coral or green.</div>",
+   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#C79BFF</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">Something needs attention (a tight schedule, stale forecast). Violet, always with a warning icon. Never amber, coral or green.</div>",
    "lines": 3
   },
   {
@@ -684,8 +684,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "status/danger",
-    "./Light Hex/#text0": "&#35;A3115C",
-    "./Dark Hex/#text0": "&#35;FF77AE",
+    "./Light Hex/#text0": "#A3115C",
+    "./Dark Hex/#text0": "#FF77AE",
     "./Role/#text0": "A destructive action or a failure. Raspberry, always with an icon and words. Kept 40+ deg (OKLCH) from the coral accent so it never reads as the brand."
    },
    "nameOverrides": {
@@ -723,8 +723,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "status/noForecast",
-    "./Light Hex/#text0": "&#35;6E6E73",
-    "./Dark Hex/#text0": "&#35;9A9AA0",
+    "./Light Hex/#text0": "#6E6E73",
+    "./Dark Hex/#text0": "#9A9AA0",
     "./Role/#text0": "No forecast: the hollow ring and dashed arc. Neutral by design; it is never a score colour."
    },
    "nameOverrides": {
@@ -779,20 +779,20 @@
    "textOverrides": {
     "./Group Title/#text0": "Sky bands",
     "./Token / map/pin/Token Name/#text0": "sky/night",
-    "./Token / map/pin/Light Hex/#text0": "&#35;0B1530",
-    "./Token / map/pin/Dark Hex/#text0": "&#35;070D1F",
+    "./Token / map/pin/Light Hex/#text0": "#0B1530",
+    "./Token / map/pin/Dark Hex/#text0": "#070D1F",
     "./Token / map/pin/Role/#text0": "Timeline band: night.",
     "./Token / map/pinInactive/Token Name/#text0": "sky/blueHour",
-    "./Token / map/pinInactive/Light Hex/#text0": "&#35;3A4FA0",
-    "./Token / map/pinInactive/Dark Hex/#text0": "&#35;34468F",
+    "./Token / map/pinInactive/Light Hex/#text0": "#3A4FA0",
+    "./Token / map/pinInactive/Dark Hex/#text0": "#34468F",
     "./Token / map/pinInactive/Role/#text0": "Timeline band: blue hour and twilight.",
     "./Token / map/sun/Token Name/#text0": "sky/golden",
-    "./Token / map/sun/Light Hex/#text0": "&#35;F0B35A",
-    "./Token / map/sun/Dark Hex/#text0": "&#35;C98A2E",
+    "./Token / map/sun/Light Hex/#text0": "#F0B35A",
+    "./Token / map/sun/Dark Hex/#text0": "#C98A2E",
     "./Token / map/sun/Role/#text0": "Timeline band: golden hour. Sky only; the Light Index uses light/ramp.",
     "./Token / map/moon/Token Name/#text0": "sky/day",
-    "./Token / map/moon/Light Hex/#text0": "&#35;CFE3F2",
-    "./Token / map/moon/Dark Hex/#text0": "&#35;5E87A8",
+    "./Token / map/moon/Light Hex/#text0": "#CFE3F2",
+    "./Token / map/moon/Dark Hex/#text0": "#5E87A8",
     "./Token / map/moon/Role/#text0": "Timeline band: daylight."
    },
    "nameOverrides": {
@@ -845,16 +845,16 @@
    "textOverrides": {
     "./Group Title/#text0": "Cloud layers",
     "./Token / status/warning/Token Name/#text0": "cloud/low",
-    "./Token / status/warning/Light Hex/#text0": "&#35;8A94A3",
-    "./Token / status/warning/Dark Hex/#text0": "&#35;9AA3B2",
+    "./Token / status/warning/Light Hex/#text0": "#8A94A3",
+    "./Token / status/warning/Dark Hex/#text0": "#9AA3B2",
     "./Token / status/warning/Role/#text0": "Low cloud layer fill in the cloud-by-altitude chart.",
     "./Token / status/danger/Token Name/#text0": "cloud/mid",
-    "./Token / status/danger/Light Hex/#text0": "&#35;B4BCC8",
-    "./Token / status/danger/Dark Hex/#text0": "&#35;6F7888",
+    "./Token / status/danger/Light Hex/#text0": "#B4BCC8",
+    "./Token / status/danger/Dark Hex/#text0": "#6F7888",
     "./Token / status/danger/Role/#text0": "Mid cloud layer fill.",
     "./Token / status/noForecast/Token Name/#text0": "cloud/high",
-    "./Token / status/noForecast/Light Hex/#text0": "&#35;DCE1E8",
-    "./Token / status/noForecast/Dark Hex/#text0": "&#35;4A5160",
+    "./Token / status/noForecast/Light Hex/#text0": "#DCE1E8",
+    "./Token / status/noForecast/Dark Hex/#text0": "#4A5160",
     "./Token / status/noForecast/Role/#text0": "High cloud layer fill."
    },
    "nameOverrides": {
@@ -875,7 +875,7 @@
     "Colour Tokens"
    ],
    "parentSeq": 3,
-   "html": "<div layer-name=\"Group / Light Index ramp\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Light Index ramp</div>\n  <div layer-name=\"Token / light/ramp/poor\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-light-ramp-poor);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-light-ramp-poor);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">light/ramp/poor</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;E4DCCB</div>\n  </div>\n</div>",
+   "html": "<div layer-name=\"Group / Light Index ramp\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Light Index ramp</div>\n  <div layer-name=\"Token / light/ramp/poor\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-light-ramp-poor);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-light-ramp-poor);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">light/ramp/poor</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#E4DCCB</div>\n  </div>\n</div>",
    "lines": 15,
    "partial": true
   },
@@ -891,7 +891,7 @@
     "Token / light/ramp/poor"
    ],
    "parentSeq": 29,
-   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;3A362F</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">Light Index fill, Poor band. Sand. Single hue ramp, ordered by lightness. Always printed with the band word.</div>",
+   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#3A362F</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">Light Index fill, Poor band. Sand. Single hue ramp, ordered by lightness. Always printed with the band word.</div>",
    "lines": 3
   },
   {
@@ -924,8 +924,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "light/ramp/fair",
-    "./Light Hex/#text0": "&#35;D8C08E",
-    "./Dark Hex/#text0": "&#35;5C4F36",
+    "./Light Hex/#text0": "#D8C08E",
+    "./Dark Hex/#text0": "#5C4F36",
     "./Role/#text0": "Light Index fill, Fair band."
    },
    "nameOverrides": {
@@ -963,8 +963,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "light/ramp/good",
-    "./Light Hex/#text0": "&#35;D9A646",
-    "./Dark Hex/#text0": "&#35;8F6A21",
+    "./Light Hex/#text0": "#D9A646",
+    "./Dark Hex/#text0": "#8F6A21",
     "./Role/#text0": "Light Index fill, Good band. Amber, not green."
    },
    "nameOverrides": {
@@ -1002,8 +1002,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "light/ramp/great",
-    "./Light Hex/#text0": "&#35;986808",
-    "./Dark Hex/#text0": "&#35;D49E2E",
+    "./Light Hex/#text0": "#986808",
+    "./Dark Hex/#text0": "#D49E2E",
     "./Role/#text0": "Light Index fill, Great band."
    },
    "nameOverrides": {
@@ -1041,8 +1041,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "light/ramp/epic",
-    "./Light Hex/#text0": "&#35;6B3800",
-    "./Dark Hex/#text0": "&#35;FFC05A",
+    "./Light Hex/#text0": "#6B3800",
+    "./Dark Hex/#text0": "#FFC05A",
     "./Role/#text0": "Light Index fill, Epic band. Deepest amber in light mode, brightest in dark mode."
    },
    "nameOverrides": {
@@ -1080,8 +1080,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "light/rampText/poor",
-    "./Light Hex/#text0": "&#35;2B2112",
-    "./Dark Hex/#text0": "&#35;F2EBDD",
+    "./Light Hex/#text0": "#2B2112",
+    "./Dark Hex/#text0": "#F2EBDD",
     "./Role/#text0": "Band word or number on light/ramp/poor (4.5:1 or better)."
    },
    "nameOverrides": {
@@ -1119,8 +1119,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "light/rampText/fair",
-    "./Light Hex/#text0": "&#35;2B2112",
-    "./Dark Hex/#text0": "&#35;FFF3DA",
+    "./Light Hex/#text0": "#2B2112",
+    "./Dark Hex/#text0": "#FFF3DA",
     "./Role/#text0": "Band word or number on light/ramp/fair."
    },
    "nameOverrides": {
@@ -1158,8 +1158,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "light/rampText/good",
-    "./Light Hex/#text0": "&#35;2B1A00",
-    "./Dark Hex/#text0": "&#35;FFFFFF",
+    "./Light Hex/#text0": "#2B1A00",
+    "./Dark Hex/#text0": "#FFFFFF",
     "./Role/#text0": "Band word or number on light/ramp/good."
    },
    "nameOverrides": {
@@ -1197,8 +1197,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "light/rampText/great",
-    "./Light Hex/#text0": "&#35;FFFFFF",
-    "./Dark Hex/#text0": "&#35;1F1300",
+    "./Light Hex/#text0": "#FFFFFF",
+    "./Dark Hex/#text0": "#1F1300",
     "./Role/#text0": "Band word or number on light/ramp/great."
    },
    "nameOverrides": {
@@ -1236,8 +1236,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "light/rampText/epic",
-    "./Light Hex/#text0": "&#35;FFFFFF",
-    "./Dark Hex/#text0": "&#35;1F1300",
+    "./Light Hex/#text0": "#FFFFFF",
+    "./Dark Hex/#text0": "#1F1300",
     "./Role/#text0": "Band word or number on light/ramp/epic."
    },
    "nameOverrides": {
@@ -1292,20 +1292,20 @@
    "textOverrides": {
     "./Group Title/#text0": "Text",
     "./Token / map/pin/Token Name/#text0": "text/primary",
-    "./Token / map/pin/Light Hex/#text0": "&#35;1E0F0A",
-    "./Token / map/pin/Dark Hex/#text0": "&#35;FFF4E8",
+    "./Token / map/pin/Light Hex/#text0": "#1E0F0A",
+    "./Token / map/pin/Dark Hex/#text0": "#FFF4E8",
     "./Token / map/pin/Role/#text0": "Primary text: First Light ink (espresso / warm cream).",
     "./Token / map/pinInactive/Token Name/#text0": "text/secondary",
-    "./Token / map/pinInactive/Light Hex/#text0": "&#35;6B5A51",
-    "./Token / map/pinInactive/Dark Hex/#text0": "&#35;BBA99D",
+    "./Token / map/pinInactive/Light Hex/#text0": "#6B5A51",
+    "./Token / map/pinInactive/Dark Hex/#text0": "#BBA99D",
     "./Token / map/pinInactive/Role/#text0": "Secondary text, 4.5:1 or better on paper, cards and the system window.",
     "./Token / map/sun/Token Name/#text0": "text/tertiary",
-    "./Token / map/sun/Light Hex/#text0": "&#35;A6958B",
-    "./Token / map/sun/Dark Hex/#text0": "&#35;7A685E",
+    "./Token / map/sun/Light Hex/#text0": "#A6958B",
+    "./Token / map/sun/Dark Hex/#text0": "#7A685E",
     "./Token / map/sun/Role/#text0": "Decoration and placeholders only; never information.",
     "./Token / map/moon/Token Name/#text0": "text/quaternary",
-    "./Token / map/moon/Light Hex/#text0": "&#35;CDBDB2",
-    "./Token / map/moon/Dark Hex/#text0": "&#35;4F423B",
+    "./Token / map/moon/Light Hex/#text0": "#CDBDB2",
+    "./Token / map/moon/Dark Hex/#text0": "#4F423B",
     "./Token / map/moon/Role/#text0": "Disabled text."
    },
    "nameOverrides": {
@@ -1346,8 +1346,8 @@
    "textOverrides": {
     "./Group Title/#text0": "Separator",
     "./Token / selection/fill/Token Name/#text0": "separator/default",
-    "./Token / selection/fill/Light Hex/#text0": "&#35;E6D6C8",
-    "./Token / selection/fill/Dark Hex/#text0": "&#35;3A2C26",
+    "./Token / selection/fill/Light Hex/#text0": "#E6D6C8",
+    "./Token / selection/fill/Dark Hex/#text0": "#3A2C26",
     "./Token / selection/fill/Role/#text0": "Hairlines and dividers, warm."
    },
    "nameOverrides": {
@@ -1366,7 +1366,7 @@
     "Colour Tokens"
    ],
    "parentSeq": 3,
-   "html": "<div layer-name=\"Group / Backgrounds\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Backgrounds</div>\n  <div layer-name=\"Token / background/window\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-background-window);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-background-window);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">background/window</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;FFF8F0</div>\n  </div>\n</div>",
+   "html": "<div layer-name=\"Group / Backgrounds\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:0\">\n  <div layer-name=\"Group Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-title-section);font-weight:var(--font-weight-semibold);line-height:var(--leading-title-section);color:var(--color-canvas-label-title);white-space:nowrap;padding-bottom:4px\">Backgrounds</div>\n  <div layer-name=\"Token / background/window\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n    <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n      <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-background-window);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n      </div>\n      <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n        <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-background-window);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n      </div>\n    </div>\n    <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">background/window</div>\n    <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#FFF8F0</div>\n  </div>\n</div>",
    "lines": 15,
    "partial": true
   },
@@ -1382,7 +1382,7 @@
     "Token / background/window"
    ],
    "parentSeq": 42,
-   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;150C0A</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">First Light paper: the ground of the app's own content (spot page, trip builder, trips home, list panels).</div>",
+   "html": "<div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#150C0A</div>\n<div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\"></div>\n<div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">First Light paper: the ground of the app's own content (spot page, trip builder, trips home, list panels).</div>",
    "lines": 3
   },
   {
@@ -1415,8 +1415,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "background/control",
-    "./Light Hex/#text0": "&#35;FFFDF9",
-    "./Dark Hex/#text0": "&#35;1F1512",
+    "./Light Hex/#text0": "#FFFDF9",
+    "./Dark Hex/#text0": "#1F1512",
     "./Role/#text0": "Cards and lifted surfaces on paper."
    },
    "nameOverrides": {
@@ -1454,8 +1454,8 @@
    },
    "textOverrides": {
     "./Token Name/#text0": "background/content",
-    "./Light Hex/#text0": "&#35;FFFDF9",
-    "./Dark Hex/#text0": "&#35;1F1512",
+    "./Light Hex/#text0": "#FFFDF9",
+    "./Dark Hex/#text0": "#1F1512",
     "./Role/#text0": "Lists, text areas and pin labels on paper."
    },
    "nameOverrides": {
@@ -1474,7 +1474,7 @@
     "Group / Backgrounds"
    ],
    "parentSeq": 42,
-   "html": "<div layer-name=\"Token / background/systemWindow\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n  <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n    <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n      <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-background-system-window);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n    </div>\n    <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n      <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-background-system-window);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n    </div>\n  </div>\n  <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">background/systemWindow</div>\n  <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;ECECEC</div>\n  <div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">&amp;#35;1E1E1E</div>\n  <div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\">windowBackgroundColor</div>\n  <div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">The system window colour, for snapshot stand-ins of system-drawn surfaces (sidebar, settings). Not for the app's own content.</div>\n</div>",
+   "html": "<div layer-name=\"Token / background/systemWindow\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-lg);padding:var(--spacing-xs) 0;align-items:center\">\n  <div layer-name=\"Swatches\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-sm);flex-shrink:0;width:200px\">\n    <div layer-name=\"Swatch / light\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-background-window);border:0.5px solid var(--color-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n      <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-background-system-window);border-radius:var(--radius-badge);border:0.5px solid var(--color-canvas-specimen-border)\"></div>\n    </div>\n    <div layer-name=\"Swatch / dark\" style=\"box-sizing:border-box;width:96px;height:48px;padding:var(--spacing-sm);display:flex;background:var(--color-dark-background-window);border:0.5px solid var(--color-dark-canvas-specimen-border);border-radius:var(--radius-control);flex-shrink:0\">\n      <div layer-name=\"Colour\" style=\"box-sizing:border-box;flex:1 1 0;background:var(--color-dark-background-system-window);border-radius:var(--radius-badge);border:0.5px solid var(--color-dark-canvas-specimen-border)\"></div>\n    </div>\n  </div>\n  <div layer-name=\"Token Name\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-body-emphasis);font-weight:var(--font-weight-semibold);line-height:var(--leading-body-emphasis);color:var(--color-canvas-label-title);white-space:nowrap;flex-shrink:0;width:210px\">background/systemWindow</div>\n  <div layer-name=\"Light Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#ECECEC</div>\n  <div layer-name=\"Dark Hex\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-time);font-weight:var(--font-weight-regular);line-height:var(--leading-time);font-variant-numeric:tabular-nums;color:var(--color-canvas-label-body);white-space:nowrap;width:84px;flex-shrink:0\">#1E1E1E</div>\n  <div layer-name=\"System Alias\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-body);white-space:nowrap;flex-shrink:0;width:150px\">windowBackgroundColor</div>\n  <div layer-name=\"Role\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-canvas-label-title);flex:1 1 0;min-width:0\">The system window colour, for snapshot stand-ins of system-drawn surfaces (sidebar, settings). Not for the app's own content.</div>\n</div>",
    "lines": 15
   },
   {

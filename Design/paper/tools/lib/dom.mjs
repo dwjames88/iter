@@ -5,7 +5,8 @@
 //   serialize(node)        -> compact html;  pretty(node, indent=0) -> array of lines (svg is one line)
 //   walk(node, fn, path)   -> depth-first, fn(node, parent, pathArray)
 const VOID = new Set(['img', 'path', 'circle', 'rect', 'line', 'ellipse', 'polyline', 'polygon', 'stop', 'br', 'img']);
-const unesc = (s) => s.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+// numeric entities (&#35; in hex labels) are decoded too, so fragments carry the character Paper should show
+const unesc = (s) => s.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#(\d+);/g, (_, d) => String.fromCharCode(+d)).replace(/&amp;/g, '&');
 export const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 export function parse(html) {

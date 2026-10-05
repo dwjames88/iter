@@ -31,7 +31,7 @@ function signedBar(points) {
   const len = Math.max(2, Math.abs(points) * 0.8);
   return row({ name: 'SignedBar', align: 'center', noshrink: true, w: track, style: { height: d('size/confidenceMark'), position: 'relative' } },
     el('div', { name: 'Centre Line', style: { position: 'absolute', left: track / 2, top: 0, width: d('stroke/thin'), height: '100%', background: c('separator/default') } }),
-    el('div', { name: 'Bar', style: { position: 'absolute', top: 3, height: d('space/sm'), width: len, left: points >= 0 ? track / 2 : track / 2 - len, background: points >= 0 ? c('accent/primary') : c('status/warning') } }));
+    el('div', { name: 'Bar', style: { position: 'absolute', top: 3, height: d('space/sm'), width: len, left: points >= 0 ? track / 2 : track / 2 - len, background: c('text/secondary') } })); // neutral for helps and hurts (COMPONENTS.md SignedBar)
 }
 
 function body() {
@@ -75,7 +75,7 @@ function board() {
     row({ name: 'Notes', gap: d('space/md'), align: 'flex-start' },
       note({ title: 'Never green, never coral', body: 'The ramp is amber. Coral is the accent and the route; warnings are violet, failure is raspberry. Unknown is neutral grey, never a low score.', width: 360 }),
       note({ title: 'Thresholds', body: 'Band edges live in IterCore (Light.swift), not in tokens: Poor below 40, Fair 40, Good 58, Great 74, Epic 88. The ranges shown are computed from those minimums.', width: 360 }),
-      note({ title: 'Sample bars', body: 'Signed bars use illustrative points; the real ones scale to the largest factor (minimum 10). Colour follows the effect: accent for helps, status/warning for hurts, with the signed number as the other cue.', width: 360 })),
+      note({ title: 'Sample bars', body: 'Signed bars use illustrative points; the real ones scale to the largest factor (minimum 10). Bars are text/secondary for helps and hurts; direction is the side (right helps, left hurts) and the signed number is the other cue, so colour never reads as good or bad.', width: 360 })),
     themeBlocks(body, { gap: 24, width: 800 }),
   ], { gap: 24, pad: 40 });
 }

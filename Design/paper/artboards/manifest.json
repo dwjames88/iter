@@ -1408,7 +1408,7 @@
   "theme": "light",
   "covers": [],
   "notes": [],
-  "bytes": 263715,
+  "bytes": 263355,
   "page": "Foundations",
   "source": "src/foundations/colour.mjs",
   "fragments": {
@@ -1536,7 +1536,7 @@
   "theme": "light",
   "covers": [],
   "notes": [],
-  "bytes": 181632,
+  "bytes": 181691,
   "page": "Foundations",
   "source": "src/foundations/lightindex.mjs",
   "fragments": {

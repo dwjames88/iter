@@ -26,15 +26,15 @@
    "withoutSavings": 3340
   },
   "Screens (Light)": {
-   "artboards": 103,
-   "withSavings": 3147,
-   "withoutSavings": 3406
+   "artboards": 102,
+   "withSavings": 3144,
+   "withoutSavings": 3403
   }
  },
  "total": {
-  "artboards": 250,
-  "withSavings": 5992,
-  "withoutSavings": 10065
+  "artboards": 249,
+  "withSavings": 5989,
+  "withoutSavings": 10062
  },
  "artboards": [
   {
@@ -2090,19 +2090,6 @@
    "duplicateCalls": null,
    "callsWithSavings": 73,
    "callsWithoutSavings": 90
-  },
-  {
-   "file": "screens/light/S-explore-default--notes--light",
-   "name": "Explore · Default · Notes",
-   "page": "Screens (Light)",
-   "writes": 1,
-   "clones": 0,
-   "review": 1,
-   "createArtboard": 1,
-   "duplicateOf": null,
-   "duplicateCalls": null,
-   "callsWithSavings": 3,
-   "callsWithoutSavings": 3
   },
   {
    "file": "screens/light/S-explore-default-960--light",

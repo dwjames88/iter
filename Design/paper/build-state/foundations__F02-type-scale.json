@@ -450,6 +450,6 @@
   "names": {}
  },
  "calls": 20,
- "updatedAt": "2026-10-05T16:44:40.351Z",
- "reviewed": "All 18 fragments placed; layout, colours, tabular digits, no wrapping match; hairline borders fixed with literal 1px; New York serif NOT rendering on type/title/spot samples (shows SF), needs lead decision."
+ "updatedAt": "2026-10-05T16:50:44.354Z",
+ "reviewed": "Matches the reference in layout, spacing, sizes and colours; nothing clipped. Hairlines restored at 0.5px. The place-name sample shows the default sans because Paper cannot see New York here (decision 7); digits proportional."
 }

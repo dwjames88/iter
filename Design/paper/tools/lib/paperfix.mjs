@@ -62,5 +62,6 @@ function fix(n, parentStyle) {
 export function paperFix(rootHtml) {
   const root = parse(rootHtml);
   const changed = fix(root, null) + literalize(root, false);
-  return { html: changed ? serialize(root) : rootHtml, changed };
+  // hex labels are written as &#35;… in the page html (check.mjs refuses literal hex colours); the parser decodes them.
+  return { html: changed ? serialize(root).replace(/>#([0-9A-Fa-f]{3,8})</g, '>&#35;$1<') : rootHtml, changed };
 }
