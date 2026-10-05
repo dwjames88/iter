@@ -13,7 +13,7 @@ public struct AppleIntelligenceScout: Scouting {
     private let drives: (any DriveTimeProviding)?
     private let curated: [Spot]
 
-    private static let log = Logger(subsystem: "studio.paused.iter", category: "scout")
+    private static let log = Logger(subsystem: "com.dwjames.iter", category: "scout")
 
     public init(search: any PlaceSearching, geocoder: any Geocoding, drives: (any DriveTimeProviding)?, curated: [Spot]) {
         self.search = search
@@ -35,12 +35,14 @@ public struct AppleIntelligenceScout: Scouting {
     /// Step 2: a fresh session, no tools, sees only the registered candidates and answers in a fixed shape.
     static let pickingInstructions = """
     You choose photography locations. Pick only from the candidate list, and refer to each by its ID exactly as listed. \
-    Never invent a place, an ID or a coordinate. Choose at most 8, best first, and skip candidates that do not fit. \
+    Never invent a place, an ID or a coordinate. Choose at most 6, best first, and skip candidates that do not fit. \
     For each give one short, specific reason tied to the request (for example fog, forest, or which way the sun rises) and the best light. \
     If nothing fits, return no picks.
     """
 
-    static let candidateLimit = 20
+    /// Kept small: the on-device model has a 4,096-token window, and a long candidate list plus eight reasons
+    /// was the cause of truncated, unparseable answers in live runs.
+    static let candidateLimit = 14
 
     public func scout(_ request: String, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
         let state = availability()
@@ -89,7 +91,8 @@ public struct AppleIntelligenceScout: Scouting {
         }
     }
 
-    /// Guided generation occasionally fails to parse; one retry with a fresh session is enough in practice.
+    /// Guided generation occasionally fails to parse. Up to three attempts, each with a fresh session; retries use
+    /// greedy sampling, which in live runs produced well-formed answers more reliably.
     /// Guardrail, language, context and availability errors are not retried.
     private static func pick(prompt: String) async throws -> ScoutAnswer {
         var attempt = 0
@@ -97,11 +100,13 @@ public struct AppleIntelligenceScout: Scouting {
             attempt += 1
             do {
                 let picker = LanguageModelSession(model: .default, instructions: pickingInstructions)
-                return try await picker.respond(to: prompt, generating: ScoutAnswer.self).content
+                let options = attempt == 1 ? GenerationOptions(maximumResponseTokens: 700)
+                                           : GenerationOptions(samplingMode: .greedy, maximumResponseTokens: 700)
+                return try await picker.respond(to: prompt, generating: ScoutAnswer.self, options: options).content
             } catch {
                 guard let mapped = ScoutError.map(error) else { throw CancellationError() }
-                guard attempt < 2, case .failed = mapped else { throw mapped }
-                log.notice("Pick step failed (\(String(describing: mapped), privacy: .public)); retrying once")
+                guard attempt < 3, case .failed = mapped else { throw mapped }
+                log.notice("Pick step failed (\(String(describing: mapped), privacy: .public)); retrying")
             }
         }
     }

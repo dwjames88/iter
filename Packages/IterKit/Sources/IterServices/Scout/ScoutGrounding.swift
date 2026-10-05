@@ -14,7 +14,7 @@ enum ScoutWindow: String, Equatable {
 struct ScoutPick: Equatable {
     @Guide(description: "The place ID exactly as a tool returned it, for example m3 or c:mesa-arch. Never invent an ID.")
     var placeID: String
-    @Guide(description: "One short sentence on why this place suits the request, naming the light or the conditions. No numbers or coordinates.")
+    @Guide(description: "One short sentence, under 20 words, on why this place suits the request. No numbers or coordinates.")
     var why: String
     @Guide(description: "The best light for this place given the request.")
     var window: ScoutWindow
@@ -22,7 +22,7 @@ struct ScoutPick: Equatable {
 
 @Generable
 struct ScoutAnswer: Equatable {
-    @Guide(description: "At most 8 picks, best first, each from a tool result.", .maximumCount(8))
+    @Guide(description: "At most 6 picks, best first, each from the candidate list.", .maximumCount(6))
     var picks: [ScoutPick]
 }
 
@@ -40,7 +40,7 @@ enum ScoutGrounding {
     static let maximumSuggestions = 8
     static let maximumReasonLength = 240
 
-    private static let log = Logger(subsystem: "studio.paused.iter", category: "scout")
+    private static let log = Logger(subsystem: "com.dwjames.iter", category: "scout")
 
     /// Resolves each pick against the registry. Unknown IDs are dropped (and logged); the same place is kept once, in order.
     static func resolve(picks: [ResolvedPickInput], registry: [String: RegisteredPlace], fallbackTimeZone: TimeZone = .current) -> [ScoutSuggestion] {

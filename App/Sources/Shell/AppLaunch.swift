@@ -20,10 +20,4 @@ enum AppLaunch {
         AppleIntelligenceScout(search: MapKitPlaceSearch(), geocoder: MapKitGeocoder(), drives: MapKitDriveTimes(),
                                curated: CuratedSpots.all)
     }
-
-    @MainActor
-    static func runSmokeHookIfRequested(_ model: AppModel) async {
-        guard smokeTest else { return }
-        await SmokeHook.run(model)
-    }
 }

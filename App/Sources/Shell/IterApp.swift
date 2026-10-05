@@ -20,7 +20,15 @@ struct IterApp: App {
         }
         let store = IterStore(container: container)
         store.actionName = StoreActionText.name
-        _model = State(initialValue: AppModel.live(store: store, scout: AppLaunch.makeScout()))
+        let model = AppModel.live(store: store, scout: AppLaunch.makeScout())
+        _model = State(initialValue: model)
+        // The smoke hook starts here, not in a view task, so it also runs when the app is launched hidden.
+        if AppLaunch.smokeTest {
+            Task { @MainActor in
+                await model.loadAttribution()
+                await SmokeHook.run(model)
+            }
+        }
     }
 
     var body: some Scene {
@@ -29,7 +37,6 @@ struct IterApp: App {
                 .environment(model)
                 .modelContainer(model.store.container)
                 .task { await model.loadAttribution() }
-                .task { await AppLaunch.runSmokeHookIfRequested(model) }
         }
         .defaultSize(width: 1280, height: 820)
         // Under the test runner the host app opens no window, so tests never take over the screen.
