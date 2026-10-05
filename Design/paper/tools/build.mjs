@@ -16,6 +16,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { withTheme, canvas } from './lib/tokens.mjs';
 import { missingSymbols } from './lib/icons.mjs';
 import { parse, serialize, pretty, styleOf, styleToString } from './lib/dom.mjs';
+import { paperFix } from './lib/paperfix.mjs';
 import { buildFragments, diffForDuplicate } from './lib/fragments.mjs';
 import { col } from './lib/h.mjs';
 import { note } from './lib/chrome.mjs';
@@ -101,6 +102,7 @@ for (const file of files) {
         const bg = withTheme(theme, () => canvas(ab.background || (ab.section === 'screens' ? 'desktop' : 'artboard')));
         const rootStyle = `box-sizing:border-box;width:${ab.width}px;height:${ab.height}px;overflow:hidden;position:relative;display:flex;flex-direction:column;background:${bg}`;
         let rootHtml = `<div layer-name="${label.replace(/"/g, '&quot;')}" data-artboard style="${rootStyle}">\n${inner}\n</div>`;
+        rootHtml = paperFix(rootHtml).html; // Paper text-alignment rewrites (tools/lib/paperfix.mjs)
         if (toLiteral) rootHtml = toLiteral(rootHtml);
         // assets: marker src="@asset:<rel>" -> relative path in the html, paper-asset:/// absolute in fragments
         const assetRel = '../'.repeat(rel.split(path.sep).length) + 'assets/';

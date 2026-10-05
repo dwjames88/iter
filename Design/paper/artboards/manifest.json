@@ -12,7 +12,7 @@
    "Component/AddSpotBanner"
   ],
   "notes": [],
-  "bytes": 11190,
+  "bytes": 11097,
   "page": "Components",
   "source": "src/components/explore/explore.mjs",
   "fragments": {
@@ -36,7 +36,7 @@
    "Menus/AddStopPopover"
   ],
   "notes": [],
-  "bytes": 82985,
+  "bytes": 81992,
   "page": "Components",
   "source": "src/components/trip-builder/components.mjs",
   "fragments": {
@@ -85,7 +85,7 @@
    "Component/ConfidenceMark"
   ],
   "notes": [],
-  "bytes": 26910,
+  "bytes": 26629,
   "page": "Components",
   "source": "src/components/core/light-index.mjs",
   "fragments": {
@@ -156,7 +156,7 @@
   "notes": [
    "Chevron drawn open"
   ],
-  "bytes": 97056,
+  "bytes": 95997,
   "page": "Components",
   "source": "src/components/spot/spot-boards.mjs",
   "fragments": {
@@ -202,7 +202,7 @@
    "Component/ExploreListPanel"
   ],
   "notes": [],
-  "bytes": 411717,
+  "bytes": 406628,
   "page": "Components",
   "source": "src/components/explore/explore.mjs",
   "fragments": {
@@ -225,7 +225,7 @@
    "Component/ExploreMapPane"
   ],
   "notes": [],
-  "bytes": 303227,
+  "bytes": 290998,
   "page": "Components",
   "source": "src/components/explore/explore.mjs",
   "fragments": {
@@ -250,7 +250,7 @@
   "notes": [
    "COMPONENTS.md says the selected pin is accent/primary; source uses map/pin"
   ],
-  "bytes": 43735,
+  "bytes": 42308,
   "page": "Components",
   "source": "src/components/explore/explore.mjs",
   "fragments": {
@@ -275,7 +275,7 @@
   "notes": [
    "Save symbol: bookmark, not star"
   ],
-  "bytes": 90486,
+  "bytes": 89385,
   "page": "Components",
   "source": "src/components/explore/explore.mjs",
   "fragments": {
@@ -298,7 +298,7 @@
    "Component/ExploreRow"
   ],
   "notes": [],
-  "bytes": 68105,
+  "bytes": 67170,
   "page": "Components",
   "source": "src/components/explore/explore.mjs",
   "fragments": {
@@ -324,7 +324,7 @@
    "Symbols are single-colour",
    "Hard-coded opacities"
   ],
-  "bytes": 485461,
+  "bytes": 483226,
   "page": "Components",
   "source": "src/components/spot/spot-boards.mjs",
   "fragments": {
@@ -350,7 +350,7 @@
    "Deviation 1: no band word in compact",
    "Deviation 7: literal opacity 0.85"
   ],
-  "bytes": 190327,
+  "bytes": 187112,
   "page": "Components",
   "source": "src/components/core/light-index.mjs",
   "fragments": {
@@ -373,7 +373,7 @@
    "Component/LightBadge"
   ],
   "notes": [],
-  "bytes": 163348,
+  "bytes": 160175,
   "page": "Components",
   "source": "src/components/core/light-index.mjs",
   "fragments": {
@@ -400,7 +400,7 @@
    "Hard-coded opacities",
    "Fixtures"
   ],
-  "bytes": 147345,
+  "bytes": 147514,
   "page": "Components",
   "source": "src/components/spot/spot-boards.mjs",
   "fragments": {
@@ -425,7 +425,7 @@
   "notes": [
    "Absent in snapshots"
   ],
-  "bytes": 6116,
+  "bytes": 6035,
   "page": "Components",
   "source": "src/components/spot/spot-boards.mjs",
   "fragments": {
@@ -448,7 +448,7 @@
    "Component/MapStandIn"
   ],
   "notes": [],
-  "bytes": 132790,
+  "bytes": 126609,
   "page": "Components",
   "source": "src/components/explore/explore.mjs",
   "fragments": {
@@ -471,7 +471,7 @@
    "Component/NoForecastRing"
   ],
   "notes": [],
-  "bytes": 20421,
+  "bytes": 19270,
   "page": "Components",
   "source": "src/components/core/light-index.mjs",
   "fragments": {
@@ -497,7 +497,7 @@
    "Best tab colour",
    "Hard-coded opacities"
   ],
-  "bytes": 181628,
+  "bytes": 174417,
   "page": "Components",
   "source": "src/components/spot/spot-boards.mjs",
   "fragments": {
@@ -520,7 +520,7 @@
    "Component/ProvenanceTag"
   ],
   "notes": [],
-  "bytes": 11398,
+  "bytes": 11115,
   "page": "Components",
   "source": "src/components/core/honesty.mjs",
   "fragments": {
@@ -546,7 +546,7 @@
    "Signed bars are grey",
    "Fixtures"
   ],
-  "bytes": 70307,
+  "bytes": 70254,
   "page": "Components",
   "source": "src/components/spot/spot-boards.mjs",
   "fragments": {
@@ -571,7 +571,7 @@
   "notes": [
    "Deviation 2: Sample data can appear twice"
   ],
-  "bytes": 22651,
+  "bytes": 22432,
   "page": "Components",
   "source": "src/components/core/honesty.mjs",
   "fragments": {
@@ -596,7 +596,7 @@
   "notes": [
    "Doc vs source: name-to-locality gap"
   ],
-  "bytes": 91519,
+  "bytes": 90270,
   "page": "Components",
   "source": "src/components/saved-scout/saved-scout.mjs",
   "fragments": {
@@ -621,7 +621,7 @@
   "notes": [
    "Deviation 7: literal opacity 0.85"
   ],
-  "bytes": 90370,
+  "bytes": 88037,
   "page": "Components",
   "source": "src/components/core/light-index.mjs",
   "fragments": {
@@ -667,7 +667,7 @@
    "Component/ScoutResultRow"
   ],
   "notes": [],
-  "bytes": 103478,
+  "bytes": 102545,
   "page": "Components",
   "source": "src/components/saved-scout/saved-scout.mjs",
   "fragments": {
@@ -718,7 +718,7 @@
    "Arc does not zoom",
    "Fixtures"
   ],
-  "bytes": 110686,
+  "bytes": 113095,
   "page": "Components",
   "source": "src/components/spot/spot-boards.mjs",
   "fragments": {
@@ -741,7 +741,7 @@
    "Component/SpotCard"
   ],
   "notes": [],
-  "bytes": 16503,
+  "bytes": 16260,
   "page": "Components",
   "source": "src/components/spot/spot-boards.mjs",
   "fragments": {
@@ -764,7 +764,7 @@
    "Component/SpotEditorSheet"
   ],
   "notes": [],
-  "bytes": 104479,
+  "bytes": 103678,
   "page": "Components",
   "source": "src/components/saved-scout/spot-editor-sheet.mjs",
   "fragments": {
@@ -787,7 +787,7 @@
    "Component/SpotFactsRow"
   ],
   "notes": [],
-  "bytes": 62894,
+  "bytes": 62485,
   "page": "Components",
   "source": "src/components/spot/spot-boards.mjs",
   "fragments": {
@@ -812,7 +812,7 @@
   "notes": [
    "Add to Trip"
   ],
-  "bytes": 117578,
+  "bytes": 117053,
   "page": "Components",
   "source": "src/components/spot/spot-boards.mjs",
   "fragments": {
@@ -858,7 +858,7 @@
    "Component/StopRow"
   ],
   "notes": [],
-  "bytes": 124397,
+  "bytes": 123212,
   "page": "Components",
   "source": "src/components/trip-builder/components.mjs",
   "fragments": {
@@ -881,7 +881,7 @@
    "Component/SuggestionBanner"
   ],
   "notes": [],
-  "bytes": 22407,
+  "bytes": 22172,
   "page": "Components",
   "source": "src/components/trip-builder/components.mjs",
   "fragments": {
@@ -927,7 +927,7 @@
    "Component/System components"
   ],
   "notes": [],
-  "bytes": 187969,
+  "bytes": 185729,
   "page": "Components",
   "source": "src/components/system/system.mjs",
   "fragments": {
@@ -950,7 +950,7 @@
    "Component/TemplateRow"
   ],
   "notes": [],
-  "bytes": 18300,
+  "bytes": 18059,
   "page": "Components",
   "source": "src/components/trips-home/trips-home.mjs",
   "fragments": {
@@ -999,7 +999,7 @@
    "Component/TripCard"
   ],
   "notes": [],
-  "bytes": 47740,
+  "bytes": 47281,
   "page": "Components",
   "source": "src/components/trips-home/trips-home.mjs",
   "fragments": {
@@ -1023,7 +1023,7 @@
    "Menus/Trip context menu"
   ],
   "notes": [],
-  "bytes": 31736,
+  "bytes": 31499,
   "page": "Components",
   "source": "src/components/trips-home/trips-home.mjs",
   "fragments": {
@@ -1069,7 +1069,7 @@
    "Component/TripPlanList"
   ],
   "notes": [],
-  "bytes": 172077,
+  "bytes": 170666,
   "page": "Components",
   "source": "src/components/trip-builder/components.mjs",
   "fragments": {
@@ -1094,7 +1094,7 @@
   "notes": [
    "Deviation: active pin token is accent/emphasis in source"
   ],
-  "bytes": 90414,
+  "bytes": 89167,
   "page": "Components",
   "source": "src/components/trip-builder/components.mjs",
   "fragments": {
@@ -1165,7 +1165,7 @@
   "notes": [
    "Best tab colour"
   ],
-  "bytes": 122899,
+  "bytes": 120642,
   "page": "Components",
   "source": "src/components/spot/spot-boards.mjs",
   "fragments": {
@@ -1191,7 +1191,7 @@
    "Chevron drawn open",
    "Signed bars are grey"
   ],
-  "bytes": 90624,
+  "bytes": 89411,
   "page": "Components",
   "source": "src/components/spot/spot-boards.mjs",
   "fragments": {
@@ -1409,7 +1409,7 @@
   "theme": "light",
   "covers": [],
   "notes": [],
-  "bytes": 271007,
+  "bytes": 263715,
   "page": "Foundations",
   "source": "src/foundations/colour.mjs",
   "fragments": {
@@ -1432,7 +1432,7 @@
   "notes": [
    "Deviation 5: serif beyond place names"
   ],
-  "bytes": 54292,
+  "bytes": 52889,
   "page": "Foundations",
   "source": "src/foundations/type.mjs",
   "fragments": {
@@ -1453,7 +1453,7 @@
   "theme": "light",
   "covers": [],
   "notes": [],
-  "bytes": 92426,
+  "bytes": 91062,
   "page": "Foundations",
   "source": "src/foundations/spacing.mjs",
   "fragments": {
@@ -1474,7 +1474,7 @@
   "theme": "light",
   "covers": [],
   "notes": [],
-  "bytes": 34061,
+  "bytes": 33670,
   "page": "Foundations",
   "source": "src/foundations/elevation.mjs",
   "fragments": {
@@ -1495,7 +1495,7 @@
   "theme": "light",
   "covers": [],
   "notes": [],
-  "bytes": 372602,
+  "bytes": 367822,
   "page": "Foundations",
   "source": "src/foundations/icons.mjs",
   "fragments": {
@@ -1537,7 +1537,7 @@
   "theme": "light",
   "covers": [],
   "notes": [],
-  "bytes": 184581,
+  "bytes": 181632,
   "page": "Foundations",
   "source": "src/foundations/lightindex.mjs",
   "fragments": {
@@ -1562,7 +1562,7 @@
   "notes": [
    "Ends is formatted like the trip dates (\"Fri, Oct 9\", en_US), not \"Fri 9 Oct\" as SCREENS.md says. Drawn over the trip builder window chrome; see the Trip builder artboards for that screen."
   ],
-  "bytes": 38623,
+  "bytes": 38439,
   "page": "Screens (Dark)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {
@@ -1587,7 +1587,7 @@
   "notes": [
    "Ends is formatted like the trip dates (\"Fri, Oct 9\", en_US), not \"Fri 9 Oct\" as SCREENS.md says. Drawn over the trip builder window chrome; see the Trip builder artboards for that screen."
   ],
-  "bytes": 38180,
+  "bytes": 37996,
   "page": "Screens (Light)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {
@@ -1633,7 +1633,7 @@
   ],
   "snapshot": "snapshots/editor-create-dark-1280x820.png",
   "notes": [],
-  "bytes": 94133,
+  "bytes": 93350,
   "page": "Screens (Dark)",
   "source": "src/screens/spot-editor/spot-editor.mjs",
   "fragments": {
@@ -1657,7 +1657,7 @@
   ],
   "snapshot": "snapshots/editor-create-light-1280x820.png",
   "notes": [],
-  "bytes": 92845,
+  "bytes": 92062,
   "page": "Screens (Light)",
   "source": "src/screens/spot-editor/spot-editor.mjs",
   "fragments": {
@@ -1683,7 +1683,7 @@
   "notes": [
    "Edit opens from Saved or the Spot page; it is drawn over Explore here to share one backdrop with the other states."
   ],
-  "bytes": 95352,
+  "bytes": 94565,
   "page": "Screens (Dark)",
   "source": "src/screens/spot-editor/spot-editor.mjs",
   "fragments": {
@@ -1709,7 +1709,7 @@
   "notes": [
    "Edit opens from Saved or the Spot page; it is drawn over Explore here to share one backdrop with the other states."
   ],
-  "bytes": 94054,
+  "bytes": 93267,
   "page": "Screens (Light)",
   "source": "src/screens/spot-editor/spot-editor.mjs",
   "fragments": {
@@ -1754,7 +1754,7 @@
    "Spot editor sheet/Looking up"
   ],
   "notes": [],
-  "bytes": 97923,
+  "bytes": 97130,
   "page": "Screens (Dark)",
   "source": "src/screens/spot-editor/spot-editor.mjs",
   "fragments": {
@@ -1777,7 +1777,7 @@
    "Spot editor sheet/Looking up"
   ],
   "notes": [],
-  "bytes": 96615,
+  "bytes": 95822,
   "page": "Screens (Light)",
   "source": "src/screens/spot-editor/spot-editor.mjs",
   "fragments": {
@@ -1801,7 +1801,7 @@
   ],
   "snapshot": "snapshots/editor-create-lookup-failed-dark-1280x820.png",
   "notes": [],
-  "bytes": 96029,
+  "bytes": 95238,
   "page": "Screens (Dark)",
   "source": "src/screens/spot-editor/spot-editor.mjs",
   "fragments": {
@@ -1825,7 +1825,7 @@
   ],
   "snapshot": "snapshots/editor-create-lookup-failed-light-1280x820.png",
   "notes": [],
-  "bytes": 94731,
+  "bytes": 93940,
   "page": "Screens (Light)",
   "source": "src/screens/spot-editor/spot-editor.mjs",
   "fragments": {
@@ -1850,7 +1850,7 @@
   "notes": [
    "Shown after a failed save: blank name and an invalid walk-in. The pin has also been moved, so Reset Pin appears."
   ],
-  "bytes": 97359,
+  "bytes": 96563,
   "page": "Screens (Dark)",
   "source": "src/screens/spot-editor/spot-editor.mjs",
   "fragments": {
@@ -1875,7 +1875,7 @@
   "notes": [
    "Shown after a failed save: blank name and an invalid walk-in. The pin has also been moved, so Reset Pin appears."
   ],
-  "bytes": 96046,
+  "bytes": 95250,
   "page": "Screens (Light)",
   "source": "src/screens/spot-editor/spot-editor.mjs",
   "fragments": {
@@ -1921,7 +1921,7 @@
   ],
   "snapshot": "snapshots/explore-addspot-mode-dark-1280x820.png",
   "notes": [],
-  "bytes": 125598,
+  "bytes": 123349,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -1945,7 +1945,7 @@
   ],
   "snapshot": "snapshots/explore-addspot-mode-light-1280x820.png",
   "notes": [],
-  "bytes": 123750,
+  "bytes": 121501,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -1971,7 +1971,7 @@
   "notes": [
    "List width: the source frames the list column 300 min / 360 ideal / 520 max; the snapshots show it at 520 (the max). Drawn at the 360 ideal. Owner to decide."
   ],
-  "bytes": 122667,
+  "bytes": 120450,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -1997,7 +1997,7 @@
   "notes": [
    "List width: the source frames the list column 300 min / 360 ideal / 520 max; the snapshots show it at 520 (the max). Drawn at the 360 ideal. Owner to decide."
   ],
-  "bytes": 120864,
+  "bytes": 118647,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2045,7 +2045,7 @@
   "notes": [
    "Toolbar overflow is inferred (the snapshot draws grey blocks): items that do not fit (the search field) collapse into the trailing overflow capsule. The list column is at its 300 minimum; the map is narrower. The capsule holds the chevron.right.2 symbol."
   ],
-  "bytes": 104877,
+  "bytes": 102881,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2071,7 +2071,7 @@
   "notes": [
    "Toolbar overflow is inferred (the snapshot draws grey blocks): items that do not fit (the search field) collapse into the trailing overflow capsule. The list column is at its 300 minimum; the map is narrower. The capsule holds the chevron.right.2 symbol."
   ],
-  "bytes": 103319,
+  "bytes": 101323,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2117,7 +2117,7 @@
   ],
   "snapshot": "snapshots/explore-filtered-empty-dark-1280x820.png",
   "notes": [],
-  "bytes": 48387,
+  "bytes": 48174,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2141,7 +2141,7 @@
   ],
   "snapshot": "snapshots/explore-filtered-empty-light-1280x820.png",
   "notes": [],
-  "bytes": 47769,
+  "bytes": 47556,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2165,7 +2165,7 @@
    "Menus/AddToTripMenu"
   ],
   "notes": [],
-  "bytes": 138274,
+  "bytes": 135993,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2189,7 +2189,7 @@
    "Menus/AddToTripMenu"
   ],
   "notes": [],
-  "bytes": 136296,
+  "bytes": 134015,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2212,7 +2212,7 @@
    "Menus/Explore filters and sort menus"
   ],
   "notes": [],
-  "bytes": 135058,
+  "bytes": 132774,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2235,7 +2235,7 @@
    "Menus/Explore filters and sort menus"
   ],
   "notes": [],
-  "bytes": 133095,
+  "bytes": 130811,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2258,7 +2258,7 @@
    "Menus/Explore filters and sort menus"
   ],
   "notes": [],
-  "bytes": 126857,
+  "bytes": 124617,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2281,7 +2281,7 @@
    "Menus/Explore filters and sort menus"
   ],
   "notes": [],
-  "bytes": 124999,
+  "bytes": 122759,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2305,7 +2305,7 @@
   ],
   "snapshot": "snapshots/explore-noforecast-dark-1280x820.png",
   "notes": [],
-  "bytes": 109144,
+  "bytes": 106363,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2329,7 +2329,7 @@
   ],
   "snapshot": "snapshots/explore-noforecast-light-1280x820.png",
   "notes": [],
-  "bytes": 107606,
+  "bytes": 104825,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2354,7 +2354,7 @@
   "notes": [
    "Not in the snapshots. Illustrative: no curated spot is polar, so Night on 21 Jun stands in for a window that does not occur."
   ],
-  "bytes": 92212,
+  "bytes": 90544,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2379,7 +2379,7 @@
   "notes": [
    "Not in the snapshots. Illustrative: no curated spot is polar, so Night on 21 Jun stands in for a window that does not occur."
   ],
-  "bytes": 90859,
+  "bytes": 89191,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2426,7 +2426,7 @@
   "notes": [
    "Not in the snapshots (the fixtures select Mesa Arch, whose window has passed)."
   ],
-  "bytes": 138106,
+  "bytes": 135690,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2451,7 +2451,7 @@
   "notes": [
    "Not in the snapshots (the fixtures select Mesa Arch, whose window has passed)."
   ],
-  "bytes": 136093,
+  "bytes": 133677,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2496,7 +2496,7 @@
    "Explore/Search failed"
   ],
   "notes": [],
-  "bytes": 125147,
+  "bytes": 122919,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2519,7 +2519,7 @@
    "Explore/Search failed"
   ],
   "notes": [],
-  "bytes": 123314,
+  "bytes": 121086,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2542,7 +2542,7 @@
    "Explore/Search found nothing"
   ],
   "notes": [],
-  "bytes": 47445,
+  "bytes": 47238,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2565,7 +2565,7 @@
    "Explore/Search found nothing"
   ],
   "notes": [],
-  "bytes": 46852,
+  "bytes": 46645,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2590,7 +2590,7 @@
   "notes": [
    "Not in the snapshots. Apple Maps rows carry no provenance tag in the source (SCREENS.md says they are tagged). Place names and scores are illustrative."
   ],
-  "bytes": 77583,
+  "bytes": 76792,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2615,7 +2615,7 @@
   "notes": [
    "Not in the snapshots. Apple Maps rows carry no provenance tag in the source (SCREENS.md says they are tagged). Place names and scores are illustrative."
   ],
-  "bytes": 76545,
+  "bytes": 75754,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2663,7 +2663,7 @@
   "notes": [
    "Save symbol: the card shows bookmark.fill (\"Saved\"); SCREENS.md says a filled star"
   ],
-  "bytes": 134849,
+  "bytes": 132335,
   "page": "Screens (Dark)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2689,7 +2689,7 @@
   "notes": [
    "Save symbol: the card shows bookmark.fill (\"Saved\"); SCREENS.md says a filled star"
   ],
-  "bytes": 132881,
+  "bytes": 130367,
   "page": "Screens (Light)",
   "source": "src/screens/explore/explore.mjs",
   "fragments": {
@@ -2734,7 +2734,7 @@
    "New Trip sheet (and Change Dates sheet)/New Trip, empty"
   ],
   "notes": [],
-  "bytes": 47855,
+  "bytes": 47565,
   "page": "Screens (Dark)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {
@@ -2757,7 +2757,7 @@
    "New Trip sheet (and Change Dates sheet)/New Trip, empty"
   ],
   "notes": [],
-  "bytes": 47292,
+  "bytes": 47002,
   "page": "Screens (Light)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {
@@ -2783,7 +2783,7 @@
   "notes": [
    "Sheet is 680 wide (listIdeal + inspectorIdeal) and sized to its content, as in the app. The snapshot draws a larger frame with empty space and a 12 pt panel; the source is followed (macOS 26 sheet radius)."
   ],
-  "bytes": 48634,
+  "bytes": 48340,
   "page": "Screens (Dark)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {
@@ -2809,7 +2809,7 @@
   "notes": [
    "Sheet is 680 wide (listIdeal + inspectorIdeal) and sized to its content, as in the app. The snapshot draws a larger frame with empty space and a 12 pt panel; the source is followed (macOS 26 sheet radius)."
   ],
-  "bytes": 48061,
+  "bytes": 47767,
   "page": "Screens (Light)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {
@@ -2856,7 +2856,7 @@
   "notes": [
    "A system confirmation dialog; drawn with the shared alert panel."
   ],
-  "bytes": 47590,
+  "bytes": 47211,
   "page": "Screens (Dark)",
   "source": "src/screens/saved/saved.mjs",
   "fragments": {
@@ -2881,7 +2881,7 @@
   "notes": [
    "A system confirmation dialog; drawn with the shared alert panel."
   ],
-  "bytes": 47097,
+  "bytes": 46718,
   "page": "Screens (Light)",
   "source": "src/screens/saved/saved.mjs",
   "fragments": {
@@ -2929,7 +2929,7 @@
   "notes": [
    "The toolbar search and Sort and Filter menu belong to the list, so the empty state shows no toolbar items."
   ],
-  "bytes": 22323,
+  "bytes": 22212,
   "page": "Screens (Dark)",
   "source": "src/screens/saved/saved.mjs",
   "fragments": {
@@ -2955,7 +2955,7 @@
   "notes": [
    "The toolbar search and Sort and Filter menu belong to the list, so the empty state shows no toolbar items."
   ],
-  "bytes": 22075,
+  "bytes": 21964,
   "page": "Screens (Light)",
   "source": "src/screens/saved/saved.mjs",
   "fragments": {
@@ -3002,7 +3002,7 @@
   "notes": [
    "A search with no match shows the system search-empty view (\"No Results for “query”\") instead of this one."
   ],
-  "bytes": 26963,
+  "bytes": 26839,
   "page": "Screens (Dark)",
   "source": "src/screens/saved/saved.mjs",
   "fragments": {
@@ -3027,7 +3027,7 @@
   "notes": [
    "A search with no match shows the system search-empty view (\"No Results for “query”\") instead of this one."
   ],
-  "bytes": 26675,
+  "bytes": 26551,
   "page": "Screens (Light)",
   "source": "src/screens/saved/saved.mjs",
   "fragments": {
@@ -3073,7 +3073,7 @@
   ],
   "snapshot": "snapshots/saved-list-dark-1280x820.png",
   "notes": [],
-  "bytes": 44558,
+  "bytes": 44197,
   "page": "Screens (Dark)",
   "source": "src/screens/saved/saved.mjs",
   "fragments": {
@@ -3097,7 +3097,7 @@
   ],
   "snapshot": "snapshots/saved-list-light-1280x820.png",
   "notes": [],
-  "bytes": 44130,
+  "bytes": 43769,
   "page": "Screens (Light)",
   "source": "src/screens/saved/saved.mjs",
   "fragments": {
@@ -3121,7 +3121,7 @@
   ],
   "snapshot": "snapshots/saved-noforecast-dark-1280x820.png",
   "notes": [],
-  "bytes": 40462,
+  "bytes": 39972,
   "page": "Screens (Dark)",
   "source": "src/screens/saved/saved.mjs",
   "fragments": {
@@ -3145,7 +3145,7 @@
   ],
   "snapshot": "snapshots/saved-noforecast-light-1280x820.png",
   "notes": [],
-  "bytes": 40084,
+  "bytes": 39594,
   "page": "Screens (Light)",
   "source": "src/screens/saved/saved.mjs",
   "fragments": {
@@ -3168,7 +3168,7 @@
    "Menus/Saved sort and filter menu"
   ],
   "notes": [],
-  "bytes": 51797,
+  "bytes": 51397,
   "page": "Screens (Dark)",
   "source": "src/screens/saved/saved.mjs",
   "fragments": {
@@ -3191,7 +3191,7 @@
    "Menus/Saved sort and filter menu"
   ],
   "notes": [],
-  "bytes": 51284,
+  "bytes": 50884,
   "page": "Screens (Light)",
   "source": "src/screens/saved/saved.mjs",
   "fragments": {
@@ -3215,7 +3215,7 @@
   ],
   "snapshot": "snapshots/scout-guardrail-dark-1280x820.png",
   "notes": [],
-  "bytes": 25016,
+  "bytes": 24892,
   "page": "Screens (Dark)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3239,7 +3239,7 @@
   ],
   "snapshot": "snapshots/scout-guardrail-light-1280x820.png",
   "notes": [],
-  "bytes": 24738,
+  "bytes": 24614,
   "page": "Screens (Light)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3263,7 +3263,7 @@
   ],
   "snapshot": "snapshots/scout-idle-dark-1280x820.png",
   "notes": [],
-  "bytes": 29400,
+  "bytes": 29166,
   "page": "Screens (Dark)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3287,7 +3287,7 @@
   ],
   "snapshot": "snapshots/scout-idle-light-1280x820.png",
   "notes": [],
-  "bytes": 29072,
+  "bytes": 28838,
   "page": "Screens (Light)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3311,7 +3311,7 @@
   ],
   "snapshot": "snapshots/scout-no-results-dark-1280x820.png",
   "notes": [],
-  "bytes": 24040,
+  "bytes": 23916,
   "page": "Screens (Dark)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3335,7 +3335,7 @@
   ],
   "snapshot": "snapshots/scout-no-results-light-1280x820.png",
   "notes": [],
-  "bytes": 23762,
+  "bytes": 23638,
   "page": "Screens (Light)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3360,7 +3360,7 @@
   "notes": [
    "The four \"other failure\" empty states share one layout, so they are shown together in a 2 x 2 grid with a label each (labels are annotations, not UI). In the app each fills the content area alone, with the request bar shown except for \"unavailable\"."
   ],
-  "bytes": 37479,
+  "bytes": 37300,
   "page": "Screens (Dark)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3385,7 +3385,7 @@
   "notes": [
    "The four \"other failure\" empty states share one layout, so they are shown together in a 2 x 2 grid with a label each (labels are annotations, not UI). In the app each fills the content area alone, with the request bar shown except for \"unavailable\"."
   ],
-  "bytes": 37001,
+  "bytes": 36822,
   "page": "Screens (Light)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3434,7 +3434,7 @@
    "Map markers: the source draws MapKit Markers tinted accent for every result (selected is larger). The snapshot stand-in draws the selected pin accent and the others grey; the source is followed.",
    "The list is 360 wide (listIdeal) beside the sidebar; the snapshot, which has no sidebar, fills 520."
   ],
-  "bytes": 89345,
+  "bytes": 88762,
   "page": "Screens (Dark)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3461,7 +3461,7 @@
    "Map markers: the source draws MapKit Markers tinted accent for every result (selected is larger). The snapshot stand-in draws the selected pin accent and the others grey; the source is followed.",
    "The list is 360 wide (listIdeal) beside the sidebar; the snapshot, which has no sidebar, fills 520."
   ],
-  "bytes": 88312,
+  "bytes": 87729,
   "page": "Screens (Light)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3506,7 +3506,7 @@
    "Scout/Checking the forecast"
   ],
   "notes": [],
-  "bytes": 89815,
+  "bytes": 89262,
   "page": "Screens (Dark)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3529,7 +3529,7 @@
    "Scout/Checking the forecast"
   ],
   "notes": [],
-  "bytes": 88797,
+  "bytes": 88244,
   "page": "Screens (Light)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3553,7 +3553,7 @@
   ],
   "snapshot": "snapshots/scout-results-noforecast-dark-1280x820.png",
   "notes": [],
-  "bytes": 80803,
+  "bytes": 80056,
   "page": "Screens (Dark)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3577,7 +3577,7 @@
   ],
   "snapshot": "snapshots/scout-results-noforecast-light-1280x820.png",
   "notes": [],
-  "bytes": 79875,
+  "bytes": 79128,
   "page": "Screens (Light)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3601,7 +3601,7 @@
   ],
   "snapshot": "snapshots/scout-running-dark-1280x820.png",
   "notes": [],
-  "bytes": 25818,
+  "bytes": 25689,
   "page": "Screens (Dark)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3625,7 +3625,7 @@
   ],
   "snapshot": "snapshots/scout-running-light-1280x820.png",
   "notes": [],
-  "bytes": 25510,
+  "bytes": 25381,
   "page": "Screens (Light)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3649,7 +3649,7 @@
   ],
   "snapshot": "snapshots/scout-unavailable-device-dark-1280x820.png",
   "notes": [],
-  "bytes": 22433,
+  "bytes": 22323,
   "page": "Screens (Dark)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3673,7 +3673,7 @@
   ],
   "snapshot": "snapshots/scout-unavailable-device-light-1280x820.png",
   "notes": [],
-  "bytes": 22195,
+  "bytes": 22085,
   "page": "Screens (Light)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3697,7 +3697,7 @@
   ],
   "snapshot": "snapshots/scout-unavailable-downloading-dark-1280x820.png",
   "notes": [],
-  "bytes": 22285,
+  "bytes": 22175,
   "page": "Screens (Dark)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3721,7 +3721,7 @@
   ],
   "snapshot": "snapshots/scout-unavailable-downloading-light-1280x820.png",
   "notes": [],
-  "bytes": 22047,
+  "bytes": 21937,
   "page": "Screens (Light)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3745,7 +3745,7 @@
   ],
   "snapshot": "snapshots/scout-unavailable-not-enabled-dark-1280x820.png",
   "notes": [],
-  "bytes": 23288,
+  "bytes": 23175,
   "page": "Screens (Dark)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -3769,7 +3769,7 @@
   ],
   "snapshot": "snapshots/scout-unavailable-not-enabled-light-1280x820.png",
   "notes": [],
-  "bytes": 23040,
+  "bytes": 22927,
   "page": "Screens (Light)",
   "source": "src/screens/scout/scout.mjs",
   "fragments": {
@@ -4390,7 +4390,7 @@
   "notes": [
    "Sidebar rows follow the store, so \"Trip renamed or created\" is this artboard with a different row label."
   ],
-  "bytes": 24900,
+  "bytes": 24758,
   "page": "Screens (Dark)",
   "source": "src/screens/shell/shell.mjs",
   "fragments": {
@@ -4417,7 +4417,7 @@
   "notes": [
    "Sidebar rows follow the store, so \"Trip renamed or created\" is this artboard with a different row label."
   ],
-  "bytes": 24632,
+  "bytes": 24490,
   "page": "Screens (Light)",
   "source": "src/screens/shell/shell.mjs",
   "fragments": {
@@ -4463,7 +4463,7 @@
   ],
   "snapshot": "snapshots/shell-default-dark-960x640.png",
   "notes": [],
-  "bytes": 24882,
+  "bytes": 24740,
   "page": "Screens (Dark)",
   "source": "src/screens/shell/shell.mjs",
   "fragments": {
@@ -4487,7 +4487,7 @@
   ],
   "snapshot": "snapshots/shell-default-light-960x640.png",
   "notes": [],
-  "bytes": 24614,
+  "bytes": 24472,
   "page": "Screens (Light)",
   "source": "src/screens/shell/shell.mjs",
   "fragments": {
@@ -4510,7 +4510,7 @@
    "Shell: sidebar and detail/No sample banner"
   ],
   "notes": [],
-  "bytes": 22543,
+  "bytes": 22433,
   "page": "Screens (Dark)",
   "source": "src/screens/shell/shell.mjs",
   "fragments": {
@@ -4533,7 +4533,7 @@
    "Shell: sidebar and detail/No sample banner"
   ],
   "notes": [],
-  "bytes": 22300,
+  "bytes": 22190,
   "page": "Screens (Light)",
   "source": "src/screens/shell/shell.mjs",
   "fragments": {
@@ -4556,7 +4556,7 @@
    "Shell: sidebar and detail/No sample banner"
   ],
   "notes": [],
-  "bytes": 22525,
+  "bytes": 22415,
   "page": "Screens (Dark)",
   "source": "src/screens/shell/shell.mjs",
   "fragments": {
@@ -4579,7 +4579,7 @@
    "Shell: sidebar and detail/No sample banner"
   ],
   "notes": [],
-  "bytes": 22282,
+  "bytes": 22172,
   "page": "Screens (Light)",
   "source": "src/screens/shell/shell.mjs",
   "fragments": {
@@ -4605,7 +4605,7 @@
   "notes": [
    "Explanation text is illustrative"
   ],
-  "bytes": 265820,
+  "bytes": 264414,
   "page": "Screens (Dark)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4631,7 +4631,7 @@
   "notes": [
    "Explanation text is illustrative"
   ],
-  "bytes": 262672,
+  "bytes": 261266,
   "page": "Screens (Light)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4657,7 +4657,7 @@
   "notes": [
    "cloud.slash does not exist"
   ],
-  "bytes": 125942,
+  "bytes": 124428,
   "page": "Screens (Dark)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4683,7 +4683,7 @@
   "notes": [
    "cloud.slash does not exist"
   ],
-  "bytes": 124104,
+  "bytes": 122590,
   "page": "Screens (Light)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4709,7 +4709,7 @@
   "notes": [
    "cloud.slash does not exist"
   ],
-  "bytes": 124772,
+  "bytes": 123347,
   "page": "Screens (Dark)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4735,7 +4735,7 @@
   "notes": [
    "cloud.slash does not exist"
   ],
-  "bytes": 122969,
+  "bytes": 121544,
   "page": "Screens (Light)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4761,7 +4761,7 @@
   "notes": [
    "cloud.slash does not exist"
   ],
-  "bytes": 124372,
+  "bytes": 122862,
   "page": "Screens (Dark)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4787,7 +4787,7 @@
   "notes": [
    "cloud.slash does not exist"
   ],
-  "bytes": 122559,
+  "bytes": 121049,
   "page": "Screens (Light)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4811,7 +4811,7 @@
   ],
   "snapshot": "snapshots/spot-polar-dark-1280x2600.png",
   "notes": [],
-  "bytes": 218071,
+  "bytes": 216744,
   "page": "Screens (Dark)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4835,7 +4835,7 @@
   ],
   "snapshot": "snapshots/spot-polar-light-1280x2600.png",
   "notes": [],
-  "bytes": 215348,
+  "bytes": 214021,
   "page": "Screens (Light)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4866,7 +4866,7 @@
    "\"Updated 09:00\"",
    "Look Around is absent"
   ],
-  "bytes": 252238,
+  "bytes": 250759,
   "page": "Screens (Dark)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4897,7 +4897,7 @@
    "\"Updated 09:00\"",
    "Look Around is absent"
   ],
-  "bytes": 249180,
+  "bytes": 247701,
   "page": "Screens (Light)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4921,7 +4921,7 @@
   ],
   "snapshot": "snapshots/spot-sample-dark-960x640.png",
   "notes": [],
-  "bytes": 245597,
+  "bytes": 244166,
   "page": "Screens (Dark)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4945,7 +4945,7 @@
   ],
   "snapshot": "snapshots/spot-sample-light-960x640.png",
   "notes": [],
-  "bytes": 242674,
+  "bytes": 241243,
   "page": "Screens (Light)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4969,7 +4969,7 @@
   ],
   "snapshot": "snapshots/spot-user-dark-1280x2600.png",
   "notes": [],
-  "bytes": 245406,
+  "bytes": 244037,
   "page": "Screens (Dark)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -4993,7 +4993,7 @@
   ],
   "snapshot": "snapshots/spot-user-light-1280x2600.png",
   "notes": [],
-  "bytes": 242508,
+  "bytes": 241139,
   "page": "Screens (Light)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -5020,7 +5020,7 @@
    "Chevron drawn open",
    "Signed bars are grey"
   ],
-  "bytes": 263349,
+  "bytes": 261936,
   "page": "Screens (Dark)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -5047,7 +5047,7 @@
    "Chevron drawn open",
    "Signed bars are grey"
   ],
-  "bytes": 260196,
+  "bytes": 258783,
   "page": "Screens (Light)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -5073,7 +5073,7 @@
   "notes": [
    "Arc does not zoom"
   ],
-  "bytes": 160349,
+  "bytes": 159148,
   "page": "Screens (Dark)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -5099,7 +5099,7 @@
   "notes": [
    "Arc does not zoom"
   ],
-  "bytes": 158146,
+  "bytes": 156945,
   "page": "Screens (Light)",
   "source": "src/screens/spot/spot-page.mjs",
   "fragments": {
@@ -5120,7 +5120,7 @@
   "theme": "dark",
   "covers": [],
   "notes": [],
-  "bytes": 116557,
+  "bytes": 115604,
   "page": "Screens (Dark)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5141,7 +5141,7 @@
   "theme": "light",
   "covers": [],
   "notes": [],
-  "bytes": 115179,
+  "bytes": 114226,
   "page": "Screens (Light)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5165,7 +5165,7 @@
   ],
   "snapshot": "snapshots/trip-builder-conflict-dark-1280x820.png",
   "notes": [],
-  "bytes": 88191,
+  "bytes": 87605,
   "page": "Screens (Dark)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5189,7 +5189,7 @@
   ],
   "snapshot": "snapshots/trip-builder-conflict-light-1280x820.png",
   "notes": [],
-  "bytes": 87128,
+  "bytes": 86542,
   "page": "Screens (Light)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5213,7 +5213,7 @@
   ],
   "snapshot": "snapshots/trip-builder-conflict-dark-960x640.png",
   "notes": [],
-  "bytes": 75953,
+  "bytes": 75445,
   "page": "Screens (Dark)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5237,7 +5237,7 @@
   ],
   "snapshot": "snapshots/trip-builder-conflict-light-960x640.png",
   "notes": [],
-  "bytes": 75035,
+  "bytes": 74527,
   "page": "Screens (Light)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5264,7 +5264,7 @@
    "Active pin is accent/emphasis in source (COMPONENTS.md says map/pin).",
    "Days 3 and 4 are not in the snapshots; their times and scores are illustrative."
   ],
-  "bytes": 89011,
+  "bytes": 88397,
   "page": "Screens (Dark)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5291,7 +5291,7 @@
    "Active pin is accent/emphasis in source (COMPONENTS.md says map/pin).",
    "Days 3 and 4 are not in the snapshots; their times and scores are illustrative."
   ],
-  "bytes": 87948,
+  "bytes": 87334,
   "page": "Screens (Light)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5337,7 +5337,7 @@
   ],
   "snapshot": "snapshots/trip-builder-dark-960x640.png",
   "notes": [],
-  "bytes": 71644,
+  "bytes": 71128,
   "page": "Screens (Dark)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5361,7 +5361,7 @@
   ],
   "snapshot": "snapshots/trip-builder-light-960x640.png",
   "notes": [],
-  "bytes": 70756,
+  "bytes": 70240,
   "page": "Screens (Light)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5384,7 +5384,7 @@
    "Trip builder/Dragging"
   ],
   "notes": [],
-  "bytes": 89235,
+  "bytes": 88620,
   "page": "Screens (Dark)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5407,7 +5407,7 @@
    "Trip builder/Dragging"
   ],
   "notes": [],
-  "bytes": 88167,
+  "bytes": 87552,
   "page": "Screens (Light)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5430,7 +5430,7 @@
    "Trip builder/Estimated drive"
   ],
   "notes": [],
-  "bytes": 89590,
+  "bytes": 88974,
   "page": "Screens (Dark)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5453,7 +5453,7 @@
    "Trip builder/Estimated drive"
   ],
   "notes": [],
-  "bytes": 88517,
+  "bytes": 87901,
   "page": "Screens (Light)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5476,7 +5476,7 @@
    "Trip builder/Fetching drives"
   ],
   "notes": [],
-  "bytes": 90600,
+  "bytes": 89985,
   "page": "Screens (Dark)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5499,7 +5499,7 @@
    "Trip builder/Fetching drives"
   ],
   "notes": [],
-  "bytes": 89532,
+  "bytes": 88917,
   "page": "Screens (Light)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5523,7 +5523,7 @@
   ],
   "snapshot": "snapshots/trip-builder-missing-dark-1280x820.png",
   "notes": [],
-  "bytes": 19653,
+  "bytes": 19552,
   "page": "Screens (Dark)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5547,7 +5547,7 @@
   ],
   "snapshot": "snapshots/trip-builder-missing-light-1280x820.png",
   "notes": [],
-  "bytes": 19435,
+  "bytes": 19334,
   "page": "Screens (Light)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5571,7 +5571,7 @@
   ],
   "snapshot": "snapshots/trip-builder-noforecast-dark-1280x820.png",
   "notes": [],
-  "bytes": 74626,
+  "bytes": 73931,
   "page": "Screens (Dark)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5595,7 +5595,7 @@
   ],
   "snapshot": "snapshots/trip-builder-noforecast-light-1280x820.png",
   "notes": [],
-  "bytes": 73708,
+  "bytes": 73013,
   "page": "Screens (Light)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5619,7 +5619,7 @@
   ],
   "snapshot": "snapshots/trip-builder-noforecast-dark-960x640.png",
   "notes": [],
-  "bytes": 67072,
+  "bytes": 66493,
   "page": "Screens (Dark)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5643,7 +5643,7 @@
   ],
   "snapshot": "snapshots/trip-builder-noforecast-light-960x640.png",
   "notes": [],
-  "bytes": 66254,
+  "bytes": 65675,
   "page": "Screens (Light)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5667,7 +5667,7 @@
   ],
   "snapshot": "snapshots/trip-stoprow-dark-1280x820.png",
   "notes": [],
-  "bytes": 50900,
+  "bytes": 50543,
   "page": "Screens (Dark)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5691,7 +5691,7 @@
   ],
   "snapshot": "snapshots/trip-stoprow-light-1280x820.png",
   "notes": [],
-  "bytes": 50272,
+  "bytes": 49915,
   "page": "Screens (Light)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5714,7 +5714,7 @@
    "Trip builder/Window missing"
   ],
   "notes": [],
-  "bytes": 87928,
+  "bytes": 87349,
   "page": "Screens (Dark)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5737,7 +5737,7 @@
    "Trip builder/Window missing"
   ],
   "notes": [],
-  "bytes": 86895,
+  "bytes": 86316,
   "page": "Screens (Light)",
   "source": "src/screens/trip-builder/trip-builder.mjs",
   "fragments": {
@@ -5760,7 +5760,7 @@
    "All Trips/Card, all sessions passed"
   ],
   "notes": [],
-  "bytes": 29901,
+  "bytes": 29716,
   "page": "Screens (Dark)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {
@@ -5783,7 +5783,7 @@
    "All Trips/Card, all sessions passed"
   ],
   "notes": [],
-  "bytes": 29583,
+  "bytes": 29398,
   "page": "Screens (Light)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {
@@ -5807,7 +5807,7 @@
   ],
   "snapshot": "snapshots/trips-empty-dark-1280x820.png",
   "notes": [],
-  "bytes": 25187,
+  "bytes": 24984,
   "page": "Screens (Dark)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {
@@ -5831,7 +5831,7 @@
   ],
   "snapshot": "snapshots/trips-empty-light-1280x820.png",
   "notes": [],
-  "bytes": 24859,
+  "bytes": 24656,
   "page": "Screens (Light)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {
@@ -5856,7 +5856,7 @@
   "notes": [
    "System alert drawn with the shared alert panel; the real alert is the system SwiftUI .alert (app icon, bold title, message, OK)."
   ],
-  "bytes": 38593,
+  "bytes": 38350,
   "page": "Screens (Dark)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {
@@ -5881,7 +5881,7 @@
   "notes": [
    "System alert drawn with the shared alert panel; the real alert is the system SwiftUI .alert (app icon, bold title, message, OK)."
   ],
-  "bytes": 38180,
+  "bytes": 37937,
   "page": "Screens (Light)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {
@@ -5929,7 +5929,7 @@
   "notes": [
    "Three cards: no stops, two with a Next line. The snapshot draws no toolbar contents; the New Trip plus button is drawn from the source."
   ],
-  "bytes": 36271,
+  "bytes": 36043,
   "page": "Screens (Dark)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {
@@ -5955,7 +5955,7 @@
   "notes": [
    "Three cards: no stops, two with a Next line. The snapshot draws no toolbar contents; the New Trip plus button is drawn from the source."
   ],
-  "bytes": 35903,
+  "bytes": 35675,
   "page": "Screens (Light)",
   "source": "src/screens/trips-home/trips-home.mjs",
   "fragments": {

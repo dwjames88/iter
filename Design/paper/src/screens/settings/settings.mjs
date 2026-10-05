@@ -99,7 +99,8 @@ const intelligence = (k) => () => {
 // About: the Logo image set, 64 pt high. Path data from Brand/logo/symbol-firstlight.svg; fills are tokens (ink and accent).
 function logo() {
   const here = path.dirname(fileURLToPath(import.meta.url));
-  const file = path.resolve(here, '../../../../../Brand/logo/symbol-firstlight.svg');
+  // Brand/logo renamed the First Light files (symbol-firstlight.svg -> symbol.svg, same artwork) on 2026-10-05; accept either.
+  const file = ['symbol-firstlight.svg', 'symbol.svg'].map((n) => path.resolve(here, '../../../../../Brand/logo', n)).find((f) => fs.existsSync(f));
   const paths = [...fs.readFileSync(file, 'utf8').matchAll(/<path[^>]* d="([^"]+)"/g)].map((m) => m[1]);
   const [vbw, vbh] = [274.4, 790];
   return svgEl('Logo', { width: Math.round(64 * vbw / vbh), height: 64, viewBox: `0 0 ${vbw} ${vbh}` },

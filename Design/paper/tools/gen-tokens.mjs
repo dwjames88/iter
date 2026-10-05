@@ -200,7 +200,13 @@ const paperArray = [
   ...paper.spacing.sort(byVal), ...paper.radius.sort(byVal), ...paper.container.sort(byVal),
   ...paper.fontFamily, ...paper.fontSize.sort(byVal), ...paper.fontWeight.sort(byVal),
   ...paper.lineHeight.sort(byVal), ...paper.opacity.sort(byVal),
-];
+].map((t) => ({
+  ...t,
+  // Paper's create_tokens requires the full custom-property name (pattern ^--[a-zA-Z0-9_-]+$),
+  // and documents fontWeight and opacity values as numbers. (Fixed during the Paper build, 2026-10-05.)
+  name: t.name.startsWith('--') ? t.name : `--${t.name}`,
+  value: (t.type === 'fontWeight' || t.type === 'opacity') ? Number(t.value) : t.value,
+}));
 // dedupe fontSize/lineHeight entries with identical names is impossible (names unique); equal values with different names are kept.
 
 const header = `/* GENERATED FILE - DO NOT EDIT.
