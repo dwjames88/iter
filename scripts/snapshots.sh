@@ -11,7 +11,7 @@ rm -rf "$CONTAINER_TMP"
 ONLY=()
 if [ -n "${1:-}" ]; then ONLY=(-only-testing:"IterAppTests/$1"); fi
 TEST_RUNNER_ITER_SNAPSHOT_CACHE=${ITER_SNAPSHOT_CACHE:-0} TEST_RUNNER_ITER_SNAPSHOT_RUN=$RUN TEST_RUNNER_ITER_SNAPSHOTS=1 xcodebuild test -project Iter.xcodeproj -scheme Iter -destination 'platform=macOS' \
-  -derivedDataPath build/DerivedData ${ONLY[@]+"${ONLY[@]}"} -quiet 2>&1 | grep -E "error:|failed|passed|Test run" || true
+  -derivedDataPath "${ITER_DD:-build/DerivedData}" ${ONLY[@]+"${ONLY[@]}"} -quiet 2>&1 | grep -E "error:|failed|passed|Test run" || true
 mkdir -p Design/snapshots
 cp "$CONTAINER_TMP"/*.png Design/snapshots/ 2>/dev/null || true
 rm -rf "$CONTAINER_TMP"
