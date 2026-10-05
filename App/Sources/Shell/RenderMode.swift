@@ -15,7 +15,6 @@ private struct SnapshotOpaqueBackground: ViewModifier {
             // Translucent materials need the window server's backdrop, which an offscreen render does not have.
             // Snapshots draw them as the flat window colour instead.
             content.scrollContentBackground(.hidden).background(IterColor.backgroundWindow)
-                .containerBackground(IterColor.backgroundWindow, for: .navigation)
         } else {
             content
         }
