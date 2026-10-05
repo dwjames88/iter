@@ -10,7 +10,7 @@ App/                     macOS UI only: scenes, windows, views, commands, settin
 AppTests/                hosted tests: snapshot renderer (Design/snapshots) and live service checks
 Packages/IterKit/        everything that is not macOS UI, reusable by a future iOS target
 Design/                  tokens.json (DTCG), TOKENS.md, SCREENS.md, COMPONENTS.md, snapshots/
-Brand/                   Step (Geist 600) logo files and the First Light / Alpine palettes
+Brand/                   Step (Geist 600) logo files and the First Light palette (Alpine kept in the palette files as history)
 docs/                    this file, ROADMAP.md, reference/ (the approved plan and flow briefs)
 scripts/                 run.sh, test.sh, tokens.sh, make-icon.sh, snapshots.sh
 ```
@@ -24,7 +24,7 @@ scripts/                 run.sh, test.sh, tokens.sh, make-icon.sh, snapshots.sh
 | `IterLight` | Core, Astro | `LightEngine` builds the five windows for a spot and day and scores each from a forecast; confidence and range from lead time; structured contributors (the "why"). `TripScheduler` (backward schedule and feasibility), `LightFirstOrdering` (suggested order). Pure and deterministic. |
 | `IterData` | Core | SwiftData models (`PlaceRecord`, `TripRecord`, `StopRecord`), `IterStore` (main-actor repository with named undo actions), curated spots (`curated-spots.json`), `TripDocument` (the `.iter` export format), sample seed trips and templates. |
 | `IterServices` | Core, Light, Data | `AppleWeatherService` (WeatherKit) with a caching actor, `SampleWeatherService` (Debug menu only), MapKit search, geocoding and directions (cached, throttled), `AppleIntelligenceScout` (Foundation Models with tools), `LightExplainer`. |
-| `IterDesign` | Core, SwiftUI | The token registry (`TokenValues.swift`, the single source for colours, type, spacing, radii and the light ramp), the SwiftUI API (`IterColor`, `IterSpace`, `IterRadius`, `IterFont`) and small cross-platform primitives (Light Index badge, confidence mark). |
+| `IterDesign` | Core, SwiftUI | The token registry (`TokenValues.swift`, the single source for colours, type, spacing, radii and the light ramp), the SwiftUI API (`IterColor`, `IterSpace`, `IterRadius`, `IterFont`; text tokens are `IterInk`, which is prominence-aware) and small cross-platform primitives (Light Index badge, confidence mark). |
 | `IterFeatures` | all above | `@Observable @MainActor` view models for Explore, Spot, Trips, Trip builder, Scout and Saved, plus `AppEnvironment` (the service container). Platform-neutral. |
 | `iter-tokens` | Design | Exports `Design/tokens.json` (DTCG) and the app's asset-catalog colour sets from the registry; imports an edited `tokens.json` back into the registry. |
 

@@ -132,7 +132,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **One job:** a warning is violet and always carries an icon.
 - **Anatomy:** `exclamationmark.triangle.fill` (or `exclamationmark.triangle`) + text, both `status/warning`, `type/caption` (`type/callout` in Change Dates). Wraps.
 - **Wording seen:** "Out of order: this Sunrise is earlier than the previous stop's Sunset"; "No Sunset window on this day at this place"; "Drive doesn't fit: 2 hr, 58 min short"; "N stops will move to Day D, the new last day. You can undo this."; "Couldn't find this place's time zone, so using this Mac's."; "Couldn't search Apple Maps for “query”."
-- **Danger variant:** validation messages in the Spot editor use `status/danger` (crimson) with `exclamationmark.triangle.fill` at `type/caption`.
+- **Danger variant:** validation messages in the Spot editor use `status/danger` (raspberry) with `exclamationmark.triangle.fill` at `type/caption`.
 - **Used on:** Trip builder rows and connectors, Change Dates sheet, Spot editor, Explore header.
 
 ---
@@ -151,7 +151,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `MapStandIn`, `Components/MapStandIn.swift`; `ExploreMapStandIn` in `Explore/ExploreMapPane.swift`.
 - **One job:** snapshots only. A labelled stand-in for a live map.
-- **Anatomy:** a `background/control` ground; the same pins at projected positions; for trips, the active day's route as a `route/active` polyline (`stroke/route` 4); pins 28 pt (36 selected), selected `accent/primary`, others `text/secondary`, each with a `type/caption` label; the label "Map (snapshot stand-in)" at top-left in `text/tertiary`.
+- **Anatomy:** a `background/control` ground; the same pins at projected positions; for trips, the active day's route as a `route/active` polyline (`stroke/route` 4); pins 28 pt (36 selected), selected `map/pin`, others `map/pinInactive`, each with a `type/caption` label; the label "Map (snapshot stand-in)" at top-left in `text/tertiary`.
 - Not part of the product design. Design the real map from [ExploreMapPane](#exploremappane), [TripRouteMap](#triproutemap) and the Map entry under System components.
 
 ### SpotEditorSheet
@@ -254,9 +254,9 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `ConnectorRowView`, `Trips/StopRow.swift`.
 - **One job:** the drive between two stops and whether it fits; across a day boundary, an explicit overnight break.
-- **Anatomy:** left rail: a 2 pt (`stroke/thick`) by 16 pt (`size/icon/medium`) rounded bar in a 22 pt column, in `route/active` (teal) when the drive fits or `status/warning` (violet) when it does not. Then `car.fill` + "57 min · 41 mi" (`type/caption`, `text/secondary`, monospaced digits). Vertical padding `space/xs`.
+- **Anatomy:** left rail: a 2 pt (`stroke/thick`) by 16 pt (`size/icon/medium`) rounded bar in a 22 pt column, in `route/active` (coral) when the drive fits or `status/warning` (violet) when it does not. Then `car.fill` + "57 min · 41 mi" (`type/caption`, `text/secondary`, monospaced digits). Vertical padding `space/xs`.
 - **Variants:** *same-day:* rail then drive text, left aligned. *Overnight:* rail, then `moon.stars` + "Overnight" (`type/captionStrong`, `text/secondary`), a hairline rule filling the width, then the drive text at the right.
-- **States:** fits (teal); does not fit (violet rail, then "· ⚠ Drive doesn't fit: 12 hr, 57 min short" in violet with a triangle icon); estimated ("· estimated", tooltip "Drive time estimated"); loading (the drive text is absent until MapKit answers; a spinner is in the toolbar).
+- **States:** fits (coral); does not fit (violet rail, then "· ⚠ Drive doesn't fit: 12 hr, 57 min short" in violet with a triangle icon); estimated ("· estimated", tooltip "Drive time estimated"); loading (the drive text is absent until MapKit answers; a spinner is in the toolbar).
 - **Accessibility:** one combined element.
 - **Used on:** Trip builder.
 
@@ -272,7 +272,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `TripRouteMap`, `Trips/TripRouteMap.swift`.
 - **One job:** the route sanity check.
-- **Anatomy (live map):** MapKit map filling the right column. **Pins:** numbered circles, 28 pt (`size/mapPin`), 36 pt when selected (`size/mapPinSelected`); in the active day `accent/primary` fill with `accent/onAccent` number; other days `text/secondary` fill with a `background/window` number; border `background/window` 1 pt (2 pt when selected); number in `type/captionStrong`. **Routes:** the active day's legs as `route/active` 4 pt (`stroke/route`) over a `background/window` casing 7 pt (`stroke/routeCasing`); other days `route/inactive` 3 pt (`stroke/routeInactive`). Straight lines when the road path is unknown. Controls: zoom stepper, compass, scale. **Day picker:** a system segmented control (up to 5 days; a menu beyond that) in a `regularMaterial` pill (`radius/control`, padding `space/xs`) at the top-left with `space/md` margin; shown only when more than one day has stops.
+- **Anatomy (live map):** MapKit map filling the right column. **Pins:** numbered circles, 28 pt (`size/mapPin`), 36 pt when selected (`size/mapPinSelected`); in the active day `map/pin` fill with an `accent/onAccent` number; other days `map/pinInactive` fill with a `background/window` number; border `background/window` 1 pt (2 pt when selected); number in `type/captionStrong`. **Routes:** the active day's legs as `route/active` 4 pt (`stroke/route`) over a `background/window` casing 7 pt (`stroke/routeCasing`); other days `route/inactive` 3 pt (`stroke/routeInactive`). Straight lines when the road path is unknown. Controls: zoom stepper, compass, scale. **Day picker:** a system segmented control (up to 5 days; a menu beyond that) in a `regularMaterial` pill (`radius/control`, padding `space/xs`) at the top-left with `space/md` margin; shown only when more than one day has stops.
 - **States:** a stop selected (the camera recentres on it, zoom kept); the picked day; fit-to-trip on appear and when stops change.
 - **Accessibility:** label "Route map"; pins "Stop 2, Monument Valley".
 
@@ -376,7 +376,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Type, file:** `OutlookStrip`, `Spot/WhenToGoView.swift`.
 - **One job:** ten days at a glance for the chosen intent, fading with confidence.
 - **Anatomy:** caption "10-day outlook for Sunrise" (`type/subheadline`, `text/secondary`); a row of ten equal cells (gap `space/xs`); key line "Fainter days are less certain. A dashed ring means no forecast." (`type/caption`, `text/tertiary`). Each cell, top to bottom (gap `space/xxs`, vertical padding `space/xs`): a **Best** tab (`type/captionStrong`, `accent/onAccent` on an `accent/primary` capsule; an empty line on other days), weekday (`type/caption`, `text/secondary`), day number (`type/bodyEmphasis`, monospaced), a [ScoreChip](#scorechip) regular or a 22 pt [NoForecastRing](#noforecastring), and a caption (up to two lines, `type/caption`, `text/secondary`, min height 24): the range "65–81", or "Passed", "Weather off", "Offline", "Too far ahead", "Loading", "No window".
-- **States:** default; selected day (fill `accent/primary` at 16%, 1.5 pt `accent/primary` outline, `radius/control`); best day (the Best tab); confidence fade (medium 80% opacity, low 60%); no forecast (ring, short reason); no window (empty).
+- **States:** default; selected day (fill `selection/fill`, 1.5 pt `accent/primary` outline, `radius/control`); best day (the Best tab); confidence fade (medium 80% opacity, low 60%); no forecast (ring, short reason); no window (empty).
 - **Accessibility:** each cell is a button, label "Monday, October 12, Sunrise, Light Index 87, Great, Low confidence, Best", selected trait.
 
 ### DayWindowsSection
@@ -390,7 +390,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Type, file:** `WindowRow` (private), `Spot/DayWindowsView.swift`.
 - **One job:** one window with its score, expandable to its reasons.
 - **Anatomy:** a button row, padding `space/md` by `space/sm`: `chevron.right` (`type/captionStrong`, `text/secondary`, 14 pt column; rotates 90 degrees when open), a regular [LightBadge](#lightbadge), then at the right the time range "07:25–08:01" (`type/time`). When open, [ReasonsGrid](#reasonsgrid) below, indented past the chevron, padding `space/md` at the bottom.
-- **States:** collapsed; expanded; selected (row fill `accent/primary` at 16%); no forecast (ring, "No forecast"; expanded: the reason sentence and, if the service failed, **Retry**).
+- **States:** collapsed; expanded; selected (row fill `selection/fill`, `accent/primary` stroke); no forecast (ring, "No forecast"; expanded: the reason sentence and, if the service failed, **Retry**).
 - **Accessibility:** combined; value "Expanded" or "Collapsed"; hint "Shows why this window scores as it does".
 
 ### ReasonsGrid
@@ -440,7 +440,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
   - **Classic view line:** a dashed `accent/primary` vertical line at the spot's facing bearing with a label "Classic view faces 100° E" (`type/captionStrong`, `accent/text`) above the plot. Absent when the facing is unknown.
   - Sunrise and sunset direction marks on the horizon (2 pt ticks, `text/primary`) with two label lines: "Sunrise 07:25" (`type/caption`, `text/primary`) and "99° E" (`type/caption`, `text/secondary`).
   - **Paths:** the sun's path `text/primary` 2 pt; the moon's path `map/moon` 2 pt; drawn only above the horizon.
-  - **Markers** (14 pt, `chart/arcMarker`): the sun marker is `map/sun` (coral) with a 1.5 pt `background/window` ring when above the horizon, and a hollow `background/window` disc with a 2 pt `map/sun` ring when below (down to −20°); the moon marker is `map/moon` with the same ring, only when above the horizon.
+  - **Markers** (14 pt, `chart/arcMarker`): the sun marker is `map/sun` with a 1.5 pt `background/window` ring when above the horizon, and a hollow `background/window` disc with a 2 pt `map/sun` ring when below (down to −20°); the moon marker is `map/moon` with the same ring, only when above the horizon.
   - **Legend:** 12 pt dot `map/sun` "Sun", dot `map/moon` "Moon", a 2 pt `accent/primary` bar "Classic view" (only when facing is known); `type/caption`, `text/secondary`.
   - **Text lines:** "At 07:43 the sun is 3° above the horizon, toward 102° ESE." (`type/callout`); "The sun is in your frame." (`type/callout`, `text/secondary`; also "off to one side", "behind you"); the moon line with its phase symbol (20 pt, `text/primary`) and "Waxing crescent · 6% lit · rises 09:38 · sets 19:33" (`type/callout`, `text/secondary`).
 - **States:** default; no classic view; sun below the horizon ("At 18:25 the sun is below the horizon."); polar (a near-flat path).
@@ -503,7 +503,7 @@ Iter relies on these system controls. Do not restyle them in the design; use the
 | System component | How Iter uses it |
 |---|---|
 | **NavigationSplitView** with a **sidebar** List | `.listStyle(.sidebar)`; two sections ("Trips": All Trips + one row per trip; "Find": Explore, Saved, Scout), selection bound to the window's navigation; sidebar width 200 / 240 / 320 pt; the Sample data banner is a bottom safe-area inset; a "New Trip" toolbar button. Detail column is a NavigationStack per section. |
-| **List** | Explore (inset, sectioned, selection and context menu with primary action), Trip builder (inset, selection, drag and drop, section headers), Saved (inset, multi-selection), Scout results (inset, visible separators), Add Stop popover (plain). Selection is the system accent tint. |
+| **List** | Explore (inset, sectioned, selection and context menu with primary action), Trip builder (inset, selection, drag and drop, section headers), Saved (inset, multi-selection), Scout results (inset, visible separators), Add Stop popover (plain). Selection in a system list is the system accent fill, with the text falling back to the system's colours; custom surfaces use `selection/fill` with an `accent/primary` stroke. |
 | **HSplitView** | Explore (list, map), Trip builder (plan, map): draggable native divider. |
 | **Toolbar** | Unified title bar. Items per screen are listed in SCREENS.md. Window title is the section name; the trip builder replaces the title with the editable name. |
 | **searchable** (toolbar search field) | Explore ("Search spots and places"), Saved ("Search saved spots"). |
@@ -527,13 +527,13 @@ Iter relies on these system controls. Do not restyle them in the design; use the
 1. **Every score names its window.** A number is never alone: "Sunset · 87", or the window name beside the chip in every variant (compact shows "Sunset", regular shows "Sunset" plus the band, large shows "Sunset · 87"). Pins and outlook cells inherit the window from context (the pin's chip text, the outlook title "10-day outlook for Sunrise").
 2. **No forecast is a hollow dashed ring plus a reason, never a number, never a low score.** Ring in `status/noForecast`. Long reason in large surfaces, short reason in rows ("Weather off", "Offline", "Too far ahead", "Passed", "Loading"). Sun and moon times stay exact and visible.
 3. **The band word is always printed beside the ramp colour** in the regular and large badges. Colour alone never carries the band. (The compact badge, the outlook chips and pin dots rely on the number or context; see the inconsistencies reported with this document.) A badge always has its hairline, because Poor and Fair are too pale to reach 3:1 on the window.
-4. **Coral (`map/sun`) is only the sun marker.** Never a score, status, button, pin or fill. Teal (`accent/primary`, `route/active`) is the land and the journey: selection, actions, routes. It is never "good".
-5. **A warning is violet (`status/warning`) and always has an icon.** Failure and validation are crimson (`status/danger`) with an icon. Never amber, never coral, never green. Green is not used anywhere.
+4. **Coral is used with restraint.** `accent/primary` is the one thing that acts or is selected, `route/active` the route, `map/pin` the pins and `map/sun` the sun. Never a score, a status, an error or a large fill behind text. Small text uses `accent/text`; small text on a coral fill uses `accent/emphasis`. It is never "good".
+5. **A warning is violet (`status/warning`) and always has an icon.** Failure and validation are raspberry (`status/danger`) with an icon and words. Never amber, never coral, never green. Green is not used anywhere.
 6. **"Sample data" appears once per screen.** The banner sits in the sidebar; screens that show sample scores carry one inline label; [WeatherAttributionView](#weatherattributionview) substitutes the label for the Apple mark.
 7. **Attribution wherever weather appears.** Apple Weather mark, Legal attribution link and "Light Index modified from forecast data" on Explore, Trip builder (when scored), Saved, Scout results, the Spot page hourly strip and Settings > Weather.
 8. **Confidence is shown, and low confidence fades.** Three bars on regular and large badges; ranges ("Likely 72–100") for days four and later; outlook cells fade to 80% and 60%.
 9. **Times are the spot's own and monospaced; units follow the Mac and Settings.**
-10. **System chrome stays system.** Window, sidebar, list, control and text colours are system aliases; only the ramp, accent, route, status, sky and cloud colours are Iter's.
+10. **System chrome stays system.** The sidebar, toolbar, Settings, sheets and standard controls keep the system's materials and colours and take coral only through the app accent. What the app draws itself uses First Light paper and ink (`text/*`, `background/*`), plus the ramp, accent, route, pin, status, sky and cloud colours.
 11. **Never reorder or change a plan automatically.** Suggestions are offered, and every edit is undoable.
 12. **The scout's words are labelled** ("Scout's note", "Written by Apple Intelligence from the factors listed above."). Iter scores the light, not the model.
 
@@ -545,10 +545,9 @@ Found in the hand-off audit and left for the design work, because each one is a 
 2. **"Sample data" can appear twice on one screen**, in the header and in the attribution footer (Explore, Scout, Settings ▸ Weather). The rule says once per screen.
 3. **Rain colour.** There is no rain token. The timeline's rain bars use `sky/blueHour`, and the hourly strip's rain figures use `accent/text`. A `weather/rain` token is needed.
 4. **Accent on the outlook "Best" tag** marks the best day. Accent is for interaction and the route, so this edges toward accent meaning "good".
-5. **Two coral marks on the sky arc**: the legend dot and the sun marker. The rule allows one per view.
-6. **Serif beyond place names.** `type/title/spot` (New York) is also used for trip names and the empty-state headline.
-7. **Literal opacities** in `App/Sources/Spot/SpotLayout.swift` (selection fills, chart layers) and the low-confidence chip opacity (0.85) are not tokens yet.
-8. **Explore rows have no hover style** (`ExploreRowView.isHovered` is unused); only the pin reacts to hover.
-9. **At 960×640 the trip builder's session line truncates** ("25 min wal…").
+5. **Serif beyond place names.** `type/title/spot` (New York) is also used for trip names and the empty-state headline.
+6. **Literal opacities** in `App/Sources/Spot/SpotLayout.swift` (chart layers) and the low-confidence chip opacity (0.85) are not tokens yet.
+7. **Explore rows have no hover style** (`ExploreRowView.isHovered` is unused); only the pin reacts to hover.
+8. **At 960×640 the trip builder's session line truncates** ("25 min wal…").
 
 Fixed in the audit pass: Explore uses the bookmark symbol for Save like every other screen; the Light Index factor bars are neutral (direction shows helps or hurts, not colour); the spot editor's time-zone warning has its icon.

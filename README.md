@@ -14,7 +14,7 @@ Start with [TESTING.md](TESTING.md). It covers what is in this build, a guided t
 | `docs/ARCHITECTURE.md`, `docs/ROADMAP.md` | How it is built; what milestone 1 contains and what comes next |
 | `docs/reference/` | The approved improvement plan and the prototype's flow briefs |
 | `Design/` | Design tokens (`tokens.json`, DTCG), `TOKENS.md`, `SCREENS.md`, `COMPONENTS.md`, `snapshots/` |
-| `Brand/` | The Step logo (Geist 600) and the First Light / Alpine palettes |
+| `Brand/` | The Step logo (Geist 600) and the First Light palette (`palettes/` also keeps the Alpine study as history) |
 | `Packages/IterKit/` | Everything that is not Mac UI: domain, light engine, astronomy, data, services, view models |
 | `App/` | The macOS app: views, menus, settings, assets, the String Catalog |
 | `scripts/` | `run.sh`, `test.sh`, `snapshots.sh`, `tokens.sh` (design tokens round trip), `make-icon.sh`, `strings.sh` |

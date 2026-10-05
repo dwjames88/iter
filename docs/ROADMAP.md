@@ -28,7 +28,7 @@ A coherent Mac app you can use end to end. Anything not listed here is absent fr
 
 ## Milestone 2 · Foundation and field
 
-* Night mode (red, dim) as a token mode, alongside the First Light / Alpine decision in the design tool (P2.4–P2.6).
+* Night mode (red, dim) as a token mode (P2.4–P2.6). The palette decision is made: First Light throughout.
 * Now mode (E1): opens to the next three hours during a trip.
 * Weather swap (B3) inside 72 hours, once the confidence model has been tested.
 * Calendar export of sessions and GPX; along-the-drive spots (P4.6).
