@@ -26,7 +26,7 @@ struct SavedView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationTitle(Text("Saved", comment: "Section title"))
-        .snapshotOpaqueBackground()
+        .paperListBackground()
         .sheet(item: $editing) { record in
             SpotEditorSheet(mode: .edit(record))
         }

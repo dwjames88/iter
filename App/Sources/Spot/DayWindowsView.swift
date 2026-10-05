@@ -85,7 +85,7 @@ private struct WindowRow: View {
                     .padding(.leading, IterSize.iconSmall + IterSpace.sm)
             }
         }
-        .background(isSelected ? IterColor.accent.opacity(SpotLayout.selectedFillOpacity) : .clear)
+        .background(isSelected ? IterColor.selection : .clear)
     }
 }
 

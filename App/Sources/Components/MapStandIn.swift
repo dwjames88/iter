@@ -32,7 +32,7 @@ struct MapStandIn: View {
                         let p = project(pin.coordinate, region, geo.size)
                         VStack(spacing: IterSpace.xxs) {
                             Circle()
-                                .fill(pin.selected ? IterColor.accent : IterColor.textSecondary)
+                                .fill(pin.selected ? IterColor.mapPin : IterColor.mapPinInactive)
                                 .frame(width: pin.selected ? IterSize.mapPinSelected : IterSize.mapPin,
                                        height: pin.selected ? IterSize.mapPinSelected : IterSize.mapPin)
                             Text(pin.label).font(IterFont.caption).foregroundStyle(IterColor.textPrimary).lineLimit(1)

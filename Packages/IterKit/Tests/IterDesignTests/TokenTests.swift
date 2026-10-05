@@ -84,10 +84,17 @@ struct RegistryTests {
         let _: [Color] = [
             IterColor.accent,
             IterColor.accentText,
+            IterColor.accentHover,
+            IterColor.accentPressed,
+            IterColor.accentDisabled,
+            IterColor.accentEmphasis,
             IterColor.onAccent,
+            IterColor.selection,
             IterColor.focusRing,
             IterColor.route,
             IterColor.routeInactive,
+            IterColor.mapPin,
+            IterColor.mapPinInactive,
             IterColor.brandDot,
             IterColor.sun,
             IterColor.moon,
@@ -101,15 +108,15 @@ struct RegistryTests {
             IterColor.cloudLow,
             IterColor.cloudMid,
             IterColor.cloudHigh,
-            IterColor.textPrimary,
-            IterColor.textSecondary,
-            IterColor.textTertiary,
-            IterColor.textDisabled,
             IterColor.separator,
             IterColor.backgroundWindow,
             IterColor.backgroundControl,
             IterColor.backgroundContent,
+            IterColor.backgroundSystemWindow,
         ]
+        // Text tokens are IterInk (a ShapeStyle); `.color` is the plain colour.
+        let inks: [IterInk] = [IterColor.textPrimary, IterColor.textSecondary, IterColor.textTertiary, IterColor.textDisabled]
+        let _: [Color] = inks.map(\.color)
         let _: [CGFloat] = [
             IterSpace.xxs,
             IterSpace.xs,
@@ -234,12 +241,11 @@ struct ContrastTests {
         #expect((max(good, epic) + 0.05) / (min(good, epic) + 0.05) >= 1.8)
     }
 
-    // `brand/dot` is excluded: it is part of the logo, which WCAG 1.4.11 exempts, and it keeps the chosen file's gold.
     @Test(arguments: Mode.allCases) func graphicsAreAtLeast3To1OnTheWindow(_ mode: Mode) {
         let window = mode.hex("background/window")
         let control = mode.hex("background/control")
         for n in ["accent/primary", "route/active", "route/inactive", "focus/ring", "status/noForecast", "map/moon", "map/sun",
-                  "status/warning", "status/danger"] {
+                  "status/warning", "status/danger", "map/pin", "map/pinInactive", "accent/emphasis", "brand/dot"] {
             #expect(contrast(mode.hex(n), window) >= 3, "\(n) \(mode) on window: \(contrast(mode.hex(n), window))")
             #expect(contrast(mode.hex(n), control) >= 3, "\(n) \(mode) on control: \(contrast(mode.hex(n), control))")
         }
@@ -248,30 +254,50 @@ struct ContrastTests {
     @Test(arguments: Mode.allCases) func textColoursAreAtLeast4_5(_ mode: Mode) {
         let window = mode.hex("background/window")
         let control = mode.hex("background/control")
-        for n in ["accent/text", "status/warning", "status/danger", "text/primary"] {
+        for n in ["accent/text", "status/warning", "status/danger", "text/primary", "text/secondary"] {
             #expect(contrast(mode.hex(n), window) >= 4.5, "\(n) \(mode) on window: \(contrast(mode.hex(n), window))")
             #expect(contrast(mode.hex(n), control) >= 4.5, "\(n) \(mode) on control: \(contrast(mode.hex(n), control))")
         }
-        #expect(contrast(mode.hex("accent/onAccent"), mode.hex("accent/primary")) >= 4.5)
+        let selection = mode.hex("selection/fill")
+        for n in ["text/primary", "text/secondary", "accent/text"] {
+            #expect(contrast(mode.hex(n), selection) >= 4.5, "\(n) \(mode) on selection: \(contrast(mode.hex(n), selection))")
+        }
+        let onAccent = mode.hex("accent/onAccent")
+        #expect(contrast(onAccent, mode.hex("accent/emphasis")) >= 4.5, "onAccent on emphasis \(mode)")
+        #expect(contrast(onAccent, mode.hex("accent/primary")) >= 3, "onAccent on primary \(mode)")   // icons and large text
+        #expect(contrast(mode.hex("text/secondary"), mode.hex("background/systemWindow")) >= 4.5, "secondary on system window \(mode)")
     }
 
-    @Test func statusColoursKeepTheirOwnHues() {
-        // Never green or coral, and not the amber of the ramp: check hue angles in both modes.
-        func hue(_ hex: String) -> Double {
-            let c = RGB(hex: hex)!
-            let (r, g, b) = (Double(c.red) / 255, Double(c.green) / 255, Double(c.blue) / 255)
-            let mx = max(r, g, b), mn = min(r, g, b), d = mx - mn
-            guard d > 0 else { return 0 }
-            let h = mx == r ? ((g - b) / d).truncatingRemainder(dividingBy: 6) : mx == g ? (b - r) / d + 2 : (r - g) / d + 4
-            return (h * 60 + 360).truncatingRemainder(dividingBy: 360)
+    /// OKLCH hue in degrees, from the OKLab matrices (Ottosson), independent of the library.
+    private func oklchHue(_ hex: String) -> Double {
+        let c = RGB(hex: hex)!
+        func lin(_ v: Int) -> Double { let x = Double(v) / 255; return x <= 0.04045 ? x / 12.92 : pow((x + 0.055) / 1.055, 2.4) }
+        let (r, g, b) = (lin(c.red), lin(c.green), lin(c.blue))
+        let l = cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b)
+        let m = cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b)
+        let s = cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b)
+        let a = 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s
+        let bb = 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s
+        let h = atan2(bb, a) * 180 / .pi
+        return h < 0 ? h + 360 : h
+    }
+
+    private func hueDistance(_ x: String, _ y: String) -> Double {
+        let d = abs(oklchHue(x) - oklchHue(y)).truncatingRemainder(dividingBy: 360)
+        return min(d, 360 - d)
+    }
+
+    @Test(arguments: Mode.allCases) func statusColoursKeepTheirOwnHues(_ mode: Mode) {
+        let accent = mode.hex("accent/primary"), danger = mode.hex("status/danger"), warning = mode.hex("status/warning")
+        #expect(hueDistance(danger, accent) >= 35, "danger vs accent \(mode): \(hueDistance(danger, accent))")
+        #expect(hueDistance(warning, accent) >= 60, "warning vs accent \(mode): \(hueDistance(warning, accent))")
+        #expect(hueDistance(danger, warning) >= 35, "danger vs warning \(mode): \(hueDistance(danger, warning))")
+        for band in ["great", "good"] {
+            let d = hueDistance(mode.hex("light/ramp/\(band)"), accent)
+            #expect(d >= 30, "ramp \(band) vs accent \(mode): \(d)")
         }
-        for mode in Mode.allCases {
-            let warning = hue(mode.hex("status/warning")), danger = hue(mode.hex("status/danger"))
-            #expect(warning > 250 && warning < 310, "warning hue \(warning)")          // violet
-            #expect(danger > 330 || danger < 10, "danger hue \(danger)")               // crimson, bluer than coral (~14 deg)
-            let brand = hue(mode.hex("brand/dot"))
-            #expect(abs(brand - danger) > 15 || abs(brand - danger) > 345)
-        }
+        let w = oklchHue(warning)
+        #expect(w >= 280 && w <= 320, "warning is violet: \(w)")
     }
 }
 
@@ -298,7 +324,7 @@ struct RoundTripTests {
 
     @Test func editingTheJSONComesBackAsSwift() throws {
         var text = TokenCodec.exportJSON(.current)
-        text = text.replacingOccurrences(of: "\"hex\": \"#0a7c6e\"", with: "\"hex\": \"#123456\"")
+        text = text.replacingOccurrences(of: "\"hex\": \"#d9431a\"", with: "\"hex\": \"#123456\"")
         let reg = try TokenCodec.importJSON(text)
         #expect(reg.colors.first { $0.name == "accent/primary" }?.light == "#123456")
         #expect(TokenCodec.swiftSource(reg).contains("light: \"#123456\""))

@@ -79,7 +79,7 @@ struct TripRouteMap: View {
             .monospacedDigit()
             .foregroundStyle(inDay ? IterColor.onAccent : IterColor.backgroundWindow)
             .frame(width: size, height: size)
-            .background(inDay ? IterColor.accent : IterColor.textSecondary, in: Circle())
+            .background(inDay ? IterColor.accentEmphasis : IterColor.mapPinInactive, in: Circle())
             .overlay(Circle().strokeBorder(IterColor.backgroundWindow, lineWidth: selected ? IterStroke.thick : IterStroke.thin))
             .accessibilityLabel(Text("Stop \(entry.number), \(entry.stop.spot.name)", comment: "VoiceOver: map pin"))
     }

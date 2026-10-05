@@ -63,6 +63,7 @@ struct TripPlanList: View {
             }
         }
         .listStyle(.inset)
+        .paperListBackground()
         .onDeleteCommand(perform: removeSelected)
         .animation(.default, value: dropSpot)
     }
@@ -74,7 +75,7 @@ struct TripPlanList: View {
             Label(String(localized: "Add Stop", comment: "Button at the end of a day"), systemImage: "plus")
         }
         .buttonStyle(.borderless)
-        .foregroundStyle(IterColor.accent)
+        .foregroundStyle(IterColor.accentText)
         .padding(.vertical, IterSpace.xs)
         .selectionDisabled()
         .listRowSeparator(.hidden)

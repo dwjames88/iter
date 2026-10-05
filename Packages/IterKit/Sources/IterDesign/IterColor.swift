@@ -7,16 +7,24 @@ import UIKit
 #endif
 
 /// Colours by role. Every value is read from `TokenValues`; nothing here is a literal.
-/// Semantic UI colours (text, separator, backgrounds) are system colours; brand and data colours are concrete.
+/// Every colour is a concrete First Light token except `backgroundSystemWindow`, which aliases the system window colour.
+/// Text colours are `IterInk` so they fall back to the system hierarchy on a selected system-list row.
 public enum IterColor {
     // Interface
     public static let accent = make("accent/primary")
     public static let accentText = make("accent/text")
+    public static let accentHover = make("accent/hover")
+    public static let accentPressed = make("accent/pressed")
+    public static let accentDisabled = make("accent/disabled")
+    public static let accentEmphasis = make("accent/emphasis")
     public static let onAccent = make("accent/onAccent")
+    public static let selection = make("selection/fill")
     public static let focusRing = make("focus/ring")
     // Journey
     public static let route = make("route/active")
     public static let routeInactive = make("route/inactive")
+    public static let mapPin = make("map/pin")
+    public static let mapPinInactive = make("map/pinInactive")
     // Light moment
     public static let brandDot = make("brand/dot")
     public static let sun = make("map/sun")
@@ -34,15 +42,16 @@ public enum IterColor {
     public static let cloudLow = make("cloud/low")
     public static let cloudMid = make("cloud/mid")
     public static let cloudHigh = make("cloud/high")
-    // Text and surfaces (system colours)
-    public static let textPrimary = make("text/primary")
-    public static let textSecondary = make("text/secondary")
-    public static let textTertiary = make("text/tertiary")
-    public static let textDisabled = make("text/quaternary")
+    // Text (IterInk) and surfaces
+    public static let textPrimary = IterInk(token: "text/primary", hierarchical: .primary)
+    public static let textSecondary = IterInk(token: "text/secondary", hierarchical: .secondary)
+    public static let textTertiary = IterInk(token: "text/tertiary", hierarchical: .tertiary)
+    public static let textDisabled = IterInk(token: "text/quaternary", hierarchical: .quaternary)
     public static let separator = make("separator/default")
     public static let backgroundWindow = make("background/window")
     public static let backgroundControl = make("background/control")
     public static let backgroundContent = make("background/content")
+    public static let backgroundSystemWindow = make("background/systemWindow")
 
     /// Fill for a Light Index band. Single hue, ordered by lightness; always print the band word beside it.
     public static func ramp(_ band: LightBand) -> Color { rampColors[band.rawValue] }
@@ -126,4 +135,26 @@ public enum IterColor {
         }
     }
     #endif
+}
+
+/// A text colour that is the concrete First Light ink normally, and the system hierarchical style on a selected
+/// system-list row (`backgroundProminence == .increased`, where the system fills the row with the accent).
+public struct IterInk: ShapeStyle {
+    public let token: String
+    let hierarchical: HierarchicalShapeStyle
+
+    init(token: String, hierarchical: HierarchicalShapeStyle) {
+        self.token = token
+        self.hierarchical = hierarchical
+    }
+
+    /// The plain colour, for Canvas, GraphicsContext and APIs that need a `Color`.
+    public var color: Color { IterColor.make(token) }
+
+    /// `color` with an opacity, for tints.
+    public func opacity(_ opacity: Double) -> Color { color.opacity(opacity) }
+
+    public func resolve(in environment: EnvironmentValues) -> AnyShapeStyle {
+        environment.backgroundProminence == .increased ? AnyShapeStyle(hierarchical) : AnyShapeStyle(color)
+    }
 }

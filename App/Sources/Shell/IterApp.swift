@@ -3,6 +3,7 @@ import SwiftData
 import IterCore
 import IterData
 import IterFeatures
+import IterDesign
 
 @main
 struct IterApp: App {
@@ -34,6 +35,7 @@ struct IterApp: App {
     var body: some Scene {
         WindowGroup(id: "main") {
             RootView()
+                .tint(IterColor.accent)
                 .environment(model)
                 .modelContainer(model.store.container)
                 .task { await model.loadAttribution() }
@@ -45,6 +47,7 @@ struct IterApp: App {
 
         Settings {
             SettingsView()
+                .tint(IterColor.accent)
                 .environment(model)
         }
     }

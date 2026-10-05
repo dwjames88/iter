@@ -36,7 +36,7 @@ private struct ScoutScreen: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .navigationTitle(Text("Scout", comment: "Section title"))
-        .snapshotOpaqueBackground()
+        .paperListBackground()
     }
 
     // MARK: Request

@@ -286,9 +286,9 @@ enum TimelineRenderer {
                 ? StrokeStyle(lineWidth: IterStroke.regular)
                 : StrokeStyle(lineWidth: IterStroke.thin, dash: [IterStroke.dashLength, IterStroke.dashGap])
             ctx.stroke(line, with: .color(IterColor.backgroundWindow), style: StrokeStyle(lineWidth: style.lineWidth + IterStroke.thin * 2))
-            ctx.stroke(line, with: .color(IterColor.textPrimary), style: style)
+            ctx.stroke(line, with: .color(IterColor.textPrimary.color), style: style)
             let knob = CGRect(x: mx - IterSpace.xs, y: lay.skyBottom - IterSpace.xs, width: IterSpace.sm, height: IterSpace.sm)
-            ctx.fill(Path(ellipseIn: knob), with: .color(IterColor.textPrimary))
+            ctx.fill(Path(ellipseIn: knob), with: .color(IterColor.textPrimary.color))
             ctx.stroke(Path(ellipseIn: knob), with: .color(IterColor.backgroundWindow), lineWidth: IterStroke.thin)
         }
     }
@@ -313,7 +313,7 @@ enum TimelineRenderer {
             var tick = Path()
             tick.move(to: CGPoint(x: tx, y: lay.skyBottom))
             tick.addLine(to: CGPoint(x: tx, y: lay.skyBottom + SpotLayout.tickLength))
-            ctx.stroke(tick, with: .color(IterColor.textSecondary), lineWidth: IterStroke.thin)
+            ctx.stroke(tick, with: .color(IterColor.textSecondary.color), lineWidth: IterStroke.thin)
             let text = Text(verbatim: LightText.hourLabel(date, in: d.zone)).font(IterFont.timeSmall).foregroundStyle(IterColor.textSecondary)
             ctx.draw(text, at: CGPoint(x: tx, y: lay.skyBottom + SpotLayout.tickLength), anchor: .top)
         }
@@ -329,7 +329,7 @@ enum TimelineRenderer {
             guard x1 > x0 else { continue }
             let rect = CGRect(x: x0, y: plot.minY, width: x1 - x0, height: plot.height)
             ctx.fill(Path(rect), with: .color(tint(w.kind).opacity(SpotLayout.windowTintOpacity)))
-            if w.kind == d.selected { ctx.fill(Path(rect), with: .color(IterColor.accent.opacity(SpotLayout.selectedFillOpacity))) }
+            if w.kind == d.selected { ctx.fill(Path(rect), with: .color(IterColor.selection)) }
         }
 
         // 0, 50, 100 percent gridlines with labels.
@@ -386,7 +386,7 @@ enum TimelineRenderer {
             let (x0, x1) = extent(w, x: x, left: left, right: right)
             guard x1 > x0 else { continue }
             let selected = w.kind == d.selected
-            let color = selected ? IterColor.accent : IterColor.textSecondary
+            let color = selected ? IterColor.accent : IterColor.textSecondary.color
             var bracket = Path()
             bracket.move(to: CGPoint(x: x0, y: lay.bracketY + SpotLayout.bracketDrop))
             bracket.addLine(to: CGPoint(x: x0, y: lay.bracketY))

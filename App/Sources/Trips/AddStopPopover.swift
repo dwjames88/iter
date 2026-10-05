@@ -87,7 +87,7 @@ private struct AddStopRow: View {
                 if let window = window { LightBadge(window: window, style: .compact, showsSource: false) }
                 Image(systemName: isAdded ? "checkmark.circle.fill" : "plus.circle")
                     .font(IterFont.callout)
-                    .foregroundStyle(isAdded ? IterColor.textSecondary : IterColor.accent)
+                    .foregroundStyle(isAdded ? IterColor.textSecondary.color : IterColor.accent)
                     .accessibilityHidden(true)
             }
             .contentShape(Rectangle())

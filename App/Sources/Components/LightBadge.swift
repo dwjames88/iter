@@ -159,7 +159,7 @@ struct ConfidenceMark: View {
         HStack(alignment: .bottom, spacing: IterStroke.thin) {
             ForEach(0..<3) { i in
                 RoundedRectangle(cornerRadius: IterStroke.thin)
-                    .fill(i < filled ? IterColor.textSecondary : IterColor.separator)
+                    .fill(i < filled ? IterColor.textSecondary.color : IterColor.separator)
                     .frame(width: IterStroke.thick, height: IterSize.confidenceMark * CGFloat(i + 1) / 3)
             }
         }

@@ -143,6 +143,7 @@ struct ExploreListPanel: View {
                 }
             }
             .listStyle(.inset)
+            .paperListBackground()
             .contextMenu(forSelectionType: String.self) { ids in
                 if let id = ids.first, let row = explore.row(id: id) {
                     ExploreSpotMenu(spot: row.spot, day: explore.day)

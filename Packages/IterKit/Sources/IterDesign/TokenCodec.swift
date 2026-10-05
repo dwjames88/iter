@@ -191,7 +191,7 @@ public enum TokenCodec {
         // the generator would write (so keep the one-token-per-line layout, or run `scripts/tokens.sh` after editing).
         //
         // Colours are #RRGGBB for sRGB. A `system:` alias means the app uses that system colour at run time and the hex
-        // pair is only its resolved reference (light #ECECEC window, dark #1E1E1E window).
+        // pair is only its resolved reference (only background/systemWindow has one: light #ECECEC, dark #1E1E1E).
 
         public enum TokenValues {
             public static let colors: [ColorToken] = [

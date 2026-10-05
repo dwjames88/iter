@@ -55,7 +55,7 @@ struct ExploreMapPane: View {
                     Annotation(String(localized: "New spot", comment: "Map pin label"), coordinate: clCoordinate(draft), anchor: .bottom) {
                         Image(systemName: "mappin.circle.fill")
                             .font(.title)
-                            .foregroundStyle(IterColor.accent)
+                            .foregroundStyle(IterColor.mapPin)
                     }
                 }
             }
@@ -181,7 +181,7 @@ struct ExploreMapStandIn: View {
                             .position(project(pin.row.spot.coordinate, region, geo.size))
                     }
                     if let draft = explore.draftCoordinate {
-                        Image(systemName: "mappin.circle.fill").font(.title).foregroundStyle(IterColor.accent)
+                        Image(systemName: "mappin.circle.fill").font(.title).foregroundStyle(IterColor.mapPin)
                             .position(project(draft, region, geo.size))
                     }
                 }

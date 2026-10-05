@@ -158,7 +158,7 @@ struct OutlookStrip: View {
                     .font(IterFont.captionStrong)
                     .foregroundStyle(IterColor.onAccent)
                     .padding(.horizontal, IterSpace.xs)
-                    .background(isBest ? AnyShapeStyle(IterColor.accent) : AnyShapeStyle(.clear), in: Capsule())
+                    .background(isBest ? AnyShapeStyle(IterColor.accentEmphasis) : AnyShapeStyle(.clear), in: Capsule())
                 Text(TimeText.weekday(light.day)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
                 Text(TimeText.dayNumber(light.day)).font(IterFont.bodyEmphasis).monospacedDigit()
                 chip(window)
@@ -169,7 +169,7 @@ struct OutlookStrip: View {
             .padding(.vertical, IterSpace.xs)
             .frame(maxWidth: .infinity)
             .opacity(fade(score))
-            .background(selected ? IterColor.accent.opacity(SpotLayout.selectedFillOpacity) : .clear,
+            .background(selected ? IterColor.selection : .clear,
                         in: RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous))
             .overlay(RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous)
                 .strokeBorder(selected ? IterColor.accent : .clear, lineWidth: IterStroke.regular))

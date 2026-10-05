@@ -13,14 +13,23 @@ private struct SnapshotOpaqueBackground: ViewModifier {
     func body(content: Content) -> some View {
         if renderMode == .snapshot {
             // Translucent materials need the window server's backdrop, which an offscreen render does not have.
-            // Snapshots draw them as the flat window colour instead.
-            content.scrollContentBackground(.hidden).background(IterColor.backgroundWindow)
+            // Snapshots draw them as the flat system window colour instead (sidebar and Settings only; the app's own
+            // lists use `paperListBackground`).
+            content.scrollContentBackground(.hidden).background(IterColor.backgroundSystemWindow)
         } else {
             content
         }
     }
 }
 
+/// The app's own list panels (Saved, Scout, Explore list) sit on First Light paper in live and snapshot renders.
+private struct PaperListBackground: ViewModifier {
+    func body(content: Content) -> some View {
+        content.scrollContentBackground(.hidden).background(IterColor.backgroundContent)
+    }
+}
+
 extension View {
+    func paperListBackground() -> some View { modifier(PaperListBackground()) }
     func snapshotOpaqueBackground() -> some View { modifier(SnapshotOpaqueBackground()) }
 }

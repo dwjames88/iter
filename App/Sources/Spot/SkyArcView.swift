@@ -146,7 +146,7 @@ enum ArcRenderer {
         var horizonLine = Path()
         horizonLine.move(to: CGPoint(x: left, y: horizon))
         horizonLine.addLine(to: CGPoint(x: right, y: horizon))
-        ctx.stroke(horizonLine, with: .color(IterColor.textSecondary), lineWidth: IterStroke.thin)
+        ctx.stroke(horizonLine, with: .color(IterColor.textSecondary.color), lineWidth: IterStroke.thin)
         ctx.draw(Text(LightText.horizon).font(IterFont.caption).foregroundStyle(IterColor.textSecondary),
                  at: CGPoint(x: left + IterSpace.xs, y: horizon - IterSpace.xxs), anchor: .bottomLeading)
 
@@ -155,7 +155,7 @@ enum ArcRenderer {
             var tick = Path()
             tick.move(to: CGPoint(x: x(azimuth), y: bottom))
             tick.addLine(to: CGPoint(x: x(azimuth), y: bottom + IterSpace.xs))
-            ctx.stroke(tick, with: .color(IterColor.textSecondary), lineWidth: IterStroke.thin)
+            ctx.stroke(tick, with: .color(IterColor.textSecondary.color), lineWidth: IterStroke.thin)
             ctx.draw(Text(verbatim: name).font(IterFont.captionStrong).foregroundStyle(IterColor.textPrimary),
                      at: CGPoint(x: x(azimuth), y: bottom + IterSpace.xs), anchor: .top)
         }
@@ -188,7 +188,7 @@ enum ArcRenderer {
             var mark = Path()
             mark.move(to: CGPoint(x: ex, y: horizon - IterSpace.xs))
             mark.addLine(to: CGPoint(x: ex, y: horizon + IterSpace.xs))
-            ctx.stroke(mark, with: .color(IterColor.textPrimary), lineWidth: IterStroke.thick)
+            ctx.stroke(mark, with: .color(IterColor.textPrimary.color), lineWidth: IterStroke.thick)
             let line1 = ctx.resolve(Text(event.label).font(IterFont.caption).foregroundStyle(IterColor.textPrimary))
             let line2 = ctx.resolve(Text(LightText.degrees(event.azimuth)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary))
             let w = max(line1.measure(in: CGSize(width: 400, height: 40)).width, line2.measure(in: CGSize(width: 400, height: 40)).width)
@@ -212,7 +212,7 @@ enum ArcRenderer {
                 }
             }
             stroke(d.moon, minAltitude: 0, color: IterColor.moon, width: IterStroke.thick, dimBelowHorizon: false)
-            stroke(d.sun, minAltitude: 0, color: IterColor.textPrimary, width: IterStroke.thick, dimBelowHorizon: false)
+            stroke(d.sun, minAltitude: 0, color: IterColor.textPrimary.color, width: IterStroke.thick, dimBelowHorizon: false)
         }
 
         // Markers at the shared time.

@@ -62,10 +62,10 @@ struct ExplorePinView: View {
             .padding(.horizontal, IterSpace.sm)
             .padding(.vertical, IterSpace.xs)
             .background(IterColor.backgroundContent, in: Capsule())
-            .overlay(Capsule().strokeBorder(IterColor.accent, lineWidth: IterStroke.thick))
+            .overlay(Capsule().strokeBorder(IterColor.mapPin, lineWidth: IterStroke.thick))
             Image(systemName: "arrowtriangle.down.fill")
                 .font(IterFont.caption)
-                .foregroundStyle(IterColor.accent)
+                .foregroundStyle(IterColor.mapPin)
                 .accessibilityHidden(true)
         }
     }

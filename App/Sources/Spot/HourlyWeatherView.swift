@@ -82,7 +82,7 @@ struct HourlyWeatherSection: View {
         if x1 > x0 {
             Rectangle()
                 .fill(TimelineRenderer.tint(w.kind).opacity(SpotLayout.windowTintOpacity))
-                .overlay(w.kind == page.selectedWindow ? IterColor.accent.opacity(SpotLayout.selectedFillOpacity) : .clear)
+                .overlay(w.kind == page.selectedWindow ? IterColor.selection : .clear)
                 .frame(width: x1 - x0, height: height)
                 .offset(x: x0)
         }
@@ -97,14 +97,14 @@ struct HourlyWeatherSection: View {
             cell(AppSettings.temperature(h.temperatureC, unitSetting: temperatureUnit))
             cell(Int((h.cloudCover * 100).rounded()).formatted())
             cell(h.precipitationChance >= Self.rainThreshold ? Int((h.precipitationChance * 100).rounded()).formatted() : "",
-                 color: IterColor.accentText)
+                 color: AnyShapeStyle(IterColor.accentText))
             cell(LightText.windNumber(kph: h.windSpeedKph))
         }
         .lineLimit(1)
         .minimumScaleFactor(0.7)
     }
 
-    private func cell(_ text: String, color: Color = IterColor.textPrimary) -> some View {
+    private func cell(_ text: String, color: AnyShapeStyle = AnyShapeStyle(IterColor.textPrimary)) -> some View {
         Text(text)
             .font(IterFont.timeSmall)
             .foregroundStyle(color)
