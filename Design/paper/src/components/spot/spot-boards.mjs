@@ -27,11 +27,10 @@ function board({ id, name, type, file, job, covers, notes = [], body, width = 10
 
 const N = {
   chevron: { title: 'Chevron drawn open', body: 'The expanded row chevron rotates 90 degrees in the app; here it is chevron.down.' },
-  signed: { title: 'Signed bars are grey', body: 'COMPONENTS.md says helps = accent/primary, hurts = status/warning. The source fills every bar text/secondary so colour never reads as good or bad. Source followed.' },
-  best: { title: 'Best tab colour', body: 'COMPONENTS.md says accent/primary; the source uses accent/emphasis. Source followed.' },
+  signed: { title: 'Signed bars are grey', body: 'Every signed bar is text/secondary: direction is the left or right side, so colour never reads as good or bad.' },
+  best: { title: 'Best tab colour', body: 'The outlook Best tag is accent/emphasis.' },
   header: { title: 'Add to Trip', body: 'Prominent in the source and in SCREENS.md; the snapshots draw it as a plain bordered button. Source followed.' },
-  cloud: { title: 'cloud.slash does not exist', body: 'The no-forecast note is a Label with systemImage "cloud.slash", which is missing on this macOS: the app shows the sentence with an empty icon slot. Drawn as built.' },
-  arc: { title: 'Arc does not zoom', body: 'SCREENS.md says the arc shares the zoomed domain; in the source only the timeline and hourly strip do. Source followed.' },
+  arc: { title: 'Arc does not zoom', body: 'Zooming narrows the timeline and hourly strip only; the sky arc keeps the whole day.' },
   hourly: { title: 'Symbols are single-colour', body: 'The app uses multicolour SF Symbols for the weather; the symbol export is one colour, drawn in text/secondary.' },
   alpha: { title: 'Hard-coded opacities', body: 'Window tints 0.2, selection 0.16, cloud 0.5, below-horizon 0.35, outlook fades 0.8 and 0.6 are literals in SpotLayout.swift (deviation 7); here they are the opacity tokens.' },
   fixture: { title: 'Fixtures', body: 'Numbers are the real engine output for Mesa Arch on Mon 12 Oct 2026 with sample weather (and Tromso, Cottonwood bend), not drawn by hand.' },
@@ -70,7 +69,7 @@ export const artboards = [
     body: () => [spec('Idle', explainBlock('idle')), spec('Loading', explainBlock('loading')), spec('Done', col({ name: 'Done Wrap', w: 440 }, explainBlock('done', { textBody: 'Mid and high cloud covers 29% of the sky, which should catch colour as the sun comes up. Low cloud is only 6%, so the horizon looks open.' }))),
       spec('Failed: not available', explainBlock('failed', { failure: "Apple Intelligence isn't available right now." })), spec('Failed: ungrounded', col({ name: 'Fail Wrap', w: 440 }, explainBlock('failed', { failure: "The explanation didn't match the numbers, so it was discarded. Try again." }))),
       spec('Unavailable', text('(nothing is drawn)', { name: 'Absent', font: font('caption'), color: 'text/tertiary' }))], blocks: 'row' }),
-  board({ id: 'C-light-timeline', name: 'LightTimeline', type: 'LightTimelineSection, TimelineRenderer', file: 'Spot/LightTimelineView.swift', job: 'The 24 hours of light: sky by sun altitude, five windows with scores, cloud by altitude, rain chance, and a scrubber.', covers: 'LightTimeline', notes: [N.cloud, N.alpha, N.fixture], width: 1000, height: 3224,
+  board({ id: 'C-light-timeline', name: 'LightTimeline', type: 'LightTimelineSection, TimelineRenderer', file: 'Spot/LightTimelineView.swift', job: 'The 24 hours of light: sky by sun altitude, five windows with scores, cloud by altitude, rain chance, and a scrubber.', covers: 'LightTimeline', notes: [N.alpha, N.fixture], width: 1000, height: 3224,
     body: () => [spec('Full day, Mon 12 Oct (Sunrise selected)', lightTimeline(sample())), spec('Sunrise ±2 h (two tiers, hourly ticks)', lightTimeline(vm('sample', { focus: 'sunrise' }))), spec('Sunset ±2 h', lightTimeline(vm('user', { focus: 'sunset' }))), spec('No forecast: sky strip only', lightTimeline(vm('noforecast')))], blocks: 'column', blockWidth: 934 }),
   board({ id: 'C-sky-arc', name: 'SkyArc', type: 'SkyArcSection, ArcRenderer', file: 'Spot/SkyArcView.swift', job: 'Where the sun and moon are, by compass direction and height, at the shared marker time.', covers: 'SkyArc', notes: [N.arc, N.fixture], width: 1000, height: 3648,
     body: () => [spec('Default, with classic view', skyArc(sample())), spec('No classic view (facing unknown)', skyArc(vm('user'))), spec('Sun below the horizon (22:00)', skyArc(vm('sample', { markerMin: 22 * 60 }))), spec('Polar: the sun never leaves the horizon', skyArc(vm('polar')))], blocks: 'column', blockWidth: 934 }),

@@ -990,8 +990,8 @@
     "Timeline Body"
    ],
    "parentSeq": 42,
-   "html": "<div layer-name=\"No Weather Note\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n  <div layer-name=\"Icon Slot (cloud.slash missing)\" style=\"box-sizing:border-box;width:8px;height:14px;flex-shrink:0\"></div>\n  <div layer-name=\"Reason\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-secondary);white-space:nowrap\">Weather isn't enabled for this build of Iter, so only sun and moon times are shown.</div>\n</div>",
-   "lines": 4
+   "html": "<div layer-name=\"No Weather Note\" style=\"box-sizing:border-box;display:flex;flex-direction:row;gap:var(--spacing-xs);align-items:center\">\n  <div layer-name=\"Icon Slot\" style=\"box-sizing:border-box;display:flex;align-items:center;height:14px;flex-shrink:0\">\n    <svg layer-name=\"Icon / thermometer.medium.slash\" xmlns=\"http://www.w3.org/2000/svg\" width=\"13\" height=\"13\" viewBox=\"0 0 95.6 108.43\" preserveAspectRatio=\"xMidYMid meet\" style=\"box-sizing:border-box;display:block;flex-shrink:0;fill:var(--color-dark-text-secondary)\"><path d=\"M66.34 17.91L76.95 17.91C78.67 17.91 79.81 16.59 79.81 15.04C79.81 13.53 78.67 12.2 76.95 12.2L66.34 12.2C64.62 12.2 63.43 13.53 63.43 15.04C63.43 16.59 64.62 17.91 66.34 17.91ZM66.34 31.62L76.95 31.62C78.67 31.62 79.81 30.3 79.81 28.75C79.81 27.23 78.67 25.91 76.95 25.91L66.34 25.91C64.62 25.91 63.43 27.23 63.43 28.75C63.43 30.3 64.62 31.62 66.34 31.62ZM66.34 45.33L76.95 45.33C78.67 45.33 79.81 44 79.81 42.45C79.81 40.94 78.67 39.61 76.95 39.61L66.34 39.61C64.62 39.61 63.43 40.94 63.43 42.45C63.43 44 64.62 45.33 66.34 45.33ZM66.34 59.04L76.95 59.04C78.67 59.04 79.81 57.71 79.81 56.16C79.81 54.65 78.67 53.32 76.95 53.32L66.34 53.32C64.62 53.32 63.43 54.65 63.43 56.16C63.43 57.71 64.62 59.04 66.34 59.04ZM41.84 108.43C55.91 108.43 67.34 97 67.34 82.96C67.34 75.53 64.27 69.03 58.45 63.77C57.36 62.8 57.15 62.24 57.15 60.79L57.15 16.68C57.15 6.73 50.95 0 41.84 0C32.7 0 26.43 6.73 26.43 16.68L26.43 60.79C26.43 62.24 26.23 62.8 25.2 63.77C19.37 69.03 16.31 75.53 16.31 82.96C16.31 97 27.73 108.43 41.84 108.43ZM41.84 101.33C31.67 101.33 23.47 93.06 23.47 82.96C23.47 76.88 26.33 71.36 31.53 67.87C33.02 66.87 33.61 65.92 33.61 63.95L33.61 16.99C33.61 11.1 36.96 7.17 41.84 7.17C46.68 7.17 49.99 11.1 49.99 16.99L49.99 63.95C49.99 65.92 50.62 66.87 52.11 67.87C57.26 71.36 60.17 76.88 60.17 82.96C60.17 93.06 51.97 101.33 41.84 101.33ZM41.79 94.73C48.36 94.73 53.62 89.47 53.62 82.9C53.62 78.34 51.04 74.57 47.3 72.54C45.69 71.66 45.17 71.07 45.17 68.72L45.17 42.55C45.17 40.26 43.7 38.71 41.79 38.71C39.94 38.71 38.47 40.26 38.47 42.55L38.47 68.72C38.47 71.07 37.94 71.66 36.34 72.54C32.56 74.57 30.03 78.34 30.03 82.9C30.03 89.47 35.28 94.73 41.79 94.73ZM79.48 95.55C83.21 99.26 89.28 99.26 92.91 95.45C96.52 91.76 96.5 85.86 92.85 82.12L16.21 5.48C12.54 1.8 6.49 1.78 2.78 5.48C-0.91 9.17 -0.96 15.22 2.83 18.87ZM83.49 91.5C84.97 92.98 87.42 92.98 88.86 91.5C90.28 90.01 90.27 87.67 88.86 86.19L12.15 9.54C10.7 8.08 8.27 8.06 6.79 9.54C5.37 10.96 5.32 13.44 6.79 14.85Z\"/></svg>\n  </div>\n  <div layer-name=\"Reason\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-text-secondary);white-space:nowrap\">Weather isn't enabled for this build of Iter, so only sun and moon times are shown.</div>\n</div>",
+   "lines": 6
   },
   {
    "seq": 45,
@@ -1145,8 +1145,8 @@
     "Window"
    ],
    "parentSeq": 1,
-   "html": "<div layer-name=\"Fold Marker\" style=\"box-sizing:border-box;position:absolute;top:820px;left:0;right:0;height:0;border-top:1px dashed var(--color-dark-canvas-note-border)\">\n  <div layer-name=\"Fold Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption);color:var(--color-dark-canvas-note-text);white-space:nowrap;position:absolute;top:-10px;right:12px;padding:1px 6px;border-radius:6px;background:var(--color-dark-canvas-note-background);border:1px solid var(--color-dark-canvas-note-border)\">Fold · 820</div>\n</div>\n<div layer-name=\"Notes\" style=\"box-sizing:border-box;position:absolute;left:280px;top:2140px;display:flex;flex-direction:row;gap:12px;align-items:flex-start;flex-wrap:wrap;width:960px\">\n  <div layer-name=\"Note / cloud.slash does not exist\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:280px;background:var(--color-dark-canvas-note-background);border:1px solid var(--color-dark-canvas-note-border);border-radius:var(--radius-control)\">\n    <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-dark-canvas-note-text)\">cloud.slash does not exist</div>\n    <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-dark-canvas-note-text)\">The no-forecast note under the timeline is Label(reason, systemImage: \"cloud.slash\"). That SF Symbol is missing on this macOS, so the app draws the sentence with an empty icon slot. Drawn as built; the design pass should pick a real symbol (cloud.bolt.slash does not exist either; consider icloud.slash or a custom glyph).</div>\n  </div>\n</div>",
-   "lines": 9
+   "html": "<div layer-name=\"Fold Marker\" style=\"box-sizing:border-box;position:absolute;top:820px;left:0;right:0;height:0;border-top:1px dashed var(--color-dark-canvas-note-border)\">\n  <div layer-name=\"Fold Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-caption);font-weight:var(--font-weight-semibold);line-height:var(--leading-caption);color:var(--color-dark-canvas-note-text);white-space:nowrap;position:absolute;top:-10px;right:12px;padding:1px 6px;border-radius:6px;background:var(--color-dark-canvas-note-background);border:1px solid var(--color-dark-canvas-note-border)\">Fold · 820</div>\n</div>",
+   "lines": 3
   }
  ],
  "duplicateOf": {
@@ -1325,6 +1325,7 @@
    "./Window/Detail/Spot Page Scroll/Spot Page Content/LightTimeline/SpotCard / Timeline/Timeline Body/Canvas / Light Timeline/Bracket Label / Sunset",
    "./Window/Detail/Spot Page Scroll/Spot Page Content/LightTimeline/SpotCard / Timeline/Timeline Body/Canvas / Light Timeline/Bracket Label / Blue PM",
    "./Window/Detail/Spot Page Scroll/Spot Page Content/LightTimeline/SpotCard / Timeline/Timeline Body/Canvas / Light Timeline/Bracket Label / Night",
+   "./Window/Detail/Spot Page Scroll/Spot Page Content/LightTimeline/SpotCard / Timeline/Timeline Body/No Weather Note/Icon Slot/Icon / thermometer.medium.slash",
    "./Window/Detail/Spot Page Scroll/Spot Page Content/LightTimeline/SpotCard / Timeline/Timeline Body/No Weather Note/Reason",
    "./Window/Detail/Spot Page Scroll/Spot Page Content/SkyArc/Section Title",
    "./Window/Detail/Spot Page Scroll/Spot Page Content/SkyArc/SpotCard / Sky Arc",
@@ -1370,10 +1371,7 @@
    "./Window/Detail/Spot Page Scroll/Spot Page Content/SpotFactsRow/SpotCard / Facts/Facts Body/Notes/Notes Title",
    "./Window/Detail/Spot Page Scroll/Spot Page Content/SpotFactsRow/SpotCard / Facts/Facts Body/Notes/Notes Text",
    "./Window/Fold Marker",
-   "./Window/Fold Marker/Fold Label",
-   "./Window/Notes/Note / cloud.slash does not exist",
-   "./Window/Notes/Note / cloud.slash does not exist/Note Title",
-   "./Window/Notes/Note / cloud.slash does not exist/Note Body"
+   "./Window/Fold Marker/Fold Label"
   ],
   "exceptions": [],
   "textChanges": [],
@@ -1384,7 +1382,7 @@
     "name": "Spot page · No forecast · Dark · 1280"
    }
   ],
-  "changedCount": 209,
+  "changedCount": 207,
   "updateStylesCalls": 5
  }
 }

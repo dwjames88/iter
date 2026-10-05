@@ -63,7 +63,7 @@ export const artboards = [
     render: () => win({ detail: filterEmptyDetail() }) },
   { id: 'S-saved-delete-confirm', name: 'Saved · Delete confirmation', section: 'screens', width: W, height: H, covers: ['Saved/Delete confirmation'],
     notes: ['A system confirmation dialog; drawn with the shared alert panel.'],
-    render: () => win({ detail: listBody(listRows(), { sample: true }), overlays: [alert({ title: 'Delete “Back field at Lone Pine”?', message: 'It is also removed from 2 trip stops. You can undo this.', buttons: [{ label: 'Delete Spot', destructive: true }, { label: 'Cancel' }], width: 300 })] }) },
+    render: () => win({ detail: listBody(listRows(), { sample: true }), overlays: [alert({ title: 'Delete “Back field at Lone Pine”?', message: 'It is also removed from 2 trip stops. You can undo this with Edit > Undo.', buttons: [{ label: 'Delete Spot', destructive: true }, { label: 'Cancel' }], width: 300 })] }) },
   { id: 'S-saved-sort-menu', name: 'Saved · Sort and filter menu', section: 'screens', width: W, height: H, covers: ['Menus/Saved sort and filter menu'],
     render: () => win({ detail: listBody(listRows(), { sample: true }), overlays: [SORT_MENU()] }) },
 ];

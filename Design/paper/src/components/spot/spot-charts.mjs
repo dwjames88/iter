@@ -192,11 +192,11 @@ export function timelineLegend(m) {
     m.hasLayers ? [swatch('cloud/high', 'High cloud'), swatch('cloud/mid', 'Mid cloud'), swatch('cloud/low', 'Low cloud')] : swatch('cloud/mid', 'Cloud cover'),
     swatch('sky/blueHour', 'Chance of rain'));
 }
-/** The no-forecast note. SF Symbol cloud.slash does not exist on the build Mac, so SwiftUI draws the label with no glyph. */
+/** The no-forecast note: Label with thermometer.medium.slash. */
 export function timelineNoWeather(m) {
   const msg = m.loading ? 'Checking the forecast…' : NO_FORECAST_LONG[m.unavailableReason ?? 'notLoaded'];
   return row({ name: 'No Weather Note', align: 'center', gap: d('space/xs') },
-    el('div', { name: 'Icon Slot (cloud.slash missing)', style: { width: 8, height: 14, flexShrink: 0 } }),
+    el('div', { name: 'Icon Slot', style: { display: 'flex', alignItems: 'center', height: 14, flexShrink: 0 } }, icon('thermometer.medium.slash', { size: 13, color: 'text/secondary' })),
     text(msg, { name: 'Reason', font: font('subheadline'), color: 'text/secondary' }));
 }
 export function timelineReadout(m) {

@@ -111,6 +111,5 @@ A renamed token makes `build.mjs` stop with the name and a suggestion, so nothin
 
 - **Maps** are a neutral placeholder layer named `Map placeholder (swap)`; pins, routes, cards and banners on top are real layers. Swap the placeholder for a map image.
 - **Blur**: materials (place card, popovers, menus, sheets, glass) use `backdrop-filter`, which Paper may not support. They are 92 to 96% opaque, so they read correctly without it.
-- **`cloud.slash`** does not exist as an SF Symbol on this macOS. The app shows a blank, and the design draws a labelled stand-in.
 - **Shadows** are inline CSS (Paper has no shadow token type).
 - **Files over 200 KB** (F01, F05, the Explore list and map panels, HourlyStrip) are a problem only for route A pastes. If Paper refuses one, import it in two halves (the light and dark blocks are separate top-level children). Route B writes them in fragments anyway.

@@ -16,8 +16,6 @@ These are the lead's opinions, kept out of the artboards. Every artboard draws t
 
 ## Things the build surfaced that are not in that list
 
-- **`cloud.slash` does not exist** as an SF Symbol on this macOS, so the app shows an empty icon slot in the Explore notice and under the timeline. `icloud.slash` exists but means iCloud. A custom symbol may be best.
 - **First Light makes coral do several jobs**: accent, selection, routes, pins, the sun and the logo dot. The ramp is amber and stays separate. Check the trip builder's route map and the spot page's arc side by side. That is where the colours meet hardest.
 - **Selection fill on the sidebar and lists** is a pale peach in the kit (accent at 16%). macOS uses the accent at full strength for a key window's sidebar selection. Decide which you want; the token is `--opacity-selection-tint`.
-- **Explore list width**: the source asks for 360 pt ideal; the snapshots show 520. A wider list shows full spot names without truncation and suits a list-first app.
 - **Settings tab bar** is drawn as the standard macOS 26 toolbar tabs, because the snapshot could not render it. Nothing to change, but it has never been seen rendered.

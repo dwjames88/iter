@@ -1,4 +1,4 @@
-// F06 Logo and app icon. First Light artwork: source SVGs from Brand/logo (First Light files) or the Vantage finalists;
+// F06 Logo and app icon. First Light artwork: source SVGs from Brand/logo (First Light files);
 // their outlined paths are parsed here and re-emitted with every fill rewritten to a token var. Clear space and
 // minimum sizes are DERIVED from the mark (the dot diameter and the 16 px favicon), not typed in.
 //   ink   = text/primary (espresso on paper, cream on the dark ground)   dot = brand/dot
@@ -10,8 +10,8 @@ import { artboardHeader, themeBlocks, section, cell, page } from '../../tools/li
 import { loadLogo, logoSvgInner, pathBox, sourceFills, brandNotes, colour } from './tokdata.mjs';
 
 const L = {
-  lockup: loadLogo('lockup-firstlight'), lockupDark: loadLogo('lockup-firstlight-dark'), symbol: loadLogo('symbol-firstlight'),
-  icon: loadLogo('app-icon-firstlight'), lockupMono: loadLogo('lockup-mono'), symbolMono: loadLogo('symbol-mono'), fav: loadLogo('favicon-16'),
+  lockup: loadLogo('lockup'), lockupDark: loadLogo('lockup-dark'), symbol: loadLogo('symbol'),
+  icon: loadLogo('app-icon'), lockupMono: loadLogo('lockup-mono'), symbolMono: loadLogo('symbol-mono'), fav: loadLogo('favicon-16'),
 };
 
 // ---- drift check: do the token colours still equal the source file's fills? (build log only) ----------------------

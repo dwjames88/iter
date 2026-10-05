@@ -96,11 +96,10 @@ const intelligence = (k) => () => {
     ...(n.action ? [{ node: row({ name: 'Action Row', style: { padding: `${d('space/sm')} ${d('space/md')}` } }, button(n.action, { kind: 'bordered', size: 'regular' })) }] : [])] })];
 };
 
-// About: the Logo image set, 64 pt high. Path data from Brand/logo/symbol-firstlight.svg; fills are tokens (ink and accent).
+// About: the Logo image set, 64 pt high. Path data from Brand/logo/symbol.svg; fills are tokens (ink and accent).
 function logo() {
   const here = path.dirname(fileURLToPath(import.meta.url));
-  // Brand/logo renamed the First Light files (symbol-firstlight.svg -> symbol.svg, same artwork) on 2026-10-05; accept either.
-  const file = ['symbol-firstlight.svg', 'symbol.svg'].map((n) => path.resolve(here, '../../../../../Brand/logo', n)).find((f) => fs.existsSync(f));
+  const file = path.resolve(here, '../../../../../Brand/logo/symbol.svg'); // throws (ENOENT) if renamed, never falls back
   const paths = [...fs.readFileSync(file, 'utf8').matchAll(/<path[^>]* d="([^"]+)"/g)].map((m) => m[1]);
   const [vbw, vbh] = [274.4, 790];
   return svgEl('Logo', { width: Math.round(64 * vbw / vbh), height: 64, viewBox: `0 0 ${vbw} ${vbh}` },

@@ -13,7 +13,7 @@
 //   hexText(hex, opts) text node showing a hex value; the leading '#' is an HTML entity so the value is displayed, not
 //                      authored as a literal colour (check.mjs flags a literal #rrggbb in output files)
 //   mdTable(file, h2)  rows of the first markdown table under "## <h2>" -> arrays of cell strings, markup stripped
-//   loadLogo(name)     {file, viewBox:[w,h], parts:[{tag, attrs}]} from Brand/logo (First Light) or the Vantage finalists
+//   loadLogo(name)     {file, viewBox:[w,h], parts:[{tag, attrs}]} from Brand/logo (First Light); throws if the file is missing
 //   logoSvg(logo, fills, {name,width,height})   re-emit the parts with fills = array of CSS colours (token vars)
 import fs from 'node:fs';
 import path from 'node:path';
@@ -88,15 +88,14 @@ export function mdTable(file, h2) {
 }
 
 // ---- logo ----------------------------------------------------------------------------------------------------------
-const VANTAGE = '/Users/<user>/Developer/Active/Vantage/brand/iter/round-4/finalists/step';
 export const brandNotes = (() => {
   try { return JSON.parse(fs.readFileSync(path.join(repoDir, 'Brand', 'logo', 'notes.json'), 'utf8')); } catch { return null; }
 })();
 
 export function loadLogo(name) {
-  const candidates = [path.join(repoDir, 'Brand', 'logo', `${name}.svg`), path.join(VANTAGE, `${name}.svg`)];
-  const file = candidates.find((f) => fs.existsSync(f));
-  if (!file) throw new Error(`logo "${name}.svg" not found in Brand/logo or the Vantage finalists`);
+  // Brand/logo only: no fallback to older artwork, a missing or renamed file must stop the build.
+  const file = path.join(repoDir, 'Brand', 'logo', `${name}.svg`);
+  if (!fs.existsSync(file)) throw new Error(`logo "${name}.svg" not found in Brand/logo (First Light files are lockup, lockup-dark, symbol, symbol-dark, app-icon, favicon-16; gold files are in _retired)`);
   const src = fs.readFileSync(file, 'utf8');
   const vb = /viewBox="([^"]+)"/.exec(src)[1].trim().split(/\s+/).map(Number);
   const parts = [];

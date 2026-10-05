@@ -15,7 +15,7 @@ const HEAD = { title: 'LightBadge', type: 'LightBadge', file: 'Components/LightB
 const NOTES_A = () => [
   note({ title: 'Deviation 1: no band word in compact', body: 'Compact badges (map pins, Saved, Scout and Add Stop rows) show the number and short window name but not the band word. The VoiceOver label includes it. Reproduced as built; the design pass decides on a word, a glyph or nothing.' }),
   note({ title: 'Deviation 7: literal opacity 0.85', body: 'Low confidence fades the whole chip to 85% opacity. 0.85 is a literal in LightBadge.swift, not a token (here --opacity-low-confidence in canvas-tokens.json).' }),
-  note({ title: 'Chip width vs doc', body: 'COMPONENTS.md says min width 28 (regular) and 18 (compact). In SwiftUI the horizontal padding sits outside the min-width frame, so built chips are 36 and 26 wide at minimum. Built size is drawn.' }),
+  note({ title: 'Chip width', body: 'The horizontal padding (2 x 4) sits outside the min-width frame (28 regular, 18 compact), so chips are 36 and 26 pt wide at minimum. Built size is drawn.' }),
   note({ title: 'Rule: never alone', body: 'Every score names its window. No forecast is a ring and a reason, never a number and never a low score.' })];
 const boardOf = (title, notes, body) => page([
   artboardHeader({ ...HEAD, title }),

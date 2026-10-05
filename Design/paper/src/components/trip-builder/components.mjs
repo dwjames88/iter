@@ -94,7 +94,7 @@ const mapBoard = () => {
   const day2 = { ...canyon, activeDay: 1 };
   return frame({ title: 'TripRouteMap', type: 'TripRouteMap', file: 'Trips/TripRouteMap.swift', job: 'The route sanity check: numbered pins, the active day in the route colour, other days quieter.' },
     [note({ title: 'Live map vs stand-in', body: 'Only the selected stop is 36 pt; other active-day pins are 28 pt in accent/emphasis; pins of other days are 28 pt map/pinInactive. The snapshot stand-in draws every active-day pin large.' }),
-      note({ title: 'Deviation: pin token', body: 'TripRouteMap.swift fills active pins with accent/emphasis; COMPONENTS.md names map/pin. The source is drawn.' }),
+      note({ title: 'Deviation: pin token', body: 'TripRouteMap.swift fills the pins of the active day with accent/emphasis; the snapshot stand-in draws map/pin. The source is drawn.' }),
       note({ title: 'Placeholder', body: 'The map is a placeholder; Apple\'s cartography, compass and scale are not drawn (zoom stepper shown).' })],
     () => [
       row({ name: 'Maps', gap: 24, align: 'flex-start' },

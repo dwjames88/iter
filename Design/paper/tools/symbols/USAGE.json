@@ -18,7 +18,7 @@
   "Design/SCREENS.md:444"
  ],
  "arrow.right.circle": [
-  "App/Sources/Saved/SavedView.swift:147",
+  "App/Sources/Saved/SavedView.swift:143",
   "App/Sources/Explore/ExploreActions.swift:40"
  ],
  "arrow.up.arrow.down": [
@@ -38,7 +38,7 @@
   "Design/SCREENS.md:110"
  ],
  "bookmark": [
-  "App/Sources/Saved/SavedView.swift:61",
+  "App/Sources/Saved/SavedView.swift:57",
   "App/Sources/Shell/SidebarView.swift:29",
   "App/Sources/Scout/ScoutView.swift:343",
   "App/Sources/Explore/ExploreActions.swift:50",
@@ -47,6 +47,7 @@
   "Design/SCREENS.md:110",
   "Design/SCREENS.md:319",
   "Design/SCREENS.md:374",
+  "Design/COMPONENTS.md:332",
   "Design/COMPONENTS.md:486"
  ],
  "bookmark.fill": [
@@ -56,12 +57,13 @@
   "App/Sources/Spot/SpotHeaderView.swift:65",
   "Design/SCREENS.md:319",
   "Design/COMPONENTS.md:283",
+  "Design/COMPONENTS.md:332",
   "Design/COMPONENTS.md:353",
   "Design/COMPONENTS.md:486"
  ],
  "bookmark.slash": [
+  "App/Sources/Saved/SavedView.swift:150",
   "App/Sources/Saved/SavedView.swift:154",
-  "App/Sources/Saved/SavedView.swift:158",
   "App/Sources/Explore/ExploreActions.swift:48"
  ],
  "building.2": [
@@ -175,15 +177,6 @@
  "cloud.rain.fill": [
   "added: design chrome / weather mapping (not literal in source)"
  ],
- "cloud.slash": [
-  "App/Sources/Explore/ExploreListPanel.swift:54",
-  "App/Sources/Spot/LightTimelineView.swift:132",
-  "Design/SCREENS.md:265",
-  "Design/SCREENS.md:296",
-  "Design/SCREENS.md:347",
-  "Design/COMPONENTS.md:295",
-  "Design/COMPONENTS.md:427"
- ],
  "cloud.sleet.fill": [
   "added: design chrome / weather mapping (not literal in source)"
  ],
@@ -289,8 +282,8 @@
   "added: design chrome / weather mapping (not literal in source)"
  ],
  "line.3.horizontal.decrease.circle": [
-  "App/Sources/Saved/SavedView.swift:129",
-  "App/Sources/Saved/SavedView.swift:136",
+  "App/Sources/Saved/SavedView.swift:125",
+  "App/Sources/Saved/SavedView.swift:132",
   "App/Sources/Explore/ExploreView.swift:178",
   "App/Sources/Explore/ExploreListPanel.swift:182",
   "Design/SCREENS.md:280",
@@ -422,7 +415,7 @@
   "App/Sources/Text/LightText.swift:254"
  ],
  "pencil": [
-  "App/Sources/Saved/SavedView.swift:151",
+  "App/Sources/Saved/SavedView.swift:147",
   "App/Sources/Spot/SpotHeaderView.swift:80",
   "Design/SCREENS.md:319"
  ],
@@ -505,10 +498,10 @@
   "added: design chrome / weather mapping (not literal in source)"
  ],
  "star": [
-  "Design/COMPONENTS.md:332"
+  "added: design chrome / weather mapping (not literal in source)"
  ],
  "star.fill": [
-  "Design/COMPONENTS.md:332"
+  "added: design chrome / weather mapping (not literal in source)"
  ],
  "sun.dust": [
   "App/Sources/Text/LightText.swift:255"
@@ -567,8 +560,17 @@
   "App/Sources/Scout/ScoutView.swift:113",
   "Design/SCREENS.md:438"
  ],
+ "thermometer.medium.slash": [
+  "App/Sources/Explore/ExploreListPanel.swift:54",
+  "App/Sources/Spot/LightTimelineView.swift:132",
+  "Design/SCREENS.md:265",
+  "Design/SCREENS.md:296",
+  "Design/SCREENS.md:347",
+  "Design/COMPONENTS.md:295",
+  "Design/COMPONENTS.md:427"
+ ],
  "trash": [
-  "App/Sources/Saved/SavedView.swift:152",
+  "App/Sources/Saved/SavedView.swift:148",
   "App/Sources/Spot/SpotHeaderView.swift:83",
   "Design/SCREENS.md:319"
  ],

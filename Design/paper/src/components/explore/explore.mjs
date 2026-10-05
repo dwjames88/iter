@@ -13,7 +13,9 @@ const abs = (o) => ({ position: 'absolute', ...o });
 
 // ---- data (curated spots, sample weather: Tue 6 Oct 2026, 10:00 Denver; from the Explore snapshots) ---------------------------
 export const DAY = 'Tue, Oct 6, 2026';
-export const LIST_W = 360; // IterSize.listIdeal (the snapshots show the 520 listMax; the app opens at the ideal width)
+export const LIST_W = 520; // list column at 1280x820 (HSplitView clamps it to 300...520; it is 360 at 960x640)
+export const LIST_W_960 = 360;
+const CARD_W = 360; // place card width
 
 // A scored row: kind = LightWindow kind. conf = confidence (sample weather is medium).
 const S = (name, locality, kind, score, time, conf = 'medium') => ({ name, locality, kind, score, time, conf });
@@ -119,7 +121,7 @@ export function exploreHeader({ count, day, intent = "Each spot's best", loading
     summaryLine({ count, intent, loading, day }),
     sample ? sampleDataLabel({ style: 'inline' }) : null,
     notice ? row({ name: 'Forecast Notice', align: 'flex-start', gap: d('space/xs') },
-      el('div', { name: 'Icon Slot', style: { display: 'flex', alignItems: 'center', height: 14, flexShrink: 0 } }, icon('cloud.slash', { size: 12, color: 'text/secondary' })),
+      el('div', { name: 'Icon Slot', style: { display: 'flex', alignItems: 'center', height: 14, flexShrink: 0 } }, icon('thermometer.medium.slash', { size: 12, color: 'text/secondary' })),
       text(NO_FORECAST[notice].long, { name: 'Notice', font: font('caption'), color: 'text/secondary', wrap: true, grow: true })) : null,
     searchStatus(search));
 }
@@ -212,7 +214,7 @@ export function addToTripButton() {
   icon('chevron.down', { size: 9, color: 'text/secondary', weight: 'bold' }));
 }
 // kind: 'passed' (the snapshot case) | 'scored' | 'none' (no such light today) ; own: your own spot (no Save button)
-export function explorePlaceCard({ name = 'Mesa Arch', locality = 'Canyonlands National Park, UT', origin = 'Curated', kind = 'passed', saved = true, own = false, width = LIST_W } = {}) {
+export function explorePlaceCard({ name = 'Mesa Arch', locality = 'Canyonlands National Park, UT', origin = 'Curated', kind = 'passed', saved = true, own = false, width = CARD_W } = {}) {
   let light;
   if (kind === 'none') {
     light = text('No such light today', { name: 'No Window Today', font: font('subheadline'), color: 'text/secondary' });
@@ -322,7 +324,7 @@ const rowBoard = () => {
     col({ name: 'Content', gap: 24, align: 'flex-start' },
       row({ name: 'Notes', gap: d('space/md'), align: 'flex-start' },
         note({ title: 'Anatomy', body: 'Gap space/md, vertical padding space/xs inside the system List row (about 10 px each side as drawn). Name type/bodyEmphasis; locality type/caption; time type/timeSmall with monospaced digits. The badge column is a fixed 112 px slot here so columns align; the app sizes it to content and right-aligns it.' }),
-        note({ title: 'Provenance', body: 'Only "Added by you" rows carry a ProvenanceTag; Curated and Apple Maps rows do not (SCREENS.md says Apple Maps rows are tagged: the source does not).' }),
+        note({ title: 'Provenance', body: 'Only "Added by you" rows carry a ProvenanceTag; Curated and Apple Maps rows do not. Scout results are the ones that carry a tag.' }),
         note({ title: 'Hover', body: 'The row has no hover style; hovering gives the map pin a chip.' })),
       themeBlocks(body, { width: 780 })),
   ], { gap: 24 });
@@ -359,17 +361,17 @@ const pinBoard = () => {
 const cardBoard = () => {
   const body = () => [
     row({ name: 'Cards', gap: 32, align: 'flex-start', wrap: true },
-      cell('card passed', explorePlaceCard({ kind: 'passed' }), { caption: 'No forecast / window passed (the snapshots); saved', width: LIST_W }),
-      cell('card scored', explorePlaceCard({ name: 'Hopi Point', locality: 'Grand Canyon National Park, AZ', kind: 'scored', saved: false }), { caption: 'Scored, window ahead; not saved', width: LIST_W })),
+      cell('card passed', explorePlaceCard({ kind: 'passed' }), { caption: 'No forecast / window passed (the snapshots); saved', width: CARD_W }),
+      cell('card scored', explorePlaceCard({ name: 'Hopi Point', locality: 'Grand Canyon National Park, AZ', kind: 'scored', saved: false }), { caption: 'Scored, window ahead; not saved', width: CARD_W })),
     row({ name: 'Cards 2', gap: 32, align: 'flex-start', wrap: true },
-      cell('card no window', explorePlaceCard({ name: 'Haystack Rock', locality: 'Cannon Beach, OR', kind: 'none', saved: false }), { caption: 'No window that day', width: LIST_W }),
-      cell('card own spot', explorePlaceCard({ name: 'Backyard Ridge', locality: 'Boulder, CO', origin: 'Added by you', kind: 'scored', own: true }), { caption: 'Your own spot: no Save button', width: LIST_W })),
+      cell('card no window', explorePlaceCard({ name: 'Haystack Rock', locality: 'Cannon Beach, OR', kind: 'none', saved: false }), { caption: 'No window that day', width: CARD_W }),
+      cell('card own spot', explorePlaceCard({ name: 'Backyard Ridge', locality: 'Boulder, CO', origin: 'Added by you', kind: 'scored', own: true }), { caption: 'Your own spot: no Save button', width: CARD_W })),
   ];
   return page([
     artboardHeader({ title: 'ExplorePlaceCard', type: 'ExplorePlaceCard', file: 'Explore/ExplorePlaceCard.swift', job: "The selected spot's identity, its light that day, and one primary action." }),
     col({ name: 'Content', gap: 24, align: 'flex-start' },
       row({ name: 'Notes', gap: d('space/md'), align: 'flex-start' },
-        note({ title: 'Save symbol (doc error)', body: 'COMPONENTS.md and SCREENS.md say star / star.fill ("Saved (filled star)"). The source uses bookmark / bookmark.fill, as everywhere else. Source followed.' }),
+        note({ title: 'Save symbol', body: 'The Save control is a bookmark (bookmark / bookmark.fill), as everywhere else in the app.' }),
         note({ title: 'Material', body: 'The card is regularMaterial in the app (canvas material/regular here); the snapshots draw it flat background/content. The built card is max 360 wide, centred at the bottom of the map with space/md margin.' }),
         note({ title: 'Sample data', body: 'The scored card shows the Sample data label inline in the badge (showsSource defaults on); the passed-window card has none.' })),
       themeBlocks(body, { width: 840 })),
@@ -404,7 +406,7 @@ const addTripBoard = () => {
     artboardHeader({ title: 'AddToTripMenu', type: 'AddToTripMenu', file: 'Components/AddToTripMenu.swift', job: 'Add a spot to a trip day, where the choice of day is a light decision.' }),
     col({ name: 'Content', gap: 24, align: 'flex-start' },
       row({ name: 'Notes', gap: d('space/md'), align: 'flex-start' },
-        note({ title: 'Day label', body: 'Source: "Day 2 · Thu, Oct 8, 2026 · Sunrise · 64" (TimeText.day and LightText.headline "Sunset · 64"). COMPONENTS.md shows "Day 2 · Wed 7 Oct · Sunset 64"; neither the date nor the middle dot in the headline matches the source. Scores shown are illustrative.' }),
+        note({ title: 'Day label', body: 'Each item reads "Day 2 · Thu, Oct 8, 2026 · Sunset · 64" (TimeText.day, then the window headline). Scores shown are illustrative.' }),
         note({ title: 'New Trip with This Spot', body: 'Creates a one-day trip "Trip to <spot>" starting tomorrow, adds the stop and opens the trip.' })),
       themeBlocks(body, { width: 760 })),
   ], { gap: 24 });
@@ -461,7 +463,7 @@ const panelBoard = () => {
       cell('panel failed', exploreListPanel({ height: H, header: { count: 45, sample: true, search: { state: 'failed', query: 'antelope' } }, sections: [{ title: 'Spots', count: 45, rows: ROWS_DEFAULT.slice(0, 7) }] }), { caption: 'Search failed: warning line with Retry', width: LIST_W }),
       cell('panel offer', exploreListPanel({ height: H, header: { count: 45, sample: true, search: { state: 'offer', query: 'antelope' } }, sections: [{ title: 'Spots', count: 45, rows: ROWS_DEFAULT.slice(0, 7) }] }), { caption: 'Query typed, not yet searched: link row', width: LIST_W })),
     row({ name: 'Panels 2', gap: 24, align: 'flex-start', wrap: true },
-      cell('panel notice', exploreListPanel({ height: H, footer: null, header: { count: 45, notice: 'weatherServiceNotEnabled' }, sections: [{ title: 'Spots', count: 45, rows: ROWS_NOFORECAST.slice(0, 7) }] }), { caption: 'No forecast: reason with cloud.slash, empty footer', width: LIST_W }),
+      cell('panel notice', exploreListPanel({ height: H, footer: null, header: { count: 45, notice: 'weatherServiceNotEnabled' }, sections: [{ title: 'Spots', count: 45, rows: ROWS_NOFORECAST.slice(0, 7) }] }), { caption: 'No forecast: reason with thermometer.medium.slash, empty footer', width: LIST_W }),
       cell('panel empty filters', exploreListPanel({ height: H, header: { count: 0, sample: true }, empty: 'filters' }), { caption: 'Empty: No Matching Spots', width: LIST_W }),
       cell('panel empty places', exploreListPanel({ height: H, header: { count: 0, sample: true }, empty: 'places', emptyOpts: { query: 'antelope' } }), { caption: 'Empty: No places found (real search)', width: LIST_W })),
   ];
@@ -469,8 +471,7 @@ const panelBoard = () => {
     artboardHeader({ title: 'ExploreListPanel', type: 'ExploreListPanel', file: 'Explore/ExploreListPanel.swift', job: 'The reading surface of Explore: summary, notices, search status, the list, attribution.' }),
     col({ name: 'Content', gap: 24, align: 'flex-start' },
       row({ name: 'Notes', gap: d('space/md'), align: 'flex-start' },
-        note({ title: 'Width', body: 'The column is 300 min, 360 ideal, 520 max (HSplitView); drawn at the ideal 360. The snapshots show it at 520.' }),
-        note({ title: 'cloud.slash', body: 'The cloud.slash symbol is missing from the local SF Symbol set, so the notice icon is the neutral stand-in glyph.' })),
+        note({ title: 'Width', body: 'HSplitView clamps the column to 300...520 and splits the detail width equally, so it is 520 at 1280x820 and 360 at 960x640. Drawn at 520.' })),
       themeBlocks(body, { width: 1640, direction: 'column' })),
   ], { gap: 24 });
 };
@@ -478,10 +479,10 @@ const panelBoard = () => {
 export const artboards = [
   { id: 'C-explore-row', name: 'ExploreRow', section: 'components', width: 1720, height: 944, themes: ['light'], covers: ['Component/ExploreRow'], notes: [], render: rowBoard },
   { id: 'C-explore-pin', name: 'ExplorePinView', section: 'components', width: 1400, height: 624, themes: ['light'], covers: ['Component/ExplorePinView'], notes: ['COMPONENTS.md says the selected pin is accent/primary; source uses map/pin'], render: pinBoard },
-  { id: 'C-explore-place-card', name: 'ExplorePlaceCard', section: 'components', width: 1800, height: 752, themes: ['light'], covers: ['Component/ExplorePlaceCard'], notes: ['Save symbol: bookmark, not star'], render: cardBoard },
+  { id: 'C-explore-place-card', name: 'ExplorePlaceCard', section: 'components', width: 1800, height: 752, themes: ['light'], covers: ['Component/ExplorePlaceCard'], notes: ['Save symbol: bookmark'], render: cardBoard },
   { id: 'C-add-spot-banner', name: 'AddSpotBanner', section: 'components', width: 1200, height: 464, themes: ['light'], covers: ['Component/AddSpotBanner'], render: bannerBoard },
   { id: 'C-add-to-trip-menu', name: 'AddToTripMenu', section: 'components', width: 1680, height: 640, themes: ['light'], covers: ['Component/AddToTripMenu', 'Menus/AddToTripMenu'], notes: ['Day label strings differ from COMPONENTS.md'], render: addTripBoard },
   { id: 'C-map-stand-in', name: 'MapStandIn', section: 'components', width: 1304, height: 1312, themes: ['light'], covers: ['Component/MapStandIn'], render: standInBoard },
   { id: 'C-explore-map-pane', name: 'ExploreMapPane', section: 'components', width: 1304, height: 2368, themes: ['light'], covers: ['Component/ExploreMapPane'], render: paneBoard },
-  { id: 'C-explore-list-panel', name: 'ExploreListPanel', section: 'components', width: 1704, height: 3128, themes: ['light'], covers: ['Component/ExploreListPanel'], render: panelBoard },
+  { id: 'C-explore-list-panel', name: 'ExploreListPanel', section: 'components', width: 1704, height: 5832, themes: ['light'], covers: ['Component/ExploreListPanel'], render: panelBoard },
 ];

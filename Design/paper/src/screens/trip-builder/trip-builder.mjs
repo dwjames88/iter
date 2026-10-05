@@ -6,7 +6,7 @@ import { macWindow, sidebar, toolbarButton, popover, menu, note } from '../../..
 import { tripHeader, tripPlanList, tripRouteMap, connectorRow, stopRow, addStopBody, canyonCountry, conflictTrip, item, OVERNIGHT, SHORT, CANYON_STOPS, FITS } from '../../components/trip-builder/parts.mjs';
 
 const TOOLBAR = 52;
-const DEVIATION_PIN = 'In the app the active pin is accent/emphasis (TripRouteMap.swift); COMPONENTS.md and the snapshot stand-in name map/pin. The source is drawn.';
+const DEVIATION_PIN = 'The active-day pin is accent/emphasis (TripRouteMap.swift); the snapshot stand-in draws map/pin. The source is drawn.';
 
 function toolbar(extra = []) {
   return [extra, toolbarButton('square.and.arrow.up', { label: undefined }), toolbarButton('ellipsis.circle')];
@@ -83,7 +83,7 @@ const mk = (id, name, w, h, covers, snap, render, extra = {}) => ({ id, name, se
 export const artboards = [
   mk('S-trip-builder-default', 'Trip builder · Default', 1280, 820, [`${TB}/Default, sample weather`], SNAP('trip-builder', '1280x820'),
     () => builderWindow({ width: 1280, height: 820, trip: canyonCountry() }),
-    { notes: ['Active pin is accent/emphasis in source (COMPONENTS.md says map/pin).', 'Days 3 and 4 are not in the snapshots; their times and scores are illustrative.'] }),
+    { notes: ['Active-day pins are accent/emphasis.', 'Days 3 and 4 are not in the snapshots; their times and scores are illustrative.'] }),
   mk('S-trip-builder-default-960', 'Trip builder · Default', 960, 640, [`${TB}/Default, sample weather`], SNAP('trip-builder', '960x640'),
     () => builderWindow({ width: 960, height: 640, trip: canyonCountry() })),
   mk('S-trip-builder-noforecast', 'Trip builder · No forecast', 1280, 820, [`${TB}/No forecast`], SNAP('trip-builder-noforecast', '1280x820'),

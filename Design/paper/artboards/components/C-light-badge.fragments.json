@@ -70,11 +70,11 @@
    ],
    "styleOverrides": {},
    "textOverrides": {
-    "./Note Title/#text0": "Chip width vs doc",
-    "./Note Body/#text0": "COMPONENTS.md says min width 28 (regular) and 18 (compact). In SwiftUI the horizontal padding sits outside the min-width frame, so built chips are 36 and 26 wide at minimum. Built size is drawn."
+    "./Note Title/#text0": "Chip width",
+    "./Note Body/#text0": "The horizontal padding (2 x 4) sits outside the min-width frame (28 regular, 18 compact), so chips are 36 and 26 pt wide at minimum. Built size is drawn."
    },
    "nameOverrides": {
-    ".": "Note / Chip width vs doc"
+    ".": "Note / Chip width"
    },
    "lines": 3
   },

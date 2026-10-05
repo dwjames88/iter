@@ -6,7 +6,7 @@ import { icon } from '../../../tools/lib/icons.mjs';
 import { divider } from '../../../tools/lib/controls.mjs';
 import { macWindow, sidebar, toolbarButton, toolbarGroup } from '../../../tools/lib/chrome.mjs';
 import {
-  LIST_W, ROWS_DEFAULT, ROWS_NOFORECAST, exploreListPanel, exploreMapPane, pinAt, pinChip,
+  LIST_W, LIST_W_960, ROWS_DEFAULT, ROWS_NOFORECAST, exploreListPanel, exploreMapPane, pinAt, pinChip,
   spotContextMenu, addToTripMenu, tripDaysMenu, filtersMenu, categorySubmenu, sortMenu,
 } from '../../components/explore/explore.mjs';
 
@@ -66,7 +66,7 @@ const mesaPin = { kind: 'goldenMorning', time: '07:20' };
 
 // ---- states ------------------------------------------------------------------------------------------------------------------------
 const stateDefault = () => explore(base());
-const stateDefault960 = () => explore({ width: 960, height: 640, listW: 300, tb: { overflow: true }, list: { header: { count: 45, sample: true }, sections: spots(ROWS_DEFAULT.slice(0, 7)) }, map: {} });
+const stateDefault960 = () => explore({ width: 960, height: 640, listW: LIST_W_960, tb: { overflow: true }, list: { header: { count: 45, sample: true }, sections: spots(ROWS_DEFAULT.slice(0, 7)) }, map: {} });
 const stateSelected = () => explore({ ...base(), map: { selected: mesaPin, card: { kind: 'passed' } } });
 const stateNoForecast = () => explore({
   sample: false,
@@ -159,16 +159,16 @@ const stateSortMenu = () => explore({
 const snap = (n) => `snapshots/explore-${n}-{theme}-1280x820.png`;
 export const artboards = [
   { id: 'S-explore-default', name: 'Explore · Default', section: 'screens', width: 1280, height: 820, snapshot: snap('default'), covers: ['Explore/Default'],
-    notes: ['List width: the source frames the list column 300 min / 360 ideal / 520 max; the snapshots show it at 520 (the max). Drawn at the 360 ideal. Owner to decide.'], render: stateDefault },
+    render: stateDefault },
   { id: 'S-explore-default-960', name: 'Explore · Default', section: 'screens', width: 960, height: 640, snapshot: 'snapshots/explore-default-{theme}-960x640.png', covers: ['Explore/Default'],
-    notes: ['Toolbar overflow is inferred (the snapshot draws grey blocks): items that do not fit (the search field) collapse into the trailing overflow capsule. The list column is at its 300 minimum; the map is narrower. The capsule holds the chevron.right.2 symbol.'], render: stateDefault960 },
+    notes: ['Toolbar overflow is inferred (the snapshot draws grey blocks): items that do not fit (the search field) collapse into the trailing overflow capsule. The list column is 360 here (HSplitView splits the detail width equally and clamps it to 300...520); the map is narrower. The capsule holds the chevron.right.2 symbol.'], render: stateDefault960 },
   { id: 'S-explore-selected', name: 'Explore · Selected with place card', section: 'screens', width: 1280, height: 820, snapshot: snap('selected'), covers: ['Explore/Selected, with place card'],
-    notes: ['Save symbol: the card shows bookmark.fill ("Saved"); SCREENS.md says a filled star'], render: stateSelected },
+    notes: ['Save symbol: the card shows bookmark.fill ("Saved").'], render: stateSelected },
   { id: 'S-explore-no-forecast', name: 'Explore · No forecast', section: 'screens', width: 1280, height: 820, snapshot: snap('noforecast'), covers: ['Explore/No forecast'], render: stateNoForecast },
   { id: 'S-explore-filtered-empty', name: 'Explore · Filtered empty', section: 'screens', width: 1280, height: 820, snapshot: snap('filtered-empty'), covers: ['Explore/Filtered empty'], render: stateFilteredEmpty },
   { id: 'S-explore-add-spot', name: 'Explore · Add Spot mode', section: 'screens', width: 1280, height: 820, snapshot: snap('addspot-mode'), covers: ['Explore/Add Spot mode'], render: stateAddSpot },
   { id: 'S-explore-search-results', name: 'Explore · Apple Maps results', section: 'screens', width: 1280, height: 820, covers: ['Explore/Apple Maps search results'],
-    notes: ['Not in the snapshots. Apple Maps rows carry no provenance tag in the source (SCREENS.md says they are tagged). Place names and scores are illustrative.'], render: stateSearchResults },
+    notes: ['Not in the snapshots. Apple Maps rows in Explore carry no provenance tag (only your own spots are tagged "Added by you"). Place names and scores are illustrative.'], render: stateSearchResults },
   { id: 'S-explore-search-nothing', name: 'Explore · Search found nothing', section: 'screens', width: 1280, height: 820, covers: ['Explore/Search found nothing'], render: stateSearchNothing },
   { id: 'S-explore-search-failed', name: 'Explore · Search failed', section: 'screens', width: 1280, height: 820, covers: ['Explore/Search failed'], render: stateSearchFailed },
   { id: 'S-explore-polar', name: 'Explore · Polar day, no window', section: 'screens', width: 1280, height: 820, covers: ['Explore/Polar day, no window'],

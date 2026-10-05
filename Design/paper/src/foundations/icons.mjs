@@ -29,7 +29,7 @@ function tileFor(name) {
     glyph(name, 'light'),
     col({ name: 'Labels', gap: 0, grow: true },
       text(name, { name: 'Symbol Name', font: font('bodyEmphasis'), color: canvas('label/title'), wrap: true, style: { wordBreak: 'break-all' } }),
-      text(missing ? (name === 'cloud.slash' ? 'Not an SF Symbol (app bug); stand-in drawn' : 'Stand-in drawn: symbol not exported') : where(USAGE[name]), { name: 'Used In', font: font('caption'), color: canvas('label/body'), wrap: true })));
+      text(missing ? 'Stand-in drawn: symbol not exported' : where(USAGE[name]), { name: 'Used In', font: font('caption'), color: canvas('label/body'), wrap: true })));
 }
 
 function board() {
@@ -44,8 +44,7 @@ function board() {
     artboardHeader({ title: 'Iconography', type: 'SF Symbols', file: 'tools/symbols/symbols.json · USAGE.json', job: `${names.length} symbols, all system SF Symbols at the symbol's native weight, sized from the three icon tokens and coloured with text, accent or status tokens. Each tile shows the glyph with the part of the app that uses it.` }),
     row({ name: 'Notes', gap: d('space/md'), align: 'flex-start' },
       note({ title: 'Colour rule', body: 'Icons that act are accent/primary; informational icons are text/primary or text/secondary; warnings are status/warning and always paired with words. No green anywhere.', width: 360 }),
-      missing.includes('cloud.slash') ? note({ title: 'App bug: cloud.slash does not exist', body: 'cloud.slash is not an SF Symbol on macOS 27 (checked with NSImage(systemSymbolName:)), so the app draws nothing where it uses it (ExploreListPanel.swift:54, LightTimelineView.swift:132). The tile below is a neutral stand-in. icloud.slash exists if a replacement is wanted.', width: 460 }) : null,
-      missing.filter((n) => n !== 'cloud.slash').length ? note({ title: 'Not exported yet', body: `${missing.filter((n) => n !== 'cloud.slash').join(', ')}: shown as a neutral outlined stand-in named Icon / <symbol>.`, width: 360 }) : null),
+      missing.length ? note({ title: 'Not exported yet', body: `${missing.join(', ')}: shown as a neutral outlined stand-in named Icon / <symbol>.`, width: 360 }) : null),
     section('Sizes', row({ name: 'Sizes', gap: 48 }, sizeRow)),
     section(`Used by the app (${appNames.length})`, row({ name: 'Symbol Grid / App', wrap: true, gap: 20, align: 'flex-start' }, appNames.map(tileFor))),
     section(`Design-file chrome only (${chromeNames.length})`, row({ name: 'Symbol Grid / Chrome', wrap: true, gap: 20, align: 'flex-start' }, chromeNames.map(tileFor))),
@@ -53,5 +52,5 @@ function board() {
 }
 
 export const artboards = [
-  { id: 'F05-iconography', name: 'F05 Iconography', section: 'foundations', width: 1640, height: Math.ceil((400 + Math.ceil(Object.keys(USAGE).length / 4) * 64 + 64) / 8) * 8, themes: ['light'], covers: [], render: board },
+  { id: 'F05-iconography', name: 'F05 Iconography', section: 'foundations', width: 1640, height: Math.ceil((400 + Math.ceil(Object.keys(USAGE).length / 4) * 64 + 72) / 8) * 8, themes: ['light'], covers: [], render: board },
 ];

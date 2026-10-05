@@ -3,11 +3,11 @@
   "name": "Explore · Default · Notes",
   "page": "Screens (Light)",
   "width": 320,
-  "height": 184,
+  "height": 216,
   "styles": {
    "boxSizing": "border-box",
    "width": "320px",
-   "height": "184px",
+   "height": "216px",
    "overflow": "hidden",
    "position": "relative",
    "display": "flex",
@@ -30,7 +30,7 @@
     "Explore · Default · Notes"
    ],
    "parentSeq": 0,
-   "html": "<div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:12px;padding:16px\">\n  <div layer-name=\"Note / Note\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:288px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n    <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Note</div>\n    <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Toolbar overflow is inferred (the snapshot draws grey blocks): items that do not fit (the search field) collapse into the trailing overflow capsule. The list column is at its 300 minimum; the map is narrower. The capsule holds the chevron.right.2 symbol.</div>\n  </div>\n</div>",
+   "html": "<div layer-name=\"Notes\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:12px;padding:16px\">\n  <div layer-name=\"Note / Note\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:288px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n    <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Note</div>\n    <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Toolbar overflow is inferred (the snapshot draws grey blocks): items that do not fit (the search field) collapse into the trailing overflow capsule. The list column is 360 here (HSplitView splits the detail width equally and clamps it to 300...520); the map is narrower. The capsule holds the chevron.right.2 symbol.</div>\n  </div>\n</div>",
    "lines": 6
   }
  ]

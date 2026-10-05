@@ -259,8 +259,8 @@
   {
    "n": 5,
    "name": "Remaining domain components",
-   "calls": 1530,
-   "cumulative": 2442,
+   "calls": 1260,
+   "cumulative": 2172,
    "artboards": [
     {
      "id": "C-add-to-trip-menu",
@@ -312,74 +312,11 @@
      "calls": 11
     },
     {
-     "id": "C-trip-header",
-     "theme": "light",
-     "name": "TripHeader",
-     "file": "components/C-trip-header.html",
-     "calls": 18
-    },
-    {
-     "id": "C-trip-plan-list",
-     "theme": "light",
-     "name": "TripPlanList",
-     "file": "components/C-trip-plan-list.html",
-     "calls": 48
-    },
-    {
-     "id": "C-day-header",
-     "theme": "light",
-     "name": "DayHeader",
-     "file": "components/C-day-header.html",
-     "calls": 21
-    },
-    {
-     "id": "C-stop-row",
-     "theme": "light",
-     "name": "StopRow",
-     "file": "components/C-stop-row.html",
-     "calls": 45
-    },
-    {
-     "id": "C-stop-number-badge",
-     "theme": "light",
-     "name": "StopNumberBadge",
-     "file": "components/C-stop-number-badge.html",
-     "calls": 9
-    },
-    {
-     "id": "C-connector-row",
-     "theme": "light",
-     "name": "ConnectorRow",
-     "file": "components/C-connector-row.html",
-     "calls": 28
-    },
-    {
-     "id": "C-suggestion-banner",
-     "theme": "light",
-     "name": "SuggestionBanner",
-     "file": "components/C-suggestion-banner.html",
-     "calls": 17
-    },
-    {
-     "id": "C-trip-route-map",
-     "theme": "light",
-     "name": "TripRouteMap",
-     "file": "components/C-trip-route-map.html",
-     "calls": 40
-    },
-    {
-     "id": "C-add-stop-popover",
-     "theme": "light",
-     "name": "AddStopPopover",
-     "file": "components/C-add-stop-popover.html",
-     "calls": 42
-    },
-    {
      "id": "C-explore-list-panel",
      "theme": "light",
      "name": "ExploreListPanel",
      "file": "components/C-explore-list-panel.html",
-     "calls": 95
+     "calls": 94
     },
     {
      "id": "C-explore-row",
@@ -484,7 +421,7 @@
      "theme": "light",
      "name": "LightTimeline",
      "file": "components/C-light-timeline.html",
-     "calls": 39
+     "calls": 38
     },
     {
      "id": "C-sky-arc",
@@ -548,7 +485,7 @@
    "n": 6,
    "name": "Remaining light screens (1280 and other sizes)",
    "calls": 2124,
-   "cumulative": 4566,
+   "cumulative": 4296,
    "artboards": [
     {
      "id": "S-shell-no-banner",
@@ -990,7 +927,7 @@
    "n": 7,
    "name": "Remaining dark twins",
    "calls": 371,
-   "cumulative": 4937,
+   "cumulative": 4667,
    "artboards": [
     {
      "id": "S-shell-no-banner",
@@ -1432,7 +1369,7 @@
    "n": 8,
    "name": "960 variants (light and dark)",
    "calls": 335,
-   "cumulative": 5272,
+   "cumulative": 5002,
    "artboards": [
     {
      "id": "S-shell-default-960",
@@ -1537,16 +1474,9 @@
   {
    "n": 9,
    "name": "Menus, popovers and system boards",
-   "calls": 428,
-   "cumulative": 5700,
+   "calls": 402,
+   "cumulative": 5404,
    "artboards": [
-    {
-     "id": "C-trip-builder-menus",
-     "theme": "light",
-     "name": "Trip builder menus",
-     "file": "components/C-trip-builder-menus.html",
-     "calls": 26
-    },
     {
      "id": "M-share-sheet",
      "theme": "light",
@@ -1637,7 +1567,7 @@
    "n": 10,
    "name": "Flows: overview and the four journeys",
    "calls": 58,
-   "cumulative": 5758,
+   "cumulative": 5462,
    "artboards": [
     {
      "id": "F-flows-overview",
@@ -1679,8 +1609,8 @@
   {
    "n": 11,
    "name": "Note companions",
-   "calls": 66,
-   "cumulative": 5824,
+   "calls": 63,
+   "cumulative": 5525,
    "artboards": [
     {
      "id": "S-shell-default--notes",
@@ -1722,13 +1652,6 @@
      "theme": "light",
      "name": "Trip builder · Default · Notes",
      "file": "screens/light/S-trip-builder-default--notes--light.html",
-     "calls": 3
-    },
-    {
-     "id": "S-explore-default--notes",
-     "theme": "light",
-     "name": "Explore · Default · Notes",
-     "file": "screens/light/S-explore-default--notes--light.html",
      "calls": 3
     },
     {
@@ -1841,8 +1764,8 @@
   {
    "n": 12,
    "name": "F04, F05, F06 and remaining foundations",
-   "calls": 184,
-   "cumulative": 6008,
+   "calls": 183,
+   "cumulative": 5708,
    "artboards": [
     {
      "id": "F04-elevation",
@@ -1856,7 +1779,7 @@
      "theme": "light",
      "name": "F05 Iconography",
      "file": "foundations/F05-iconography.html",
-     "calls": 146
+     "calls": 145
     },
     {
      "id": "F06-logo-app-icon",
@@ -1869,8 +1792,8 @@
   }
  ],
  "total": {
-  "calls": 6008,
-  "artboards": 250
+  "calls": 5708,
+  "artboards": 239
  },
  "budgets": [
   {
@@ -1921,7 +1844,7 @@
   },
   {
    "budget": 2000,
-   "calls": 1996,
+   "calls": 1999,
    "fullStages": [
     0,
     1,
@@ -1940,15 +1863,6 @@
      "C-trip-context-menu (light)",
      "C-trip-card (light)",
      "C-template-row (light)",
-     "C-trip-header (light)",
-     "C-trip-plan-list (light)",
-     "C-day-header (light)",
-     "C-stop-row (light)",
-     "C-stop-number-badge (light)",
-     "C-connector-row (light)",
-     "C-suggestion-banner (light)",
-     "C-trip-route-map (light)",
-     "C-add-stop-popover (light)",
      "C-explore-list-panel (light)",
      "C-explore-row (light)",
      "C-explore-map-pane (light)",
@@ -1962,27 +1876,27 @@
      "C-day-windows (light)",
      "C-window-row (light)",
      "C-reasons-grid (light)",
-     "C-look-around (light)"
-    ],
-    "excluded": [
      "C-signed-bar (light)",
      "C-explain-block (light)",
      "C-light-timeline (light)",
      "C-sky-arc (light)",
      "C-hourly-strip (light)",
-     "C-spot-facts-row (light)",
+     "C-spot-facts-row (light)"
+    ],
+    "excluded": [
+     "C-look-around (light)",
      "C-saved-row (light)",
      "C-scout-result-row (light)",
      "C-scout-progress (light)",
      "C-system-components (light)"
     ]
    },
-   "artboards": 59
+   "artboards": 55
   }
  ],
  "oneWritePerArtboard": {
-  "artboards": 250,
-  "calls": 763,
+  "artboards": 239,
+  "calls": 730,
   "note": "create_artboard + one write_html + one screenshot per artboard; ignores Paper's ~15-line-per-write guidance, comparison only"
  }
 }

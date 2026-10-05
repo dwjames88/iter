@@ -75,7 +75,7 @@ function changeDatesBody({ moves }) {
   const rows = [
     { label: 'Starts', control: datePicker('10/7/2026') },
     { node: daysRow(moves ? 3 : 4, false) },
-    { label: 'Ends', control: text(moves ? 'Fri, Oct 9' : 'Sat, Oct 10', { name: 'Value', font: font('body'), color: 'text/primary' }) },
+    { label: 'Ends', control: text(moves ? 'Fri, Oct 9, 2026' : 'Sat, Oct 10, 2026', { name: 'Value', font: font('body'), color: 'text/primary' }) },
   ];
   if (moves) rows.push({ node: row({ name: 'Warning Row', style: { padding: `${d('space/sm')} ${d('space/md')}` } },
     warningLine('1 stop will move to Day 3, the new last day. You can undo this.', { font: 'callout' })) });
@@ -122,6 +122,6 @@ export const artboards = [
     render: () => home({ trips: TRIPS, tripNames, overlays: [newTripSheet(false)] }) },
   { id: 'S-change-dates', name: 'Change Dates · Stops would move', section: 'screens', width: 1280, height: 820,
     covers: ['New Trip sheet (and Change Dates sheet)/Change Dates, stops would move'],
-    notes: ['Ends is formatted like the trip dates ("Fri, Oct 9", en_US), not "Fri 9 Oct" as SCREENS.md says. Drawn over the trip builder window chrome; see the Trip builder artboards for that screen.'],
+    notes: ['Ends is formatted by TimeText.day: "Fri, Oct 9, 2026". Drawn over the trip builder window chrome; see the Trip builder artboards for that screen.'],
     render: () => tripBackdrop([changeDatesSheet(true)]) },
 ];

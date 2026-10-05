@@ -127,7 +127,7 @@
   },
   "Components": {
    "width": 6000,
-   "height": 40584,
+   "height": 31032,
    "rows": [
     {
      "label": "Light Index components",
@@ -362,8 +362,8 @@
       "height": 60
      },
      "y": 8816,
-     "width": 5672,
-     "height": 2264,
+     "width": 2872,
+     "height": 1176,
      "items": [
       {
        "id": "C-trip-card",
@@ -384,124 +384,6 @@
        "height": 640,
        "x": 1568,
        "y": 8816
-      },
-      {
-       "id": "C-trip-header",
-       "theme": "light",
-       "name": "TripHeader",
-       "file": "components/C-trip-header.html",
-       "width": 1200,
-       "height": 1136,
-       "x": 3072,
-       "y": 8816
-      },
-      {
-       "id": "C-trip-plan-list",
-       "theme": "light",
-       "name": "TripPlanList",
-       "file": "components/C-trip-plan-list.html",
-       "width": 1200,
-       "height": 2264,
-       "x": 4472,
-       "y": 8816
-      }
-     ]
-    },
-    {
-     "label": "Trips components (cont.)",
-     "labelBox": {
-      "x": 0,
-      "y": 11480,
-      "width": 1200,
-      "height": 60
-     },
-     "y": 11600,
-     "width": 5280,
-     "height": 3032,
-     "items": [
-      {
-       "id": "C-day-header",
-       "theme": "light",
-       "name": "DayHeader",
-       "file": "components/C-day-header.html",
-       "width": 1200,
-       "height": 696,
-       "x": 0,
-       "y": 11600
-      },
-      {
-       "id": "C-stop-row",
-       "theme": "light",
-       "name": "StopRow",
-       "file": "components/C-stop-row.html",
-       "width": 1400,
-       "height": 3032,
-       "x": 1400,
-       "y": 11600
-      },
-      {
-       "id": "C-stop-number-badge",
-       "theme": "light",
-       "name": "StopNumberBadge",
-       "file": "components/C-stop-number-badge.html",
-       "width": 880,
-       "height": 408,
-       "x": 3000,
-       "y": 11600
-      },
-      {
-       "id": "C-connector-row",
-       "theme": "light",
-       "name": "ConnectorRow",
-       "file": "components/C-connector-row.html",
-       "width": 1200,
-       "height": 832,
-       "x": 4080,
-       "y": 11600
-      }
-     ]
-    },
-    {
-     "label": "Trips components (cont.)",
-     "labelBox": {
-      "x": 0,
-      "y": 15032,
-      "width": 1200,
-      "height": 60
-     },
-     "y": 15152,
-     "width": 4000,
-     "height": 2272,
-     "items": [
-      {
-       "id": "C-suggestion-banner",
-       "theme": "light",
-       "name": "SuggestionBanner",
-       "file": "components/C-suggestion-banner.html",
-       "width": 1200,
-       "height": 544,
-       "x": 0,
-       "y": 15152
-      },
-      {
-       "id": "C-trip-route-map",
-       "theme": "light",
-       "name": "TripRouteMap",
-       "file": "components/C-trip-route-map.html",
-       "width": 1200,
-       "height": 2272,
-       "x": 1400,
-       "y": 15152
-      },
-      {
-       "id": "C-add-stop-popover",
-       "theme": "light",
-       "name": "AddStopPopover",
-       "file": "components/C-add-stop-popover.html",
-       "width": 1200,
-       "height": 1496,
-       "x": 2800,
-       "y": 15152
       }
      ]
     },
@@ -509,11 +391,11 @@
      "label": "Explore components",
      "labelBox": {
       "x": 0,
-      "y": 17824,
+      "y": 10392,
       "width": 1200,
       "height": 60
      },
-     "y": 17944,
+     "y": 10512,
      "width": 5128,
      "height": 3128,
      "items": [
@@ -525,7 +407,7 @@
        "width": 1704,
        "height": 3128,
        "x": 0,
-       "y": 17944
+       "y": 10512
       },
       {
        "id": "C-explore-row",
@@ -535,7 +417,7 @@
        "width": 1720,
        "height": 944,
        "x": 1904,
-       "y": 17944
+       "y": 10512
       },
       {
        "id": "C-explore-map-pane",
@@ -545,7 +427,7 @@
        "width": 1304,
        "height": 2368,
        "x": 3824,
-       "y": 17944
+       "y": 10512
       }
      ]
     },
@@ -553,11 +435,11 @@
      "label": "Explore components (cont.)",
      "labelBox": {
       "x": 0,
-      "y": 21472,
+      "y": 14040,
       "width": 1200,
       "height": 60
      },
-     "y": 21592,
+     "y": 14160,
      "width": 4800,
      "height": 752,
      "items": [
@@ -569,7 +451,7 @@
        "width": 1400,
        "height": 624,
        "x": 0,
-       "y": 21592
+       "y": 14160
       },
       {
        "id": "C-explore-place-card",
@@ -579,7 +461,7 @@
        "width": 1800,
        "height": 752,
        "x": 1600,
-       "y": 21592
+       "y": 14160
       },
       {
        "id": "C-add-spot-banner",
@@ -589,7 +471,7 @@
        "width": 1200,
        "height": 464,
        "x": 3600,
-       "y": 21592
+       "y": 14160
       }
      ]
     },
@@ -597,11 +479,11 @@
      "label": "Spot page components",
      "labelBox": {
       "x": 0,
-      "y": 22744,
+      "y": 15312,
       "width": 1200,
       "height": 60
      },
-     "y": 22864,
+     "y": 15432,
      "width": 5000,
      "height": 1944,
      "items": [
@@ -613,7 +495,7 @@
        "width": 1000,
        "height": 1472,
        "x": 0,
-       "y": 22864
+       "y": 15432
       },
       {
        "id": "C-when-to-go",
@@ -623,7 +505,7 @@
        "width": 1000,
        "height": 1944,
        "x": 1200,
-       "y": 22864
+       "y": 15432
       },
       {
        "id": "C-sun-times-line",
@@ -633,7 +515,7 @@
        "width": 1400,
        "height": 392,
        "x": 2400,
-       "y": 22864
+       "y": 15432
       },
       {
        "id": "C-outlook-strip",
@@ -643,7 +525,7 @@
        "width": 1000,
        "height": 1944,
        "x": 4000,
-       "y": 22864
+       "y": 15432
       }
      ]
     },
@@ -651,11 +533,11 @@
      "label": "Spot page components (cont.)",
      "labelBox": {
       "x": 0,
-      "y": 25208,
+      "y": 17776,
       "width": 1200,
       "height": 60
      },
-     "y": 25328,
+     "y": 17896,
      "width": 6000,
      "height": 2000,
      "items": [
@@ -667,7 +549,7 @@
        "width": 1000,
        "height": 1816,
        "x": 0,
-       "y": 25328
+       "y": 17896
       },
       {
        "id": "C-window-row",
@@ -677,7 +559,7 @@
        "width": 1000,
        "height": 2000,
        "x": 1200,
-       "y": 25328
+       "y": 17896
       },
       {
        "id": "C-reasons-grid",
@@ -687,7 +569,7 @@
        "width": 1000,
        "height": 1488,
        "x": 2400,
-       "y": 25328
+       "y": 17896
       },
       {
        "id": "C-signed-bar",
@@ -697,7 +579,7 @@
        "width": 1000,
        "height": 744,
        "x": 3600,
-       "y": 25328
+       "y": 17896
       },
       {
        "id": "C-explain-block",
@@ -707,7 +589,7 @@
        "width": 1200,
        "height": 688,
        "x": 4800,
-       "y": 25328
+       "y": 17896
       }
      ]
     },
@@ -715,11 +597,11 @@
      "label": "Spot page components (cont.)",
      "labelBox": {
       "x": 0,
-      "y": 27728,
+      "y": 20296,
       "width": 1200,
       "height": 60
      },
-     "y": 27848,
+     "y": 20416,
      "width": 5800,
      "height": 3648,
      "items": [
@@ -731,7 +613,7 @@
        "width": 1000,
        "height": 3224,
        "x": 0,
-       "y": 27848
+       "y": 20416
       },
       {
        "id": "C-sky-arc",
@@ -741,7 +623,7 @@
        "width": 1000,
        "height": 3648,
        "x": 1200,
-       "y": 27848
+       "y": 20416
       },
       {
        "id": "C-hourly-strip",
@@ -751,7 +633,7 @@
        "width": 1000,
        "height": 1952,
        "x": 2400,
-       "y": 27848
+       "y": 20416
       },
       {
        "id": "C-spot-facts-row",
@@ -761,7 +643,7 @@
        "width": 1000,
        "height": 1328,
        "x": 3600,
-       "y": 27848
+       "y": 20416
       },
       {
        "id": "C-look-around",
@@ -771,7 +653,7 @@
        "width": 1000,
        "height": 968,
        "x": 4800,
-       "y": 27848
+       "y": 20416
       }
      ]
     },
@@ -779,11 +661,11 @@
      "label": "Saved and Scout components",
      "labelBox": {
       "x": 0,
-      "y": 31896,
+      "y": 24464,
       "width": 1200,
       "height": 60
      },
-     "y": 32016,
+     "y": 24584,
      "width": 4280,
      "height": 1144,
      "items": [
@@ -795,7 +677,7 @@
        "width": 1560,
        "height": 880,
        "x": 0,
-       "y": 32016
+       "y": 24584
       },
       {
        "id": "C-scout-result-row",
@@ -805,7 +687,7 @@
        "width": 1160,
        "height": 1120,
        "x": 1760,
-       "y": 32016
+       "y": 24584
       },
       {
        "id": "C-scout-progress",
@@ -815,7 +697,7 @@
        "width": 1160,
        "height": 1144,
        "x": 3120,
-       "y": 32016
+       "y": 24584
       }
      ]
     },
@@ -823,11 +705,11 @@
      "label": "System components",
      "labelBox": {
       "x": 0,
-      "y": 33560,
+      "y": 26128,
       "width": 1200,
       "height": 60
      },
-     "y": 33680,
+     "y": 26248,
      "width": 2432,
      "height": 2512,
      "items": [
@@ -839,7 +721,7 @@
        "width": 2432,
        "height": 2512,
        "x": 0,
-       "y": 33680
+       "y": 26248
       }
      ]
     },
@@ -847,24 +729,14 @@
      "label": "Menus, popovers and dialogs",
      "labelBox": {
       "x": 0,
-      "y": 36592,
+      "y": 29160,
       "width": 1200,
       "height": 60
      },
-     "y": 36712,
-     "width": 5688,
-     "height": 1600,
+     "y": 29280,
+     "width": 5584,
+     "height": 1752,
      "items": [
-      {
-       "id": "C-trip-builder-menus",
-       "theme": "light",
-       "name": "Trip builder menus",
-       "file": "components/C-trip-builder-menus.html",
-       "width": 1264,
-       "height": 880,
-       "x": 0,
-       "y": 36712
-      },
       {
        "id": "M-share-sheet",
        "theme": "light",
@@ -872,8 +744,8 @@
        "file": "components/M-share-sheet.html",
        "width": 1408,
        "height": 680,
-       "x": 1464,
-       "y": 36712
+       "x": 0,
+       "y": 29280
       },
       {
        "id": "M-file-panels",
@@ -882,8 +754,8 @@
        "file": "components/M-file-panels.html",
        "width": 1264,
        "height": 1176,
-       "x": 3072,
-       "y": 36712
+       "x": 1608,
+       "y": 29280
       },
       {
        "id": "M-alerts-dialogs",
@@ -892,23 +764,9 @@
        "file": "components/M-alerts-dialogs.html",
        "width": 1152,
        "height": 1600,
-       "x": 4536,
-       "y": 36712
-      }
-     ]
-    },
-    {
-     "label": "Menus, popovers and dialogs (cont.)",
-     "labelBox": {
-      "x": 0,
-      "y": 38712,
-      "width": 1160,
-      "height": 60
-     },
-     "y": 38832,
-     "width": 1160,
-     "height": 1752,
-     "items": [
+       "x": 3072,
+       "y": 29280
+      },
       {
        "id": "M-window-toolbars",
        "theme": "light",
@@ -916,15 +774,15 @@
        "file": "components/M-window-toolbars.html",
        "width": 1160,
        "height": 1752,
-       "x": 0,
-       "y": 38832
+       "x": 4424,
+       "y": 29280
       }
      ]
     }
    ]
   },
   "Screens (Light)": {
-   "width": 7960,
+   "width": 7920,
    "height": 30380,
    "rows": [
     {
@@ -1127,7 +985,7 @@
        "name": "Change Dates · Stops would move · Notes",
        "file": "screens/light/S-change-dates--notes--light.html",
        "width": 320,
-       "height": 168,
+       "height": 144,
        "x": 4640,
        "y": 2800,
        "companionOf": "S-change-dates"
@@ -1162,7 +1020,7 @@
        "name": "Trip builder · Default · Notes",
        "file": "screens/light/S-trip-builder-default--notes--light.html",
        "width": 320,
-       "height": 208,
+       "height": 200,
        "x": 1320,
        "y": 4140,
        "companionOf": "S-trip-builder-default"
@@ -1340,7 +1198,7 @@
       "height": 60
      },
      "y": 9500,
-     "width": 7960,
+     "width": 7600,
      "height": 820,
      "items": [
       {
@@ -1354,24 +1212,13 @@
        "y": 9500
       },
       {
-       "id": "S-explore-default--notes",
-       "theme": "light",
-       "name": "Explore · Default · Notes",
-       "file": "screens/light/S-explore-default--notes--light.html",
-       "width": 320,
-       "height": 160,
-       "x": 1320,
-       "y": 9500,
-       "companionOf": "S-explore-default"
-      },
-      {
        "id": "S-explore-default-960",
        "theme": "light",
        "name": "Explore · Default · Light · 960",
        "file": "screens/light/S-explore-default-960--light.html",
        "width": 960,
        "height": 640,
-       "x": 1840,
+       "x": 1480,
        "y": 9500
       },
       {
@@ -1380,8 +1227,8 @@
        "name": "Explore · Default · Notes",
        "file": "screens/light/S-explore-default-960--notes--light.html",
        "width": 320,
-       "height": 184,
-       "x": 2840,
+       "height": 216,
+       "x": 2480,
        "y": 9500,
        "companionOf": "S-explore-default-960"
       },
@@ -1392,7 +1239,7 @@
        "file": "screens/light/S-explore-selected--light.html",
        "width": 1280,
        "height": 820,
-       "x": 3360,
+       "x": 3000,
        "y": 9500
       },
       {
@@ -1401,8 +1248,8 @@
        "name": "Explore · Selected with place card · Notes",
        "file": "screens/light/S-explore-selected--notes--light.html",
        "width": 320,
-       "height": 128,
-       "x": 4680,
+       "height": 112,
+       "x": 4320,
        "y": 9500,
        "companionOf": "S-explore-selected"
       },
@@ -1413,7 +1260,7 @@
        "file": "screens/light/S-explore-no-forecast--light.html",
        "width": 1280,
        "height": 820,
-       "x": 5200,
+       "x": 4840,
        "y": 9500
       },
       {
@@ -1423,7 +1270,7 @@
        "file": "screens/light/S-explore-filtered-empty--light.html",
        "width": 1280,
        "height": 820,
-       "x": 6680,
+       "x": 6320,
        "y": 9500
       }
      ]
@@ -1922,7 +1769,7 @@
        "name": "Scout · Results · Notes",
        "file": "screens/light/S-scout-results--notes--light.html",
        "width": 320,
-       "height": 264,
+       "height": 168,
        "x": 4280,
        "y": 23780,
        "companionOf": "S-scout-results"

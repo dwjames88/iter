@@ -57,14 +57,14 @@ function marker({ x, y, label, symbol, selected }) {
     text(label, { name: 'Label', font: font('caption', { weight: selected ? 'semibold' : 'regular' }), color: canvas('label/title'), style: { whiteSpace: 'nowrap' } }));
 }
 const MARKERS = [
-  { x: 150, y: 150, label: 'Hoyt Arboretum', symbol: CATEGORY.forest[0], selected: true },
-  { x: 250, y: 215, label: 'Latourell Falls', symbol: CATEGORY.waterfall[0] },
-  { x: 330, y: 560, label: 'Tunnel View', symbol: CATEGORY.landscape[0] },
-  { x: 560, y: 470, label: 'Mesa Arch', symbol: CATEGORY.desert[0] },
+  { x: 90, y: 120, label: 'Hoyt Arboretum', symbol: CATEGORY.forest[0], selected: true },
+  { x: 180, y: 180, label: 'Latourell Falls', symbol: CATEGORY.waterfall[0] },
+  { x: 165, y: 600, label: 'Tunnel View', symbol: CATEGORY.landscape[0] },
+  { x: 440, y: 560, label: 'Mesa Arch', symbol: CATEGORY.desert[0] },
 ];
 
 function results({ rows, sample, attribution }) {
-  const listW = dv('layout/listIdeal');
+  const listW = dv('layout/listMax');
   return row({ name: 'Results', grow: true, style: { minHeight: 0 } },
     col({ name: 'Result List', w: listW, noshrink: true, style: { minHeight: 0 } },
       row({ name: 'List Header', align: 'baseline', gap: d('space/sm'), style: { padding: `${d('space/sm')} ${d('space/lg')}`, flexShrink: 0 } },
@@ -109,8 +109,7 @@ export const artboards = [
   { id: 'S-scout-running', name: 'Scout · Running', section: 'screens', width: W, height: H, snapshot: snap('running'), covers: ['Scout/Running'],
     render: () => win({ bar: requestBar({ value: REQUEST, disabled: true, running: true }), detail: running() }) },
   { id: 'S-scout-results', name: 'Scout · Results', section: 'screens', width: W, height: H, snapshot: snap('results'), covers: ['Scout/Results'],
-    notes: ['Map markers: the source draws MapKit Markers tinted accent for every result (selected is larger). The snapshot stand-in draws the selected pin accent and the others grey; the source is followed.',
-      'The list is 360 wide (listIdeal) beside the sidebar; the snapshot, which has no sidebar, fills 520.'],
+    notes: ['Map markers: the source draws MapKit Markers tinted accent for every result (selected is larger). The snapshot stand-in draws the selected pin accent and the others grey; the source is followed.'],
     render: () => win({ bar: requestBar({ value: REQUEST }), detail: results({ rows: SAMPLE_ROWS, sample: true, attribution: true }) }) },
   { id: 'S-scout-results-loading', name: 'Scout · Checking the forecast', section: 'screens', width: W, height: H, covers: ['Scout/Checking the forecast'], duplicateOf: 'S-scout-results',
     render: () => win({ bar: requestBar({ value: REQUEST }), detail: results({ rows: LOADING_ROWS, sample: true, attribution: true }) }) },

@@ -45,7 +45,7 @@
     "Notes"
    ],
    "parentSeq": 1,
-   "html": "<div layer-name=\"Note / Delete spot: two wordings\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:340px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n  <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Delete spot: two wordings</div>\n  <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Spot page: \"Delete “name”?\", \"…You can undo this with Edit &gt; Undo.\", button Delete. Saved: same title, \"…You can undo this.\", button Delete Spot. Reproduced as built.</div>\n</div>",
+   "html": "<div layer-name=\"Note / Delete spot: one wording\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-md);flex-shrink:0;width:340px;background:var(--color-canvas-note-background);border:1px solid var(--color-canvas-note-border);border-radius:var(--radius-control)\">\n  <div layer-name=\"Note Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-semibold);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">Delete spot: one wording</div>\n  <div layer-name=\"Note Body\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-subheadline);font-weight:var(--font-weight-regular);line-height:var(--leading-subheadline);color:var(--color-canvas-note-text)\">The Spot page and Saved share one confirmation: \"Delete “name”?\", \"It is also removed from N trip stops. You can undo this with Edit &gt; Undo.\", button Delete Spot. The message is pluralised: \"1 trip stop\", \"2 trip stops\".</div>\n</div>",
    "lines": 4
   },
   {
@@ -60,13 +60,13 @@
    ],
    "parentSeq": 1,
    "sourceSeq": 2,
-   "sourcePath": "Alerts and dialogs/Page/Content/Notes/Note / Delete spot: two wordings",
+   "sourcePath": "Alerts and dialogs/Page/Content/Notes/Note / Delete spot: one wording",
    "sourcePathArray": [
     "Alerts and dialogs",
     "Page",
     "Content",
     "Notes",
-    "Note / Delete spot: two wordings"
+    "Note / Delete spot: one wording"
    ],
    "styleOverrides": {},
    "textOverrides": {
@@ -253,7 +253,7 @@
     "Row 2"
    ],
    "parentSeq": 9,
-   "html": "<div layer-name=\"Specimen / delete spot page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0\">\n  <div layer-name=\"Alert / Delete “Roadside Pullout”?\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-canvas-sheet);border-radius:26px\">\n    <div layer-name=\"App Icon (swap)\" style=\"box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n      <div layer-name=\"Dot\" style=\"box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-accent-on-accent)\"></div>\n    </div>\n    <div layer-name=\"Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);text-align:center\">Delete “Roadside Pullout”?</div>\n    <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);text-align:center\">It is also removed from 2 trip stops. You can undo this with Edit &gt; Undo.</div>\n    <div layer-name=\"Alert Buttons\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px\">\n      <div layer-name=\"Button / Delete\" style=\"box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-status-danger);padding:0 18px\">\n        <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-accent-on-accent);white-space:nowrap\">Delete</div>\n      </div>\n    </div>\n  </div>\n</div>",
+   "html": "<div layer-name=\"Specimen / delete spot page\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-xs);align-items:flex-start;width:280px;flex-shrink:0\">\n  <div layer-name=\"Alert / Delete “Roadside Pullout”?\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-md);padding:20px;align-items:center;flex-shrink:0;width:280px;background:var(--color-canvas-sheet-background);backdrop-filter:blur(30px) saturate(1.6);box-shadow:var(--shadow-canvas-sheet);border-radius:26px\">\n    <div layer-name=\"App Icon (swap)\" style=\"box-sizing:border-box;width:56px;height:56px;border-radius:13px;background:var(--color-accent-primary);display:flex;align-items:center;justify-content:center;flex-shrink:0\">\n      <div layer-name=\"Dot\" style=\"box-sizing:border-box;width:14px;height:14px;border-radius:999px;background:var(--color-accent-on-accent)\"></div>\n    </div>\n    <div layer-name=\"Title\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-headline);font-weight:var(--font-weight-semibold);line-height:var(--leading-headline);color:var(--color-text-primary);text-align:center\">Delete “Roadside Pullout”?</div>\n    <div layer-name=\"Message\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:var(--text-callout);font-weight:var(--font-weight-regular);line-height:var(--leading-callout);color:var(--color-text-secondary);text-align:center\">It is also removed from 1 trip stop. You can undo this with Edit &gt; Undo.</div>\n    <div layer-name=\"Alert Buttons\" style=\"box-sizing:border-box;display:flex;flex-direction:column;gap:var(--spacing-sm);align-self:stretch;padding-top:4px\">\n      <div layer-name=\"Button / Delete Spot\" style=\"box-sizing:border-box;display:flex;flex-direction:row;height:var(--spacing-size-control-height-large);width:100%;align-items:center;justify-content:center;gap:var(--spacing-xs);border-radius:999px;flex-shrink:0;background:var(--color-status-danger);padding:0 18px\">\n        <div layer-name=\"Label\" style=\"box-sizing:border-box;font-family:var(--font-sans);font-size:15px;font-weight:var(--font-weight-regular);line-height:20px;color:var(--color-accent-on-accent);white-space:nowrap\">Delete Spot</div>\n      </div>\n    </div>\n  </div>\n</div>",
    "lines": 14,
    "partial": true
   },
@@ -323,15 +323,13 @@
    ],
    "styleOverrides": {},
    "textOverrides": {
-    "./Alert / Delete “Roadside Pullout”?/Message/#text0": "It is also removed from 2 trip stops. You can undo this.",
-    "./Alert / Delete “Roadside Pullout”?/Alert Buttons/Button / Delete/Label/#text0": "Delete Spot",
+    "./Alert / Delete “Roadside Pullout”?/Message/#text0": "It is also removed from 2 trip stops. You can undo this with Edit > Undo.",
     "./Caption/#text0": "Saved list, your own spot"
    },
    "nameOverrides": {
-    ".": "Specimen / delete spot saved",
-    "./Alert / Delete “Roadside Pullout”?/Alert Buttons/Button / Delete": "Button / Delete Spot"
+    ".": "Specimen / delete spot saved"
    },
-   "lines": 5
+   "lines": 3
   },
   {
    "seq": 16,

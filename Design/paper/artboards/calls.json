@@ -7,8 +7,8 @@
  "pages": {
   "Components": {
    "artboards": 54,
-   "withSavings": 1879,
-   "withoutSavings": 2762
+   "withSavings": 1877,
+   "withoutSavings": 2761
   },
   "Flows": {
    "artboards": 5,
@@ -17,8 +17,8 @@
   },
   "Foundations": {
    "artboards": 7,
-   "withSavings": 428,
-   "withoutSavings": 500
+   "withSavings": 427,
+   "withoutSavings": 499
   },
   "Screens (Dark)": {
    "artboards": 81,
@@ -33,8 +33,8 @@
  },
  "total": {
   "artboards": 250,
-  "withSavings": 5995,
-  "withoutSavings": 10067
+  "withSavings": 5992,
+  "withoutSavings": 10065
  },
  "artboards": [
   {
@@ -145,14 +145,14 @@
    "file": "components/C-explore-list-panel",
    "name": "ExploreListPanel",
    "page": "Components",
-   "writes": 52,
+   "writes": 51,
    "clones": 31,
    "review": 1,
    "createArtboard": 1,
    "duplicateOf": null,
    "duplicateCalls": null,
-   "callsWithSavings": 95,
-   "callsWithoutSavings": 397
+   "callsWithSavings": 94,
+   "callsWithoutSavings": 396
   },
   {
    "file": "components/C-explore-map-pane",
@@ -250,12 +250,12 @@
    "name": "LightTimeline",
    "page": "Components",
    "writes": 22,
-   "clones": 12,
+   "clones": 11,
    "review": 1,
    "createArtboard": 1,
    "duplicateOf": null,
    "duplicateCalls": null,
-   "callsWithSavings": 39,
+   "callsWithSavings": 38,
    "callsWithoutSavings": 52
   },
   {
@@ -860,14 +860,14 @@
    "file": "foundations/F05-iconography",
    "name": "F05 Iconography",
    "page": "Foundations",
-   "writes": 144,
+   "writes": 143,
    "clones": 0,
    "review": 1,
    "createArtboard": 1,
    "duplicateOf": null,
    "duplicateCalls": null,
-   "callsWithSavings": 146,
-   "callsWithoutSavings": 146
+   "callsWithSavings": 145,
+   "callsWithoutSavings": 145
   },
   {
    "file": "foundations/F06-logo-app-icon",

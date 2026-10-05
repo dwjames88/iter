@@ -16,7 +16,7 @@ const alertsBoard = () => page([
   col({ name: 'Content', gap: 24, align: 'flex-start' },
     notes(
       note({ title: 'System UI', body: 'Drawn with the shared alert panel (app icon stand-in, bold title, grey message, full-width buttons). The real alerts are macOS system dialogs; confirmation dialogs attach to the window as sheets.', width: 340 }),
-      note({ title: 'Delete spot: two wordings', body: 'Spot page: "Delete “name”?", "…You can undo this with Edit > Undo.", button Delete. Saved: same title, "…You can undo this.", button Delete Spot. Reproduced as built.', width: 340 }),
+      note({ title: 'Delete spot: one wording', body: 'The Spot page and Saved share one confirmation: "Delete “name”?", "It is also removed from N trip stops. You can undo this with Edit > Undo.", button Delete Spot. The message is pluralised: "1 trip stop", "2 trip stops".', width: 340 }),
       note({ title: 'Reset All Data…', body: 'Debug menu only. NSAlert with the critical style: the first button (Delete Everything) is the destructive default.', width: 340 })),
     themeBlocks(() => col({ name: 'Alert Grid', gap: d('space/xl') },
       row({ name: 'Row 1', gap: d('space/xl'), align: 'flex-start' },
@@ -25,8 +25,8 @@ const alertsBoard = () => page([
         cell('couldnt open trip', alertPanel({ title: "Couldn't open this trip", message: "The file isn't a readable Iter trip.", buttons: ['OK'] }), { width: 280, caption: 'A .iter file opened from Finder. Other: "It was made by a newer version of Iter."' })),
       row({ name: 'Row 2', gap: d('space/xl'), align: 'flex-start' },
         cell('couldnt export trip', alertPanel({ title: "Couldn't Export Trip", message: "The trip couldn't be saved to that location.", buttons: ['OK'] }), { width: 280, caption: 'Trip actions > Export…' }),
-        cell('delete spot page', alertPanel({ title: 'Delete “Roadside Pullout”?', message: 'It is also removed from 2 trip stops. You can undo this with Edit > Undo.', buttons: [{ label: 'Delete', destructive: true }, { label: 'Cancel' }] }), { width: 280, caption: 'Spot page, your own spot' }),
-        cell('delete spot saved', alertPanel({ title: 'Delete “Roadside Pullout”?', message: 'It is also removed from 2 trip stops. You can undo this.', buttons: [{ label: 'Delete Spot', destructive: true }, { label: 'Cancel' }] }), { width: 280, caption: 'Saved list, your own spot' }))), { direction: 'column' }),
+        cell('delete spot page', alertPanel({ title: 'Delete “Roadside Pullout”?', message: 'It is also removed from 1 trip stop. You can undo this with Edit > Undo.', buttons: [{ label: 'Delete Spot', destructive: true }, { label: 'Cancel' }] }), { width: 280, caption: 'Spot page, your own spot' }),
+        cell('delete spot saved', alertPanel({ title: 'Delete “Roadside Pullout”?', message: 'It is also removed from 2 trip stops. You can undo this with Edit > Undo.', buttons: [{ label: 'Delete Spot', destructive: true }, { label: 'Cancel' }] }), { width: 280, caption: 'Saved list, your own spot' }))), { direction: 'column' }),
   ),
 ], { gap: 24 });
 
