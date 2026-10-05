@@ -70,6 +70,16 @@ Every structural or destructive edit (delete trip, delete spot, add, remove or m
 
 Bundle ID `com.dwjames.iter`, team `VF945J28YU` (a Personal Team, free provisioning), automatic signing with "Apple Development certificate". App Sandbox with outgoing network and user-selected files. The WeatherKit entitlement lives in `App/Iter-WeatherKit.entitlements` and is used only when `scripts/run.sh --weatherkit` is run, because WeatherKit needs a paid Developer Program team with the capability on the App ID; see TESTING.md.
 
+## Testing and inspection
+
+* `swift test` (package): domain, astronomy against USNO, JPL Horizons and Meeus reference values, the Light Index rules (overcast golden hour is never Good; night never lifts a daytime intent; no forecast never gives a number), the scheduler and ordering, store and undo, services with fakes, view models. `ITER_LIVE=1` adds live MapKit and WeatherKit checks, and `ITER_LIVE_AI=1` adds live Scout and explainer runs.
+* `xcodebuild test` (hosted in the app): renderer pixel tests and the snapshot suites. `scripts/snapshots.sh` renders every screen and state offscreen to `Design/snapshots` (`AppTests/Support/Snapshot.swift` explains how and what cannot be drawn: live maps, toolbar items, traffic lights). Map views draw `MapStandIn` when `\.renderMode == .snapshot`.
+* Smoke: `open -g -j build/Iter.app --args -IterSmokeTest YES -IterInMemoryStore YES` runs `SmokeHook` from app launch (no UI needed) and logs `smoke: …` lines under subsystem `com.dwjames.iter`.
+
+## Scout pipeline
+
+Two sessions, because the on-device model's context is 4,096 tokens. (1) *Gather*: a session with tools (`FindPlacesTool` over MapKit, `CuratedSpotsTool`, `DriveTimeTool`) that registers every place it finds under a short ID. (2) *Pick*: a fresh session without tools that sees only the registered candidates and returns `@Generable ScoutAnswer` (IDs, a short reason limited to what the candidate data says, a window). `ScoutGrounding` drops any ID not in the registry and takes names and coordinates only from the registry. Parse failures are retried (greedy sampling) and tolerated when candidates already exist.
+
 ## Strings
 
-All user-facing text is in `App/Resources/Localizable.xcstrings`. The package produces structured values (factors, reasons, enums); the app phrases them.
+All user-facing text is in `App/Resources/Localizable.xcstrings` (510 strings). The package produces structured values (factors, reasons, enums); the app phrases them, light vocabulary in `App/Sources/Text/LightText.swift`. Xcode's editor syncs the catalog on build; from the command line run `scripts/strings.sh` after a build.
