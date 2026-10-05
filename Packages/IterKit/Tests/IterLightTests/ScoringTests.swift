@@ -263,7 +263,6 @@ private func score(_ kind: LightWindowKind, _ w: Wx, eph: FixedEphemeris = Fixed
         }
         let epic = scores.filter { LightBand(score: $0) == .epic }.count
         let bands = Set(scores.map { LightBand(score: $0) })
-        print("DIST", Dictionary(grouping: scores.map { LightBand(score: $0) }, by: { $0 }).mapValues(\.count).sorted { $0.key < $1.key })
         #expect(Double(epic) / Double(scores.count) <= 0.10, "epic \(epic) of \(scores.count)")
         #expect(bands.count >= 4, "bands \(bands)")
     }
