@@ -534,6 +534,9 @@
     "Couldn't find this place's time zone, so using this Mac's." : {
       "comment" : "Time zone fallback after a failed lookup"
     },
+    "Couldn't open this trip" : {
+      "comment" : "Alert title"
+    },
     "Couldn't reach Apple Weather." : {
       "comment" : "Settings weather status"
     },
@@ -823,6 +826,9 @@
     },
     "It is also removed from %lld trip stops. You can undo this." : {
       "comment" : "Delete spot warning; number of trip stops using it"
+    },
+    "It was made by a newer version of Iter." : {
+      "comment" : "Import error"
     },
     "Iter" : {
       "comment" : "App name"
@@ -1505,6 +1511,9 @@
     },
     "The explanation didn't match the numbers, so it was discarded. Try again." : {
       "comment" : "Explanation failure"
+    },
+    "The file isn't a readable Iter trip." : {
+      "comment" : "Import error"
     },
     "The forecast didn't arrive." : {
       "comment" : "Settings weather detail"

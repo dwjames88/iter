@@ -102,9 +102,9 @@ struct ExplorePlaceCard: View {
             model.store.setSaved(spot, !saved)
         } label: {
             if saved {
-                Label(String(localized: "Saved", comment: "Place card: the spot is saved"), systemImage: "star.fill")
+                Label(String(localized: "Saved", comment: "Place card: the spot is saved"), systemImage: "bookmark.fill")
             } else {
-                Label(String(localized: "Save", comment: "Place card: save the spot"), systemImage: "star")
+                Label(String(localized: "Save", comment: "Place card: save the spot"), systemImage: "bookmark")
             }
         }
         .help(saved ? String(localized: "Remove from Saved", comment: "Tooltip") : String(localized: "Save this spot", comment: "Tooltip"))

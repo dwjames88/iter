@@ -174,7 +174,7 @@ private struct SignedBar: View {
             ZStack {
                 Rectangle().fill(IterColor.separator).frame(width: IterStroke.thin, height: IterSize.iconSmall)
                 RoundedRectangle(cornerRadius: IterStroke.thin)
-                    .fill(effect == .hurts ? IterColor.warning : IterColor.accent)
+                    .fill(IterColor.textSecondary) // direction shows helps or hurts; colour must not read as good or bad
                     .frame(width: max(length, points == 0 ? 0 : IterStroke.thick), height: IterSpace.sm)
                     .offset(x: points >= 0 ? max(length, 0) / 2 : -max(length, 0) / 2)
             }

@@ -45,9 +45,9 @@ struct ExploreSpotMenu: View {
                 model.store.setSaved(spot, !saved)
             } label: {
                 if saved {
-                    Label(String(localized: "Unsave", comment: "Context menu"), systemImage: "star.slash")
+                    Label(String(localized: "Unsave", comment: "Context menu"), systemImage: "bookmark.slash")
                 } else {
-                    Label(String(localized: "Save", comment: "Context menu"), systemImage: "star")
+                    Label(String(localized: "Save", comment: "Context menu"), systemImage: "bookmark")
                 }
             }
         }

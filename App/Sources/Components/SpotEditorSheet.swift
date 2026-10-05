@@ -213,9 +213,10 @@ struct SpotEditorSheet: View {
             VStack(alignment: .trailing, spacing: 0) {
                 Text(zone.localizedName(for: .generic, locale: .current) ?? zone.identifier)
                 if draft.timeZoneIsFallback {
-                    Text(lookup == .looking
+                    Label(lookup == .looking
                          ? String(localized: "Using this Mac's time zone until the lookup finishes.", comment: "Time zone fallback while looking up")
-                         : String(localized: "Couldn't find this place's time zone, so using this Mac's.", comment: "Time zone fallback after a failed lookup"))
+                         : String(localized: "Couldn't find this place's time zone, so using this Mac's.", comment: "Time zone fallback after a failed lookup"),
+                          systemImage: "exclamationmark.triangle")
                         .font(IterFont.caption)
                         .foregroundStyle(IterColor.warning)
                         .multilineTextAlignment(.trailing)
