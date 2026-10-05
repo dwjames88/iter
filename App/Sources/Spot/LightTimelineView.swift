@@ -129,7 +129,7 @@ struct LightTimelineSection: View {
             Text(page.isLoadingForecast ? LightText.checkingForecast
                  : LightText.noForecastReason(page.unavailableReason ?? .notLoaded))
         } icon: {
-            Image(systemName: "cloud.slash")
+            Image(systemName: "thermometer.medium.slash")
         }
         .font(IterFont.subheadline)
         .foregroundStyle(IterColor.textSecondary)

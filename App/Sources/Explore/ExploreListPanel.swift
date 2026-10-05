@@ -51,7 +51,7 @@ struct ExploreListPanel: View {
                     Text(LightText.noForecastReason(reason))
                         .fixedSize(horizontal: false, vertical: true)
                 } icon: {
-                    Image(systemName: "cloud.slash")
+                    Image(systemName: "thermometer.medium.slash")
                 }
                 .font(IterFont.caption)
                 .foregroundStyle(IterColor.textSecondary)
