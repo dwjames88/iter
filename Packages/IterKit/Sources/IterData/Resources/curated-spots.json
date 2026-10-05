@@ -1,1 +1,1231 @@
-[]
+[
+  {
+    "id": "tunnel-view",
+    "name": "Tunnel View",
+    "locality": "Yosemite National Park, CA",
+    "coordinate": {
+      "latitude": 37.7156,
+      "longitude": -119.6773
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "landscape",
+    "bestLight": [
+      "sunset",
+      "sunrise"
+    ],
+    "facing": 75,
+    "blurb": "The whole valley in one frame — El Capitan, Bridalveil and Half Dome lit from behind you at sunset.",
+    "notes": "Park in the upper lot, walk 30 seconds. Crowds at sunset; arrive 45 min early for a tripod spot. Winter storms clearing = the shot.",
+    "walkInMinutes": 5,
+    "elevationMeters": 1300,
+    "popularity": 96,
+    "tags": [
+      "iconic",
+      "granite",
+      "valley",
+      "roadside"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "mesa-arch",
+    "name": "Mesa Arch",
+    "locality": "Canyonlands National Park, UT",
+    "coordinate": {
+      "latitude": 38.389,
+      "longitude": -109.8677
+    },
+    "timeZoneIdentifier": "America/Denver",
+    "category": "desert",
+    "bestLight": [
+      "sunrise"
+    ],
+    "facing": 100,
+    "blurb": "The underside of the arch glows orange for about ten minutes after sunrise. Bring a wide lens and patience.",
+    "notes": "0.5 mi loop from the lot. 20+ photographers most mornings — be there 60 min before sunrise. Starburst at f/16 as the sun clears the La Sals.",
+    "walkInMinutes": 10,
+    "elevationMeters": 1860,
+    "popularity": 92,
+    "tags": [
+      "iconic",
+      "arch",
+      "sunrise",
+      "short-hike"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "alabama-hills",
+    "name": "Mobius Arch, Alabama Hills",
+    "locality": "Lone Pine, CA",
+    "coordinate": {
+      "latitude": 36.6116,
+      "longitude": -118.1256
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "astro",
+    "bestLight": [
+      "night",
+      "sunrise"
+    ],
+    "facing": 280,
+    "blurb": "A natural arch framing Mount Whitney, with some of the darkest accessible skies in California.",
+    "notes": "Short loop from Movie Road. Frame Whitney through the arch at dawn alpenglow; Milky Way core rises to the south in spring/summer. Free BLM camping nearby.",
+    "elevationMeters": 1500,
+    "popularity": 78,
+    "tags": [
+      "arch",
+      "milky-way",
+      "dispersed-camping",
+      "free"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "glacier-point",
+    "name": "Glacier Point",
+    "locality": "Yosemite National Park, CA",
+    "coordinate": {
+      "latitude": 37.7307,
+      "longitude": -119.574
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "landscape",
+    "bestLight": [
+      "sunset",
+      "sunrise",
+      "night"
+    ],
+    "facing": 65,
+    "blurb": "Half Dome straight across the void, Vernal and Nevada Falls stacked below it. At sunset the granite turns the colour of apricots.",
+    "notes": "Glacier Point Road is usually open late May–Nov only; 1 hr drive from the valley floor. Paved 0.3 mi walk. 70–200mm isolates Half Dome alpenglow; stay for stars over Clouds Rest.",
+    "walkInMinutes": 10,
+    "elevationMeters": 2199,
+    "popularity": 88,
+    "tags": [
+      "iconic",
+      "overlook",
+      "half-dome",
+      "roadside"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "valley-view",
+    "name": "Valley View",
+    "locality": "Yosemite National Park, CA",
+    "coordinate": {
+      "latitude": 37.7169,
+      "longitude": -119.6634
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "landscape",
+    "bestLight": [
+      "sunset",
+      "overcast",
+      "sunrise"
+    ],
+    "facing": 80,
+    "blurb": "El Capitan and Bridalveil Fall mirrored in a slow bend of the Merced. The quieter cousin of Tunnel View, ten feet from your car.",
+    "notes": "Pullout on Northside Drive (one-way westbound). Low water in late summer exposes river rocks for foreground. Spring snowmelt = full falls. Polariser and a 16–35mm.",
+    "elevationMeters": 1210,
+    "popularity": 72,
+    "tags": [
+      "river",
+      "reflection",
+      "roadside",
+      "el-capitan"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "mono-lake-south-tufa",
+    "name": "South Tufa, Mono Lake",
+    "locality": "Lee Vining, CA",
+    "coordinate": {
+      "latitude": 37.9395,
+      "longitude": -119.0271
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "landscape",
+    "bestLight": [
+      "sunrise",
+      "night",
+      "sunset"
+    ],
+    "facing": 70,
+    "blurb": "Limestone towers standing in a salt lake twice as old as the Sierra, glassy and pink before the wind wakes up.",
+    "notes": "$3 day-use fee, 1 mi loop boardwalk. Do not climb or touch tufa. Mornings are usually calm for reflections; bring bug spray in June for alkali flies. Milky Way rises over the lake to the southeast.",
+    "walkInMinutes": 20,
+    "elevationMeters": 1945,
+    "popularity": 74,
+    "tags": [
+      "tufa",
+      "lake",
+      "reflection",
+      "milky-way"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "convict-lake",
+    "name": "Convict Lake",
+    "locality": "Mammoth Lakes, CA",
+    "coordinate": {
+      "latitude": 37.5905,
+      "longitude": -118.852
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "landscape",
+    "bestLight": [
+      "sunrise",
+      "sunset"
+    ],
+    "facing": 200,
+    "blurb": "Mount Morrison’s striped face catches first light and drops it straight into the lake. Aspens go gold here in early October.",
+    "notes": "5 min off US-395, paved lot at the shore. The 2.5 mi flat loop gives compositions from every side. Calm water is most likely in the first hour after sunrise.",
+    "elevationMeters": 2320,
+    "popularity": 62,
+    "tags": [
+      "alpine-lake",
+      "fall-colour",
+      "reflection",
+      "easy"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "bodie",
+    "name": "Bodie Ghost Town",
+    "locality": "Bodie State Historic Park, CA",
+    "coordinate": {
+      "latitude": 38.2122,
+      "longitude": -119.0115
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "architecture",
+    "bestLight": [
+      "sunset",
+      "overcast"
+    ],
+    "blurb": "A gold-rush town left exactly where it fell — pews, pool tables and 1940s trucks bleaching in high-desert light.",
+    "notes": "Last 3 mi are washboard gravel; road closes with snow. Park hours roughly 9am–6pm (shorter in winter), so golden hour means late-summer evenings. Shoot through the windows; night access only on ranger-led photo events.",
+    "elevationMeters": 2550,
+    "popularity": 60,
+    "tags": [
+      "ghost-town",
+      "history",
+      "interiors",
+      "gold-rush"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "zabriskie-point",
+    "name": "Zabriskie Point",
+    "locality": "Death Valley National Park, CA",
+    "coordinate": {
+      "latitude": 36.4205,
+      "longitude": -116.8103
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "desert",
+    "bestLight": [
+      "sunrise"
+    ],
+    "facing": 255,
+    "blurb": "Folded mudstone badlands ripple toward Manly Beacon while the Panamints blush on the horizon. Pure sunrise theatre.",
+    "notes": "Paved 5 min uphill walk from the lot. Busy at dawn year-round; arrive 40 min early. Telephoto (70–200mm) picks out the light on the ridgelines. Avoid midday May–Sept — 45°C+.",
+    "walkInMinutes": 5,
+    "elevationMeters": 216,
+    "popularity": 85,
+    "tags": [
+      "badlands",
+      "iconic",
+      "overlook",
+      "roadside"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "mesquite-flat-dunes",
+    "name": "Mesquite Flat Sand Dunes",
+    "locality": "Death Valley National Park, CA",
+    "coordinate": {
+      "latitude": 36.6064,
+      "longitude": -117.1156
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "desert",
+    "bestLight": [
+      "sunrise",
+      "sunset",
+      "night"
+    ],
+    "blurb": "Knife-edge ridges and wind ripples lit from the side — the only hour of the day the dunes have texture.",
+    "notes": "Park at the Stovepipe Wells lot; walk 20–30 min out to escape footprints. Sidelight within 45 min of sunrise/sunset. Carry water and a headlamp; dunes are easy to get turned around in after dark.",
+    "walkInMinutes": 30,
+    "elevationMeters": 0,
+    "popularity": 76,
+    "tags": [
+      "dunes",
+      "ripples",
+      "footprint-free",
+      "astro"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "badwater-basin",
+    "name": "Badwater Basin",
+    "locality": "Death Valley National Park, CA",
+    "coordinate": {
+      "latitude": 36.2302,
+      "longitude": -116.7675
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "desert",
+    "bestLight": [
+      "sunrise",
+      "sunset",
+      "night"
+    ],
+    "facing": 270,
+    "blurb": "Hexagonal salt polygons to the horizon, 86 m below sea level, with Telescope Peak glowing pink above them at dawn.",
+    "notes": "Boardwalk from the lot; the crisp polygons start about 1.5 mi out on the flat. After rare winter rain, shallow water gives reflections of the Panamints. Wide lens low to the ground.",
+    "walkInMinutes": 50,
+    "elevationMeters": -86,
+    "popularity": 80,
+    "tags": [
+      "salt-flat",
+      "polygons",
+      "lowest-point",
+      "reflection"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "delicate-arch",
+    "name": "Delicate Arch",
+    "locality": "Arches National Park, UT",
+    "coordinate": {
+      "latitude": 38.7436,
+      "longitude": -109.4993
+    },
+    "timeZoneIdentifier": "America/Denver",
+    "category": "desert",
+    "bestLight": [
+      "sunset",
+      "night"
+    ],
+    "facing": 110,
+    "blurb": "A freestanding 16 m arch on the lip of a slickrock bowl, burning red against the snow-capped La Sals at sunset.",
+    "notes": "3 mi round trip, 146 m climb on exposed slickrock. Timed-entry reservation needed Apr–Oct. Expect 100+ people at sunset; stay for blue hour and a clean frame. Headlamp for the descent.",
+    "walkInMinutes": 50,
+    "elevationMeters": 1480,
+    "popularity": 94,
+    "tags": [
+      "iconic",
+      "arch",
+      "hike",
+      "la-sal-mountains"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "dead-horse-point",
+    "name": "Dead Horse Point",
+    "locality": "Dead Horse Point State Park, UT",
+    "coordinate": {
+      "latitude": 38.4708,
+      "longitude": -109.7405
+    },
+    "timeZoneIdentifier": "America/Denver",
+    "category": "landscape",
+    "bestLight": [
+      "sunrise",
+      "sunset",
+      "night"
+    ],
+    "facing": 200,
+    "blurb": "A 600 m drop to a perfect gooseneck of the Colorado River, with Canyonlands spreading out to the horizon.",
+    "notes": "State park fee ($20/vehicle). Main overlook is paved and 2 min from the lot. Sunrise lights the far canyon walls while the bend sits in soft shadow. Certified International Dark Sky Park.",
+    "walkInMinutes": 2,
+    "elevationMeters": 1830,
+    "popularity": 78,
+    "tags": [
+      "overlook",
+      "gooseneck",
+      "colorado-river",
+      "roadside"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "zion-canyon-overlook",
+    "name": "Canyon Overlook",
+    "locality": "Zion National Park, UT",
+    "coordinate": {
+      "latitude": 37.2135,
+      "longitude": -112.9406
+    },
+    "timeZoneIdentifier": "America/Denver",
+    "category": "landscape",
+    "bestLight": [
+      "sunrise"
+    ],
+    "facing": 250,
+    "blurb": "A ledge high above Pine Creek looking straight down Zion Canyon to the Streaked Wall. The sun rises behind you and floods it gold.",
+    "notes": "1 mi round trip with some ledges and handrails. The trailhead lot just east of the Zion–Mt Carmel tunnel holds ~12 cars — arrive 45 min before sunrise. Oversize vehicles need a tunnel permit.",
+    "walkInMinutes": 20,
+    "elevationMeters": 1560,
+    "popularity": 84,
+    "tags": [
+      "overlook",
+      "short-hike",
+      "canyon",
+      "east-side"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "canyon-junction-bridge",
+    "name": "The Watchman from Canyon Junction",
+    "locality": "Zion National Park, UT",
+    "coordinate": {
+      "latitude": 37.2131,
+      "longitude": -112.9795
+    },
+    "timeZoneIdentifier": "America/Denver",
+    "category": "landscape",
+    "bestLight": [
+      "sunset"
+    ],
+    "facing": 170,
+    "blurb": "The Virgin River bends toward the Watchman as its summit catches the last sun. Autumn cottonwoods make it sing.",
+    "notes": "Shoot from the Canyon Junction bridge on Zion Canyon Scenic Drive; park at Canyon Junction or walk from the visitor centre (Pa’rus Trail). Tripods line the rail 30 min before sunset — share the space.",
+    "elevationMeters": 1200,
+    "popularity": 86,
+    "tags": [
+      "iconic",
+      "river",
+      "bridge",
+      "roadside"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "bryce-sunset-point",
+    "name": "Sunset Point",
+    "locality": "Bryce Canyon National Park, UT",
+    "coordinate": {
+      "latitude": 37.6227,
+      "longitude": -112.1661
+    },
+    "timeZoneIdentifier": "America/Denver",
+    "category": "landscape",
+    "bestLight": [
+      "sunrise",
+      "night"
+    ],
+    "facing": 110,
+    "blurb": "Thousands of orange hoodoos catch the first light and glow from within. Ironically, sunrise is the moment here.",
+    "notes": "Paved rim walk from the lot. At 2,400 m it is cold before dawn even in summer. The Navajo Loop descends into Wall Street for backlit hoodoo shots. Winter snow on the spires is the rare prize.",
+    "elevationMeters": 2440,
+    "popularity": 88,
+    "tags": [
+      "hoodoos",
+      "amphitheater",
+      "iconic",
+      "snow"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "factory-butte",
+    "name": "Factory Butte",
+    "locality": "Hanksville, UT",
+    "coordinate": {
+      "latitude": 38.418,
+      "longitude": -110.852
+    },
+    "timeZoneIdentifier": "America/Denver",
+    "category": "desert",
+    "bestLight": [
+      "sunrise",
+      "sunset"
+    ],
+    "facing": 315,
+    "blurb": "A lone sandstone fortress rising over grey Mancos shale badlands. On the right morning it looks like another planet.",
+    "notes": "Access via Factory Butte Rd off UT-24; graded dirt, impassable when the bentonite is wet. No services; nearest fuel in Hanksville. Long lens compresses the butte against the Henry Mountains.",
+    "elevationMeters": 1600,
+    "popularity": 42,
+    "tags": [
+      "badlands",
+      "butte",
+      "dirt-road",
+      "remote"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "bonneville-salt-flats",
+    "name": "Bonneville Salt Flats",
+    "locality": "Wendover, UT",
+    "coordinate": {
+      "latitude": 40.763,
+      "longitude": -113.891
+    },
+    "timeZoneIdentifier": "America/Denver",
+    "category": "landscape",
+    "bestLight": [
+      "sunset",
+      "blueHour",
+      "night"
+    ],
+    "facing": 270,
+    "blurb": "Flat white nothing to every horizon. After spring rain it becomes a mirror that doubles the sky.",
+    "notes": "Exit 4 off I-80, drive the access road to the end. Surface is only drivable when fully dry — soft salt traps cars. Minimalist compositions; bring a person or a car for scale.",
+    "elevationMeters": 1285,
+    "popularity": 58,
+    "tags": [
+      "salt-flat",
+      "minimal",
+      "reflection",
+      "roadside"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "horseshoe-bend",
+    "name": "Horseshoe Bend",
+    "locality": "Page, AZ",
+    "coordinate": {
+      "latitude": 36.8791,
+      "longitude": -111.5104
+    },
+    "timeZoneIdentifier": "America/Phoenix",
+    "category": "landscape",
+    "bestLight": [
+      "sunrise",
+      "sunset"
+    ],
+    "facing": 250,
+    "blurb": "The Colorado River wraps a perfect 270° curve 300 m below the rim. The canyon is best just after sunrise, before the shadow and the tour buses arrive.",
+    "notes": "$10 parking fee; 1.5 mi round trip on a graded path. You need 14mm or wider (or a vertical pano) to fit the whole bend. Sunset brings a starburst but deep shadow in the bend. Arizona does not observe DST.",
+    "walkInMinutes": 25,
+    "elevationMeters": 1300,
+    "popularity": 95,
+    "tags": [
+      "iconic",
+      "colorado-river",
+      "overlook",
+      "crowded"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "monument-valley",
+    "name": "Monument Valley",
+    "locality": "Navajo Nation, AZ/UT",
+    "coordinate": {
+      "latitude": 36.9804,
+      "longitude": -110.1128
+    },
+    "timeZoneIdentifier": "America/Denver",
+    "category": "landscape",
+    "bestLight": [
+      "sunrise",
+      "sunset",
+      "night"
+    ],
+    "facing": 75,
+    "blurb": "The Mittens and Merrick Butte in silhouette as the sun rises between them — the American West as you already imagine it.",
+    "notes": "Navajo Nation tribal park; entry fee per person. Navajo Nation observes daylight saving time (unlike the rest of Arizona). The 17-mile loop is rough dirt; backcountry areas require a Navajo guide. The View Hotel terrace is the classic sunrise frame.",
+    "elevationMeters": 1700,
+    "popularity": 90,
+    "tags": [
+      "iconic",
+      "buttes",
+      "navajo-nation",
+      "astro"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "antelope-canyon",
+    "name": "Upper Antelope Canyon",
+    "locality": "Page, AZ",
+    "coordinate": {
+      "latitude": 36.8619,
+      "longitude": -111.3743
+    },
+    "timeZoneIdentifier": "America/Phoenix",
+    "category": "desert",
+    "bestLight": [
+      "midday",
+      "overcast"
+    ],
+    "blurb": "A corkscrew of sandstone lit by bounced sunlight, with beams of midday sun falling through the dust.",
+    "notes": "Guided Navajo tours only — book weeks ahead. Light beams appear roughly late March–early October, 11am–1pm. Tripods are generally not allowed on standard tours. Page is on Arizona time (no DST). Protect your sensor from sand.",
+    "elevationMeters": 1150,
+    "popularity": 93,
+    "tags": [
+      "slot-canyon",
+      "light-beams",
+      "guided-only",
+      "navajo-nation"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "grand-canyon-hopi-point",
+    "name": "Hopi Point",
+    "locality": "Grand Canyon National Park, AZ",
+    "coordinate": {
+      "latitude": 36.0741,
+      "longitude": -112.1543
+    },
+    "timeZoneIdentifier": "America/Phoenix",
+    "category": "landscape",
+    "bestLight": [
+      "sunset",
+      "sunrise"
+    ],
+    "facing": 0,
+    "blurb": "The widest view on the South Rim, with a sliver of the Colorado far below and layers of buttes fading into violet.",
+    "notes": "Hermit Road is shuttle-only Mar–Nov; the last buses fill fast after sunset. Winter lets you drive. A 70–200mm isolates ridge layers in haze. Mather Point is the busier sunrise alternative.",
+    "elevationMeters": 2170,
+    "popularity": 90,
+    "tags": [
+      "iconic",
+      "overlook",
+      "colorado-river",
+      "shuttle"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "the-wave",
+    "name": "The Wave",
+    "locality": "Coyote Buttes North, AZ",
+    "coordinate": {
+      "latitude": 36.9959,
+      "longitude": -112.0063
+    },
+    "timeZoneIdentifier": "America/Phoenix",
+    "category": "desert",
+    "bestLight": [
+      "midday",
+      "overcast"
+    ],
+    "blurb": "Swirling Navajo sandstone striped like a cross-section of the wind. Few places on earth look this unreal.",
+    "notes": "Permit by lottery only (advance online + daily geo-lottery), 64 people per day. 6.4 mi round trip across trackless slickrock; carry GPS. Late morning to early afternoon keeps the troughs free of deep shadow.",
+    "walkInMinutes": 105,
+    "elevationMeters": 1590,
+    "popularity": 85,
+    "tags": [
+      "permit",
+      "sandstone",
+      "bucket-list",
+      "hike"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "crater-lake",
+    "name": "Crater Lake from Watchman Overlook",
+    "locality": "Crater Lake National Park, OR",
+    "coordinate": {
+      "latitude": 42.9446,
+      "longitude": -122.1705
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "landscape",
+    "bestLight": [
+      "sunrise",
+      "night"
+    ],
+    "facing": 110,
+    "blurb": "The deepest, bluest lake in the US, with Wizard Island’s cinder cone rising out of it as the sun comes over the rim.",
+    "notes": "Rim Drive west side usually opens July–Oct; snow can linger into June. Overlook is a short walk from the road. Dark skies make it a great Milky Way location on moonless nights.",
+    "elevationMeters": 2300,
+    "popularity": 82,
+    "tags": [
+      "caldera",
+      "lake",
+      "wizard-island",
+      "astro"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "haystack-rock",
+    "name": "Haystack Rock",
+    "locality": "Cannon Beach, OR",
+    "coordinate": {
+      "latitude": 45.8845,
+      "longitude": -123.9651
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "coast",
+    "bestLight": [
+      "sunset",
+      "overcast",
+      "blueHour"
+    ],
+    "facing": 200,
+    "blurb": "A 72 m basalt monolith with the Needles at its feet, doubled in wet sand as the tide pulls out.",
+    "notes": "Check the tide table — low tide at sunset gives mirror-like sand. Tufted puffins nest Apr–Jul. Coastal fog is common; moody overcast is part of the charm. Public lots along Hemlock St.",
+    "elevationMeters": 5,
+    "popularity": 80,
+    "tags": [
+      "sea-stack",
+      "tide-pools",
+      "reflection",
+      "puffins"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "palouse-falls",
+    "name": "Palouse Falls",
+    "locality": "Palouse Falls State Park, WA",
+    "coordinate": {
+      "latitude": 46.6639,
+      "longitude": -118.224
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "waterfall",
+    "bestLight": [
+      "sunset",
+      "night",
+      "sunrise"
+    ],
+    "facing": 150,
+    "blurb": "A 60 m waterfall pouring into a basalt bowl in the middle of wheat country. Remote enough for serious stars.",
+    "notes": "Discover Pass required. Main overlook is steps from the lot; the upper rim trail gives the classic curve. Rim is unfenced — stay on marked paths. Spring flow is strongest.",
+    "elevationMeters": 250,
+    "popularity": 64,
+    "tags": [
+      "waterfall",
+      "canyon",
+      "basalt",
+      "astro"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "reflection-lakes",
+    "name": "Reflection Lakes",
+    "locality": "Mount Rainier National Park, WA",
+    "coordinate": {
+      "latitude": 46.7686,
+      "longitude": -121.7302
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "landscape",
+    "bestLight": [
+      "sunrise",
+      "sunset"
+    ],
+    "facing": 350,
+    "blurb": "Rainier’s glaciers turned upside-down in still water, with lupine and paintbrush along the shore in August.",
+    "notes": "Stevens Canyon Rd pullout, roughly July–Oct. Calm water is most likely at dawn. Wildflower peak late July–mid Aug. Timed entry at Paradise may apply in summer.",
+    "elevationMeters": 1480,
+    "popularity": 76,
+    "tags": [
+      "reflection",
+      "wildflowers",
+      "volcano",
+      "roadside"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "trillium-lake",
+    "name": "Trillium Lake",
+    "locality": "Mount Hood National Forest, OR",
+    "coordinate": {
+      "latitude": 45.271,
+      "longitude": -121.737
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "landscape",
+    "bestLight": [
+      "sunrise",
+      "night"
+    ],
+    "facing": 0,
+    "blurb": "Mount Hood rising over a mirror-flat lake, framed by dark firs. The dock at dawn is a Pacific Northwest rite.",
+    "notes": "Day-use fee in summer; road unplowed in winter (snowshoe in 1.5 mi). Arrive before sunrise for glass-calm water. Milky Way sits over Hood in summer from the south shore.",
+    "elevationMeters": 1100,
+    "popularity": 70,
+    "tags": [
+      "reflection",
+      "volcano",
+      "camping",
+      "astro"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "multnomah-falls",
+    "name": "Multnomah Falls",
+    "locality": "Columbia River Gorge, OR",
+    "coordinate": {
+      "latitude": 45.5762,
+      "longitude": -122.1158
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "waterfall",
+    "bestLight": [
+      "overcast",
+      "blueHour"
+    ],
+    "facing": 170,
+    "blurb": "A two-tiered 189 m waterfall with the Benson Bridge strung across it like a stage prop.",
+    "notes": "Timed-use permit needed for the I-84 lot in summer. Overcast days kill the contrast — perfect for waterfalls. ND filter for silky water; wipe spray from the lens constantly.",
+    "elevationMeters": 60,
+    "popularity": 88,
+    "tags": [
+      "waterfall",
+      "bridge",
+      "moss",
+      "crowded"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "bixby-bridge",
+    "name": "Bixby Bridge",
+    "locality": "Big Sur, CA",
+    "coordinate": {
+      "latitude": 36.3716,
+      "longitude": -121.9021
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "coast",
+    "bestLight": [
+      "sunset",
+      "blueHour",
+      "overcast"
+    ],
+    "facing": 170,
+    "blurb": "A 1932 concrete arch leaping a canyon on Highway 1, with the Pacific crashing below and fog rolling through.",
+    "notes": "Classic frame from the pullout at Castle Rock viewpoint, north side. Very limited parking; do not stop on the highway. Check Caltrans for Hwy 1 closures. Marine layer often clears just before sunset.",
+    "elevationMeters": 80,
+    "popularity": 88,
+    "tags": [
+      "bridge",
+      "highway-1",
+      "iconic",
+      "fog"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "mcway-falls",
+    "name": "McWay Falls",
+    "locality": "Julia Pfeiffer Burns State Park, CA",
+    "coordinate": {
+      "latitude": 36.1578,
+      "longitude": -121.672
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "waterfall",
+    "bestLight": [
+      "sunset",
+      "overcast"
+    ],
+    "facing": 190,
+    "blurb": "A waterfall dropping straight onto a sealed-off sand cove of turquoise water. It looks computer-generated.",
+    "notes": "State park day-use fee; 0.6 mi round trip on the Overlook Trail. The beach is closed — shoot from the trail. Sunset light warms the cove from the west. Hwy 1 slides can close access.",
+    "walkInMinutes": 10,
+    "elevationMeters": 30,
+    "popularity": 84,
+    "tags": [
+      "waterfall",
+      "beach",
+      "turquoise",
+      "highway-1"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "pfeiffer-keyhole-arch",
+    "name": "Keyhole Arch, Pfeiffer Beach",
+    "locality": "Big Sur, CA",
+    "coordinate": {
+      "latitude": 36.238,
+      "longitude": -121.8161
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "coast",
+    "bestLight": [
+      "sunset"
+    ],
+    "facing": 235,
+    "blurb": "Around the winter solstice the setting sun shines straight through the keyhole, and the sand turns faintly purple.",
+    "notes": "Unmarked, narrow Sycamore Canyon Rd (no trailers/RVs); day-use fee. The through-the-arch glow happens roughly mid-Dec to mid-Jan in the last hour before sunset. Tide and waves matter — watch for sneaker waves.",
+    "elevationMeters": 5,
+    "popularity": 74,
+    "tags": [
+      "arch",
+      "purple-sand",
+      "winter",
+      "sun-alignment"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "golden-gate-battery-spencer",
+    "name": "Golden Gate from Battery Spencer",
+    "locality": "Marin Headlands, CA",
+    "coordinate": {
+      "latitude": 37.8327,
+      "longitude": -122.4832
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "architecture",
+    "bestLight": [
+      "blueHour",
+      "sunset",
+      "night"
+    ],
+    "facing": 150,
+    "blurb": "The north tower at eye level with San Francisco glittering behind it. When the fog pours through, it becomes surreal.",
+    "notes": "Tiny lot on Conzelman Rd fills fast — arrive 60 min before sunset or park further up. Windy and cold year-round. 24–70mm; low fog below the deck is the jackpot, most often in summer.",
+    "elevationMeters": 100,
+    "popularity": 92,
+    "tags": [
+      "bridge",
+      "city-lights",
+      "fog",
+      "iconic"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "point-reyes-lighthouse",
+    "name": "Point Reyes Lighthouse",
+    "locality": "Point Reyes National Seashore, CA",
+    "coordinate": {
+      "latitude": 37.9956,
+      "longitude": -123.0231
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "coast",
+    "bestLight": [
+      "sunset",
+      "overcast"
+    ],
+    "facing": 230,
+    "blurb": "An 1870 lighthouse clinging to a headland 300 steps down, in one of the foggiest places on the continent.",
+    "notes": "308 stairs to the lighthouse (open limited days/hours). Winter weekends: shuttle-only access. Gray whales pass Jan–Apr. Fog can sit all day — check the forecast here twice.",
+    "elevationMeters": 80,
+    "popularity": 70,
+    "tags": [
+      "lighthouse",
+      "fog",
+      "cliffs",
+      "whales"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "bombay-beach",
+    "name": "Bombay Beach",
+    "locality": "Salton Sea, CA",
+    "coordinate": {
+      "latitude": 33.3508,
+      "longitude": -115.7297
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "street",
+    "bestLight": [
+      "sunset",
+      "blueHour"
+    ],
+    "facing": 250,
+    "blurb": "Half-sunken trailers and guerrilla art installations on a dying inland sea. Strange, sad and beautiful at dusk.",
+    "notes": "Park in town and walk to the shoreline. Respect residents and private property. The smell can be strong in summer; summer heat is extreme. Silhouette the art against the sunset over the Santa Rosas.",
+    "elevationMeters": -68,
+    "popularity": 45,
+    "tags": [
+      "art",
+      "ruins",
+      "salton-sea",
+      "offbeat"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "emerald-bay",
+    "name": "Emerald Bay",
+    "locality": "Lake Tahoe, CA",
+    "coordinate": {
+      "latitude": 38.954,
+      "longitude": -120.11
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "landscape",
+    "bestLight": [
+      "sunrise",
+      "night"
+    ],
+    "facing": 80,
+    "blurb": "Fannette Island floating in a bay the colour of glacier water, with the sun lifting over the Carson Range.",
+    "notes": "Inspiration Point overlook on CA-89 is roadside. Highway can close in winter for avalanche control. Lots fill by mid-morning in summer; sunrise is empty.",
+    "elevationMeters": 2100,
+    "popularity": 80,
+    "tags": [
+      "lake",
+      "island",
+      "overlook",
+      "snow"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "trona-pinnacles",
+    "name": "Trona Pinnacles",
+    "locality": "Ridgecrest, CA",
+    "coordinate": {
+      "latitude": 35.6177,
+      "longitude": -117.368
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "astro",
+    "bestLight": [
+      "night",
+      "sunrise",
+      "sunset"
+    ],
+    "blurb": "Five hundred tufa spires in an ancient lakebed. Under a moonless sky it is the closest thing to shooting on Mars.",
+    "notes": "5 mi graded dirt road from CA-178; passable in a car when dry, avoid after rain. Free BLM camping. Bortle 2–3 skies. Light-paint the spires gently for foreground.",
+    "elevationMeters": 520,
+    "popularity": 35,
+    "tags": [
+      "tufa",
+      "milky-way",
+      "dirt-road",
+      "free-camping"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "fossil-falls",
+    "name": "Fossil Falls",
+    "locality": "Little Lake, CA",
+    "coordinate": {
+      "latitude": 35.9707,
+      "longitude": -117.9087
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "astro",
+    "bestLight": [
+      "night",
+      "sunset"
+    ],
+    "blurb": "A dry waterfall of polished black basalt, carved by a river that vanished 10,000 years ago. Empty after dark.",
+    "notes": "Signed turn off US-395, then 0.5 mi walk on rough lava. No rails at the drop — scout the edges in daylight. Great paired with Alabama Hills on the same night.",
+    "walkInMinutes": 20,
+    "elevationMeters": 1000,
+    "popularity": 28,
+    "tags": [
+      "basalt",
+      "dry-falls",
+      "milky-way",
+      "short-walk"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "valley-of-fire-fire-wave",
+    "name": "Fire Wave",
+    "locality": "Valley of Fire State Park, NV",
+    "coordinate": {
+      "latitude": 36.4847,
+      "longitude": -114.5223
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "desert",
+    "bestLight": [
+      "sunset",
+      "sunrise"
+    ],
+    "blurb": "Candy-striped red and cream sandstone curling like a breaking wave, an hour from the Las Vegas Strip.",
+    "notes": "1.5 mi round trip on sand. Some trails close in summer when temps exceed 100°F. Park gates open sunrise to sunset for day-use, so camp in the park for the edges of the day. Low angle, wide lens.",
+    "walkInMinutes": 25,
+    "elevationMeters": 700,
+    "popularity": 45,
+    "tags": [
+      "sandstone",
+      "stripes",
+      "short-hike",
+      "heat"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "toroweap-overlook",
+    "name": "Toroweap Overlook",
+    "locality": "Grand Canyon National Park (North Rim), AZ",
+    "coordinate": {
+      "latitude": 36.215,
+      "longitude": -113.0572
+    },
+    "timeZoneIdentifier": "America/Phoenix",
+    "category": "landscape",
+    "bestLight": [
+      "sunrise",
+      "sunset",
+      "night"
+    ],
+    "facing": 80,
+    "blurb": "A sheer 900 m drop straight to the Colorado River, with no rails, no crowds and no light pollution.",
+    "notes": "61 mi of unpaved road from AZ-389; last 3 mi need high clearance/4x4 and spare tyres. Camping permit required for the 9 small sites. No water or services. The edge is unfenced — tripod well back.",
+    "elevationMeters": 1400,
+    "popularity": 30,
+    "tags": [
+      "4x4",
+      "remote",
+      "sheer-drop",
+      "camping"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "goblin-valley",
+    "name": "Goblin Valley",
+    "locality": "Goblin Valley State Park, UT",
+    "coordinate": {
+      "latitude": 38.5733,
+      "longitude": -110.7071
+    },
+    "timeZoneIdentifier": "America/Denver",
+    "category": "desert",
+    "bestLight": [
+      "sunset",
+      "night"
+    ],
+    "blurb": "Thousands of mushroom-shaped hoodoos you can walk among — soft sidelight at dusk, then an International Dark Sky Park.",
+    "notes": "State park fee; the Valley of Goblins is off-trail from the overlook. Campground and yurts book up in spring. Low sidelight at sunset brings out every goblin’s face.",
+    "elevationMeters": 1550,
+    "popularity": 45,
+    "tags": [
+      "hoodoos",
+      "dark-sky",
+      "playful",
+      "camping"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "little-finland",
+    "name": "Little Finland",
+    "locality": "Gold Butte National Monument, NV",
+    "coordinate": {
+      "latitude": 36.428,
+      "longitude": -114.156
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "desert",
+    "bestLight": [
+      "sunset",
+      "sunrise"
+    ],
+    "blurb": "Delicate red sandstone fins and hoodoos eroded into lace — one of the least-visited wonders in the Mojave.",
+    "notes": "About 2.5 hrs from Las Vegas; the last stretch needs high clearance and sometimes 4x4. No services, no cell signal — carry water and tell someone. Fins are fragile; do not climb.",
+    "elevationMeters": 700,
+    "popularity": 18,
+    "tags": [
+      "sandstone",
+      "fins",
+      "remote",
+      "high-clearance"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "lake-sabrina",
+    "name": "Lake Sabrina",
+    "locality": "Bishop Creek, CA",
+    "coordinate": {
+      "latitude": 37.213,
+      "longitude": -118.609
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "landscape",
+    "bestLight": [
+      "sunrise",
+      "sunset"
+    ],
+    "facing": 200,
+    "blurb": "A granite-rimmed reservoir under the Sierra crest, ringed by aspens that turn gold and orange in October.",
+    "notes": "30 min up CA-168 from Bishop. Fall colour usually peaks late Sept–mid Oct (check the Eastern Sierra fall colour report). Calm dawn water for reflections; the road can close with early snow.",
+    "elevationMeters": 2760,
+    "popularity": 40,
+    "tags": [
+      "alpine-lake",
+      "fall-colour",
+      "aspens",
+      "easy"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "kelso-dunes",
+    "name": "Kelso Dunes",
+    "locality": "Mojave National Preserve, CA",
+    "coordinate": {
+      "latitude": 34.9064,
+      "longitude": -115.7229
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "desert",
+    "bestLight": [
+      "sunset",
+      "sunrise"
+    ],
+    "blurb": "Singing sand dunes 200 m high in the empty heart of the Mojave. Hardly anyone walks past the first ridge.",
+    "notes": "3 mi graded dirt road to the trailhead. The summit is 3 mi round trip and steep in soft sand. Slide down the slip face to hear it boom. No services for 40 mi.",
+    "walkInMinutes": 50,
+    "elevationMeters": 800,
+    "popularity": 42,
+    "tags": [
+      "dunes",
+      "singing-sand",
+      "remote",
+      "free-camping"
+    ],
+    "origin": "curated"
+  },
+  {
+    "id": "ancient-bristlecone-forest",
+    "name": "Ancient Bristlecone Pine Forest",
+    "locality": "White Mountains, CA",
+    "coordinate": {
+      "latitude": 37.3855,
+      "longitude": -118.178
+    },
+    "timeZoneIdentifier": "America/Los_Angeles",
+    "category": "astro",
+    "bestLight": [
+      "night",
+      "sunset"
+    ],
+    "blurb": "Twisted pines more than 4,000 years old under a sky black enough to see the Milky Way cast shadows.",
+    "notes": "Schulman Grove is about 1 hr from Bishop; road usually open May–Nov. At 3,000 m nights are cold — pack layers. Low-level light painting on the trunks, never bright lights.",
+    "elevationMeters": 3050,
+    "popularity": 45,
+    "tags": [
+      "ancient-trees",
+      "milky-way",
+      "high-altitude",
+      "dark-sky"
+    ],
+    "origin": "curated"
+  }
+]
