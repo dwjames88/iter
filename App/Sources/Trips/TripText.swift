@@ -24,7 +24,7 @@ extension TimeText {
         String(localized: "\(days) days · \(stops) stops", comment: "Trip size on a trip card, e.g. 4 days · 6 stops")
     }
 
-    /// "Day 2 · Wed 7 Oct"
+    /// "Day 2 · Thu, Oct 8, 2026"
     static func tripDay(index: Int, day: LocalDay) -> String {
         String(localized: "Day \(index + 1) · \(self.day(day))", comment: "Trip day header, e.g. Day 2 · Wed 7 Oct")
     }

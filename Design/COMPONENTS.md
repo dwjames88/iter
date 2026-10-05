@@ -36,8 +36,8 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 | Style | Scored | No forecast |
 |---|---|---|
-| **compact** | [ScoreChip](#scorechip) compact (18 pt square) + short window name (`type/caption`, `text/secondary`): "Sunrise", "Sunset", "Blue AM", "Blue PM", "Night". Gap `space/xs`. **No band word, no confidence.** | 18 pt [NoForecastRing](#noforecastring) + short window name. No reason text. |
-| **regular** | [ScoreChip](#scorechip) regular (22 pt tall, min 28 wide) + a two-line block (gap `space/sm`): window name (`type/subheadline`, `text/primary`; full names "Morning blue hour", "Evening blue hour"), then `type/caption` `text/secondary`: band word, [ConfidenceMark](#confidencemark), optional Sample data. | 22 pt ring + window name, then "No forecast" (`type/caption`, `text/secondary`). |
+| **compact** | [ScoreChip](#scorechip) compact (18 pt tall, 26 wide) + short window name (`type/caption`, `text/secondary`): "Sunrise", "Sunset", "Blue AM", "Blue PM", "Night". Gap `space/xs`. **No band word, no confidence.** | 18 pt [NoForecastRing](#noforecastring) + short window name. No reason text. |
+| **regular** | [ScoreChip](#scorechip) regular (22 pt tall, min 36 wide) + a two-line block (gap `space/sm`): window name (`type/subheadline`, `text/primary`; full names "Morning blue hour", "Evening blue hour"), then `type/caption` `text/secondary`: band word, [ConfidenceMark](#confidencemark), optional Sample data. | 22 pt ring + window name, then "No forecast" (`type/caption`, `text/secondary`). |
 | **large** | [ScoreChip](#scorechip) large (64 pt) + block (gap `space/md`): headline "Sunset · 87" (`type/headline`), then `type/subheadline` `text/secondary`: band word, and "· Likely 72–100" when the range is not a single value; then `type/caption` row: ConfidenceMark and "Low confidence" (also Medium, High), optional Sample data. | 64 pt ring + headline "Sunset · No forecast" and the full reason sentence (`type/subheadline`, `text/secondary`, wraps). |
 
 - **States:** scored (band Poor to Epic, colour from the band); low confidence (chip at 85% opacity); no forecast (any of five reasons, see below); sample data (inline label when `showsSource`). The no-forecast reason sentence is only in the large variant; compact and regular never show a number or a band for no forecast.
@@ -64,8 +64,8 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 | Size | Height | Min width | Type | Corner radius | Horizontal padding |
 |---|---|---|---|---|---|
-| compact | 18 (`size/badge/heightCompact`) | 18 | `type/score/badge` | `radius/badge` (6) | `space/xs` |
-| regular | 22 (`size/badge/height`) | 28 (`size/badge/minWidth`) | `type/score/medium` | `radius/badge` | `space/xs` |
+| compact | 18 (`size/badge/heightCompact`) | 18 frame + 2 x 4 padding = 26 built | `type/score/badge` | `radius/badge` (6) | `space/xs` |
+| regular | 22 (`size/badge/height`) | 28 (`size/badge/minWidth`) + 2 x 4 padding = 36 built | `type/score/medium` | `radius/badge` | `space/xs` |
 | large | 64 (`size/lightRing/large`) | 64 | `type/score/large` | `radius/card` (12) | none |
 
 - **States, by band** (fill / text, light then dark; see TOKENS.md for the values): Poor `light/ramp/poor` / `light/rampText/poor`; Fair `fair`; Good `good`; Great `great`; Epic `epic`. Low confidence: 85% opacity. Never green, red or coral.
@@ -143,7 +143,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `AddToTripMenu`, `Components/AddToTripMenu.swift`.
 - **One job:** add a spot to a trip day, where the choice of day is a light decision.
-- **Anatomy:** a system Menu with the label "Add to Trip" and `plus.circle`. Contents: one submenu per trip; inside, one item per day, "Day 2 · Wed 7 Oct · Sunset 64" (window name and score for that day at this spot, or "Sunset · No forecast"); a divider; "New Trip with This Spot" (creates a one-day trip named "Trip to <spot>" starting tomorrow, adds the stop, opens the trip).
+- **Anatomy:** a system Menu with the label "Add to Trip" and `plus.circle`. Contents: one submenu per trip; inside, one item per day, "Day 2 · Thu, Oct 8, 2026 · Sunset · 64" (window name and score for that day at this spot, or "Sunset · No forecast"); a divider; "New Trip with This Spot" (creates a one-day trip named "Trip to <spot>" starting tomorrow, adds the stop, opens the trip).
 - **Style by context:** button style (prominent on the Spot header, bordered on the place card and Scout rows), or a menu row in context menus.
 - **Used on:** Spot header, Explore place card and context menus, Saved context menu, Scout rows.
 
@@ -272,7 +272,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `TripRouteMap`, `Trips/TripRouteMap.swift`.
 - **One job:** the route sanity check.
-- **Anatomy (live map):** MapKit map filling the right column. **Pins:** numbered circles, 28 pt (`size/mapPin`), 36 pt when selected (`size/mapPinSelected`); in the active day `map/pin` fill with an `accent/onAccent` number; other days `map/pinInactive` fill with a `background/window` number; border `background/window` 1 pt (2 pt when selected); number in `type/captionStrong`. **Routes:** the active day's legs as `route/active` 4 pt (`stroke/route`) over a `background/window` casing 7 pt (`stroke/routeCasing`); other days `route/inactive` 3 pt (`stroke/routeInactive`). Straight lines when the road path is unknown. Controls: zoom stepper, compass, scale. **Day picker:** a system segmented control (up to 5 days; a menu beyond that) in a `regularMaterial` pill (`radius/control`, padding `space/xs`) at the top-left with `space/md` margin; shown only when more than one day has stops.
+- **Anatomy (live map):** MapKit map filling the right column. **Pins:** numbered circles, 28 pt (`size/mapPin`), 36 pt when selected (`size/mapPinSelected`); in the active day `accent/emphasis` fill with an `accent/onAccent` number; other days `map/pinInactive` fill with a `background/window` number; border `background/window` 1 pt (2 pt when selected); number in `type/captionStrong`. **Routes:** the active day's legs as `route/active` 4 pt (`stroke/route`) over a `background/window` casing 7 pt (`stroke/routeCasing`); other days `route/inactive` 3 pt (`stroke/routeInactive`). Straight lines when the road path is unknown. Controls: zoom stepper, compass, scale. **Day picker:** a system segmented control (up to 5 days; a menu beyond that) in a `regularMaterial` pill (`radius/control`, padding `space/xs`) at the top-left with `space/md` margin; shown only when more than one day has stops.
 - **States:** a stop selected (the camera recentres on it, zoom kept); the picked day; fit-to-trip on appear and when stops change.
 - **Accessibility:** label "Route map"; pins "Stop 2, Monument Valley".
 
@@ -292,7 +292,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `ExploreListPanel`, `Explore/ExploreListPanel.swift`.
 - **One job:** the reading surface of Explore: summary, notices, search status, the list, attribution.
-- **Anatomy:** see [Explore](SCREENS.md#explore). Background `background/content`. Header: summary "45 places · Tue, Oct 6, 2026 · Each spot's best" (`type/subheadline`, `text/secondary`, "·" in `text/tertiary`), sample label, notice (`cloud.slash` + reason, `type/caption`, `text/secondary`), search status. Section headers: `type/captionStrong`, `text/secondary`, with a count at right.
+- **Anatomy:** see [Explore](SCREENS.md#explore). Background `background/content`. Header: summary "45 places · Tue, Oct 6, 2026 · Each spot's best" (`type/subheadline`, `text/secondary`, "·" in `text/tertiary`), sample label, notice (`thermometer.medium.slash` + reason, `type/caption`, `text/secondary`), search status. Section headers: `type/captionStrong`, `text/secondary`, with a count at right.
 - **States:** list; loading (small spinner); searching; search failed; empty ("No Matching Spots" or "No places found", via ContentUnavailableView, with Clear Filters).
 
 ### ExploreRow
@@ -329,7 +329,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `ExplorePlaceCard`, `Explore/ExplorePlaceCard.swift`.
 - **One job:** the selected spot's identity, its light that day, and one primary action.
-- **Anatomy:** a panel, max width 360 pt (`layout/listIdeal`), padding `space/md`, `radius/panel` (16), a `regularMaterial` fill (flat `background/content` in snapshots), hairline `separator/default`. Gap `space/md`. Top: name (`type/headline`), a line with locality (`type/subheadline`, `text/secondary`) and a [ProvenanceTag](#provenancetag); at top right a `xmark.circle.fill` close button (`text/tertiary`, tooltip "Deselect", label "Close"). Light block: a regular [LightBadge](#lightbadge) at left; at right the start time (`type/time`, `text/primary`) over the range "07:20–07:55" (`type/caption`, `text/secondary`); beneath, the no-forecast reason in `type/caption`, `text/secondary` when there is one. With no window that day: "No such light today". Buttons: **Open** (prominent, default, Return), **Save** or **Saved** (`star` / `star.fill`, hidden for your own spots), **Add to Trip** ([AddToTripMenu](#addtotripmenu), button style).
+- **Anatomy:** a panel, max width 360 pt (`layout/listIdeal`), padding `space/md`, `radius/panel` (16), a `regularMaterial` fill (flat `background/content` in snapshots), hairline `separator/default`. Gap `space/md`. Top: name (`type/headline`), a line with locality (`type/subheadline`, `text/secondary`) and a [ProvenanceTag](#provenancetag); at top right a `xmark.circle.fill` close button (`text/tertiary`, tooltip "Deselect", label "Close"). Light block: a regular [LightBadge](#lightbadge) at left; at right the start time (`type/time`, `text/primary`) over the range "07:20–07:55" (`type/caption`, `text/secondary`); beneath, the no-forecast reason in `type/caption`, `text/secondary` when there is one. With no window that day: "No such light today". Buttons: **Open** (prominent, default, Return), **Save** or **Saved** (`bookmark` / `bookmark.fill`, hidden for your own spots), **Add to Trip** ([AddToTripMenu](#addtotripmenu), button style).
 - **States:** scored (badge by band, no reason); no forecast (ring, "No forecast", the reason sentence; this is what the snapshots show); no window; saved; your own spot (no Save button).
 - **Accessibility:** container labelled "Place card for Mesa Arch".
 
@@ -375,7 +375,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `OutlookStrip`, `Spot/WhenToGoView.swift`.
 - **One job:** ten days at a glance for the chosen intent, fading with confidence.
-- **Anatomy:** caption "10-day outlook for Sunrise" (`type/subheadline`, `text/secondary`); a row of ten equal cells (gap `space/xs`); key line "Fainter days are less certain. A dashed ring means no forecast." (`type/caption`, `text/tertiary`). Each cell, top to bottom (gap `space/xxs`, vertical padding `space/xs`): a **Best** tab (`type/captionStrong`, `accent/onAccent` on an `accent/primary` capsule; an empty line on other days), weekday (`type/caption`, `text/secondary`), day number (`type/bodyEmphasis`, monospaced), a [ScoreChip](#scorechip) regular or a 22 pt [NoForecastRing](#noforecastring), and a caption (up to two lines, `type/caption`, `text/secondary`, min height 24): the range "65–81", or "Passed", "Weather off", "Offline", "Too far ahead", "Loading", "No window".
+- **Anatomy:** caption "10-day outlook for Sunrise" (`type/subheadline`, `text/secondary`); a row of ten equal cells (gap `space/xs`); key line "Fainter days are less certain. A dashed ring means no forecast." (`type/caption`, `text/tertiary`). Each cell, top to bottom (gap `space/xxs`, vertical padding `space/xs`): a **Best** tab (`type/captionStrong`, `accent/onAccent` on an `accent/emphasis` capsule; an empty line on other days), weekday (`type/caption`, `text/secondary`), day number (`type/bodyEmphasis`, monospaced), a [ScoreChip](#scorechip) regular or a 22 pt [NoForecastRing](#noforecastring), and a caption (up to two lines, `type/caption`, `text/secondary`, min height 24): the range "65–81", or "Passed", "Weather off", "Offline", "Too far ahead", "Loading", "No window".
 - **States:** default; selected day (fill `selection/fill`, 1.5 pt `accent/primary` outline, `radius/control`); best day (the Best tab); confidence fade (medium 80% opacity, low 60%); no forecast (ring, short reason); no window (empty).
 - **Accessibility:** each cell is a button, label "Monday, October 12, Sunrise, Light Index 87, Great, Low confidence, Best", selected trait.
 
@@ -403,7 +403,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `SignedBar` (private), `Spot/DayWindowsView.swift`.
 - **One job:** a factor's points, right helps and left hurts.
-- **Anatomy:** a 1 pt (`stroke/thin`) centre line 14 pt high in `separator/default` on a track 2 x (32 + 4) = 72 pt wide; a bar 8 pt (`space/sm`) high from the centre, length proportional to the points (scale: the largest factor, minimum 10), at least 2 pt long. Colour `accent/primary` for helps and neutral, `status/warning` for hurts. The signed number ("+21", "−4") at the right (`type/timeSmall`, `text/secondary`, 28 pt wide), so colour is never the only cue.
+- **Anatomy:** a 1 pt (`stroke/thin`) centre line 14 pt high in `separator/default` on a track 2 x (32 + 4) = 72 pt wide; a bar 8 pt (`space/sm`) high from the centre, length proportional to the points (scale: the largest factor, minimum 10), at least 2 pt long. Colour `text/secondary` for both helps and hurts (direction is the left or right side; colour must not read as good or bad). The signed number ("+21", "−4") at the right (`type/timeSmall`, `text/secondary`, 28 pt wide), so colour is never the only cue.
 - **Accessibility:** hidden; the row label says helps or hurts and the points.
 
 ### ExplainBlock
@@ -424,7 +424,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
   5. **Weather plot** (only with a forecast): 80 pt tall, 8 pt below the axis; 0%, 50%, 100% gridlines (`separator/default`, hairline) with labels at the left (`type/timeSmall`, `text/secondary`); cloud layers drawn as overlapping (not stacked) filled areas at 50% opacity with a 1.5 pt top line: `cloud/high`, `cloud/mid`, `cloud/low` (or a single `cloud/mid` "Cloud cover" when the layers are unavailable); rain chance bars (hours at 10% or more, 60% width) in `sky/blueHour`; each window tints the plot with its sky colour at 20% (the selected window with `accent/primary` at 16% added).
   6. **Selected window:** a 2 pt `accent/primary` outline across the sky band and plot, with a `background/window` halo.
   7. **Marker:** a vertical line in `text/primary` through the sky band and plot (dashed 1 pt at rest, solid 1.5 pt while scrubbing) with a `background/window` halo, and an 8 pt knob on the sky band's bottom edge.
-  8. **Legend** (below, `type/caption`, `text/secondary`): swatches 12 pt with hairline: High cloud, Mid cloud, Low cloud, Chance of rain. With no forecast, the legend is replaced by `cloud.slash` + the reason (or "Checking the forecast…").
+  8. **Legend** (below, `type/caption`, `text/secondary`): swatches 12 pt with hairline: High cloud, Mid cloud, Low cloud, Chance of rain. With no forecast, the legend is replaced by `thermometer.medium.slash` + the reason (or "Checking the forecast…").
 - **Zoom variants:** Full day (all 24 h, 3 tiers); Sunrise ±2 h and Sunset ±2 h (a four-hour domain, 2 tiers, hourly ticks). The picker is only offered when more than one is available.
 - **Interaction:** hover or drag scrubs the marker (shared with the arc and the hourly strip); a click on a window selects it.
 - **Accessibility:** one adjustable element "Light timeline for Monday, October 12" with the windows and times listed; increment and decrement select the next or previous window.
@@ -544,7 +544,7 @@ Found in the hand-off audit and left for the design work, because each one is a 
 1. **Band word in compact places.** Compact badges (map pins, Saved, Scout and Add Stop rows) and the outlook cells show the number and window name but not the band word. The VoiceOver label includes the band. Decide whether compact spaces carry the word, a glyph, or nothing.
 2. **"Sample data" can appear twice on one screen**, in the header and in the attribution footer (Explore, Scout, Settings ▸ Weather). The rule says once per screen.
 3. **Rain colour.** There is no rain token. The timeline's rain bars use `sky/blueHour`, and the hourly strip's rain figures use `accent/text`. A `weather/rain` token is needed.
-4. **Accent on the outlook "Best" tag** marks the best day. Accent is for interaction and the route, so this edges toward accent meaning "good".
+4. **Accent on the outlook "Best" tag** (`accent/emphasis`) marks the best day. Accent is for interaction and the route, so this edges toward accent meaning "good".
 5. **Serif beyond place names.** `type/title/spot` (New York) is also used for trip names and the empty-state headline.
 6. **Literal opacities** in `App/Sources/Spot/SpotLayout.swift` (chart layers) and the low-confidence chip opacity (0.85) are not tokens yet.
 7. **Explore rows have no hover style** (`ExploreRowView.isHovered` is unused); only the pin reacts to hover.

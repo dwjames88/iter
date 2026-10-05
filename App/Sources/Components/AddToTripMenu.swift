@@ -42,7 +42,7 @@ struct AddToTripMenu: View {
         return model.store.trips()
     }
 
-    /// "Day 2 · Wed 7 Oct · Sunset 64" (or "· Sunset, no forecast").
+    /// "Day 2 · Thu, Oct 8, 2026 · Sunset · 64" (or "· Sunset · No forecast").
     private func dayLabel(trip: TripRecord, day: Int) -> String {
         let date = trip.startDay.adding(days: day)
         let base = String(localized: "Day \(day + 1) · \(TimeText.day(date))", comment: "Trip day in Add to Trip menu")
