@@ -1,0 +1,63 @@
+{
+  "firstlight": {
+    "name": "First Light",
+    "ink": "#1E0F0A",
+    "paper": "#FFF8F0",
+    "accent": "#D9431A",
+    "ink_dark": "#FFF4E8",
+    "paper_dark": "#150C0A",
+    "accent_dark": "#FF8A5C",
+    "icon": {
+      "ground": "#1E0F0A",
+      "mark": "#FFF4E8",
+      "accent": "#FF8A5C"
+    },
+    "contrast": {
+      "ink_on_paper": 17.68,
+      "accent_on_paper": 4.18,
+      "ink_dark_on_paper_dark": 17.78,
+      "accent_dark_on_paper_dark": 8.3,
+      "icon_mark_on_ground": 17.16,
+      "icon_accent_on_ground": 8.02
+    }
+  },
+  "alpine": {
+    "name": "Alpine",
+    "ink": "#0F2A20",
+    "paper": "#F0F4F2",
+    "accent": "#0A7C6E",
+    "ink_dark": "#EEF4F1",
+    "paper_dark": "#0A1A14",
+    "accent_dark": "#5FE0C8",
+    "icon": {
+      "ground": "#0F2A20",
+      "mark": "#EEF4F1",
+      "accent": "#5FE0C8"
+    },
+    "contrast": {
+      "ink_on_paper": 13.79,
+      "accent_on_paper": 4.59,
+      "ink_dark_on_paper_dark": 16.1,
+      "accent_dark_on_paper_dark": 11.09,
+      "icon_mark_on_ground": 13.73,
+      "icon_accent_on_ground": 9.46
+    }
+  },
+  "canonical": {
+    "firstlight": "firstlight-deep",
+    "alpine": "alpine-glacier"
+  },
+  "neutral": {
+    "ink": "currentColor",
+    "gold": "#F5B72B",
+    "icon": {
+      "ground": "#0A0A0A",
+      "mark": "#FFFFFF",
+      "accent": "#F5B72B"
+    },
+    "contrast": {
+      "icon_mark_on_ground": 19.8,
+      "icon_accent_on_ground": 11.02
+    }
+  }
+}
