@@ -22,7 +22,7 @@ struct ExploreListPanel: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .frame(maxHeight: .infinity)
-        .background(IterColor.backgroundContent)
+        .background(IterColor.backgroundContent, ignoresSafeAreaEdges: [])
     }
 
     // MARK: Header
@@ -32,15 +32,12 @@ struct ExploreListPanel: View {
             HStack(spacing: IterSpace.xs) {
                 Text("^[\(explore.rows.count) place](inflect: true)", comment: "Number of places listed in Explore")
                     .font(IterFont.subheadline)
-                Text(verbatim: "·").foregroundStyle(IterColor.textTertiary)
-                Text(TimeText.day(explore.day))
-                Text(verbatim: "·").foregroundStyle(IterColor.textTertiary)
-                Text(model.preferredIntent.map { LightText.name($0) } ?? LightText.eachSpotsBest)
                 Spacer(minLength: 0)
                 if explore.isLoadingForecasts {
                     ProgressView().controlSize(.small)
                         .help(String(localized: "Loading forecasts", comment: "Tooltip on the progress indicator"))
                 }
+                optionsMenu
             }
             .font(IterFont.subheadline)
             .foregroundStyle(IterColor.textSecondary)
@@ -61,6 +58,72 @@ struct ExploreListPanel: View {
         .padding(.horizontal, IterSpace.md)
         .padding(.vertical, IterSpace.sm)
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    // MARK: Options menu
+
+    /// Light, sort and filters in one menu, labelled with the current light choice.
+    private var optionsMenu: some View {
+        @Bindable var model = model
+        return Menu {
+            Picker(selection: $model.preferredIntent) {
+                Text(LightText.eachSpotsBest).tag(LightIntent?.none)
+                Divider()
+                ForEach(LightIntent.allCases) { intent in
+                    Label(LightText.name(intent), systemImage: LightText.symbol(intent)).tag(LightIntent?.some(intent))
+                }
+            } label: {
+                Text("Show Light For", comment: "Menu section title: which light to score every spot for")
+            }
+            .pickerStyle(.inline)
+            Picker(selection: $explore.sort) {
+                ForEach(ExploreSort.allCases) { sort in Text(LightText.name(sort)).tag(sort) }
+            } label: {
+                Text("Sort By", comment: "Menu section title")
+            }
+            .pickerStyle(.inline)
+            Menu(String(localized: "Category", comment: "Filters submenu")) {
+                ForEach(SpotCategory.allCases) { category in
+                    Toggle(LightText.name(category), isOn: member(category, of: \.categories))
+                }
+            }
+            Menu(String(localized: "Known For", comment: "Filters submenu: what the spot is best at")) {
+                ForEach(BestLight.allCases) { best in
+                    Toggle(LightText.name(best), isOn: member(best, of: \.bestLight))
+                }
+            }
+            Menu(String(localized: "Source", comment: "Filters submenu")) {
+                ForEach(ExploreSource.allCases) { source in
+                    Toggle(LightText.name(source), isOn: member(source, of: \.sources))
+                }
+            }
+            Divider()
+            Button(String(localized: "Clear Filters", comment: "Menu item")) { explore.filters = .none }
+                .disabled(!explore.filters.isActive)
+        } label: {
+            let count = explore.filters.activeCount
+            HStack(spacing: IterSpace.xs) {
+                Text(model.preferredIntent.map { LightText.name($0) } ?? LightText.eachSpotsBest)
+                Image(systemName: count > 0 ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
+                if count > 0 { Text(count, format: .number).monospacedDigit() }
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text("Light, sort and filters", comment: "Explore list header menu"))
+            .accessibilityValue(count > 0 ? Text("\(count) filters active", comment: "VoiceOver: number of active filters") : Text("No filters active", comment: "VoiceOver"))
+        }
+        .menuStyle(.button)
+        .buttonStyle(.borderless)
+        .menuIndicator(.hidden)
+        .fixedSize()
+        .help(String(localized: "Choose the light, sort the list, and filter by category, what a spot is known for, and source", comment: "Tooltip"))
+    }
+
+    /// A toggle binding for membership of one element in one of the filter sets.
+    private func member<Element: Hashable>(_ element: Element, of keyPath: WritableKeyPath<ExploreFilters, Set<Element>>) -> Binding<Bool> {
+        Binding(get: { explore.filters[keyPath: keyPath].contains(element) },
+                set: { on in
+                    if on { explore.filters[keyPath: keyPath].insert(element) } else { explore.filters[keyPath: keyPath].remove(element) }
+                })
     }
 
     private var trimmedQuery: String { explore.query.trimmingCharacters(in: .whitespacesAndNewlines) }

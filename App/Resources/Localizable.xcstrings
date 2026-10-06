@@ -172,6 +172,9 @@
         }
       }
     },
+    "%@. Choose a day" : {
+      "comment" : "Tooltip: the shown day, then a hint that it opens a calendar"
+    },
     "%@–%@" : {
       "comment" : "A time range, e.g. 6:12–6:48 PM",
       "localizations" : {
@@ -183,9 +186,6 @@
         }
       }
     },
-    "%lld active" : {
-      "comment" : "VoiceOver: number of active filters"
-    },
     "%lld days · %lld stops" : {
       "comment" : "Trip size on a trip card, e.g. 4 days · 6 stops",
       "localizations" : {
@@ -196,6 +196,9 @@
           }
         }
       }
+    },
+    "%lld filters active" : {
+      "comment" : "VoiceOver: number of active filters"
     },
     "%lld min" : {
       "comment" : "Minutes, e.g. 20 min"
@@ -465,6 +468,12 @@
     "Checking the forecast…" : {
       "comment" : "Shown while the forecast loads"
     },
+    "Choose the day whose route is highlighted on the map" : {
+      "comment" : "Tooltip"
+    },
+    "Choose the light, sort the list, and filter by category, what a spot is known for, and source" : {
+      "comment" : "Tooltip"
+    },
     "Choosing the best matches" : {
       "comment" : "Scout progress stage"
     },
@@ -562,10 +571,10 @@
       "comment" : "Scout example request"
     },
     "Date" : {
-      "comment" : "Accessibility label of the date picker"
+      "comment" : "Accessibility label of the date control\nAccessibility label of the date picker"
     },
     "Day %lld" : {
-      "comment" : "Map day picker segment"
+      "comment" : "Route day picker segment"
     },
     "Day %lld · %@" : {
       "comment" : "Trip day header, e.g. Day 2 · Wed 7 Oct\nTrip day in Add to Trip menu",
@@ -712,12 +721,6 @@
     },
     "Fetching drive times" : {
       "comment" : "Accessibility label\nTooltip"
-    },
-    "Filter by category, what a spot is known for, and source" : {
-      "comment" : "Tooltip"
-    },
-    "Filters" : {
-      "comment" : "Toolbar menu"
     },
     "Find" : {
       "comment" : "Sidebar section"
@@ -897,7 +900,7 @@
       "comment" : "Link to Apple Weather legal attribution"
     },
     "Light" : {
-      "comment" : "Menu title\nToolbar: which light to look for"
+      "comment" : "Menu title"
     },
     "Light Index modified from forecast data" : {
       "comment" : "Value-added data notice under weather"
@@ -916,6 +919,9 @@
     },
     "Light windows" : {
       "comment" : "Spot page section title"
+    },
+    "Light, sort and filters" : {
+      "comment" : "Explore list header menu"
     },
     "Likely %@" : {
       "comment" : "Score range for days further out"
@@ -1069,6 +1075,9 @@
     "No Matching Spots" : {
       "comment" : "Empty state title"
     },
+    "No filters active" : {
+      "comment" : "VoiceOver"
+    },
     "No forecast" : {
       "comment" : "Shown instead of a score when there is no forecast"
     },
@@ -1106,9 +1115,6 @@
     },
     "No window" : {
       "comment" : "Outlook cell when the sun gives no such window"
-    },
-    "None active" : {
-      "comment" : "VoiceOver"
     },
     "Notes" : {
       "comment" : "Spot editor field\nSpot notes heading"
@@ -1260,7 +1266,7 @@
       "comment" : "Help"
     },
     "Route day" : {
-      "comment" : "Accessibility label of the map day picker"
+      "comment" : "Accessibility label of the route day picker"
     },
     "Route map" : {
       "comment" : "Accessibility label"
@@ -1319,6 +1325,9 @@
     "Scout's note" : {
       "comment" : "Label above the on-device model's one-line reason for a suggestion"
     },
+    "Search" : {
+      "comment" : "Explore search field prompt"
+    },
     "Search Apple Maps for “%@”" : {
       "comment" : "List row that runs an Apple Maps search"
     },
@@ -1330,9 +1339,6 @@
     },
     "Search spots" : {
       "comment" : "Add stop search field"
-    },
-    "Search spots and places" : {
-      "comment" : "Explore search field prompt"
     },
     "Searching Apple Maps…" : {
       "comment" : "Progress while searching"
@@ -1380,7 +1386,7 @@
       "comment" : "Menu"
     },
     "Show Light For" : {
-      "comment" : "Menu item"
+      "comment" : "Menu item\nMenu section title: which light to score every spot for"
     },
     "Show light for" : {
       "comment" : "Settings field"
@@ -1403,19 +1409,13 @@
     "Something went wrong while searching. Try again, or search places in Explore." : {
       "comment" : "Scout failure: generic"
     },
-    "Sort" : {
-      "comment" : "Menu title\nToolbar menu"
-    },
     "Sort By" : {
-      "comment" : "Menu"
+      "comment" : "Menu\nMenu section title"
     },
     "Sort and Filter" : {
       "comment" : "Toolbar button"
     },
     "Sort and filter saved spots" : {
-      "comment" : "Tooltip"
-    },
-    "Sort the list" : {
       "comment" : "Tooltip"
     },
     "Source" : {
@@ -1523,9 +1523,6 @@
     "That request is too long" : {
       "comment" : "Scout failure title"
     },
-    "The day whose light is shown" : {
-      "comment" : "Tooltip"
-    },
     "The explanation didn't match the numbers, so it was discarded. Try again." : {
       "comment" : "Explanation failure"
     },
@@ -1593,7 +1590,7 @@
       "comment" : "Settings section: WeatherKit setup steps"
     },
     "Today" : {
-      "comment" : "Button that returns the page to today\nRelative day\nToolbar button: jump to today"
+      "comment" : "Button that returns the page to today\nButton: jump to today\nRelative day\nToolbar button: jump to today"
     },
     "Tomorrow" : {
       "comment" : "Relative day\nSaved row: the light shown is tomorrow's because today's window has passed"
@@ -1713,9 +1710,6 @@
     },
     "Which light to plan for. Scores on this page follow this choice." : {
       "comment" : "Help"
-    },
-    "Which light to score every spot for" : {
-      "comment" : "Tooltip"
     },
     "Which light to shoot here: each window with its time and score for this day" : {
       "comment" : "Tooltip"

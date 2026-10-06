@@ -10,9 +10,10 @@ struct TripRouteMap: View {
     @Environment(\.renderMode) private var renderMode
     let builder: TripBuilderModel
     @Binding var selection: UUID?
+    /// The day picked in the builder's toolbar picker.
+    @Binding var chosenDay: Int?
 
     @State private var position: MapCameraPosition = .automatic
-    @State private var chosenDay: Int?
     @State private var distance: CLLocationDistance = 400_000
 
     private var entries: [TripStopEntry] { builder.days.flatMap(\.stops) }
@@ -34,7 +35,8 @@ struct TripRouteMap: View {
                 liveMap
             }
         }
-        .overlay(alignment: .topLeading) { dayPicker.padding(IterSpace.md) }
+        // MapKit's Map extends itself under the toolbar; clip it to the safe area so the bar is one plain strip.
+        .clipped()
         .accessibilityLabel(Text("Route map", comment: "Accessibility label"))
         .onAppear(perform: fit)
         .onChange(of: entries.map(\.id)) { fit() }
@@ -82,32 +84,6 @@ struct TripRouteMap: View {
             .background(inDay ? IterColor.accentEmphasis : IterColor.mapPinInactive, in: Circle())
             .overlay(Circle().strokeBorder(IterColor.backgroundWindow, lineWidth: selected ? IterStroke.thick : IterStroke.thin))
             .accessibilityLabel(Text("Stop \(entry.number), \(entry.stop.spot.name)", comment: "VoiceOver: map pin"))
-    }
-
-    // MARK: Day picker
-
-    @ViewBuilder private var dayPicker: some View {
-        let indices = builder.days.filter { !$0.stops.isEmpty }.map(\.index)
-        if indices.count > 1 {
-            let picker = Picker(selection: Binding(get: { activeDay }, set: { chosenDay = $0; selection = nil })) {
-                ForEach(indices, id: \.self) { index in
-                    Text("Day \(index + 1)", comment: "Map day picker segment").tag(index)
-                }
-            } label: {
-                Text("Route day", comment: "Accessibility label of the map day picker")
-            }
-            .labelsHidden()
-            Group {
-                if indices.count <= 5 {
-                    picker.pickerStyle(.segmented)
-                } else {
-                    picker.pickerStyle(.menu)
-                }
-            }
-            .fixedSize()
-            .padding(IterSpace.xs)
-            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous))
-        }
     }
 
     // MARK: Geometry

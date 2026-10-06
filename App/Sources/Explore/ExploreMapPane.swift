@@ -21,6 +21,8 @@ struct ExploreMapPane: View {
                 liveMap
             }
         }
+        // MapKit's Map extends itself under the toolbar; clip it to the safe area so the bar is one plain strip.
+        .clipped()
         .overlay(alignment: .top) {
             if explore.isAddingSpot {
                 AddSpotBanner { explore.isAddingSpot = false }

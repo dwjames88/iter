@@ -25,11 +25,17 @@ private struct SnapshotOpaqueBackground: ViewModifier {
 /// The app's own list panels (Saved, Scout, Explore list) sit on First Light paper in live and snapshot renders.
 private struct PaperListBackground: ViewModifier {
     func body(content: Content) -> some View {
-        content.scrollContentBackground(.hidden).background(IterColor.backgroundContent)
+        // `ignoresSafeAreaEdges: []` keeps the paper below the toolbar: a plain `.background` extends under the
+        // transparent macOS 26 toolbar, which painted an opaque block over the list column only.
+        content.scrollContentBackground(.hidden).background(IterColor.backgroundContent, ignoresSafeAreaEdges: [])
     }
 }
 
 extension View {
     func paperListBackground() -> some View { modifier(PaperListBackground()) }
+    /// One toolbar bar across the whole window. On macOS 26 the toolbar is transparent and shows whatever is behind
+    /// it, so a paper column and a map next to each other drew two different bars with a seam. Asking for the system
+    /// toolbar background draws one continuous bar; panels must not extend their own backgrounds under it.
+    func unifiedToolbarBackground() -> some View { toolbarBackgroundVisibility(.visible, for: .windowToolbar) }
     func snapshotOpaqueBackground() -> some View { modifier(SnapshotOpaqueBackground()) }
 }

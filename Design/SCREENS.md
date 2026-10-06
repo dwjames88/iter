@@ -214,9 +214,9 @@ Each day section, top to bottom:
 3. For each stop: a [ConnectorRow](COMPONENTS.md#connectorrow) (every stop after the first of the trip, including the first of a later day) then the [StopRow](COMPONENTS.md#stoprow).
 4. An **Add Stop** row (accent text, `plus` icon).
 
-Right column: [TripRouteMap](COMPONENTS.md#triproutemap), full height, with a day picker pill floating top-left.
+Right column: [TripRouteMap](COMPONENTS.md#triproutemap), full height, with no controls of its own over it; the day picker lives in the toolbar.
 
-Toolbar (right): a spinner while drive times are fetched ("Fetching drive times"), **Share** (`square.and.arrow.up`, shares the trip as an `.iter` file), and **Trip Actions** (`ellipsis.circle`) with Change Dates… (⇧⌘D), Export… (⇧⌘E), Duplicate, divider, Delete Trip (destructive). The window title is removed because the trip name is the header.
+Toolbar: a segmented **day picker** ("Day 1 | Day 2 ...", system style, principal placement) when more than one day has stops, becoming a menu picker above 5 days; choosing a day highlights its route on the map and clears the stop selection (a selected stop's day wins). Right: a spinner while drive times are fetched ("Fetching drive times"), **Share** (`square.and.arrow.up`, shares the trip as an `.iter` file), and **Trip Actions** (`ellipsis.circle`) with Change Dates… (⇧⌘D), Export… (⇧⌘E), Duplicate, divider, Delete Trip (destructive). The window title is removed because the trip name is the header.
 
 **Components.** [TripHeader](COMPONENTS.md#tripheader), [DayHeader](COMPONENTS.md#dayheader), [StopRow](COMPONENTS.md#stoprow), [StopNumberBadge](COMPONENTS.md#stopnumberbadge), [ConnectorRow](COMPONENTS.md#connectorrow), [SuggestionBanner](COMPONENTS.md#suggestionbanner), [LightBadge](COMPONENTS.md#lightbadge) (regular), [WarningLine](COMPONENTS.md#warning-lines), [TripRouteMap](COMPONENTS.md#triproutemap), [AddStopPopover](COMPONENTS.md#addstoppopover), [WeatherAttributionView](COMPONENTS.md#weatherattributionview), [MapStandIn](COMPONENTS.md#mapstandin) (snapshots only).
 
@@ -262,7 +262,7 @@ At 960x640 the session line is tight: "25 min walk-in" is truncated to "25 min w
 
 List column, top to bottom ([ExploreListPanel](COMPONENTS.md#explorelistpanel)):
 
-1. **Header** (padding `space/md` by `space/sm`): "45 places · Tue, Oct 6, 2026 · Each spot's best" in `type/subheadline`, `text/secondary`, with a small spinner while forecasts load. Under it, in order, whichever apply: a Sample data label; a notice line with `thermometer.medium.slash` ("Weather isn't enabled for this build of Iter, ..."); the search status slot.
+1. **Header** (padding `space/md` by `space/sm`): "45 places" in `type/subheadline`, `text/secondary` at the leading edge; at the trailing edge a small spinner while forecasts load, then one borderless menu button (tinted with the app accent in the app; it renders in ink in the snapshots) labelled with the current light choice ("Each spot's best", "Sunset" ...) and `line.3.horizontal.decrease.circle` (filled, with a count, when filters are on). Its menu: inline picker **Show Light For** (Each Spot's Best, divider, Sunrise, Sunset, Blue hour, Night, each with its symbol), inline picker **Sort By** (Best Light, Name, Distance from Map Centre, Popularity), submenus **Category** (10 categories), **Known For** (Sunrise, Sunset, Blue hour, Night sky, Midday, Overcast) and **Source** (Curated, Your Spots, Apple Maps), divider, Clear Filters (disabled when no filter is on). The day is not repeated here; it is in the toolbar. Under it, in order, whichever apply: a Sample data label; a notice line with `thermometer.medium.slash` ("Weather isn't enabled for this build of Iter, ..."); the search status slot.
 2. Hairline divider.
 3. **List** (inset style) in sections with a header ("Spots", "Apple Maps") and a count on the right (`type/captionStrong`, `text/secondary`), made of [ExploreRow](COMPONENTS.md#explorerow)s, sorted by the chosen sort. Or an empty state.
 4. Hairline divider.
@@ -270,15 +270,13 @@ List column, top to bottom ([ExploreListPanel](COMPONENTS.md#explorelistpanel)):
 
 Map: [ExploreMapPane](COMPONENTS.md#exploremappane), with [ExplorePinView](COMPONENTS.md#explorepinview)s, the [ExplorePlaceCard](COMPONENTS.md#exploreplacecard) docked bottom with `space/md` margin, and the [AddSpotBanner](COMPONENTS.md#addspotbanner) docked top in Add Spot mode. Map controls: zoom stepper, compass, scale. Map style: standard, flat, no points of interest.
 
-Toolbar (all primary-action placement), left to right:
+Toolbar (all primary-action placement), left to right. The window toolbar draws the system toolbar background across the whole window (`unifiedToolbarBackground()`), and the list's paper stops at the toolbar's bottom edge, so the bar is one continuous strip over list and map. Light, sort and filters are not in the toolbar; they are the menu in the list header:
 
 | Item | Control |
 |---|---|
-| Search | System search field in the toolbar, prompt "Search spots and places" (⌘F focuses it). Return runs an Apple Maps search. |
-| Date | `chevron.left` (⌘[), a date picker, `chevron.right` (⌘]), **Today** (disabled when already today). |
-| Light | Menu picker with `sun.horizon` icon: Each spot's best, divider, Sunrise, Sunset, Blue hour, Night (each with its symbol). |
-| Filters | Menu, icon `line.3.horizontal.decrease.circle` (filled with a count when filters are on). Submenus: **Category** (10 categories), **Known For** (Sunrise, Sunset, Blue hour, Night sky, Midday, Overcast), **Source** (Curated, Your Spots, Apple Maps), divider, Clear Filters. |
-| Sort | Menu, icon `arrow.up.arrow.down`: Best Light, Name, Distance from Map Centre, Popularity. |
+| Search | System search field in the toolbar, prompt "Search" (⌘F focuses it). Return runs an Apple Maps search. |
+| Date | One grouped control: `chevron.left` (⌘[), a button showing the day as "Mon, Oct 5" (weekday and month abbreviated, monospaced digits, year added only outside the current year), `chevron.right` (⌘]). Clicking the day opens a popover with a graphical calendar (picking a day closes it) and a **Today** button (disabled on today). |
+| Today | A separate **Today** button right after the date control, shown only when the day is not today (not rendered otherwise). |
 | Add Spot | Toggle button, `mappin.and.ellipse`. Tooltip "Add your own spot: click the map to drop a pin (Esc to cancel)". |
 
 **Search status slot** (in the header): while searching, a spinner with "Searching Apple Maps…" and a small Cancel button; on failure a violet `exclamationmark.triangle` line "Couldn't search Apple Maps for “query”." with a Retry button; when the field has text that has not been searched, a link-style row "Search Apple Maps for “query”" with a magnifier.
@@ -506,7 +504,7 @@ These exist in the app but are **not drawn in any snapshot** (menus, popovers an
 | Thing | Why it is missing or looks wrong |
 |---|---|
 | Live MapKit maps (Explore, Trip route, Scout, Spot editor) | MapKit does not draw offscreen. A stand-in draws a flat `background/control` ground with a "Map (snapshot stand-in)" label (`type/caption`, `text/tertiary`) and the same pins at projected positions. The real map has Apple's cartography, a zoom stepper, a compass and a scale. In the Trip builder stand-in, the pins of the active day are all drawn selected-size and accent; in the live map, only the selected stop's pin is large (36 pt) and the other pins of the active day are 28 pt accent, pins of other days 28 pt `text/secondary`. |
-| Toolbar items | Render as blank rounded squares (width and position are right, content is not). Use the toolbar lists in each screen section. |
+| Toolbar items | Render as blank rounded squares (width and position are right, content is not). Use the toolbar lists in each screen section. The Explore date control (a ControlGroup) is also drawn partly at the top-left of the window in offscreen renders (an "Oct 6 | >" fragment); that is a renderer artifact, not app layout, so use the Explore toolbar table instead. |
 | Window traffic lights, the sidebar toggle | Not drawn (a stray partial icon sits at the left edge). |
 | Window title position | The title appears top-left ("Explore", "Saved") because the render has no title bar chrome. |
 | Look Around | Omitted offscreen. In the app it appears as the last section of the spot page when Apple has imagery: a 224 pt high (`chart/arcHeight` + `chart/timelineHeight`) clipped panel with 12 pt corners under the heading "Look Around". |

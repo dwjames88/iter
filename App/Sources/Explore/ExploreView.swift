@@ -41,6 +41,7 @@ private struct ExploreContent: View {
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
     @FocusState private var searchFocused: Bool
+    @State private var choosingDay = false
 
     var body: some View {
         HSplitView {
@@ -51,7 +52,7 @@ private struct ExploreContent: View {
         }
         .navigationTitle(Text("Explore", comment: "Window title"))
         .searchable(text: $explore.query, placement: .toolbar,
-                    prompt: Text("Search spots and places", comment: "Explore search field prompt"))
+                    prompt: Text("Search", comment: "Explore search field prompt"))
         .searchFocused($searchFocused)
         .onSubmit(of: .search) { explore.submitSearch() }
         .toolbar { toolbar }
@@ -88,12 +89,13 @@ private struct ExploreContent: View {
     // MARK: Toolbar
 
     @ToolbarContentBuilder private var toolbar: some ToolbarContent {
-        ToolbarItemGroup(placement: .primaryAction) {
-            dateControl
+        ToolbarItem(placement: .primaryAction) { dateControl }
+        if !explore.isToday {
+            ToolbarItem(placement: .primaryAction) {
+                Button(String(localized: "Today", comment: "Toolbar button: jump to today")) { explore.goToToday() }
+                    .help(String(localized: "Jump to today", comment: "Tooltip"))
+            }
         }
-        ToolbarItem(placement: .primaryAction) { intentPicker }
-        ToolbarItem(placement: .primaryAction) { filtersMenu }
-        ToolbarItem(placement: .primaryAction) { sortMenu }
         ToolbarItem(placement: .primaryAction) {
             Toggle(isOn: $explore.isAddingSpot) {
                 Label(String(localized: "Add Spot", comment: "Toolbar toggle: click the map to add your own spot"),
@@ -106,103 +108,77 @@ private struct ExploreContent: View {
 
     private static let utc = TimeZone(identifier: "UTC")!
 
-    @ViewBuilder private var dateControl: some View {
-        Button {
-            explore.shiftDay(by: -1)
-        } label: {
-            Label(String(localized: "Previous Day", comment: "Toolbar button"), systemImage: "chevron.left")
-        }
-        .keyboardShortcut("[", modifiers: .command)
-        .help(String(localized: "Previous day (⌘[)", comment: "Tooltip"))
+    private var dayBinding: Binding<Date> {
+        Binding(get: { explore.day.noon(in: Self.utc) }, set: { explore.day = LocalDay($0, in: Self.utc) })
+    }
 
-        DatePicker(selection: Binding(get: { explore.day.noon(in: Self.utc) },
-                                      set: { explore.day = LocalDay($0, in: Self.utc) }),
-                   displayedComponents: .date) {
-            Text("Date", comment: "Accessibility label of the date picker")
-        }
-        .labelsHidden()
-        .environment(\.timeZone, Self.utc)
-        .help(String(localized: "The day whose light is shown", comment: "Tooltip"))
+    /// "Mon, Oct 5"; the year is added only for a day outside the current year. UTC, like the day binding.
+    private var dayLabel: String {
+        let date = explore.day.noon(in: Self.utc)
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = Self.utc
+        let sameYear = calendar.component(.year, from: date) == calendar.component(.year, from: model.now())
+        var style = Date.FormatStyle().weekday(.abbreviated).month(.abbreviated).day()
+        if !sameYear { style = style.year() }
+        style.timeZone = Self.utc
+        return date.formatted(style)
+    }
 
-        Button {
-            explore.shiftDay(by: 1)
-        } label: {
-            Label(String(localized: "Next Day", comment: "Toolbar button"), systemImage: "chevron.right")
-        }
-        .keyboardShortcut("]", modifiers: .command)
-        .help(String(localized: "Next day (⌘])", comment: "Tooltip"))
+    private var fullDayLabel: String {
+        var style = Date.FormatStyle().weekday(.wide).month(.wide).day().year()
+        style.timeZone = Self.utc
+        return explore.day.noon(in: Self.utc).formatted(style)
+    }
 
-        Button(String(localized: "Today", comment: "Toolbar button: jump to today")) { explore.goToToday() }
+    /// One grouped control: previous day, the day (opens a calendar), next day.
+    private var dateControl: some View {
+        ControlGroup {
+            Button {
+                explore.shiftDay(by: -1)
+            } label: {
+                Label(String(localized: "Previous Day", comment: "Toolbar button"), systemImage: "chevron.left")
+            }
+            .keyboardShortcut("[", modifiers: .command)
+            .help(String(localized: "Previous day (⌘[)", comment: "Tooltip"))
+
+            Button {
+                choosingDay.toggle()
+            } label: {
+                Text(dayLabel).monospacedDigit()
+            }
+            .help(String(localized: "\(fullDayLabel). Choose a day", comment: "Tooltip: the shown day, then a hint that it opens a calendar"))
+            .accessibilityLabel(Text("Date", comment: "Accessibility label of the date control"))
+            .accessibilityValue(Text(fullDayLabel))
+            .popover(isPresented: $choosingDay, arrowEdge: .bottom) { dayPopover }
+
+            Button {
+                explore.shiftDay(by: 1)
+            } label: {
+                Label(String(localized: "Next Day", comment: "Toolbar button"), systemImage: "chevron.right")
+            }
+            .keyboardShortcut("]", modifiers: .command)
+            .help(String(localized: "Next day (⌘])", comment: "Tooltip"))
+        }
+        .controlGroupStyle(.navigation)
+    }
+
+    private var dayPopover: some View {
+        VStack(spacing: IterSpace.md) {
+            DatePicker(selection: Binding(get: { dayBinding.wrappedValue },
+                                          set: { dayBinding.wrappedValue = $0; choosingDay = false }),
+                       displayedComponents: .date) {
+                Text("Date", comment: "Accessibility label of the date picker")
+            }
+            .datePickerStyle(.graphical)
+            .labelsHidden()
+            .environment(\.timeZone, Self.utc)
+            Button(String(localized: "Today", comment: "Button: jump to today")) {
+                explore.goToToday()
+                choosingDay = false
+            }
             .disabled(explore.isToday)
             .help(String(localized: "Jump to today", comment: "Tooltip"))
-    }
-
-    private var intentPicker: some View {
-        @Bindable var model = model
-        return Picker(selection: $model.preferredIntent) {
-            Text(LightText.eachSpotsBest).tag(LightIntent?.none)
-            Divider()
-            ForEach(LightIntent.allCases) { intent in
-                Label(LightText.name(intent), systemImage: LightText.symbol(intent)).tag(LightIntent?.some(intent))
-            }
-        } label: {
-            Label(String(localized: "Light", comment: "Toolbar: which light to look for"), systemImage: "sun.horizon")
         }
-        .pickerStyle(.menu)
-        .help(String(localized: "Which light to score every spot for", comment: "Tooltip"))
-    }
-
-    private var filtersMenu: some View {
-        Menu {
-            Menu(String(localized: "Category", comment: "Filters submenu")) {
-                ForEach(SpotCategory.allCases) { category in
-                    Toggle(LightText.name(category), isOn: member(category, of: \.categories))
-                }
-            }
-            Menu(String(localized: "Known For", comment: "Filters submenu: what the spot is best at")) {
-                ForEach(BestLight.allCases) { best in
-                    Toggle(LightText.name(best), isOn: member(best, of: \.bestLight))
-                }
-            }
-            Menu(String(localized: "Source", comment: "Filters submenu")) {
-                ForEach(ExploreSource.allCases) { source in
-                    Toggle(LightText.name(source), isOn: member(source, of: \.sources))
-                }
-            }
-            Divider()
-            Button(String(localized: "Clear Filters", comment: "Menu item")) { explore.filters = .none }
-                .disabled(!explore.filters.isActive)
-        } label: {
-            let count = explore.filters.activeCount
-            HStack(spacing: IterSpace.xs) {
-                Image(systemName: count > 0 ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
-                if count > 0 { Text(count, format: .number).monospacedDigit() }
-            }
-            .accessibilityLabel(Text("Filters", comment: "Toolbar menu"))
-            .accessibilityValue(count > 0 ? Text("\(count) active", comment: "VoiceOver: number of active filters") : Text("None active", comment: "VoiceOver"))
-        }
-        .help(String(localized: "Filter by category, what a spot is known for, and source", comment: "Tooltip"))
-    }
-
-    private var sortMenu: some View {
-        Menu {
-            Picker(selection: $explore.sort) {
-                ForEach(ExploreSort.allCases) { sort in Text(LightText.name(sort)).tag(sort) }
-            } label: {
-                Text("Sort", comment: "Menu title")
-            }
-            .pickerStyle(.inline)
-        } label: {
-            Label(String(localized: "Sort", comment: "Toolbar menu"), systemImage: "arrow.up.arrow.down")
-        }
-        .help(String(localized: "Sort the list", comment: "Tooltip"))
-    }
-
-    /// A toggle binding for membership of one element in one of the filter sets.
-    private func member<Element: Hashable>(_ element: Element, of keyPath: WritableKeyPath<ExploreFilters, Set<Element>>) -> Binding<Bool> {
-        Binding(get: { explore.filters[keyPath: keyPath].contains(element) },
-                set: { on in
-                    if on { explore.filters[keyPath: keyPath].insert(element) } else { explore.filters[keyPath: keyPath].remove(element) }
-                })
+        .padding(IterSpace.md)
     }
 }

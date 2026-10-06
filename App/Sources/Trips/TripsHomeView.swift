@@ -28,7 +28,8 @@ struct TripsHomeView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(IterColor.backgroundWindow)
+        .background(IterColor.backgroundWindow, ignoresSafeAreaEdges: [])
+        .unifiedToolbarBackground()
         .navigationTitle(Text("All Trips", comment: "Screen title"))
         .toolbar {
             if !summaries.isEmpty {

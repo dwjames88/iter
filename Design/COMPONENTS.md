@@ -272,7 +272,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `TripRouteMap`, `Trips/TripRouteMap.swift`.
 - **One job:** the route sanity check.
-- **Anatomy (live map):** MapKit map filling the right column. **Pins:** numbered circles, 28 pt (`size/mapPin`), 36 pt when selected (`size/mapPinSelected`); in the active day `accent/emphasis` fill with an `accent/onAccent` number; other days `map/pinInactive` fill with a `background/window` number; border `background/window` 1 pt (2 pt when selected); number in `type/captionStrong`. **Routes:** the active day's legs as `route/active` 4 pt (`stroke/route`) over a `background/window` casing 7 pt (`stroke/routeCasing`); other days `route/inactive` 3 pt (`stroke/routeInactive`). Straight lines when the road path is unknown. Controls: zoom stepper, compass, scale. **Day picker:** a system segmented control (up to 5 days; a menu beyond that) in a `regularMaterial` pill (`radius/control`, padding `space/xs`) at the top-left with `space/md` margin; shown only when more than one day has stops.
+- **Anatomy (live map):** MapKit map filling the right column. **Pins:** numbered circles, 28 pt (`size/mapPin`), 36 pt when selected (`size/mapPinSelected`); in the active day `accent/emphasis` fill with an `accent/onAccent` number; other days `map/pinInactive` fill with a `background/window` number; border `background/window` 1 pt (2 pt when selected); number in `type/captionStrong`. **Routes:** the active day's legs as `route/active` 4 pt (`stroke/route`) over a `background/window` casing 7 pt (`stroke/routeCasing`); other days `route/inactive` 3 pt (`stroke/routeInactive`). Straight lines when the road path is unknown. Controls: zoom stepper, compass, scale. **Day picker:** not on the map; a system segmented control (up to 5 days; a menu beyond that) in the trip builder toolbar (principal placement), shown only when more than one day has stops. The map takes the chosen day through a binding.
 - **States:** a stop selected (the camera recentres on it, zoom kept); the picked day; fit-to-trip on appear and when stops change.
 - **Accessibility:** label "Route map"; pins "Stop 2, Monument Valley".
 
@@ -506,17 +506,17 @@ Iter relies on these system controls. Do not restyle them in the design; use the
 | **List** | Explore (inset, sectioned, selection and context menu with primary action), Trip builder (inset, selection, drag and drop, section headers), Saved (inset, multi-selection), Scout results (inset, visible separators), Add Stop popover (plain). Selection in a system list is the system accent fill, with the text falling back to the system's colours; custom surfaces use `selection/fill` with an `accent/primary` stroke. |
 | **HSplitView** | Explore (list, map), Trip builder (plan, map): draggable native divider. |
 | **Toolbar** | Unified title bar. Items per screen are listed in SCREENS.md. Window title is the section name; the trip builder replaces the title with the editable name. |
-| **searchable** (toolbar search field) | Explore ("Search spots and places"), Saved ("Search saved spots"). |
+| **searchable** (toolbar search field) | Explore ("Search"), Saved ("Search saved spots"). |
 | **ContentUnavailableView** | Empty and error states: large grey symbol, bold title, grey description, 0 to 2 action buttons. Used for Trip Not Found, Explore empty, Saved empty and filter-empty, Scout unavailable and failure states, search-empty. |
 | **Map** (MapKit) | Explore: standard style, flat elevation, points of interest hidden, controls zoom stepper, compass, scale, custom annotations, selection. Trip route: polylines and numbered annotations. Spot editor: a small map with pan and zoom, the pin fixed at the centre. Scout: accent-tinted markers with category symbols. |
 | **LookAroundPreview** | Spot page, 224 pt high, `radius/card` clip; only when a scene exists. |
-| **Picker** | Segmented (intent on the Spot page, timeline zoom, trip map day picker up to 5 days); menu (session menu, Explore Light picker, Settings pickers, Category in the editor); inline in menus (Sort, Show Light For). |
-| **Menu** | Add to Trip, Explore Filters and Sort, Saved Sort and Filter, Trip Actions, context menus. |
+| **Picker** | Segmented (intent on the Spot page, timeline zoom, trip builder toolbar day picker up to 5 days); menu (session menu, Settings pickers, Category in the editor); inline in menus (Sort By and Show Light For in the Explore list header menu). |
+| **Menu** | Add to Trip, Explore list header menu (light, sort, filters), Saved Sort and Filter, Trip Actions, context menus. |
 | **ShareLink** | Trip (toolbar and context menu; shares a `.iter` document), Spot (header; shares an Apple Maps link and a coordinate message). |
-| **DatePicker, Stepper, TextField, Toggle** | Forms (grouped style) in the sheets and Settings; Explore's date control is a DatePicker flanked by chevron buttons; the Explore Add Spot control is a button-style Toggle. |
+| **DatePicker, Stepper, TextField, Toggle** | Forms (grouped style) in the sheets and Settings; Explore's date control is a button group (chevrons around a "Mon, Oct 5" button that opens a popover with a graphical DatePicker and a Today button); the Explore Add Spot control is a button-style Toggle. |
 | **Sheet, popover, confirmationDialog, alert, fileImporter, fileExporter** | As listed in SCREENS.md. |
 | **TabView** | Settings (four tabs). |
-| **Materials** | `regularMaterial` for the place card, Add Spot banner and route day picker; `bar` for the Saved footer. Flat colours in snapshots. |
+| **Materials** | `regularMaterial` for the place card, Add Spot banner; `bar` for the Saved footer. Flat colours in snapshots. |
 | **ProgressView** | Small circular spinners next to loading text; large in Scout's running state. |
 | **Buttons** | Prominent (accent fill, `accent/onAccent` text) for the single primary action of a view; bordered for secondary; borderless or link for inline actions; plain for tappable cards and rows. |
 

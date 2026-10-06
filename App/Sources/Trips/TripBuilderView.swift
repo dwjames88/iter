@@ -21,6 +21,8 @@ private struct TripBuilderContent: View {
     @Environment(AppNavigation.self) private var navigation
     @State private var builder: TripBuilderModel
     @State private var selection: UUID?
+    /// The day picked in the toolbar picker; shared with the map (the selected stop's day wins there).
+    @State private var chosenDay: Int?
     @State private var changesDates = false
     @State private var exports = false
     @State private var exportMessage: String?
@@ -62,10 +64,11 @@ private struct TripBuilderContent: View {
                 TripPlanList(builder: builder, selection: $selection)
             }
             .frame(minWidth: IterSize.listIdeal, idealWidth: IterSize.listMax, maxWidth: .infinity)
-            TripRouteMap(builder: builder, selection: $selection)
+            TripRouteMap(builder: builder, selection: $selection, chosenDay: $chosenDay)
                 .frame(minWidth: IterSize.listMin, maxWidth: .infinity)
         }
-        .background(IterColor.backgroundWindow)
+        .background(IterColor.backgroundWindow, ignoresSafeAreaEdges: [])
+        .unifiedToolbarBackground()
         .navigationTitle(plan.name)
         .toolbar(removing: .title)
         .toolbar { toolbar(plan) }
@@ -88,7 +91,37 @@ private struct TripBuilderContent: View {
 
     private var exportItem: TripDocument? { record.map { model.store.document(for: $0) } }
 
+    /// Day numbers that have stops, and the day the map highlights (same rule as `TripRouteMap`).
+    private var dayIndices: [Int] { builder.days.filter { !$0.stops.isEmpty }.map(\.index) }
+
+    private var activeDay: Int {
+        if let selection, let entry = builder.days.flatMap(\.stops).first(where: { $0.id == selection }) { return entry.stop.dayIndex }
+        return chosenDay ?? dayIndices.first ?? 0
+    }
+
+    @ViewBuilder private var dayPicker: some View {
+        let picker = Picker(selection: Binding(get: { activeDay }, set: { chosenDay = $0; selection = nil })) {
+            ForEach(dayIndices, id: \.self) { index in
+                Text("Day \(index + 1)", comment: "Route day picker segment").tag(index)
+            }
+        } label: {
+            Text("Route day", comment: "Accessibility label of the route day picker")
+        }
+        .labelsHidden()
+        if dayIndices.count <= 5 {
+            picker.pickerStyle(.segmented)
+        } else {
+            picker.pickerStyle(.menu)
+        }
+    }
+
     @ToolbarContentBuilder private func toolbar(_ plan: TripPlan) -> some ToolbarContent {
+        if dayIndices.count > 1 {
+            ToolbarItem(placement: .principal) {
+                dayPicker
+                    .help(Text("Choose the day whose route is highlighted on the map", comment: "Tooltip"))
+            }
+        }
         if builder.isLoadingLegs {
             ToolbarItem {
                 ProgressView().controlSize(.small)
