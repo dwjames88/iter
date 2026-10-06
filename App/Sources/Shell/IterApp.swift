@@ -27,8 +27,12 @@ struct IterApp: App {
         _model = State(initialValue: model)
         // `-IterSeedTrip YES` (with `-IterInMemoryStore YES` only): the Canyon Country sample trip, starting tomorrow,
         // so `-IterSection trip` opens a 4-day trip for screenshots and measurements without touching real data.
-        if AppLaunch.inMemoryStore, UserDefaults.standard.bool(forKey: "IterSeedTrip") {
-            _ = store.seedSampleTrip(startDay: model.today(in: .current).adding(days: 1))
+        // `-IterSeedTrip conflict` also reverses day 2, so a sunrise stop follows a sunset stop (a conflict and a suggestion).
+        if AppLaunch.inMemoryStore, let seed = AppLaunch.seedTrip {
+            let trip = store.seedSampleTrip(startDay: model.today(in: .current).adding(days: 1))
+            if seed == .conflict {
+                store.reorder(day: 1, in: trip, to: trip.orderedStops(onDay: 1).reversed().map(\.id))
+            }
         }
         // The smoke hook starts here, not in a view task, so it also runs when the app is launched hidden.
         if AppLaunch.smokeTest {

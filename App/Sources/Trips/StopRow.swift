@@ -19,39 +19,44 @@ struct StopNumberBadge: View {
     }
 }
 
-/// One stop: its schedule leads (when to leave, when to be set up), then the session, the light, and the stop's own notes.
+/// One stop on a day's timeline: the set-up time in the gutter, the numbered node on the rail, then the stop itself
+/// (name, light, session, walk-in and set-up, note). Leave times belong to the drive row above it.
 struct StopRowView: View {
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
     let entry: TripStopEntry
     let builder: TripBuilderModel
     @Binding var selection: UUID?
+    /// The rail above and below the node: the drive into this stop and the drive out of it.
+    var railAbove: RailTone?
+    var railBelow: RailTone?
 
     @State private var editsBuffer = false
 
     private var spot: Spot { entry.stop.spot }
     private var zone: TimeZone { spot.timeZone }
 
+    private static let verticalPadding = IterSpace.sm
+
     var body: some View {
-        HStack(alignment: .top, spacing: IterSpace.md) {
-            StopNumberBadge(number: entry.number)
+        HStack(alignment: .top, spacing: 0) {
+            TimeGutter(time: entry.schedule?.setUpBy, zone: zone, label: String(localized: "Set up", comment: "Label under a stop's set-up time"))
+                .padding(.top, Self.verticalPadding)
+            TimelineRail(above: railAbove, below: railBelow, nodeTop: Self.verticalPadding, nodeSize: IterSize.badgeHeight) {
+                StopNumberBadge(number: entry.number)
+                    .background(IterColor.backgroundContent, in: Circle())
+            }
             VStack(alignment: .leading, spacing: IterSpace.xs) {
                 titleLine
-                if let schedule = entry.schedule, let headline = ScheduleText.headline(schedule, in: zone, leavingFrom: entry.previous?.spot.timeZone) {
-                    Text(headline)
-                        .font(IterFont.bodyEmphasis)
-                        .monospacedDigit()
-                        .foregroundStyle(IterColor.textPrimary)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
                 sessionLine
                 ForEach(ScheduleText.rowIssues(for: entry), id: \.self) { issue in
                     IssueLine(text: issue)
                 }
                 StopNoteField(stopID: entry.id, note: entry.stop.note, builder: builder)
             }
+            .padding(.leading, IterSpace.sm)
+            .padding(.vertical, Self.verticalPadding)
         }
-        .padding(.vertical, IterSpace.sm)
         .contentShape(Rectangle())
         .contextMenu { StopContextMenu(entry: entry, builder: builder, selection: $selection) }
         .accessibilityElement(children: .contain)
@@ -139,7 +144,7 @@ struct StopRowView: View {
         .help(Text("Which light to shoot here: each window with its time and score for this day", comment: "Tooltip"))
     }
 
-    private var walkInText: some View { Text(ScheduleText.walkIn(minutes: spot.walkInMinutes)) }
+    private var walkInText: some View { Text(ScheduleText.parkAndWalk(entry.schedule, minutes: spot.walkInMinutes, in: zone)) }
 
     private var bufferButton: some View {
         Button { editsBuffer = true } label: {
@@ -242,68 +247,5 @@ struct StopContextMenu: View {
         let item = MKMapItem(location: CLLocation(latitude: spot.coordinate.latitude, longitude: spot.coordinate.longitude), address: nil)
         item.name = spot.name
         item.openInMaps()
-    }
-}
-
-/// The line between two stops: the drive and whether it fits. Across a day boundary it is an explicit overnight break (C50).
-struct ConnectorRowView: View {
-    let entry: TripStopEntry
-
-    var body: some View {
-        HStack(alignment: .center, spacing: IterSpace.md) {
-            rail
-            if entry.isOvernightFromPrevious {
-                Label {
-                    Text(ConnectorText.overnight).font(IterFont.captionStrong).foregroundStyle(IterColor.textSecondary)
-                } icon: {
-                    Image(systemName: "moon.stars").font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-                }
-                Rectangle().fill(IterColor.separator).frame(height: IterStroke.hairline)
-                driveText
-            } else {
-                driveText
-                Spacer(minLength: 0)
-            }
-        }
-        .padding(.vertical, IterSpace.xs)
-        .accessibilityElement(children: .combine)
-    }
-
-    private var rail: some View {
-        RoundedRectangle(cornerRadius: IterStroke.thin)
-            .fill(doesNotFit ? IterColor.warning : IterColor.route)
-            .frame(width: IterStroke.thick, height: IterSize.iconMedium)
-            .frame(width: IterSize.badgeHeight)
-            .accessibilityHidden(true)
-    }
-
-    private var doesNotFit: Bool { shortBy != nil }
-
-    @ViewBuilder private var driveText: some View {
-        if let leg = entry.schedule?.legFromPrevious {
-            HStack(spacing: IterSpace.xs) {
-                Image(systemName: "car.fill").font(IterFont.caption).accessibilityHidden(true)
-                Text(ConnectorText.drive(leg)).monospacedDigit()
-                if leg.isEstimate {
-                    Text(verbatim: "·").accessibilityHidden(true)
-                    Text(ConnectorText.estimated).help(Text(ConnectorText.driveEstimatedHelp))
-                }
-                if let short = shortBy {
-                    Text(verbatim: "·").accessibilityHidden(true)
-                    Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(IterColor.warning).accessibilityHidden(true)
-                    Text(ScheduleText.driveDoesNotFit(shortBy: short)).foregroundStyle(IterColor.warning)
-                }
-            }
-            .font(IterFont.caption)
-            .foregroundStyle(IterColor.textSecondary)
-            .lineLimit(2)
-        }
-    }
-
-    private var shortBy: TimeInterval? {
-        for issue in entry.schedule?.issues ?? [] {
-            if case .driveDoesNotFit(let seconds) = issue { return seconds }
-        }
-        return nil
     }
 }

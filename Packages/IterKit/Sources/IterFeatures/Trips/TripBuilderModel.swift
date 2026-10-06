@@ -56,6 +56,8 @@ public final class TripBuilderModel {
     public private(set) var legs: [LegKey: DriveLeg] = [:]
     /// Light-first suggestions that have not been dismissed.
     public private(set) var suggestions: [OrderingSuggestion] = []
+    /// The day-first shape of the plan: day groups with their timelines, overnight boundaries and overview cells.
+    public private(set) var layout = TripDayLayout(groups: [])
     /// True while drives are being fetched.
     public private(set) var isLoadingLegs = false
 
@@ -189,6 +191,7 @@ public final class TripBuilderModel {
             schedule = TripSchedule(stops: [])
             days = []
             suggestions = []
+            layout = TripDayLayout(groups: [])
             return
         }
         let plan = record.plan
@@ -263,6 +266,7 @@ public final class TripBuilderModel {
         allSuggestions = scheduler.suggestOrdering(plan, legs: legs)
         suggestions = allSuggestions.filter { !dismissals.isDismissed(trip: tripID, day: $0.dayIndex, order: $0.order) }
         days = buildDays(plan: plan, schedule: schedule)
+        layout = TripDayLayout.make(days: days, suggestions: suggestions)
     }
 
     private func buildDays(plan: TripPlan, schedule: TripSchedule) -> [TripDay] {
@@ -423,6 +427,7 @@ public final class TripBuilderModel {
     public func dismiss(_ suggestion: OrderingSuggestion) {
         dismissals.dismiss(trip: tripID, day: suggestion.dayIndex, order: suggestion.order)
         suggestions = allSuggestions.filter { !dismissals.isDismissed(trip: tripID, day: $0.dayIndex, order: $0.order) }
+        layout = TripDayLayout.make(days: days, suggestions: suggestions)
     }
 
     // MARK: - Add stop

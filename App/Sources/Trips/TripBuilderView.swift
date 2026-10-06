@@ -4,75 +4,122 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// The trip builder (plan 6.3-A): the plan as a day list with feasibility connectors on the left, the route on the right.
+/// The trip builder (plan 6.3-A): the plan as day containers with feasibility connectors on the left, the route on the right.
 struct TripBuilderView: View {
     let tripID: UUID
+    /// The day selected on first appearance (0-based); `-IterTripDay` for captures.
+    var initialDay: Int? = AppLaunch.tripDay
     @Environment(AppModel.self) private var model
 
     var body: some View {
         let _ = IterPerf.count("trip.viewBody")
-        TripBuilderContent(tripID: tripID, model: model)
+        TripBuilderContent(tripID: tripID, model: model, initialDay: initialDay)
     }
 }
 
-/// Holds the builder model. Built once per trip; `TripBuilderView` is re-created freely by the navigation stack.
+/// Holds the builder model. The model is made once, when the view first appears, never in an initializer: the
+/// navigation stack re-creates `TripBuilderView` (and this view's `init`) on every state change, and a model made there
+/// would run a full refresh and a drive fetch each time. `DetailView` gives the view `.id(tripID)`, so each trip
+/// gets its own.
 private struct TripBuilderContent: View {
     let tripID: UUID
     let model: AppModel
     @Environment(AppNavigation.self) private var navigation
-    @State private var builder: TripBuilderModel
+    @State private var builder: TripBuilderModel?
     @State private var selection: UUID?
-    /// The day picked in the toolbar picker; shared with the map (the selected stop's day wins there).
-    @State private var chosenDay: Int?
+    /// The one selected day, shared by the overview strip, the list, the map and its switcher. nil: all days.
+    @State private var selectedDay: Int?
+    @State private var scrollRequest: DayScrollRequest?
     @State private var changesDates = false
     @State private var exports = false
     @State private var exportMessage: String?
 
-    init(tripID: UUID, model: AppModel) {
+    init(tripID: UUID, model: AppModel, initialDay: Int?) {
         self.tripID = tripID
         self.model = model
-        _builder = State(initialValue: TripBuilderModel(tripID: tripID, store: model.store, scheduler: model.scheduler,
-                                                        drives: model.drives, forecasts: model.forecasts, now: { model.now() }))
+        _selectedDay = State(initialValue: initialDay)
     }
 
     var body: some View {
         Group {
-            if let plan = builder.plan {
-                builderBody(plan)
-            } else {
-                ContentUnavailableView {
-                    Label(String(localized: "Trip Not Found", comment: "Empty state title"), systemImage: "map")
-                } description: {
-                    Text("This trip was deleted or its creation was undone.", comment: "Empty state explanation")
-                } actions: {
-                    Button(String(localized: "Back to All Trips", comment: "Button")) { navigation.show(.trips) }
-                        .buttonStyle(.borderedProminent)
+            if let builder {
+                if let plan = builder.plan {
+                    builderBody(plan, builder)
+                } else {
+                    ContentUnavailableView {
+                        Label(String(localized: "Trip Not Found", comment: "Empty state title"), systemImage: "map")
+                    } description: {
+                        Text("This trip was deleted or its creation was undone.", comment: "Empty state explanation")
+                    } actions: {
+                        Button(String(localized: "Back to All Trips", comment: "Button")) { navigation.show(.trips) }
+                            .buttonStyle(.borderedProminent)
+                    }
                 }
+            } else {
+                Color.clear
             }
         }
-        .onChange(of: model.store.revision) { builder.refreshIfChanged() }
-        .onChange(of: model.forecasts.revision) { builder.refreshIfChanged() }
+        .onAppear(perform: makeBuilderIfNeeded)
         .tripFlows()
+    }
+
+    private func makeBuilderIfNeeded() {
+        guard builder == nil else { return }
+        let made = TripBuilderModel(tripID: tripID, store: model.store, scheduler: model.scheduler, drives: model.drives,
+                                    forecasts: model.forecasts, now: { model.now() })
+        if let day = selectedDay {
+            if made.layout.groups.indices.contains(day) { made.setFocusDay(day) } else { selectedDay = nil }
+        }
+        builder = made
+    }
+
+    // MARK: Day selection
+
+    /// The strip and the map's switcher choose a day (nil: all days): the list scrolls to it and the map frames it.
+    private func chooseDay(_ day: Int?, in builder: TripBuilderModel) {
+        selectedDay = day
+        if let selected = selection, builder.layout.day(ofStop: selected) != day { selection = nil }
+        builder.setFocusDay(day)
+        if let day { scrollRequest = DayScrollRequest(day: day, token: (scrollRequest?.token ?? 0) + 1) }
+    }
+
+    /// A stop was selected (in the list or on the map): its day becomes the selected day and the map follows.
+    private func stopSelected(_ id: UUID?, in builder: TripBuilderModel) {
+        guard let id, let entry = builder.days.flatMap(\.stops).first(where: { $0.id == id }) else { return }
+        let requestBefore = builder.cameraRequest?.id
+        if selectedDay != entry.stop.dayIndex {
+            selectedDay = entry.stop.dayIndex
+            builder.setFocusDay(entry.stop.dayIndex)
+        }
+        // A refit to the new day already frames the stop; otherwise pan to it without changing the zoom.
+        if builder.cameraRequest?.id == requestBefore { builder.reveal(entry.stop.spot.coordinate) }
     }
 
     // MARK: Content
 
-    @ViewBuilder private func builderBody(_ plan: TripPlan) -> some View {
+    @ViewBuilder private func builderBody(_ plan: TripPlan, _ builder: TripBuilderModel) -> some View {
         ResizableSplit(storageKey: "trip", idealWidth: IterSize.listMax) {
             VStack(spacing: 0) {
                 TripHeader(plan: plan, builder: builder) { changesDates = true }
                 Divider()
                 WeatherStatusBanner(status: model.weatherStatus)
-                TripPlanList(builder: builder, selection: $selection)
+                if builder.layout.groups.count > 1 {
+                    TripOverviewStrip(cells: builder.layout.overviewCells, selectedDay: selectedDay) { chooseDay($0, in: builder) }
+                    Divider()
+                }
+                TripPlanList(builder: builder, selection: $selection, selectedDay: $selectedDay, scrollRequest: scrollRequest)
             }
         } trailing: {
-            TripRouteMap(builder: builder, selection: $selection, chosenDay: $chosenDay)
+            TripRouteMap(builder: builder, selection: $selection, selectedDay: Binding(get: { selectedDay }, set: { chooseDay($0, in: builder) }))
         }
         .background(IterColor.backgroundWindow, ignoresSafeAreaEdges: [])
         .unifiedToolbarBackground()
         .navigationTitle(plan.name)
         .toolbar(removing: .title)
-        .toolbar { toolbar(plan) }
+        .toolbar { toolbar(plan, builder) }
+        .onChange(of: model.store.revision) { builder.refreshIfChanged() }
+        .onChange(of: model.forecasts.revision) { builder.refreshIfChanged() }
+        .onChange(of: selection) { stopSelected(selection, in: builder) }
         .sheet(isPresented: $changesDates) { ChangeDatesSheet(builder: builder) }
         .fileExporter(isPresented: $exports, item: exportItem, contentTypes: [.iterTrip],
                       defaultFilename: TripDocument.suggestedFileName(forTripNamed: plan.name)) { result in
@@ -92,37 +139,7 @@ private struct TripBuilderContent: View {
 
     private var exportItem: TripDocument? { record.map { model.store.document(for: $0) } }
 
-    /// Day numbers that have stops, and the day the map highlights (same rule as `TripRouteMap`).
-    private var dayIndices: [Int] { builder.days.filter { !$0.stops.isEmpty }.map(\.index) }
-
-    private var activeDay: Int {
-        if let selection, let entry = builder.days.flatMap(\.stops).first(where: { $0.id == selection }) { return entry.stop.dayIndex }
-        return chosenDay ?? dayIndices.first ?? 0
-    }
-
-    @ViewBuilder private var dayPicker: some View {
-        let picker = Picker(selection: Binding(get: { activeDay }, set: { chosenDay = $0; selection = nil })) {
-            ForEach(dayIndices, id: \.self) { index in
-                Text("Day \(index + 1)", comment: "Route day picker segment").tag(index)
-            }
-        } label: {
-            Text("Route day", comment: "Accessibility label of the route day picker")
-        }
-        .labelsHidden()
-        if dayIndices.count <= 5 {
-            picker.pickerStyle(.segmented)
-        } else {
-            picker.pickerStyle(.menu)
-        }
-    }
-
-    @ToolbarContentBuilder private func toolbar(_ plan: TripPlan) -> some ToolbarContent {
-        if dayIndices.count > 1 {
-            ToolbarItem(placement: .principal) {
-                dayPicker
-                    .help(Text("Choose the day whose route is highlighted on the map", comment: "Tooltip"))
-            }
-        }
+    @ToolbarContentBuilder private func toolbar(_ plan: TripPlan, _ builder: TripBuilderModel) -> some ToolbarContent {
         if builder.isLoadingLegs {
             ToolbarItem {
                 ProgressView().controlSize(.small)
