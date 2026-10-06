@@ -42,6 +42,7 @@ private struct ExploreContent: View {
     @Environment(AppNavigation.self) private var navigation
     @FocusState private var searchFocused: Bool
     @State private var choosingDay = false
+    @Environment(\.openURL) private var openURL
 
     var body: some View {
         HSplitView {
@@ -95,6 +96,17 @@ private struct ExploreContent: View {
                 Button(String(localized: "Today", comment: "Toolbar button: jump to today")) { explore.goToToday() }
                     .help(String(localized: "Jump to today", comment: "Tooltip"))
             }
+        }
+        ToolbarItem(placement: .primaryAction) {
+            Button {
+                if let region = explore.visibleRegion {
+                    openURL(WindyLink.url(center: region.center, zoom: WindyLink.zoom(forLatitudeDelta: region.latitudeDelta)))
+                }
+            } label: {
+                Label(String(localized: "Windy", comment: "Toolbar button: open the map area on windy.com"), systemImage: "wind")
+            }
+            .disabled(explore.visibleRegion == nil)
+            .help(String(localized: "Open this map area on windy.com", comment: "Tooltip"))
         }
         ToolbarItem(placement: .primaryAction) {
             Toggle(isOn: $explore.isAddingSpot) {

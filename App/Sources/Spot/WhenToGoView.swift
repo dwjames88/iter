@@ -85,7 +85,7 @@ struct WhenToGoSection: View {
                             .foregroundStyle(IterColor.textSecondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
-                    if case .serviceFailed = page.unavailableReason {
+                    if let reason = page.unavailableReason, LightText.canRetry(reason) {
                         Button { page.retry() } label: { Label(LightText.retry, systemImage: "arrow.clockwise") }
                             .controlSize(.small)
                             .keyboardShortcut("r", modifiers: [.command, .option])

@@ -8,6 +8,7 @@ import IterFeatures
 struct RootView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.undoManager) private var undoManager
+    @Environment(\.openSettings) private var openSettings
     @State private var navigation = AppNavigation()
     @SceneStorage("sidebarSelection") private var storedSelection: Data?
 
@@ -26,6 +27,7 @@ struct RootView: View {
             model.store.undoManager = undoManager
             restoreSelection()
         }
+        .task { if AppLaunch.settingsTab != nil { openSettings() } }
         .onChange(of: undoManager) { _, new in model.store.undoManager = new }
         // A .iter file opened from Finder (or dropped on the Dock icon) lands here as a new trip.
         .handlesExternalEvents(preferring: ["*"], allowing: ["*"])
@@ -66,6 +68,10 @@ struct RootView: View {
                 navigation.selection = forced
             } else if AppLaunch.sectionName == "trip", let first = model.store.trips().first {
                 navigation.selection = .trip(first.id)
+            }
+            if let spot = AppLaunch.spot {
+                navigation.selection = .explore
+                navigation.explorePath = [SpotRoute(spot: spot)]
             }
         }
         guard let data = storedSelection, let item = try? JSONDecoder().decode(SidebarItem?.self, from: data) else { return }

@@ -57,7 +57,7 @@ struct TripPlanList: View {
                 }
             }
             if showsScores {
-                WeatherAttributionView()
+                ForecastSourceFooter(app: model, coordinates: builder.days.flatMap(\.stops).map(\.stop.spot.coordinate))
                     .selectionDisabled()
                     .listRowSeparator(.hidden)
             }
@@ -122,10 +122,7 @@ struct TripPlanList: View {
             return nil
         }
         guard let first = reasons.first, reasons.count == builder.days.flatMap(\.stops).count else { return nil }
-        switch first {
-        case .weatherServiceNotEnabled, .serviceFailed: return first
-        default: return nil
-        }
+        return LightText.isGlobal(first) ? first : nil
     }
 }
 

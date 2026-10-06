@@ -84,6 +84,9 @@ struct ExplorePlaceCard: View {
                             .foregroundStyle(IterColor.textSecondary)
                     }
                 }
+                if let forecast = model.forecasts.state(for: spot.coordinate).forecast {
+                    ForecastSourceLine(info: ForecastSourceInfo(forecast))
+                }
                 if let reason = row.unavailableReason {
                     Text(LightText.noForecastReason(reason))
                         .font(IterFont.caption)

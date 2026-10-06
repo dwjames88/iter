@@ -10,6 +10,8 @@ struct HourlyWeatherSection: View {
     @AppStorage(AppSettings.temperatureUnit) private var temperatureUnit = "system"
 
     private static let rainThreshold = 0.2
+    /// Millimetres per hour worth showing when only an amount is known.
+    private static let rainMmThreshold = 0.1
     private static let rowCount = 5
 
     var body: some View {
@@ -19,9 +21,9 @@ struct HourlyWeatherSection: View {
                 HStack(alignment: .firstTextBaseline) {
                     Text(LightText.hourlyTitle).font(IterFont.titleSection)
                     Spacer()
-                    Text(TimeText.updated(page.forecast?.fetchedAt ?? page.app.now()))
-                        .font(IterFont.footnote)
-                        .foregroundStyle(IterColor.textSecondary)
+                    if let forecast = page.forecast {
+                        ForecastSourceLine(info: ForecastSourceInfo(forecast))
+                    }
                 }
                 SpotCard {
                     VStack(alignment: .leading, spacing: IterSpace.sm) {
@@ -30,9 +32,11 @@ struct HourlyWeatherSection: View {
                             .accessibilityElement(children: .ignore)
                             .accessibilityLabel(accessibilitySummary(hours))
                         HStack(alignment: .firstTextBaseline) {
-                            WeatherAttributionView()
+                            WeatherAttributionView(source: page.forecast?.source ?? ForecastSourceInfo.configured(app: page.app))
                             Spacer()
-                            Text("Wind in \(LightText.windUnit)", comment: "Hourly strip footnote naming the wind unit")
+                            Text(hours.contains { $0.precipitationChance == nil && $0.precipitationMm != nil }
+                                 ? String(localized: "Rain in mm/h · Wind in \(LightText.windUnit)", comment: "Hourly strip footnote naming the rain and wind units when rain is an amount")
+                                 : String(localized: "Wind in \(LightText.windUnit)", comment: "Hourly strip footnote naming the wind unit"))
                                 .font(IterFont.caption)
                                 .foregroundStyle(IterColor.textSecondary)
                         }
@@ -96,12 +100,32 @@ struct HourlyWeatherSection: View {
                 .frame(height: SpotLayout.hourlyRow)
             cell(AppSettings.temperature(h.temperatureC, unitSetting: temperatureUnit))
             cell(Int((h.cloudCover * 100).rounded()).formatted())
-            cell(h.precipitationChance >= Self.rainThreshold ? Int((h.precipitationChance * 100).rounded()).formatted() : "",
-                 color: AnyShapeStyle(IterColor.accentText))
+            cell(rainText(h), color: AnyShapeStyle(IterColor.accentText))
             cell(LightText.windNumber(kph: h.windSpeedKph))
         }
         .lineLimit(1)
         .minimumScaleFactor(0.7)
+    }
+
+    /// The chance when the provider gives one, the amount in mm when it gives only that, "—" when it gives neither.
+    private func rainText(_ h: HourlyConditions) -> String {
+        if let chance = h.precipitationChance {
+            return chance >= Self.rainThreshold ? Int((chance * 100).rounded()).formatted() : ""
+        }
+        if let mm = h.precipitationMm {
+            return mm >= Self.rainMmThreshold ? mm.formatted(.number.precision(.fractionLength(0...1))) : ""
+        }
+        return "—"
+    }
+
+    private func rainSpoken(_ h: HourlyConditions) -> String {
+        if let chance = h.precipitationChance, chance >= Self.rainThreshold {
+            return ", \(LightText.percent(chance)) rain"
+        }
+        if h.precipitationChance == nil, let mm = h.precipitationMm, mm >= Self.rainMmThreshold {
+            return ", \(LightText.millimetresPerHour(mm)) rain"
+        }
+        return ""
     }
 
     private func cell(_ text: String, color: AnyShapeStyle = AnyShapeStyle(IterColor.textPrimary)) -> some View {
@@ -114,7 +138,7 @@ struct HourlyWeatherSection: View {
     private func accessibilitySummary(_ hours: [HourlyConditions]) -> String {
         let zone = page.timeZone
         let rows = hours.enumerated().filter { $0.offset % 3 == 0 }.map(\.element).map { h in
-            let rain = h.precipitationChance >= Self.rainThreshold ? ", \(LightText.percent(h.precipitationChance)) rain" : ""
+            let rain = rainSpoken(h)
             return "\(LightText.hourLabel(h.date, in: zone)): \(AppSettings.temperature(h.temperatureC, unitSetting: temperatureUnit)), \(LightText.percent(h.cloudCover)) cloud\(rain)"
         }
         return ([String(localized: "Hourly weather", comment: "VoiceOver label")] + rows).joined(separator: ". ")

@@ -116,6 +116,12 @@ private struct FailingGeocoder: Geocoding {
         let bare = Fixtures.model(weather: .notEnabled)
         try await Snapshot.render(Fixtures.host(SettingsView(initialTab: .weather), model: bare), screen: "settings", state: "weather", settle: .seconds(1))
         try await Snapshot.render(Fixtures.host(SettingsView(initialTab: .weather), model: sample), screen: "settings", state: "weather-working", sizes: [Snapshot.regular], settle: .seconds(1))
+        let needsKey = await Fixtures.weatherSettingsModel(primary: .openWeather, fallback: .appleWeather)
+        try await Snapshot.render(Fixtures.host(SettingsView(initialTab: .weather), model: needsKey), screen: "settings", state: "weather-needs-key", settle: .seconds(1))
+        let working = await Fixtures.weatherSettingsModel(primary: .openWeather, fallback: .appleWeather, keys: [.openWeather], working: [.openWeather])
+        try await Snapshot.render(Fixtures.host(SettingsView(initialTab: .weather), model: working), screen: "settings", state: "weather-openweather-working", settle: .seconds(1))
+        let testing = await Fixtures.weatherSettingsModel(primary: .windy, fallback: .openWeather, keys: [.windy])
+        try await Snapshot.render(Fixtures.host(SettingsView(initialTab: .weather), model: testing), screen: "settings", state: "weather-testing-key", settle: .seconds(1))
         try await Snapshot.render(Fixtures.host(SettingsView(initialTab: .intelligence), model: bare), screen: "settings", state: "intelligence", sizes: [Snapshot.regular])
         try await Snapshot.render(Fixtures.host(SettingsView(initialTab: .about), model: bare), screen: "settings", state: "about", sizes: [Snapshot.regular])
     }
@@ -133,5 +139,27 @@ private struct FailingGeocoder: Geocoding {
         let record = Self.addUserSpot(model)
         #expect(model.store.savedPlaces().contains { $0.id == record.id })
         #expect(record.origin == .user)
+    }
+}
+
+// MARK: - Weather settings behaviour (runs without snapshots)
+
+@MainActor
+@Suite struct WeatherSettingsStatusTests {
+    @Test func statusWordsMatchTheSpec() {
+        let time = Fixtures.now.formatted(date: .omitted, time: .shortened)
+        #expect(WeatherSettingsText.status(.working(lastUpdate: Fixtures.now), source: .openWeather).text == "Working · last update \(time)")
+        #expect(WeatherSettingsText.status(.needsKey, source: .windy).text == "Needs an API key")
+        #expect(WeatherSettingsText.status(.dailyCap(calls: 800, cap: 800), source: .openWeather).text == "Daily cap reached (800 of 800)")
+        #expect(WeatherSettingsText.status(.failed(detail: "x"), source: .openWeather).text == "Couldn't reach OpenWeather")
+    }
+
+    @Test func fixtureModelsCarryTheStatuses() async {
+        let needsKey = await Fixtures.weatherSettingsModel(primary: .openWeather, fallback: .appleWeather)
+        #expect(needsKey.weather.status(for: .openWeather) == .needsKey)
+        let testing = await Fixtures.weatherSettingsModel(primary: .windy, keys: [.windy])
+        #expect(testing.weather.status(for: .windy) == .testingKey)
+        let working = await Fixtures.weatherSettingsModel(primary: .openWeather, keys: [.openWeather], working: [.openWeather])
+        #expect(working.weather.status(for: .openWeather) == .working(lastUpdate: Fixtures.now))
     }
 }

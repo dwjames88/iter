@@ -47,11 +47,13 @@ public struct AppleWeatherService: WeatherProviding {
         }
     }
 
+    /// Apple's required attribution is its combined mark and legal page (so `requiredText` stays nil).
     public func attribution() async -> WeatherAttributionInfo? {
         do {
             let a = try await WeatherService.shared.attribution
             return WeatherAttributionInfo(serviceName: a.serviceName, legalPageURL: a.legalPageURL,
-                                          combinedMarkLightURL: a.combinedMarkLightURL, combinedMarkDarkURL: a.combinedMarkDarkURL)
+                                          combinedMarkLightURL: a.combinedMarkLightURL, combinedMarkDarkURL: a.combinedMarkDarkURL,
+                                          requiredText: nil)
         } catch {
             return nil
         }
@@ -67,8 +69,10 @@ public struct AppleWeatherService: WeatherProviding {
             cloudMid: h.cloudCoverByAltitude.medium,
             cloudHigh: h.cloudCoverByAltitude.high,
             precipitationChance: h.precipitationChance,
+            precipitationMm: h.precipitationAmount.converted(to: .millimeters).value,
             visibilityMeters: h.visibility.converted(to: .meters).value,
             windSpeedKph: h.wind.speed.converted(to: .kilometersPerHour).value,
+            windGustKph: h.wind.gust?.converted(to: .kilometersPerHour).value,
             temperatureC: h.temperature.converted(to: .celsius).value,
             humidity: h.humidity,
             symbolName: h.symbolName,

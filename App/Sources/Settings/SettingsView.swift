@@ -11,7 +11,7 @@ enum SettingsTab: Hashable { case general, weather, intelligence, about }
 struct SettingsView: View {
     @State private var tab: SettingsTab
 
-    init(initialTab: SettingsTab = .general) {
+    init(initialTab: SettingsTab = AppLaunch.settingsTab ?? .general) {
         _tab = State(initialValue: initialTab)
     }
 
@@ -80,118 +80,6 @@ private struct GeneralSettingsPane: View {
     }
 }
 
-// MARK: - Weather
-
-private struct WeatherSettingsPane: View {
-    @Environment(AppModel.self) private var model
-    @State private var status: Status = .checking
-
-    enum Status: Equatable {
-        case checking
-        case working
-        case notEnabled
-        case failed(String)
-    }
-
-    /// Any place will do; this one is only a probe.
-    private static let probe = Coordinate(latitude: 38.3659, longitude: -109.6213)
-
-    var body: some View {
-        Form {
-            Section {
-                statusRow
-                if model.sampleDataEnabled {
-                    LabeledContent {
-                        SampleDataLabel(style: .inline)
-                    } label: { Text("Sample Data", comment: "Settings field") }
-                    Text("Scores use made-up weather, not Apple Weather. Turn this off in the Debug menu.", comment: "Settings: sample data explanation")
-                        .font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-                }
-            } header: { Text("Forecast source", comment: "Settings section") }
-            if status == .notEnabled { enableSteps }
-            if case .failed(let detail) = status {
-                Section {
-                    Text(detail).font(IterFont.caption).foregroundStyle(IterColor.textSecondary).textSelection(.enabled)
-                } header: { Text("Detail", comment: "Settings section: technical error detail") }
-            }
-            if model.sampleDataEnabled || model.attribution != nil {
-                Section {
-                    WeatherAttributionView()
-                } header: { Text("Attribution", comment: "Settings section") }
-            }
-        }
-        .formStyle(.grouped)
-        .task { await check() }
-    }
-
-    @ViewBuilder private var statusRow: some View {
-        switch status {
-        case .checking:
-            HStack(spacing: IterSpace.sm) {
-                ProgressView().controlSize(.small)
-                Text("Checking Apple Weather…", comment: "Settings weather status")
-            }
-        case .working:
-            Label {
-                Text("Apple Weather is working", comment: "Settings weather status")
-            } icon: { Image(systemName: "checkmark.circle") }
-        case .notEnabled:
-            Label {
-                Text("Weather isn't enabled for this build.", comment: "Settings weather status")
-            } icon: { Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(IterColor.warning) }
-        case .failed:
-            HStack {
-                Label {
-                    Text("Couldn't reach Apple Weather.", comment: "Settings weather status")
-                } icon: { Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(IterColor.warning) }
-                Spacer()
-                Button { Task { await check(force: true) } } label: { Text("Check Again", comment: "Button") }
-            }
-        }
-    }
-
-    private var enableSteps: some View {
-        Section {
-            VStack(alignment: .leading, spacing: IterSpace.sm) {
-                step(1, Text("Sign in to Xcode with an Apple Developer Program account.", comment: "WeatherKit setup step"))
-                step(2, Text("In Certificates, Identifiers & Profiles, enable WeatherKit for the App ID com.dwjames.iter, on both the Capabilities and App Services tabs.",
-                             comment: "WeatherKit setup step"))
-                step(3, Text("Build with `scripts/run.sh --weatherkit`.", comment: "WeatherKit setup step; the command is code"))
-            }
-            .textSelection(.enabled)
-        } header: {
-            Text("To turn it on", comment: "Settings section: WeatherKit setup steps")
-        } footer: {
-            Text("Until then, sun and moon times are exact and light scores show \u{201C}No forecast\u{201D}.", comment: "Settings footer: what works without weather")
-        }
-    }
-
-    private func step(_ n: Int, _ text: Text) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
-            Text("\(n).").monospacedDigit().foregroundStyle(IterColor.textSecondary)
-            text.fixedSize(horizontal: false, vertical: true)
-        }
-    }
-
-    private func check(force: Bool = false) async {
-        status = .checking
-        await model.loadAttribution()
-        if force { model.forecasts.request(Self.probe, force: true) }
-        let state = await model.forecasts.load(Self.probe)
-        switch state {
-        case .loaded: status = .working
-        case .unavailable(.weatherServiceNotEnabled): status = .notEnabled
-        case .unavailable(let reason): status = .failed(Self.detail(reason))
-        case .loading: status = .failed(String(localized: "The forecast didn't arrive.", comment: "Settings weather detail"))
-        }
-    }
-
-    private static func detail(_ reason: ForecastUnavailableReason) -> String {
-        if case .serviceFailed(let detail) = reason, !detail.isEmpty { return detail }
-        return LightText.noForecastReason(reason)
-    }
-}
-
 // MARK: - Apple Intelligence
 
 private struct IntelligenceSettingsPane: View {
@@ -237,7 +125,7 @@ private struct AboutSettingsPane: View {
             Text(version).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
             Text("Be in the right place when the light is right.", comment: "Tagline")
                 .font(IterFont.body)
-            Text("Sun and moon times are calculated on this Mac. Weather is from Apple Weather. Places and drive times are from Apple Maps, alongside Iter's curated spots.",
+            Text("Sun and moon times are calculated on this Mac. Weather is from the source you choose in Settings ▸ Weather: Apple Weather, OpenWeather or Windy (contains data from the Windy database). Places and drive times are from Apple Maps, alongside Iter's curated spots.",
                  comment: "About: data sources")
                 .font(IterFont.caption)
                 .foregroundStyle(IterColor.textSecondary)

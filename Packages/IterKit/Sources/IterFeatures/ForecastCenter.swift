@@ -49,6 +49,14 @@ public final class ForecastCenter {
         revision += 1
     }
 
+    /// Drops every state and in-flight fetch but keeps the provider (its settings or keys changed), so screens refetch.
+    public func invalidateAll() {
+        inFlight.values.forEach { $0.cancel() }
+        inFlight = [:]
+        states = [:]
+        revision += 1
+    }
+
     public func state(for coordinate: Coordinate) -> ForecastState {
         states[coordinate.cacheKey] ?? .loading
     }

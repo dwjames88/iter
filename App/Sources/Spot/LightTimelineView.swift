@@ -84,7 +84,8 @@ struct LightTimelineSection: View {
         let r = page.readout(at: t)
         let window = page.window(at: t)
         return HStack(spacing: IterSpace.sm) {
-            Text(LightText.readout(hour: TimeText.time(t, in: page.timeZone), cloud: r.cloud, rain: r.rain))
+            Text(LightText.readout(hour: TimeText.time(t, in: page.timeZone), cloud: r.cloud, rain: r.rain,
+                                         rainMm: r.rain == nil ? page.forecast?.hour(at: t)?.precipitationMm : nil))
                 .font(IterFont.bodyEmphasis)
                 .monospacedDigit()
             if let window {
@@ -109,7 +110,7 @@ struct LightTimelineSection: View {
             } else {
                 swatch(IterColor.cloudMid, LightText.cloudTotalLegend)
             }
-            swatch(IterColor.skyBlue, LightText.rainLegend)
+            swatch(IterColor.skyBlue, data.hours.contains { $0.precipitationChance != nil } ? LightText.rainLegend : LightText.rainAmountLegend)
             Spacer()
         }
         .font(IterFont.caption)
@@ -371,13 +372,26 @@ enum TimelineRenderer {
                 layer.stroke(top, with: .color(color), lineWidth: IterStroke.regular)
             }
             // Rain chance as bars.
-            for h in hours where h.precipitationChance >= 0.1 {
+            // When the provider gives only an amount (Windy), the bar is the amount against a full scale of `rainFullScaleMm`.
+            for h in hours {
+                let level = rainLevel(h)
+                guard level >= 0.1 else { continue }
                 let x0 = x(h.date), x1 = x(h.date.addingTimeInterval(3600))
                 let inset = (x1 - x0) * 0.2
-                let rect = CGRect(x: x0 + inset, y: y(h.precipitationChance), width: max(1, x1 - x0 - inset * 2), height: lay.plotBottom - y(h.precipitationChance))
+                let rect = CGRect(x: x0 + inset, y: y(level), width: max(1, x1 - x0 - inset * 2), height: lay.plotBottom - y(level))
                 layer.fill(Path(roundedRect: rect, cornerRadius: IterStroke.thin), with: .color(IterColor.skyBlue))
             }
         }
+    }
+
+    /// Millimetres per hour that fill the plot's height when the provider gives no chance of rain.
+    static let rainFullScaleMm = 2.0
+
+    /// 0–1: the chance when known, else the amount against `rainFullScaleMm`, else 0.
+    private static func rainLevel(_ h: HourlyConditions) -> Double {
+        if let chance = h.precipitationChance { return chance }
+        if let mm = h.precipitationMm { return min(1, mm / rainFullScaleMm) }
+        return 0
     }
 
     private static func drawBrackets(_ ctx: inout GraphicsContext, _ d: TimelineData, _ lay: Layout, x: (Date) -> CGFloat, left: CGFloat, right: CGFloat) {

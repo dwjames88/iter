@@ -40,10 +40,10 @@ private let now = Date(timeIntervalSince1970: 1_800_000_000)
             let f = try await SampleWeatherService(now: { now }).forecast(for: p)
             for h in f.hours {
                 #expect((0...1).contains(h.cloudCover))
-                #expect((0...1).contains(h.precipitationChance))
+                #expect((0...1).contains(h.precipitationChance ?? -1))
                 #expect((0...1).contains(h.humidity))
                 #expect((0...1).contains(h.cloudLow ?? 0) && (0...1).contains(h.cloudMid ?? 0) && (0...1).contains(h.cloudHigh ?? 0))
-                #expect(h.visibilityMeters > 0 && h.windSpeedKph >= 0)
+                #expect((h.visibilityMeters ?? 0) > 0 && h.windSpeedKph >= 0)
                 #expect(h.temperatureC > -40 && h.temperatureC < 55)
                 #expect(!h.symbolName.isEmpty && !h.condition.isEmpty)
             }
@@ -56,11 +56,11 @@ private let now = Date(timeIntervalSince1970: 1_800_000_000)
             let f = try await SampleWeatherService(now: { now }).forecast(for: p)
             var clear = false, colour = false, overcast = false, rain = false, fog = false
             for h in f.hours {
-                if h.cloudCover < 0.15 && h.precipitationChance < 0.1 { clear = true }
+                if h.cloudCover < 0.15 && (h.precipitationChance ?? 1) < 0.1 { clear = true }
                 if (h.cloudHigh ?? 0) > 0.6 && (h.cloudLow ?? 1) < 0.15 { colour = true }
-                if h.cloudCover > 0.9 && h.precipitationChance < 0.3 { overcast = true }
-                if h.precipitationChance > 0.6 { rain = true }
-                if h.visibilityMeters < 1500 { fog = true }
+                if h.cloudCover > 0.9 && (h.precipitationChance ?? 1) < 0.3 { overcast = true }
+                if (h.precipitationChance ?? 0) > 0.6 { rain = true }
+                if (h.visibilityMeters ?? .infinity) < 1500 { fog = true }
             }
             #expect(clear && colour && overcast && rain && fog, "missing a regime at \(p)")
         }

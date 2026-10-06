@@ -38,21 +38,23 @@ func makeSpot(_ id: String = "spot", lat: Double = 40, lon: Double = -110, walk:
 
 struct Wx {
     var total = 0.3, low: Double? = 0.1, mid: Double? = 0.3, high: Double? = 0.3
-    var rain = 0.0, visibility = 20_000.0
+    var rain: Double? = 0.0, visibility: Double? = 20_000.0
+    var mm: Double?
+    var resolution: HourlyConditions.Resolution = .hourly
 }
 
 /// A forecast of identical weather for every hour of `day` and the day either side, fetched at `fetchedAt`.
-func forecast(day: LocalDay = testDay, fetchedAt: Date, days: Int = 1, _ wx: @Sendable (Date) -> Wx) -> Forecast {
+func forecast(day: LocalDay = testDay, fetchedAt: Date, days: Int = 1, model: String? = nil, _ wx: @Sendable (Date) -> Wx) -> Forecast {
     let start = day.adding(days: -1).start(in: utc)
     let count = (days + 2) * 24
     let hours = (0..<count).map { i -> HourlyConditions in
         let date = start.addingTimeInterval(Double(i) * 3600)
         let w = wx(date)
         return HourlyConditions(date: date, cloudCover: w.total, cloudLow: w.low, cloudMid: w.mid, cloudHigh: w.high,
-                                precipitationChance: w.rain, visibilityMeters: w.visibility, windSpeedKph: 5, temperatureC: 12,
-                                humidity: 0.5, symbolName: "sun.max", condition: "clear")
+                                precipitationChance: w.rain, precipitationMm: w.mm, visibilityMeters: w.visibility, windSpeedKph: 5, temperatureC: 12,
+                                humidity: 0.5, symbolName: "sun.max", condition: "clear", resolution: w.resolution)
     }
-    return Forecast(coordinate: Coordinate(latitude: 40, longitude: -110), hours: hours, days: [], fetchedAt: fetchedAt, source: .appleWeather)
+    return Forecast(coordinate: Coordinate(latitude: 40, longitude: -110), hours: hours, days: [], fetchedAt: fetchedAt, source: .appleWeather, model: model)
 }
 
 func uniform(_ w: Wx, fetchedAt: Date, day: LocalDay = testDay) -> Forecast { forecast(day: day, fetchedAt: fetchedAt) { _ in w } }

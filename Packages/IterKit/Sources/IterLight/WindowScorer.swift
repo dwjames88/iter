@@ -7,8 +7,14 @@ struct WindowConditions: Equatable {
     var low: Double?
     var mid: Double?
     var high: Double?
-    var precipitationChance: Double
-    var visibilityMeters: Double
+    /// Mean chance over the hours that supply one; nil when none do (Windy).
+    var precipitationChance: Double?
+    /// Mean amount in mm per hour over the hours that supply one; nil when none do.
+    var precipitationMm: Double?
+    /// Mean visibility over the hours that supply one; nil when none do.
+    var visibilityMeters: Double?
+    /// Which resolutions occurred among the window's hours.
+    var resolutions: Set<HourlyConditions.Resolution> = []
 
     /// All three layers were supplied for every hour of the window.
     var hasLayers: Bool { low != nil && mid != nil && high != nil }
@@ -25,6 +31,8 @@ struct ScoredWindow: Equatable {
     var contributors: [LightContributor]
     /// Cloud layers were needed for this window's kind and were missing, so the total-cloud fallback was used.
     var usedLayerFallback: Bool
+    /// Score-level notes that come from the scoring itself (precipitation from amount, no visibility).
+    var notes: [ScoreNote] = []
 }
 
 /// Pure scoring heuristics. A score is a neutral baseline of 60 plus signed points per factor, clamped 5...100.
@@ -58,6 +66,9 @@ enum WindowScorer {
     static let moonDownBonus = 6.0
 
     static let precipitation: [(Double, Double)] = [(0, 0), (0.10, 0), (0.30, -8), (0.60, -25), (1, -40)]
+    /// Precipitation by amount (mm per hour), used only when the provider gives no chance. Reaches the same -40 as a
+    /// 100% chance at 2 mm/h (steady rain); 0.2 mm/h (drizzle) costs 4 points, 0.5 mm/h 12, 1 mm/h 25.
+    static let precipitationAmount: [(Double, Double)] = [(0, 0), (0.05, 0), (0.2, -4), (0.5, -12), (1, -25), (2, -40)]
     static let visibilityGolden: [(Double, Double)] = [(0, -28), (5, -8), (8, 0), (12, 0), (20, 2)]
     static let visibilityOther: [(Double, Double)] = [(0, -30), (5, -10), (10, 0), (12, 0), (20, 2)]
 
@@ -66,6 +77,7 @@ enum WindowScorer {
     static func score(kind: LightWindowKind, conditions c: WindowConditions, moon: MoonLight?) -> ScoredWindow {
         var parts: [(LightContributor.Factor, Double, Double)] = []   // factor, points, value
         var fallback = false
+        var notes: [ScoreNote] = []
         var ceilingAdjust = 0.0
         let total = c.totalCloud
         let clear = total < 0.10
@@ -105,9 +117,18 @@ enum WindowScorer {
             }
         }
 
-        parts.append((.precipitation, interp(c.precipitationChance, precipitation), c.precipitationChance))
-        let visKm = c.visibilityMeters / 1000
-        parts.append((.visibility, interp(visKm, kind.isGolden ? visibilityGolden : visibilityOther), c.visibilityMeters))
+        if let chance = c.precipitationChance {
+            parts.append((.precipitation, interp(chance, precipitation), chance))
+        } else if let mm = c.precipitationMm {
+            // The contributor's value is mm per hour here (see ScoreNote.precipitationFromAmount).
+            parts.append((.precipitation, interp(mm, precipitationAmount), mm))
+            notes.append(.precipitationFromAmount)
+        }
+        if let visibility = c.visibilityMeters {
+            parts.append((.visibility, interp(visibility / 1000, kind.isGolden ? visibilityGolden : visibilityOther), visibility))
+        } else {
+            notes.append(.noVisibility)
+        }
 
         var raw = baseline + parts.reduce(0) { $0 + $1.1 }
         if kind != .night {
@@ -138,22 +159,42 @@ enum WindowScorer {
         }
         // The primary cloud factor always appears; others only when they moved the score.
         let primary = rounded.first?.factor
+        let layers: CloudLayers? = {
+            guard let low = c.low, let mid = c.mid, let high = c.high else { return nil }
+            return CloudLayers(low: low, mid: mid, high: high)
+        }()
         let contributors = rounded
             .filter { $0.points != 0 || $0.factor == primary }
             .map { LightContributor(factor: $0.factor, effect: $0.points >= 2 ? .helps : ($0.points <= -2 ? .hurts : .neutral),
-                                    points: $0.points, value: $0.value) }
+                                    points: $0.points, value: $0.value,
+                                    layers: ($0.factor == .midHighCloud || $0.factor == .lowCloud) ? layers : nil) }
             .sorted { a, b in
                 abs(a.points) != abs(b.points) ? abs(a.points) > abs(b.points) : a.factor.rawValue < b.factor.rawValue
             }
-        return ScoredWindow(value: value, contributors: contributors, usedLayerFallback: fallback)
+        return ScoredWindow(value: value, contributors: contributors, usedLayerFallback: fallback, notes: notes)
     }
 
     // MARK: Confidence
 
-    static func confidence(leadHours: Double, layersMissing: Bool) -> Confidence {
-        var level: Int = leadHours <= 36 ? 2 : (leadHours <= 72 ? 1 : 0)
+    /// Lead sets the base: up to 36 h high, up to 72 h medium, else low. Three-hourly (interpolated) hours lower the
+    /// high threshold to 24 h. Any daily-summary hour makes it low. Missing layers (when the window needed them)
+    /// cost one step.
+    static func confidence(leadHours: Double, layersMissing: Bool,
+                           resolutions: Set<HourlyConditions.Resolution> = []) -> Confidence {
+        let highLimit = resolutions.contains(.interpolated) ? 24.0 : 36.0
+        var level: Int = leadHours <= highLimit ? 2 : (leadHours <= 72 ? 1 : 0)
+        if resolutions.contains(.dailySummary) { level = 0 }
         if layersMissing { level = max(0, level - 1) }
         return level == 2 ? .high : (level == 1 ? .medium : .low)
+    }
+
+    /// Notes in `ScoreNote.allCases` order, without duplicates.
+    static func notes(scored: ScoredWindow, resolutions: Set<HourlyConditions.Resolution>) -> [ScoreNote] {
+        var set = Set(scored.notes)
+        if scored.usedLayerFallback { set.insert(.noCloudLayers) }
+        if resolutions.contains(.interpolated) { set.insert(.threeHourlySteps) }
+        if resolutions.contains(.dailySummary) { set.insert(.dailySummaryOnly) }
+        return ScoreNote.allCases.filter { set.contains($0) }
     }
 
     static func range(value: Int, confidence: Confidence) -> ClosedRange<Int> {

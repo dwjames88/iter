@@ -105,7 +105,7 @@ struct SavedView: View {
                         .font(IterFont.caption)
                         .foregroundStyle(IterColor.textSecondary)
                     Spacer()
-                    WeatherAttributionView()
+                    ForecastSourceFooter(app: model, coordinates: shown.map(\.spot.coordinate))
                 }
                 .padding(.horizontal, IterSpace.lg)
                 .padding(.vertical, IterSpace.sm)

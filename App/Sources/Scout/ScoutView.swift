@@ -264,7 +264,7 @@ private struct ScoutResultsView: View {
                     .font(IterFont.caption)
                     .foregroundStyle(IterColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
-                WeatherAttributionView()
+                ForecastSourceFooter(app: app, coordinates: found.map(\.spot.coordinate))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(IterSpace.md)

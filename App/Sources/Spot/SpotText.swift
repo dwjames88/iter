@@ -130,16 +130,22 @@ extension LightText {
     static let cloudMidLegend = String(localized: "Mid cloud", comment: "Chart legend")
     static let cloudHighLegend = String(localized: "High cloud", comment: "Chart legend")
     static let cloudTotalLegend = String(localized: "Cloud cover", comment: "Chart legend")
+    static let windyTitle = String(localized: "Windy", comment: "Spot page section title")
+    static let windyExplanation = String(localized: "Windy's map shows cloud by height, rain and wind around this spot. It opens on windy.com: Windy doesn't allow its map inside other weather apps.",
+                                         comment: "Spot page Windy section")
+    static let openInWindy = String(localized: "Open in Windy", comment: "Button that opens windy.com at the spot")
     static let rainLegend = String(localized: "Chance of rain", comment: "Chart legend")
+    static let rainAmountLegend = String(localized: "Rain amount (full height is 2 mm/h)", comment: "Chart legend when the provider gives amounts, not chances")
 
     static let noWeatherLayers = String(localized: "Cloud and rain are not drawn: there is no forecast. Sun and window times above are exact.",
                                         comment: "Timeline note when there is no forecast")
 
     /// "6 PM · 79% cloud · 10% rain"
-    static func readout(hour: String, cloud: Double?, rain: Double?) -> String {
+    static func readout(hour: String, cloud: Double?, rain: Double?, rainMm: Double? = nil) -> String {
         var parts = [hour]
         if let cloud { parts.append(String(localized: "\(percent(cloud)) cloud", comment: "Scrub readout")) }
         if let rain { parts.append(String(localized: "\(percent(rain)) rain", comment: "Scrub readout")) }
+        else if let rainMm { parts.append(String(localized: "\(millimetresPerHour(rainMm)) rain", comment: "Scrub readout when only an amount is known")) }
         return parts.joined(separator: " · ")
     }
 

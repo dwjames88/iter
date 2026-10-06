@@ -60,6 +60,34 @@ import IterFeatures
         try await render(SpotPage(app: model, spot: record.spot, initialDay: nil), model: model, state: "user")
     }
 
+    /// FIXTURE ONLY: OpenWeather-shaped data (total cloud only, with the first choice marked as failed) built from the sample
+    /// generator. It exercises the source line, the fallback wording, the notes and the Windy section, not real OpenWeather output.
+    @Test(.enabled(if: Snapshot.enabled)) func openWeatherFallback() async throws {
+        let model = Fixtures.model(weather: .notEnabled, seedTrip: false)
+        model.forecasts.replaceProvider(FixtureProvider(shape: .openWeather))
+        let page = SpotModel(app: model, spot: mesaArch, explainer: NeverExplainer())
+        await page.start()
+        page.toggleExpanded(page.selectedWindow ?? .goldenEvening)
+        try await render(SpotPage(model: page), model: model, state: "openweather-fallback")
+    }
+
+    /// FIXTURE ONLY: Windy GFS-shaped data (cloud by height, rain amount without a chance, no visibility, three-hourly steps).
+    @Test(.enabled(if: Snapshot.enabled)) func windyGFS() async throws {
+        let model = Fixtures.model(weather: .notEnabled, seedTrip: false)
+        model.forecasts.replaceProvider(FixtureProvider(shape: .windy))
+        let page = SpotModel(app: model, spot: mesaArch, explainer: NeverExplainer())
+        await page.start()
+        page.toggleExpanded(page.selectedWindow ?? .goldenEvening)
+        try await render(SpotPage(model: page), model: model, state: "windy-gfs")
+    }
+
+    @Test @MainActor func fixtureForecastsCarryTheirSource() async throws {
+        let open = try await FixtureProvider(shape: .openWeather).forecast(for: mesaArch.coordinate)
+        #expect(open.source == .openWeather && open.fallbackFrom == [.appleWeather] && open.hours.allSatisfy { !$0.hasLayers })
+        let windy = try await FixtureProvider(shape: .windy).forecast(for: mesaArch.coordinate)
+        #expect(windy.source == .windy && windy.model == "GFS" && windy.hours.allSatisfy { $0.precipitationChance == nil })
+    }
+
     @Test func shareLinkCarriesCoordinates() {
         let url = SpotHeaderView.shareURL(for: mesaArch)
         #expect(url.absoluteString.contains("ll="))
@@ -71,4 +99,38 @@ import IterFeatures
 private struct NeverExplainer: LightExplaining {
     func isAvailable() -> Bool { true }
     func explain(spotName: String, window: LightWindow, intentName: String) async throws -> String { throw CancellationError() }
+}
+
+/// FIXTURE ONLY. Reshapes the sample generator's forecast to look like a provider's, for snapshots.
+struct FixtureProvider: WeatherProviding {
+    enum Shape { case openWeather, windy }
+    let shape: Shape
+
+    var source: ForecastSource { shape == .openWeather ? .openWeather : .windy }
+    func attribution() async -> WeatherAttributionInfo? { nil }
+
+    func forecast(for coordinate: Coordinate) async throws -> Forecast {
+        var forecast = try await SampleWeatherService(now: { Fixtures.now }).forecast(for: coordinate)
+        forecast.source = source
+        switch shape {
+        case .openWeather:
+            forecast.fallbackFrom = [.appleWeather]
+            forecast.hours = forecast.hours.map { h in
+                var h = h
+                h.cloudLow = nil; h.cloudMid = nil; h.cloudHigh = nil
+                return h
+            }
+        case .windy:
+            forecast.model = "GFS"
+            forecast.hours = forecast.hours.map { h in
+                var h = h
+                h.precipitationMm = (h.precipitationChance ?? 0) * 1.5
+                h.precipitationChance = nil
+                h.visibilityMeters = nil
+                h.resolution = .interpolated
+                return h
+            }
+        }
+        return forecast
+    }
 }

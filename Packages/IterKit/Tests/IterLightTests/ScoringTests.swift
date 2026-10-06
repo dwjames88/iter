@@ -378,3 +378,120 @@ private func score(_ kind: LightWindowKind, _ w: Wx, eph: FixedEphemeris = Fixed
         #expect(dl.timeZoneIdentifier == "UTC")
     }
 }
+
+/// Optional precipitation and visibility, resolutions, layers on contributors and notes.
+@Suite struct ProviderGaps {
+    private func scoreAt(_ w: Wx, _ kind: LightWindowKind = .goldenEvening, lead hours: Double = 12, model: String? = nil) -> LightScore {
+        let engine = LightEngine(ephemeris: FixedEphemeris())
+        let mid = engine.windows(for: makeSpot(), on: testDay).first { $0.kind == kind }!.span.midpoint
+        let fetched = mid.addingTimeInterval(-hours * 3600)
+        let f = forecast(fetchedAt: fetched, model: model) { _ in w }
+        return engine.dayLight(for: makeSpot(), on: testDay, forecast: f, unavailable: nil, now: fetched).window(kind)!.assessment.lightScore!
+    }
+
+    private let partly = Wx(total: 0.5, low: 0.1, mid: 0.4, high: 0.4)
+
+    @Test func amountBasedPrecipitationHurtsAndNotes() {
+        var dry = partly; dry.rain = nil; dry.mm = 0
+        var wet = partly; wet.rain = nil; wet.mm = 2
+        let d = scoreAt(dry), w = scoreAt(wet)
+        #expect(w.value < d.value)
+        let p = w.contributors.first { $0.factor == .precipitation }
+        #expect(p?.effect == .hurts)
+        #expect(p?.points == -40)
+        #expect(w.notes.contains(.precipitationFromAmount))
+        #expect(d.notes.contains(.precipitationFromAmount))
+        // A chance, when present, wins and adds no note.
+        var both = wet; both.rain = 0
+        #expect(!scoreAt(both).notes.contains(.precipitationFromAmount))
+    }
+
+    @Test func amountCurve() {
+        #expect(WindowScorer.interp(0, WindowScorer.precipitationAmount) == 0)
+        #expect(WindowScorer.interp(0.2, WindowScorer.precipitationAmount) == -4)
+        #expect(WindowScorer.interp(2, WindowScorer.precipitationAmount) == -40)
+        #expect(WindowScorer.interp(10, WindowScorer.precipitationAmount) == -40)
+    }
+
+    @Test func neitherChanceNorAmountOmitsFactor() {
+        var w = partly; w.rain = nil; w.mm = nil
+        let s = scoreAt(w)
+        #expect(!s.contributors.contains { $0.factor == .precipitation })
+        #expect(!s.notes.contains(.precipitationFromAmount))
+    }
+
+    @Test func missingVisibilityIsOmittedWithNote() {
+        var w = partly; w.visibility = nil
+        let s = scoreAt(w)
+        #expect(!s.contributors.contains { $0.factor == .visibility })
+        #expect(s.notes.contains(.noVisibility))
+        #expect(!scoreAt(partly).notes.contains(.noVisibility))
+        // Poor visibility would otherwise have hurt.
+        var fog = partly; fog.visibility = 2_000
+        #expect(scoreAt(fog).value < s.value)
+    }
+
+    @Test func interpolatedHoursCapHighAtTwentyFourHours() {
+        var w = partly; w.resolution = .interpolated
+        #expect(scoreAt(w, lead: 12).confidence == .high)
+        #expect(scoreAt(w, lead: 30).confidence == .medium)
+        #expect(scoreAt(partly, lead: 30).confidence == .high)
+        #expect(scoreAt(w, lead: 30).notes.contains(.threeHourlySteps))
+        #expect(!scoreAt(partly, lead: 30).notes.contains(.threeHourlySteps))
+        #expect(scoreAt(w, lead: 50).confidence == .medium)
+    }
+
+    @Test func dailySummaryHoursAreLow() {
+        var w = partly; w.resolution = .dailySummary
+        let s = scoreAt(w, lead: 12)
+        #expect(s.confidence == .low)
+        #expect(s.notes.contains(.dailySummaryOnly))
+        #expect(s.range.count > scoreAt(partly, lead: 12).range.count)
+    }
+
+    @Test func layersAreCarriedOnCloudContributors() {
+        let s = scoreAt(partly)
+        let expected = CloudLayers(low: 0.1, mid: 0.4, high: 0.4)
+        #expect(s.contributors.first { $0.factor == .midHighCloud }?.layers == expected)
+        #expect(s.contributors.first { $0.factor == .lowCloud }?.layers == expected)
+        #expect(s.contributors.filter { $0.factor == .precipitation || $0.factor == .visibility }.allSatisfy { $0.layers == nil })
+        let blue = scoreAt(partly, .blueEvening)
+        #expect(blue.contributors.first { $0.factor == .midHighCloud }?.layers == expected)
+        let flat = scoreAt(Wx(total: 0.5, low: nil, mid: nil, high: nil))
+        #expect(flat.contributors.allSatisfy { $0.layers == nil })
+        #expect(flat.notes.contains(.noCloudLayers))
+        #expect(!s.notes.contains(.noCloudLayers))
+    }
+
+    @Test func notesAreOrderedAndUnique() {
+        var w = Wx(total: 0.5, low: nil, mid: nil, high: nil)
+        w.rain = nil; w.mm = 0.3; w.visibility = nil; w.resolution = .dailySummary
+        let s = scoreAt(w)
+        #expect(s.notes == [.noCloudLayers, .dailySummaryOnly, .precipitationFromAmount, .noVisibility])
+        var i = w; i.resolution = .interpolated
+        #expect(scoreAt(i).notes == [.noCloudLayers, .threeHourlySteps, .precipitationFromAmount, .noVisibility])
+        #expect(Set(s.notes).count == s.notes.count)
+    }
+
+    @Test func modelIsCopied() {
+        #expect(scoreAt(partly, model: "GFS").model == "GFS")
+        #expect(scoreAt(partly).model == nil)
+    }
+
+    @Test(arguments: [LightWindowKind.goldenMorning, .goldenEvening], [HourlyConditions.Resolution.hourly, .interpolated, .dailySummary])
+    func overcastGoldenStaysBelowGood(kind: LightWindowKind, resolution: HourlyConditions.Resolution) {
+        for asChance in [true, false] {
+            for visibility in [30_000.0, nil] {
+                var w = Wx(total: 0.95, low: 0.5, mid: 0.4, high: 0.4)
+                w.rain = asChance ? 0.0 : nil
+                w.mm = asChance ? nil : 0
+                w.visibility = visibility
+                w.resolution = resolution
+                for lead in [6.0, 30, 60, 100] {
+                    let s = scoreAt(w, kind, lead: lead)
+                    #expect(s.band < .good && s.value <= 56, "chance \(asChance) vis \(String(describing: visibility)) lead \(lead): \(s.value)")
+                }
+            }
+        }
+    }
+}

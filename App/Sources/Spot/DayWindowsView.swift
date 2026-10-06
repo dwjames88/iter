@@ -104,7 +104,7 @@ private struct Reasons: View {
                     .font(IterFont.callout)
                     .foregroundStyle(IterColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
-                if case .serviceFailed = reason {
+                if LightText.canRetry(reason) {
                     Button { page.retry() } label: { Label(LightText.retry, systemImage: "arrow.clockwise") }
                         .controlSize(.small)
                 }
@@ -119,16 +119,16 @@ private struct Reasons: View {
             ForEach(score.contributors) { c in
                 GridRow {
                     Text(LightText.title(c.factor)).font(IterFont.bodyEmphasis)
-                    Text(LightText.value(c)).font(IterFont.time).foregroundStyle(IterColor.textSecondary)
+                    Text(LightText.value(c, notes: score.notes)).font(IterFont.time).foregroundStyle(IterColor.textSecondary)
                         .gridColumnAlignment(.trailing)
                     SignedBar(points: c.points, scale: scale, effect: c.effect)
-                    Text(LightText.sentence(c, kind: window.kind))
+                    Text(LightText.sentence(c, kind: window.kind, notes: score.notes))
                         .font(IterFont.callout)
                         .foregroundStyle(IterColor.textPrimary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel("\(LightText.title(c.factor)), \(LightText.value(c)), \(effectWord(c.effect)) \(LightText.points(c.points)) points. \(LightText.sentence(c, kind: window.kind))")
+                .accessibilityLabel("\(LightText.title(c.factor)), \(LightText.value(c, notes: score.notes)), \(effectWord(c.effect)) \(LightText.points(c.points)) points. \(LightText.sentence(c, kind: window.kind, notes: score.notes))")
             }
         }
         VStack(alignment: .leading, spacing: IterSpace.xs) {
@@ -140,13 +140,20 @@ private struct Reasons: View {
                     Text("Likely \(range)", comment: "Score range for days further out").font(IterFont.subheadline)
                 }
                 Text(verbatim: "·").foregroundStyle(IterColor.textSecondary)
-                Text(TimeText.updated(score.forecastFetchedAt)).font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
-                if score.source == .sample { SampleDataLabel(style: .inline) }
+                Text(LightText.sourceUpdated(score.source, model: score.model, fetchedAt: score.forecastFetchedAt,
+                                             fallbackFrom: page.forecast?.source == score.source ? page.forecast?.fallbackFrom ?? [] : []))
+                    .font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
             }
             Text("\(LightText.confidenceExplained(score.confidence)) \(LightText.leadNote(hours: score.leadHours))")
                 .font(IterFont.footnote)
                 .foregroundStyle(IterColor.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
+            ForEach(score.notes, id: \.self) { note in
+                Text(LightText.note(note, source: score.source))
+                    .font(IterFont.footnote)
+                    .foregroundStyle(IterColor.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
         ExplainBlock(page: page, window: window)
     }

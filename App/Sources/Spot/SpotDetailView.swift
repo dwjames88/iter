@@ -38,6 +38,7 @@ struct SpotPage: View {
                 LightTimelineSection(page: page)
                 SkyArcSection(page: page)
                 HourlyWeatherSection(page: page)
+                WindySection(coordinate: liveSpot.coordinate)
                 SpotFactsSection(spot: liveSpot)
                 LookAroundSection(coordinate: liveSpot.coordinate)
             }

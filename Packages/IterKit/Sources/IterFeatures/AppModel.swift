@@ -26,6 +26,10 @@ public final class AppModel {
     public var preferredIntent: LightIntent?
     /// Apple Weather attribution, loaded once (works even when the forecast itself is not enabled).
     public private(set) var attribution: WeatherAttributionInfo?
+    /// The attribution of every selectable provider (and the current one), loaded by `loadAttribution()`.
+    public private(set) var attributions: [ForecastSource: WeatherAttributionInfo] = [:]
+    /// The user's weather choices, keys and per-provider status; owns the provider router.
+    public let weather: WeatherSetup
     /// The clock (injected for tests and snapshots).
     public var now: () -> Date
 
@@ -40,6 +44,7 @@ public final class AppModel {
                 geocoder: any Geocoding,
                 drives: any DriveTimeProviding,
                 scout: (any Scouting)?,
+                weatherSetup: WeatherSetup? = nil,
                 sampleWeather: any WeatherProviding = CachedWeatherService(wrapping: SampleWeatherService()),
                 ephemeris: any Ephemeris = Astronomy(),
                 defaults: UserDefaults = .standard,
@@ -58,18 +63,30 @@ public final class AppModel {
         let sample = defaults.bool(forKey: Self.sampleDataKey)
         self.sampleDataEnabled = sample
         self.forecasts = ForecastCenter(provider: sample ? sampleWeather : weather)
+        // Without a setup (tests) the weather settings are hermetic: in-memory keys, no environment, `weather` is the Apple provider.
+        self.weather = weatherSetup ?? WeatherSetup(keyStore: InMemoryAPIKeyStore(), cacheDirectory: nil, defaults: defaults,
+                                                    environment: { [:] }, launchArgument: { _ in nil }, apple: weather)
+        self.weather.onChange = { [weak self] in
+            guard let self else { return }
+            self.forecasts.invalidateAll()
+            Task { await self.loadAttribution() }
+        }
     }
 
     public var ephemeris: any Ephemeris { engine.ephemeris }
 
-    /// The real app: WeatherKit (cached), MapKit, on-disk store.
+    /// The real app: the weather router (Apple Weather, OpenWeather, Windy as the user chose), MapKit, on-disk store.
     public static func live(store: IterStore, scout: (any Scouting)?) -> AppModel {
-        AppModel(store: store,
-                 weather: CachedWeatherService(wrapping: AppleWeatherService()),
+        let cache = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appending(path: "Iter/ForecastCache", directoryHint: .isDirectory)
+        let setup = WeatherSetup(keyStore: KeychainAPIKeyStore(), cacheDirectory: cache)
+        return AppModel(store: store,
+                 weather: setup.router,
                  search: MapKitPlaceSearch(),
                  geocoder: MapKitGeocoder(),
                  drives: MapKitDriveTimes(),
-                 scout: scout)
+                 scout: scout,
+                 weatherSetup: setup)
     }
 
     public func setSampleData(_ enabled: Bool) {
@@ -81,7 +98,15 @@ public final class AppModel {
 
     public func loadAttribution() async {
         attribution = await liveWeather.attribution()
+        var loaded: [ForecastSource: WeatherAttributionInfo] = [:]
+        for source in Set(ForecastSource.selectable + [liveWeather.source]) where source != .sample {
+            if let info = await weather.attribution(for: source) { loaded[source] = info }
+        }
+        if let current = attribution { loaded[liveWeather.source] = current }
+        attributions = loaded
     }
+
+    public func attribution(for source: ForecastSource) -> WeatherAttributionInfo? { attributions[source] }
 
     /// Today in the given zone, from the injected clock.
     public func today(in zone: TimeZone) -> LocalDay { LocalDay(now(), in: zone) }

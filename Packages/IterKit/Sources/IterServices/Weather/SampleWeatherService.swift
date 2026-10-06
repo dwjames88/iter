@@ -52,7 +52,7 @@ public struct SampleWeatherService: WeatherProviding {
                 date: Date(timeIntervalSince1970: Double(index) * 86400 - coordinate.longitude / 15 * 3600),
                 highC: hs.map(\.temperatureC).max() ?? 0,
                 lowC: hs.map(\.temperatureC).min() ?? 0,
-                precipitationChance: hs.map(\.precipitationChance).max() ?? 0,
+                precipitationChance: hs.compactMap(\.precipitationChance).max() ?? 0,
                 symbolName: noon.symbolName.replacingOccurrences(of: ".fill", with: ""),
                 condition: noon.condition))
         }

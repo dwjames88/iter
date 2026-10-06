@@ -2,38 +2,63 @@ import Foundation
 
 /// Weather for one hour at one place. Fractions are 0–1; nil means the provider did not supply it.
 public struct HourlyConditions: Codable, Hashable, Sendable {
+    /// How an hour was obtained from the provider.
+    public enum Resolution: String, Codable, Hashable, Sendable {
+        /// The provider gave this hour directly.
+        case hourly
+        /// Linearly interpolated between the provider's three-hourly steps (Windy GFS, ICON).
+        case interpolated
+        /// Filled from the provider's daily summary, beyond its hourly range (OpenWeather after 48 h).
+        case dailySummary
+    }
+
     public var date: Date
     public var cloudCover: Double
-    /// Cloud by altitude (WeatherKit `cloudCoverByAltitude`, macOS 15+). nil when not provided.
+    /// Cloud by altitude (WeatherKit `cloudCoverByAltitude`; Windy `lclouds`/`mclouds`/`hclouds`). nil when not provided.
     public var cloudLow: Double?
     public var cloudMid: Double?
     public var cloudHigh: Double?
-    public var precipitationChance: Double
-    public var visibilityMeters: Double
+    /// Probability of precipitation, 0–1. nil when the provider gives amounts only (Windy).
+    public var precipitationChance: Double?
+    /// Precipitation amount for this hour, millimetres. nil when not provided.
+    public var precipitationMm: Double?
+    /// Horizontal visibility. nil when the provider or model has none.
+    public var visibilityMeters: Double?
     public var windSpeedKph: Double
+    public var windGustKph: Double?
     public var temperatureC: Double
     public var humidity: Double
-    /// SF Symbol name supplied by the provider (WeatherKit `symbolName`).
+    /// Height of the lowest cloud base above ground (Windy `cbase`). nil when not provided.
+    public var cloudBaseMeters: Double?
+    /// SF Symbol name (WeatherKit's own, or mapped from the provider's condition code).
     public var symbolName: String
     /// Provider condition, e.g. WeatherKit `WeatherCondition.rawValue` ("mostlyCloudy", "foggy").
     public var condition: String
+    public var resolution: Resolution
 
     public init(date: Date, cloudCover: Double, cloudLow: Double? = nil, cloudMid: Double? = nil, cloudHigh: Double? = nil,
-                precipitationChance: Double, visibilityMeters: Double, windSpeedKph: Double, temperatureC: Double,
-                humidity: Double, symbolName: String, condition: String) {
+                precipitationChance: Double?, precipitationMm: Double? = nil, visibilityMeters: Double?, windSpeedKph: Double,
+                windGustKph: Double? = nil, temperatureC: Double, humidity: Double, cloudBaseMeters: Double? = nil,
+                symbolName: String, condition: String, resolution: Resolution = .hourly) {
         self.date = date
         self.cloudCover = cloudCover
         self.cloudLow = cloudLow
         self.cloudMid = cloudMid
         self.cloudHigh = cloudHigh
         self.precipitationChance = precipitationChance
+        self.precipitationMm = precipitationMm
         self.visibilityMeters = visibilityMeters
         self.windSpeedKph = windSpeedKph
+        self.windGustKph = windGustKph
         self.temperatureC = temperatureC
         self.humidity = humidity
+        self.cloudBaseMeters = cloudBaseMeters
         self.symbolName = symbolName
         self.condition = condition
+        self.resolution = resolution
     }
+
+    public var hasLayers: Bool { cloudLow != nil && cloudMid != nil && cloudHigh != nil }
 }
 
 /// A summary for one day at one place.
@@ -45,14 +70,23 @@ public struct DailyConditions: Codable, Hashable, Sendable {
     public var precipitationChance: Double
     public var symbolName: String
     public var condition: String
+    /// The provider's own sun and moon times (OpenWeather), kept as a cross-check for Iter's astronomy. Not displayed.
+    public var providerSunrise: Date?
+    public var providerSunset: Date?
+    /// The provider's moon phase, 0 and 1 new, 0.5 full (OpenWeather `moon_phase`). Not displayed.
+    public var providerMoonPhase: Double?
 
-    public init(date: Date, highC: Double, lowC: Double, precipitationChance: Double, symbolName: String, condition: String) {
+    public init(date: Date, highC: Double, lowC: Double, precipitationChance: Double, symbolName: String, condition: String,
+                providerSunrise: Date? = nil, providerSunset: Date? = nil, providerMoonPhase: Double? = nil) {
         self.date = date
         self.highC = highC
         self.lowC = lowC
         self.precipitationChance = precipitationChance
         self.symbolName = symbolName
         self.condition = condition
+        self.providerSunrise = providerSunrise
+        self.providerSunset = providerSunset
+        self.providerMoonPhase = providerMoonPhase
     }
 }
 
@@ -64,13 +98,21 @@ public struct Forecast: Codable, Hashable, Sendable {
     /// When the data was fetched (shown as "Updated 2:00 PM").
     public var fetchedAt: Date
     public var source: ForecastSource
+    /// The numerical model behind the data when the provider names one ("GFS", "ICON-EU"); nil otherwise.
+    public var model: String?
+    /// Providers tried first that failed, in order, when this forecast came from the user's fallback order.
+    /// Empty when the first choice answered. Shown beside the source so a fallback is never silent.
+    public var fallbackFrom: [ForecastSource]
 
-    public init(coordinate: Coordinate, hours: [HourlyConditions], days: [DailyConditions], fetchedAt: Date, source: ForecastSource) {
+    public init(coordinate: Coordinate, hours: [HourlyConditions], days: [DailyConditions], fetchedAt: Date, source: ForecastSource,
+                model: String? = nil, fallbackFrom: [ForecastSource] = []) {
         self.coordinate = coordinate
         self.hours = hours.sorted { $0.date < $1.date }
         self.days = days
         self.fetchedAt = fetchedAt
         self.source = source
+        self.model = model
+        self.fallbackFrom = fallbackFrom
     }
 
     /// The last instant covered by the hourly data.
@@ -89,22 +131,31 @@ public struct Forecast: Codable, Hashable, Sendable {
     }
 }
 
-/// Apple Weather attribution, required wherever WeatherKit data appears.
+/// The attribution a provider's licence requires wherever its data appears.
+/// Apple Weather: the combined mark and the legal page (from WeatherKit). OpenWeather (ODbL): a visible
+/// "Weather data © OpenWeather" with a link. Windy (API terms §Attribution): "Contains data from the Windy database",
+/// the model's data source, and the Windy logo clickable to windy.com.
 public struct WeatherAttributionInfo: Codable, Hashable, Sendable {
     public var serviceName: String
     public var legalPageURL: URL
-    public var combinedMarkLightURL: URL
-    public var combinedMarkDarkURL: URL
+    /// Apple's combined mark (nil for providers that require a text line instead).
+    public var combinedMarkLightURL: URL?
+    public var combinedMarkDarkURL: URL?
+    /// The text the licence asks for, e.g. "Weather data © OpenWeather". nil for Apple Weather (the mark carries it).
+    public var requiredText: String?
 
-    public init(serviceName: String, legalPageURL: URL, combinedMarkLightURL: URL, combinedMarkDarkURL: URL) {
+    public init(serviceName: String, legalPageURL: URL, combinedMarkLightURL: URL? = nil, combinedMarkDarkURL: URL? = nil,
+                requiredText: String? = nil) {
         self.serviceName = serviceName
         self.legalPageURL = legalPageURL
         self.combinedMarkLightURL = combinedMarkLightURL
         self.combinedMarkDarkURL = combinedMarkDarkURL
+        self.requiredText = requiredText
     }
 }
 
-/// Supplies forecasts. Implementations: WeatherKit (IterServices), sample data (Debug menu only), test fakes.
+/// Supplies forecasts. Implementations: WeatherKit, OpenWeather, Windy and the fallback router (IterServices),
+/// sample data (Debug menu only), test fakes.
 public protocol WeatherProviding: Sendable {
     var source: ForecastSource { get }
     /// Throws `WeatherError`.
@@ -113,13 +164,25 @@ public protocol WeatherProviding: Sendable {
 }
 
 public enum WeatherError: Error, Hashable, Sendable {
+    /// WeatherKit is not provisioned for this build.
     case notEnabled
+    /// Apple Weather failed (kept for WeatherKit; other providers use `provider`).
     case failed(String)
+    case missingKey(ForecastSource)
+    case keyRejected(ForecastSource)
+    case overDailyLimit(ForecastSource)
+    case testingKey(ForecastSource)
+    case provider(ForecastSource, String)
 
     public var unavailableReason: ForecastUnavailableReason {
         switch self {
         case .notEnabled: .weatherServiceNotEnabled
         case .failed(let detail): .serviceFailed(detail: detail)
+        case .missingKey(let s): .missingAPIKey(s)
+        case .keyRejected(let s): .keyRejected(s)
+        case .overDailyLimit(let s): .dailyLimitReached(s)
+        case .testingKey(let s): .testingKey(s)
+        case .provider(let s, let detail): .providerFailed(s, detail: detail)
         }
     }
 }

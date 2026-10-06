@@ -11,6 +11,61 @@
         }
       }
     },
+    "%@ %@, %@ %@, little low cloud: colour likely." : {
+      "comment" : "Light reason naming mid and high cloud. Arguments: dominant layer and amount, other layer and amount",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@, %3$@ %4$@, little low cloud: colour likely."
+          }
+        }
+      }
+    },
+    "%@ %@, low cloud %@: a thick upper deck mutes the colour." : {
+      "comment" : "Light reason naming the dominant upper cloud and the low cloud",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@, low cloud %3$@: a thick upper deck mutes the colour."
+          }
+        }
+      }
+    },
+    "%@ %@, low cloud %@: good chance of a lit sky." : {
+      "comment" : "Light reason naming the dominant upper cloud and the low cloud",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@, low cloud %3$@: good chance of a lit sky."
+          }
+        }
+      }
+    },
+    "%@ %@, low cloud %@: little effect on colour." : {
+      "comment" : "Light reason naming the dominant upper cloud and the low cloud",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@, low cloud %3$@: little effect on colour."
+          }
+        }
+      }
+    },
+    "%@ (%@ unavailable)" : {
+      "comment" : "Weather source used as a fallback, e.g. OpenWeather (Apple Weather unavailable)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ (%2$@ unavailable)"
+          }
+        }
+      }
+    },
     "%@ (estimated)" : {
       "comment" : "Trip driving total that includes estimated drives"
     },
@@ -37,17 +92,32 @@
     "%@ ft elevation" : {
       "comment" : "Spot fact: elevation in feet"
     },
+    "%@ gives total cloud only, not cloud by height: confidence is one step lower." : {
+      "comment" : "Score footnote: no cloud layers. Argument is the provider name"
+    },
     "%@ lit" : {
       "comment" : "Moon illumination"
     },
     "%@ m elevation" : {
       "comment" : "Spot fact: elevation in metres"
     },
+    "%@ mm" : {
+      "comment" : "Rain amount in millimetres"
+    },
+    "%@ mm/h" : {
+      "comment" : "Rain amount in millimetres per hour"
+    },
+    "%@ needs an API key. Add one in Settings ▸ Weather." : {
+      "comment" : "No forecast reason: the chosen provider has no API key. Argument is the provider name"
+    },
     "%@ rain" : {
-      "comment" : "Scrub readout"
+      "comment" : "Scrub readout\nScrub readout when only an amount is known"
+    },
+    "%@ rejected the API key. Check it in Settings ▸ Weather." : {
+      "comment" : "No forecast reason: a provider refused the key. Argument is the provider name"
     },
     "%@ · %@" : {
-      "comment" : "Add stop row: place and distance from the anchor stop\nDrive time and distance between two stops\nSession menu item with no forecast\nSession menu item: window name and its time range",
+      "comment" : "Add stop row: place and distance from the anchor stop\nDrive time and distance between two stops\nSession menu item with no forecast\nSession menu item: window name and its time range\nWeather source and its model, e.g. Windy · GFS",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -118,6 +188,17 @@
     "%@ · no window this day" : {
       "comment" : "A stop's session that the sun does not produce that day"
     },
+    "%@ · updated %@" : {
+      "comment" : "Weather source line, e.g. Windy · GFS · updated 19:40",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · updated %2$@"
+          }
+        }
+      }
+    },
     "%@ – %@" : {
       "comment" : "Trip date range, e.g. Wed 7 – Sat 10 Oct",
       "localizations" : {
@@ -128,6 +209,12 @@
           }
         }
       }
+    },
+    "%@'s model steps every three hours; Iter fills the hours between." : {
+      "comment" : "Score footnote: three-hourly model. Argument is the provider name"
+    },
+    "%@'s testing key returns shuffled data, so Iter won't score from it." : {
+      "comment" : "No forecast reason: a testing API key. Argument is the provider name"
     },
     "%@, %@" : {
       "comment" : "VoiceOver: template",
@@ -209,6 +296,17 @@
     "%lld min walk-in" : {
       "comment" : "Spot fact: walk from parking\nWalk from parking to the shooting spot"
     },
+    "%lld of %lld" : {
+      "comment" : "Settings: calls made today of the daily cap, e.g. 12 of 800",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld"
+          }
+        }
+      }
+    },
     "%lld places for “%@”" : {
       "comment" : "Scout results header, with the request",
       "localizations" : {
@@ -259,6 +357,9 @@
     },
     "A thick upper deck mutes the colour." : {
       "comment" : "Light reason"
+    },
+    "API key" : {
+      "comment" : "Settings field"
     },
     "About" : {
       "comment" : "Settings tab"
@@ -341,8 +442,8 @@
     "Apple Maps" : {
       "comment" : "List section: places found by searching Apple Maps\nSaved filter\nSource filter: places found by searching Apple Maps\nSpot provenance"
     },
-    "Apple Weather is working" : {
-      "comment" : "Settings weather status"
+    "Apple Weather" : {
+      "comment" : "Weather provider name"
     },
     "Apply" : {
       "comment" : "Button: apply the suggested order"
@@ -402,6 +503,9 @@
     "Best at %@" : {
       "comment" : "Spot fact: what the spot is known for"
     },
+    "Best for the spot" : {
+      "comment" : "Windy model choice"
+    },
     "Best light (choose any)" : {
       "comment" : "Spot editor section: multiple choice"
     },
@@ -419,6 +523,9 @@
     },
     "Build with `scripts/run.sh --weatherkit`." : {
       "comment" : "WeatherKit setup step; the command is code"
+    },
+    "Calls today" : {
+      "comment" : "Settings field"
     },
     "Cancel" : {
       "comment" : "Alert button\nButton\nButton: stop the scout"
@@ -450,11 +557,11 @@
     "Change how long before the window you want to be set up" : {
       "comment" : "Tooltip"
     },
+    "Check" : {
+      "comment" : "Button: test a weather provider now"
+    },
     "Check Again" : {
       "comment" : "Button"
-    },
-    "Checking Apple Weather…" : {
-      "comment" : "Settings weather status"
     },
     "Checking the drive" : {
       "comment" : "Scout progress stage"
@@ -467,6 +574,9 @@
     },
     "Checking the forecast…" : {
       "comment" : "Shown while the forecast loads"
+    },
+    "Checking…" : {
+      "comment" : "Settings weather status"
     },
     "Choose the day whose route is highlighted on the map" : {
       "comment" : "Tooltip"
@@ -510,6 +620,9 @@
     "Cloud and rain are not drawn: there is no forecast. Sun and window times above are exact." : {
       "comment" : "Timeline note when there is no forecast"
     },
+    "Cloud by height (low, mid, high) from the GFS, ICON and NAM models. Testing keys return shuffled data." : {
+      "comment" : "Settings: Windy description"
+    },
     "Cloud cover" : {
       "comment" : "Chart legend\nLight factor"
     },
@@ -531,6 +644,9 @@
     "Compass direction →" : {
       "comment" : "Sky arc x axis"
     },
+    "Contains data from the Windy database" : {
+      "comment" : "Windy attribution required by its API terms"
+    },
     "Copy Coordinates" : {
       "comment" : "Context menu"
     },
@@ -546,11 +662,20 @@
     "Couldn't open this trip" : {
       "comment" : "Alert title"
     },
-    "Couldn't reach Apple Weather." : {
-      "comment" : "Settings weather status"
+    "Couldn't reach %@" : {
+      "comment" : "Settings weather status; the name is a weather provider"
+    },
+    "Couldn't reach %@." : {
+      "comment" : "No forecast reason: a provider failed. Argument is the provider name"
     },
     "Couldn't reach Apple Weather. Sun and moon times are still exact." : {
       "comment" : "No forecast reason: network or service failure"
+    },
+    "Couldn't remove the key from your Keychain." : {
+      "comment" : "Settings: Keychain error"
+    },
+    "Couldn't save the key to your Keychain." : {
+      "comment" : "Settings: Keychain error"
     },
     "Couldn't search Apple Maps for “%@”." : {
       "comment" : "Inline error under the search field"
@@ -563,6 +688,17 @@
     },
     "Curated" : {
       "comment" : "Saved filter\nSource filter: Iter's hand-picked spots\nSpot provenance"
+    },
+    "Daily cap reached (%lld of %lld)" : {
+      "comment" : "Settings weather status",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Daily cap reached (%1$lld of %2$lld)"
+          }
+        }
+      }
     },
     "Dark sky" : {
       "comment" : "Light factor"
@@ -625,9 +761,6 @@
     },
     "Desert" : {
       "comment" : "Spot category"
-    },
-    "Detail" : {
-      "comment" : "Settings section: technical error detail"
     },
     "Dismiss" : {
       "comment" : "Button"
@@ -755,14 +888,26 @@
     "Forest" : {
       "comment" : "Spot category"
     },
+    "From environment (%@)" : {
+      "comment" : "Settings: the key comes from an environment variable"
+    },
+    "From launch argument" : {
+      "comment" : "Settings: the key comes from a launch argument"
+    },
     "Full day" : {
       "comment" : "Timeline zoom option"
     },
     "Full moon" : {
       "comment" : "Moon phase"
     },
+    "GFS everywhere" : {
+      "comment" : "Windy model choice"
+    },
     "General" : {
       "comment" : "Settings tab"
+    },
+    "Get a key" : {
+      "comment" : "Settings: link to a provider's API key page"
     },
     "Go" : {
       "comment" : "Menu title"
@@ -792,7 +937,7 @@
       "comment" : "Short confidence label"
     },
     "High cloud" : {
-      "comment" : "Chart legend"
+      "comment" : "Chart legend\nCloud layer name at the start of a sentence"
     },
     "High confidence" : {
       "comment" : "Light Index confidence"
@@ -802,6 +947,12 @@
     },
     "Hour by hour" : {
       "comment" : "Spot page section title"
+    },
+    "Hourly for 10 days, with cloud cover and visibility. Needs a paid Apple developer team to turn on." : {
+      "comment" : "Settings: Apple Weather description"
+    },
+    "Hourly for 48 hours, then daily. Total cloud only. 1,000 free calls a day." : {
+      "comment" : "Settings: OpenWeather description"
     },
     "Hourly weather" : {
       "comment" : "VoiceOver label"
@@ -814,6 +965,12 @@
     },
     "Hurts" : {
       "comment" : "Factor effect"
+    },
+    "If it fails, try" : {
+      "comment" : "Settings: the fallback forecast source"
+    },
+    "If the first source can't answer, Iter asks the second. A fallback is always named next to the forecast." : {
+      "comment" : "Settings footer"
     },
     "Import Trip" : {
       "comment" : "Undo action name"
@@ -856,8 +1013,17 @@
     "Iter couldn't read that file. Nothing was imported." : {
       "comment" : "Import error"
     },
+    "Iter's daily limit for %@ is reached, to stay inside the free allowance. Forecasts resume tomorrow or raise the cap in Settings." : {
+      "comment" : "No forecast reason: Iter's own daily call cap was reached. Argument is the provider name"
+    },
     "Jump to today" : {
       "comment" : "Tooltip"
+    },
+    "Key rejected" : {
+      "comment" : "Compact no-forecast reason: the API key was refused\nSettings weather status"
+    },
+    "Key type" : {
+      "comment" : "Settings field"
     },
     "Kind" : {
       "comment" : "Saved sort order: by category"
@@ -897,7 +1063,7 @@
       "comment" : "Tooltip"
     },
     "Legal attribution" : {
-      "comment" : "Link to Apple Weather legal attribution"
+      "comment" : "Link to Apple Weather legal attribution\nLink to a weather provider's legal attribution"
     },
     "Light" : {
       "comment" : "Menu title"
@@ -926,6 +1092,9 @@
     "Likely %@" : {
       "comment" : "Score range for days further out"
     },
+    "Limit reached" : {
+      "comment" : "Compact no-forecast reason: Iter's daily call cap"
+    },
     "Little chance of rain." : {
       "comment" : "Light reason"
     },
@@ -934,6 +1103,9 @@
     },
     "Little low cloud: the horizon should be open." : {
       "comment" : "Light reason"
+    },
+    "Little or no rain forecast." : {
+      "comment" : "Light reason when rain is judged from the forecast amount"
     },
     "Loading" : {
       "comment" : "Compact no-forecast reason"
@@ -953,11 +1125,20 @@
     "Low cloud" : {
       "comment" : "Chart legend\nLight factor"
     },
+    "Low cloud %@ may block the sun at the horizon." : {
+      "comment" : "Light reason naming the low cloud amount"
+    },
+    "Low cloud %@: the horizon should be open." : {
+      "comment" : "Light reason naming the low cloud amount"
+    },
     "Low cloud can block the sun at the horizon." : {
       "comment" : "Light reason"
     },
     "Low confidence" : {
       "comment" : "Light Index confidence"
+    },
+    "Made-up weather for demos." : {
+      "comment" : "Settings: sample description"
     },
     "Map (snapshot stand-in)" : {
       "comment" : "Label on the static map used in snapshot renders"
@@ -978,10 +1159,13 @@
       "comment" : "Light reason"
     },
     "Mid cloud" : {
-      "comment" : "Chart legend"
+      "comment" : "Chart legend\nCloud layer name at the start of a sentence"
     },
     "Midday" : {
       "comment" : "Best light a spot is known for"
+    },
+    "Model" : {
+      "comment" : "Settings field"
     },
     "Moon" : {
       "comment" : "Sky arc legend"
@@ -1018,6 +1202,12 @@
     },
     "Nearest to %@ first" : {
       "comment" : "Add stop list order, naming the stop the distances are from"
+    },
+    "Needs an API key" : {
+      "comment" : "Settings weather status"
+    },
+    "Needs key" : {
+      "comment" : "Compact no-forecast reason: no API key"
     },
     "New Spot" : {
 
@@ -1113,8 +1303,20 @@
     "No such light today" : {
       "comment" : "Row: the chosen window does not occur on this day at this place"
     },
+    "No visibility from this source." : {
+      "comment" : "Score footnote: no visibility data"
+    },
     "No window" : {
       "comment" : "Outlook cell when the sun gives no such window"
+    },
+    "None" : {
+      "comment" : "Settings: no fallback forecast source"
+    },
+    "Not checked yet" : {
+      "comment" : "Settings weather status"
+    },
+    "Not enabled for this build" : {
+      "comment" : "Settings weather status"
     },
     "Notes" : {
       "comment" : "Spot editor field\nSpot notes heading"
@@ -1152,6 +1354,9 @@
     "Open in Maps" : {
       "comment" : "Button\nContext menu"
     },
+    "Open in Windy" : {
+      "comment" : "Button that opens windy.com at the spot"
+    },
     "Open spot page" : {
       "comment" : "Tooltip"
     },
@@ -1160,6 +1365,18 @@
     },
     "Open this location in Apple Maps" : {
       "comment" : "Help"
+    },
+    "Open this map area on windy.com" : {
+      "comment" : "Tooltip"
+    },
+    "Open this spot on windy.com in your browser" : {
+      "comment" : "Tooltip"
+    },
+    "OpenWeather" : {
+      "comment" : "Weather provider name"
+    },
+    "OpenWeather rejected the API key, or the key isn't subscribed to One Call 3.0. Check it in Settings ▸ Weather." : {
+      "comment" : "No forecast reason: OpenWeather refused the key"
     },
     "Opens the trip" : {
       "comment" : "VoiceOver hint"
@@ -1193,6 +1410,9 @@
     "Passed" : {
       "comment" : "Compact no-forecast reason"
     },
+    "Paste your key" : {
+
+    },
     "Pick your spots and days. Iter works out when to leave so you are set up before the light arrives." : {
       "comment" : "Empty trips screen explanation"
     },
@@ -1223,17 +1443,35 @@
     "Previous day (⌘[)" : {
       "comment" : "Tooltip"
     },
+    "Professional" : {
+      "comment" : "Windy key type"
+    },
     "Puts the stops in the order their light arrives." : {
       "comment" : "Light-first suggestion explanation"
     },
     "Rain" : {
       "comment" : "Hourly row label\nLight factor"
     },
+    "Rain amount (full height is 2 mm/h)" : {
+      "comment" : "Chart legend when the provider gives amounts, not chances"
+    },
+    "Rain in mm/h · Wind in %@" : {
+      "comment" : "Hourly strip footnote naming the rain and wind units when rain is an amount"
+    },
+    "Rain is expected." : {
+      "comment" : "Light reason when rain is judged from the forecast amount"
+    },
     "Rain is likely." : {
       "comment" : "Light reason"
     },
+    "Rain judged from the forecast amount (no probability from %@)." : {
+      "comment" : "Score footnote: no rain probability. Argument is the provider name"
+    },
     "Refresh Forecasts" : {
       "comment" : "Menu item"
+    },
+    "Remove" : {
+      "comment" : "Button"
     },
     "Remove Stop" : {
       "comment" : "Undo action name"
@@ -1275,7 +1513,7 @@
       "comment" : "Settings field"
     },
     "Sample data" : {
-      "comment" : "Banner title when sample weather is on\nLabel on scores made from sample weather"
+      "comment" : "Banner title when sample weather is on\nLabel on scores made from sample weather\nWeather source name: made-up data for demos"
     },
     "Save" : {
       "comment" : "Button\nButton: save a spot\nContext menu\nPlace card: save the spot"
@@ -1292,7 +1530,19 @@
     "Saved" : {
       "comment" : "Accessibility label\nButton state\nButton state: spot is saved\nMenu item\nPlace card: the spot is saved\nSection title\nSidebar item"
     },
-    "Scores use made-up weather, not Apple Weather. Turn this off in the Debug menu." : {
+    "Saved in Keychain" : {
+      "comment" : "Settings: the key is in the Keychain"
+    },
+    "Saved in Keychain. Paste to replace" : {
+
+    },
+    "Scored from a daily summary: beyond %@'s hourly forecast." : {
+      "comment" : "Score footnote: daily summary only. Argument is the provider name"
+    },
+    "Scored from a daily summary: beyond OpenWeather's 48 hours." : {
+      "comment" : "Score footnote: daily summary only"
+    },
+    "Scores use made-up weather, not a real forecast. Turn this off in the Debug menu." : {
       "comment" : "Settings: sample data explanation"
     },
     "Scores use made-up weather. Turn off in the Debug menu." : {
@@ -1476,7 +1726,7 @@
     "Sun and moon for %@" : {
       "comment" : "VoiceOver: sky arc label"
     },
-    "Sun and moon times are calculated on this Mac. Weather is from Apple Weather. Places and drive times are from Apple Maps, alongside Iter's curated spots." : {
+    "Sun and moon times are calculated on this Mac. Weather is from the source you choose in Settings ▸ Weather: Apple Weather, OpenWeather or Windy (contains data from the Windy database). Places and drive times are from Apple Maps, alongside Iter's curated spots." : {
       "comment" : "About: data sources"
     },
     "Sun direction" : {
@@ -1520,6 +1770,15 @@
     "Temperature" : {
       "comment" : "Settings field"
     },
+    "Testing" : {
+      "comment" : "Windy key type"
+    },
+    "Testing key" : {
+      "comment" : "Compact no-forecast reason: testing API key"
+    },
+    "Testing key: Windy's data is shuffled, so Iter won't score from it" : {
+      "comment" : "Settings weather status"
+    },
     "That request is too long" : {
       "comment" : "Scout failure title"
     },
@@ -1528,9 +1787,6 @@
     },
     "The file isn't a readable Iter trip." : {
       "comment" : "Import error"
-    },
-    "The forecast didn't arrive." : {
-      "comment" : "Settings weather detail"
     },
     "The forecast is close, so the score is firm." : {
       "comment" : "Confidence in words"
@@ -1586,7 +1842,7 @@
     "Time zone" : {
       "comment" : "Spot editor field"
     },
-    "To turn it on" : {
+    "To turn on Apple Weather" : {
       "comment" : "Settings section: WeatherKit setup steps"
     },
     "Today" : {
@@ -1634,7 +1890,7 @@
     "Unsave" : {
       "comment" : "Context menu\nMenu item"
     },
-    "Until then, sun and moon times are exact and light scores show “No forecast”." : {
+    "Until a forecast source works, sun and moon times are exact and light scores show “No forecast”." : {
       "comment" : "Settings footer: what works without weather"
     },
     "Updated %@" : {
@@ -1642,6 +1898,9 @@
     },
     "Urban" : {
       "comment" : "Spot category"
+    },
+    "Use" : {
+      "comment" : "Settings: the forecast source Iter uses"
     },
     "Use Sample Weather" : {
       "comment" : "Debug menu item"
@@ -1690,11 +1949,11 @@
     "Weather" : {
       "comment" : "Settings tab"
     },
+    "Weather data © OpenWeather" : {
+      "comment" : "OpenWeather attribution required by its licence"
+    },
     "Weather isn't enabled for this build of Iter, so only sun and moon times are shown." : {
       "comment" : "No forecast reason: WeatherKit not provisioned"
-    },
-    "Weather isn't enabled for this build." : {
-      "comment" : "Settings weather status"
     },
     "Weather off" : {
       "comment" : "Compact no-forecast reason"
@@ -1726,8 +1985,20 @@
     "Wind in %@" : {
       "comment" : "Hourly strip footnote naming the wind unit"
     },
+    "Windy" : {
+      "comment" : "Spot page section title\nToolbar button: open the map area on windy.com\nWeather provider name"
+    },
+    "Windy's map shows cloud by height, rain and wind around this spot. It opens on windy.com: Windy doesn't allow its map inside other weather apps." : {
+      "comment" : "Spot page Windy section"
+    },
+    "Windy.com" : {
+      "comment" : "Link to windy.com in the Windy attribution"
+    },
     "With none chosen, light is shown for sunset." : {
       "comment" : "Spot editor best light footer"
+    },
+    "Working · last update %@" : {
+      "comment" : "Settings weather status, e.g. Working · last update 19:40"
     },
     "Write a plain-language explanation with Apple Intelligence" : {
       "comment" : "Help"
@@ -1773,8 +2044,14 @@
     "estimated" : {
       "comment" : "Marks a drive time that is a straight-line estimate, not a road route"
     },
+    "high" : {
+      "comment" : "Cloud layer name inside a sentence"
+    },
     "km/h" : {
       "comment" : "Wind speed unit"
+    },
+    "mid" : {
+      "comment" : "Cloud layer name inside a sentence"
     },
     "mph" : {
       "comment" : "Wind speed unit"

@@ -43,7 +43,7 @@ let package = Package(
         .testTarget(name: "IterAstroTests", dependencies: ["IterAstro"]),
         .testTarget(name: "IterLightTests", dependencies: ["IterLight", "IterAstro"]),
         .testTarget(name: "IterDataTests", dependencies: ["IterData"]),
-        .testTarget(name: "IterServicesTests", dependencies: ["IterServices"]),
+        .testTarget(name: "IterServicesTests", dependencies: ["IterServices"], resources: [.copy("Fixtures")]),
         .testTarget(name: "IterDesignTests", dependencies: ["IterDesign"]),
         .testTarget(name: "IterFeaturesTests", dependencies: ["IterFeatures"]),
     ]

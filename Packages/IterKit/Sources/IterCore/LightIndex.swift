@@ -49,9 +49,15 @@ public struct LightScore: Codable, Hashable, Sendable {
     public var forecastFetchedAt: Date
     /// Hours between the fetch and the window's middle.
     public var leadHours: Double
+    /// The provider's model ("GFS") when it names one, so the score can say "Windy · GFS".
+    public var model: String?
+    /// What the provider could not supply for this window; each is phrased beside the reasons and lowers confidence where noted.
+    public var notes: [ScoreNote]
 
     public init(value: Int, band: LightBand, confidence: Confidence, range: ClosedRange<Int>, contributors: [LightContributor],
-                source: ForecastSource, forecastFetchedAt: Date, leadHours: Double) {
+                source: ForecastSource, forecastFetchedAt: Date, leadHours: Double, model: String? = nil, notes: [ScoreNote] = []) {
+        self.model = model
+        self.notes = notes
         self.value = value
         self.band = band
         self.confidence = confidence

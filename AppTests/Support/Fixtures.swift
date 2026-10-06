@@ -38,6 +38,20 @@ enum Fixtures {
         return model
     }
 
+    /// A model for the Settings ▸ Weather snapshots: the chosen providers, the keys "saved" in the in-memory store (never probed,
+    /// so no network) and the providers that last answered at the fixed clock.
+    static func weatherSettingsModel(weather: Weather = .notEnabled, primary: ForecastSource, fallback: ForecastSource? = nil,
+                                     keys: [ForecastSource] = [], working: [ForecastSource] = []) async -> AppModel {
+        let model = Self.model(weather: weather, seedTrip: false, saved: [])
+        let setup = model.weather
+        for source in keys { try? setup.factory.keys.store.setKey("fixture-key", for: source) }
+        setup.selectPrimary(primary)
+        setup.selectFallback(fallback)
+        await setup.settled()
+        for source in working { setup.record(source, .success(now)) }
+        return model
+    }
+
     /// A view wired the way the app wires it.
     static func host<V: View>(_ view: V, model: AppModel, navigation: AppNavigation = AppNavigation()) -> some View {
         view

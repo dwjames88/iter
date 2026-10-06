@@ -4,7 +4,7 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// The leading column: summary, honest notices, search status, the list, and Apple Weather attribution.
+/// The leading column: summary, honest notices, search status, the list, and the forecast source with its attribution.
 struct ExploreListPanel: View {
     @Bindable var explore: ExploreModel
     @Environment(AppModel.self) private var model
@@ -16,7 +16,7 @@ struct ExploreListPanel: View {
             Divider()
             content
             Divider()
-            WeatherAttributionView()
+            ForecastSourceFooter(app: model, coordinates: explore.rows.filter { $0.score != nil }.map(\.spot.coordinate))
                 .padding(.horizontal, IterSpace.md)
                 .padding(.vertical, IterSpace.sm)
                 .frame(maxWidth: .infinity, alignment: .leading)

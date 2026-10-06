@@ -1,0 +1,62 @@
+{
+ "lat": 40.12,
+ "lon": -96.66,
+ "timezone": "America/Chicago",
+ "timezone_offset": -18000,
+ "hourly": [
+  {
+   "dt": 1595242800,
+   "temp": 20.1,
+   "humidity": 70,
+   "clouds": 40,
+   "wind_speed": 2.0,
+   "weather": [
+    {
+     "id": 802,
+     "main": "Clouds",
+     "description": "scattered clouds",
+     "icon": "03d"
+    }
+   ]
+  },
+  {
+   "dt": 1595246400,
+   "temp": 20.4,
+   "humidity": 68,
+   "clouds": 55,
+   "wind_speed": 2.5,
+   "weather": [
+    {
+     "id": 803,
+     "main": "Clouds",
+     "description": "broken clouds",
+     "icon": "04d"
+    }
+   ]
+  },
+  {
+   "dt": 1595250000,
+   "temp": 20.6,
+   "humidity": 66,
+   "wind_speed": 2.5,
+   "weather": [
+    {
+     "id": 803,
+     "main": "Clouds",
+     "description": "broken clouds",
+     "icon": "04d"
+    }
+   ]
+  },
+  {
+   "temp": 20.6,
+   "humidity": 66,
+   "clouds": 10,
+   "wind_speed": 2.5
+  },
+  {
+   "dt": 1595253600,
+   "clouds": 100
+  }
+ ]
+}

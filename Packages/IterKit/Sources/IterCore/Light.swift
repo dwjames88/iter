@@ -129,14 +129,31 @@ public struct LightContributor: Codable, Hashable, Sendable, Identifiable {
     public var points: Int
     /// The measured value, in the unit documented on `Factor`.
     public var value: Double
+    /// For cloud factors when the provider separates layers: the window's mean low, mid and high cloud,
+    /// so the reason can name them ("high cloud 60%, low cloud 10%"). nil when the provider gives total cloud only.
+    public var layers: CloudLayers?
 
     public var id: Factor { factor }
 
-    public init(factor: Factor, effect: Effect, points: Int, value: Double) {
+    public init(factor: Factor, effect: Effect, points: Int, value: Double, layers: CloudLayers? = nil) {
         self.factor = factor
         self.effect = effect
         self.points = points
         self.value = value
+        self.layers = layers
+    }
+}
+
+/// Cloud cover by height, fractions 0–1.
+public struct CloudLayers: Codable, Hashable, Sendable {
+    public var low: Double
+    public var mid: Double
+    public var high: Double
+
+    public init(low: Double, mid: Double, high: Double) {
+        self.low = low
+        self.mid = mid
+        self.high = high
     }
 }
 
@@ -152,10 +169,46 @@ public enum ForecastUnavailableReason: Codable, Hashable, Sendable {
     case inThePast
     /// No forecast has been requested yet (for example, offline or still loading).
     case notLoaded
+    /// The chosen provider needs an API key and none is set (Settings ▸ Weather, Keychain, or ITER_*_KEY).
+    case missingAPIKey(ForecastSource)
+    /// The provider refused the key (HTTP 401/403, or the subscription does not include the product).
+    case keyRejected(ForecastSource)
+    /// Iter's own daily call cap for the provider was reached (it protects the free allowance), or the provider said 429.
+    case dailyLimitReached(ForecastSource)
+    /// The key is a testing key whose data is not a real forecast (Windy's free tier returns data for random places).
+    case testingKey(ForecastSource)
+    /// A named provider failed (network, server, unreadable response). `detail` is for logs and Settings, not for rows.
+    case providerFailed(ForecastSource, detail: String)
 }
 
-/// Where a forecast came from. Sample data is always labelled on screen.
-public enum ForecastSource: String, Codable, Hashable, Sendable {
+/// Where a forecast came from. Sample data is always labelled on screen; every other source is named wherever a
+/// forecast or score appears, with the attribution its licence requires.
+public enum ForecastSource: String, Codable, CaseIterable, Hashable, Sendable, Identifiable {
     case appleWeather
+    case openWeather
+    case windy
     case sample
+
+    public var id: String { rawValue }
+
+    /// The real providers a user can choose in Settings ▸ Weather (sample data stays behind the Debug menu).
+    public static let selectable: [ForecastSource] = [.appleWeather, .openWeather, .windy]
+
+    /// Whether the provider needs an API key from the user.
+    public var needsAPIKey: Bool { self == .openWeather || self == .windy }
+}
+
+/// Something the provider could not supply for a scored window, which the Light Index reports beside its reasons
+/// and folds into its confidence.
+public enum ScoreNote: String, Codable, CaseIterable, Hashable, Sendable {
+    /// No cloud by height: the score used total cloud only (confidence drops one step).
+    case noCloudLayers
+    /// Beyond the provider's hourly range: the window was scored from a daily summary (confidence is low).
+    case dailySummaryOnly
+    /// The model steps every three hours; Iter interpolated to hours (high confidence needs 24 h lead, not 36).
+    case threeHourlySteps
+    /// No precipitation probability: rain was judged from the forecast amount.
+    case precipitationFromAmount
+    /// No visibility from this provider or model; visibility was left out of the score.
+    case noVisibility
 }

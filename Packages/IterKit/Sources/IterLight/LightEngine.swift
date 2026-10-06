@@ -131,11 +131,13 @@ public struct LightEngine: Sendable {
         }
         let scored = WindowScorer.score(kind: kind, conditions: conditions, moon: moon)
         let lead = mid.timeIntervalSince(forecast.fetchedAt) / 3600
-        let confidence = WindowScorer.confidence(leadHours: lead, layersMissing: scored.usedLayerFallback)
+        let confidence = WindowScorer.confidence(leadHours: lead, layersMissing: scored.usedLayerFallback,
+                                                 resolutions: conditions.resolutions)
         return .scored(LightScore(value: scored.value, band: LightBand(score: scored.value), confidence: confidence,
                                   range: WindowScorer.range(value: scored.value, confidence: confidence),
                                   contributors: scored.contributors, source: forecast.source,
-                                  forecastFetchedAt: forecast.fetchedAt, leadHours: lead))
+                                  forecastFetchedAt: forecast.fetchedAt, leadHours: lead, model: forecast.model,
+                                  notes: WindowScorer.notes(scored: scored, resolutions: conditions.resolutions)))
     }
 
     /// Weather averaged over the hours overlapping `span`, weighted by overlap seconds.
@@ -150,13 +152,21 @@ public struct LightEngine: Sendable {
         }
         let weight = hours.reduce(0) { $0 + $1.1 }
         func mean(_ f: (HourlyConditions) -> Double) -> Double { hours.reduce(0) { $0 + f($1.0) * $1.1 } / weight }
+        /// Mean over the hours that have the value (weighted by overlap); nil when none do.
+        func optionalMean(_ f: (HourlyConditions) -> Double?) -> Double? {
+            var sum = 0.0, w = 0.0
+            for (h, overlap) in hours { if let v = f(h) { sum += v * overlap; w += overlap } }
+            return w > 0 ? sum / w : nil
+        }
         let hasLayers = hours.allSatisfy { $0.0.cloudLow != nil && $0.0.cloudMid != nil && $0.0.cloudHigh != nil }
         return WindowConditions(
             totalCloud: mean(\.cloudCover),
             low: hasLayers ? mean { $0.cloudLow ?? 0 } : nil,
             mid: hasLayers ? mean { $0.cloudMid ?? 0 } : nil,
             high: hasLayers ? mean { $0.cloudHigh ?? 0 } : nil,
-            precipitationChance: mean(\.precipitationChance),
-            visibilityMeters: mean(\.visibilityMeters))
+            precipitationChance: optionalMean(\.precipitationChance),
+            precipitationMm: optionalMean(\.precipitationMm),
+            visibilityMeters: optionalMean(\.visibilityMeters),
+            resolutions: Set(hours.map { $0.0.resolution }))
     }
 }
