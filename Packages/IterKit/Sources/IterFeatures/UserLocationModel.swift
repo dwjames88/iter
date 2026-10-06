@@ -73,6 +73,12 @@ public final class UserLocationModel {
     /// Fetches a fresh fix now (e.g. a refresh button).
     public func refresh() { refreshIfAuthorized() }
 
+    /// MapKit's own user-location indicator (and its button) belong on a map: real, permitted location only.
+    public var showsSystemIndicator: Bool { authorization == .authorized && !isSimulated }
+
+    /// Where the app draws its own dot: only for a simulated, permitted location (MapKit would show the real one).
+    public var simulatedIndicatorCoordinate: Coordinate? { authorization == .authorized && isSimulated ? coordinate : nil }
+
     public func distanceMiles(to other: Coordinate) -> Double? {
         coordinate.map { $0.distance(to: other) / 1609.344 }
     }

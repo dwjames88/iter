@@ -10,6 +10,7 @@ import IterFeatures
 struct ExploreMapPane: View {
     @Bindable var explore: ExploreModel
     @Environment(\.renderMode) private var renderMode
+    @Environment(AppModel.self) private var app
     @State private var position: MapCameraPosition
     /// True once the map wrote a user-positioned `position` (pan, zoom, stepper, compass) that has not settled yet.
     @State private var userInteracted = false
@@ -81,6 +82,7 @@ struct ExploreMapPane: View {
                 ForEach(explore.pins.sorted { zOrder($0.style) < zOrder($1.style) }) { pin in
                     pinAnnotation(pin)
                 }
+                UserLocationMapContent(location: app.location)
                 if let draft = explore.draftCoordinate {
                     Annotation(String(localized: "New spot", comment: "Map pin label"), coordinate: clCoordinate(draft), anchor: .bottom) {
                         Image(systemName: "mappin.circle.fill")
@@ -91,6 +93,7 @@ struct ExploreMapPane: View {
             }
             .mapStyle(.standard(elevation: .flat, pointsOfInterest: .excludingAll))
             .mapControls {
+                if app.location.showsSystemIndicator { MapUserLocationButton() }
                 MapZoomStepper()
                 MapCompass()
                 MapScaleView()
@@ -191,6 +194,38 @@ struct ExploreMapPane: View {
     }
 }
 
+/// The user's position on a live map: MapKit's own blue dot for a real, permitted location; for a simulated one
+/// (`-IterLocation`), which MapKit cannot know, an equivalent dot at the simulated coordinate. Nothing otherwise.
+struct UserLocationMapContent: MapContent {
+    let location: UserLocationModel
+
+    var body: some MapContent {
+        if location.showsSystemIndicator {
+            UserAnnotation()
+        }
+        if let c = location.simulatedIndicatorCoordinate {
+            Annotation(String(localized: "Your location (simulated)", comment: "Map: the simulated user location"),
+                       coordinate: CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude), anchor: .center) {
+                SimulatedUserLocationDot()
+            }
+            .annotationTitles(.hidden)
+        }
+    }
+}
+
+/// A system-style location dot: blue, white ring, soft shadow.
+struct SimulatedUserLocationDot: View {
+    var body: some View {
+        Circle()
+            .fill(IterColor.userLocation)
+            .frame(width: 14, height: 14)
+            .overlay(Circle().strokeBorder(.white, lineWidth: 2.5))
+            .shadow(color: .black.opacity(0.3), radius: 2, y: 1)
+            .accessibilityElement()
+            .accessibilityLabel(Text("Your location (simulated)", comment: "VoiceOver: the simulated user location on the map"))
+    }
+}
+
 /// The hint shown while Add Spot mode is on.
 struct AddSpotBanner: View {
     var onCancel: () -> Void
@@ -218,6 +253,7 @@ struct AddSpotBanner: View {
 /// at the framed region, so hierarchy and legibility can be reviewed.
 struct ExploreMapStandIn: View {
     @Bindable var explore: ExploreModel
+    @Environment(AppModel.self) private var app
 
     var body: some View {
         GeometryReader { geo in
@@ -232,6 +268,9 @@ struct ExploreMapStandIn: View {
                     if let draft = explore.draftCoordinate {
                         Image(systemName: "mappin.circle.fill").font(.title).foregroundStyle(IterColor.mapPin)
                             .position(project(draft, region, geo.size))
+                    }
+                    if let c = app.location.simulatedIndicatorCoordinate {
+                        SimulatedUserLocationDot().position(project(c, region, geo.size))
                     }
                 }
                 Text("Map (snapshot stand-in)", comment: "Label on the static map used in snapshot renders")

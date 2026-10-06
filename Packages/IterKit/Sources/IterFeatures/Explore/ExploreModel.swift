@@ -365,12 +365,12 @@ public final class ExploreModel {
         cameraRequest = CameraRequest(id: nextRequestID(), kind: .pan(target))
     }
 
-    /// What an automatic fit frames: the Near you rows (and Apple Maps results) when there is a location, else every
+    /// What an automatic fit frames: the Near you rows (and Apple Maps results) and the user's own position when there is a location, else every
     /// listed row. Falls back to every row when filters leave Near you empty. Capped by `MapCameraPolicy.maxAutomaticSpan`.
     public var fitCoordinates: [Coordinate] {
         if hasLocation {
             let near = derived.sections.filter { $0.kind == .nearYou || $0.kind == .appleMaps }.flatMap(\.rows)
-            if !near.isEmpty { return near.map(\.spot.coordinate) }
+            if !near.isEmpty { return near.map(\.spot.coordinate) + [app.location.coordinate].compactMap { $0 } }
         }
         return rows.map(\.spot.coordinate)
     }

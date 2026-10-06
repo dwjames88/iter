@@ -589,11 +589,25 @@ private func miles(_ a: Coordinate, _ b: Coordinate) -> Double { a.distance(to: 
     @Test func theFitFramesNearYouAndNeverTheWholeWorld() async throws {
         let explore = try await makeExplore(at: moab, radius: 300)
         let near = ids(explore, .nearYou).compactMap { explore.row(id: $0)?.spot.coordinate }
-        #expect(Set(explore.fitCoordinates.map(\.latitude)) == Set(near.map(\.latitude)))
+        #expect(Set(explore.fitCoordinates.map(\.latitude)) == Set(near.map(\.latitude) + [moab.latitude]))
         explore.requestInitialCamera()
         guard case .fit(let region)? = explore.cameraRequest?.kind else { Issue.record("expected a fit"); return }
         #expect(region.latitudeDelta <= MapCameraPolicy.maxAutomaticSpan)
         for c in near { #expect(region.contains(c)) }
+    }
+
+    @Test func theFitIncludesTheUsersOwnPosition() async throws {
+        let explore = try await makeExplore(at: sanFrancisco, radius: 100)
+        let user = try #require(explore.app.location.coordinate)
+        #expect(explore.fitCoordinates.contains(user))
+        explore.requestInitialCamera()
+        guard case .fit(let region)? = explore.cameraRequest?.kind else { Issue.record("expected a fit"); return }
+        #expect(region.contains(user))
+        #expect(explore.app.location.simulatedIndicatorCoordinate == user)
+        #expect(!explore.app.location.showsSystemIndicator)
+        let without = try await makeExplore()
+        #expect(without.app.location.simulatedIndicatorCoordinate == nil)
+        #expect(!without.fitCoordinates.isEmpty)
     }
 
     @Test func aMovedMapIsNotRefitAndTheSettledCameraIsSaved() async throws {

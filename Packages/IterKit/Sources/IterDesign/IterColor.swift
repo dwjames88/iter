@@ -25,6 +25,7 @@ public enum IterColor {
     public static let routeInactive = make("route/inactive")
     public static let mapPin = make("map/pin")
     public static let mapPinInactive = make("map/pinInactive")
+    public static let userLocation = make("map/userLocation")
     // Light moment
     public static let brandDot = make("brand/dot")
     public static let sun = make("map/sun")
@@ -103,7 +104,7 @@ public enum IterColor {
     /// System colour aliases the registry may name. Unknown aliases fall back to the token's hex values.
     public static let supportedSystemAliases: [String] = [
         "labelColor", "secondaryLabelColor", "tertiaryLabelColor", "quaternaryLabelColor",
-        "separatorColor", "windowBackgroundColor", "controlBackgroundColor", "textBackgroundColor",
+        "separatorColor", "windowBackgroundColor", "controlBackgroundColor", "textBackgroundColor", "systemBlueColor",
     ]
 
     #if canImport(AppKit)
@@ -117,6 +118,7 @@ public enum IterColor {
         case "windowBackgroundColor": .windowBackgroundColor
         case "controlBackgroundColor": .controlBackgroundColor
         case "textBackgroundColor": .textBackgroundColor
+        case "systemBlueColor": .systemBlue
         default: nil
         }
     }
@@ -131,6 +133,7 @@ public enum IterColor {
         case "windowBackgroundColor": .systemBackground
         case "controlBackgroundColor": .secondarySystemBackground
         case "textBackgroundColor": .systemBackground
+        case "systemBlueColor": .systemBlue
         default: nil
         }
     }

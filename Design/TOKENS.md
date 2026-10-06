@@ -10,7 +10,7 @@ Do not edit the generated files by hand. Edit `TokenValues.swift` (or `tokens.js
 
 ## The identity, in one paragraph
 
-Everything is First Light. The palette is warm espresso ink, cream paper and a coral accent, used throughout: the interface accent, selection, focus, links, route lines, map pins, the sun marker, the logo dot and the app icon. The coral is used with restraint: it marks the one thing that acts or is selected, the route and the sun. The Light Index is a single-hue ramp from neutral sand to deep amber, ordered by lightness, and the band word is always printed beside it. Status colours have their own hues and always come with an icon: warning is violet, danger is raspberry. Text, separators and the app's own backgrounds are our First Light inks and paper, not system colours. The only system colour in the registry is `background/systemWindow`, for snapshot stand-ins.
+Everything is First Light. The palette is warm espresso ink, cream paper and a coral accent, used throughout: the interface accent, selection, focus, links, route lines, map pins, the sun marker, the logo dot and the app icon. The coral is used with restraint: it marks the one thing that acts or is selected, the route and the sun. The Light Index is a single-hue ramp from neutral sand to deep amber, ordered by lightness, and the band word is always printed beside it. Status colours have their own hues and always come with an icon: warning is violet, danger is raspberry. Text, separators and the app's own backgrounds are our First Light inks and paper, not system colours. The system colours in the registry are `background/systemWindow`, for snapshot stand-ins, and `map/userLocation` (system blue), for the simulated location dot.
 
 ## Colour role rules (what each colour must never be used for)
 
@@ -24,6 +24,7 @@ Coral is used with restraint. It is for the one thing that acts or is selected, 
 | `accent/hover`, `accent/pressed`, `accent/disabled` | The matching states of a custom control's accent fill or icon | Anything but a state. |
 | `selection/fill` | The fill of a selected row, day or window in the app's own views, always with an `accent/primary` stroke | A fill for anything not selected. |
 | `route/active`, `route/inactive` | Route lines, trip connectors, the switchback device | Pin colours for data, or any rating. Coral here means "the way", never "good light". |
+| `map/userLocation` | The simulated user-location dot (`-IterLocation`), with a white ring; real locations use MapKit's own blue dot | Anything else; it is the one blue in the app. |
 | `map/pin`, `map/pinInactive` | The selected spot pin and the stops of the day being looked at; the other stops and unselected stand-in pins | A rating. |
 | `brand/dot` | The logo dot | Anything but the logo. |
 | `map/sun` | The sun marker | A score, a status, a button, a large fill, text. It is not part of the ramp. |
@@ -121,6 +122,7 @@ Every token, its values and its one job. Generated from the registry.
 | `brand/dot` | `#D9431A` | `#FF8A5C` |  | The logo's dot (First Light coral). Graphic only, never text. |
 | `map/pin` | `#D9431A` | `#FF8A5C` |  | Selected spot pin and trip stop pins for the day being looked at. |
 | `map/pinInactive` | `#857369` | `#8F7D73` |  | Trip stop pins outside the day being looked at, and unselected stand-in pins. |
+| `map/userLocation` | `#007AFF` | `#0A84FF` | `systemBlueColor` | The simulated user-location dot (-IterLocation), drawn like the system's blue dot. Real locations use MapKit's own indicator. |
 | `map/sun` | `#D9431A` | `#FF8A5C` |  | The sun marker on the sky arc and the timeline. The light moment; never a fill behind text. |
 | `map/moon` | `#5B6B8C` | `#C8D2EA` |  | The moon marker on the sky arc and the timeline. |
 | `status/warning` | `#7A3EB8` | `#C79BFF` |  | Something needs attention (a tight schedule, stale forecast). Violet, always with a warning icon. Never amber, coral or green. |
@@ -267,7 +269,7 @@ The tests also check that the committed `tokens.json` and `TokenValues.swift` ar
 
 ## NightModeReady
 
-Milestone 2 adds a Night mode (red and dim, with greens remapped). The registry is shaped for it: a colour token is a name plus a set of appearance values (today `light` and `dark`), and the API resolves a name through one function (`IterColor.color(for:)`). Adding a night column means adding a field to `ColorToken`, a `night` entry under the DTCG extension, an extra appearance in the colour sets and a branch in that one resolver. No token names or call sites change. The one system-aliased token, `background/systemWindow`, would need a night override too, since system colours do not know Night mode.
+Milestone 2 adds a Night mode (red and dim, with greens remapped). The registry is shaped for it: a colour token is a name plus a set of appearance values (today `light` and `dark`), and the API resolves a name through one function (`IterColor.color(for:)`). Adding a night column means adding a field to `ColorToken`, a `night` entry under the DTCG extension, an extra appearance in the colour sets and a branch in that one resolver. No token names or call sites change. The system-aliased tokens, `background/systemWindow` and `map/userLocation`, would need a night override too, since system colours do not know Night mode.
 
 ## App icon
 

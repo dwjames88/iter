@@ -2121,6 +2121,9 @@
     "Your Spots" : {
       "comment" : "Source filter: spots the user added"
     },
+    "Your location (simulated)" : {
+      "comment" : "Map: the simulated user location\nVoiceOver: the simulated user location on the map"
+    },
     "Zoom" : {
       "comment" : "Timeline zoom picker label"
     },

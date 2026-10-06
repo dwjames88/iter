@@ -8,6 +8,7 @@ import IterFeatures
 /// the map is the sanity check (pattern #9). Selecting a pin selects the stop, and the other way round.
 struct TripRouteMap: View {
     @Environment(\.renderMode) private var renderMode
+    @Environment(AppModel.self) private var app
     let builder: TripBuilderModel
     @Binding var selection: UUID?
     /// The day picked in the builder's toolbar picker.
@@ -85,6 +86,7 @@ struct TripRouteMap: View {
                     }
                 }
             }
+            UserLocationMapContent(location: app.location)
             ForEach(entries) { entry in
                 Annotation(entry.stop.spot.name, coordinate: Self.coordinate(entry.stop.spot.coordinate), anchor: .center) {
                     pin(entry)
@@ -93,6 +95,7 @@ struct TripRouteMap: View {
             }
         }
         .mapControls {
+            if app.location.showsSystemIndicator { MapUserLocationButton() }
             MapZoomStepper()
             MapCompass()
             MapScaleView()

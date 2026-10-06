@@ -21,6 +21,7 @@ public enum TokenValues {
         ColorToken("brand/dot", light: "#D9431A", dark: "#FF8A5C", "The logo's dot (First Light coral). Graphic only, never text."),
         ColorToken("map/pin", light: "#D9431A", dark: "#FF8A5C", "Selected spot pin and trip stop pins for the day being looked at."),
         ColorToken("map/pinInactive", light: "#857369", dark: "#8F7D73", "Trip stop pins outside the day being looked at, and unselected stand-in pins."),
+        ColorToken("map/userLocation", light: "#007AFF", dark: "#0A84FF", system: "systemBlueColor", "The simulated user-location dot (-IterLocation), drawn like the system's blue dot. Real locations use MapKit's own indicator."),
         ColorToken("map/sun", light: "#D9431A", dark: "#FF8A5C", "The sun marker on the sky arc and the timeline. The light moment; never a fill behind text."),
         ColorToken("map/moon", light: "#5B6B8C", dark: "#C8D2EA", "The moon marker on the sky arc and the timeline."),
         ColorToken("status/warning", light: "#7A3EB8", dark: "#C79BFF", "Something needs attention (a tight schedule, stale forecast). Violet, always with a warning icon. Never amber, coral or green."),
