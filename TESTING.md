@@ -49,6 +49,8 @@ Apple Intelligence (the Scout and "Explain") needs Apple Intelligence switched o
 | Seed Sample Trip | Adds the Canyon Country trip starting tomorrow and opens it. |
 | Reset All Data… | Deletes every trip and spot after asking. This cannot be undone. |
 
+For screenshots, launch with `-IterSection explore|saved|scout|trips|trip` (`trip` = first trip) to open on that section (overriding the restored one) and `-IterAppearance light|dark` to force the appearance.
+
 ## Keyboard
 
 ⌘N New Trip · ⇧⌘N Add Spot on Map · ⌘O Import Trip · ⌘F Find Spots · ⌘1 Trips · ⌘2 Explore · ⌘3 Saved · ⌘4 Scout · ⌘R Refresh Forecasts · ⌘[ / ⌘] previous / next day (Explore) · ⌘D Save spot · ⌘E Edit your spot · ⌘Z / ⇧⌘Z Undo / Redo · Delete removes the selected stop or spot · ⌘, Settings.

@@ -61,6 +61,13 @@ struct RootView: View {
     }
 
     private func restoreSelection() {
+        defer {
+            if let forced = AppLaunch.section {
+                navigation.selection = forced
+            } else if AppLaunch.sectionName == "trip", let first = model.store.trips().first {
+                navigation.selection = .trip(first.id)
+            }
+        }
         guard let data = storedSelection, let item = try? JSONDecoder().decode(SidebarItem?.self, from: data) else { return }
         if case .trip(let id) = item, model.store.trip(id: id) == nil {
             navigation.selection = .trips
