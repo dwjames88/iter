@@ -238,6 +238,7 @@ private struct ScoutResultsView: View {
 
     private var list: some View {
         VStack(spacing: 0) {
+            WeatherStatusBanner(status: app.weatherStatus)
             HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
                 Text("\(found.count) places for \u{201C}\(model.submittedRequest)\u{201D}", comment: "Scout results header, with the request")
                     .font(IterFont.subheadline)
@@ -356,24 +357,13 @@ private struct ScoutResultRow: View {
 
     @ViewBuilder private var light: some View {
         switch model.light(for: suggestion) {
-        case .scored(let day, let window):
-            HStack(spacing: IterSpace.sm) {
-                LightBadge(window: window, style: .compact)
-                Text(TimeText.day(day)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-            }
-        case .noForecast(let reason):
-            HStack(spacing: IterSpace.sm) {
-                NoForecastRing(diameter: IterSize.iconMedium)
-                Text(LightText.noForecastShort(reason)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-            }
-            .help(LightText.noForecastReason(reason))
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel(LightText.noForecastReason(reason))
+        case .window(let day, let window):
+            WindowLightLine(window: window, zone: spot.timeZone, isLoading: app.forecasts.isLoading(spot.coordinate),
+                            isTomorrow: day > app.today(in: spot.timeZone))
         case .loading:
-            HStack(spacing: IterSpace.sm) {
-                ProgressView().controlSize(.small)
-                Text("Checking the forecast", comment: "Scout result: forecast loading").font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-            }
+            ProgressView().controlSize(.small)
+        case .none:
+            EmptyView()
         }
     }
 }

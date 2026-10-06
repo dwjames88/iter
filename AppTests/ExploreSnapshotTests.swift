@@ -13,10 +13,9 @@ import IterFeatures
     }
 
     /// Name order keeps the row's position stable while forecasts arrive; the list is scrolled to it once.
-    private func openRow(_ explore: ExploreModel, id: String = "mesa-arch") {
+    private func selectRow(_ explore: ExploreModel, id: String = "mesa-arch") {
         explore.sort = .name
         explore.select(id, from: .list)
-        explore.toggleExpansion()
         explore.requestScroll(to: id)
     }
 
@@ -53,13 +52,12 @@ import IterFeatures
         }, screen: "explore", state: "near-more", settle: .seconds(2))
     }
 
-    /// A Near You row opened: its content sits on its own surface, only the summary line is selected.
-    @Test(.enabled(if: Snapshot.enabled)) func nearExpanded() async throws {
+    /// A Near You row selected: its place card shows over the map.
+    @Test(.enabled(if: Snapshot.enabled)) func nearSelected() async throws {
         try await Snapshot.render(screen(located(Self.sanFrancisco)) { explore in
             explore.select("tunnel-view", from: .list)
-            explore.toggleExpansion()
             explore.requestScroll(to: "tunnel-view")
-        }, screen: "explore", state: "near-expanded", settle: .seconds(3))
+        }, screen: "explore", state: "near-selected", settle: .seconds(3))
     }
 
     /// Location denied: the whole list plus the Settings prompt.
@@ -107,29 +105,16 @@ import IterFeatures
         try await Snapshot.render(screen(model) { $0.beginAddingSpot() }, screen: "explore", state: "addspot-mode", settle: .seconds(2))
     }
 
-    /// The list with every row lit for blue hour: the long window names ("Evening blue hour") must not move chips or times.
-    @Test(.enabled(if: Snapshot.enabled)) func listBlueHour() async throws {
+    /// A row selected: its place card over the map, with sample weather.
+    @Test(.enabled(if: Snapshot.enabled)) func selectedCard() async throws {
         let model = Fixtures.model(weather: .sample)
-        model.preferredIntent = .blueHour
-        try await Snapshot.render(screen(model), screen: "explore", state: "list-bluehour", settle: .seconds(2))
+        try await Snapshot.render(screen(model) { selectRow($0) }, screen: "explore", state: "selected-card", settle: .seconds(3))
     }
 
-    /// A row opened to its actions and the day's weather, with sample weather.
-    @Test(.enabled(if: Snapshot.enabled)) func expandedRow() async throws {
-        let model = Fixtures.model(weather: .sample)
-        try await Snapshot.render(screen(model) { explore in
-            openRow(explore)
-        },
-                                  screen: "explore", state: "expanded", settle: .seconds(3))
-    }
-
-    /// A row opened with no forecast: rings and the reason, inside the row.
-    @Test(.enabled(if: Snapshot.enabled)) func expandedRowNoForecast() async throws {
-        let model = Fixtures.model(weather: .notEnabled)
-        try await Snapshot.render(screen(model) { explore in
-            openRow(explore)
-        },
-                                  screen: "explore", state: "expanded-noforecast", settle: .seconds(3))
+    /// Weather offline: the banner under the header, rows without scores, and the selected row's card.
+    @Test(.enabled(if: Snapshot.enabled)) func weatherOffline() async throws {
+        let model = Fixtures.model(weather: .failed)
+        try await Snapshot.render(screen(model) { selectRow($0) }, screen: "explore", state: "weather-offline", settle: .seconds(3))
     }
 
     @Test func screenBuilds() {

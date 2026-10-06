@@ -179,6 +179,8 @@ public enum ForecastUnavailableReason: Codable, Hashable, Sendable {
     case testingKey(ForecastSource)
     /// A named provider failed (network, server, unreadable response). `detail` is for logs and Settings, not for rows.
     case providerFailed(ForecastSource, detail: String)
+    /// The Mac could not reach the provider (no connection, DNS or timeout).
+    case offline(ForecastSource)
 }
 
 /// Where a forecast came from. Sample data is always labelled on screen; every other source is named wherever a
@@ -205,6 +207,8 @@ public enum ScoreNote: String, Codable, CaseIterable, Hashable, Sendable {
     case noCloudLayers
     /// Beyond the provider's hourly range: the window was scored from a daily summary (confidence is low).
     case dailySummaryOnly
+    /// Beyond the provider's forecast: the last forecast day's weather is carried forward (confidence is lowest).
+    case persistence
     /// The model steps every three hours; Iter interpolated to hours (high confidence needs 24 h lead, not 36).
     case threeHourlySteps
     /// No precipitation probability: rain was judged from the forecast amount.

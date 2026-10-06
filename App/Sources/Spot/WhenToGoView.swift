@@ -3,29 +3,15 @@ import IterCore
 import IterDesign
 import IterFeatures
 
-/// The lead of the page: "when should I be here?" The best window over the next ten days for the chosen intent,
-/// then the outlook strip. With no score it says why and shows the sun times, which are always exact.
+/// The lead of the page: "when should I be here?" The best window over the days the forecast covers, then the
+/// outlook strip. With no score it shows the sun times, which are always exact; the screen's banner says why.
 struct WhenToGoSection: View {
     let page: SpotModel
     @Environment(\.spotDensity) private var density
 
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.md) {
-            let layout = density == .compact ? AnyLayout(VStackLayout(alignment: .leading, spacing: IterSpace.sm))
-                                             : AnyLayout(HStackLayout(alignment: .firstTextBaseline))
-            layout {
-                SpotSectionTitle(LightText.whenToGo)
-                if density == .page { Spacer() }
-                Picker(selection: Binding(get: { page.intent }, set: { page.selectIntent($0) })) {
-                    ForEach(LightIntent.allCases) { intent in
-                        Label(LightText.name(intent), systemImage: LightText.symbol(intent)).tag(intent)
-                    }
-                } label: { Text("Shoot", comment: "Intent picker label on the spot page") }
-                .pickerStyle(.segmented)
-                .labelsHidden()
-                .fixedSize()
-                .help(String(localized: "Which light to plan for. Scores on this page follow this choice.", comment: "Help"))
-            }
+            SpotSectionTitle(LightText.whenToGo)
             SpotCard { lead }
             OutlookStrip(page: page)
         }
@@ -49,9 +35,9 @@ struct WhenToGoSection: View {
         let layout = density == .compact ? AnyLayout(VStackLayout(alignment: .leading, spacing: IterSpace.md))
                                          : AnyLayout(HStackLayout(alignment: .top, spacing: IterSpace.lg))
         return layout {
-            LightBadge(window: best.window, style: .large)
+            LightBadge(window: best.window, style: .large, isLoading: page.isLoadingForecast)
             VStack(alignment: .leading, spacing: IterSpace.xs) {
-                Text(LightText.bestIn(days: SpotModel.outlookDays, intent: page.intent))
+                Text(LightText.bestIn(days: page.outlookStripDays.count, intent: page.intent))
                     .font(IterFont.caption)
                     .foregroundStyle(IterColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -84,29 +70,7 @@ struct WhenToGoSection: View {
     }
 
     private var noScore: some View {
-        VStack(alignment: .leading, spacing: IterSpace.sm) {
-            HStack(alignment: .top, spacing: IterSpace.md) {
-                NoForecastRing(diameter: IterSize.lightRingLarge)
-                VStack(alignment: .leading, spacing: IterSpace.xs) {
-                    Text(LightText.noScoredWindow(intent: page.intent, days: SpotModel.outlookDays))
-                        .font(IterFont.headline)
-                    if let reason = page.unavailableReason {
-                        Text(LightText.noForecastReason(reason))
-                            .font(IterFont.callout)
-                            .foregroundStyle(IterColor.textSecondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    if let reason = page.unavailableReason, LightText.canRetry(reason) {
-                        Button { page.retry() } label: { Label(LightText.retry, systemImage: "arrow.clockwise") }
-                            .controlSize(.small)
-                            .keyboardShortcut("r", modifiers: [.command, .option])
-                    }
-                }
-                Spacer(minLength: 0)
-            }
-            Divider()
-            SunTimesLine(page: page)
-        }
+        SunTimesLine(page: page)
     }
 }
 
@@ -139,24 +103,29 @@ struct SunTimesLine: View {
 
 // MARK: - Outlook
 
-/// Ten days, each with the chosen intent's headline chip (pattern #22): fainter and with a range as confidence
-/// falls, a dashed ring where there is no forecast, "Best" on the best day.
+/// The days the forecast covers, each with the intent's headline chip (pattern #22): fainter and with a range as
+/// confidence falls, an empty slot where a day has no score, "Best" on the best day.
 struct OutlookStrip: View {
     let page: SpotModel
     @Environment(\.spotDensity) private var density
 
     var body: some View {
         let best = page.best
+        let days = shownDays
         VStack(alignment: .leading, spacing: IterSpace.sm) {
-            Text(LightText.outlookTitle(intent: page.intent)).font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
+            Text(LightText.outlookTitle(days: days.count, intent: page.intent)).font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
             HStack(alignment: .top, spacing: IterSpace.xs) {
-                ForEach(page.stripDays, id: \.day) { light in
+                ForEach(days, id: \.day) { light in
                     cell(light, isBest: best?.day == light.day)
                 }
             }
             Text(LightText.outlookKey).font(IterFont.caption).foregroundStyle(IterColor.textTertiary)
         }
     }
+
+    /// The strip's days. A leading day whose window has already passed has no score to show, so the strip starts
+    /// at the next day; days are never added past the forecast's horizon.
+    private var shownDays: [DayLight] { page.outlookStripDays }
 
     private func cell(_ light: DayLight, isBest: Bool) -> some View {
         let window = light.headline(for: page.intent)
@@ -211,7 +180,11 @@ struct OutlookStrip: View {
         if let score = window?.assessment.lightScore {
             ScoreChip(score: score, size: density == .compact ? .compact : .regular)
         } else {
-            NoForecastRing(diameter: density == .compact ? IterSize.badgeHeightCompact : IterSize.badgeHeight)
+            ZStack {
+                if page.isLoadingForecast { ProgressView().controlSize(.small) }
+            }
+            .frame(width: density == .compact ? IterSize.badgeHeightCompact : IterSize.badgeMinWidth,
+                   height: density == .compact ? IterSize.badgeHeightCompact : IterSize.badgeHeight)
         }
     }
 
@@ -219,7 +192,7 @@ struct OutlookStrip: View {
         guard let window else { return String(localized: "No window", comment: "Outlook cell when the sun gives no such window") }
         switch window.assessment {
         case .scored(let score): return LightText.range(score) ?? " "
-        case .noForecast(let reason): return LightText.noForecastShort(reason)
+        case .noForecast: return " "
         }
     }
 
@@ -236,5 +209,19 @@ struct OutlookStrip: View {
         if let window { parts.append(LightText.accessibilityDescription(window)) }
         if isBest { parts.append(LightText.bestMarker) }
         return parts.joined(separator: ", ")
+    }
+}
+
+extension SpotModel {
+    /// The outlook strip's days. A leading day whose window has already passed has no score to show, so the strip
+    /// starts at the next day; days are never added past the forecast's horizon. The "Best … in the next N days"
+    /// caption counts the same days.
+    var outlookStripDays: [DayLight] {
+        var days = stripDays
+        if let first = days.first, days.count > 1, first.day == today,
+           case .noForecast(.inThePast)? = first.headline(for: intent)?.assessment {
+            days.removeFirst()
+        }
+        return days
     }
 }

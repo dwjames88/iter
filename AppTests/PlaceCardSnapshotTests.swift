@@ -41,7 +41,6 @@ private struct FakeImagery: SpotImageryProviding {
 @MainActor
 @Suite(.serialized) struct PlaceCardSnapshotTests {
     private static let cardSize = Snapshot.Size(name: "420x720", width: 420, height: 720)
-    private static let day = LocalDay(year: 2026, month: 10, day: 6)
 
     /// The card alone, on a flat stand-in for the map, at the size the map pane gives it.
     private func card(_ model: AppModel, spotID: String = "mesa-arch", imagery: any SpotImageryProviding,
@@ -51,7 +50,7 @@ private struct FakeImagery: SpotImageryProviding {
         return Fixtures.host(
             ZStack(alignment: .bottomTrailing) {
                 IterColor.backgroundControl
-                ExplorePlaceCard(row: row, day: Self.day, size: CGSize(width: IterSize.placeCardWidth, height: 680),
+                ExplorePlaceCard(row: row, size: CGSize(width: IterSize.placeCardWidth, height: 680),
                                  startsScrolled: scrolled) {}
                     .padding(IterSpace.md)
             }
@@ -63,18 +62,21 @@ private struct FakeImagery: SpotImageryProviding {
 
     @Test(.enabled(if: Snapshot.enabled)) func withImages() async throws {
         let model = Fixtures.model(weather: .sample)
+        _ = await model.forecasts.load(CuratedSpots.spot(id: "mesa-arch")!.coordinate)
         try await Snapshot.render(card(model, imagery: FakeImagery(sources: [.lookAround, .satellite])),
                                   screen: "placecard", state: "images", sizes: [Self.cardSize], settle: .seconds(2), chrome: .bare)
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func placeholder() async throws {
         let model = Fixtures.model(weather: .sample)
+        _ = await model.forecasts.load(CuratedSpots.spot(id: "mesa-arch")!.coordinate)
         try await Snapshot.render(card(model, imagery: FakeImagery(sources: [])),
                                   screen: "placecard", state: "placeholder", sizes: [Self.cardSize], settle: .seconds(2), chrome: .bare)
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func scrolledToActions() async throws {
         let model = Fixtures.model(weather: .sample)
+        _ = await model.forecasts.load(CuratedSpots.spot(id: "mesa-arch")!.coordinate)
         try await Snapshot.render(card(model, imagery: FakeImagery(sources: [.lookAround, .satellite]), scrolled: true),
                                   screen: "placecard", state: "scrolled", sizes: [Self.cardSize], settle: .seconds(3), chrome: .bare)
     }
@@ -99,6 +101,7 @@ private struct FakeImagery: SpotImageryProviding {
         let warmed = await MapKitSpotImagery.shared.images(for: request)
         guard !warmed.isEmpty else { return }
         let model = Fixtures.model(weather: .sample)
+        _ = await model.forecasts.load(CuratedSpots.spot(id: "mesa-arch")!.coordinate)
         try await Snapshot.render(card(model, spotID: spot.id, imagery: MapKitSpotImagery.shared),
                                   screen: "placecard", state: "real-images", sizes: [Self.cardSize], settle: .seconds(2), chrome: .bare)
     }

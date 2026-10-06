@@ -129,15 +129,13 @@ struct LightTimelineSection: View {
         }
     }
 
-    private var noWeather: some View {
-        Label {
-            Text(page.isLoadingForecast ? LightText.checkingForecast
-                 : LightText.noForecastReason(page.unavailableReason ?? .notLoaded))
-        } icon: {
-            Image(systemName: "thermometer.medium.slash")
+    /// Without hourly weather the timeline has nothing to chart; the screen's banner says why.
+    @ViewBuilder private var noWeather: some View {
+        if page.isLoadingForecast {
+            Label { Text(LightText.checkingForecast) } icon: { ProgressView().controlSize(.small) }
+                .font(IterFont.subheadline)
+                .foregroundStyle(IterColor.textSecondary)
         }
-        .font(IterFont.subheadline)
-        .foregroundStyle(IterColor.textSecondary)
     }
 
     private func label(_ focus: TimelineFocus) -> String {

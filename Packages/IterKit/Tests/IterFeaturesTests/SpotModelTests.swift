@@ -57,12 +57,30 @@ private func makeApp(_ weather: Weather = .sample, now: Date = fixedNow) throws 
     case .sample: provider = SampleWeatherService(now: { now })
     case .notEnabled: provider = FailingWeather(error: .notEnabled)
     case .failed: provider = FailingWeather(error: .failed("offline"))
+    case .eightDays: provider = EightDayWeather(now: now)
     }
     return AppModel(store: store, weather: provider, search: NoSearch(), geocoder: NoGeocoder(), drives: NoDrives(), scout: nil,
                     defaults: UserDefaults(suiteName: "SpotModelTests-\(UUID().uuidString)")!, now: { now })
 }
 
-private enum Weather { case sample, notEnabled, failed }
+private enum Weather { case sample, notEnabled, failed, eightDays }
+
+/// Like OpenWeather: hours from the start of the local day, for eight whole days (the later ones from daily summaries).
+private struct EightDayWeather: WeatherProviding {
+    var now: Date
+    var source: ForecastSource { .openWeather }
+    func forecast(for coordinate: Coordinate) async throws -> Forecast {
+        let zone = CuratedSpots.all.first { $0.coordinate == coordinate }?.timeZone ?? denver
+        let start = LocalDay(now, in: zone).start(in: zone)
+        let hours = (0..<(8 * 24)).map { i in
+            HourlyConditions(date: start.addingTimeInterval(Double(i) * 3600), cloudCover: 0.35, precipitationChance: 0.05, visibilityMeters: 10_000,
+                             windSpeedKph: 5, temperatureC: 12, humidity: 0.5, symbolName: "sun.max", condition: "clear",
+                             resolution: i < 48 ? .hourly : .dailySummary)
+        }
+        return Forecast(coordinate: coordinate, hours: hours, days: [], fetchedAt: now, source: .openWeather)
+    }
+    func attribution() async -> WeatherAttributionInfo? { nil }
+}
 
 private var mesaArch: Spot { CuratedSpots.spot(id: "mesa-arch")! }
 
@@ -139,11 +157,36 @@ private let tromso = Spot(id: "tromso", name: "Tromsø harbour", locality: "Trom
         let far = LocalDay(year: 2026, month: 11, day: 20)
         let model = SpotModel(app: app, spot: mesaArch, initialDay: far, explainer: FakeExplainer())
         await model.start()
-        #expect(model.outlook.count == SpotModel.outlookDays)
-        #expect(model.stripDays.count == SpotModel.outlookDays + 1)
+        #expect(model.outlook.count == model.outlookDayCount)
+        #expect(model.stripDays.count == model.outlookDayCount + 1)
         #expect(model.stripDays.last?.day == far)
+        // Far beyond the forecast: scored by persistence, at the lowest confidence.
         let headline = try #require(model.headline(on: far))
-        #expect(headline.assessment == .noForecast(.beyondHorizon))
+        let score = try #require(headline.assessment.lightScore)
+        #expect(score.confidence == .low)
+        #expect(score.notes.contains(.persistence))
+    }
+
+    @Test func outlookIsClampedToTheDaysTheForecastCovers() async throws {
+        let app = try makeApp(.eightDays)
+        let model = SpotModel(app: app, spot: mesaArch, explainer: FakeExplainer())
+        // Before the forecast arrives there is nothing to clamp to.
+        #expect(model.outlookDayCount == SpotModel.outlookDays)
+        await model.start()
+        #expect(model.outlookDayCount == 8)
+        #expect(model.outlook.count == 8)
+        #expect(model.outlook.allSatisfy { $0.windows.allSatisfy { $0.score != nil || $0.assessment == .noForecast(.inThePast) } })
+        if let best = model.best { #expect(best.day < model.today.adding(days: 8)) }
+    }
+
+    @Test func upcomingWindowsAreTodaysRemainingAndTomorrows() async throws {
+        let app = try makeApp()
+        let model = SpotModel(app: app, spot: mesaArch, explainer: FakeExplainer())
+        await model.start()
+        let list = model.upcomingWindows
+        #expect(list.first?.day == model.today)
+        #expect(list.last?.day == model.today.adding(days: 1))
+        #expect(list.allSatisfy { $0.window.span.end > fixedNow })
     }
 
     @Test func selectingAWindowIsSharedAndExpandingSelectsIt() async throws {

@@ -49,16 +49,6 @@ struct AppCommands: Commands {
                 .keyboardShortcut("4")
         }
         CommandMenu(String(localized: "Light", comment: "Menu title")) {
-            Picker(String(localized: "Show Light For", comment: "Menu item"), selection: Binding(
-                get: { model.preferredIntent },
-                set: { model.preferredIntent = $0 })) {
-                Text("Each Spot's Best", comment: "Intent menu option").tag(LightIntent?.none)
-                ForEach(LightIntent.allCases) { intent in
-                    Text(LightText.name(intent)).tag(LightIntent?.some(intent))
-                }
-            }
-            .pickerStyle(.inline)
-            Divider()
             Button(String(localized: "Refresh Forecasts", comment: "Menu item")) { model.forecasts.retryFailed() }
                 .keyboardShortcut("r")
         }

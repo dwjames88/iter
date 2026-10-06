@@ -214,8 +214,8 @@ struct SpotEditorSheet: View {
                 Text(zone.localizedName(for: .generic, locale: .current) ?? zone.identifier)
                 if draft.timeZoneIsFallback {
                     Label(lookup == .looking
-                         ? String(localized: "Using this Mac's time zone until the lookup finishes.", comment: "Time zone fallback while looking up")
-                         : String(localized: "Couldn't find this place's time zone, so using this Mac's.", comment: "Time zone fallback after a failed lookup"),
+                         ? String(localized: "Estimated from the map position until the lookup finishes.", comment: "Time zone fallback while looking up")
+                         : String(localized: "Couldn't look up this place's time zone, so it's estimated from the map position.", comment: "Time zone fallback after a failed lookup"),
                           systemImage: "exclamationmark.triangle")
                         .font(IterFont.caption)
                         .foregroundStyle(IterColor.warning)
@@ -280,11 +280,13 @@ struct SpotEditorSheet: View {
                                                     coordinate: draft.coordinate == original ? coordinate : draft.coordinate,
                                                     timeZoneIdentifier: draft.timeZoneIdentifier, category: draft.category,
                                                     bestLight: draft.orderedBestLight, notes: draft.notes, walkInMinutes: walkIn)
+            model.spotSaved(record.spot)
             onSave(record)
         case .edit(let record):
             model.store.updatePlace(record, name: draft.trimmedName, locality: draft.trimmedLocality, coordinate: draft.coordinate,
                                     timeZoneIdentifier: draft.timeZoneIdentifier, category: draft.category,
                                     bestLight: draft.orderedBestLight, notes: draft.notes, walkInMinutes: walkIn)
+            model.spotSaved(record.spot)
             onSave(record)
         }
         dismiss()

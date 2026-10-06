@@ -2,8 +2,9 @@ import SwiftUI
 import IterCore
 import IterDesign
 
-/// The Light Index as shown everywhere: the window name always beside the number ("Sunset · 38"), the band word,
-/// the confidence, and a hollow dashed ring instead of a number when there is no forecast (plan 2.3, 6.4-A).
+/// The Light Index as shown everywhere: the window's symbol beside the number (its name is the tooltip and the
+/// VoiceOver label), the band word and the confidence. Without a score the slot stays empty, or shows a spinner
+/// while the forecast loads; a screen's weather banner says why (plan 2.3, 6.4-A).
 struct LightBadge: View {
     enum Style { case compact, regular, large }
 
@@ -12,6 +13,10 @@ struct LightBadge: View {
     /// Show "Sample data" beside a score made from sample weather. Off by default for rows and pins: lists say it
     /// once in their header (and the sidebar banner says it on every screen), so it does not repeat on every row.
     var showsSource = false
+    /// The forecast for this place is being fetched: an unscored window shows a spinner in the score slot.
+    var isLoading = false
+    /// Show the window's full name beside its symbol (the spot page's rows); elsewhere the symbol stands alone.
+    var showsName = false
 
     var body: some View {
         content
@@ -23,8 +28,21 @@ struct LightBadge: View {
         switch window.assessment {
         case .scored(let score):
             scored(score)
-        case .noForecast(let reason):
-            noForecast(reason)
+        case .noForecast:
+            unscored
+        }
+    }
+
+    @ViewBuilder private var nameLabel: some View {
+        if showsName {
+            HStack(spacing: IterSpace.xs) {
+                WindowSymbol(kind: window.kind)
+                Text(LightText.name(window.kind))
+                    .font(IterFont.bodyEmphasis)
+                    .foregroundStyle(IterColor.textPrimary)
+            }
+        } else {
+            WindowSymbol(kind: window.kind)
         }
     }
 
@@ -32,14 +50,14 @@ struct LightBadge: View {
         switch style {
         case .compact:
             HStack(spacing: IterSpace.xs) {
+                WindowSymbol(kind: window.kind)
                 ScoreChip(score: score, size: .compact)
-                Text(LightText.shortName(window.kind)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
             }
         case .regular:
             HStack(spacing: IterSpace.sm) {
+                nameLabel
                 ScoreChip(score: score, size: .regular)
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(LightText.name(window.kind)).font(IterFont.subheadline).foregroundStyle(IterColor.textPrimary)
                     HStack(spacing: IterSpace.xs) {
                         Text(LightText.name(score.band))
                         ConfidenceMark(confidence: score.confidence)
@@ -75,33 +93,32 @@ struct LightBadge: View {
         }
     }
 
-    @ViewBuilder private func noForecast(_ reason: ForecastUnavailableReason) -> some View {
+    /// No score: the symbol and an empty slot (a spinner while loading). No ring, no words.
+    @ViewBuilder private var unscored: some View {
         switch style {
         case .compact:
             HStack(spacing: IterSpace.xs) {
-                NoForecastRing(diameter: IterSize.badgeHeightCompact)
-                Text(LightText.shortName(window.kind)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
+                WindowSymbol(kind: window.kind)
+                scoreSlot(width: IterSize.badgeHeightCompact, height: IterSize.badgeHeightCompact)
             }
         case .regular:
             HStack(spacing: IterSpace.sm) {
-                NoForecastRing(diameter: IterSize.badgeHeight)
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(LightText.name(window.kind)).font(IterFont.subheadline).foregroundStyle(IterColor.textPrimary)
-                    Text(LightText.noForecast).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-                }
+                nameLabel
+                scoreSlot(width: IterSize.badgeMinWidth, height: IterSize.badgeHeight)
             }
         case .large:
             HStack(alignment: .center, spacing: IterSpace.md) {
-                NoForecastRing(diameter: IterSize.lightRingLarge)
-                VStack(alignment: .leading, spacing: IterSpace.xxs) {
-                    Text(LightText.headline(window)).font(IterFont.headline).foregroundStyle(IterColor.textPrimary)
-                    Text(LightText.noForecastReason(reason))
-                        .font(IterFont.subheadline)
-                        .foregroundStyle(IterColor.textSecondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
+                scoreSlot(width: IterSize.lightRingLarge, height: IterSize.lightRingLarge)
+                Text(LightText.headline(window)).font(IterFont.headline).foregroundStyle(IterColor.textPrimary)
             }
         }
+    }
+
+    @ViewBuilder private func scoreSlot(width: CGFloat, height: CGFloat) -> some View {
+        ZStack {
+            if isLoading { ProgressView().controlSize(.small) }
+        }
+        .frame(width: width, height: height)
     }
 }
 
@@ -138,19 +155,6 @@ struct ScoreChip: View {
     }
 }
 
-/// "No forecast": a hollow dashed ring, no colour band, no number (plan P1.2).
-struct NoForecastRing: View {
-    let diameter: CGFloat
-
-    var body: some View {
-        Circle()
-            .strokeBorder(IterColor.noForecast,
-                          style: StrokeStyle(lineWidth: IterStroke.regular, dash: [IterStroke.dashLength, IterStroke.dashGap]))
-            .frame(width: diameter, height: diameter)
-            .accessibilityHidden(true)
-    }
-}
-
 /// Three small bars: how far to trust the score.
 struct ConfidenceMark: View {
     let confidence: Confidence
@@ -169,5 +173,37 @@ struct ConfidenceMark: View {
 
     private var filled: Int {
         switch confidence { case .low: 1; case .medium: 2; case .high: 3 }
+    }
+}
+
+/// A window's one-line light for a list row: symbol, score chip (or an empty slot) and its start time in the
+/// spot's own zone. The symbol carries the name, so no "Tomorrow" or window word is needed.
+struct WindowLightLine: View {
+    let window: LightWindow
+    let zone: TimeZone
+    var isLoading = false
+    /// For VoiceOver and the tooltip only: the window falls on tomorrow.
+    var isTomorrow = false
+
+    var body: some View {
+        HStack(spacing: IterSpace.sm) {
+            LightBadge(window: window, style: .compact, isLoading: isLoading)
+            Text(TimeText.time(window.span.start, in: zone))
+                .font(IterFont.caption)
+                .monospacedDigit()
+                .foregroundStyle(IterColor.textSecondary)
+        }
+        .help(helpText)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(helpText)
+    }
+
+    private var helpText: String {
+        let base = LightText.accessibilityDescription(window)
+        let time = TimeText.time(window.span.start, in: zone)
+        if isTomorrow {
+            return String(localized: "\(base), tomorrow at \(time)", comment: "VoiceOver: a window tomorrow, with its start time")
+        }
+        return String(localized: "\(base), \(time)", comment: "VoiceOver: a window with its start time")
     }
 }

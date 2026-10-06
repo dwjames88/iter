@@ -22,13 +22,6 @@ struct TripPlanList: View {
 
     var body: some View {
         List(selection: $selection) {
-            if let reason = globalNoForecastReason {
-                Text(LightText.noForecastReason(reason))
-                    .font(IterFont.caption)
-                    .foregroundStyle(IterColor.textSecondary)
-                    .selectionDisabled()
-                    .listRowSeparator(.hidden)
-            }
             ForEach(builder.days) { day in
                 Section {
                     if let suggestion = builder.suggestion(forDay: day.index) {
@@ -112,17 +105,6 @@ struct TripPlanList: View {
 
     private var showsScores: Bool {
         builder.days.contains { $0.stops.contains { $0.sessionWindow?.score != nil } }
-    }
-
-    /// One calm line when no stop can be scored for a reason that applies to every stop (weather off, offline),
-    /// instead of repeating it on every row.
-    private var globalNoForecastReason: ForecastUnavailableReason? {
-        let reasons = builder.days.flatMap(\.stops).compactMap { entry -> ForecastUnavailableReason? in
-            if case .noForecast(let reason)? = entry.sessionWindow?.assessment { return reason }
-            return nil
-        }
-        guard let first = reasons.first, reasons.count == builder.days.flatMap(\.stops).count else { return nil }
-        return LightText.isGlobal(first) ? first : nil
     }
 }
 

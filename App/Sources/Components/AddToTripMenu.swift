@@ -18,8 +18,10 @@ struct AddToTripMenu: View {
             ForEach(trips, id: \.id) { trip in
                 Menu(trip.name) {
                     ForEach(0..<trip.dayCount, id: \.self) { day in
-                        Button(dayLabel(trip: trip, day: day)) {
+                        Button {
                             _ = model.store.addStop(spot, to: trip, day: day)
+                        } label: {
+                            dayLabel(trip: trip, day: day)
                         }
                     }
                 }
@@ -42,11 +44,19 @@ struct AddToTripMenu: View {
         return model.store.trips()
     }
 
-    /// "Day 2 · Thu, Oct 8, 2026 · Sunset · 64" (or "· Sunset · No forecast").
-    private func dayLabel(trip: TripRecord, day: Int) -> String {
+    /// "Day 2 · Thu, Oct 8, 2026" with that day's sunset window's symbol and score beside it.
+    private func dayLabel(trip: TripRecord, day: Int) -> some View {
         let date = trip.startDay.adding(days: day)
         let base = String(localized: "Day \(day + 1) · \(TimeText.day(date))", comment: "Trip day in Add to Trip menu")
-        guard let window = model.dayLight(for: spot, on: date).headline(for: model.intent(for: spot)) else { return base }
-        return "\(base) · \(LightText.headline(window))"
+        let window = model.dayLight(for: spot, on: date).window(.goldenEvening)
+        return Label {
+            if let score = window?.score {
+                Text("\(base) · \(score)", comment: "Add to Trip menu: the day, then the sunset score")
+            } else {
+                Text(base)
+            }
+        } icon: {
+            Image(systemName: LightText.symbol(window?.kind ?? .goldenEvening))
+        }
     }
 }

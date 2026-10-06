@@ -39,25 +39,11 @@ struct SettingsView: View {
 // MARK: - General
 
 private struct GeneralSettingsPane: View {
-    @Environment(AppModel.self) private var model
-    @AppStorage(SettingsKeys.preferredIntent) private var intentRaw = ""
     @AppStorage(AppSettings.temperatureUnit) private var temperatureUnit = "system"
     @AppStorage(AppSettings.defaultSetUpBuffer) private var setUpBuffer = 20
 
     var body: some View {
         Form {
-            Section {
-                Picker(selection: $intentRaw) {
-                    Text("Each Spot's Best", comment: "Settings: show each spot's own best light").tag("")
-                    Divider()
-                    ForEach(LightIntent.allCases) { (intent: LightIntent) in
-                        Label(LightText.name(intent), systemImage: LightText.symbol(intent)).tag(intent.rawValue)
-                    }
-                } label: { Text("Show light for", comment: "Settings field") }
-                .onChange(of: intentRaw) { _, new in model.preferredIntent = LightIntent(rawValue: new) }
-            } footer: {
-                Text("Which light the scores show on Explore, Saved and in lists. A spot's page always shows every window.", comment: "Settings footer")
-            }
             Section {
                 Picker(selection: $temperatureUnit) {
                     Text("System", comment: "Temperature unit follows the system").tag("system")
@@ -76,7 +62,6 @@ private struct GeneralSettingsPane: View {
             }
         }
         .formStyle(.grouped)
-        .onAppear { model.preferredIntent = LightIntent(rawValue: intentRaw) }
     }
 }
 

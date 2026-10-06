@@ -113,16 +113,58 @@ public struct LightEngine: Sendable {
         return best.map { ($0.day, $0.window) }
     }
 
+    /// The next sunrise or sunset event at the spot by the spot's own clock: golden morning or golden evening of today
+    /// through three days on, the first whose window has not ended. Polar fallback: the first daytime window not yet over.
+    public func nextEvent(for spot: Spot, forecast: Forecast?, unavailable: ForecastUnavailableReason?, now: Date) -> (day: LocalDay, window: LightWindow)? {
+        let today = LocalDay(now, in: spot.timeZone)
+        let days = (0..<4).map { dayLight(for: spot, on: today.adding(days: $0), forecast: forecast, unavailable: unavailable, now: now) }
+        for dl in days {
+            if let w = dl.windows.first(where: { ($0.kind == .goldenMorning || $0.kind == .goldenEvening) && $0.span.end > now }) {
+                return (dl.day, w)
+            }
+        }
+        for dl in days {
+            if let w = dl.windows.first(where: { $0.kind != .night && $0.span.end > now }) { return (dl.day, w) }
+        }
+        return nil
+    }
+
+    /// Today's windows that have not ended (spot's zone), then all of tomorrow's, chronologically.
+    public func upcomingWindows(for spot: Spot, forecast: Forecast?, unavailable: ForecastUnavailableReason?, now: Date) -> [(day: LocalDay, window: LightWindow)] {
+        let today = LocalDay(now, in: spot.timeZone)
+        var out: [(day: LocalDay, window: LightWindow)] = []
+        let first = dayLight(for: spot, on: today, forecast: forecast, unavailable: unavailable, now: now)
+        out += first.windows.filter { $0.span.end > now }.map { (first.day, $0) }
+        let second = dayLight(for: spot, on: today.adding(days: 1), forecast: forecast, unavailable: unavailable, now: now)
+        out += second.windows.map { (second.day, $0) }
+        return out
+    }
+
+    /// How many outlook days to show: the days the forecast covers, at most `max`. Without a forecast, `max`.
+    public func outlookDayCount(for spot: Spot, from day: LocalDay, forecast: Forecast?, max: Int) -> Int {
+        guard max >= 1 else { return 0 }
+        guard let forecast, !forecast.hours.isEmpty else { return max }
+        return Swift.max(1, Swift.min(max, forecast.coveredDays(from: day, in: spot.timeZone)))
+    }
+
     // MARK: Assessment
 
     func assess(kind: LightWindowKind, span: TimeSpan, spot: Spot, forecast: Forecast?, unavailable: ForecastUnavailableReason?, now: Date) -> LightAssessment {
         if span.end <= now { return .noForecast(.inThePast) }
         guard let forecast else { return .noForecast(unavailable ?? .notLoaded) }
         let mid = span.midpoint
-        guard let first = forecast.hours.first, let horizon = forecast.horizon, mid >= first.date, mid < horizon else {
-            return .noForecast(.beyondHorizon)
+        guard forecast.hours.first != nil, let horizon = forecast.horizon else { return .noForecast(.beyondHorizon) }
+
+        // Beyond the provider's forecast: carry the last forecast day's weather forward, at the lowest confidence.
+        var scoringSpan = span
+        var persisted = false
+        if mid >= horizon {
+            let days = Int((mid.timeIntervalSince(horizon) / 86_400).rounded(.down)) + 1
+            let shift = TimeInterval(days) * 86_400
+            scoringSpan = TimeSpan(start: span.start.addingTimeInterval(-shift), end: span.end.addingTimeInterval(-shift))
+            persisted = true
         }
-        guard let conditions = Self.conditions(in: forecast, over: span) else { return .noForecast(.beyondHorizon) }
+        guard let conditions = Self.conditions(in: forecast, over: scoringSpan) else { return .noForecast(.beyondHorizon) }
 
         var moon: MoonLight?
         if kind == .night {
@@ -131,13 +173,13 @@ public struct LightEngine: Sendable {
         }
         let scored = WindowScorer.score(kind: kind, conditions: conditions, moon: moon)
         let lead = mid.timeIntervalSince(forecast.fetchedAt) / 3600
-        let confidence = WindowScorer.confidence(leadHours: lead, layersMissing: scored.usedLayerFallback,
-                                                 resolutions: conditions.resolutions)
+        let confidence = persisted ? Confidence.low
+            : WindowScorer.confidence(leadHours: lead, layersMissing: scored.usedLayerFallback, resolutions: conditions.resolutions)
         return .scored(LightScore(value: scored.value, band: LightBand(score: scored.value), confidence: confidence,
                                   range: WindowScorer.range(value: scored.value, confidence: confidence),
                                   contributors: scored.contributors, source: forecast.source,
                                   forecastFetchedAt: forecast.fetchedAt, leadHours: lead, model: forecast.model,
-                                  notes: WindowScorer.notes(scored: scored, resolutions: conditions.resolutions)))
+                                  notes: WindowScorer.notes(scored: scored, resolutions: conditions.resolutions, persisted: persisted)))
     }
 
     /// Weather averaged over the hours overlapping `span`, weighted by overlap seconds.
@@ -147,7 +189,9 @@ public struct LightEngine: Sendable {
             return (h, max(0, overlap))
         }
         if hours.isEmpty || hours.reduce(0, { $0 + $1.1 }) <= 0 {
-            guard let h = forecast.hour(at: span.midpoint) else { return nil }
+            // A window that has begun before the first forecast hour, or whose middle sits in a gap, uses the first hour.
+            guard let h = forecast.hour(at: span.midpoint) ?? (span.midpoint < (forecast.hours.first?.date ?? .distantPast) ? forecast.hours.first : nil)
+            else { return nil }
             hours = [(h, 1)]
         }
         let weight = hours.reduce(0) { $0 + $1.1 }

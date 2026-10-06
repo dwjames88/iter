@@ -48,6 +48,12 @@ enum ProviderHTTP {
     static func map(_ error: any Error, source: ForecastSource, key: String) -> WeatherError {
         if let e = error as? WeatherError { return e }
         if let url = error as? URLError {
+            switch url.code {
+            case .notConnectedToInternet, .networkConnectionLost, .timedOut, .cannotFindHost, .cannotConnectToHost,
+                 .dnsLookupFailed, .internationalRoamingOff, .dataNotAllowed:
+                return .offline(source)
+            default: break
+            }
             return .provider(source, redact("Network error: \(url.code.rawValue) \(url.localizedDescription)", key: key))
         }
         if error is DecodingError {

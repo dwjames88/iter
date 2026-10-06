@@ -225,6 +225,7 @@ public final class WeatherSetup {
                 let u = usage(for: source)
                 return .dailyCap(calls: u?.calls ?? 0, cap: u?.cap ?? 0)
             case .failed(let detail), .provider(_, let detail): return .failed(detail: detail)
+            case .offline: return .failed(detail: "The network is unreachable")
             }
         }
         if source == .windy, settings.windyKeyType == .testing { return .testingKey }

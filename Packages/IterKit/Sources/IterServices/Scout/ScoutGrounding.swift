@@ -1,6 +1,7 @@
 import Foundation
 import FoundationModels
 import IterCore
+import IterData
 import OSLog
 
 // MARK: - Model output types
@@ -43,7 +44,7 @@ enum ScoutGrounding {
     private static let log = Logger(subsystem: "com.dwjames.iter", category: "scout")
 
     /// Resolves each pick against the registry. Unknown IDs are dropped (and logged); the same place is kept once, in order.
-    static func resolve(picks: [ResolvedPickInput], registry: [String: RegisteredPlace], fallbackTimeZone: TimeZone = .current) -> [ScoutSuggestion] {
+    static func resolve(picks: [ResolvedPickInput], registry: [String: RegisteredPlace], fallbackTimeZone: TimeZone? = nil) -> [ScoutSuggestion] {
         var seen = Set<String>()
         var out: [ScoutSuggestion] = []
         for pick in picks {
@@ -83,12 +84,13 @@ enum ScoutGrounding {
     }
 
     /// A Spot for a MapKit result: origin `.scout`, id = the MapKit place id.
-    static func spot(from result: PlaceResult, timeZoneIdentifier: String?, fallback: TimeZone) -> Spot {
+    static func spot(from result: PlaceResult, timeZoneIdentifier: String?, fallback: TimeZone?) -> Spot {
         Spot(id: result.id.isEmpty ? "scout:" + result.coordinate.cacheKey : result.id,
              name: result.name,
              locality: result.locality,
              coordinate: result.coordinate,
-             timeZoneIdentifier: result.timeZoneIdentifier ?? timeZoneIdentifier ?? fallback.identifier,
+             timeZoneIdentifier: result.timeZoneIdentifier ?? timeZoneIdentifier ?? fallback?.identifier
+                ?? TimeZoneEstimate.identifier(for: result.coordinate),
              category: category(pointOfInterest: result.pointOfInterestCategory, name: result.name),
              origin: .scout)
     }

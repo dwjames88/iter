@@ -28,9 +28,9 @@ import IterFeatures
         try await render(SpotPage(model: page), model: model, state: "window-expanded")
     }
 
-    @Test(.enabled(if: Snapshot.enabled)) func noForecast() async throws {
+    @Test(.enabled(if: Snapshot.enabled)) func weatherOffline() async throws {
         let model = Fixtures.model(weather: .notEnabled)
-        try await render(SpotPage(app: model, spot: mesaArch, initialDay: nil), model: model, state: "noforecast")
+        try await render(SpotPage(app: model, spot: mesaArch, initialDay: nil), model: model, state: "weather-offline")
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func failed() async throws {

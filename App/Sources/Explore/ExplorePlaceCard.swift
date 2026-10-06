@@ -4,12 +4,11 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// The place card over the map for the selected spot (pattern #6): a pinned header (what it is, its light that day),
+/// The place card over the map for the selected spot (pattern #6): a pinned header (what it is, its next window),
 /// then a scrolling body. It opens on images of the site; scrolling up reveals the spot page's own sections (weather,
 /// light windows, sun and moon, facts) at compact density, then Save, Add to Trip and a link to the full page.
 struct ExplorePlaceCard: View {
     let row: ExploreRow
-    let day: LocalDay
     /// The card's size, set by the map pane from the pane's size (see `ExploreMapPane`).
     var size = CGSize(width: IterSize.placeCardWidth, height: IterSize.placeCardMaxHeight)
     /// Start scrolled to the actions at the bottom. Debug and snapshot aid; `-IterCardScrolled YES` sets it at launch.
@@ -21,6 +20,8 @@ struct ExplorePlaceCard: View {
     @Environment(\.renderMode) private var renderMode
 
     private var spot: Spot { row.spot }
+    /// The day of the row's next window; today at the spot when there is none.
+    private var day: LocalDay { row.day ?? model.today(in: spot.timeZone) }
     private static let actionsID = "place-card-actions"
 
     /// How long after appearing the card keeps re-scrolling to the actions as its content grows (launch flag only).
@@ -115,15 +116,25 @@ struct ExplorePlaceCard: View {
     @ViewBuilder private var lightSummary: some View {
         if let window = row.window {
             HStack(spacing: IterSpace.sm) {
-                LightBadge(window: window, style: .compact)
+                WindowSymbol(kind: window.kind)
+                if let score = window.assessment.lightScore {
+                    ScoreChip(score: score, size: .regular)
+                } else if row.isLoading {
+                    ProgressView().controlSize(.small)
+                }
                 Text(TimeText.time(window.span.start, in: spot.timeZone))
                     .font(IterFont.timeSmall)
                     .foregroundStyle(IterColor.textSecondary)
                     .monospacedDigit()
+                if LightText.isTomorrow(row) {
+                    Text("Tomorrow", comment: "Place card: the next window is tomorrow")
+                        .font(IterFont.subheadline)
+                        .foregroundStyle(IterColor.textSecondary)
+                }
                 Spacer(minLength: 0)
             }
-        } else {
-            Text(LightText.noWindowToday).font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(LightText.rowLight(row) ?? "")
         }
     }
 
@@ -198,6 +209,7 @@ private struct PlaceCardSections: View {
         VStack(alignment: .leading, spacing: IterSpace.lg) {
             WhenToGoSection(page: page)
             DayWindowsSection(page: page)
+            PlaceCardUpcoming(page: page)
             LightTimelineSection(page: page)
             SkyArcSection(page: page)
             HourlyWeatherSection(page: page)
@@ -205,5 +217,35 @@ private struct PlaceCardSections: View {
         }
         .environment(\.spotDensity, .compact)
         .task { await page.start() }
+    }
+}
+
+/// The next windows after today's, one line each: the day, the window symbol, the score and the start time.
+private struct PlaceCardUpcoming: View {
+    let page: SpotModel
+
+    var body: some View {
+        let windows = page.upcomingWindows
+        if !windows.isEmpty {
+            VStack(alignment: .leading, spacing: IterSpace.sm) {
+                Text("Coming Up", comment: "Place card: the next sunrise and sunset windows").font(IterFont.headline)
+                ForEach(Array(windows.enumerated()), id: \.offset) { _, item in
+                    HStack(spacing: IterSpace.sm) {
+                        Text(LightText.relativeDay(item.day, today: page.today))
+                            .font(IterFont.subheadline)
+                            .foregroundStyle(IterColor.textSecondary)
+                        Spacer(minLength: 0)
+                        WindowSymbol(kind: item.window.kind)
+                        if let score = item.window.assessment.lightScore {
+                            ScoreChip(score: score, size: .compact)
+                        }
+                        Text(TimeText.time(item.window.span.start, in: page.spot.timeZone))
+                            .font(IterFont.timeSmall)
+                            .foregroundStyle(IterColor.textSecondary)
+                            .monospacedDigit()
+                    }
+                }
+            }
+        }
     }
 }

@@ -68,7 +68,7 @@ struct WeatherSettingsPane: View {
         } header: {
             Text("To turn on Apple Weather", comment: "Settings section: WeatherKit setup steps")
         } footer: {
-            Text("Until a forecast source works, sun and moon times are exact and light scores show \u{201C}No forecast\u{201D}.", comment: "Settings footer: what works without weather")
+            Text("Until a forecast source works, sun and moon times are exact and light scores stay empty.", comment: "Settings footer: what works without weather")
         }
     }
 

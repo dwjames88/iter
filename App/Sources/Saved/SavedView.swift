@@ -28,6 +28,7 @@ struct SavedView: View {
         .navigationTitle(Text("Saved", comment: "Section title"))
         .paperListBackground()
         .unifiedToolbarBackground()
+        .safeAreaInset(edge: .top, spacing: 0) { WeatherStatusBanner(status: model.weatherStatus) }
         .sheet(item: $editing) { record in
             SpotEditorSheet(mode: .edit(record))
         }
@@ -46,7 +47,7 @@ struct SavedView: View {
         _ = model.forecasts.revision
         return model.store.savedPlaces().map { record in
             let spot = record.spot
-            let score = SavedLight.headline(model, spot)?.window.score
+            let score = model.nextLight(for: spot)?.window.score
             return SavedItem(id: record.id, spot: spot, todayScore: score)
         }
     }
@@ -57,7 +58,7 @@ struct SavedView: View {
         ContentUnavailableView {
             Label(String(localized: "Nothing saved yet", comment: "Saved empty title"), systemImage: "bookmark")
         } description: {
-            Text("Save a spot from Explore or Scout and it shows up here with today's light. Spots you add yourself live here too.",
+            Text("Save a spot from Explore or Scout and it shows up here with its next sunrise or sunset. Spots you add yourself live here too.",
                  comment: "Saved empty explanation")
         } actions: {
             Button { navigation.show(.explore) } label: { Text("Browse Explore", comment: "Button") }
@@ -74,7 +75,7 @@ struct SavedView: View {
     private func list(_ all: [SavedItem]) -> some View {
         let shown = SavedArranger.arrange(all, query: query, filter: filter, sort: sort)
         return List(shown, selection: $selection) { item in
-            SavedRow(item: item, intent: model.intent(for: item.spot))
+            SavedRow(item: item)
                 .tag(item.id)
         }
         .listStyle(.inset)
@@ -184,12 +185,10 @@ struct SavedView: View {
 private struct SavedRow: View {
     @Environment(AppModel.self) private var model
     let item: SavedItem
-    let intent: LightIntent
 
     var body: some View {
         let spot = item.spot
-        let headline = SavedLight.headline(model, spot)
-        let window = headline?.window
+        let next = model.nextLight(for: spot)
         HStack(spacing: IterSpace.md) {
             Image(systemName: LightText.symbol(spot.category))
                 .font(.title3)
@@ -207,39 +206,12 @@ private struct SavedRow: View {
                 }
             }
             Spacer(minLength: IterSpace.sm)
-            if let window {
-                VStack(alignment: .trailing, spacing: IterSpace.xxs) {
-                    LightBadge(window: window, style: .compact)
-                    if headline?.isTomorrow == true {
-                        Text("Tomorrow", comment: "Saved row: the light shown is tomorrow's because today's window has passed")
-                            .font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-                    }
-                    if let reason = noForecastReason(window) {
-                        Text(reason).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-                    }
-                }
+            if let next {
+                WindowLightLine(window: next.window, zone: spot.timeZone, isLoading: model.forecasts.isLoading(spot.coordinate),
+                                isTomorrow: next.day > model.today(in: spot.timeZone))
             }
         }
         .padding(.vertical, IterSpace.xs)
         .accessibilityElement(children: .combine)
-    }
-
-    private func noForecastReason(_ window: LightWindow) -> String? {
-        if case .noForecast(let reason) = window.assessment { return LightText.noForecastShort(reason) }
-        return nil
-    }
-}
-
-/// The row's headline light: today's window for the intent, or tomorrow's once today's has passed.
-@MainActor private enum SavedLight {
-    static func headline(_ model: AppModel, _ spot: Spot) -> (window: LightWindow, isTomorrow: Bool)? {
-        let intent = model.intent(for: spot)
-        let today = model.today(in: spot.timeZone)
-        guard let first = model.dayLight(for: spot, on: today).headline(for: intent) else { return nil }
-        if case .noForecast(.inThePast) = first.assessment,
-           let next = model.dayLight(for: spot, on: today.adding(days: 1)).headline(for: intent) {
-            return (next, true)
-        }
-        return (first, false)
     }
 }

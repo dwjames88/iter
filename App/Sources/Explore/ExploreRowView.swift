@@ -4,31 +4,20 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// One list row: the spot, then its light on the chosen day in three fixed lanes (chip, window name with band,
-/// start time; see `ExploreRowLayout`). When the row is expanded, its actions and weather are the *next* list row
-/// (`ExploreExpansionRow`), so the list's selection highlight stays on this summary line only.
+/// One list row: the spot, then its next sunrise or sunset in three fixed lanes (window symbol, score chip, start
+/// time; see `ExploreRowLayout`). A click selects the row; it is not a button that expands.
 struct ExploreRowView: View {
     let row: ExploreRow
-    let day: LocalDay
     var isHovered = false
-    var isExpanded = false
     /// Shown after the locality ("Big Sur, CA · 42 mi") when there is a location to measure from.
     var showsDistance = false
-    /// A click on the summary line (not the expanded area).
-    var onTap: () -> Void = {}
 
     var body: some View {
         summary
             .padding(.vertical, IterSpace.xs)
             .contentShape(Rectangle())
-            .simultaneousGesture(TapGesture().onEnded { onTap() })
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(LightText.rowDescription(row, showsDistance: showsDistance))
-            .accessibilityValue(isExpanded
-                ? Text("Expanded", comment: "VoiceOver: the list row is open")
-                : Text("Collapsed", comment: "VoiceOver: the list row is closed"))
-            .accessibilityHint(Text("Shows or hides the save and trip buttons and the weather", comment: "VoiceOver hint on an Explore row"))
-            .accessibilityAddTraits(.isButton)
     }
 
     private var summary: some View {
@@ -65,51 +54,31 @@ struct ExploreRowView: View {
         let lanes = ExploreRowLayout.metrics
         if let window = row.window {
             HStack(alignment: .center, spacing: ExploreRowLayout.laneGap) {
+                WindowSymbol(kind: window.kind)
+                    .frame(width: lanes.symbolLane)
                 chip(window)
                     .frame(width: lanes.chipLane)
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(LightText.name(window.kind))
-                        .font(IterFont.subheadline)
-                        .foregroundStyle(IterColor.textPrimary)
-                        .lineLimit(lanes.nameLines)
-                        .fixedSize(horizontal: false, vertical: true)
-                    detail(window)
-                        .font(IterFont.caption)
-                        .foregroundStyle(IterColor.textSecondary)
-                }
-                .frame(width: lanes.textLane, alignment: .leading)
                 Text(LightText.startTime(window, in: row.spot.timeZone) ?? "")
                     .font(IterFont.timeSmall)
                     .foregroundStyle(IterColor.textSecondary)
                     .monospacedDigit()
                     .lineLimit(1)
                     .frame(width: lanes.timeLane, alignment: .trailing)
+                    .help(LightText.isTomorrow(row)
+                          ? String(localized: "Tomorrow", comment: "Tooltip on a row's start time: the next window is tomorrow")
+                          : "")
             }
         } else {
-            Text(LightText.noWindowToday)
-                .font(IterFont.caption)
-                .foregroundStyle(IterColor.textSecondary)
-                .multilineTextAlignment(.trailing)
-                .frame(width: lanes.total, alignment: .trailing)
+            Color.clear.frame(width: lanes.total, height: IterSize.badgeHeight)
         }
     }
 
     @ViewBuilder private func chip(_ window: LightWindow) -> some View {
         switch window.assessment {
-        case .scored(let score): ScoreChip(score: score, size: .regular)
-        case .noForecast: NoForecastRing(diameter: IterSize.badgeHeight)
-        }
-    }
-
-    @ViewBuilder private func detail(_ window: LightWindow) -> some View {
-        switch window.assessment {
         case .scored(let score):
-            HStack(spacing: IterSpace.xs) {
-                Text(LightText.name(score.band))
-                ConfidenceMark(confidence: score.confidence)
-            }
+            ScoreChip(score: score, size: .regular)
         case .noForecast:
-            Text(LightText.noForecast)
+            if row.isLoading { ProgressView().controlSize(.small) } else { Color.clear }
         }
     }
 }

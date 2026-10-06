@@ -48,6 +48,7 @@ struct SpotPage: View {
             .frame(maxWidth: .infinity)
         }
         .background(IterColor.backgroundWindow)
+        .safeAreaInset(edge: .top, spacing: 0) { WeatherStatusBanner(status: model.weatherStatus) }
         .navigationTitle(liveSpot.name)
         .task { await page.start() }
         .onChange(of: liveSpot) { _, new in page.update(spot: new) }

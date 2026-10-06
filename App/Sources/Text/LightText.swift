@@ -37,22 +37,24 @@ enum LightText {
         }
     }
 
+    /// One symbol per window, readable apart at 16 pt without colour: the arrow says morning (up) or evening (down),
+    /// the filled sun is golden hour and the outlined sun is the blue hour on the same side of the day.
     static func symbol(_ kind: LightWindowKind) -> String {
         switch kind {
-        case .blueMorning: "sun.horizon"
-        case .goldenMorning: "sunrise"
-        case .goldenEvening: "sunset"
-        case .blueEvening: "moon.haze"
-        case .night: "moon.stars"
+        case .blueMorning: "sunrise"
+        case .goldenMorning: "sunrise.fill"
+        case .goldenEvening: "sunset.fill"
+        case .blueEvening: "sunset"
+        case .night: "moon.stars.fill"
         }
     }
 
     static func symbol(_ intent: LightIntent) -> String {
         switch intent {
-        case .sunrise: "sunrise"
-        case .sunset: "sunset"
-        case .blueHour: "moon.haze"
-        case .night: "moon.stars"
+        case .sunrise: "sunrise.fill"
+        case .sunset: "sunset.fill"
+        case .blueHour: "sunset"
+        case .night: "moon.stars.fill"
         }
     }
 
@@ -100,7 +102,7 @@ enum LightText {
         if let score = window.assessment.lightScore {
             return String(localized: "\(name(window.kind)) · \(score.value)", comment: "Window name and Light Index score, e.g. Sunset · 38")
         }
-        return String(localized: "\(name(window.kind)) · No forecast", comment: "Window name with no score")
+        return name(window.kind)
     }
 
     /// "55–75" for a range, nil when the range is a single value.
@@ -115,82 +117,8 @@ enum LightText {
         case .scored(let s):
             String(localized: "\(name(window.kind)), Light Index \(s.value), \(name(s.band)), \(name(s.confidence))",
                    comment: "VoiceOver: window, score, band, confidence")
-        case .noForecast(let reason):
-            String(localized: "\(name(window.kind)), no forecast. \(noForecastReason(reason))",
-                   comment: "VoiceOver: window with no forecast and why")
-        }
-    }
-
-    // MARK: No forecast
-
-    /// Short label shown in place of a score.
-    static let noForecast = String(localized: "No forecast", comment: "Shown instead of a score when there is no forecast")
-
-    /// Why there is no score, in one honest sentence.
-    static func noForecastReason(_ reason: ForecastUnavailableReason) -> String {
-        switch reason {
-        case .weatherServiceNotEnabled:
-            String(localized: "Weather isn't enabled for this build of Iter, so only sun and moon times are shown.",
-                   comment: "No forecast reason: WeatherKit not provisioned")
-        case .serviceFailed:
-            String(localized: "Couldn't reach Apple Weather. Sun and moon times are still exact.",
-                   comment: "No forecast reason: network or service failure")
-        case .beyondHorizon:
-            String(localized: "Too far ahead for a forecast. Planned on sun angle and season until about ten days out.",
-                   comment: "No forecast reason: beyond the forecast horizon")
-        case .inThePast:
-            String(localized: "This window has passed.", comment: "No forecast reason: window already over")
-        case .notLoaded:
-            String(localized: "Forecast not loaded yet.", comment: "No forecast reason: not loaded")
-        case .missingAPIKey(let source):
-            String(localized: "\(name(source)) needs an API key. Add one in Settings ▸ Weather.",
-                   comment: "No forecast reason: the chosen provider has no API key. Argument is the provider name")
-        case .keyRejected(let source):
-            source == .openWeather
-                ? String(localized: "OpenWeather rejected the API key, or the key isn't subscribed to One Call 3.0. Check it in Settings ▸ Weather.",
-                         comment: "No forecast reason: OpenWeather refused the key")
-                : String(localized: "\(name(source)) rejected the API key. Check it in Settings ▸ Weather.",
-                         comment: "No forecast reason: a provider refused the key. Argument is the provider name")
-        case .dailyLimitReached(let source):
-            String(localized: "Iter's daily limit for \(name(source)) is reached, to stay inside the free allowance. Forecasts resume tomorrow or raise the cap in Settings.",
-                   comment: "No forecast reason: Iter's own daily call cap was reached. Argument is the provider name")
-        case .testingKey(let source):
-            String(localized: "\(name(source))'s testing key returns shuffled data, so Iter won't score from it.",
-                   comment: "No forecast reason: a testing API key. Argument is the provider name")
-        case .providerFailed(let source, _):
-            String(localized: "Couldn't reach \(name(source)).", comment: "No forecast reason: a provider failed. Argument is the provider name")
-        }
-    }
-
-    /// One-word reason for compact places (rows, pins).
-    static func noForecastShort(_ reason: ForecastUnavailableReason) -> String {
-        switch reason {
-        case .weatherServiceNotEnabled: String(localized: "Weather off", comment: "Compact no-forecast reason")
-        case .serviceFailed, .providerFailed: String(localized: "Offline", comment: "Compact no-forecast reason")
-        case .beyondHorizon: String(localized: "Too far ahead", comment: "Compact no-forecast reason")
-        case .inThePast: String(localized: "Passed", comment: "Compact no-forecast reason")
-        case .notLoaded: String(localized: "Loading", comment: "Compact no-forecast reason")
-        case .missingAPIKey: String(localized: "Needs key", comment: "Compact no-forecast reason: no API key")
-        case .keyRejected: String(localized: "Key rejected", comment: "Compact no-forecast reason: the API key was refused")
-        case .dailyLimitReached: String(localized: "Limit reached", comment: "Compact no-forecast reason: Iter's daily call cap")
-        case .testingKey: String(localized: "Testing key", comment: "Compact no-forecast reason: testing API key")
-        }
-    }
-
-    /// Whether trying again could help (a failed request), as opposed to something the user must change.
-    static func canRetry(_ reason: ForecastUnavailableReason) -> Bool {
-        switch reason {
-        case .serviceFailed, .providerFailed: true
-        case .weatherServiceNotEnabled, .beyondHorizon, .inThePast, .notLoaded, .missingAPIKey, .keyRejected, .dailyLimitReached, .testingKey: false
-        }
-    }
-
-    /// True when the same reason would apply to every place (weather off, offline, key or cap problems), so a list can
-    /// say it once instead of on every row.
-    static func isGlobal(_ reason: ForecastUnavailableReason) -> Bool {
-        switch reason {
-        case .weatherServiceNotEnabled, .serviceFailed, .providerFailed, .missingAPIKey, .keyRejected, .dailyLimitReached, .testingKey: true
-        case .beyondHorizon, .inThePast, .notLoaded: false
+        case .noForecast:
+            name(window.kind)
         }
     }
 
@@ -239,6 +167,9 @@ enum LightText {
                 ? String(localized: "Scored from a daily summary: beyond OpenWeather's 48 hours.", comment: "Score footnote: daily summary only")
                 : String(localized: "Scored from a daily summary: beyond \(provider)'s hourly forecast.",
                          comment: "Score footnote: daily summary only. Argument is the provider name")
+        case .persistence:
+            return String(localized: "Beyond the forecast: the last forecast day's weather carried forward.",
+                          comment: "Score footnote: scored by persistence beyond the provider's horizon")
         case .threeHourlySteps:
             return String(localized: "\(provider)'s model steps every three hours; Iter fills the hours between.",
                           comment: "Score footnote: three-hourly model. Argument is the provider name")

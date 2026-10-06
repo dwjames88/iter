@@ -50,7 +50,7 @@ struct ExploreMapPane: View {
         .onGeometryChange(for: CGSize.self) { $0.size } action: { paneSize = $0 }
         .overlay(alignment: .bottomTrailing) {
             if let row = explore.selectedRow, !explore.isAddingSpot {
-                ExplorePlaceCard(row: row, day: explore.day, size: cardSize) { explore.select(nil, from: .map) }
+                ExplorePlaceCard(row: row, size: cardSize) { explore.select(nil, from: .map) }
                     .padding(IterSpace.md)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
             }
@@ -145,7 +145,7 @@ struct ExploreMapPane: View {
             .onHover { inside in
                 if inside { explore.hoveredID = pin.id } else if explore.hoveredID == pin.id { explore.hoveredID = nil }
             }
-            .contextMenu { ExploreSpotMenu(spot: pin.row.spot, day: explore.day) }
+            .contextMenu { ExploreSpotMenu(spot: pin.row.spot, day: pin.row.day ?? LocalDay.today(in: pin.row.spot.timeZone)) }
     }
 
     private func zOrder(_ style: ExplorePinStyle) -> Int {

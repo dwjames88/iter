@@ -16,12 +16,12 @@ extension LightText {
 
     // MARK: Lead
 
-    static func outlookTitle(intent: LightIntent) -> String {
-        String(localized: "10-day outlook for \(name(intent))", comment: "Outlook strip title with the chosen intent, e.g. Sunset")
+    static func outlookTitle(days: Int, intent: LightIntent) -> String {
+        String(localized: "\(days)-day outlook for \(name(intent))", comment: "Outlook strip title with the number of days and the chosen intent, e.g. 8-day outlook for Sunset")
     }
 
-    static let outlookKey = String(localized: "Fainter days are less certain. A dashed ring means no forecast.",
-                                   comment: "Outlook strip key explaining fading and dashed rings")
+    static let outlookKey = String(localized: "Fainter days are less certain.",
+                                   comment: "Outlook strip key explaining fading")
 
     static let bestMarker = String(localized: "Best", comment: "Marker on the best day of the outlook")
 
@@ -29,12 +29,7 @@ extension LightText {
         String(localized: "Best \(name(intent).lowercased()) in the next \(days) days", comment: "Caption above the best window, e.g. Best sunset in the next 10 days")
     }
 
-    static func noScoredWindow(intent: LightIntent, days: Int) -> String {
-        String(localized: "No scored \(name(intent).lowercased()) window in the next \(days) days.", comment: "Lead text when nothing can be scored")
-    }
-
     static let checkingForecast = String(localized: "Checking the forecast…", comment: "Shown while the forecast loads")
-    static let retry = String(localized: "Retry", comment: "Button to fetch the forecast again")
     static let showThisDay = String(localized: "Show this day", comment: "Button that selects the best day")
     static let backToToday = String(localized: "Today", comment: "Button that returns the page to today")
 

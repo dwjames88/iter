@@ -55,7 +55,7 @@ extension LightText {
         if let score = window.score {
             return String(localized: "\(base) · \(score)", comment: "Session menu item with its score")
         }
-        return String(localized: "\(base) · \(noForecastShort(window.assessment.noForecastReason))", comment: "Session menu item with no forecast")
+        return base
     }
 
     static func noSession(_ kind: LightWindowKind) -> String {
@@ -82,14 +82,6 @@ extension LightText {
         let count = String(AttributedString(localized: "^[\(stops) stop](inflect: true)").characters)
         if drivingSeconds < 60 { return count }
         return String(localized: "\(count) · \(TimeText.duration(drivingSeconds)) driving", comment: "Day total: stops and driving time")
-    }
-}
-
-extension LightAssessment {
-    /// The reason when there is no forecast; `.notLoaded` for a scored window (never read in that case).
-    var noForecastReason: ForecastUnavailableReason {
-        if case .noForecast(let reason) = self { return reason }
-        return .notLoaded
     }
 }
 

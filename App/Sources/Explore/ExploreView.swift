@@ -24,9 +24,21 @@ struct ExploreView: View {
             Color.clear.onAppear {
                 let made = ExploreModel(app: model)
                 configure?(made)
-                if let id = AppLaunch.expandRowID, made.row(id: id) != nil {
+                if let add = AppLaunch.addSpot {
+                    // The spot editor's Save, without the sheet: default zone from the coordinate, then fetch.
+                    let draft = SpotDraft(coordinate: add.coordinate)
+                    let record = model.store.createUserSpot(name: add.name, coordinate: draft.coordinate,
+                                                            timeZoneIdentifier: draft.timeZoneIdentifier)
+                    model.spotSaved(record.spot)
+                    made.didCreate(record.spot)
+                    made.requestScroll(to: record.spot.id)
+                }
+                if let text = AppLaunch.searchText {
+                    made.query = text
+                    made.submitSearch()
+                }
+                if let id = AppLaunch.selectRowID, made.row(id: id) != nil {
                     made.select(id, from: .list)
-                    made.toggleExpansion()
                     made.requestScroll(to: id)
                 }
                 explore = made
@@ -46,7 +58,6 @@ private struct ExploreContent: View {
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
     @FocusState private var searchFocused: Bool
-    @State private var choosingDay = false
     @Environment(\.openURL) private var openURL
 
     var body: some View {
@@ -98,13 +109,6 @@ private struct ExploreContent: View {
     // MARK: Toolbar
 
     @ToolbarContentBuilder private var toolbar: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) { dateControl }
-        if !explore.isToday {
-            ToolbarItem(placement: .primaryAction) {
-                Button(String(localized: "Today", comment: "Toolbar button: jump to today")) { explore.goToToday() }
-                    .help(String(localized: "Jump to today", comment: "Tooltip"))
-            }
-        }
         ToolbarItem(placement: .primaryAction) {
             Button {
                 if let region = explore.visibleRegion {
@@ -124,81 +128,5 @@ private struct ExploreContent: View {
             .toggleStyle(.button)
             .help(String(localized: "Add your own spot: click the map to drop a pin (Esc to cancel)", comment: "Tooltip"))
         }
-    }
-
-    private static let utc = TimeZone(identifier: "UTC")!
-
-    private var dayBinding: Binding<Date> {
-        Binding(get: { explore.day.noon(in: Self.utc) }, set: { explore.day = LocalDay($0, in: Self.utc) })
-    }
-
-    /// "Mon, Oct 5"; the year is added only for a day outside the current year. UTC, like the day binding.
-    private var dayLabel: String {
-        let date = explore.day.noon(in: Self.utc)
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = Self.utc
-        let sameYear = calendar.component(.year, from: date) == calendar.component(.year, from: model.now())
-        var style = Date.FormatStyle().weekday(.abbreviated).month(.abbreviated).day()
-        if !sameYear { style = style.year() }
-        style.timeZone = Self.utc
-        return date.formatted(style)
-    }
-
-    private var fullDayLabel: String {
-        var style = Date.FormatStyle().weekday(.wide).month(.wide).day().year()
-        style.timeZone = Self.utc
-        return explore.day.noon(in: Self.utc).formatted(style)
-    }
-
-    /// One grouped control: previous day, the day (opens a calendar), next day.
-    private var dateControl: some View {
-        ControlGroup {
-            Button {
-                explore.shiftDay(by: -1)
-            } label: {
-                Label(String(localized: "Previous Day", comment: "Toolbar button"), systemImage: "chevron.left")
-            }
-            .keyboardShortcut("[", modifiers: .command)
-            .help(String(localized: "Previous day (⌘[)", comment: "Tooltip"))
-
-            Button {
-                choosingDay.toggle()
-            } label: {
-                Text(dayLabel).monospacedDigit()
-            }
-            .help(String(localized: "\(fullDayLabel). Choose a day", comment: "Tooltip: the shown day, then a hint that it opens a calendar"))
-            .accessibilityLabel(Text("Date", comment: "Accessibility label of the date control"))
-            .accessibilityValue(Text(fullDayLabel))
-            .popover(isPresented: $choosingDay, arrowEdge: .bottom) { dayPopover }
-
-            Button {
-                explore.shiftDay(by: 1)
-            } label: {
-                Label(String(localized: "Next Day", comment: "Toolbar button"), systemImage: "chevron.right")
-            }
-            .keyboardShortcut("]", modifiers: .command)
-            .help(String(localized: "Next day (⌘])", comment: "Tooltip"))
-        }
-        .controlGroupStyle(.navigation)
-    }
-
-    private var dayPopover: some View {
-        VStack(spacing: IterSpace.md) {
-            DatePicker(selection: Binding(get: { dayBinding.wrappedValue },
-                                          set: { dayBinding.wrappedValue = $0; choosingDay = false }),
-                       displayedComponents: .date) {
-                Text("Date", comment: "Accessibility label of the date picker")
-            }
-            .datePickerStyle(.graphical)
-            .labelsHidden()
-            .environment(\.timeZone, Self.utc)
-            Button(String(localized: "Today", comment: "Button: jump to today")) {
-                explore.goToToday()
-                choosingDay = false
-            }
-            .disabled(explore.isToday)
-            .help(String(localized: "Jump to today", comment: "Tooltip"))
-        }
-        .padding(IterSpace.md)
     }
 }

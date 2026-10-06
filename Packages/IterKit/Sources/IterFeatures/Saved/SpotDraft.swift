@@ -1,5 +1,6 @@
 import Foundation
 import IterCore
+import IterData
 
 /// The form state of the spot editor, with validation. Platform-neutral so it can be tested.
 public struct SpotDraft: Equatable, Sendable {
@@ -15,9 +16,10 @@ public struct SpotDraft: Equatable, Sendable {
     /// True when the zone is this Mac's because the lookup failed or has not answered.
     public var timeZoneIsFallback: Bool
 
-    public init(coordinate: Coordinate, timeZone: TimeZone = .current, timeZoneIsFallback: Bool = true) {
+    /// Without a zone the estimate for the coordinate is used (never the Mac's), and it stays marked as a fallback.
+    public init(coordinate: Coordinate, timeZone: TimeZone? = nil, timeZoneIsFallback: Bool = true) {
         self.coordinate = coordinate
-        self.timeZoneIdentifier = timeZone.identifier
+        self.timeZoneIdentifier = timeZone?.identifier ?? TimeZoneEstimate.identifier(for: coordinate)
         self.timeZoneIsFallback = timeZoneIsFallback
     }
 

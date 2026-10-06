@@ -118,6 +118,14 @@ public struct Forecast: Codable, Hashable, Sendable {
     /// The last instant covered by the hourly data.
     public var horizon: Date? { hours.last.map { $0.date.addingTimeInterval(3600) } }
 
+    /// How many consecutive local days, starting at `day`, begin before `horizon` (0 when there are no hours).
+    public func coveredDays(from day: LocalDay, in zone: TimeZone) -> Int {
+        guard let horizon else { return 0 }
+        var count = 0
+        while day.adding(days: count).start(in: zone) < horizon { count += 1 }
+        return count
+    }
+
     /// The hour containing `date`, or nil if `date` is outside the forecast.
     public func hour(at date: Date) -> HourlyConditions? {
         guard let first = hours.first, date >= first.date, let horizon, date < horizon else { return nil }
@@ -173,6 +181,8 @@ public enum WeatherError: Error, Hashable, Sendable {
     case overDailyLimit(ForecastSource)
     case testingKey(ForecastSource)
     case provider(ForecastSource, String)
+    /// The device could not reach the provider.
+    case offline(ForecastSource)
 
     public var unavailableReason: ForecastUnavailableReason {
         switch self {
@@ -183,6 +193,7 @@ public enum WeatherError: Error, Hashable, Sendable {
         case .overDailyLimit(let s): .dailyLimitReached(s)
         case .testingKey(let s): .testingKey(s)
         case .provider(let s, let detail): .providerFailed(s, detail: detail)
+        case .offline(let s): .offline(s)
         }
     }
 }

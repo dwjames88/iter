@@ -189,8 +189,9 @@ enum WindowScorer {
     }
 
     /// Notes in `ScoreNote.allCases` order, without duplicates.
-    static func notes(scored: ScoredWindow, resolutions: Set<HourlyConditions.Resolution>) -> [ScoreNote] {
+    static func notes(scored: ScoredWindow, resolutions: Set<HourlyConditions.Resolution>, persisted: Bool = false) -> [ScoreNote] {
         var set = Set(scored.notes)
+        if persisted { set.insert(.persistence) }
         if scored.usedLayerFallback { set.insert(.noCloudLayers) }
         if resolutions.contains(.interpolated) { set.insert(.threeHourlySteps) }
         if resolutions.contains(.dailySummary) { set.insert(.dailySummaryOnly) }

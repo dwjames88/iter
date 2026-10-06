@@ -25,17 +25,26 @@ struct ExplorePinView: View {
             if let score = pin.row.window?.assessment.lightScore {
                 Circle().fill(IterColor.ramp(score.band))
             } else {
-                Circle().fill(IterColor.backgroundContent)
-                    .overlay(Circle().strokeBorder(IterColor.noForecast, lineWidth: IterStroke.regular))
+                Circle().fill(IterColor.backgroundControl)
             }
         }
         .frame(width: IterSpace.md, height: IterSpace.md)
         .overlay(Circle().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
     }
 
+    /// The window symbol and, when scored, the score. Without a score the chip is plain (a neutral chip while loading).
+    private func lightContent(_ window: LightWindow, chipSize: ScoreChip.Size) -> some View {
+        HStack(spacing: IterSpace.xs) {
+            WindowSymbol(kind: window.kind, font: .system(size: IterSize.pinSymbol))
+            if let score = window.assessment.lightScore {
+                ScoreChip(score: score, size: chipSize)
+            }
+        }
+    }
+
     @ViewBuilder private var chip: some View {
         if let window = pin.row.window {
-            LightBadge(window: window, style: .compact, showsSource: false)
+            lightContent(window, chipSize: .compact)
                 .padding(.horizontal, IterSpace.xs)
                 .padding(.vertical, IterSpace.xxs)
                 .background(IterColor.backgroundContent, in: Capsule())
@@ -50,7 +59,7 @@ struct ExplorePinView: View {
             Group {
                 if let window = pin.row.window {
                     HStack(spacing: IterSpace.xs) {
-                        LightBadge(window: window, style: .compact, showsSource: false)
+                        lightContent(window, chipSize: .compact)
                         if let time = LightText.startTime(window, in: pin.row.spot.timeZone) {
                             Text(time).font(IterFont.timeSmall).foregroundStyle(IterColor.textPrimary)
                         }
@@ -69,4 +78,9 @@ struct ExplorePinView: View {
                 .accessibilityHidden(true)
         }
     }
+}
+
+extension IterSize {
+    /// The window symbol inside a map pin chip.
+    static let pinSymbol: CGFloat = 12
 }

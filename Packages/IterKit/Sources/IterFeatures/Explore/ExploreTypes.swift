@@ -50,8 +50,12 @@ public struct ExploreFilters: Equatable, Sendable {
 public struct ExploreRow: Identifiable, Hashable, Sendable {
     public var spot: Spot
     public var source: ExploreSource
-    /// The headline window for the chosen intent on the chosen day; nil when the sun never makes that window.
+    /// The spot's next event (sunrise or sunset) by its own clock; unscored while there is no forecast.
     public var window: LightWindow?
+    /// The local day of that event.
+    public var day: LocalDay?
+    /// The forecast is in flight and nothing is cached yet.
+    public var isLoading: Bool = false
     /// Straight-line metres from you when there is a location; else from the centre of the visible map while sorting
     /// by distance; else nil.
     public var distanceMeters: Double?

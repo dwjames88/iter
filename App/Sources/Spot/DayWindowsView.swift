@@ -30,16 +30,20 @@ struct DayWindowsSection: View {
                     }
                 }
             }
-            if light.windows.isEmpty {
+            let rows = windowRows(light)
+            if rows.isEmpty {
                 Label(light.sun.kind == .polarDay ? LightText.polarDay : light.sun.kind == .polarNight ? LightText.polarNight : LightText.noWindowsPolar,
                       systemImage: light.sun.kind == .polarDay ? "sun.max" : "moon.stars")
                     .font(IterFont.callout)
                     .foregroundStyle(IterColor.textSecondary)
             } else {
                 VStack(spacing: 0) {
-                    ForEach(Array(light.windows.enumerated()), id: \.element.kind) { index, window in
+                    ForEach(Array(rows.enumerated()), id: \.offset) { index, row in
                         if index > 0 { Divider() }
-                        WindowRow(page: page, window: window)
+                        if row.day != page.day, index == 0 || rows[index - 1].day == page.day {
+                            laterDayHeader(row.day)
+                        }
+                        WindowRow(page: page, window: row.window, day: row.day)
                     }
                 }
                 .background(IterColor.backgroundControl, in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
@@ -51,24 +55,55 @@ struct DayWindowsSection: View {
     }
 }
 
+extension DayWindowsSection {
+    /// The selected day's windows; on today, the windows still ahead plus tomorrow's (nothing already over).
+    fileprivate func windowRows(_ light: DayLight) -> [(day: LocalDay, window: LightWindow)] {
+        if page.day == page.today {
+            let ahead = page.upcomingWindows
+            if !ahead.isEmpty { return ahead }
+        }
+        return light.windows.map { (day: light.day, window: $0) }
+    }
+
+    fileprivate func laterDayHeader(_ day: LocalDay) -> some View {
+        Text(LightText.relativeDay(day, today: page.today))
+            .font(IterFont.captionStrong)
+            .foregroundStyle(IterColor.textSecondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, IterSpace.md)
+            .padding(.vertical, IterSpace.xs)
+            .accessibilityAddTraits(.isHeader)
+    }
+}
+
 private struct WindowRow: View {
     let page: SpotModel
     let window: LightWindow
+    let day: LocalDay
 
     @Environment(\.spotDensity) private var density
-    private var isExpanded: Bool { page.expanded.contains(window.kind) }
-    private var isSelected: Bool { page.selectedWindow == window.kind }
+    /// A row from another day (tomorrow's, listed under today's) opens that day instead of expanding in place.
+    private var isOtherDay: Bool { day != page.day }
+    private var isScored: Bool { window.assessment.lightScore != nil }
+    private var isExpandable: Bool { isScored && !isOtherDay }
+    private var isExpanded: Bool { isExpandable && page.expanded.contains(window.kind) }
+    private var isSelected: Bool { !isOtherDay && page.selectedWindow == window.kind }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Button { page.toggleExpanded(window.kind) } label: {
+            Button {
+                if isOtherDay { page.selectDay(day) } else if isExpandable { page.toggleExpanded(window.kind) }
+            } label: {
                 HStack(spacing: IterSpace.sm) {
                     Image(systemName: "chevron.right")
                         .font(IterFont.captionStrong)
                         .foregroundStyle(IterColor.textSecondary)
                         .rotationEffect(.degrees(isExpanded ? 90 : 0))
                         .frame(width: IterSize.iconSmall)
-                    LightBadge(window: window, style: .regular)
+                        .opacity(isExpandable ? 1 : 0)
+                        .accessibilityHidden(true)
+                    LightBadge(window: window, style: .regular, isLoading: page.isLoadingForecast,
+                               showsName: density == .page)
                     Spacer()
                     Text(TimeText.timeRange(window.span, in: page.timeZone))
                         .font(IterFont.time)
@@ -82,8 +117,10 @@ private struct WindowRow: View {
             .accessibilityElement(children: .combine)
             .accessibilityLabel("\(LightText.accessibilityDescription(window)), \(TimeText.timeRange(window.span, in: page.timeZone))")
             .accessibilityValue(isExpanded ? String(localized: "Expanded", comment: "VoiceOver state") : String(localized: "Collapsed", comment: "VoiceOver state"))
-            .accessibilityHint(String(localized: "Shows why this window scores as it does", comment: "VoiceOver hint"))
-            .help(String(localized: "Show the reasons behind this window", comment: "Help"))
+            .accessibilityHint(isOtherDay ? String(localized: "Opens this day", comment: "VoiceOver hint")
+                               : String(localized: "Shows why this window scores as it does", comment: "VoiceOver hint"))
+            .help(isOtherDay ? String(localized: "Open this day", comment: "Help")
+                  : String(localized: "Show the reasons behind this window", comment: "Help"))
             if isExpanded {
                 Reasons(page: page, window: window)
                     .padding(.horizontal, IterSpace.md)
@@ -106,15 +143,8 @@ private struct Reasons: View {
             switch window.assessment {
             case .scored(let score):
                 scored(score)
-            case .noForecast(let reason):
-                Text(LightText.noForecastReason(reason))
-                    .font(IterFont.callout)
-                    .foregroundStyle(IterColor.textSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                if LightText.canRetry(reason) {
-                    Button { page.retry() } label: { Label(LightText.retry, systemImage: "arrow.clockwise") }
-                        .controlSize(.small)
-                }
+            case .noForecast:
+                EmptyView()
             }
         }
     }

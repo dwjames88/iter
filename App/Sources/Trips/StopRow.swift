@@ -21,6 +21,7 @@ struct StopNumberBadge: View {
 
 /// One stop: its schedule leads (when to leave, when to be set up), then the session, the light, and the stop's own notes.
 struct StopRowView: View {
+    @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
     let entry: TripStopEntry
     let builder: TripBuilderModel
@@ -83,7 +84,7 @@ struct StopRowView: View {
             }
             Spacer(minLength: IterSpace.sm)
             if let window = entry.sessionWindow {
-                LightBadge(window: window, style: .regular)
+                LightBadge(window: window, style: .regular, isLoading: model.forecasts.isLoading(spot.coordinate))
             }
         }
     }
@@ -123,7 +124,7 @@ struct StopRowView: View {
     private var sessionMenu: some View {
         Picker(selection: sessionBinding) {
             ForEach(entry.windows) { window in
-                Text(LightText.sessionMenuItem(window, in: zone)).tag(window.kind)
+                Label(LightText.sessionMenuItem(window, in: zone), systemImage: LightText.symbol(window.kind)).tag(window.kind)
             }
             if entry.sessionWindow == nil {
                 Text(LightText.noSession(entry.stop.session)).tag(entry.stop.session)

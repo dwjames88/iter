@@ -4,7 +4,7 @@ import IterCore
 import IterData
 import IterServices
 
-/// State and derived data for the Explore screen: date, filters, sort, search, results, selection and camera requests.
+/// State and derived data for the Explore screen: filters, sort, search, results, selection and camera requests.
 /// One selection drives pin, row and place card (pattern #5). Platform-neutral; the view draws it.
 @MainActor
 @Observable
@@ -13,8 +13,6 @@ public final class ExploreModel {
 
     // MARK: Inputs
 
-    /// The day lit on every row and pin.
-    public var day: LocalDay
     public var filters = ExploreFilters() {
         didSet { if oldValue != filters { resultSetChanged() } }
     }
@@ -47,8 +45,6 @@ public final class ExploreModel {
     public private(set) var searchState: ExploreSearchState = .idle
     public private(set) var selectedID: String?
     public private(set) var selectionSource: SelectionSource = .program
-    /// The one list row open to its actions and weather. Always nil or equal to `selectedID`.
-    public private(set) var expandedID: String?
     public private(set) var cameraRequest: CameraRequest?
     /// Asks the list to scroll a row into view when `id` changes.
     public private(set) var scrollRequest: (id: Int, target: String)?
@@ -68,7 +64,7 @@ public final class ExploreModel {
     @ObservationIgnored public private(set) var searchTask: Task<Void, Never>?
     @ObservationIgnored private var requestCounter = 0
     @ObservationIgnored private var windowCache: [String: CachedWindow] = [:]
-    @ObservationIgnored private var windowCacheStamp: WindowStamp?
+    @ObservationIgnored private var windowCacheBucket: Int?
     @ObservationIgnored private var derivedCache: (stamp: DerivedStamp, value: Derived)?
     @ObservationIgnored private let defaults: UserDefaults
     @ObservationIgnored public private(set) var cameraPolicy: MapCameraPolicy
@@ -78,7 +74,6 @@ public final class ExploreModel {
         self.searchDebounce = searchDebounce
         self.defaults = defaults
         self.cameraPolicy = MapCameraPolicy.load(screen: Self.cameraScreenKey, defaults: defaults)
-        self.day = app.today(in: .current)
     }
 
     // MARK: - Location
@@ -97,20 +92,12 @@ public final class ExploreModel {
 
     private var trimmedQuery: String { query.trimmingCharacters(in: .whitespacesAndNewlines) }
 
-    // MARK: - Day
-
-    public var isToday: Bool { day == app.today(in: .current) }
-
-    public func shiftDay(by days: Int) { day = day.adding(days: days) }
-    public func goToToday() { day = app.today(in: .current) }
-
     // MARK: - Derived rows
 
-    private struct CachedWindow { var window: LightWindow? }
-    private struct WindowStamp: Equatable { var day: LocalDay; var intent: LightIntent? }
+    private struct CachedWindow { var event: (day: LocalDay, window: LightWindow)? }
     private struct DerivedStamp: Equatable {
-        var day: LocalDay
-        var intent: LightIntent?
+        /// Five-minute bucket of the clock, so each row's next event rolls over after its sunset.
+        var timeBucket: Int
         var forecastRevision: Int
         var storeRevision: Int
         var filters: ExploreFilters
@@ -128,10 +115,12 @@ public final class ExploreModel {
         var byID: [String: ExploreRow]
     }
 
+    private static func timeBucket(_ date: Date) -> Int { Int(date.timeIntervalSince1970 / 300) }
+
     private var derived: Derived {
         let user = app.location.coordinate
         let origin: Coordinate? = user ?? (sort == .distance ? visibleRegion?.center : nil)
-        let stamp = DerivedStamp(day: day, intent: app.preferredIntent, forecastRevision: app.forecasts.revision,
+        let stamp = DerivedStamp(timeBucket: Self.timeBucket(app.now()), forecastRevision: app.forecasts.revision,
                                  storeRevision: app.store.revision, filters: filters, sort: sort,
                                  query: query.trimmingCharacters(in: .whitespacesAndNewlines),
                                  appleIDs: appleResults.map(\.id), origin: origin, hasLocation: user != nil,
@@ -160,10 +149,12 @@ public final class ExploreModel {
     }
 
     private func buildDerived(_ stamp: DerivedStamp) -> Derived {
-        refreshWindowCache(day: stamp.day, intent: stamp.intent)
+        refreshWindowCache(bucket: stamp.timeBucket)
         var rows: [ExploreRow] = []
         for (spot, source) in candidates() where Self.matches(spot, source: source, filters: filters, query: stamp.query) {
-            rows.append(ExploreRow(spot: spot, source: source, window: window(for: spot),
+            let event = nextEvent(for: spot)
+            rows.append(ExploreRow(spot: spot, source: source, window: event?.window, day: event?.day,
+                                   isLoading: app.forecasts.isLoading(spot.coordinate),
                                    distanceMeters: stamp.origin.map { $0.distance(to: spot.coordinate) }))
         }
         let own = rows.filter { $0.source != .appleMaps }
@@ -191,17 +182,16 @@ public final class ExploreModel {
         return Derived(sections: sections, rows: flat, byID: Dictionary(flat.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a }))
     }
 
-    private func refreshWindowCache(day: LocalDay, intent: LightIntent?) {
-        let stamp = WindowStamp(day: day, intent: intent)
-        if windowCacheStamp != stamp {
+    private func refreshWindowCache(bucket: Int) {
+        if windowCacheBucket != bucket {
             windowCache = [:]
-            windowCacheStamp = stamp
+            windowCacheBucket = bucket
         }
     }
 
-    /// The headline window for the chosen intent. Pure read: it never starts a fetch (see `requestForecasts`).
-    /// Cached per spot, day, intent and forecast state, so scrolling and revision bumps stay cheap.
-    private func window(for spot: Spot) -> LightWindow? {
+    /// The spot's next sunrise or sunset. Pure read: it never starts a fetch (see `requestForecasts`).
+    /// Cached per spot, time bucket and forecast state, so scrolling and revision bumps stay cheap.
+    private func nextEvent(for spot: Spot) -> (day: LocalDay, window: LightWindow)? {
         let state = app.forecasts.state(for: spot.coordinate)
         let tag: String
         switch state {
@@ -209,13 +199,11 @@ public final class ExploreModel {
         case .loaded(let f): tag = "F\(f.fetchedAt.timeIntervalSince1970)"
         case .unavailable(let r): tag = "U\(r.hashValue)"
         }
-        let key = "\(spot.id)|\(spot.coordinate.cacheKey)|\(tag)"
-        if let hit = windowCache[key] { return hit.window }
-        let dayLight = app.engine.dayLight(for: spot, on: day, forecast: state.forecast,
-                                           unavailable: state.unavailableReason, now: app.now())
-        let window = dayLight.headline(for: app.intent(for: spot))
-        windowCache[key] = CachedWindow(window: window)
-        return window
+        let key = "\(spot.id)|\(spot.coordinate.cacheKey)|\(spot.timeZoneIdentifier)|\(tag)"
+        if let hit = windowCache[key] { return hit.event }
+        let event = app.engine.nextEvent(for: spot, forecast: state.forecast, unavailable: state.unavailableReason, now: app.now())
+        windowCache[key] = CachedWindow(event: event)
+        return event
     }
 
     // MARK: Filtering and sorting (static so tests can drive them directly)
@@ -269,15 +257,8 @@ public final class ExploreModel {
 
     // MARK: Header facts
 
-    /// One honest line for the whole list when forecasts are missing, instead of the same reason on every row.
-    /// The most common specific reason among rows without a forecast; nil when everything is scored or still loading.
-    public var forecastNotice: ForecastUnavailableReason? {
-        var counts: [ForecastUnavailableReason: Int] = [:]
-        for row in rows {
-            if let reason = row.unavailableReason, reason != .notLoaded, reason != .inThePast { counts[reason, default: 0] += 1 }
-        }
-        return counts.max { $0.value < $1.value }?.key
-    }
+    /// Why weather is missing, shown once for the whole screen (never per row).
+    public var weatherStatus: WeatherStatus { app.weatherStatus }
 
     /// True when any listed score was made from sample weather (the list says so once).
     public var hasSampleScores: Bool {
@@ -285,8 +266,16 @@ public final class ExploreModel {
     }
 
     /// Forecasts still on their way.
+    /// Only rows on screen count: a collapsed "More Places" is not fetched until it opens, so it must not keep the
+    /// header spinner going.
     public var isLoadingForecasts: Bool {
-        rows.contains { $0.unavailableReason == .notLoaded }
+        fetchedRows.contains { $0.isLoading }
+    }
+
+    /// Rows whose forecasts are fetched now, in list order (everything but a collapsed "More Places").
+    private var fetchedRows: [ExploreRow] {
+        let hidden: Set<ExploreSectionKind> = isMorePlacesOpen ? [] : [.morePlaces]
+        return sections.filter { !hidden.contains($0.kind) }.flatMap(\.rows)
     }
 
     /// True when search text or a filter is narrowing the list (offers "Clear Filters").
@@ -302,9 +291,16 @@ public final class ExploreModel {
 
     // MARK: Forecasts
 
-    /// Starts forecast fetches for every candidate that could be listed (the fetches are shared and cached).
+    /// Starts forecast fetches, in list order, for the rows that are showing ("More Places" waits until it is open).
+    /// The fetches are shared and cached.
     public func requestForecasts() {
-        app.forecasts.requestAll(rows.map(\.spot.coordinate))
+        app.forecasts.requestAll(fetchedRows.map(\.spot.coordinate))
+    }
+
+    /// A row appeared on screen: make sure its forecast is on its way.
+    public func requestForecast(for id: String) {
+        guard let row = derived.byID[id] else { return }
+        app.forecasts.request(row.spot.coordinate)
     }
 
     // MARK: - Selection and camera
@@ -312,7 +308,6 @@ public final class ExploreModel {
     /// Selects a row (or clears with nil). The list follows a map selection by scrolling; the map follows a
     /// list selection by panning only if the pin is out of view (pattern #5).
     public func select(_ id: String?, from source: SelectionSource = .program) {
-        if expandedID != id { expandedID = nil }
         guard selectedID != id else { return }
         selectedID = id
         selectionSource = source
@@ -323,26 +318,6 @@ public final class ExploreModel {
         if source == .map { scrollRequest = (nextRequestID(), id) }
         reveal(row.spot.coordinate)
     }
-
-    /// A click on a list row: a collapsed row is selected and expanded, an expanded row collapses. The list's
-    /// selection binding and the click gesture may arrive in either order; both orders end in the same state.
-    public func rowClicked(_ id: String) {
-        guard derived.byID[id] != nil else { return }
-        if expandedID == id {
-            expandedID = nil
-            return
-        }
-        select(id, from: .list)
-        expandedID = id
-    }
-
-    /// Space or Return on the selected row: expand it, or collapse it when already open.
-    public func toggleExpansion() {
-        guard let id = selectedID, derived.byID[id] != nil else { return }
-        expandedID = expandedID == id ? nil : id
-    }
-
-    public func collapse() { expandedID = nil }
 
     /// Asks the list to scroll a row into view (launch-time screenshots; selection from the map does this itself).
     public func requestScroll(to id: String) {
@@ -452,7 +427,6 @@ public final class ExploreModel {
 
     private func dropSelectionIfHidden() {
         if let id = selectedID, derived.byID[id] == nil { selectedID = nil }
-        if let id = expandedID, derived.byID[id] == nil { expandedID = nil }
     }
 
     // MARK: Pins
@@ -531,10 +505,9 @@ public final class ExploreModel {
              bestLight: [], popularity: 0, origin: .appleMaps)
     }
 
-    /// When MapKit gives no zone: the nearest curated spot's, else the Mac's.
+    /// When MapKit gives no zone: the nearest curated spot's, else a longitude-based offset (never the Mac's).
     func zoneIdentifier(near coordinate: Coordinate) -> String {
-        CuratedSpots.all.min { $0.coordinate.distance(to: coordinate) < $1.coordinate.distance(to: coordinate) }?.timeZoneIdentifier
-            ?? TimeZone.current.identifier
+        TimeZoneEstimate.identifier(for: coordinate)
     }
 
     // MARK: - Add your own spot
@@ -553,6 +526,7 @@ public final class ExploreModel {
     /// The editor saved a new spot: leave the mode, select it, show it.
     public func didCreate(_ spot: Spot) {
         isAddingSpot = false
+        app.spotSaved(spot)
         // Filters could hide the new spot; the user just made it, so make sure it shows.
         if !filters.sources.contains(.yours) { filters.sources.insert(.yours) }
         select(spot.id, from: .program)

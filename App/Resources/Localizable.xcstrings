@@ -69,6 +69,17 @@
     "%@ (estimated)" : {
       "comment" : "Trip driving total that includes estimated drives"
     },
+    "%@ Scores are from the last update at %@." : {
+      "comment" : "Weather banner: a provider error, then the time of the last successful forecast",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ Scores are from the last update at %2$@."
+          }
+        }
+      }
+    },
     "%@ away" : {
       "comment" : "VoiceOver: distance from you"
     },
@@ -98,6 +109,9 @@
     "%@ gives total cloud only, not cloud by height: confidence is one step lower." : {
       "comment" : "Score footnote: no cloud layers. Argument is the provider name"
     },
+    "%@ isn't answering." : {
+      "comment" : "Weather banner: a provider failed; argument is the provider"
+    },
     "%@ lit" : {
       "comment" : "Moon illumination"
     },
@@ -110,17 +124,14 @@
     "%@ mm/h" : {
       "comment" : "Rain amount in millimetres per hour"
     },
-    "%@ needs an API key. Add one in Settings ▸ Weather." : {
-      "comment" : "No forecast reason: the chosen provider has no API key. Argument is the provider name"
-    },
     "%@ rain" : {
       "comment" : "Scrub readout\nScrub readout when only an amount is known"
     },
-    "%@ rejected the API key. Check it in Settings ▸ Weather." : {
-      "comment" : "No forecast reason: a provider refused the key. Argument is the provider name"
+    "%@ rejected the weather key. Check it in Settings." : {
+      "comment" : "Weather banner: key rejected; argument is the provider"
     },
     "%@ · %@" : {
-      "comment" : "Add stop row: place and distance from the anchor stop\nDrive time and distance between two stops\nSession menu item with no forecast\nSession menu item: window name and its time range\nWeather source and its model, e.g. Windy · GFS",
+      "comment" : "Add stop row: place and distance from the anchor stop\nDrive time and distance between two stops\nSession menu item: window name and its time range\nWeather source and its model, e.g. Windy · GFS",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -164,7 +175,7 @@
       }
     },
     "%@ · %lld" : {
-      "comment" : "Session menu item with its score\nWindow name and Light Index score, e.g. Sunset · 38",
+      "comment" : "Add to Trip menu: the day, then the sunset score\nSession menu item with its score\nWindow name and Light Index score, e.g. Sunset · 38",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -184,9 +195,6 @@
           }
         }
       }
-    },
-    "%@ · No forecast" : {
-      "comment" : "Window name with no score"
     },
     "%@ · no window this day" : {
       "comment" : "A stop's session that the sun does not produce that day"
@@ -216,11 +224,11 @@
     "%@'s model steps every three hours; Iter fills the hours between." : {
       "comment" : "Score footnote: three-hourly model. Argument is the provider name"
     },
-    "%@'s testing key returns shuffled data, so Iter won't score from it." : {
-      "comment" : "No forecast reason: a testing API key. Argument is the provider name"
+    "%@'s testing key gives shuffled data, so Iter won't score from it." : {
+      "comment" : "Weather banner: testing key; argument is the provider"
     },
     "%@, %@" : {
-      "comment" : "VoiceOver: template",
+      "comment" : "VoiceOver: a window with its start time\nVoiceOver: template",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -251,19 +259,16 @@
         }
       }
     },
-    "%@, no forecast. %@" : {
-      "comment" : "VoiceOver: window with no forecast and why",
+    "%@, tomorrow at %@" : {
+      "comment" : "VoiceOver: a window tomorrow, with its start time",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@, no forecast. %2$@"
+            "value" : "%1$@, tomorrow at %2$@"
           }
         }
       }
-    },
-    "%@. Choose a day" : {
-      "comment" : "Tooltip: the shown day, then a hint that it opens a calendar"
     },
     "%@–%@" : {
       "comment" : "A time range, e.g. 6:12–6:48 PM",
@@ -324,6 +329,17 @@
     "%lld spots" : {
       "comment" : "Saved count footer"
     },
+    "%lld-day outlook for %@" : {
+      "comment" : "Outlook strip title with the number of days and the chosen intent, e.g. 8-day outlook for Sunset",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld-day outlook for %2$@"
+          }
+        }
+      }
+    },
     "%lld." : {
 
     },
@@ -348,9 +364,6 @@
           }
         }
       }
-    },
-    "10-day outlook for %@" : {
-      "comment" : "Outlook strip title with the chosen intent, e.g. Sunset"
     },
     "A bright moon is up and washes out stars." : {
       "comment" : "Light reason"
@@ -391,8 +404,8 @@
     "Add a stop to this day, nearest spots first" : {
       "comment" : "Tooltip"
     },
-    "Add this spot to a trip" : {
-      "comment" : "Tooltip"
+    "Add a weather key in Settings to see light scores." : {
+      "comment" : "Weather banner: no API key for the chosen provider"
     },
     "Add this spot to a trip day" : {
       "comment" : "Help"
@@ -450,6 +463,9 @@
     },
     "Apple Weather" : {
       "comment" : "Weather provider name"
+    },
+    "Apple Weather isn't enabled for this build. Choose another source in Settings." : {
+      "comment" : "Weather banner: WeatherKit not provisioned"
     },
     "Apply" : {
       "comment" : "Button: apply the suggested order"
@@ -515,6 +531,9 @@
     "Best light (choose any)" : {
       "comment" : "Spot editor section: multiple choice"
     },
+    "Beyond the forecast: the last forecast day's weather carried forward." : {
+      "comment" : "Score footnote: scored by persistence beyond the provider's horizon"
+    },
     "Blue AM" : {
       "comment" : "Short light window name for pins"
     },
@@ -575,9 +594,6 @@
     "Checking the drive to %@" : {
       "comment" : "Scout progress stage, with the destination"
     },
-    "Checking the forecast" : {
-      "comment" : "Scout result: forecast loading"
-    },
     "Checking the forecast…" : {
       "comment" : "Shown while the forecast loads"
     },
@@ -585,9 +601,6 @@
       "comment" : "Settings weather status"
     },
     "Choose the day whose route is highlighted on the map" : {
-      "comment" : "Tooltip"
-    },
-    "Choose the light, sort the list, and filter by category, what a spot is known for, and source" : {
       "comment" : "Tooltip"
     },
     "Choosing the best matches" : {
@@ -645,7 +658,10 @@
       "comment" : "Scout example request"
     },
     "Collapsed" : {
-      "comment" : "VoiceOver state\nVoiceOver: the list row is closed\nVoiceOver: the section is closed"
+      "comment" : "VoiceOver state\nVoiceOver: the section is closed"
+    },
+    "Coming Up" : {
+      "comment" : "Place card: the next sunrise and sunset windows"
     },
     "Compass direction →" : {
       "comment" : "Sky arc x axis"
@@ -662,23 +678,17 @@
     "Couldn't Import Trip" : {
       "comment" : "Alert title"
     },
-    "Couldn't find this place's time zone, so using this Mac's." : {
-      "comment" : "Time zone fallback after a failed lookup"
-    },
     "Couldn't find your location." : {
       "comment" : "Explore banner: no fix yet"
+    },
+    "Couldn't look up this place's time zone, so it's estimated from the map position." : {
+      "comment" : "Time zone fallback after a failed lookup"
     },
     "Couldn't open this trip" : {
       "comment" : "Alert title"
     },
     "Couldn't reach %@" : {
       "comment" : "Settings weather status; the name is a weather provider"
-    },
-    "Couldn't reach %@." : {
-      "comment" : "No forecast reason: a provider failed. Argument is the provider name"
-    },
-    "Couldn't reach Apple Weather. Sun and moon times are still exact." : {
-      "comment" : "No forecast reason: network or service failure"
     },
     "Couldn't remove the key from your Keychain." : {
       "comment" : "Settings: Keychain error"
@@ -717,9 +727,6 @@
     },
     "Data Sources and Attribution" : {
       "comment" : "About: heading for provider credits\nSettings section"
-    },
-    "Date" : {
-      "comment" : "Accessibility label of the date control\nAccessibility label of the date picker"
     },
     "Day %lld" : {
       "comment" : "Route day picker segment"
@@ -795,12 +802,6 @@
     "Duplicate Trip" : {
       "comment" : "Undo action name"
     },
-    "Each Spot's Best" : {
-      "comment" : "Intent menu option\nSettings: show each spot's own best light"
-    },
-    "Each spot's best" : {
-      "comment" : "Intent picker: every spot is shown in its own best light"
-    },
     "Edit" : {
       "comment" : "Button"
     },
@@ -828,11 +829,14 @@
     "Epic" : {
       "comment" : "Light Index band"
     },
+    "Estimated from the map position until the lookup finishes." : {
+      "comment" : "Time zone fallback while looking up"
+    },
     "Evening blue hour" : {
       "comment" : "Light window: civil twilight after sunset"
     },
     "Expanded" : {
-      "comment" : "VoiceOver state\nVoiceOver: the list row is open\nVoiceOver: the section is open"
+      "comment" : "VoiceOver state\nVoiceOver: the section is open"
     },
     "Explain" : {
       "comment" : "Button: write a plain-language explanation of a score"
@@ -855,8 +859,8 @@
     "Fahrenheit (°F)" : {
       "comment" : "Temperature unit"
     },
-    "Fainter days are less certain. A dashed ring means no forecast." : {
-      "comment" : "Outlook strip key explaining fading and dashed rings"
+    "Fainter days are less certain." : {
+      "comment" : "Outlook strip key explaining fading"
     },
     "Fair" : {
       "comment" : "Light Index band"
@@ -893,9 +897,6 @@
     },
     "Forecast is for right now." : {
       "comment" : "Forecast lead note"
-    },
-    "Forecast not loaded yet." : {
-      "comment" : "No forecast reason: not loaded"
     },
     "Forecast source" : {
       "comment" : "Settings section"
@@ -1042,14 +1043,11 @@
     "Iter uses your location to show spots within %lld miles." : {
       "comment" : "Explore banner: why location is asked for; the number is the radius in miles"
     },
-    "Iter's daily limit for %@ is reached, to stay inside the free allowance. Forecasts resume tomorrow or raise the cap in Settings." : {
-      "comment" : "No forecast reason: Iter's own daily call cap was reached. Argument is the provider name"
-    },
-    "Jump to today" : {
-      "comment" : "Tooltip"
+    "Iter's daily limit for %@ is reached." : {
+      "comment" : "Weather banner: the daily call cap; argument is the provider"
     },
     "Key rejected" : {
-      "comment" : "Compact no-forecast reason: the API key was refused\nSettings weather status"
+      "comment" : "Settings weather status"
     },
     "Key type" : {
       "comment" : "Settings field"
@@ -1115,14 +1113,8 @@
     "Light windows" : {
       "comment" : "Spot page section title"
     },
-    "Light, sort and filters" : {
-      "comment" : "Explore list header menu"
-    },
     "Likely %@" : {
       "comment" : "Score range for days further out"
-    },
-    "Limit reached" : {
-      "comment" : "Compact no-forecast reason: Iter's daily call cap"
     },
     "Little chance of rain." : {
       "comment" : "Light reason"
@@ -1135,9 +1127,6 @@
     },
     "Little or no rain forecast." : {
       "comment" : "Light reason when rain is judged from the forecast amount"
-    },
-    "Loading" : {
-      "comment" : "Compact no-forecast reason"
     },
     "Loading forecasts" : {
       "comment" : "Tooltip on the progress indicator"
@@ -1256,9 +1245,6 @@
     "Needs an API key" : {
       "comment" : "Settings weather status"
     },
-    "Needs key" : {
-      "comment" : "Compact no-forecast reason: no API key"
-    },
     "New Spot" : {
 
     },
@@ -1279,12 +1265,6 @@
     },
     "New spot" : {
       "comment" : "Map pin label"
-    },
-    "Next Day" : {
-      "comment" : "Toolbar button"
-    },
-    "Next day (⌘])" : {
-      "comment" : "Tooltip"
     },
     "Next image" : {
       "comment" : "VoiceOver and tooltip"
@@ -1321,9 +1301,6 @@
     "No filters active" : {
       "comment" : "VoiceOver"
     },
-    "No forecast" : {
-      "comment" : "Shown instead of a score when there is no forecast"
-    },
     "No golden hour, blue hour or night window today." : {
       "comment" : "Windows list when the sun produces no windows"
     },
@@ -1336,17 +1313,6 @@
     "No saved spots match this filter." : {
       "comment" : "Saved filter empty explanation"
     },
-    "No scored %@ window in the next %lld days." : {
-      "comment" : "Lead text when nothing can be scored",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "No scored %1$@ window in the next %2$lld days."
-          }
-        }
-      }
-    },
     "No spots here" : {
       "comment" : "Saved filter result empty"
     },
@@ -1355,9 +1321,6 @@
     },
     "No stops yet. Open the trip to add the first." : {
       "comment" : "Trip card with no stops"
-    },
-    "No such light today" : {
-      "comment" : "Row: the chosen window does not occur on this day at this place"
     },
     "No visibility from this source." : {
       "comment" : "Score footnote: no visibility data"
@@ -1395,9 +1358,6 @@
     "OK" : {
       "comment" : "Alert button"
     },
-    "Offline" : {
-      "comment" : "Compact no-forecast reason"
-    },
     "Open" : {
       "comment" : "Button: open a spot\nContext menu\nContext menu: open the spot page\nMenu item"
     },
@@ -1406,6 +1366,9 @@
     },
     "Open Location Settings" : {
       "comment" : "Button: open System Settings > Location Services"
+    },
+    "Open Settings" : {
+      "comment" : "Tooltip"
     },
     "Open Spot Page" : {
       "comment" : "Context menu"
@@ -1425,6 +1388,9 @@
     "Open the spot page" : {
       "comment" : "Tooltip"
     },
+    "Open this day" : {
+      "comment" : "Help"
+    },
     "Open this location in Apple Maps" : {
       "comment" : "Help"
     },
@@ -1437,10 +1403,10 @@
     "OpenWeather" : {
       "comment" : "Weather provider name"
     },
-    "OpenWeather rejected the API key, or the key isn't subscribed to One Call 3.0. Check it in Settings ▸ Weather." : {
-      "comment" : "No forecast reason: OpenWeather refused the key"
-    },
     "Opens the trip" : {
+      "comment" : "VoiceOver hint"
+    },
+    "Opens this day" : {
       "comment" : "VoiceOver hint"
     },
     "Optional" : {
@@ -1468,9 +1434,6 @@
     },
     "Park, town or region" : {
       "comment" : "Locality placeholder"
-    },
-    "Passed" : {
-      "comment" : "Compact no-forecast reason"
     },
     "Paste your key" : {
 
@@ -1501,12 +1464,6 @@
     },
     "Popularity" : {
       "comment" : "Sort option: most popular first"
-    },
-    "Previous Day" : {
-      "comment" : "Toolbar button"
-    },
-    "Previous day (⌘[)" : {
-      "comment" : "Tooltip"
     },
     "Previous image" : {
       "comment" : "VoiceOver and tooltip"
@@ -1541,9 +1498,6 @@
     "Remove" : {
       "comment" : "Button"
     },
-    "Remove %@ from Saved" : {
-      "comment" : "VoiceOver"
-    },
     "Remove Stop" : {
       "comment" : "Undo action name"
     },
@@ -1569,7 +1523,7 @@
       "comment" : "Button"
     },
     "Retry" : {
-      "comment" : "Button\nButton to fetch the forecast again"
+      "comment" : "Button"
     },
     "Return to today at this spot" : {
       "comment" : "Help"
@@ -1593,22 +1547,19 @@
       "comment" : "VoiceOver: image of a spot"
     },
     "Save" : {
-      "comment" : "Button\nButton: save a spot\nContext menu\nExpanded row: save the spot\nPlace card: save the spot"
-    },
-    "Save %@" : {
-      "comment" : "VoiceOver"
+      "comment" : "Button\nButton: save a spot\nContext menu\nPlace card: save the spot"
     },
     "Save Spot" : {
       "comment" : "Undo action name"
     },
-    "Save a spot from Explore or Scout and it shows up here with today's light. Spots you add yourself live here too." : {
+    "Save a spot from Explore or Scout and it shows up here with its next sunrise or sunset. Spots you add yourself live here too." : {
       "comment" : "Saved empty explanation"
     },
     "Save this spot" : {
       "comment" : "Help\nTooltip"
     },
     "Saved" : {
-      "comment" : "Accessibility label\nButton state\nButton state: spot is saved\nExpanded row: the spot is saved\nMenu item\nPlace card: the spot is saved\nSection title\nSidebar item"
+      "comment" : "Accessibility label\nButton state\nButton state: spot is saved\nMenu item\nPlace card: the spot is saved\nSection title\nSidebar item"
     },
     "Saved in Keychain" : {
       "comment" : "Settings: the key is in the Keychain"
@@ -1694,6 +1645,9 @@
     "Set-up time before a window" : {
       "comment" : "Settings field"
     },
+    "Settings…" : {
+      "comment" : "Weather banner: open Settings ▸ Weather"
+    },
     "Share" : {
       "comment" : "Button\nToolbar button"
     },
@@ -1706,9 +1660,6 @@
     "Share…" : {
       "comment" : "Context menu"
     },
-    "Shoot" : {
-      "comment" : "Intent picker label on the spot page"
-    },
     "Shorten it to a sentence: the kind of place, the area and the light." : {
       "comment" : "Scout failure: too long"
     },
@@ -1718,12 +1669,6 @@
     "Show Full Page" : {
       "comment" : "Place card: open the spot's full page"
     },
-    "Show Light For" : {
-      "comment" : "Menu item\nMenu section title: which light to score every spot for"
-    },
-    "Show light for" : {
-      "comment" : "Settings field"
-    },
     "Show spots near you" : {
       "comment" : "Explore banner title when location is not yet allowed"
     },
@@ -1732,9 +1677,6 @@
     },
     "Show this day" : {
       "comment" : "Button that selects the best day"
-    },
-    "Shows or hides the save and trip buttons and the weather" : {
-      "comment" : "VoiceOver hint on an Explore row"
     },
     "Shows why this window scores as it does" : {
       "comment" : "VoiceOver hint"
@@ -1755,6 +1697,12 @@
       "comment" : "Toolbar button"
     },
     "Sort and filter saved spots" : {
+      "comment" : "Tooltip"
+    },
+    "Sort and filters" : {
+      "comment" : "Explore list header menu"
+    },
+    "Sort the list and filter by category, what a spot is known for, and source" : {
       "comment" : "Tooltip"
     },
     "Source" : {
@@ -1862,9 +1810,6 @@
     "Testing" : {
       "comment" : "Windy key type"
     },
-    "Testing key" : {
-      "comment" : "Compact no-forecast reason: testing API key"
-    },
     "Testing key: Windy's data is shuffled, so Iter won't score from it" : {
       "comment" : "Settings weather status"
     },
@@ -1925,9 +1870,6 @@
     "This trip was saved by a newer version of Iter (file format %lld). Update Iter to open it. Nothing was imported." : {
       "comment" : "Import error"
     },
-    "This window has passed." : {
-      "comment" : "No forecast reason: window already over"
-    },
     "Time zone" : {
       "comment" : "Spot editor field"
     },
@@ -1935,16 +1877,10 @@
       "comment" : "Settings section: WeatherKit setup steps"
     },
     "Today" : {
-      "comment" : "Button that returns the page to today\nButton: jump to today\nRelative day\nToolbar button: jump to today"
+      "comment" : "Button that returns the page to today\nRelative day"
     },
     "Tomorrow" : {
-      "comment" : "Relative day\nSaved row: the light shown is tomorrow's because today's window has passed"
-    },
-    "Too far ahead" : {
-      "comment" : "Compact no-forecast reason"
-    },
-    "Too far ahead for a forecast. Planned on sun angle and season until about ten days out." : {
-      "comment" : "No forecast reason: beyond the forecast horizon"
+      "comment" : "Place card: the next window is tomorrow\nRelative day\nTooltip on a row's start time: the next window is tomorrow"
     },
     "Trip Actions" : {
       "comment" : "Toolbar menu"
@@ -1979,7 +1915,7 @@
     "Unsave" : {
       "comment" : "Context menu\nMenu item"
     },
-    "Until a forecast source works, sun and moon times are exact and light scores show “No forecast”." : {
+    "Until a forecast source works, sun and moon times are exact and light scores stay empty." : {
       "comment" : "Settings footer: what works without weather"
     },
     "Updated %@" : {
@@ -1996,9 +1932,6 @@
     },
     "Use Sample Weather" : {
       "comment" : "Debug menu item"
-    },
-    "Using this Mac's time zone until the lookup finishes." : {
-      "comment" : "Time zone fallback while looking up"
     },
     "Version %@ (%@)" : {
       "comment" : "About: version and build",
@@ -2058,23 +1991,20 @@
     "Weather data © OpenWeather" : {
       "comment" : "OpenWeather attribution required by its licence"
     },
-    "Weather isn't enabled for this build of Iter, so only sun and moon times are shown." : {
-      "comment" : "No forecast reason: WeatherKit not provisioned"
+    "Weather is offline. Scores appear when it's back." : {
+      "comment" : "Weather banner: offline, nothing cached"
     },
-    "Weather off" : {
-      "comment" : "Compact no-forecast reason"
+    "Weather is offline. Scores are from the last update at %@." : {
+      "comment" : "Weather banner: offline; argument is the time of the last successful forecast"
+    },
+    "Weather isn't answering." : {
+      "comment" : "Weather banner: generic failure"
     },
     "What are you looking for?" : {
       "comment" : "Scout request field placeholder"
     },
     "When to go" : {
       "comment" : "Spot page section title"
-    },
-    "Which light the scores show on Explore, Saved and in lists. A spot's page always shows every window." : {
-      "comment" : "Settings footer"
-    },
-    "Which light to plan for. Scores on this page follow this choice." : {
-      "comment" : "Help"
     },
     "Which light to shoot here: each window with its time and score for this day" : {
       "comment" : "Tooltip"
@@ -2159,6 +2089,9 @@
     "km/h" : {
       "comment" : "Wind speed unit"
     },
+    "loading light" : {
+      "comment" : "VoiceOver: the forecast for this row is still loading"
+    },
     "mid" : {
       "comment" : "Cloud layer name inside a sentence"
     },
@@ -2171,8 +2104,8 @@
     "sets %@" : {
       "comment" : "Moonset"
     },
-    "starts %@" : {
-      "comment" : "VoiceOver: when the window starts"
+    "tomorrow" : {
+      "comment" : "VoiceOver: the next window is tomorrow"
     },
     "up all day" : {
       "comment" : "Moon stays above the horizon"

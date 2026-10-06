@@ -6,8 +6,6 @@ import IterFeatures
 extension LightText {
     // MARK: Intent, sort, filters
 
-    static let eachSpotsBest = String(localized: "Each spot's best", comment: "Intent picker: every spot is shown in its own best light")
-
     static func name(_ sort: ExploreSort) -> String {
         switch sort {
         case .bestLight: String(localized: "Best Light", comment: "Sort option: highest Light Index first")
@@ -73,9 +71,6 @@ extension LightText {
         window.map { TimeText.time($0.span.start, in: zone) }
     }
 
-    /// Shown when the sun never makes the chosen window that day (polar summer or winter).
-    static let noWindowToday = String(localized: "No such light today", comment: "Row: the chosen window does not occur on this day at this place")
-
     // MARK: Search
 
     static func searchApple(_ query: String) -> String {
@@ -91,19 +86,35 @@ extension LightText {
 
     // MARK: Accessibility
 
+    /// True when the row's next event is on a later day than today at the spot.
+    static func isTomorrow(_ row: ExploreRow) -> Bool {
+        guard let day = row.day else { return false }
+        return day != LocalDay.today(in: row.spot.timeZone)
+    }
+
+    /// "Sunset, 72, Great, high confidence, 18:42" (plus "tomorrow" for a later day). Loading says "loading light";
+    /// a window with no data leaves the score out. nil when there is no window.
+    static func rowLight(_ row: ExploreRow) -> String? {
+        guard let window = row.window else { return nil }
+        var parts = [name(window.kind)]
+        if case .scored(let score) = window.assessment {
+            parts.append(String(score.value))
+            parts.append(name(score.band))
+            parts.append(name(score.confidence).lowercased())
+        } else if row.isLoading {
+            parts.append(String(localized: "loading light", comment: "VoiceOver: the forecast for this row is still loading"))
+        }
+        if let time = startTime(window, in: row.spot.timeZone) { parts.append(time) }
+        if isTomorrow(row) { parts.append(String(localized: "tomorrow", comment: "VoiceOver: the next window is tomorrow")) }
+        return parts.joined(separator: ", ")
+    }
+
     static func rowDescription(_ row: ExploreRow, showsDistance: Bool = false) -> String {
-        var parts = [row.spot.name, row.spot.locality, name(row.spot.origin)].filter { !$0.isEmpty }
+        var parts = [row.spot.name, row.spot.locality].filter { !$0.isEmpty }
         if showsDistance, let meters = row.distanceMeters {
             parts.append(String(localized: "\(distance(meters: meters)) away", comment: "VoiceOver: distance from you"))
         }
-        if let window = row.window {
-            parts.append(accessibilityDescription(window))
-            if let time = startTime(window, in: row.spot.timeZone) {
-                parts.append(String(localized: "starts \(time)", comment: "VoiceOver: when the window starts"))
-            }
-        } else {
-            parts.append(noWindowToday)
-        }
+        if let light = rowLight(row) { parts.append(light) }
         return parts.joined(separator: ", ")
     }
 }

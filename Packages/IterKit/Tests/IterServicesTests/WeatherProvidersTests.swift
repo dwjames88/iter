@@ -93,13 +93,23 @@ final class Mutex2: @unchecked Sendable {
 
     @Test func networkFailureDetailHasNeitherKeyNorURL() async {
         let url = URL(string: "https://api.openweathermap.org/data/3.0/onecall?appid=\(secretKey)")!
-        let rig = Rig(transport: FakeTransport { _ in throw URLError(.notConnectedToInternet, userInfo: [NSURLErrorFailingURLErrorKey: url, NSURLErrorFailingURLStringErrorKey: url.absoluteString]) })
+        let rig = Rig(transport: FakeTransport { _ in throw URLError(.cannotParseResponse, userInfo: [NSURLErrorFailingURLErrorKey: url, NSURLErrorFailingURLStringErrorKey: url.absoluteString]) })
         do {
             _ = try await rig.openWeather().forecast(for: moabSpot)
             Issue.record("expected a throw")
         } catch let WeatherError.provider(_, detail) {
             #expect(!detail.contains(secretKey) && !detail.contains("appid") && !detail.contains("openweathermap"))
         } catch { Issue.record("wrong error \(error)") }
+    }
+
+    @Test func connectivityFailuresAreOffline() async {
+        let codes: [URLError.Code] = [.notConnectedToInternet, .networkConnectionLost, .timedOut, .cannotFindHost, .cannotConnectToHost,
+                                      .dnsLookupFailed, .internationalRoamingOff, .dataNotAllowed]
+        for code in codes {
+            let rig = Rig(transport: FakeTransport { _ in throw URLError(code) })
+            await #expect(throws: WeatherError.offline(.openWeather)) { try await rig.openWeather().forecast(for: moabSpot) }
+        }
+        #expect(WeatherError.offline(.windy).unavailableReason == .offline(.windy))
     }
 
     @Test func unreadableBodyIsAProviderError() async {

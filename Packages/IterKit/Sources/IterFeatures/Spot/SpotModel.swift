@@ -193,9 +193,19 @@ public final class SpotModel {
     /// The selected day.
     public var dayLight: DayLight { dayLight(on: day) }
 
-    /// Ten days from today at the spot.
+    /// Days in the outlook: what the forecast covers (8 with OpenWeather), at most `outlookDays`; never empty days.
+    public var outlookDayCount: Int {
+        app.engine.outlookDayCount(for: spot, from: today, forecast: forecast, max: Self.outlookDays)
+    }
+
+    /// The coming days at the spot, as many as the forecast covers.
     public var outlook: [DayLight] {
-        (0..<Self.outlookDays).map { dayLight(on: today.adding(days: $0)) }
+        (0..<outlookDayCount).map { dayLight(on: today.adding(days: $0)) }
+    }
+
+    /// Today's windows still ahead and all of tomorrow's, for the card and page.
+    public var upcomingWindows: [(day: LocalDay, window: LightWindow)] {
+        app.upcomingWindows(for: spot)
     }
 
     /// The outlook, plus the selected day when it falls outside it (a trip day further out).
@@ -207,12 +217,12 @@ public final class SpotModel {
     /// The window that answers the page's intent on a day.
     public func headline(on day: LocalDay) -> LightWindow? { dayLight(on: day).headline(for: intent) }
 
-    /// The best scored window for the intent over the next ten days; nil when nothing is scored.
+    /// The best scored window for the intent over the days the forecast covers; nil when nothing is scored.
     public var best: BestWindow? {
         validateCache()
         if let cached = bestCache[intent] { return cached }
         let state = forecastState
-        let result = app.engine.bestUpcoming(for: spot, intent: intent, from: today, days: Self.outlookDays,
+        let result = app.engine.bestUpcoming(for: spot, intent: intent, from: today, days: outlookDayCount,
                                              forecast: state.forecast, unavailable: state.unavailableReason, now: app.now())
             .map { BestWindow(day: $0.day, window: $0.window) }
         bestCache[intent] = .some(result)

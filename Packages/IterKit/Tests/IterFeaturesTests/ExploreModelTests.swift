@@ -48,7 +48,7 @@ private final class LateLocation: UserLocationProviding {
 }
 
 @MainActor
-private func makeExplore(search: FakeSearch = FakeSearch(), weatherDown: Bool = false,
+private func makeExplore(search: FakeSearch = FakeSearch(), weatherDown: Bool = false, provider: (any WeatherProviding)? = nil,
                          at fix: Coordinate? = nil, lateFix: Coordinate? = nil, radius: Int? = nil,
                          savedCamera: (region: GeoRegion, byUser: Bool)? = nil) async throws -> ExploreModel {
     let store = IterStore(container: try IterSchema.makeContainer(inMemory: true))
@@ -69,10 +69,9 @@ private func makeExplore(search: FakeSearch = FakeSearch(), weatherDown: Bool = 
         ?? lateFix.map { UserLocationModel(provider: LateLocation($0), defaults: defaults) }
         ?? UserLocationModel(defaults: defaults)
     if let radius { location.radiusMiles = radius }
-    let app = AppModel(store: store, weather: weatherDown ? DownWeather() : sample, search: search, geocoder: NoGeocoder(),
+    let app = AppModel(store: store, weather: provider ?? (weatherDown ? DownWeather() : sample), search: search, geocoder: NoGeocoder(),
                        drives: NoDrives(), scout: nil, location: location, sampleWeather: sample, defaults: defaults, now: { fixedNow })
     let explore = ExploreModel(app: app, searchDebounce: .zero, defaults: defaults)
-    explore.day = LocalDay(year: 2026, month: 10, day: 6)
     if fix != nil {
         explore.start()
         for _ in 0..<200 where location.coordinate == nil { await Task.yield() }
@@ -171,14 +170,75 @@ private func place(_ id: String, _ name: String, lat: Double = 38.7, lon: Double
         #expect(distances == distances.sorted())
     }
 
-    @Test func noForecastRowsCarryTheReasonAndTheNoticeIsOneLine() async throws {
+    @Test func missingForecastIsOneStatusNotARowState() async throws {
         let explore = try await makeExplore(weatherDown: true)
+        #expect(explore.weatherStatus == .ok)
         for spot in CuratedSpots.all { _ = await explore.app.forecasts.load(spot.coordinate) }
         #expect(explore.rows.allSatisfy { $0.score == nil })
-        // A sunrise window earlier today is honestly "passed"; everything else names the missing service.
-        #expect(explore.rows.allSatisfy { $0.unavailableReason == .weatherServiceNotEnabled || $0.unavailableReason == .inThePast })
-        #expect(explore.forecastNotice == .weatherServiceNotEnabled)
+        // The engine still never invents a number, and the screen carries one banner.
+        #expect(explore.weatherStatus == .failed(.weatherServiceNotEnabled, lastUpdate: nil))
         #expect(!explore.isLoadingForecasts)
+    }
+
+    @Test func missingKeyAndOfflineMapToStatuses() async throws {
+        let keyless = try await makeExplore(provider: FakeFailingWeather(error: .missingKey(.openWeather)))
+        _ = await keyless.app.forecasts.load(CuratedSpots.all[0].coordinate)
+        #expect(keyless.weatherStatus == .needsKey(.openWeather))
+        let offline = try await makeExplore(provider: FakeFailingWeather(error: .offline(.openWeather)))
+        _ = await offline.app.forecasts.load(CuratedSpots.all[0].coordinate)
+        #expect(offline.weatherStatus == .offline(.openWeather, lastUpdate: nil))
+    }
+
+    @Test func rowWindowIsTheNextEvent() async throws {
+        let explore = try await makeExplore()
+        let spot = try #require(CuratedSpots.spot(id: "mesa-arch"))
+        _ = await explore.app.forecasts.load(spot.coordinate)
+        let row = try #require(explore.row(id: "mesa-arch"))
+        // 10:00 in Denver: this evening's golden hour.
+        #expect(row.window?.kind == .goldenEvening)
+        #expect(row.day == LocalDay(year: 2026, month: 10, day: 6))
+        #expect(row.score != nil)
+        #expect(!row.isLoading)
+    }
+
+    @Test func rowIsLoadingUntilTheProviderAnswers() async throws {
+        let explore = try await makeExplore()
+        let spot = try #require(CuratedSpots.spot(id: "mesa-arch"))
+        explore.app.forecasts.request(spot.coordinate)
+        #expect(explore.row(id: "mesa-arch")?.isLoading == true)
+        #expect(explore.isLoadingForecasts)
+        _ = await explore.app.forecasts.load(spot.coordinate)
+        #expect(explore.row(id: "mesa-arch")?.isLoading == false)
+    }
+
+    @Test func requestForecastsSkipsACollapsedMorePlaces() async throws {
+        let explore = try await makeExplore(at: moab, radius: 50)
+        let more = try #require(explore.sections.first { $0.kind == .morePlaces })
+        let near = try #require(explore.sections.first { $0.kind == .nearYou })
+        #expect(!explore.isMorePlacesOpen)
+        explore.requestForecasts()
+        #expect(explore.app.forecasts.states[near.rows[0].spot.coordinate.cacheKey] != nil)
+        #expect(explore.app.forecasts.states[more.rows[0].spot.coordinate.cacheKey] == nil)
+        explore.requestForecast(for: more.rows[0].id)
+        #expect(explore.app.forecasts.states[more.rows[0].spot.coordinate.cacheKey] != nil)
+        explore.setMorePlacesOpen(true)
+        explore.requestForecasts()
+        #expect(more.rows.allSatisfy { explore.app.forecasts.states[$0.spot.coordinate.cacheKey] != nil })
+    }
+
+    @Test func creatingASpotRequestsItsForecast() async throws {
+        let explore = try await makeExplore()
+        let record = explore.app.store.createUserSpot(name: "Fresh", coordinate: Coordinate(latitude: 12.34, longitude: 56.78),
+                                                      timeZoneIdentifier: "GMT+0400")
+        #expect(explore.app.forecasts.states[record.spot.coordinate.cacheKey] == nil)
+        explore.didCreate(record.spot)
+        #expect(explore.app.forecasts.states[record.spot.coordinate.cacheKey] != nil)
+    }
+
+    @Test func appleResultWithoutAZoneGetsAnEstimateNotTheMacs() async throws {
+        let explore = try await makeExplore()
+        let spot = explore.zoneIdentifier(near: Coordinate(latitude: 64.1, longitude: -19.0))
+        #expect(spot == "GMT-0100")
     }
 
     @Test func searchTransitionsIdleSearchingFinished() async throws {
@@ -367,106 +427,26 @@ private func place(_ id: String, _ name: String, lat: Double = 38.7, lon: Double
         #expect(explore.draftCoordinate == nil)
     }
 
-    @Test func dayNavigation() async throws {
-        let explore = try await makeExplore()
-        explore.goToToday()
-        #expect(explore.isToday)
-        explore.shiftDay(by: 1)
-        #expect(!explore.isToday)
-        explore.shiftDay(by: -1)
-        #expect(explore.isToday)
-    }
+    // MARK: Row selection
 
-    // MARK: Row expansion
-
-    @Test func clickExpandsAndSelects() async throws {
+    @Test func clickingARowSelectsItWithoutScrolling() async throws {
         let explore = try await makeExplore()
-        explore.rowClicked("mesa-arch")
+        explore.select("mesa-arch", from: .list)
         #expect(explore.selectedID == "mesa-arch")
-        #expect(explore.expandedID == "mesa-arch")
+        #expect(explore.selectedRow?.id == "mesa-arch")
         #expect(explore.scrollRequest == nil)
     }
 
-    @Test func clickingAgainCollapsesButKeepsSelection() async throws {
+    @Test func selectionClearsWhenTheRowIsFilteredOut() async throws {
         let explore = try await makeExplore()
-        explore.rowClicked("mesa-arch")
-        explore.rowClicked("mesa-arch")
-        #expect(explore.expandedID == nil)
-        #expect(explore.selectedID == "mesa-arch")
-    }
-
-    @Test func clickingAnotherRowMovesTheExpansion() async throws {
-        let explore = try await makeExplore()
-        let other = try #require(CuratedSpots.all.first { $0.id != "mesa-arch" }).id
-        explore.rowClicked("mesa-arch")
-        explore.rowClicked(other)
-        #expect(explore.expandedID == other)
-        #expect(explore.selectedID == other)
-    }
-
-    /// The List's selection binding and the tap gesture can arrive in either order.
-    @Test func bindingAndTapInEitherOrderEndExpanded() async throws {
-        let other = try #require(CuratedSpots.all.first { $0.id != "mesa-arch" }).id
-        // Binding first, then tap.
-        let a = try await makeExplore()
-        a.rowClicked("mesa-arch")
-        a.select(other, from: .list)
-        a.rowClicked(other)
-        #expect(a.expandedID == other && a.selectedID == other)
-        // Tap first, then binding.
-        let b = try await makeExplore()
-        b.rowClicked("mesa-arch")
-        b.rowClicked(other)
-        b.select(other, from: .list)
-        #expect(b.expandedID == other && b.selectedID == other)
-        // Click on the selected, expanded row: only the tap arrives.
-        b.rowClicked(other)
-        #expect(b.expandedID == nil && b.selectedID == other)
-    }
-
-    @Test func keyboardSelectionOfAnotherRowCollapses() async throws {
-        let explore = try await makeExplore()
-        let other = try #require(CuratedSpots.all.first { $0.id != "mesa-arch" }).id
-        explore.rowClicked("mesa-arch")
-        explore.select(other, from: .list)
-        #expect(explore.expandedID == nil)
-        #expect(explore.selectedID == other)
-    }
-
-    @Test func toggleOnTheSelectedRow() async throws {
-        let explore = try await makeExplore()
-        explore.toggleExpansion()
-        #expect(explore.expandedID == nil)
         explore.select("mesa-arch", from: .list)
-        explore.toggleExpansion()
-        #expect(explore.expandedID == "mesa-arch")
-        explore.toggleExpansion()
-        #expect(explore.expandedID == nil)
-    }
-
-    @Test func mapSelectionDoesNotExpandAndCollapsesAnother() async throws {
-        let explore = try await makeExplore()
-        let other = try #require(CuratedSpots.all.first { $0.id != "mesa-arch" }).id
-        explore.select(other, from: .map)
-        #expect(explore.expandedID == nil)
-        explore.rowClicked("mesa-arch")
-        explore.select(other, from: .map)
-        #expect(explore.expandedID == nil)
-        #expect(explore.selectedID == other)
-    }
-
-    @Test func expansionClearsWhenTheRowIsFilteredOut() async throws {
-        let explore = try await makeExplore()
-        explore.rowClicked("mesa-arch")
         explore.filters.sources = [.yours]
-        #expect(explore.expandedID == nil)
         #expect(explore.selectedID == nil)
     }
 
     @Test func listSelectionMakesNoScrollRequest() async throws {
         let explore = try await makeExplore()
         explore.select("mesa-arch", from: .list)
-        explore.toggleExpansion()
         #expect(explore.scrollRequest == nil)
     }
 }
@@ -692,4 +672,12 @@ private func miles(_ a: Coordinate, _ b: Coordinate) -> Double { a.distance(to: 
         let explore = try await makeExplore(at: Self.oregonCoast, savedCamera: (Self.bayArea, true))
         #expect(explore.initialCameraRegion == Self.bayArea)
     }
+}
+
+/// A provider that always fails with the given error.
+struct FakeFailingWeather: WeatherProviding {
+    var error: WeatherError
+    var source: ForecastSource { .openWeather }
+    func forecast(for coordinate: Coordinate) async throws -> Forecast { throw error }
+    func attribution() async -> WeatherAttributionInfo? { nil }
 }

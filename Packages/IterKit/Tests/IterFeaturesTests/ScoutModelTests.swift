@@ -104,20 +104,21 @@ import IterServices
         if case .failed(.unavailable) = model.state {} else { Issue.record("expected failure") }
     }
 
-    @Test func noForecastMeansNoScore() async {
+    @Test func noForecastGivesAnUnscoredNextEventAndAStatus() async {
         let app = scoutAppModel(weather: ScoutFailingWeather(error: .notEnabled), scout: nil)
         let model = ScoutModel(app: app)
         let s = scoutSuggestion("mesa-arch")
         _ = await app.forecasts.load(s.spot.coordinate)
-        #expect(model.light(for: s) == .noForecast(.weatherServiceNotEnabled))
+        guard case .window(_, let window) = model.light(for: s) else { Issue.record("expected a window"); return }
+        #expect(window.score == nil)
+        #expect(app.weatherStatus == .failed(.weatherServiceNotEnabled, lastUpdate: nil))
     }
 
-    @Test func serviceFailureKeepsItsReason() async {
-        let app = scoutAppModel(weather: ScoutFailingWeather(error: .failed("offline")), scout: nil)
-        let model = ScoutModel(app: app)
+    @Test func offlineIsAStatusNotARowState() async {
+        let app = scoutAppModel(weather: ScoutFailingWeather(error: .offline(.appleWeather)), scout: nil)
         let s = scoutSuggestion("tunnel-view")
         _ = await app.forecasts.load(s.spot.coordinate)
-        #expect(model.light(for: s) == .noForecast(.serviceFailed(detail: "offline")))
+        #expect(app.weatherStatus == .offline(.appleWeather, lastUpdate: nil))
     }
 
     @Test func forecastNotYetLoadedIsLoadingNotAScore() {
@@ -126,14 +127,15 @@ import IterServices
         #expect(model.light(for: scoutSuggestion("mesa-arch")) == .loading)
     }
 
-    @Test func sampleForecastScoresTheSuggestedWindow() async {
+    @Test func sampleForecastScoresTheNextEvent() async {
         let app = scoutAppModel(weather: ScoutFailingWeather(error: .notEnabled), scout: nil)
         app.setSampleData(true)
         let model = ScoutModel(app: app)
         let s = scoutSuggestion("mesa-arch", window: .goldenMorning)
         _ = await app.forecasts.load(s.spot.coordinate)
-        guard case .scored(_, let window) = model.light(for: s) else { Issue.record("expected a score"); return }
-        #expect(window.kind == .goldenMorning || window.kind == .blueMorning)
+        guard case .window(_, let window) = model.light(for: s) else { Issue.record("expected a window"); return }
+        // 10:00 in Denver: the next event is this evening's sunset, whatever light the suggestion named.
+        #expect(window.kind == .goldenEvening)
         #expect(window.score != nil)
     }
 

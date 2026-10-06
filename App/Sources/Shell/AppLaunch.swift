@@ -44,9 +44,19 @@ enum AppLaunch {
         }
     }
     static var spot: Spot? { UserDefaults.standard.string(forKey: "IterSpot").flatMap { CuratedSpots.spot(id: $0) } }
-    /// `-IterExpandRow <spot id>` (for example `mesa-arch`): Explore selects that row, expands it and scrolls it into view
-    /// once when it is first built. For screenshots.
-    static var expandRowID: String? { UserDefaults.standard.string(forKey: "IterExpandRow") }
+    /// `-IterSelectRow <spot id>` (for example `mesa-arch`): Explore selects that row, scrolls it into view once when it
+    /// is first built, and so shows its place card. For screenshots.
+    static var selectRowID: String? { UserDefaults.standard.string(forKey: "IterSelectRow") }
+    /// `-IterSearch <text>`: Explore runs that Apple Maps search at launch (screenshots of search results).
+    static var searchText: String? { UserDefaults.standard.string(forKey: "IterSearch") }
+    /// `-IterAddSpot "lat,lon,Name"`: Explore adds your own spot there at launch, through the same path as the spot
+    /// editor's Save, and selects it. Honoured only with `-IterInMemoryStore YES`, so it never touches real data.
+    static var addSpot: (coordinate: Coordinate, name: String)? {
+        guard inMemoryStore, let raw = UserDefaults.standard.string(forKey: "IterAddSpot") else { return nil }
+        let parts = raw.split(separator: ",", maxSplits: 2).map { $0.trimmingCharacters(in: .whitespaces) }
+        guard parts.count == 3, let lat = Double(parts[0]), let lon = Double(parts[1]) else { return nil }
+        return (Coordinate(latitude: lat, longitude: lon), parts[2])
+    }
     /// `-IterCardScrolled YES`: the map's place card opens already scrolled to its lower sections. For screenshots.
     static var cardScrolled: Bool { UserDefaults.standard.bool(forKey: "IterCardScrolled") }
     static var appearanceName: String? { UserDefaults.standard.string(forKey: "IterAppearance") }

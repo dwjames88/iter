@@ -92,8 +92,8 @@ private struct FailingGeocoder: Geocoding {
         try await Snapshot.render(Fixtures.host(Fixtures.inDetailColumn(Self.screen(ScoutView(model: results))), model: model), screen: "scout", state: "results", settle: .seconds(1))
 
         let bare = Fixtures.model(weather: .notEnabled)
-        let noForecast = scoutModel(bare, state: .results(Self.suggestions()), request: Self.request)
-        try await Snapshot.render(Fixtures.host(Fixtures.inDetailColumn(Self.screen(ScoutView(model: noForecast))), model: bare), screen: "scout", state: "results-noforecast", settle: .seconds(1))
+        let offline = scoutModel(bare, state: .results(Self.suggestions()), request: Self.request)
+        try await Snapshot.render(Fixtures.host(Fixtures.inDetailColumn(Self.screen(ScoutView(model: offline))), model: bare), screen: "scout", state: "results-weather-offline", settle: .seconds(1))
 
         let unavailable: [(String, ScoutAvailability)] = [("unavailable-not-enabled", .appleIntelligenceNotEnabled),
                                                           ("unavailable-device", .deviceNotEligible),

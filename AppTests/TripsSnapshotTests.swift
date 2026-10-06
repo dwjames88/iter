@@ -73,10 +73,10 @@ enum TripsFixtures {
         try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: id) }, model: model), screen: "trip", state: "builder", settle: settle)
     }
 
-    @Test(.enabled(if: Snapshot.enabled)) func builderNoForecast() async throws {
+    @Test(.enabled(if: Snapshot.enabled)) func builderWeatherOffline() async throws {
         let model = TripsFixtures.model(weather: .notEnabled)
         let id = model.store.trips()[0].id
-        try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: id) }, model: model), screen: "trip", state: "builder-noforecast", settle: settle)
+        try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: id) }, model: model), screen: "trip", state: "builder-weather-offline", settle: settle)
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func builderConflict() async throws {

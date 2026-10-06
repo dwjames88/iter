@@ -15,7 +15,7 @@ struct ExploreListPanel: View {
     /// True for a few seconds after the launch scroll, while regrouping (the location fix) may still move rows.
     @State private var launchScrollSettling = false
 
-    /// Launch-hook timing: wait for the expansion row to lay out, and how long regrouping may re-issue the scroll.
+    /// Launch-hook timing: wait for the rows to lay out, and how long regrouping may re-issue the scroll.
     private enum LaunchScroll {
         static let layoutDelay = Duration.milliseconds(200)
         static let settleWindow = Duration.seconds(4)
@@ -33,6 +33,7 @@ struct ExploreListPanel: View {
         VStack(spacing: 0) {
             header
             Divider()
+            WeatherStatusBanner(status: explore.weatherStatus)
             ExploreLocationBanner(explore: explore)
             content
             Divider()
@@ -63,16 +64,6 @@ struct ExploreListPanel: View {
             .foregroundStyle(IterColor.textSecondary)
 
             if explore.hasSampleScores { SampleDataLabel(style: .inline) }
-            if let reason = explore.forecastNotice {
-                Label {
-                    Text(LightText.noForecastReason(reason))
-                        .fixedSize(horizontal: false, vertical: true)
-                } icon: {
-                    Image(systemName: "thermometer.medium.slash")
-                }
-                .font(IterFont.caption)
-                .foregroundStyle(IterColor.textSecondary)
-            }
             searchStatus
         }
         .padding(.horizontal, IterSpace.md)
@@ -82,20 +73,9 @@ struct ExploreListPanel: View {
 
     // MARK: Options menu
 
-    /// Light, sort and filters in one menu, labelled with the current light choice.
+    /// Near You radius, sort and filters in one menu, labelled with the filter icon and the active count.
     private var optionsMenu: some View {
-        @Bindable var model = model
-        return Menu {
-            Picker(selection: $model.preferredIntent) {
-                Text(LightText.eachSpotsBest).tag(LightIntent?.none)
-                Divider()
-                ForEach(LightIntent.allCases) { intent in
-                    Label(LightText.name(intent), systemImage: LightText.symbol(intent)).tag(LightIntent?.some(intent))
-                }
-            } label: {
-                Text("Show Light For", comment: "Menu section title: which light to score every spot for")
-            }
-            .pickerStyle(.inline)
+        Menu {
             Picker(selection: radiusBinding) {
                 ForEach(UserLocationModel.radiusChoices, id: \.self) { miles in
                     Text(LightText.radiusChoice(miles)).tag(miles)
@@ -131,19 +111,18 @@ struct ExploreListPanel: View {
         } label: {
             let count = explore.filters.activeCount
             HStack(spacing: IterSpace.xs) {
-                Text(model.preferredIntent.map { LightText.name($0) } ?? LightText.eachSpotsBest)
                 Image(systemName: count > 0 ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
                 if count > 0 { Text(count, format: .number).monospacedDigit() }
             }
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel(Text("Light, sort and filters", comment: "Explore list header menu"))
+            .accessibilityLabel(Text("Sort and filters", comment: "Explore list header menu"))
             .accessibilityValue(count > 0 ? Text("\(count) filters active", comment: "VoiceOver: number of active filters") : Text("No filters active", comment: "VoiceOver"))
         }
         .menuStyle(.button)
         .buttonStyle(.borderless)
         .menuIndicator(.hidden)
         .fixedSize()
-        .help(String(localized: "Choose the light, sort the list, and filter by category, what a spot is known for, and source", comment: "Tooltip"))
+        .help(String(localized: "Sort the list and filter by category, what a spot is known for, and source", comment: "Tooltip"))
     }
 
     private var radiusBinding: Binding<Int> {
@@ -256,27 +235,16 @@ struct ExploreListPanel: View {
         }
     }
 
-    /// A summary row per spot; an expanded one is followed by its own non-selectable row (see `ExploreExpansionRow`).
+    /// One row per spot. A click selects it (the list's selection) and shows its place card on the map.
     @ViewBuilder private func rows(in section: ExploreSection) -> some View {
         ForEach(section.rows) { row in
-            let expanded = explore.expandedID == row.id
-            ExploreRowView(row: row, day: explore.day, isHovered: explore.hoveredID == row.id,
-                           isExpanded: expanded, showsDistance: explore.hasLocation) {
-                animated { explore.rowClicked(row.id) }
-            }
-            .id(row.id)
-            .tag(row.id)
-            .listRowSeparator(expanded ? .hidden : .automatic)
-            .onHover { inside in
-                if inside { explore.hoveredID = row.id } else if explore.hoveredID == row.id { explore.hoveredID = nil }
-            }
-            if expanded {
-                ExploreExpansionRow(row: row, day: explore.day)
-                    .id("\(row.id)#expanded")
-                    .selectionDisabled()
-                    .listRowSeparator(.visible, edges: .bottom)
-                    .transition(.opacity)
-            }
+            ExploreRowView(row: row, isHovered: explore.hoveredID == row.id, showsDistance: explore.hasLocation)
+                .id(row.id)
+                .tag(row.id)
+                .onAppear { explore.requestForecast(for: row.id) }
+                .onHover { inside in
+                    if inside { explore.hoveredID = row.id } else if explore.hoveredID == row.id { explore.hoveredID = nil }
+                }
         }
     }
 
@@ -303,27 +271,18 @@ struct ExploreListPanel: View {
             .paperListBackground()
             .contextMenu(forSelectionType: String.self) { ids in
                 if let id = ids.first, let row = explore.row(id: id) {
-                    ExploreSpotMenu(spot: row.spot, day: explore.day)
+                    ExploreSpotMenu(spot: row.spot, day: row.day ?? model.today(in: row.spot.timeZone))
                 }
             } primaryAction: { ids in
-                // Double-click opens the spot page. Return reaches the same action, so a key event toggles the row instead.
+                // Double-click opens the spot page.
                 guard let id = ids.first, let row = explore.row(id: id) else { return }
-                if NSApp.currentEvent?.type == .keyDown {
-                    animated { explore.toggleExpansion() }
-                } else {
-                    ExploreActions.open(row.spot, day: explore.day, navigation: navigation)
-                }
-            }
-            .onKeyPress(.space) {
-                guard explore.selectedID != nil else { return .ignored }
-                animated { explore.toggleExpansion() }
-                return .handled
+                ExploreActions.open(row.spot, day: row.day ?? model.today(in: row.spot.timeZone), navigation: navigation)
             }
             .onAppear {
-                // `-IterExpandRow` (and the snapshot tests) ask for one program scroll when the list is first built.
-                if AppLaunch.expandRowID != nil || AppLaunch.isRunningTests, !didInitialScroll, let target = explore.scrollRequest?.target {
+                // `-IterSelectRow` (and the snapshot tests) ask for one program scroll when the list is first built.
+                if AppLaunch.selectRowID != nil || AppLaunch.isRunningTests, !didInitialScroll, let target = explore.scrollRequest?.target {
                     didInitialScroll = true
-                    if AppLaunch.expandRowID != nil {
+                    if AppLaunch.selectRowID != nil {
                         launchScrollSettling = true
                         Task {
                             await scrollAfterLayout(proxy, to: target)
@@ -347,11 +306,11 @@ struct ExploreListPanel: View {
         }
     }
 
-    /// Waits for the rows (and the expansion row after the summary) to lay out, then puts the summary row at the top.
+    /// Waits for the rows to lay out, then puts the row at the top.
     private func scrollAfterLayout(_ proxy: ScrollViewProxy, to target: String) async {
         try? await Task.sleep(for: LaunchScroll.layoutDelay)
         // Anchored at the top, the row would sit under the pinned section header. Put the row before it at the top
-        // instead, so the header covers that one and the summary row below it is fully visible.
+        // instead, so the header covers that one and the row below it is fully visible.
         let ids = explore.rows.map(\.id)
         if let index = ids.firstIndex(of: target), index > 0 {
             proxy.scrollTo(ids[index - 1], anchor: .top)

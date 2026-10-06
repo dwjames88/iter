@@ -129,6 +129,28 @@ public final class AppModel {
         return engine.outlook(for: spot, from: day, days: days, forecast: state.forecast, unavailable: state.unavailableReason, now: now())
     }
 
+    /// The next sunrise or sunset event at the spot (its own clock), scored from the current forecast state.
+    public func nextLight(for spot: Spot) -> (day: LocalDay, window: LightWindow)? {
+        forecasts.request(spot.coordinate)
+        let state = forecasts.state(for: spot.coordinate)
+        return engine.nextEvent(for: spot, forecast: state.forecast, unavailable: state.unavailableReason, now: now())
+    }
+
+    /// Today's windows still ahead plus all of tomorrow's.
+    public func upcomingWindows(for spot: Spot) -> [(day: LocalDay, window: LightWindow)] {
+        forecasts.request(spot.coordinate)
+        let state = forecasts.state(for: spot.coordinate)
+        return engine.upcomingWindows(for: spot, forecast: state.forecast, unavailable: state.unavailableReason, now: now())
+    }
+
+    /// Why weather is missing for the whole app, or `.ok`.
+    public var weatherStatus: WeatherStatus { forecasts.status }
+
+    /// A spot was saved or created: fetch its forecast now so it shows a score straight away.
+    public func spotSaved(_ spot: Spot) {
+        forecasts.request(spot.coordinate)
+    }
+
     /// The intent to show for a spot: the user's choice, else the spot's own best light.
     public func intent(for spot: Spot) -> LightIntent { preferredIntent ?? spot.defaultIntent }
 }

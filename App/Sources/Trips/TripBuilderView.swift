@@ -61,6 +61,7 @@ private struct TripBuilderContent: View {
             VStack(spacing: 0) {
                 TripHeader(plan: plan, builder: builder) { changesDates = true }
                 Divider()
+                WeatherStatusBanner(status: model.weatherStatus)
                 TripPlanList(builder: builder, selection: $selection)
             }
         } trailing: {

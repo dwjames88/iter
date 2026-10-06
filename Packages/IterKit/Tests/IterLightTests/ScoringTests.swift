@@ -139,14 +139,77 @@ private func score(_ kind: LightWindowKind, _ w: Wx, eph: FixedEphemeris = Fixed
         for w in c.windows { #expect(w.assessment == .noForecast(.serviceFailed(detail: "x"))) }
     }
 
-    @Test func beyondHorizon() {
+    @Test func beyondHorizonIsScoredByPersistenceAtLowestConfidence() {
         let engine = LightEngine(ephemeris: FixedEphemeris())
         let f = uniform(Wx(), fetchedAt: now0)   // covers day -1 to day +1
-        let far = testDay.adding(days: 5)
+        let far = testDay.adding(days: 10)
         let dl = engine.dayLight(for: makeSpot(), on: far, forecast: f, unavailable: nil, now: now0)
-        for w in dl.windows { #expect(w.assessment == .noForecast(.beyondHorizon)) }
+        for w in dl.windows {
+            let score = w.assessment.lightScore
+            #expect(score?.confidence == .low)
+            #expect(score?.notes.contains(.persistence) == true)
+            #expect(score.map { $0.range == WindowScorer.range(value: $0.value, confidence: .low) } == true)
+            #expect((score?.leadHours ?? 0) > 200)
+        }
         let partial = engine.dayLight(for: makeSpot(), on: testDay, forecast: f, unavailable: nil, now: now0)
         #expect(partial.windows.allSatisfy { $0.score != nil })
+        #expect(partial.windows.allSatisfy { $0.assessment.lightScore?.notes.contains(.persistence) == false })
+    }
+
+    @Test func persistenceKeepsOtherNotesAndNoHoursMeansBeyondHorizon() {
+        let engine = LightEngine(ephemeris: FixedEphemeris())
+        let summary = uniform(Wx(resolution: .dailySummary), fetchedAt: now0)
+        let far = engine.dayLight(for: makeSpot(), on: testDay.adding(days: 9), forecast: summary, unavailable: nil, now: now0)
+        let notes = far.windows.compactMap { $0.assessment.lightScore?.notes }
+        #expect(!notes.isEmpty)
+        #expect(notes.allSatisfy { $0.contains(.dailySummaryOnly) && $0.contains(.persistence) })
+        // Notes come out in ScoreNote.allCases order.
+        #expect(notes.allSatisfy { n in n == ScoreNote.allCases.filter(n.contains) })
+        var empty = uniform(Wx(), fetchedAt: now0)
+        empty.hours = []
+        let none = engine.dayLight(for: makeSpot(), on: testDay, forecast: empty, unavailable: nil, now: now0)
+        for w in none.windows { #expect(w.assessment == .noForecast(.beyondHorizon)) }
+    }
+
+    @Test func windowInProgressBeforeTheFirstHourIsScored() {
+        let engine = LightEngine(ephemeris: FixedEphemeris())
+        let spot = makeSpot()
+        // The forecast starts at 06:30 on test day; the blue-morning window (05:40 to 06:12) midpoint is before it, and it
+        // has not ended at 05:50.
+        var f = uniform(Wx(), fetchedAt: FixedEphemeris.at(testDay, 5.5))
+        f.hours = f.hours.filter { $0.date >= FixedEphemeris.at(testDay, 6.5) }
+        let now = FixedEphemeris.at(testDay, 5.8)
+        let dl = engine.dayLight(for: spot, on: testDay, forecast: f, unavailable: nil, now: now)
+        let blue = dl.window(.blueMorning)!
+        let score = blue.assessment.lightScore
+        #expect(score != nil)
+        #expect(score?.notes.contains(.persistence) == false)
+        // Ended window stays "in the past".
+        let later = engine.dayLight(for: spot, on: testDay, forecast: f, unavailable: nil, now: FixedEphemeris.at(testDay, 6.4))
+        #expect(later.window(.blueMorning)!.assessment == .noForecast(.inThePast))
+    }
+
+    @Test func coveredDaysAndOutlookDayCount() {
+        let engine = LightEngine(ephemeris: FixedEphemeris())
+        // Eight whole UTC days from the start of testDay (like OpenWeather's daily summaries).
+        let start = testDay.start(in: utc)
+        let hours = (0..<(8 * 24)).map { i in
+            HourlyConditions(date: start.addingTimeInterval(Double(i) * 3600), cloudCover: 0.3, precipitationChance: 0, visibilityMeters: 20_000,
+                             windSpeedKph: 5, temperatureC: 12, humidity: 0.5, symbolName: "sun.max", condition: "clear", resolution: .dailySummary)
+        }
+        let f = Forecast(coordinate: Coordinate(latitude: 40, longitude: -110), hours: hours, days: [], fetchedAt: start, source: .openWeather)
+        #expect(f.coveredDays(from: testDay, in: utc) == 8)
+        #expect(f.coveredDays(from: testDay.adding(days: 6), in: utc) == 2)
+        #expect(f.coveredDays(from: testDay.adding(days: 20), in: utc) == 0)
+        var none = f
+        none.hours = []
+        #expect(none.coveredDays(from: testDay, in: utc) == 0)
+        let spot = makeSpot()
+        #expect(engine.outlookDayCount(for: spot, from: testDay, forecast: f, max: 10) == 8)
+        #expect(engine.outlookDayCount(for: spot, from: testDay, forecast: f, max: 5) == 5)
+        #expect(engine.outlookDayCount(for: spot, from: testDay.adding(days: 30), forecast: f, max: 10) == 1)
+        #expect(engine.outlookDayCount(for: spot, from: testDay, forecast: nil, max: 10) == 10)
+        #expect(engine.outlookDayCount(for: spot, from: testDay, forecast: none, max: 10) == 10)
     }
 
     @Test func windowsInThePast() {

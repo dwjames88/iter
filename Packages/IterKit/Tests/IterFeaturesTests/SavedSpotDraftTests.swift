@@ -6,6 +6,21 @@ import IterCore
 @Suite struct SavedSpotDraftTests {
     private func draft() -> SpotDraft { SpotDraft(coordinate: Coordinate(latitude: 38.5, longitude: -109.5)) }
 
+    @Test func theDefaultZoneIsAnEstimateFromTheCoordinateNotTheMacs() {
+        // Iceland: no curated spot within 150 km, so a fixed offset from longitude.
+        let d = SpotDraft(coordinate: Coordinate(latitude: 64.1, longitude: -19.0))
+        #expect(d.timeZoneIdentifier == "GMT-0100")
+        #expect(d.timeZoneIsFallback)
+        #expect(TimeZone(identifier: d.timeZoneIdentifier) != nil)
+        // Near a curated spot it takes that spot's zone.
+        let moab = SpotDraft(coordinate: Coordinate(latitude: 38.5, longitude: -109.5))
+        #expect(moab.timeZoneIdentifier == "America/Denver")
+        // An explicit zone still wins.
+        let explicit = SpotDraft(coordinate: Coordinate(latitude: 64.1, longitude: -19.0), timeZone: TimeZone(identifier: "Atlantic/Reykjavik")!,
+                                 timeZoneIsFallback: false)
+        #expect(explicit.timeZoneIdentifier == "Atlantic/Reykjavik" && !explicit.timeZoneIsFallback)
+    }
+
     @Test func nameIsRequired() {
         var d = draft()
         #expect(d.problems == [.nameRequired])

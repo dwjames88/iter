@@ -24,11 +24,12 @@ public enum ScoutFailure: Hashable, Sendable {
     }
 }
 
-/// The light for a scouted place. Never a number without a forecast.
+/// The light for a scouted place: its next sunrise or sunset. Never a number without a forecast.
 public enum ScoutLight: Equatable, Sendable {
-    /// The best upcoming scored window for the suggested light.
-    case scored(day: LocalDay, window: LightWindow)
-    case noForecast(ForecastUnavailableReason)
+    /// The next event; the window is unscored when there is no data (the screen shows one banner for that).
+    case window(day: LocalDay, window: LightWindow)
+    /// The spot has no sunrise or sunset event ahead.
+    case none
     /// The forecast is still being fetched.
     case loading
 }
@@ -48,9 +49,6 @@ public final class ScoutModel {
     public private(set) var state: ScoutState = .idle
     /// The text that produced the current results or failure (the field may have been edited since).
     public private(set) var submittedRequest = ""
-
-    /// How far ahead results are scored.
-    public static let outlookDays = 10
 
     @ObservationIgnored private let app: AppModel
     @ObservationIgnored private let scout: (any Scouting)?
@@ -162,21 +160,13 @@ public final class ScoutModel {
 
     // MARK: Scoring
 
-    /// The Light Index for the suggested window on its best upcoming day. The scout only suggests the kind of light;
-    /// the number comes from the engine and the forecast, or there is none.
+    /// The next sunrise or sunset at the place, scored by the engine from the forecast, or unscored without one.
     public func light(for suggestion: ScoutSuggestion) -> ScoutLight {
         _ = app.forecasts.revision
         let spot = suggestion.spot
         app.forecasts.request(spot.coordinate)
-        let forecastState = app.forecasts.state(for: spot.coordinate)
-        if case .loading = forecastState { return .loading }
-        let intent = suggestion.suggestedWindow?.intent ?? spot.defaultIntent
-        let today = app.today(in: spot.timeZone)
-        if let best = app.engine.bestUpcoming(for: spot, intent: intent, from: today, days: Self.outlookDays,
-                                              forecast: forecastState.forecast, unavailable: forecastState.unavailableReason,
-                                              now: app.now()) {
-            return .scored(day: best.day, window: best.window)
-        }
-        return .noForecast(forecastState.unavailableReason ?? .beyondHorizon)
+        if app.forecasts.isLoading(spot.coordinate) { return .loading }
+        guard let next = app.nextLight(for: spot) else { return .none }
+        return .window(day: next.day, window: next.window)
     }
 }

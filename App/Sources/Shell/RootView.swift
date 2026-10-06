@@ -45,7 +45,6 @@ struct RootView: View {
             if new == .all { autoCollapsed = false }
         }
         .focusedSceneValue(\.navigation, navigation)
-        .appliesStoredPreferences()
         .onAppear {
             model.store.undoManager = undoManager
             restoreSelection()
