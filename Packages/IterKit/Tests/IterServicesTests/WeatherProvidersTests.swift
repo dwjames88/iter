@@ -196,6 +196,16 @@ final class Mutex2: @unchecked Sendable {
         #expect(rig.transport.callCount == 2)
     }
 
+    @Test("service maps every OpenWeather success body", arguments: openWeatherFixtureNames)
+    func serviceMapsEachFixture(_ name: String) async throws {
+        let body = WeatherFixture.data(name)
+        let rig = Rig(transport: FakeTransport { _ in (200, body) })
+        let f = try await rig.openWeather().forecast(for: moabSpot)
+        #expect(f.source == .openWeather)
+        #expect(f.hours.filter { $0.resolution == .hourly }.count == 48)
+        #expect(f.days.count == 8)
+    }
+
     @Test func failuresAreNotCached() async throws {
         let rig = Rig(transport: FakeTransport { _ in (500, Data()) })
         let s = rig.openWeather()

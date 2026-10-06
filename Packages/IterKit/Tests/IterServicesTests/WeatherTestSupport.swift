@@ -3,7 +3,7 @@ import Synchronization
 import IterCore
 @testable import IterServices
 
-/// Loads a fixture from `Fixtures/`. All of them are DOCUMENTED-SCHEMA fixtures, not recorded live responses (see Fixtures/README.md).
+/// Loads a fixture from `Fixtures/`. Most are DOCUMENTED-SCHEMA fixtures; the `-live-` OpenWeather ones are recorded real responses (see Fixtures/README.md).
 enum WeatherFixture {
     static func data(_ name: String) -> Data {
         let url = Bundle.module.resourceURL!.appendingPathComponent("Fixtures").appendingPathComponent(name)

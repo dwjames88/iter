@@ -1,10 +1,23 @@
 import Testing
 import Foundation
 import IterCore
+import IterAstro
+import IterData
+import IterLight
 @testable import IterServices
 
 private let fetched = Date(timeIntervalSince1970: 1_595_246_400)
 private let c = Coordinate(latitude: 40.12, longitude: -96.66)
+
+/// The documented example and the two real recorded responses (see Fixtures/README.md).
+let openWeatherFixtureNames = ["openweather-onecall3-documented.json",
+                               "openweather-onecall3-live-mesa-arch.json",
+                               "openweather-onecall3-live-haystack-rock.json"]
+
+/// Hourly entries without a `visibility` key, per fixture (counted from the files when they were recorded).
+private let expectedMissingVisibility = ["openweather-onecall3-documented.json": 0,
+                                         "openweather-onecall3-live-mesa-arch.json": 0,
+                                         "openweather-onecall3-live-haystack-rock.json": 10]
 
 @Suite("OpenWeather mapping") struct OpenWeatherMappingTests {
     func map(_ name: String = "openweather-onecall3-documented.json") throws -> Forecast {
@@ -54,6 +67,31 @@ private let c = Coordinate(latitude: 40.12, longitude: -96.66)
         #expect(d.providerMoonPhase == 0.6)
         // The local day (America/Chicago, offset -18000) starts 05:00 UTC.
         #expect(d.date == Date(timeIntervalSince1970: 1_595_221_200))
+    }
+
+    @Test("shape holds for documented and real responses", arguments: openWeatherFixtureNames)
+    func realisticShape(_ name: String) throws {
+        let raw = WeatherFixture.json(name)
+        let rawHourly = try #require(raw["hourly"] as? [[String: Any]])
+        let rawDaily = try #require(raw["daily"] as? [[String: Any]])
+        let f = try map(name)
+        let hourly = f.hours.filter { $0.resolution == .hourly }
+        #expect(f.source == .openWeather)
+        #expect(hourly.count == 48 && rawHourly.count == 48)
+        #expect(f.days.count == 8 && rawDaily.count == 8)
+        let firstDt = try #require(rawHourly[0]["dt"] as? Double)
+        #expect(hourly.first?.date == Date(timeIntervalSince1970: firstDt))
+        #expect(f.hours.allSatisfy { (0...1).contains($0.cloudCover) })
+        // Hours without `visibility` stay in the forecast with nil visibility; they are not dropped.
+        let missing = rawHourly.filter { $0["visibility"] == nil }.count
+        #expect(missing == expectedMissingVisibility[name])
+        #expect(hourly.filter { $0.visibilityMeters == nil }.count == missing)
+        // Timezone: the first daily entry's local day starts at local midnight in the response's own zone.
+        let zoneName = try #require(raw["timezone"] as? String)
+        let zone = try #require(TimeZone(identifier: zoneName))
+        let dailyDt = try #require(rawDaily[0]["dt"] as? Double)
+        let firstDaily = Date(timeIntervalSince1970: dailyDt)
+        #expect(f.days.first?.date == LocalDay(firstDaily, in: zone).start(in: zone))
     }
 
     @Test func missingFieldsAreNilNotInvented() throws {
@@ -244,5 +282,29 @@ private let c = Coordinate(latitude: 40.12, longitude: -96.66)
         #expect(WindyMapping.toFraction(50, "%") == 0.5)
         #expect(WindyMapping.toMeters(2, "km") == 2000)
         #expect(WindyMapping.toKph(1, "parsecs") == nil)
+    }
+}
+
+// MARK: Light Index over the real recordings
+
+@Suite("OpenWeather live fixtures score") struct OpenWeatherLiveFixtureScoringTests {
+    @Test("a day covered by the hourly data gets a scored window", arguments: [
+        ("openweather-onecall3-live-mesa-arch.json", "mesa-arch"),
+        ("openweather-onecall3-live-haystack-rock.json", "haystack-rock"),
+    ])
+    func scoresADay(_ name: String, _ spotID: String) throws {
+        let spot = try #require(CuratedSpots.spot(id: spotID))
+        let raw = WeatherFixture.json(name)
+        let firstDt = try #require((raw["hourly"] as? [[String: Any]])?.first?["dt"] as? Double)
+        let first = Date(timeIntervalSince1970: firstDt)
+        // Fixed reference: the moment of the first hourly entry, not the wall clock.
+        let forecast = try OpenWeatherMapping.map(WeatherFixture.data(name), coordinate: spot.coordinate, fetchedAt: first)
+        let today = LocalDay(first, in: spot.timeZone)
+        let engine = LightEngine(ephemeris: Astronomy())
+        let windows = [today, today.adding(days: 1)]
+            .flatMap { engine.dayLight(for: spot, on: $0, forecast: forecast, unavailable: nil, now: first).windows }
+        let scored = windows.compactMap(\.assessment.lightScore)
+        #expect(!scored.isEmpty)
+        #expect(scored.allSatisfy { !$0.contributors.isEmpty && Confidence.allCases.contains($0.confidence) && $0.source == .openWeather })
     }
 }
