@@ -12,7 +12,7 @@ struct SpotFactsSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.md) {
-            Text(LightText.factsTitle).font(IterFont.titleSection)
+            SpotSectionTitle(LightText.factsTitle)
             SpotCard {
                 VStack(alignment: .leading, spacing: IterSpace.md) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: IterSize.listMin / 2), alignment: .leading)], alignment: .leading, spacing: IterSpace.sm) {
@@ -62,7 +62,7 @@ struct LookAroundSection: View {
         Group {
             if renderMode == .live, let scene {
                 VStack(alignment: .leading, spacing: IterSpace.md) {
-                    Text(LightText.lookAroundTitle).font(IterFont.titleSection)
+                    SpotSectionTitle(LightText.lookAroundTitle)
                     LookAroundPreview(initialScene: scene)
                         .frame(height: IterSize.arcHeight + IterSize.timelineHeight)
                         .clipShape(RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))

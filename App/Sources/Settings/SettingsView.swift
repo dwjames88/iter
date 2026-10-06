@@ -114,6 +114,7 @@ private struct IntelligenceSettingsPane: View {
 // MARK: - About
 
 private struct AboutSettingsPane: View {
+    @Environment(AppModel.self) private var model
     var body: some View {
         VStack(spacing: IterSpace.md) {
             Image("Logo")
@@ -132,6 +133,13 @@ private struct AboutSettingsPane: View {
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: IterSize.listIdeal)
+            VStack(alignment: .leading, spacing: IterSpace.xs) {
+                Text("Data Sources and Attribution", comment: "About: heading for provider credits")
+                    .font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
+                WeatherDataSources()
+            }
+            .frame(maxWidth: IterSize.listIdeal, alignment: .leading)
+            .task { await model.loadAttribution() }
         }
         .padding(IterSpace.xl)
         .frame(maxWidth: .infinity)

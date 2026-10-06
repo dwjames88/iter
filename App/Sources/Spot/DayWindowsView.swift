@@ -7,22 +7,27 @@ import IterFeatures
 /// with its value, a sentence and a signed bar, the forecast age and the confidence in words.
 struct DayWindowsSection: View {
     let page: SpotModel
+    @Environment(\.spotDensity) private var density
 
     var body: some View {
         let light = page.dayLight
         VStack(alignment: .leading, spacing: IterSpace.md) {
-            HStack(alignment: .firstTextBaseline) {
-                Text(LightText.windowsTitle).font(IterFont.titleSection)
-                Text(LightText.relativeDay(page.day, today: page.today) == TimeText.day(page.day)
-                     ? TimeText.day(page.day)
-                     : "\(LightText.relativeDay(page.day, today: page.today)) · \(TimeText.day(page.day))")
-                    .font(IterFont.subheadline)
-                    .foregroundStyle(IterColor.textSecondary)
-                Spacer()
-                if page.day != page.today {
-                    Button(LightText.backToToday) { page.goToToday() }
-                        .controlSize(.small)
-                        .help(String(localized: "Return to today at this spot", comment: "Help"))
+            if density == .compact {
+                Text(LightText.windowsTitle).font(IterFont.headline)
+            } else {
+                HStack(alignment: .firstTextBaseline) {
+                    Text(LightText.windowsTitle).font(IterFont.titleSection)
+                    Text(LightText.relativeDay(page.day, today: page.today) == TimeText.day(page.day)
+                         ? TimeText.day(page.day)
+                         : "\(LightText.relativeDay(page.day, today: page.today)) · \(TimeText.day(page.day))")
+                        .font(IterFont.subheadline)
+                        .foregroundStyle(IterColor.textSecondary)
+                    Spacer()
+                    if page.day != page.today {
+                        Button(LightText.backToToday) { page.goToToday() }
+                            .controlSize(.small)
+                            .help(String(localized: "Return to today at this spot", comment: "Help"))
+                    }
                 }
             }
             if light.windows.isEmpty {
@@ -50,6 +55,7 @@ private struct WindowRow: View {
     let page: SpotModel
     let window: LightWindow
 
+    @Environment(\.spotDensity) private var density
     private var isExpanded: Bool { page.expanded.contains(window.kind) }
     private var isSelected: Bool { page.selectedWindow == window.kind }
 
@@ -82,7 +88,7 @@ private struct WindowRow: View {
                 Reasons(page: page, window: window)
                     .padding(.horizontal, IterSpace.md)
                     .padding(.bottom, IterSpace.md)
-                    .padding(.leading, IterSize.iconSmall + IterSpace.sm)
+                    .padding(.leading, density == .compact ? 0 : IterSize.iconSmall + IterSpace.sm)
             }
         }
         .background(isSelected ? IterColor.selection : .clear)
@@ -93,6 +99,7 @@ private struct WindowRow: View {
 private struct Reasons: View {
     let page: SpotModel
     let window: LightWindow
+    @Environment(\.spotDensity) private var density
 
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.sm) {
@@ -115,34 +122,72 @@ private struct Reasons: View {
     @ViewBuilder private func scored(_ score: LightScore) -> some View {
         Text(LightText.reasonsTitle).font(IterFont.captionStrong).foregroundStyle(IterColor.textSecondary)
         let scale = max(10, score.contributors.map { abs($0.points) }.max() ?? 10)
-        Grid(alignment: .leadingFirstTextBaseline, horizontalSpacing: IterSpace.md, verticalSpacing: IterSpace.sm) {
-            ForEach(score.contributors) { c in
-                GridRow {
-                    Text(LightText.title(c.factor)).font(IterFont.bodyEmphasis)
-                    Text(LightText.value(c, notes: score.notes)).font(IterFont.time).foregroundStyle(IterColor.textSecondary)
-                        .gridColumnAlignment(.trailing)
-                    SignedBar(points: c.points, scale: scale, effect: c.effect)
-                    Text(LightText.sentence(c, kind: window.kind, notes: score.notes))
-                        .font(IterFont.callout)
-                        .foregroundStyle(IterColor.textPrimary)
-                        .fixedSize(horizontal: false, vertical: true)
+        if density == .compact {
+            VStack(alignment: .leading, spacing: IterSpace.sm) {
+                ForEach(score.contributors) { c in
+                    VStack(alignment: .leading, spacing: IterSpace.xxs) {
+                        HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
+                            Text(LightText.title(c.factor)).font(IterFont.bodyEmphasis)
+                            Text(LightText.value(c, notes: score.notes)).font(IterFont.time).foregroundStyle(IterColor.textSecondary)
+                            Spacer(minLength: 0)
+                            SignedBar(points: c.points, scale: scale, effect: c.effect)
+                        }
+                        Text(LightText.sentence(c, kind: window.kind, notes: score.notes))
+                            .font(IterFont.callout)
+                            .foregroundStyle(IterColor.textPrimary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("\(LightText.title(c.factor)), \(LightText.value(c, notes: score.notes)), \(effectWord(c.effect)) \(LightText.points(c.points)) points. \(LightText.sentence(c, kind: window.kind, notes: score.notes))")
                 }
-                .accessibilityElement(children: .combine)
-                .accessibilityLabel("\(LightText.title(c.factor)), \(LightText.value(c, notes: score.notes)), \(effectWord(c.effect)) \(LightText.points(c.points)) points. \(LightText.sentence(c, kind: window.kind, notes: score.notes))")
+            }
+        } else {
+            Grid(alignment: .leadingFirstTextBaseline, horizontalSpacing: IterSpace.md, verticalSpacing: IterSpace.sm) {
+                ForEach(score.contributors) { c in
+                    GridRow {
+                        Text(LightText.title(c.factor)).font(IterFont.bodyEmphasis)
+                        Text(LightText.value(c, notes: score.notes)).font(IterFont.time).foregroundStyle(IterColor.textSecondary)
+                            .gridColumnAlignment(.trailing)
+                        SignedBar(points: c.points, scale: scale, effect: c.effect)
+                        Text(LightText.sentence(c, kind: window.kind, notes: score.notes))
+                            .font(IterFont.callout)
+                            .foregroundStyle(IterColor.textPrimary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("\(LightText.title(c.factor)), \(LightText.value(c, notes: score.notes)), \(effectWord(c.effect)) \(LightText.points(c.points)) points. \(LightText.sentence(c, kind: window.kind, notes: score.notes))")
+                }
             }
         }
         VStack(alignment: .leading, spacing: IterSpace.xs) {
-            HStack(spacing: IterSpace.sm) {
-                ConfidenceMark(confidence: score.confidence)
-                Text(LightText.name(score.confidence)).font(IterFont.subheadline)
-                if let range = LightText.range(score) {
-                    Text(verbatim: "·").foregroundStyle(IterColor.textSecondary)
-                    Text("Likely \(range)", comment: "Score range for days further out").font(IterFont.subheadline)
+            if density == .compact {
+                VStack(alignment: .leading, spacing: IterSpace.xxs) {
+                    HStack(spacing: IterSpace.sm) {
+                        ConfidenceMark(confidence: score.confidence)
+                        Text(LightText.name(score.confidence)).font(IterFont.subheadline)
+                        if let range = LightText.range(score) {
+                            Text(verbatim: "·").foregroundStyle(IterColor.textSecondary)
+                            Text("Likely \(range)", comment: "Score range for days further out").font(IterFont.subheadline)
+                        }
+                    }
+                    Text(LightText.sourceUpdated(score.source, model: score.model, fetchedAt: score.forecastFetchedAt,
+                                                 fallbackFrom: page.forecast?.source == score.source ? page.forecast?.fallbackFrom ?? [] : []))
+                        .font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                Text(verbatim: "·").foregroundStyle(IterColor.textSecondary)
-                Text(LightText.sourceUpdated(score.source, model: score.model, fetchedAt: score.forecastFetchedAt,
-                                             fallbackFrom: page.forecast?.source == score.source ? page.forecast?.fallbackFrom ?? [] : []))
-                    .font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
+            } else {
+                HStack(spacing: IterSpace.sm) {
+                    ConfidenceMark(confidence: score.confidence)
+                    Text(LightText.name(score.confidence)).font(IterFont.subheadline)
+                    if let range = LightText.range(score) {
+                        Text(verbatim: "·").foregroundStyle(IterColor.textSecondary)
+                        Text("Likely \(range)", comment: "Score range for days further out").font(IterFont.subheadline)
+                    }
+                    Text(verbatim: "·").foregroundStyle(IterColor.textSecondary)
+                    Text(LightText.sourceUpdated(score.source, model: score.model, fetchedAt: score.forecastFetchedAt,
+                                                 fallbackFrom: page.forecast?.source == score.source ? page.forecast?.fallbackFrom ?? [] : []))
+                        .font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
+                }
             }
             Text("\(LightText.confidenceExplained(score.confidence)) \(LightText.leadNote(hours: score.leadHours))")
                 .font(IterFont.footnote)
@@ -155,7 +200,7 @@ private struct Reasons: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
-        ExplainBlock(page: page, window: window)
+        if density == .page { ExplainBlock(page: page, window: window) }
     }
 
     private func effectWord(_ e: LightContributor.Effect) -> String {

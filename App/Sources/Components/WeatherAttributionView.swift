@@ -2,6 +2,7 @@ import SwiftUI
 import IterCore
 import IterDesign
 import IterFeatures
+import IterServices
 
 /// Which provider (and model) a shown forecast came from. Built from a `Forecast`, or from the forecasts behind a
 /// list of places, so a fallback is never hidden behind the provider the user chose.
@@ -37,13 +38,13 @@ struct ForecastSourceInfo: Hashable, Identifiable {
         return seen
     }
 
-    /// The provider the user has chosen, used for the attribution when no forecast is on screen yet.
+    /// The provider the user has chosen, used when no forecast is on screen yet.
     @MainActor static func configured(app: AppModel) -> ForecastSource {
         app.sampleDataEnabled ? .sample : app.forecasts.source
     }
 }
 
-/// "Windy · GFS · updated 19:40", or without the time in lists. Words, not a logo: the legal attribution sits beside it.
+/// "Windy · GFS · updated 19:40", or without the time in lists. Words, not a logo: it says where the forecast came from, nothing more. Legal attribution lives in Settings.
 struct ForecastSourceLine: View {
     let info: ForecastSourceInfo
 
@@ -68,7 +69,7 @@ struct ForecastSourceLine: View {
     }
 }
 
-/// What each provider's licence requires wherever its data appears, plus Iter's own "modified data" notice.
+/// What each provider's licence requires, shown in Settings ▸ Weather and Settings ▸ About, plus Iter's own "modified data" notice.
 /// Apple Weather: the mark and the legal link. OpenWeather: "Weather data © OpenWeather" linking to its licence page.
 /// Windy: "Contains data from the Windy database" and a link to windy.com. Sample data says so instead.
 struct WeatherAttributionView: View {
@@ -136,25 +137,32 @@ struct WeatherAttributionView: View {
     }
 }
 
-/// The source line(s) and attribution together, for places that show many forecasts (lists, footers):
-/// one line per distinct source, then the attribution. With no forecast loaded, only the configured provider's attribution.
-struct ForecastSourceFooter: View {
+/// One quiet source line per distinct provider behind the forecasts in a list, so a fallback is never hidden.
+/// No attribution: that lives in Settings ▸ Weather and Settings ▸ About (`WeatherAttributionView`).
+struct ForecastSourceLines: View {
     let infos: [ForecastSourceInfo]
-    let configured: ForecastSource
 
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.xxs) {
             ForEach(infos) { info in
                 if info.source != .sample { ForecastSourceLine(info: info) }
             }
-            WeatherAttributionView(sources: infos.isEmpty ? [configured] : infos.map(\.source))
         }
     }
 }
 
-extension ForecastSourceFooter {
+extension ForecastSourceLines {
     /// For the forecasts behind `coordinates`.
     @MainActor init(app: AppModel, coordinates: [Coordinate]) {
-        self.init(infos: ForecastSourceInfo.distinct(for: coordinates, app: app), configured: ForecastSourceInfo.configured(app: app))
+        self.init(infos: ForecastSourceInfo.distinct(for: coordinates, app: app))
+    }
+}
+
+/// The attribution block for Settings ▸ Weather and Settings ▸ About: every provider's required wording, mark and link.
+struct WeatherDataSources: View {
+    @Environment(AppModel.self) private var model
+
+    var body: some View {
+        WeatherAttributionView(sources: WeatherSetup.providers + (model.sampleDataEnabled ? [.sample] : []))
     }
 }

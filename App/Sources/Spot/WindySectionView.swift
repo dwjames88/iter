@@ -10,7 +10,7 @@ struct WindySection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.md) {
-            Text(LightText.windyTitle).font(IterFont.titleSection)
+            SpotSectionTitle(LightText.windyTitle)
             SpotCard {
                 HStack(alignment: .center, spacing: IterSpace.md) {
                     Text(LightText.windyExplanation)

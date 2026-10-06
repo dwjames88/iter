@@ -13,11 +13,11 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 ## Contents
 
 1. [Light Index components](#light-index-components): [LightBadge](#lightbadge), [ScoreChip](#scorechip), [NoForecastRing](#noforecastring), [ConfidenceMark](#confidencemark)
-2. [Honesty and provenance](#honesty-and-provenance-components): [SampleDataLabel](#sampledatalabel), [WeatherAttributionView](#weatherattributionview) (with ForecastSourceLine and [ForecastSourceFooter](#forecastsourcefooter)), [WindyLink](#windylink), [ProvenanceTag](#provenancetag), [Warning lines](#warning-lines), [ForecastReasons and score notes](#forecastreasons-and-score-notes)
+2. [Honesty and provenance](#honesty-and-provenance-components): [SampleDataLabel](#sampledatalabel), [WeatherAttributionView](#weatherattributionview) (with ForecastSourceLine, [ForecastSourceLines](#forecastsourcelines) and WeatherDataSources), [WindyLink](#windylink), [ProvenanceTag](#provenancetag), [Warning lines](#warning-lines), [ForecastReasons and score notes](#forecastreasons-and-score-notes)
 3. [Shared](#shared-components): [AddToTripMenu](#addtotripmenu), [MapStandIn](#mapstandin), [SpotEditorSheet](#spoteditorsheet), [SpotCard](#spotcard)
 4. [Shell](#shell-components): [TripContextMenu](#tripcontextmenu)
 5. [Trips](#trips-components): [TripCard](#tripcard), [TemplateRow](#templaterow), [TripHeader](#tripheader), [TripPlanList](#tripplanlist), [DayHeader](#dayheader), [StopRow](#stoprow), [StopNumberBadge](#stopnumberbadge), [ConnectorRow](#connectorrow), [SuggestionBanner](#suggestionbanner), [TripRouteMap](#triproutemap), [AddStopPopover](#addstoppopover)
-6. [Explore](#explore-components): [ExploreListPanel](#explorelistpanel), [ExploreRow](#explorerow), [ExploreMapPane](#exploremappane), [ExplorePinView](#explorepinview), [ExplorePlaceCard](#exploreplacecard), [AddSpotBanner](#addspotbanner)
+6. [Explore](#explore-components): [ExploreListPanel](#explorelistpanel), [ExploreLocationBanner](#explorelocationbanner), [ExploreRow](#explorerow), [ExploreExpandedRow](#exploreexpandedrow), [ExploreMapPane](#exploremappane), [ExplorePinView](#explorepinview), [ExplorePlaceCard](#exploreplacecard), [SpotImageStrip](#spotimagestrip), [AddSpotBanner](#addspotbanner)
 7. [Spot page](#spot-page-components): [SpotHeader](#spotheader), [WhenToGoSection](#whentogosection), [SunTimesLine](#suntimesline), [OutlookStrip](#outlookstrip), [DayWindowsSection](#daywindowssection), [WindowRow](#windowrow), [ReasonsGrid](#reasonsgrid), [SignedBar](#signedbar), [ExplainBlock](#explainblock), [LightTimeline](#lighttimeline), [SkyArc](#skyarc), [HourlyStrip](#hourlystrip), [WindySection](#windysection), [SpotFactsRow](#spotfactsrow), [LookAroundSection](#lookaroundsection)
 8. [Saved and Scout](#saved-and-scout-components): [SavedRow](#savedrow), [ScoutResultRow](#scoutresultrow), [ScoutProgress](#scoutprogress)
 9. [Settings components](#settings-components): [ProviderStatusRow](#providerstatusrow)
@@ -108,12 +108,12 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 | **banner** | A rounded box: `flask` icon (violet), title "Sample data" (`type/captionStrong`), body "Scores use made-up weather. Turn off in the Debug menu." (`type/caption`, `text/secondary`, wraps). Full width, padding `space/sm`, corner `radius/control` (8), fill `background/control`, 1 pt (`stroke/thin`) `status/warning` border. | as shown |
 
 - **States:** shown only in Sample data mode. The banner lives at the bottom of the sidebar; the inline label is used in headers, footers and reasons. See the "once per screen" rule below.
-- **Used on:** sidebar (banner), Explore header, Saved footer (via attribution), Scout results header, Spot page hourly strip and reasons, Settings > Weather, as the source's credit in [WeatherAttributionView](#weatherattributionview) (sample data has no provider credit).
+- **Used on:** sidebar (banner), Explore header, Saved footer, Scout results header, Spot page hourly strip and reasons, Settings > Weather (sample data has no provider credit).
 
 ### WeatherAttributionView
 
-- **Type, file:** `WeatherAttributionView`, `Components/WeatherAttributionView.swift`. Same file: `ForecastSourceInfo` (source, model, fetch time, fallback list) and [ForecastSourceLine](#forecastsourceline), [ForecastSourceFooter](#forecastsourcefooter).
-- **One job:** the credit each forecast provider's licence requires wherever its data appears, and Iter's own "modified data" notice. It takes one or more sources and draws one credit per distinct source, gap `space/xxs`, stacked.
+- **Type, file:** `WeatherAttributionView`, `Components/WeatherAttributionView.swift`. Same file: `ForecastSourceInfo` (source, model, fetch time, fallback list) [ForecastSourceLine](#forecastsourceline), [ForecastSourceLines](#forecastsourcelines) and `WeatherDataSources`.
+- **One job:** the credit each forecast provider's licence requires, shown only in Settings (2026-10-06, owner's instruction: no attribution on content screens), and Iter's own "modified data" notice. It takes one or more sources and draws one credit per distinct source, gap `space/xxs`, stacked.
 - **Anatomy, per provider** (all `type/caption`):
 
 | Source | Credit |
@@ -126,22 +126,22 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
   After the credits, when any source is not Sample data: "Light Index modified from forecast data" (`type/caption`, `text/tertiary`).
 - **States:** sample only: the label alone, no modified-data line. Apple Weather chosen but no attribution info and sample off: no Apple row (so no-forecast screens have an empty footer, and the notice line still appears if the source is not sample). Mixed list (for example OpenWeather and Windy): both credits, one notice.
 - **Accessibility:** the Apple mark carries the service name as its label.
-- **Used on:** inside [ForecastSourceFooter](#forecastsourcefooter) (Explore list, Trip builder list, Saved footer bar, Scout results footer); the Spot page hourly strip card (single source); Settings > Weather "Attribution" (the credit rows of the chosen primary and fallback, built from the same strings).
+- **Used on:** only through `WeatherDataSources`: Settings > Weather, section "Data Sources and Attribution" (below the provider sections), and Settings > About (same block under the data-sources paragraph, heading in `type/caption`, `text/secondary`). It lists every provider (Apple Weather, OpenWeather, Windy, plus the Sample data label when sample is on), then one "Light Index modified from forecast data" line. Removed from Explore, Trip builder, Saved, Scout and the Spot page hourly strip. Before any release, revisit: the providers' terms ask for attribution where the data is shown (see docs/DATA-PROVIDERS.md).
 
 ### ForecastSourceLine
 
 - **Type, file:** `ForecastSourceLine`, `Components/WeatherAttributionView.swift`.
 - **One job:** say which provider (and model) a forecast came from, in words, so a fallback is never hidden.
 - **Anatomy:** one line, `type/caption`, `text/secondary`, wraps. Strings: "Windy · GFS · updated 09:00" with a time; "Windy · GFS" without (lists, where each place has its own fetch time); "OpenWeather" and "Apple Weather" when no model is known. A fallback adds the sources that failed: "OpenWeather (Apple Weather unavailable) · updated 09:00". The reason is not claimed beyond "unavailable".
-- **States:** with time (spot page hourly header, place card, expanded window confidence line); without time (list footers). Never drawn for Sample data in footers.
-- **Used on:** Spot page "Hour by hour" header (right of the title), [ExplorePlaceCard](#exploreplacecard) (under the light block, above the reason), every [ForecastSourceFooter](#forecastsourcefooter). The expanded [ReasonsGrid](#reasonsgrid) uses the same words in its confidence line.
+- **Quiet by design:** it is honesty about the data, not legal attribution. No link styling, no logo. **States:** with time (spot page hourly header, place card, expanded window confidence line); without time (list footers). Never drawn for Sample data in footers.
+- **Used on:** Spot page "Hour by hour" header (right of the title), [ExplorePlaceCard](#exploreplacecard) (above Show Full Page), the [ExploreExpandedRow](#exploreexpandedrow) (last line), every [ForecastSourceLines](#forecastsourcelines). The expanded [ReasonsGrid](#reasonsgrid) uses the same words in its confidence line.
 
-### ForecastSourceFooter
+### ForecastSourceLines
 
-- **Type, file:** `ForecastSourceFooter`, `Components/WeatherAttributionView.swift`.
-- **One job:** the source lines and attribution together, for places that show many forecasts.
-- **Anatomy:** a column, gap `space/xxs`: one [ForecastSourceLine](#forecastsourceline) (no time) per distinct source, model and fallback among the forecasts loaded for the screen's places, in first-seen order, then [WeatherAttributionView](#weatherattributionview) for those sources. Sample data gets no line, only its label.
-- **States:** forecasts loaded (lines + credits); none loaded (only the credit of the source chosen in Settings, or the Sample data label when sample is on).
+- **Type, file:** `ForecastSourceLines` (was ForecastSourceFooter), `Components/WeatherAttributionView.swift`.
+- **One job:** the quiet source lines for places that show many forecasts. No attribution.
+- **Anatomy:** a column, gap `space/xxs`: one [ForecastSourceLine](#forecastsourceline) (no time) per distinct source, model and fallback among the forecasts loaded for the screen's places, in first-seen order. Sample data gets no line, only its label.
+- **States:** forecasts loaded (lines); none loaded (nothing).
 - **Used on:** Explore list footer (padding `space/md` by `space/sm`, scored rows only), Trip builder list (last row, only when something is scored, separator hidden), Saved bottom bar (right of "3 spots"), Scout results footer (under the scout source sentence).
 
 ### WindyLink
@@ -257,7 +257,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `TripPlanList`, `Trips/TripPlanList.swift`.
 - **One job:** the plan as day sections of stops and connectors, with drag and drop.
-- **Anatomy:** a system inset List with selection. Optional first row: one `type/caption` `text/secondary` line with the global no-forecast reason (when every stop has the same weather-off or offline reason). Per day: [DayHeader](#dayheader) as the section header, optional [SuggestionBanner](#suggestionbanner), [ConnectorRow](#connectorrow) + [StopRow](#stoprow) pairs, and an **Add Stop** row (`plus` icon and text in `accent/primary`, borderless). Last row: [WeatherAttributionView](#weatherattributionview) when something is scored.
+- **Anatomy:** a system inset List with selection. Optional first row: one `type/caption` `text/secondary` line with the global no-forecast reason (when every stop has the same weather-off or offline reason). Per day: [DayHeader](#dayheader) as the section header, optional [SuggestionBanner](#suggestionbanner), [ConnectorRow](#connectorrow) + [StopRow](#stoprow) pairs, and an **Add Stop** row (`plus` icon and text in `accent/primary`, borderless). Last row: [ForecastSourceLines](#forecastsourcelines) when something is scored.
 - **Drop indicator:** a `stroke/thick` (2 pt) capsule in `accent/primary` at the top of the target row or day.
 - **Non-selectable rows:** banners, connectors, Add Stop, caption, attribution.
 
@@ -315,7 +315,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Type, file:** `TripRouteMap`, `Trips/TripRouteMap.swift`.
 - **One job:** the route sanity check.
 - **Anatomy (live map):** MapKit map filling the right column. **Pins:** numbered circles, 28 pt (`size/mapPin`), 36 pt when selected (`size/mapPinSelected`); in the active day `accent/emphasis` fill with an `accent/onAccent` number; other days `map/pinInactive` fill with a `background/window` number; border `background/window` 1 pt (2 pt when selected); number in `type/captionStrong`. **Routes:** the active day's legs as `route/active` 4 pt (`stroke/route`) over a `background/window` casing 7 pt (`stroke/routeCasing`); other days `route/inactive` 3 pt (`stroke/routeInactive`). Straight lines when the road path is unknown. Controls: zoom stepper, compass, scale. **Day picker:** not on the map; a system segmented control (up to 5 days; a menu beyond that) in the trip builder toolbar (principal placement), shown only when more than one day has stops. The map takes the chosen day through a binding.
-- **States:** a stop selected (the camera recentres on it, zoom kept); the picked day; fit-to-trip on appear and when stops change.
+- **States:** a stop selected (the camera recentres on it, zoom kept); the picked day; fit-to-trip on first appearance, never wider than a 40° span; once you move the map the camera is yours, saved per trip and restored on relaunch, and stop changes refit only while you have not touched it.
 - **Accessibility:** label "Route map"; pins "Stop 2, Monument Valley".
 
 ### AddStopPopover
@@ -333,23 +333,41 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 ### ExploreListPanel
 
 - **Type, file:** `ExploreListPanel`, `Explore/ExploreListPanel.swift`.
-- **One job:** the reading surface of Explore: summary, notices, search status, the list, attribution.
-- **Anatomy:** see [Explore](SCREENS.md#explore). Background `background/content`. Header: summary "45 places · Tue, Oct 6, 2026 · Each spot's best" (`type/subheadline`, `text/secondary`, "·" in `text/tertiary`), sample label, notice (`thermometer.medium.slash` + reason, `type/caption`, `text/secondary`), search status. Section headers: `type/captionStrong`, `text/secondary`, with a count at right.
+- **One job:** the reading surface of Explore: summary, notices, search status, the list, the source lines.
+- **Anatomy:** see [Explore](SCREENS.md#explore). Background `background/content`. Header: summary "45 places · Tue, Oct 6, 2026 · Each spot's best" (`type/subheadline`, `text/secondary`, "·" in `text/tertiary`), sample label, notice (`thermometer.medium.slash` + reason, `type/caption`, `text/secondary`), search status. Section headers: `type/captionStrong`, `text/secondary`, with a count at right; with a location they read "Near You · Within 300 mi", "Popular", "More Places" (collapsed until opened, or while a search narrows the list) and "Apple Maps"; without one, a single "Spots" section under the [ExploreLocationBanner](#explorelocationbanner). The radius (100, 200, 300 or 500 mi; default 300) is a **Near You Radius** picker in the header menu. Sort defaults to Distance when a location exists.
 - **States:** list; loading (small spinner); searching; search failed; empty ("No Matching Spots" or "No places found", via ContentUnavailableView, with Clear Filters).
 
 ### ExploreRow
 
-- **Type, file:** `ExploreRowView`, `Explore/ExploreListPanel.swift`.
-- **One job:** one spot and its light on the chosen day.
-- **Anatomy:** row, gap `space/md`, vertical padding `space/xs`: left, name (`type/bodyEmphasis`, one line) over locality (`type/caption`, `text/secondary`) with a [ProvenanceTag](#provenancetag) for your own spots; right, a column (gap `space/xxs`): a [LightBadge](#lightbadge) regular, then the window's start time (`type/timeSmall`, `text/secondary`, monospaced digits, e.g. "19:54").
-- **States:** scored; no forecast (ring, "No forecast", start time still shown); no such light today ("No such light today", `type/caption`); selected (system list selection); hovered (the map pin gets a chip; the row itself has no distinct hover style).
-- **Accessibility:** one element: "Mesa Arch, Canyonlands National Park, UT, Curated, Sunrise, Light Index 68, Good, Medium confidence, starts 07:20".
+- **Type, file:** `ExploreRowView`, `Explore/ExploreRowView.swift`; lane widths in `ExploreRowLayout`, `Explore/ExploreRowLayout.swift`.
+- **One job:** one spot and its light on the chosen day, with every row's light on the same grid.
+- **Anatomy:** row, gap `space/md`, vertical padding `space/xs`. Left: spot name (`type/bodyEmphasis`, up to two lines, wraps rather than truncates) over locality (`type/caption`, `text/secondary`), then, when Iter knows where you are, the distance after it ("Big Sur, CA · 101 mi"; the distance is never the part cut off), then a [ProvenanceTag](#provenancetag) for your own spots. Right: the **light column**, three fixed lanes separated by `space/sm`:
+
+| Lane | Holds | Width |
+|---|---|---|
+| chip | a regular [ScoreChip](#scorechip), or the dashed [NoForecastRing](#noforecastring) centred in the lane | the larger of `size/badgeMinWidth` and three digits at the score font, plus the chip padding |
+| text | the window name (`type/subheadline`, `text/primary`) over the band word and [ConfidenceMark](#confidencemark) (`type/caption`, `text/secondary`), or "No forecast" | the widest localized window name, or the widest band word plus mark, whichever is larger |
+| time | the window's start time (`type/timeSmall`, `text/secondary`, monospaced digits, trailing), e.g. "19:54" | the widest time the locale and clock format can produce (sampled at :58 past every hour) |
+
+  Each width is measured once, at the lane's own font, so nothing in the column is typed in and all rows line up. If the one-line lanes would leave the spot name under half of `layout/listMin` at the ideal list width, the window name goes onto two lines (broken at a space, never abbreviated) and the text lane narrows to fit.
+- **States:** scored; no forecast (ring, "No forecast", start time still shown); no such light today ("No such light today", `type/caption`, right-aligned across the lanes); selected (system list selection, summary line only); expanded (see [ExploreExpandedRow](#exploreexpandedrow)); hovered (the map pin gets a chip; the row itself has no distinct hover style).
+- **Interaction:** a click selects the row and expands it in place; a second click collapses it. Double-click opens the spot page.
+- **Accessibility:** one element, a button, with the value "Expanded" or "Collapsed": "Mesa Arch, Canyonlands National Park, UT, Curated, 101 mi away, Sunrise, Light Index 68, Good, Medium confidence, starts 07:20" (the distance only when a location is known).
+
+### ExploreExpandedRow
+
+- **Type, file:** `ExploreExpandedRow` and `ExploreExpansionRow`, `Explore/ExploreExpandedRow.swift`; state in `ExploreModel` (`expandedID`, `rowClicked`, `toggleExpansion`).
+- **One job:** the actions and the weather for a spot, read without leaving the list.
+- **Anatomy:** a separate, non-selectable list row directly under its summary row, so the list's accent selection covers the summary line only. A card (`radius/card`, fill `background/window`, hairline `separator/default`), padding `space/md`, gap `space/md`, drawn with the spot page's own sections under `.spotDensity = .compact`: **Save** / **Saved** (hidden for your own spots) and [AddToTripMenu](#addtotripmenu), small and bordered; [DayWindowsSection](#daywindowssection) (Light windows); the **Hour by hour** strip (scrolling, with the visibility line); [SunTimesLine](#suntimesline) (sunrise and sunset); then the [ForecastSourceLine](#forecastsourceline), or the no-forecast reason sentence when there is no forecast.
+- **States:** collapsed (no row); expanded with a forecast; expanded with no forecast (honest "No forecast" and its reason, with the real sun times); loading (the sections fill in as the spot's own model finishes).
+- **Rules:** one row is open at a time. Clicking a row, or pressing Space or Return on the selected row, expands it; clicking again, or selecting another row, collapses it. The arrow keys move the selection and collapse. Selecting from the map selects the row without expanding it. A search or filter that removes the row also collapses it.
+- **Accessibility:** a container for its contents.
 
 ### ExploreMapPane
 
 - **Type, file:** `ExploreMapPane`, `Explore/ExploreMapPane.swift`.
 - **One job:** the map with pin hierarchy, shared selection, the place card and Add Spot mode.
-- **Anatomy:** a MapKit map (standard, flat, points of interest hidden; zoom stepper, compass, scale), pins as [ExplorePinView](#explorepinview), a "New spot" `mappin.circle.fill` (`accent/primary`, title size) at a dropped draft pin; overlays: [AddSpotBanner](#addspotbanner) top, [ExplorePlaceCard](#exploreplacecard) bottom (slides up with a fade), each inset `space/md`.
+- **Anatomy:** a MapKit map (standard, flat, points of interest hidden; zoom stepper, compass, scale), pins as [ExplorePinView](#explorepinview), a "New spot" `mappin.circle.fill` (`accent/primary`, title size) at a dropped draft pin; overlays: [AddSpotBanner](#addspotbanner) top, [ExplorePlaceCard](#exploreplacecard) bottom-trailing (slides up with a fade), each inset `space/md`. **Camera:** [MapCameraPolicy](SCREENS.md#explore) fits the Near You set (else every listed spot), never wider than a 40° span; once you move the map it stays yours, is saved for this screen and restored on relaunch, and a change in the list refits only if you have not touched it; selecting a spot pans to it without zooming out.
 - **States:** default; a selection; Add Spot mode (crosshair cursor, pins not clickable, the card hidden); a draft pin placed (the editor sheet is open).
 
 ### ExplorePinView
@@ -370,10 +388,33 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 ### ExplorePlaceCard
 
 - **Type, file:** `ExplorePlaceCard`, `Explore/ExplorePlaceCard.swift`.
-- **One job:** the selected spot's identity, its light that day, and one primary action.
-- **Anatomy:** a panel, max width 360 pt (`layout/listIdeal`), padding `space/md`, `radius/panel` (16), a `regularMaterial` fill (flat `background/content` in snapshots), hairline `separator/default`. Gap `space/md`. Top: name (`type/headline`), a line with locality (`type/subheadline`, `text/secondary`) and a [ProvenanceTag](#provenancetag); at top right a `xmark.circle.fill` close button (`text/tertiary`, tooltip "Deselect", label "Close"). Light block: a regular [LightBadge](#lightbadge) at left; at right the start time (`type/time`, `text/primary`) over the range "07:20–07:55" (`type/caption`, `text/secondary`); beneath, when a forecast is loaded the [ForecastSourceLine](#forecastsourceline) with its time ("Windy · GFS · updated 09:00"), then the no-forecast reason in `type/caption`, `text/secondary` when there is one. With no window that day: "No such light today". Buttons: **Open** (prominent, default, Return), **Save** or **Saved** (`bookmark` / `bookmark.fill`, hidden for your own spots), **Add to Trip** ([AddToTripMenu](#addtotripmenu), button style).
-- **States:** scored (badge by band, no reason); no forecast (ring, "No forecast", the reason sentence; this is what the snapshots show); no window; saved; your own spot (no Save button).
+- **One job:** the selected spot, its light that day and a preview of its page, without leaving the map.
+- **Anatomy:** a panel at the map's bottom-trailing corner, inset `space/md`. Width `layout/placeCardWidth` (360); height up to `layout/placeCardMaxHeight` (560), and never more than half the map's height so the selected pin stays visible. `radius/panel` (16), a `regularMaterial` fill (flat `background/content` in snapshots), hairline `separator/default`, a soft shadow. Top to bottom:
+  1. **Pinned header** (padding `space/md`, stays put while the body scrolls): name (`type/headline`, up to two lines), locality (`type/subheadline`, `text/secondary`) with a [ProvenanceTag](#provenancetag), a close button at top right (`xmark.circle.fill`, `text/tertiary`, tooltip "Deselect", label "Close"), and a compact light line: a compact [LightBadge](#lightbadge) and the start time (`type/timeSmall`). With no window: "No such light today".
+  2. **Image strip** ([SpotImageStrip](#spotimagestrip)), `size/placeCardImageHeight` (200) high, edge to edge.
+  3. **Spot sections** (scrolling, compact density, gap `space/lg`): When to go, Light windows, the light timeline, sun and moon, Hour by hour, facts.
+  4. **Actions:** **Save** / **Saved** (hidden for your own spots) and [AddToTripMenu](#addtotripmenu).
+  5. **Source line:** [ForecastSourceLine](#forecastsourceline), then a link-style **Show Full Page** that opens the spot page for the chosen day. (There is no Open button.)
+- **States:** scored; no forecast (ring, "No forecast", the reason in the sections); no window; saved; your own spot (no Save button); scrolled (see `-IterCardScrolled` in TESTING.md).
 - **Accessibility:** container labelled "Place card for Mesa Arch".
+
+### SpotImageStrip
+
+- **Type, file:** `SpotImageStrip` and `SpotImages`, `Components/SpotImageStrip.swift`; provider `SpotImageryProviding` (`SpotImagery.swift`) and `MapKitSpotImagery` in `Packages/IterKit/Sources/IterServices/Maps/`.
+- **One job:** show what the place looks like, honestly labelled.
+- **Anatomy:** a fixed `size/placeCardImageHeight` (200) strip, clipped, paging horizontally. Each page is one image filling the strip with a source label top-leading (a `regularMaterial` capsule, `type/captionStrong`): **Look Around** (Apple's street-level snapshot, only where Apple has imagery) or **Satellite** (a hybrid satellite snapshot with a dot at the spot). Look Around comes first when it exists. With more than one image: a dot indicator bottom-centre (capsule, material), and on hover previous and next chevrons (`size/hitTarget`, material circles) because a mouse has no swipe.
+- **States:** loading (placeholder with a small spinner); one image (no dots, no chevrons); several; placeholder when there are none (a calm `background/control` surface with the spot's category symbol in `text/tertiary`).
+- **Imagery and caching:** images are cached in memory and on disk, keyed by spot id, source, pixel size and the coordinate at 5 decimal places, so a moved spot refetches. Offscreen snapshots read the cache only. Coverage in the curated set was measured on 2026-10-06: Look Around exists for 4 of 45 (`tunnel-view`, `valley-view`, `bixby-bridge`, `golden-gate-battery-spencer`); the other 41 show the satellite image only.
+- **Built for photos:** the strip draws a list of `SpotImage`s. User photos will be one more source (a case on `SpotImageSource`, the provider returning the spot's own photos first, and the two label strings); nothing else changes.
+- **Accessibility:** each image is labelled ("Look Around view of Bixby Bridge"); the dots read "Image 1 of 2"; chevrons are labelled "Previous image" and "Next image".
+
+### ExploreLocationBanner
+
+- **Type, file:** `ExploreLocationBanner`, `Explore/ExploreLocationBanner.swift`; state in `UserLocationModel`.
+- **One job:** say why the list is not sorted by distance and offer the way out, without ever blocking the list.
+- **Anatomy:** a strip above the list, padding `space/md` by `space/sm`, `background/control`, a divider below. Prompt states carry a title ("Use your location", `type/subheadline` semibold) over a caption ("Iter uses your location to show spots within 300 miles.") and a small button at the right. Not drawn at all once a location is known.
+- **States:** not asked yet (**Use My Location**); denied or restricted (**Open Location Settings**, which opens Location Services in System Settings); finding your location (a small spinner and "Finding your location…"); no fix (a message and **Try Again**).
+- **Rules:** without a location the list is one "Spots" section and the sort is not Distance.
 
 ### AddSpotBanner
 
@@ -492,7 +533,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `HourlyWeatherSection`, `Spot/HourlyWeatherView.swift`.
 - **One job:** the day's weather hour by hour, on the timeline's x-axis.
-- **Anatomy:** header "Hour by hour" (`type/title/section`) with, at the trailing edge, the [ForecastSourceLine](#forecastsourceline) with its time ("Windy · GFS · updated 09:00", `type/caption`, `text/secondary`). A [SpotCard](#spotcard) containing a 5-row grid (rows 22 pt, `space/xxs` added to `size/icon/large`): a multicolour weather symbol (`type/subheadline`), then **Temp**, **Cloud**, **Rain**, **Wind** rows in `type/timeSmall`, monospaced digits. Row labels sit in the left gutter (`type/caption`, `text/secondary`). Rain shows a percent only at 20% or more, in `accent/text`. Temperature follows the Settings unit. Window spans are tinted with their sky colour at 20%, the selected window with `accent/primary` at 16%, the marker hour with `text/primary` at 8%. Under the strip: [WeatherAttributionView](#weatherattributionview) for the forecast's source (or the chosen one) at left, "Wind in mph" (or km/h; "Rain in mm/h · Wind in mph" when rain is an amount rather than a chance, as with Windy; `type/caption`, `text/secondary`) at right.
+- **Anatomy:** header "Hour by hour" (`type/title/section`) with, at the trailing edge, the [ForecastSourceLine](#forecastsourceline) with its time ("Windy · GFS · updated 09:00", `type/caption`, `text/secondary`). A [SpotCard](#spotcard) containing a 5-row grid (rows 22 pt, `space/xxs` added to `size/icon/large`): a multicolour weather symbol (`type/subheadline`), then **Temp**, **Cloud**, **Rain**, **Wind** rows in `type/timeSmall`, monospaced digits. Row labels sit in the left gutter (`type/caption`, `text/secondary`). Rain shows a percent only at 20% or more, in `accent/text`. Temperature follows the Settings unit. Window spans are tinted with their sky colour at 20%, the selected window with `accent/primary` at 16%, the marker hour with `text/primary` at 8%. Under the strip: "Wind in mph" (or km/h; "Rain in mm/h · Wind in mph" when rain is an amount rather than a chance, as with Windy; `type/caption`, `text/secondary`).
 - **States:** with a forecast only. No forecast: the whole section is absent.
 - **Accessibility:** a summary of every third hour ("6 AM: 36°, 43% cloud").
 
@@ -515,7 +556,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Type, file:** `LookAroundSection`, `Spot/SpotFactsView.swift`.
 - **One job:** show Apple's street-level imagery where it exists.
 - **Anatomy:** header "Look Around" (`type/title/section`) and a system Look Around preview, 224 pt high, clipped to `radius/card`.
-- **States:** absent when Apple has no imagery, and in snapshots.
+- **States:** absent when Apple has no imagery, and in snapshots. The place card's [SpotImageStrip](#spotimagestrip) shows Look Around too, with a satellite image where Apple has none.
 
 ---
 
@@ -604,8 +645,8 @@ Iter relies on these system controls. Do not restyle them in the design; use the
 3. **The band word is always printed beside the ramp colour** in the regular and large badges. Colour alone never carries the band. (The compact badge, the outlook chips and pin dots rely on the number or context; see the inconsistencies reported with this document.) A badge always has its hairline, because Poor and Fair are too pale to reach 3:1 on the window.
 4. **Coral is used with restraint.** `accent/primary` is the one thing that acts or is selected, `route/active` the route, `map/pin` the pins and `map/sun` the sun. Never a score, a status, an error or a large fill behind text. Small text uses `accent/text`; small text on a coral fill uses `accent/emphasis`. It is never "good".
 5. **A warning is violet (`status/warning`) and always has an icon.** Failure and validation are raspberry (`status/danger`) with an icon and words. Never amber, never coral, never green. Green is not used anywhere.
-6. **"Sample data" appears once per screen.** The banner sits in the sidebar; screens that show sample scores carry one inline label; [WeatherAttributionView](#weatherattributionview) shows the label in place of a provider credit.
-7. **Source and attribution wherever weather appears.** Each provider's own credit (Apple mark and Legal attribution; "Weather data © OpenWeather"; "Contains data from the Windy database" and Windy.com) plus "Light Index modified from forecast data" on Explore, Trip builder (when scored), Saved, Scout results, the Spot page hourly strip and Settings > Weather. Lists and the spot page also name the source and model in words, and a fallback is always named ("OpenWeather (Apple Weather unavailable)").
+6. **"Sample data" appears once per screen.** The banner sits in the sidebar; screens that show sample scores carry one inline label; [WeatherAttributionView](#weatherattributionview) shows the label in place of a provider credit (in Settings).
+7. **Source wherever weather appears; attribution in Settings.** Each provider's own credit (Apple mark and Legal attribution; "Weather data © OpenWeather"; "Contains data from the Windy database" and Windy.com) plus "Light Index modified from forecast data" now lives only in Settings > Weather and Settings > About (owner's instruction, 2026-10-06; to be revisited before release). Elsewhere a quiet [ForecastSourceLine](#forecastsourceline) names the source. Lists and the spot page also name the source and model in words, and a fallback is always named ("OpenWeather (Apple Weather unavailable)").
 8. **Confidence is shown, and low confidence fades.** Three bars on regular and large badges; ranges ("Likely 72–100") for days four and later; outlook cells fade to 80% and 60%.
 9. **Times are the spot's own and monospaced; units follow the Mac and Settings.**
 10. **System chrome stays system.** The sidebar, toolbar, Settings, sheets and standard controls keep the system's materials and colours and take coral only through the app accent. What the app draws itself uses First Light paper and ink (`text/*`, `background/*`), plus the ramp, accent, route, pin, status, sky and cloud colours.
@@ -617,7 +658,7 @@ Iter relies on these system controls. Do not restyle them in the design; use the
 Found in the hand-off audit and left for the design work, because each one is a design decision rather than a bug:
 
 1. **Band word in compact places.** Compact badges (map pins, Saved, Scout and Add Stop rows) and the outlook cells show the number and window name but not the band word. The VoiceOver label includes the band. Decide whether compact spaces carry the word, a glyph, or nothing.
-2. **"Sample data" can appear twice on one screen**, in the header and in the attribution footer (Explore, Scout, Settings ▸ Weather). The rule says once per screen.
+2. **"Sample data" can appear twice on one screen**, in the header and in the Settings credits (Settings ▸ Weather). The rule says once per screen.
 3. **Rain colour.** There is no rain token. The timeline's rain bars use `sky/blueHour`, and the hourly strip's rain figures use `accent/text`. A `weather/rain` token is needed.
 4. **Accent on the outlook "Best" tag** (`accent/emphasis`) marks the best day. Accent is for interaction and the route, so this edges toward accent meaning "good".
 5. **Serif beyond place names.** `type/title/spot` (New York) is also used for trip names and the empty-state headline.

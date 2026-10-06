@@ -222,4 +222,118 @@ import IterData
         let allMatch = list.candidates.allSatisfy { $0.spot.name.localizedCaseInsensitiveContains("mesa") || $0.spot.locality.localizedCaseInsensitiveContains("mesa") }
         #expect(allMatch)
     }
+
+    // MARK: Map camera
+
+    private func fitRegion(_ request: CameraRequest?) -> GeoRegion? {
+        guard let request else { return nil }
+        if case .fit(let r) = request.kind { return r }
+        return nil
+    }
+
+    @Test func dayChangeRefitsWhenTheUserHasNotMovedTheMap() throws {
+        let h = TripHarness()
+        let model = h.model(for: h.makeTrip())
+        model.setFocusDay(0)
+        model.requestInitialCamera()
+        let first = try #require(fitRegion(model.cameraRequest))
+        #expect(first.latitudeDelta <= MapCameraPolicy.maxAutomaticSpan && first.longitudeDelta <= MapCameraPolicy.maxAutomaticSpan)
+        model.cameraDidChange(to: first)   // the map settles exactly where it was sent
+        let before = model.cameraRequest?.id
+
+        model.setFocusDay(1)
+        #expect(model.cameraRequest?.id != before)
+        let second = try #require(fitRegion(model.cameraRequest))
+        let horseshoe = h.spot("horseshoe-bend").coordinate
+        #expect(abs(second.center.latitude - horseshoe.latitude) < 0.01)
+        #expect(second.latitudeDelta <= MapCameraPolicy.maxAutomaticSpan)
+    }
+
+    @Test func dayChangeLeavesAMapTheUserMovedAlone() throws {
+        let h = TripHarness()
+        let model = h.model(for: h.makeTrip())
+        model.setFocusDay(0)
+        model.requestInitialCamera()
+        let first = try #require(fitRegion(model.cameraRequest))
+        model.cameraDidChange(to: first)
+        // The user zooms out a long way.
+        model.cameraDidChange(to: GeoRegion(center: first.center, latitudeDelta: 120, longitudeDelta: 200), byUser: true)
+        let before = model.cameraRequest
+
+        model.setFocusDay(1)
+        #expect(model.cameraRequest == before)
+        model.contentChanged()
+        #expect(model.cameraRequest == before)
+    }
+
+    @Test func savedCameraIsRestoredPerTrip() throws {
+        let h = TripHarness()
+        let trip = h.makeTrip()
+        let defaults = UserDefaults(suiteName: "TripCamera-\(UUID().uuidString)")!
+        let first = h.model(for: trip, defaults: defaults)
+        first.requestInitialCamera()
+        let fit = try #require(fitRegion(first.cameraRequest))
+        let saved = GeoRegion(center: fit.center, latitudeDelta: 3, longitudeDelta: 4)
+        first.cameraDidChange(to: saved, byUser: true)
+
+        let second = h.model(for: trip, defaults: defaults)
+        second.requestInitialCamera()
+        #expect(fitRegion(second.cameraRequest) == saved)
+        // Another trip has its own camera.
+        let other = h.makeTrip()
+        let third = h.model(for: other, defaults: defaults)
+        third.requestInitialCamera()
+        #expect(fitRegion(third.cameraRequest) != saved)
+    }
+
+    @Test func selectingAStopPansWithoutChangingTheZoom() throws {
+        let h = TripHarness()
+        let model = h.model(for: h.makeTrip())
+        model.setFocusDay(0)
+        model.requestInitialCamera()
+        let first = try #require(fitRegion(model.cameraRequest))
+        model.cameraDidChange(to: first)
+        model.reveal(h.spot("horseshoe-bend").coordinate)
+        guard case .pan(let target)? = model.cameraRequest?.kind else { Issue.record("expected a pan"); return }
+        #expect(target.latitudeDelta == first.latitudeDelta && target.longitudeDelta == first.longitudeDelta)
+    }
+
+    @Test func aProgrammaticOrInitialSettleIsNeitherSavedNorAUserMove() throws {
+        let h = TripHarness()
+        let defaults = UserDefaults(suiteName: "TripCamera-\(UUID().uuidString)")!
+        let model = h.model(for: h.makeTrip(), defaults: defaults)
+        // MapKit's initial camera before any request: ignored.
+        model.cameraDidChange(to: GeoRegion(center: Coordinate(latitude: 40, longitude: -116), latitudeDelta: 121, longitudeDelta: 122))
+        #expect(model.cameraPolicy.savedRegion == nil)
+        model.requestInitialCamera()
+        let fit = try #require(fitRegion(model.cameraRequest))
+        model.cameraDidChange(to: GeoRegion(center: fit.center, latitudeDelta: fit.latitudeDelta * 1.1, longitudeDelta: fit.longitudeDelta * 1.1))
+        #expect(!model.cameraPolicy.userMovedSinceFit)
+    }
+
+    @Test func aWideNonUserSettleAfterAFitIsNotSavedAndTheFitIsRequestedAgain() throws {
+        let h = TripHarness()
+        let defaults = UserDefaults(suiteName: "TripCamera-\(UUID().uuidString)")!
+        let model = h.model(for: h.makeTrip(), defaults: defaults)
+        model.requestInitialCamera()
+        let fit = try #require(fitRegion(model.cameraRequest))
+        let first = try #require(model.cameraRequest)
+        model.cameraDidChange(to: GeoRegion(center: fit.center, latitudeDelta: 122.65, longitudeDelta: 100))
+        #expect(model.cameraPolicy.savedRegion == nil)
+        #expect(!model.cameraPolicy.userMovedSinceFit)
+        #expect(try #require(model.cameraRequest).id > first.id)
+        #expect(fitRegion(model.cameraRequest) == fit)
+    }
+
+    @Test func aUserSettleIsSavedAndMarksMoved() throws {
+        let h = TripHarness()
+        let model = h.model(for: h.makeTrip())
+        model.requestInitialCamera()
+        let fit = try #require(fitRegion(model.cameraRequest))
+        model.cameraDidChange(to: fit)
+        let user = GeoRegion(center: fit.center, latitudeDelta: 90, longitudeDelta: 100)
+        model.cameraDidChange(to: user, byUser: true)
+        #expect(model.cameraPolicy.savedRegion == user)
+        #expect(model.cameraPolicy.userMovedSinceFit)
+    }
 }

@@ -70,10 +70,90 @@ public final class TripBuilderModel {
     @ObservationIgnored private var allSuggestions: [OrderingSuggestion] = []
     @ObservationIgnored private var seenStoreRevision = -1
     @ObservationIgnored private var seenForecastRevision = -1
+    @ObservationIgnored private let defaults: UserDefaults
+
+    // MARK: - Map camera
+
+    /// The route map's camera policy (never zooms out past a continent on its own; remembers where the user left it).
+    @ObservationIgnored public private(set) var cameraPolicy: MapCameraPolicy
+    /// The latest camera command for the map; the view applies a request when its `id` changes.
+    public private(set) var cameraRequest: CameraRequest?
+    /// The day the picker has chosen; the automatic fit frames its stops (nil: the whole route).
+    public private(set) var focusDay: Int?
+    @ObservationIgnored private var visibleRegion: GeoRegion?
+    @ObservationIgnored private var requestCounter = 0
+
+    public static func cameraScreenKey(for tripID: UUID) -> String { "trip-\(tripID.uuidString)" }
+
+    /// What an automatic fit frames: the focus day's stops, or every stop when no day is focused (or it has none).
+    public var fitCoordinates: [Coordinate] {
+        let all = days.flatMap(\.stops)
+        if let focusDay {
+            let day = all.filter { $0.stop.dayIndex == focusDay }
+            if !day.isEmpty { return day.map { $0.stop.spot.coordinate } }
+        }
+        return all.map { $0.stop.spot.coordinate }
+    }
+
+    /// Where the map should start (saved camera, else a fit), so the view is created already framed. Records nothing.
+    public var initialCameraRegion: GeoRegion? { cameraPolicy.initialRegion(for: fitCoordinates) }
+
+    /// First appearance: the saved camera for this trip if any, else a fit (capped by the policy).
+    public func requestInitialCamera() {
+        guard let region = cameraPolicy.initialRegion(for: fitCoordinates) else { return }
+        if cameraPolicy.savedRegion == nil { cameraPolicy.didApplyFit(region) } else { cameraPolicy.didRestoreSavedCamera() }
+        cameraRequest = CameraRequest(id: nextRequestID(), kind: .fit(region))
+    }
+
+    /// The picker chose another day (nil: the whole route): refit unless the user has moved the map since the last fit.
+    public func setFocusDay(_ day: Int?) {
+        guard day != focusDay else { return }
+        focusDay = day
+        contentChanged()
+    }
+
+    /// Stops were added, removed or moved: refit unless the user has moved the map since the last fit.
+    public func contentChanged() {
+        guard let target = MapCameraPolicy.fit(fitCoordinates) else { return }
+        if target == cameraPolicy.lastFitRegion, !cameraPolicy.userMovedSinceFit { return }
+        guard let region = cameraPolicy.regionAfterContentChange(fitCoordinates) else { return }
+        cameraRequest = CameraRequest(id: nextRequestID(), kind: .fit(region))
+    }
+
+    /// Pans the map so the coordinate is comfortably in view; does nothing when it already is, never changes the zoom.
+    public func reveal(_ coordinate: Coordinate) {
+        guard let current = visibleRegion ?? cameraPolicy.savedRegion else { return }
+        let target = MapCameraPolicy.pan(current, toInclude: coordinate)
+        guard target != current else { return }
+        cameraPolicy.didApplyPan(target)
+        cameraRequest = CameraRequest(id: nextRequestID(), kind: .pan(target))
+    }
+
+    /// The map settled at `region` (called by the view when the camera stops moving).
+    /// `byUser` is true only when the user really moved the map. A settle MapKit made on its own is never a user move
+    /// and is saved only when it is the camera we asked for; when it is not, a request re-applies our region.
+    public func cameraDidChange(to region: GeoRegion, byUser: Bool = false) {
+        guard visibleRegion != region else { return }
+        visibleRegion = region
+        switch cameraPolicy.cameraSettled(region, byUser: byUser) {
+        case .saved:
+            cameraPolicy.save(screen: Self.cameraScreenKey(for: tripID), defaults: defaults)
+        case .reapply(let target):
+            // MapKit settled somewhere we did not ask for: ask again (the view applies the new request).
+            cameraRequest = CameraRequest(id: nextRequestID(), kind: .fit(target))
+        case .ignored:
+            break
+        }
+    }
+
+    private func nextRequestID() -> Int {
+        requestCounter += 1
+        return requestCounter
+    }
 
     public init(tripID: UUID, store: IterStore, scheduler: TripScheduler, drives: any DriveTimeProviding,
                 forecasts: ForecastCenter, dismissals: SuggestionDismissals = .shared,
-                now: @escaping @MainActor () -> Date = { Date() }) {
+                defaults: UserDefaults = .standard, now: @escaping @MainActor () -> Date = { Date() }) {
         self.tripID = tripID
         self.store = store
         self.scheduler = scheduler
@@ -81,6 +161,8 @@ public final class TripBuilderModel {
         self.forecasts = forecasts
         self.dismissals = dismissals
         self.now = now
+        self.defaults = defaults
+        self.cameraPolicy = MapCameraPolicy.load(screen: Self.cameraScreenKey(for: tripID), defaults: defaults)
         refresh()
     }
 

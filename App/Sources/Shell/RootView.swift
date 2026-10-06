@@ -12,8 +12,26 @@ struct RootView: View {
     @State private var navigation = AppNavigation()
     @SceneStorage("sidebarSelection") private var storedSelection: Data?
 
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
+    @State private var autoCollapsed = false
+    @State private var windowWidth: CGFloat = 0
+    /// Below this the sidebar, list and detail cannot all fit at their minimums.
+    private var sidebarCollapseWidth: CGFloat { IterSize.sidebarIdeal + IterSize.mainWindowMinWidth }
+
+    /// The sidebar gives way first: collapse it when the WINDOW is too narrow for sidebar plus detail minimum, bring it
+    /// back when there is room again, but only if this rule (not the person) collapsed it.
+    private func applyCollapseRule(_ width: CGFloat) {
+        guard width > 0 else { return }
+        if width < sidebarCollapseWidth {
+            if columnVisibility != .detailOnly { columnVisibility = .detailOnly; autoCollapsed = true }
+        } else if autoCollapsed {
+            autoCollapsed = false
+            columnVisibility = .all
+        }
+    }
+
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             SidebarView()
                 .navigationSplitViewColumnWidth(min: IterSize.sidebarMin, ideal: IterSize.sidebarIdeal, max: IterSize.sidebarMax)
         } detail: {
@@ -21,6 +39,11 @@ struct RootView: View {
         }
         .environment(navigation)
         .frame(minWidth: IterSize.mainWindowMinWidth, minHeight: IterSize.windowMinHeight)
+        .background(MainWindowConfigurator(minSize: CGSize(width: IterSize.mainWindowMinWidth, height: IterSize.windowMinHeight), contentWidth: $windowWidth))
+        .onChange(of: windowWidth) { _, width in applyCollapseRule(width) }
+        .onChange(of: columnVisibility) { _, new in
+            if new == .all { autoCollapsed = false }
+        }
         .focusedSceneValue(\.navigation, navigation)
         .appliesStoredPreferences()
         .onAppear {

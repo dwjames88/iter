@@ -24,7 +24,7 @@ struct SavedView: View {
                 list(all)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(minWidth: IterSize.listColumnMin, maxWidth: .infinity, maxHeight: .infinity)
         .navigationTitle(Text("Saved", comment: "Section title"))
         .paperListBackground()
         .unifiedToolbarBackground()
@@ -105,7 +105,7 @@ struct SavedView: View {
                         .font(IterFont.caption)
                         .foregroundStyle(IterColor.textSecondary)
                     Spacer()
-                    ForecastSourceFooter(app: model, coordinates: shown.map(\.spot.coordinate))
+                    ForecastSourceLines(app: model, coordinates: shown.map(\.spot.coordinate))
                 }
                 .padding(.horizontal, IterSpace.lg)
                 .padding(.vertical, IterSpace.sm)

@@ -4,11 +4,16 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// The place card over the map for the selected spot (pattern #6): what it is, its light that day, and one
-/// primary action (Open), with Save and Add to Trip beside it.
+/// The place card over the map for the selected spot (pattern #6): a pinned header (what it is, its light that day),
+/// then a scrolling body. It opens on images of the site; scrolling up reveals the spot page's own sections (weather,
+/// light windows, sun and moon, facts) at compact density, then Save, Add to Trip and a link to the full page.
 struct ExplorePlaceCard: View {
     let row: ExploreRow
     let day: LocalDay
+    /// The card's size, set by the map pane from the pane's size (see `ExploreMapPane`).
+    var size = CGSize(width: IterSize.placeCardWidth, height: IterSize.placeCardMaxHeight)
+    /// Start scrolled to the actions at the bottom. Debug and snapshot aid; `-IterCardScrolled YES` sets it at launch.
+    var startsScrolled = AppLaunch.cardScrolled
     var onClose: () -> Void
 
     @Environment(AppModel.self) private var model
@@ -16,12 +21,75 @@ struct ExplorePlaceCard: View {
     @Environment(\.renderMode) private var renderMode
 
     private var spot: Spot { row.spot }
+    private static let actionsID = "place-card-actions"
+
+    /// How long after appearing the card keeps re-scrolling to the actions as its content grows (launch flag only).
+    private static let settleWindow = Duration.seconds(4)
+    private static let settleDelay = Duration.milliseconds(100)
+
+    @State private var scrollSettling = false
+
+    private struct ContentKey: Hashable { let spotID: String; let day: LocalDay }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: IterSpace.md) {
+        VStack(alignment: .leading, spacing: 0) {
+            header
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(alignment: .leading, spacing: IterSpace.lg) {
+                        SpotImages(spot: spot)
+                        VStack(alignment: .leading, spacing: IterSpace.lg) {
+                            PlaceCardSections(app: model, spot: spot, day: day)
+                                .id(ContentKey(spotID: spot.id, day: day))
+                            VStack(alignment: .leading, spacing: IterSpace.lg) {
+                                actions
+                                footer
+                            }
+                            .id(Self.actionsID)
+                        }
+                        .padding(.horizontal, IterSpace.md)
+                        .padding(.bottom, IterSpace.md)
+                    }
+                }
+                .scrollBounceBehavior(.basedOnSize)
+                .onScrollGeometryChange(for: CGFloat.self, of: { $0.contentSize.height }) { _, _ in
+                    // The forecast and sections load and grow the content; keep the actions at the bottom meanwhile.
+                    guard scrollSettling else { return }
+                    Task {
+                        try? await Task.sleep(for: Self.settleDelay)
+                        proxy.scrollTo(Self.actionsID, anchor: .bottom)
+                    }
+                }
+                .task(id: spot.id) {
+                    guard startsScrolled else { return }
+                    scrollSettling = true
+                    try? await Task.sleep(for: Self.settleDelay)
+                    proxy.scrollTo(Self.actionsID, anchor: .bottom)
+                    try? await Task.sleep(for: Self.settleWindow)
+                    scrollSettling = false
+                }
+            }
+        }
+        .frame(width: size.width, height: size.height, alignment: .top)
+        .background(background)
+        .clipShape(shape)
+        .overlay(shape.strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
+        .shadow(radius: IterSpace.xs)
+        .environment(\.spotDensity, .compact)
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(Text("Place card for \(spot.name)", comment: "VoiceOver"))
+    }
+
+    private var shape: RoundedRectangle { RoundedRectangle(cornerRadius: IterRadius.panel, style: .continuous) }
+
+    // MARK: Header (pinned)
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: IterSpace.sm) {
             HStack(alignment: .top, spacing: IterSpace.sm) {
                 VStack(alignment: .leading, spacing: IterSpace.xxs) {
                     Text(spot.name).font(IterFont.headline).foregroundStyle(IterColor.textPrimary)
+                        .lineLimit(2)
                     HStack(spacing: IterSpace.xs) {
                         if !spot.locality.isEmpty {
                             Text(spot.locality).lineLimit(1)
@@ -39,63 +107,54 @@ struct ExplorePlaceCard: View {
                 .help(String(localized: "Deselect", comment: "Tooltip on the place card's close button"))
                 .accessibilityLabel(Text("Close", comment: "VoiceOver"))
             }
-            light
-            HStack(spacing: IterSpace.sm) {
-                Button {
-                    ExploreActions.open(spot, day: day, navigation: navigation)
-                } label: {
-                    Text("Open", comment: "Place card primary action: open the spot page")
-                        .frame(minWidth: IterSize.hitTarget)
-                }
-                .buttonStyle(.borderedProminent)
-                .keyboardShortcut(.defaultAction)
-                .help(String(localized: "Open the spot page", comment: "Tooltip"))
-                if spot.origin != .user {
-                    saveButton
-                }
-                AddToTripMenu(spot: spot)
-                    .menuStyle(.button)
-                    .fixedSize()
-            }
-            .controlSize(.regular)
+            lightSummary
         }
         .padding(IterSpace.md)
-        .frame(maxWidth: IterSize.listIdeal, alignment: .leading)
-        .background(background, in: RoundedRectangle(cornerRadius: IterRadius.panel, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: IterRadius.panel, style: .continuous)
-            .strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
-        .accessibilityElement(children: .contain)
-        .accessibilityLabel(Text("Place card for \(spot.name)", comment: "VoiceOver"))
     }
 
-    @ViewBuilder private var light: some View {
+    @ViewBuilder private var lightSummary: some View {
         if let window = row.window {
-            VStack(alignment: .leading, spacing: IterSpace.xs) {
-                HStack(alignment: .center, spacing: IterSpace.md) {
-                    LightBadge(window: window, style: .regular)
-                    Spacer(minLength: 0)
-                    VStack(alignment: .trailing, spacing: 0) {
-                        Text(TimeText.time(window.span.start, in: spot.timeZone))
-                            .font(IterFont.time)
-                            .foregroundStyle(IterColor.textPrimary)
-                            .monospacedDigit()
-                        Text(TimeText.timeRange(window.span, in: spot.timeZone))
-                            .font(IterFont.caption)
-                            .foregroundStyle(IterColor.textSecondary)
-                    }
-                }
-                if let forecast = model.forecasts.state(for: spot.coordinate).forecast {
-                    ForecastSourceLine(info: ForecastSourceInfo(forecast))
-                }
-                if let reason = row.unavailableReason {
-                    Text(LightText.noForecastReason(reason))
-                        .font(IterFont.caption)
-                        .foregroundStyle(IterColor.textSecondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
+            HStack(spacing: IterSpace.sm) {
+                LightBadge(window: window, style: .compact)
+                Text(TimeText.time(window.span.start, in: spot.timeZone))
+                    .font(IterFont.timeSmall)
+                    .foregroundStyle(IterColor.textSecondary)
+                    .monospacedDigit()
+                Spacer(minLength: 0)
             }
         } else {
             Text(LightText.noWindowToday).font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
+        }
+    }
+
+    // MARK: Body parts
+
+    private var actions: some View {
+        HStack(spacing: IterSpace.sm) {
+            if spot.origin != .user {
+                saveButton
+            }
+            AddToTripMenu(spot: spot)
+                .menuStyle(.button)
+                .fixedSize()
+            Spacer(minLength: 0)
+        }
+        .controlSize(.regular)
+    }
+
+    private var footer: some View {
+        VStack(alignment: .leading, spacing: IterSpace.sm) {
+            if let forecast = model.forecasts.state(for: spot.coordinate).forecast {
+                ForecastSourceLine(info: ForecastSourceInfo(forecast))
+            }
+            Button {
+                ExploreActions.open(spot, day: day, navigation: navigation)
+            } label: {
+                Text("Show Full Page", comment: "Place card: open the spot's full page")
+                    .font(IterFont.subheadline)
+            }
+            .buttonStyle(.link)
+            .help(String(localized: "Open the spot page", comment: "Tooltip"))
         }
     }
 
@@ -121,5 +180,30 @@ struct ExplorePlaceCard: View {
     private var background: AnyShapeStyle {
         // An offscreen render has no backdrop for materials.
         renderMode == .snapshot ? AnyShapeStyle(IterColor.backgroundContent) : AnyShapeStyle(.regularMaterial)
+    }
+}
+
+/// The spot page's own sections for the card, at compact density. Owns its `SpotModel`; the card keys it by spot and
+/// day so a new selection starts a new model.
+private struct PlaceCardSections: View {
+    @State private var page: SpotModel
+    let spot: Spot
+
+    init(app: AppModel, spot: Spot, day: LocalDay) {
+        self.spot = spot
+        _page = State(initialValue: SpotModel(app: app, spot: spot, initialDay: day))
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: IterSpace.lg) {
+            WhenToGoSection(page: page)
+            DayWindowsSection(page: page)
+            LightTimelineSection(page: page)
+            SkyArcSection(page: page)
+            HourlyWeatherSection(page: page)
+            SpotFactsSection(spot: spot)
+        }
+        .environment(\.spotDensity, .compact)
+        .task { await page.start() }
     }
 }

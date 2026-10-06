@@ -228,10 +228,10 @@ private struct ScoutResultsView: View {
     var body: some View {
         HStack(spacing: 0) {
             list
-                .frame(minWidth: IterSize.listMin, idealWidth: IterSize.listIdeal, maxWidth: IterSize.listMax)
+                .frame(minWidth: IterSize.listColumnMin, idealWidth: IterSize.listIdeal, maxWidth: IterSize.listMax)
             Divider()
             map
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(minWidth: IterSize.detailMin, maxWidth: .infinity, maxHeight: .infinity)
         }
         .onAppear { if selection == nil { selection = found.first?.id } }
     }
@@ -264,7 +264,7 @@ private struct ScoutResultsView: View {
                     .font(IterFont.caption)
                     .foregroundStyle(IterColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
-                ForecastSourceFooter(app: app, coordinates: found.map(\.spot.coordinate))
+                ForecastSourceLines(app: app, coordinates: found.map(\.spot.coordinate))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(IterSpace.md)

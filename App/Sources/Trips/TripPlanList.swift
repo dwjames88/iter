@@ -57,7 +57,7 @@ struct TripPlanList: View {
                 }
             }
             if showsScores {
-                ForecastSourceFooter(app: model, coordinates: builder.days.flatMap(\.stops).map(\.stop.spot.coordinate))
+                ForecastSourceLines(app: model, coordinates: builder.days.flatMap(\.stops).map(\.stop.spot.coordinate))
                     .selectionDisabled()
                     .listRowSeparator(.hidden)
             }
@@ -154,32 +154,51 @@ struct DayHeader: View {
     let day: TripDay
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: IterSpace.md) {
-            VStack(alignment: .leading, spacing: IterSpace.xxs) {
-                Text(TimeText.tripDay(index: day.index, day: day.day))
-                    .font(IterFont.headline)
-                    .foregroundStyle(IterColor.textPrimary)
-                if let frame = LightText.dayFrame(sunrise: day.sunrise, sunset: day.sunset, in: day.timeZone) {
-                    Label {
-                        Text(frame).monospacedDigit()
-                    } icon: {
-                        Image(systemName: "sun.horizon")
-                    }
-                    .font(IterFont.caption)
-                    .foregroundStyle(IterColor.textSecondary)
-                }
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .firstTextBaseline, spacing: IterSpace.md) {
+                titleBlock
+                Spacer(minLength: IterSpace.sm)
+                totals
             }
-            Spacer(minLength: IterSpace.sm)
-            Text(LightText.dayTotals(stops: day.stops.count, drivingSeconds: day.drivingSeconds))
-                .font(IterFont.caption)
-                .foregroundStyle(IterColor.textSecondary)
-                .monospacedDigit()
+            .fixedSize(horizontal: false, vertical: true)
+            // Narrow column: the totals stack under the title block instead of truncating beside it.
+            VStack(alignment: .leading, spacing: IterSpace.xxs) {
+                titleBlock
+                totals
+            }
         }
         .textCase(nil)
         .padding(.vertical, IterSpace.xs)
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isHeader)
+    }
+}
+
+private extension DayHeader {
+    var titleBlock: some View {
+        VStack(alignment: .leading, spacing: IterSpace.xxs) {
+            Text(TimeText.tripDay(index: day.index, day: day.day))
+                .font(IterFont.headline)
+                .foregroundStyle(IterColor.textPrimary)
+                .fixedSize(horizontal: false, vertical: true)
+            if let frame = LightText.dayFrame(sunrise: day.sunrise, sunset: day.sunset, in: day.timeZone) {
+                Label {
+                    Text(frame).monospacedDigit()
+                } icon: {
+                    Image(systemName: "sun.horizon")
+                }
+                .font(IterFont.caption)
+                .foregroundStyle(IterColor.textSecondary)
+            }
+        }
+    }
+
+    var totals: some View {
+        Text(LightText.dayTotals(stops: day.stops.count, drivingSeconds: day.drivingSeconds))
+            .font(IterFont.caption)
+            .foregroundStyle(IterColor.textSecondary)
+            .monospacedDigit()
     }
 }
 

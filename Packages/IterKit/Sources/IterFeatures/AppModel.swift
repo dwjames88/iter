@@ -19,6 +19,8 @@ public final class AppModel {
     public let geocoder: any Geocoding
     public let drives: any DriveTimeProviding
     public let scout: (any Scouting)?
+    /// The user's location for "Near you" (inert unless the app passes a live one).
+    public let location: UserLocationModel
 
     /// Sample Data mode (Debug menu). Off by default; every screen showing sample data says so.
     public private(set) var sampleDataEnabled: Bool
@@ -45,6 +47,7 @@ public final class AppModel {
                 drives: any DriveTimeProviding,
                 scout: (any Scouting)?,
                 weatherSetup: WeatherSetup? = nil,
+                location: UserLocationModel = UserLocationModel(),
                 sampleWeather: any WeatherProviding = CachedWeatherService(wrapping: SampleWeatherService()),
                 ephemeris: any Ephemeris = Astronomy(),
                 defaults: UserDefaults = .standard,
@@ -56,6 +59,7 @@ public final class AppModel {
         self.geocoder = geocoder
         self.drives = drives
         self.scout = scout
+        self.location = location
         self.defaults = defaults
         self.now = now
         self.engine = LightEngine(ephemeris: ephemeris)
@@ -86,7 +90,8 @@ public final class AppModel {
                  geocoder: MapKitGeocoder(),
                  drives: MapKitDriveTimes(),
                  scout: scout,
-                 weatherSetup: setup)
+                 weatherSetup: setup,
+                 location: .live())
     }
 
     public func setSampleData(_ enabled: Bool) {

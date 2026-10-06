@@ -26,6 +26,15 @@ enum SpotLayout {
     static let belowHorizonOpacity = 0.35
 }
 
+/// Where the spot page's sections are drawn. `.page` is the full spot page; `.compact` is a narrow host (an
+/// expanded Explore row, the map's place card, about 300–360 pt wide) where sections drop their large titles and
+/// page-only chrome and fit the width they are given.
+enum SpotDensity: Sendable { case page, compact }
+
+extension EnvironmentValues {
+    @Entry var spotDensity: SpotDensity = .page
+}
+
 /// A card surface used for the lead and the charts.
 struct SpotCard<Content: View>: View {
     @ViewBuilder var content: Content
@@ -37,5 +46,16 @@ struct SpotCard<Content: View>: View {
             .background(IterColor.backgroundControl, in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
             .overlay(RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous)
                 .strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
+    }
+}
+
+/// A section title: the large page title, or a headline in a narrow host.
+struct SpotSectionTitle: View {
+    @Environment(\.spotDensity) private var density
+    let text: String
+    init(_ text: String) { self.text = text }
+
+    var body: some View {
+        Text(text).font(density == .compact ? IterFont.headline : IterFont.titleSection)
     }
 }

@@ -69,6 +69,9 @@
     "%@ (estimated)" : {
       "comment" : "Trip driving total that includes estimated drives"
     },
+    "%@ away" : {
+      "comment" : "VoiceOver: distance from you"
+    },
     "%@ cloud" : {
       "comment" : "Scrub readout"
     },
@@ -388,6 +391,9 @@
     "Add a stop to this day, nearest spots first" : {
       "comment" : "Tooltip"
     },
+    "Add this spot to a trip" : {
+      "comment" : "Tooltip"
+    },
     "Add this spot to a trip day" : {
       "comment" : "Help"
     },
@@ -454,6 +460,9 @@
     "Ask Scout to find places" : {
       "comment" : "Tooltip"
     },
+    "Ask to use your location" : {
+      "comment" : "Tooltip"
+    },
     "Astro" : {
       "comment" : "Spot category"
     },
@@ -470,9 +479,6 @@
     },
     "At %@ the sun is below the horizon." : {
       "comment" : "Sky arc readout for the sun"
-    },
-    "Attribution" : {
-      "comment" : "Settings section"
     },
     "Back to All Trips" : {
       "comment" : "Button"
@@ -639,7 +645,7 @@
       "comment" : "Scout example request"
     },
     "Collapsed" : {
-      "comment" : "VoiceOver state"
+      "comment" : "VoiceOver state\nVoiceOver: the list row is closed\nVoiceOver: the section is closed"
     },
     "Compass direction →" : {
       "comment" : "Sky arc x axis"
@@ -658,6 +664,9 @@
     },
     "Couldn't find this place's time zone, so using this Mac's." : {
       "comment" : "Time zone fallback after a failed lookup"
+    },
+    "Couldn't find your location." : {
+      "comment" : "Explore banner: no fix yet"
     },
     "Couldn't open this trip" : {
       "comment" : "Alert title"
@@ -705,6 +714,9 @@
     },
     "Dark-sky places near Moab for the Milky Way" : {
       "comment" : "Scout example request"
+    },
+    "Data Sources and Attribution" : {
+      "comment" : "About: heading for provider credits\nSettings section"
     },
     "Date" : {
       "comment" : "Accessibility label of the date control\nAccessibility label of the date picker"
@@ -765,8 +777,8 @@
     "Dismiss" : {
       "comment" : "Button"
     },
-    "Distance from Map Centre" : {
-      "comment" : "Sort option: nearest to the middle of the map first"
+    "Distance" : {
+      "comment" : "Sort option: nearest first; from your location, or from the middle of the map when there is no location"
     },
     "Drag the map to move the pin." : {
       "comment" : "Spot editor map hint"
@@ -820,7 +832,7 @@
       "comment" : "Light window: civil twilight after sunset"
     },
     "Expanded" : {
-      "comment" : "VoiceOver state"
+      "comment" : "VoiceOver state\nVoiceOver: the list row is open\nVoiceOver: the section is open"
     },
     "Explain" : {
       "comment" : "Button: write a plain-language explanation of a score"
@@ -863,6 +875,9 @@
     },
     "Find Spots" : {
       "comment" : "Menu item"
+    },
+    "Finding your location…" : {
+      "comment" : "Progress in the Explore banner while the location is being found"
     },
     "First quarter" : {
       "comment" : "Moon phase"
@@ -972,6 +987,17 @@
     "If the first source can't answer, Iter asks the second. A fallback is always named next to the forecast." : {
       "comment" : "Settings footer"
     },
+    "Image %lld of %lld" : {
+      "comment" : "VoiceOver: position in the place card's image strip",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Image %1$lld of %2$lld"
+          }
+        }
+      }
+    },
     "Import Trip" : {
       "comment" : "Undo action name"
     },
@@ -1012,6 +1038,9 @@
     },
     "Iter couldn't read that file. Nothing was imported." : {
       "comment" : "Import error"
+    },
+    "Iter uses your location to show spots within %lld miles." : {
+      "comment" : "Explore banner: why location is asked for; the number is the radius in miles"
     },
     "Iter's daily limit for %@ is reached, to stay inside the free allowance. Forecasts resume tomorrow or raise the cap in Settings." : {
       "comment" : "No forecast reason: Iter's own daily call cap was reached. Argument is the provider name"
@@ -1063,7 +1092,7 @@
       "comment" : "Tooltip"
     },
     "Legal attribution" : {
-      "comment" : "Link to Apple Weather legal attribution\nLink to a weather provider's legal attribution"
+      "comment" : "Link to Apple Weather legal attribution"
     },
     "Light" : {
       "comment" : "Menu title"
@@ -1113,8 +1142,17 @@
     "Loading forecasts" : {
       "comment" : "Tooltip on the progress indicator"
     },
+    "Loading images of %@" : {
+      "comment" : "VoiceOver: the place card's image placeholder while loading"
+    },
     "Look Around" : {
-      "comment" : "Spot page section title"
+      "comment" : "Source label on a spot image\nSpot page section title"
+    },
+    "Look Around view of %@" : {
+      "comment" : "VoiceOver: image of a spot"
+    },
+    "Look for your location again" : {
+      "comment" : "Tooltip"
     },
     "Looking up this place…" : {
       "comment" : "Spot editor lookup progress"
@@ -1176,6 +1214,9 @@
     "Moonlight" : {
       "comment" : "Light factor"
     },
+    "More Places" : {
+      "comment" : "List section: every other spot beyond the near-you radius"
+    },
     "Morning blue hour" : {
       "comment" : "Light window: civil twilight before sunrise"
     },
@@ -1199,6 +1240,15 @@
     },
     "Name this spot to save it." : {
       "comment" : "Validation: name required"
+    },
+    "Near You" : {
+      "comment" : "List section: spots close to your location"
+    },
+    "Near You Radius" : {
+      "comment" : "Menu section title: how far Near You reaches"
+    },
+    "Near You · Within %@" : {
+      "comment" : "List section title: the distance is the near-you radius, e.g. 300 mi"
     },
     "Nearest to %@ first" : {
       "comment" : "Add stop list order, naming the stop the distances are from"
@@ -1235,6 +1285,9 @@
     },
     "Next day (⌘])" : {
       "comment" : "Tooltip"
+    },
+    "Next image" : {
+      "comment" : "VoiceOver and tooltip"
     },
     "Next sunrise %@" : {
       "comment" : "Sun time when there is no score"
@@ -1273,6 +1326,9 @@
     },
     "No golden hour, blue hour or night window today." : {
       "comment" : "Windows list when the sun produces no windows"
+    },
+    "No images of %@" : {
+      "comment" : "VoiceOver: the place card's image placeholder when there are none"
     },
     "No places found" : {
       "comment" : "Empty state after a real Apple Maps search"
@@ -1343,7 +1399,13 @@
       "comment" : "Compact no-forecast reason"
     },
     "Open" : {
-      "comment" : "Button: open a spot\nContext menu\nContext menu: open the spot page\nMenu item\nPlace card primary action: open the spot page"
+      "comment" : "Button: open a spot\nContext menu\nContext menu: open the spot page\nMenu item"
+    },
+    "Open Location Services in System Settings" : {
+      "comment" : "Tooltip"
+    },
+    "Open Location Settings" : {
+      "comment" : "Button: open System Settings > Location Services"
     },
     "Open Spot Page" : {
       "comment" : "Context menu"
@@ -1434,6 +1496,9 @@
     "Poor" : {
       "comment" : "Light Index band"
     },
+    "Popular" : {
+      "comment" : "List section: iconic spots beyond the near-you radius"
+    },
     "Popularity" : {
       "comment" : "Sort option: most popular first"
     },
@@ -1442,6 +1507,9 @@
     },
     "Previous day (⌘[)" : {
       "comment" : "Tooltip"
+    },
+    "Previous image" : {
+      "comment" : "VoiceOver and tooltip"
     },
     "Professional" : {
       "comment" : "Windy key type"
@@ -1472,6 +1540,9 @@
     },
     "Remove" : {
       "comment" : "Button"
+    },
+    "Remove %@ from Saved" : {
+      "comment" : "VoiceOver"
     },
     "Remove Stop" : {
       "comment" : "Undo action name"
@@ -1515,8 +1586,17 @@
     "Sample data" : {
       "comment" : "Banner title when sample weather is on\nLabel on scores made from sample weather\nWeather source name: made-up data for demos"
     },
+    "Satellite" : {
+      "comment" : "Source label on a spot image"
+    },
+    "Satellite view of %@" : {
+      "comment" : "VoiceOver: image of a spot"
+    },
     "Save" : {
-      "comment" : "Button\nButton: save a spot\nContext menu\nPlace card: save the spot"
+      "comment" : "Button\nButton: save a spot\nContext menu\nExpanded row: save the spot\nPlace card: save the spot"
+    },
+    "Save %@" : {
+      "comment" : "VoiceOver"
     },
     "Save Spot" : {
       "comment" : "Undo action name"
@@ -1528,7 +1608,7 @@
       "comment" : "Help\nTooltip"
     },
     "Saved" : {
-      "comment" : "Accessibility label\nButton state\nButton state: spot is saved\nMenu item\nPlace card: the spot is saved\nSection title\nSidebar item"
+      "comment" : "Accessibility label\nButton state\nButton state: spot is saved\nExpanded row: the spot is saved\nMenu item\nPlace card: the spot is saved\nSection title\nSidebar item"
     },
     "Saved in Keychain" : {
       "comment" : "Settings: the key is in the Keychain"
@@ -1635,17 +1715,26 @@
     "Show" : {
       "comment" : "Menu"
     },
+    "Show Full Page" : {
+      "comment" : "Place card: open the spot's full page"
+    },
     "Show Light For" : {
       "comment" : "Menu item\nMenu section title: which light to score every spot for"
     },
     "Show light for" : {
       "comment" : "Settings field"
     },
+    "Show spots near you" : {
+      "comment" : "Explore banner title when location is not yet allowed"
+    },
     "Show the reasons behind this window" : {
       "comment" : "Help"
     },
     "Show this day" : {
       "comment" : "Button that selects the best day"
+    },
+    "Shows or hides the save and trip buttons and the weather" : {
+      "comment" : "VoiceOver hint on an Explore row"
     },
     "Shows why this window scores as it does" : {
       "comment" : "VoiceOver hint"
@@ -1879,7 +1968,7 @@
       "comment" : "Heading above scout example requests"
     },
     "Try Again" : {
-      "comment" : "Button"
+      "comment" : "Button\nButton: look for the location again"
     },
     "Turn on Apple Intelligence in System Settings to describe the place you want in your own words." : {
       "comment" : "Scout unavailable detail: Apple Intelligence not enabled"
@@ -1902,6 +1991,9 @@
     "Use" : {
       "comment" : "Settings: the forecast source Iter uses"
     },
+    "Use My Location" : {
+      "comment" : "Button: allow location for the near-you list"
+    },
     "Use Sample Weather" : {
       "comment" : "Debug menu item"
     },
@@ -1921,6 +2013,20 @@
     },
     "Visibility" : {
       "comment" : "Light factor"
+    },
+    "Visibility %@" : {
+      "comment" : "Compact hourly weather: horizontal visibility"
+    },
+    "Visibility %@ to %@" : {
+      "comment" : "Compact hourly weather: range of horizontal visibility over the day",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Visibility %1$@ to %2$@"
+          }
+        }
+      }
     },
     "Walk-in (minutes)" : {
       "comment" : "Spot editor field: minutes from parking"
@@ -2070,6 +2176,9 @@
     },
     "walk-in unknown" : {
       "comment" : "Walk from parking to the shooting spot is not known"
+    },
+    "· %@" : {
+
     },
     "↑ Height above the horizon" : {
       "comment" : "Sky arc y axis"

@@ -63,10 +63,14 @@ struct LightTimelineSection: View {
 
     // MARK: Pieces
 
+    @Environment(\.spotDensity) private var density
+
     private var header: some View {
-        HStack(alignment: .firstTextBaseline) {
-            Text(LightText.timelineTitle).font(IterFont.titleSection)
-            Spacer()
+        let layout = density == .compact ? AnyLayout(VStackLayout(alignment: .leading, spacing: IterSpace.sm))
+                                         : AnyLayout(HStackLayout(alignment: .firstTextBaseline))
+        return layout {
+            SpotSectionTitle(LightText.timelineTitle)
+            if density == .page { Spacer() }
             if page.availableFoci.count > 1 {
                 Picker(selection: Binding(get: { page.focus }, set: { page.setFocus($0) })) {
                     ForEach(page.availableFoci) { focus in Text(label(focus)).tag(focus) }

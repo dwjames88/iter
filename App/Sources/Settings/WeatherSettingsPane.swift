@@ -81,42 +81,11 @@ struct WeatherSettingsPane: View {
 
     // MARK: Attribution
 
+    /// Each provider's required credit, moved here from the content screens at the owner's request.
     @ViewBuilder private var attribution: some View {
-        let used = model.weather.settings.order.filter { model.attribution(for: $0) != nil }
-        if model.sampleDataEnabled || !used.isEmpty {
-            Section {
-                if model.sampleDataEnabled { SampleDataLabel(style: .inline) }
-                ForEach(used, id: \.self) { source in
-                    if let info = model.attribution(for: source) { AttributionRow(info: info) }
-                }
-                Text("Light Index modified from forecast data", comment: "Value-added data notice under weather")
-                    .font(IterFont.caption).foregroundStyle(IterColor.textTertiary)
-            } header: { Text("Attribution", comment: "Settings section") }
-        }
-    }
-}
-
-/// The credit a provider asks for: a text line and a link, or Apple's mark.
-private struct AttributionRow: View {
-    let info: WeatherAttributionInfo
-    @Environment(\.colorScheme) private var colorScheme
-
-    var body: some View {
-        HStack(spacing: IterSpace.sm) {
-            if let text = info.requiredText {
-                Text(text).font(IterFont.caption)
-            } else {
-                AsyncImage(url: colorScheme == .dark ? info.combinedMarkDarkURL : info.combinedMarkLightURL) { image in
-                    image.resizable().scaledToFit()
-                } placeholder: {
-                    Text(info.serviceName).font(IterFont.caption)
-                }
-                .frame(height: IterSize.iconSmall)
-                .accessibilityLabel(info.serviceName)
-            }
-            Link(String(localized: "Legal attribution", comment: "Link to a weather provider's legal attribution"), destination: info.legalPageURL)
-                .font(IterFont.caption)
-        }
+        Section {
+            WeatherDataSources()
+        } header: { Text("Data Sources and Attribution", comment: "Settings section") }
     }
 }
 

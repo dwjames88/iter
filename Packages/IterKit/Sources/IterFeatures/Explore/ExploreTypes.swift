@@ -14,7 +14,7 @@ public enum ExploreSort: String, CaseIterable, Hashable, Sendable, Identifiable 
     /// Highest Light Index first; spots with no forecast come last.
     case bestLight
     case name
-    /// Nearest to the centre of the visible map first.
+    /// Nearest first: to you when there is a location, else to the centre of the visible map.
     case distance
     /// Most popular (iconic, crowded) first.
     case popularity
@@ -52,7 +52,8 @@ public struct ExploreRow: Identifiable, Hashable, Sendable {
     public var source: ExploreSource
     /// The headline window for the chosen intent on the chosen day; nil when the sun never makes that window.
     public var window: LightWindow?
-    /// Straight-line metres from the centre of the visible map, when known.
+    /// Straight-line metres from you when there is a location; else from the centre of the visible map while sorting
+    /// by distance; else nil.
     public var distanceMeters: Double?
 
     public var id: String { spot.id }
@@ -66,8 +67,14 @@ public struct ExploreRow: Identifiable, Hashable, Sendable {
 }
 
 public enum ExploreSectionKind: Hashable, Sendable {
-    /// Curated and your own spots.
+    /// Curated and your own spots, when there is no location to group them by.
     case spots
+    /// Curated and your own spots within the radius of you.
+    case nearYou
+    /// Iconic curated spots beyond the radius (popularity at or above `ExploreModel.popularThreshold`).
+    case popular
+    /// Every other spot beyond the radius. Collapsed by default.
+    case morePlaces
     case appleMaps
 }
 
@@ -106,8 +113,10 @@ public struct ExplorePin: Identifiable, Equatable, Sendable {
 /// A command for the map camera. The view applies a request when its `id` changes.
 public struct CameraRequest: Equatable, Sendable {
     public enum Kind: Equatable, Sendable {
+        /// An automatic fit of the content.
         case fit(GeoRegion)
-        case center(Coordinate)
+        /// A pan that keeps the zoom (selecting a spot).
+        case pan(GeoRegion)
     }
     public var id: Int
     public var kind: Kind

@@ -88,35 +88,64 @@ struct StopRowView: View {
         }
     }
 
+    /// Session menu, walk-in and set-up on one line when they fit; otherwise the menu on its own line with the
+    /// walk-in and set-up text under it (no flexible heights, so the row never grows blank space).
     private var sessionLine: some View {
-        HStack(spacing: IterSpace.sm) {
-            Picker(selection: sessionBinding) {
-                ForEach(entry.windows) { window in
-                    Text(LightText.sessionMenuItem(window, in: zone)).tag(window.kind)
-                }
-                if entry.sessionWindow == nil {
-                    Text(LightText.noSession(entry.stop.session)).tag(entry.stop.session)
-                }
-            } label: {
-                Text("Session", comment: "Accessibility label of the session menu")
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: IterSpace.sm) {
+                sessionMenu
+                walkInText
+                Text(verbatim: "·").accessibilityHidden(true)
+                bufferButton
             }
-            .pickerStyle(.menu)
-            .labelsHidden()
-            .controlSize(.small)
             .fixedSize()
-            .help(Text("Which light to shoot here: each window with its time and score for this day", comment: "Tooltip"))
-            Text(ScheduleText.walkIn(minutes: spot.walkInMinutes))
-            Text(verbatim: "·").accessibilityHidden(true)
-            Button { editsBuffer = true } label: {
-                Text(ScheduleText.buffer(minutes: entry.stop.setUpBufferMinutes))
+            VStack(alignment: .leading, spacing: IterSpace.xxs) {
+                sessionMenu
+                HStack(spacing: IterSpace.sm) {
+                    walkInText
+                    Text(verbatim: "·").accessibilityHidden(true)
+                    bufferButton
+                }
+                .fixedSize()
             }
-            .buttonStyle(.link)
-            .help(Text("Change how long before the window you want to be set up", comment: "Tooltip"))
-            .popover(isPresented: $editsBuffer, arrowEdge: .bottom) { bufferEditor }
+            VStack(alignment: .leading, spacing: IterSpace.xxs) {
+                sessionMenu
+                walkInText
+                bufferButton
+            }
         }
         .font(IterFont.caption)
         .foregroundStyle(IterColor.textSecondary)
         .lineLimit(1)
+        .popover(isPresented: $editsBuffer, arrowEdge: .bottom) { bufferEditor }
+    }
+
+    private var sessionMenu: some View {
+        Picker(selection: sessionBinding) {
+            ForEach(entry.windows) { window in
+                Text(LightText.sessionMenuItem(window, in: zone)).tag(window.kind)
+            }
+            if entry.sessionWindow == nil {
+                Text(LightText.noSession(entry.stop.session)).tag(entry.stop.session)
+            }
+        } label: {
+            Text("Session", comment: "Accessibility label of the session menu")
+        }
+        .pickerStyle(.menu)
+        .labelsHidden()
+        .controlSize(.small)
+        .fixedSize()
+        .help(Text("Which light to shoot here: each window with its time and score for this day", comment: "Tooltip"))
+    }
+
+    private var walkInText: some View { Text(ScheduleText.walkIn(minutes: spot.walkInMinutes)) }
+
+    private var bufferButton: some View {
+        Button { editsBuffer = true } label: {
+            Text(ScheduleText.buffer(minutes: entry.stop.setUpBufferMinutes))
+        }
+        .buttonStyle(.link)
+        .help(Text("Change how long before the window you want to be set up", comment: "Tooltip"))
     }
 
     private var sessionBinding: Binding<LightWindowKind> {

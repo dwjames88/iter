@@ -26,7 +26,7 @@ A coherent Mac app you can use end to end. Anything not listed here is absent fr
 
 **Testing aids.** Debug menu: Sample Data mode (off by default, labelled on every screen), Seed Sample Trip, Reset All Data. Snapshot renderer for every screen and state.
 
-**Not in milestone 1, deliberately:** Night mode (designed with the palette work, below), spot photos (the Wikipedia source is gone; Look Around stands in), a per-day timeline strip (6.3-B), "How did it go?" check-ins, calendar and GPX export.
+**Not in milestone 1, deliberately:** Night mode (designed with the palette work, below), spot photos (the Wikipedia source is gone; the Explore place card's image strip shows Look Around where Apple has it, 4 of 45 curated spots, and a satellite image otherwise; user photos will be one more source in that strip), a per-day timeline strip (6.3-B), "How did it go?" check-ins, calendar and GPX export.
 
 ## Milestone 2 · Foundation and field
 

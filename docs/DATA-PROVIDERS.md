@@ -4,6 +4,8 @@ Where Iter's forecasts come from, what each source can and cannot give the Light
 
 Iter has three forecast providers (plus Sample Data, which is for testing only). The user chooses a primary in Settings ▸ Weather and, optionally, a fallback ("If it fails, try"). `WeatherRouter` tries them in order. If the primary fails and the fallback answers, the forecast records which source failed, and every screen says so ("OpenWeather (Apple Weather unavailable)"; the reason is not claimed beyond that). If all fail, the primary's error is shown.
 
+> **Note, 2026-10-06: attribution lives in Settings.** At the owner's instruction ("Take off the attribution, put that in settings."), provider attribution (the Apple Weather mark and legal link, "Weather data © OpenWeather", Windy's "Contains data from the Windy database" and windy.com link, and "Light Index modified from forecast data") is shown only in Settings ▸ Weather ("Data Sources and Attribution") and Settings ▸ About, no longer beside forecasts on Explore, Trip builder, Saved, Scout or the spot page. Screens keep a plain source line ("OpenWeather · updated 06:29"). The provider terms as documented below (OpenWeather's licence, Apple's WeatherKit rules and Windy's API terms) ask for attribution where the data is shown. The owner chose Settings-only for this test build. **This must be revisited before any release.**
+
 ## What the Light Index needs
 
 The Light Index scores five windows a day from hourly data: cloud cover (total, and low, mid and high layers where known), precipitation, visibility, and the sun and moon from Iter's own astronomy. Each provider fills some of these and leaves the rest unknown. Unknown is never guessed. A missing input drops its factor and adds a note to the score (`ScoreNote`), and some lower confidence.
@@ -25,7 +27,7 @@ Apple Weather's column is from the app's own notes (`docs/ARCHITECTURE.md`, `App
 
 * The best fit for the Light Index: cloud by altitude, visibility and precipitation chance, hourly.
 * Works only for an app signed by a paid Apple Developer Program team with WeatherKit on its App ID. See [TESTING.md](../TESTING.md).
-* Attribution: the Apple Weather mark and its legal page, shown wherever its forecasts appear. This is WeatherKit's rule.
+* Attribution: the Apple Weather mark and its legal page, required wherever its forecasts appear. This is WeatherKit's rule (currently shown in Settings only, see the 2026-10-06 note above).
 * Cache: `CachedWeatherService`, an actor keyed by rounded coordinate.
 
 ## OpenWeather One Call 3.0
@@ -51,7 +53,7 @@ Request: `GET https://api.openweathermap.org/data/3.0/onecall` with `lat`, `lon`
 
 * **Plan:** "One Call by Call". 1,000 calls a day are free. Calls over that cost 0.0015 USD each. Price page: <https://openweathermap.org/price>.
 * **Daily cap:** set on the "Billing plan" tab of your OpenWeather account. Set it to 1,000 or below so the free allowance cannot be exceeded.
-* **Licence:** ODbL. Commercial use is allowed. Visible attribution is required wherever the data appears. OpenWeather's recommended line is "Weather data © OpenWeather". Licence page: <https://openweathermap.org/full-price#licenses>. Iter shows that line, linking openweathermap.org, wherever OpenWeather forecasts appear. The ODbL also allows Iter to keep the data, so the cache persists on disk.
+* **Licence:** ODbL. Commercial use is allowed. Visible attribution is required wherever the data appears. OpenWeather's recommended line is "Weather data © OpenWeather". Licence page: <https://openweathermap.org/full-price#licenses>. Iter shows that line, linking openweathermap.org, in Settings ▸ Weather and About (see the 2026-10-06 note above). The ODbL also allows Iter to keep the data, so the cache persists on disk.
 * **One Call 4.0.** OpenWeather now recommends One Call 4.0 for new integrations. Its FAQ describes 4.0 with a default cap of 2,000 calls a day. Iter uses 3.0 because that is the version whose pages and schema were read for this work. Moving to 4.0 is on the [roadmap](ROADMAP.md).
 * **Payment card: not confirmed.** Whether a payment card is needed for the free 3.0 allowance was not confirmed from the pages read. The price page says "Complete the billing form and confirm payment" for subscriptions. Check at sign-up before assuming it is free of card details.
 * **Keys take up to two hours to activate** after creation. A 401 in that time is normal.

@@ -24,7 +24,7 @@ struct SkyArcSection: View {
         let data = Self.data(page)
         let t = page.markerTime
         VStack(alignment: .leading, spacing: IterSpace.md) {
-            Text(LightText.skyTitle).font(IterFont.titleSection)
+            SpotSectionTitle(LightText.skyTitle)
             SpotCard {
                 VStack(alignment: .leading, spacing: IterSpace.sm) {
                     Canvas { ctx, size in ArcRenderer.draw(&ctx, size: size, data: data) }

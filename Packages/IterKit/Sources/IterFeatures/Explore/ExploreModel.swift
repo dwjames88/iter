@@ -18,7 +18,17 @@ public final class ExploreModel {
     public var filters = ExploreFilters() {
         didSet { if oldValue != filters { resultSetChanged() } }
     }
-    public var sort: ExploreSort = .bestLight
+    /// What the user picked in the menu; nil until they pick one.
+    private var chosenSort: ExploreSort?
+    /// The list order. Until the user picks one: nearest first while there is a location (the list is about places
+    /// you can reach), else best light first. `.distance` always means "from you" with a location, else "from the
+    /// map's centre".
+    public var sort: ExploreSort {
+        get { chosenSort ?? (hasLocation ? .distance : .bestLight) }
+        set { chosenSort = newValue }
+    }
+    /// The user opened "More Places" themselves.
+    private var moreOpenedByUser = false
     /// The search field. Filters curated and your own spots as you type; Apple Maps runs on submit.
     public var query = "" {
         didSet { if oldValue != query { queryChanged() } }
@@ -37,6 +47,8 @@ public final class ExploreModel {
     public private(set) var searchState: ExploreSearchState = .idle
     public private(set) var selectedID: String?
     public private(set) var selectionSource: SelectionSource = .program
+    /// The one list row open to its actions and weather. Always nil or equal to `selectedID`.
+    public private(set) var expandedID: String?
     public private(set) var cameraRequest: CameraRequest?
     /// Asks the list to scroll a row into view when `id` changes.
     public private(set) var scrollRequest: (id: Int, target: String)?
@@ -45,6 +57,12 @@ public final class ExploreModel {
 
     /// Chips on the map besides the selected one.
     public static let pinBudget = 6
+    /// Curated `Spot.popularity` (0 to 100, high = iconic and crowded) at or above which a spot beyond the radius is
+    /// listed under "Popular". It comes from the curated field; no visitor numbers are involved.
+    public static let popularThreshold = 80
+    /// The screen key the map camera is saved under.
+    public static let cameraScreenKey = "explore"
+    private static let metersPerMile = 1609.344
 
     @ObservationIgnored public var searchDebounce: Duration
     @ObservationIgnored public private(set) var searchTask: Task<Void, Never>?
@@ -52,12 +70,32 @@ public final class ExploreModel {
     @ObservationIgnored private var windowCache: [String: CachedWindow] = [:]
     @ObservationIgnored private var windowCacheStamp: WindowStamp?
     @ObservationIgnored private var derivedCache: (stamp: DerivedStamp, value: Derived)?
+    @ObservationIgnored private let defaults: UserDefaults
+    @ObservationIgnored public private(set) var cameraPolicy: MapCameraPolicy
 
-    public init(app: AppModel, searchDebounce: Duration = .milliseconds(250)) {
+    public init(app: AppModel, searchDebounce: Duration = .milliseconds(250), defaults: UserDefaults = .standard) {
         self.app = app
         self.searchDebounce = searchDebounce
+        self.defaults = defaults
+        self.cameraPolicy = MapCameraPolicy.load(screen: Self.cameraScreenKey, defaults: defaults)
         self.day = app.today(in: .current)
     }
+
+    // MARK: - Location
+
+    /// True when there is a fix to measure from.
+    public var hasLocation: Bool { app.location.coordinate != nil }
+    /// "Near you" reaches this far, in miles.
+    public var radiusMiles: Int { app.location.radiusMiles }
+
+    /// Call when Explore first appears. Never blocks; the system permission dialog may show.
+    public func start() { app.location.start() }
+
+    /// "More Places" is open: the user opened it, or a search is narrowing the list (so a match is never hidden).
+    public var isMorePlacesOpen: Bool { moreOpenedByUser || !trimmedQuery.isEmpty }
+    public func setMorePlacesOpen(_ open: Bool) { moreOpenedByUser = open }
+
+    private var trimmedQuery: String { query.trimmingCharacters(in: .whitespacesAndNewlines) }
 
     // MARK: - Day
 
@@ -79,7 +117,10 @@ public final class ExploreModel {
         var sort: ExploreSort
         var query: String
         var appleIDs: [String]
-        var center: Coordinate?
+        /// What distances are measured from: you, else the map centre while sorting by distance.
+        var origin: Coordinate?
+        var hasLocation: Bool
+        var radiusMiles: Int
     }
     private struct Derived {
         var sections: [ExploreSection]
@@ -88,18 +129,21 @@ public final class ExploreModel {
     }
 
     private var derived: Derived {
-        let center: Coordinate? = sort == .distance ? visibleRegion?.center : nil
+        let user = app.location.coordinate
+        let origin: Coordinate? = user ?? (sort == .distance ? visibleRegion?.center : nil)
         let stamp = DerivedStamp(day: day, intent: app.preferredIntent, forecastRevision: app.forecasts.revision,
                                  storeRevision: app.store.revision, filters: filters, sort: sort,
                                  query: query.trimmingCharacters(in: .whitespacesAndNewlines),
-                                 appleIDs: appleResults.map(\.id), center: center)
+                                 appleIDs: appleResults.map(\.id), origin: origin, hasLocation: user != nil,
+                                 radiusMiles: app.location.radiusMiles)
         if let cached = derivedCache, cached.stamp == stamp { return cached.value }
         let value = buildDerived(stamp)
         derivedCache = (stamp, value)
         return value
     }
 
-    /// Curated and your spots, then Apple Maps; empty sections are left out.
+    /// Near you, Popular and More Places (or one Spots section without a location), then Apple Maps; empty sections
+    /// are left out.
     public var sections: [ExploreSection] { derived.sections }
     /// Every visible row in list order.
     public var rows: [ExploreRow] { derived.rows }
@@ -120,14 +164,30 @@ public final class ExploreModel {
         var rows: [ExploreRow] = []
         for (spot, source) in candidates() where Self.matches(spot, source: source, filters: filters, query: stamp.query) {
             rows.append(ExploreRow(spot: spot, source: source, window: window(for: spot),
-                                   distanceMeters: stamp.center.map { $0.distance(to: spot.coordinate) }))
+                                   distanceMeters: stamp.origin.map { $0.distance(to: spot.coordinate) }))
         }
-        let spots = Self.sorted(rows.filter { $0.source != .appleMaps }, by: sort)
+        let own = rows.filter { $0.source != .appleMaps }
         let apple = Self.sorted(rows.filter { $0.source == .appleMaps }, by: sort)
         var sections: [ExploreSection] = []
-        if !spots.isEmpty { sections.append(ExploreSection(kind: .spots, rows: spots)) }
+        if stamp.hasLocation {
+            let radius = Double(stamp.radiusMiles) * Self.metersPerMile
+            let near = own.filter { ($0.distanceMeters ?? .infinity) <= radius }
+            let far = own.filter { ($0.distanceMeters ?? .infinity) > radius }
+            let popular = far.filter { $0.source == .curated && $0.spot.popularity >= Self.popularThreshold }
+            let popularIDs = Set(popular.map(\.id))
+            let more = far.filter { !popularIDs.contains($0.id) }
+            let groups: [(ExploreSectionKind, [ExploreRow])] = [
+                (.nearYou, Self.sorted(near, by: sort)),
+                (.popular, Self.sorted(popular, by: .popularity)),
+                (.morePlaces, Self.sorted(more, by: sort)),
+            ]
+            for (kind, group) in groups where !group.isEmpty { sections.append(ExploreSection(kind: kind, rows: group)) }
+        } else {
+            let spots = Self.sorted(own, by: sort)
+            if !spots.isEmpty { sections.append(ExploreSection(kind: .spots, rows: spots)) }
+        }
         if !apple.isEmpty { sections.append(ExploreSection(kind: .appleMaps, rows: apple)) }
-        let flat = spots + apple
+        let flat = sections.flatMap(\.rows)
         return Derived(sections: sections, rows: flat, byID: Dictionary(flat.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a }))
     }
 
@@ -252,33 +312,132 @@ public final class ExploreModel {
     /// Selects a row (or clears with nil). The list follows a map selection by scrolling; the map follows a
     /// list selection by panning only if the pin is out of view (pattern #5).
     public func select(_ id: String?, from source: SelectionSource = .program) {
+        if expandedID != id { expandedID = nil }
         guard selectedID != id else { return }
         selectedID = id
         selectionSource = source
         guard let id, let row = derived.byID[id] else { return }
-        if source == .map { scrollRequest = (nextRequestID(), id) }
-        if source != .map { reveal(row.spot.coordinate) }
-    }
-
-    /// Pans the map so the coordinate is comfortably in view; does nothing when it already is.
-    public func reveal(_ coordinate: Coordinate) {
-        if let region = visibleRegion {
-            let inner = GeoRegion(center: region.center, latitudeDelta: region.latitudeDelta * 0.7, longitudeDelta: region.longitudeDelta * 0.7)
-            if inner.contains(coordinate) { return }
+        if derived.sections.first(where: { $0.kind == .morePlaces })?.rows.contains(where: { $0.id == id }) == true {
+            moreOpenedByUser = true
         }
-        cameraRequest = CameraRequest(id: nextRequestID(), kind: .center(coordinate))
+        if source == .map { scrollRequest = (nextRequestID(), id) }
+        reveal(row.spot.coordinate)
     }
 
-    /// Frames every listed row (first appearance, and whenever filters or search results change: critique C26).
-    public func requestFit() {
-        let coordinates = rows.map(\.spot.coordinate)
-        guard let region = GeoRegion.enclosing(coordinates, padding: 0.25, minimumDelta: 0.1) else { return }
+    /// A click on a list row: a collapsed row is selected and expanded, an expanded row collapses. The list's
+    /// selection binding and the click gesture may arrive in either order; both orders end in the same state.
+    public func rowClicked(_ id: String) {
+        guard derived.byID[id] != nil else { return }
+        if expandedID == id {
+            expandedID = nil
+            return
+        }
+        select(id, from: .list)
+        expandedID = id
+    }
+
+    /// Space or Return on the selected row: expand it, or collapse it when already open.
+    public func toggleExpansion() {
+        guard let id = selectedID, derived.byID[id] != nil else { return }
+        expandedID = expandedID == id ? nil : id
+    }
+
+    public func collapse() { expandedID = nil }
+
+    /// Asks the list to scroll a row into view (launch-time screenshots; selection from the map does this itself).
+    public func requestScroll(to id: String) {
+        guard derived.byID[id] != nil else { return }
+        scrollRequest = (nextRequestID(), id)
+    }
+
+    /// The place card covers up to the lower half of the map, so a revealed pin is kept in the upper part.
+    static let revealMargins = MapCameraPolicy.Margins(bottom: 0.5)
+
+    /// Pans the map so the coordinate is comfortably in view (clear of the place card); does nothing when it already
+    /// is, and never changes the zoom.
+    public func reveal(_ coordinate: Coordinate) {
+        // Before the map has settled anywhere, the starting camera already includes the selection (see
+        // `startRegion`), so there is nothing to pan; the first camera request carries it.
+        guard let current = visibleRegion else { return }
+        let target = MapCameraPolicy.pan(current, toInclude: coordinate, margins: Self.revealMargins)
+        guard target != current else { return }
+        cameraPolicy.didApplyPan(target)
+        cameraRequest = CameraRequest(id: nextRequestID(), kind: .pan(target))
+    }
+
+    /// What an automatic fit frames: the Near you rows (and Apple Maps results) when there is a location, else every
+    /// listed row. Falls back to every row when filters leave Near you empty. Capped by `MapCameraPolicy.maxAutomaticSpan`.
+    public var fitCoordinates: [Coordinate] {
+        if hasLocation {
+            let near = derived.sections.filter { $0.kind == .nearYou || $0.kind == .appleMaps }.flatMap(\.rows)
+            if !near.isEmpty { return near.map(\.spot.coordinate) }
+        }
+        return rows.map(\.spot.coordinate)
+    }
+
+    /// Where the map should start, and how it was chosen. The saved camera is kept when the user chose it or when it
+    /// still contains a Near you row; a stale automatic one (saved far from here) gives way to a fresh fit. A selection
+    /// made before the map exists is folded in with a pan (never a zoom).
+    private func startPlan() -> (region: GeoRegion, base: GeoRegion, usesSaved: Bool)? {
+        let coordinates = fitCoordinates
+        var base: GeoRegion
+        var usesSaved = false
+        if let saved = cameraPolicy.savedRegion {
+            let stale = hasLocation && !cameraPolicy.savedByUser && !coordinates.contains(where: saved.contains)
+            if stale, let fit = MapCameraPolicy.fit(coordinates) { base = fit } else { base = saved; usesSaved = true }
+        } else if let fit = MapCameraPolicy.fit(coordinates) {
+            base = fit
+        } else {
+            return nil
+        }
+        var region = base
+        if let id = selectedID, let row = derived.byID[id] {
+            region = MapCameraPolicy.pan(base, toInclude: row.spot.coordinate, margins: Self.revealMargins)
+        }
+        return (region, base, usesSaved)
+    }
+
+    /// Where the map should start, so the pane can be created already framed and MapKit never shows its automatic
+    /// camera. Pure: records nothing.
+    public var initialCameraRegion: GeoRegion? { startPlan()?.region }
+
+    /// First appearance: the starting camera (restored across launches, else a fit), including any selection.
+    public func requestInitialCamera() {
+        guard let plan = startPlan() else { return }
+        if plan.usesSaved { cameraPolicy.didRestoreSavedCamera() } else { cameraPolicy.didApplyFit(plan.base) }
+        if plan.region != plan.base { cameraPolicy.didApplyPan(plan.region) }
+        cameraRequest = CameraRequest(id: nextRequestID(), kind: .fit(plan.region))
+    }
+
+    /// The list changed (filters, search, radius, a location fix): refit, unless the user has moved the map since
+    /// the last fit.
+    public func contentChanged() {
+        guard let region = cameraPolicy.regionAfterContentChange(fitCoordinates) else { return }
         cameraRequest = CameraRequest(id: nextRequestID(), kind: .fit(region))
     }
 
-    public func cameraDidChange(to region: GeoRegion) {
+    /// A location fix arrived (the sections regroup around it): fit the Near You rows unless the user has really moved
+    /// the map away from the last automatic fit.
+    public func locationChanged() {
+        guard let region = cameraPolicy.regionAfterLocationFix(fitCoordinates, visible: visibleRegion) else { return }
+        cameraRequest = CameraRequest(id: nextRequestID(), kind: .fit(region))
+    }
+
+    /// The map settled at `region` (called by the view when the camera stops moving).
+    /// `byUser` is true only when the user really moved the map. A settle MapKit made on its own is never a user move
+    /// and is saved only when it is the camera we asked for; when it is not, a request re-applies our region.
+    public func cameraDidChange(to region: GeoRegion, byUser: Bool = false) {
         guard visibleRegion != region else { return }
         visibleRegion = region
+        switch cameraPolicy.cameraSettled(region, byUser: byUser) {
+        case .saved:
+            cameraPolicy.save(screen: Self.cameraScreenKey, defaults: defaults)
+        case .reapply(let target):
+            // MapKit settled somewhere we did not ask for: ask again (the view applies the new request).
+            cameraRequest = CameraRequest(id: nextRequestID(), kind: .fit(target))
+        case .ignored:
+            break
+        }
     }
 
     private func nextRequestID() -> Int {
@@ -288,11 +447,12 @@ public final class ExploreModel {
 
     private func resultSetChanged() {
         dropSelectionIfHidden()
-        requestFit()
+        contentChanged()
     }
 
     private func dropSelectionIfHidden() {
         if let id = selectedID, derived.byID[id] == nil { selectedID = nil }
+        if let id = expandedID, derived.byID[id] == nil { expandedID = nil }
     }
 
     // MARK: Pins

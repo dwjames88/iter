@@ -16,7 +16,8 @@ enum Fixtures {
 
     enum Weather { case sample, notEnabled, failed }
 
-    static func model(weather: Weather = .sample, seedTrip: Bool = true, saved: [String] = ["mesa-arch", "tunnel-view"]) -> AppModel {
+    static func model(weather: Weather = .sample, seedTrip: Bool = true, saved: [String] = ["mesa-arch", "tunnel-view"],
+                      location: UserLocationModel = UserLocationModel()) -> AppModel {
         let container = try! IterSchema.makeContainer(inMemory: true)
         let store = IterStore(container: container)
         store.actionName = StoreActionText.name
@@ -32,7 +33,7 @@ enum Fixtures {
         case .failed: live = FailingWeather(error: .failed("offline"))
         }
         let model = AppModel(store: store, weather: live, search: StubSearch(), geocoder: StubGeocoder(),
-                             drives: EstimateDrives(), scout: nil, sampleWeather: sample, defaults: defaults, now: { now })
+                             drives: EstimateDrives(), scout: nil, location: location, sampleWeather: sample, defaults: defaults, now: { now })
         if seedTrip { _ = store.seedSampleTrip(startDay: LocalDay(year: 2026, month: 10, day: 7)) }
         for id in saved { if let s = CuratedSpots.spot(id: id) { store.setSaved(s, true) } }
         return model

@@ -181,6 +181,7 @@ Every token, its values and its one job. Generated from the registry.
 | `size/icon/medium` | 16 | Default symbol size. |
 | `size/icon/large` | 20 | Large symbol size. |
 | `size/confidenceMark` | 14 | Confidence mark diameter. |
+| `size/placeCardImageHeight` | 200 | Height of the image strip at the top of the map's place card: about 16:9 at the card's width. |
 | `size/lightRing/small` | 32 | Score ring in rows. |
 | `size/lightRing/medium` | 44 | Score ring on cards. |
 | `size/lightRing/large` | 64 | Score ring in headers. |
@@ -190,16 +191,20 @@ Every token, its values and its one job. Generated from the registry.
 | `chart/arcMarker` | 14 | Sun and moon marker diameter on the arc. |
 | `chart/hourlyTintHeight` | 40 | Height of the hourly tint strip. |
 | `chart/windowMinWidth` | 4 | Narrowest a light window may be drawn on the timeline. |
-| `layout/sidebarMin` | 200 | Sidebar minimum width. |
+| `layout/sidebarMin` | 240 | Sidebar minimum width: equal to the ideal, so the sidebar never squeezes; it collapses instead. |
 | `layout/sidebarIdeal` | 240 | Sidebar ideal width. |
 | `layout/sidebarMax` | 320 | Sidebar maximum width. |
 | `layout/listMin` | 300 | Content list minimum width. |
 | `layout/listIdeal` | 360 | Content list ideal width. |
 | `layout/listMax` | 520 | Content list maximum width. |
+| `layout/listColumnMin` | 340 | Narrowest a list column beside a map may be (Explore, Saved, Scout, the trip plan): the spot name plus the fixed light column still fit. |
+| `layout/detailMin` | 420 | Narrowest the map or detail pane beside a list may be, so a map stays usable and the place card fits. |
 | `layout/inspectorMin` | 280 | Inspector minimum width. |
 | `layout/inspectorIdeal` | 320 | Inspector ideal width. |
 | `layout/inspectorMax` | 420 | Inspector maximum width. |
-| `layout/windowMinWidth` | 900 | Main window minimum width. |
+| `layout/placeCardWidth` | 360 | Width of the place card floating over the map: the content list's ideal width, which the spot sections are built to fit, and about a third of the narrowest map pane. |
+| `layout/placeCardMaxHeight` | 560 | Tallest the place card grows; it is also capped to half the map's height so the selected pin stays visible. |
+| `layout/windowMinWidth` | 761 | Main window minimum width, derived: layout/listColumnMin (340) + layout/detailMin (420) + a 1 pt divider, so with the sidebar collapsed no column clips. The sidebar collapses on its own below layout/sidebarIdeal plus this. |
 | `layout/windowMinHeight` | 600 | Main window minimum height. |
 | `stroke/hairline` | 0.5 | Hairline border on cards and badges. |
 | `stroke/thin` | 1 | Thin stroke: chart axes, outlines. |

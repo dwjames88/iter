@@ -7,12 +7,15 @@ import IterFeatures
 /// then the outlook strip. With no score it says why and shows the sun times, which are always exact.
 struct WhenToGoSection: View {
     let page: SpotModel
+    @Environment(\.spotDensity) private var density
 
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.md) {
-            HStack(alignment: .firstTextBaseline) {
-                Text(LightText.whenToGo).font(IterFont.titleSection)
-                Spacer()
+            let layout = density == .compact ? AnyLayout(VStackLayout(alignment: .leading, spacing: IterSpace.sm))
+                                             : AnyLayout(HStackLayout(alignment: .firstTextBaseline))
+            layout {
+                SpotSectionTitle(LightText.whenToGo)
+                if density == .page { Spacer() }
                 Picker(selection: Binding(get: { page.intent }, set: { page.selectIntent($0) })) {
                     ForEach(LightIntent.allCases) { intent in
                         Label(LightText.name(intent), systemImage: LightText.symbol(intent)).tag(intent)
@@ -43,15 +46,23 @@ struct WhenToGoSection: View {
     }
 
     private func bestLead(_ best: BestWindow) -> some View {
-        HStack(alignment: .top, spacing: IterSpace.lg) {
+        let layout = density == .compact ? AnyLayout(VStackLayout(alignment: .leading, spacing: IterSpace.md))
+                                         : AnyLayout(HStackLayout(alignment: .top, spacing: IterSpace.lg))
+        return layout {
             LightBadge(window: best.window, style: .large)
             VStack(alignment: .leading, spacing: IterSpace.xs) {
                 Text(LightText.bestIn(days: SpotModel.outlookDays, intent: page.intent))
                     .font(IterFont.caption)
                     .foregroundStyle(IterColor.textSecondary)
-                Text("\(LightText.relativeDay(best.day, today: page.today)) · \(TimeText.timeRange(best.window.span, in: page.timeZone))")
-                    .font(IterFont.headline)
-                    .monospacedDigit()
+                    .fixedSize(horizontal: false, vertical: true)
+                if density == .compact {
+                    Text(LightText.relativeDay(best.day, today: page.today)).font(IterFont.headline)
+                    Text(TimeText.timeRange(best.window.span, in: page.timeZone)).font(IterFont.headline).monospacedDigit()
+                } else {
+                    Text("\(LightText.relativeDay(best.day, today: page.today)) · \(TimeText.timeRange(best.window.span, in: page.timeZone))")
+                        .font(IterFont.headline)
+                        .monospacedDigit()
+                }
                 if let score = best.window.assessment.lightScore {
                     if let top = score.contributors.first {
                         Text(LightText.sentence(top, kind: best.window.kind))
@@ -68,7 +79,7 @@ struct WhenToGoSection: View {
                         .controlSize(.small)
                 }
             }
-            Spacer(minLength: 0)
+            if density == .page { Spacer(minLength: 0) }
         }
     }
 
@@ -132,6 +143,7 @@ struct SunTimesLine: View {
 /// falls, a dashed ring where there is no forecast, "Best" on the best day.
 struct OutlookStrip: View {
     let page: SpotModel
+    @Environment(\.spotDensity) private var density
 
     var body: some View {
         let best = page.best
@@ -154,17 +166,15 @@ struct OutlookStrip: View {
             page.selectDay(light.day)
         } label: {
             VStack(spacing: IterSpace.xxs) {
-                Text(isBest ? LightText.bestMarker : " ")
-                    .font(IterFont.captionStrong)
-                    .foregroundStyle(IterColor.onAccent)
-                    .padding(.horizontal, IterSpace.xs)
-                    .background(isBest ? AnyShapeStyle(IterColor.accentEmphasis) : AnyShapeStyle(.clear), in: Capsule())
+                bestBubble(isBest)
                 Text(TimeText.weekday(light.day)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
                 Text(TimeText.dayNumber(light.day)).font(IterFont.bodyEmphasis).monospacedDigit()
                 chip(window)
-                Text(caption(window)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-                    .lineLimit(2).multilineTextAlignment(.center)
-                    .frame(minHeight: IterSpace.xl)
+                if density == .page {
+                    Text(caption(window)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
+                        .lineLimit(2).multilineTextAlignment(.center)
+                        .frame(minHeight: IterSpace.xl)
+                }
             }
             .padding(.vertical, IterSpace.xs)
             .frame(maxWidth: .infinity)
@@ -181,11 +191,27 @@ struct OutlookStrip: View {
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
     }
 
+    /// "Best" on the best day; in a narrow host a star, since ten cells leave no room for the word.
+    @ViewBuilder private func bestBubble(_ isBest: Bool) -> some View {
+        if density == .compact {
+            Image(systemName: isBest ? "star.fill" : "star")
+                .font(IterFont.captionStrong)
+                .foregroundStyle(isBest ? IterColor.accentText : IterColor.textTertiary.color)
+                .opacity(isBest ? 1 : 0)
+        } else {
+            Text(isBest ? LightText.bestMarker : " ")
+                .font(IterFont.captionStrong)
+                .foregroundStyle(IterColor.onAccent)
+                .padding(.horizontal, IterSpace.xs)
+                .background(isBest ? AnyShapeStyle(IterColor.accentEmphasis) : AnyShapeStyle(.clear), in: Capsule())
+        }
+    }
+
     @ViewBuilder private func chip(_ window: LightWindow?) -> some View {
         if let score = window?.assessment.lightScore {
-            ScoreChip(score: score, size: .regular)
+            ScoreChip(score: score, size: density == .compact ? .compact : .regular)
         } else {
-            NoForecastRing(diameter: IterSize.badgeHeight)
+            NoForecastRing(diameter: density == .compact ? IterSize.badgeHeightCompact : IterSize.badgeHeight)
         }
     }
 

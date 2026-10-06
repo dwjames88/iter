@@ -1,22 +1,42 @@
 import SwiftUI
+import AppKit
 import IterCore
 import IterData
 import IterDesign
 import IterFeatures
 
-/// The leading column: summary, honest notices, search status, the list, and the forecast source with its attribution.
+/// The leading column: summary, honest notices, search status, the list, and the forecast source.
 struct ExploreListPanel: View {
     @Bindable var explore: ExploreModel
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var didInitialScroll = false
+    /// True for a few seconds after the launch scroll, while regrouping (the location fix) may still move rows.
+    @State private var launchScrollSettling = false
+
+    /// Launch-hook timing: wait for the expansion row to lay out, and how long regrouping may re-issue the scroll.
+    private enum LaunchScroll {
+        static let layoutDelay = Duration.milliseconds(200)
+        static let settleWindow = Duration.seconds(4)
+    }
+
+    /// Changes whenever rows move between or within sections.
+    private var rowLayoutSignature: [String] { explore.sections.flatMap { $0.rows.map(\.id) } }
+
+    /// Runs a model change that opens or closes a row, animated unless Reduce Motion is on.
+    private func animated(_ change: () -> Void) {
+        if reduceMotion { change() } else { withAnimation(.snappy(duration: 0.2)) { change() } }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
             header
             Divider()
+            ExploreLocationBanner(explore: explore)
             content
             Divider()
-            ForecastSourceFooter(app: model, coordinates: explore.rows.filter { $0.score != nil }.map(\.spot.coordinate))
+            ForecastSourceLines(app: model, coordinates: explore.rows.filter { $0.score != nil }.map(\.spot.coordinate))
                 .padding(.horizontal, IterSpace.md)
                 .padding(.vertical, IterSpace.sm)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -76,6 +96,14 @@ struct ExploreListPanel: View {
                 Text("Show Light For", comment: "Menu section title: which light to score every spot for")
             }
             .pickerStyle(.inline)
+            Picker(selection: radiusBinding) {
+                ForEach(UserLocationModel.radiusChoices, id: \.self) { miles in
+                    Text(LightText.radiusChoice(miles)).tag(miles)
+                }
+            } label: {
+                Text(LightText.nearYouRadius)
+            }
+            .pickerStyle(.inline)
             Picker(selection: $explore.sort) {
                 ForEach(ExploreSort.allCases) { sort in Text(LightText.name(sort)).tag(sort) }
             } label: {
@@ -116,6 +144,10 @@ struct ExploreListPanel: View {
         .menuIndicator(.hidden)
         .fixedSize()
         .help(String(localized: "Choose the light, sort the list, and filter by category, what a spot is known for, and source", comment: "Tooltip"))
+    }
+
+    private var radiusBinding: Binding<Int> {
+        Binding(get: { model.location.radiusMiles }, set: { model.location.radiusMiles = $0 })
     }
 
     /// A toggle binding for membership of one element in one of the filter sets.
@@ -183,25 +215,87 @@ struct ExploreListPanel: View {
         Binding(get: { explore.selectedID }, set: { explore.select($0, from: .list) })
     }
 
+    private var moreExpanded: Binding<Bool> {
+        Binding(get: { explore.isMorePlacesOpen }, set: { explore.setMorePlacesOpen($0) })
+    }
+
+    private func sectionTitle(_ section: ExploreSection) -> String {
+        section.kind == .nearYou ? LightText.nearYouTitle(radiusMiles: explore.radiusMiles) : LightText.name(section.kind)
+    }
+
+    @ViewBuilder private func sectionHeader(_ section: ExploreSection) -> some View {
+        if section.kind == .morePlaces {
+            // The inset list draws no disclosure control of its own, so the header carries one.
+            let open = explore.isMorePlacesOpen
+            HStack(spacing: IterSpace.xs) {
+                Image(systemName: open ? "chevron.down" : "chevron.right")
+                    .imageScale(.small)
+                    .frame(width: IterSize.iconSmall)
+                headerLabel(section)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture { animated { explore.setMorePlacesOpen(!open) } }
+            .accessibilityElement(children: .combine)
+            .accessibilityAddTraits(.isButton)
+            .accessibilityValue(open ? Text("Expanded", comment: "VoiceOver: the section is open") : Text("Collapsed", comment: "VoiceOver: the section is closed"))
+            .font(IterFont.captionStrong)
+            .foregroundStyle(IterColor.textSecondary)
+        } else {
+            headerLabel(section)
+                .font(IterFont.captionStrong)
+                .foregroundStyle(IterColor.textSecondary)
+                .accessibilityElement(children: .combine)
+        }
+    }
+
+    private func headerLabel(_ section: ExploreSection) -> some View {
+        HStack {
+            Text(sectionTitle(section))
+            Spacer()
+            Text(section.rows.count, format: .number).monospacedDigit()
+        }
+    }
+
+    /// A summary row per spot; an expanded one is followed by its own non-selectable row (see `ExploreExpansionRow`).
+    @ViewBuilder private func rows(in section: ExploreSection) -> some View {
+        ForEach(section.rows) { row in
+            let expanded = explore.expandedID == row.id
+            ExploreRowView(row: row, day: explore.day, isHovered: explore.hoveredID == row.id,
+                           isExpanded: expanded, showsDistance: explore.hasLocation) {
+                animated { explore.rowClicked(row.id) }
+            }
+            .id(row.id)
+            .tag(row.id)
+            .listRowSeparator(expanded ? .hidden : .automatic)
+            .onHover { inside in
+                if inside { explore.hoveredID = row.id } else if explore.hoveredID == row.id { explore.hoveredID = nil }
+            }
+            if expanded {
+                ExploreExpansionRow(row: row, day: explore.day)
+                    .id("\(row.id)#expanded")
+                    .selectionDisabled()
+                    .listRowSeparator(.visible, edges: .bottom)
+                    .transition(.opacity)
+            }
+        }
+    }
+
     private var list: some View {
         ScrollViewReader { proxy in
             List(selection: selection) {
                 ForEach(explore.sections) { section in
-                    Section {
-                        ForEach(section.rows) { row in
-                            ExploreRowView(row: row, isHovered: explore.hoveredID == row.id)
-                                .onHover { inside in
-                                    if inside { explore.hoveredID = row.id } else if explore.hoveredID == row.id { explore.hoveredID = nil }
-                                }
+                    if section.kind == .morePlaces {
+                        Section(isExpanded: moreExpanded) {
+                            rows(in: section)
+                        } header: {
+                            sectionHeader(section)
                         }
-                    } header: {
-                        HStack {
-                            Text(LightText.name(section.kind))
-                            Spacer()
-                            Text(section.rows.count, format: .number).monospacedDigit()
+                    } else {
+                        Section {
+                            rows(in: section)
+                        } header: {
+                            sectionHeader(section)
                         }
-                        .font(IterFont.captionStrong)
-                        .foregroundStyle(IterColor.textSecondary)
                     }
                 }
             }
@@ -212,15 +306,57 @@ struct ExploreListPanel: View {
                     ExploreSpotMenu(spot: row.spot, day: explore.day)
                 }
             } primaryAction: { ids in
-                // Return and double-click open the spot page.
-                if let id = ids.first, let row = explore.row(id: id) {
+                // Double-click opens the spot page. Return reaches the same action, so a key event toggles the row instead.
+                guard let id = ids.first, let row = explore.row(id: id) else { return }
+                if NSApp.currentEvent?.type == .keyDown {
+                    animated { explore.toggleExpansion() }
+                } else {
                     ExploreActions.open(row.spot, day: explore.day, navigation: navigation)
                 }
+            }
+            .onKeyPress(.space) {
+                guard explore.selectedID != nil else { return .ignored }
+                animated { explore.toggleExpansion() }
+                return .handled
+            }
+            .onAppear {
+                // `-IterExpandRow` (and the snapshot tests) ask for one program scroll when the list is first built.
+                if AppLaunch.expandRowID != nil || AppLaunch.isRunningTests, !didInitialScroll, let target = explore.scrollRequest?.target {
+                    didInitialScroll = true
+                    if AppLaunch.expandRowID != nil {
+                        launchScrollSettling = true
+                        Task {
+                            await scrollAfterLayout(proxy, to: target)
+                            try? await Task.sleep(for: LaunchScroll.settleWindow)
+                            launchScrollSettling = false
+                        }
+                    } else {
+                        proxy.scrollTo(target, anchor: .center)
+                    }
+                }
+            }
+            .onChange(of: rowLayoutSignature) {
+                // Sections regroup when the location fix arrives; put the launch row back at the top. Launch hook only.
+                guard launchScrollSettling, let target = explore.scrollRequest?.target else { return }
+                Task { await scrollAfterLayout(proxy, to: target) }
             }
             .onChange(of: explore.scrollRequest?.id) {
                 if let target = explore.scrollRequest?.target { withAnimation { proxy.scrollTo(target) } }
             }
             .accessibilityLabel(Text("Places", comment: "VoiceOver label of the Explore list"))
+        }
+    }
+
+    /// Waits for the rows (and the expansion row after the summary) to lay out, then puts the summary row at the top.
+    private func scrollAfterLayout(_ proxy: ScrollViewProxy, to target: String) async {
+        try? await Task.sleep(for: LaunchScroll.layoutDelay)
+        // Anchored at the top, the row would sit under the pinned section header. Put the row before it at the top
+        // instead, so the header covers that one and the summary row below it is fully visible.
+        let ids = explore.rows.map(\.id)
+        if let index = ids.firstIndex(of: target), index > 0 {
+            proxy.scrollTo(ids[index - 1], anchor: .top)
+        } else {
+            proxy.scrollTo(target, anchor: .top)
         }
     }
 
@@ -248,56 +384,6 @@ struct ExploreListPanel: View {
             } actions: {
                 Button(String(localized: "Clear Filters", comment: "Button")) { explore.clearFilters() }
             }
-        }
-    }
-}
-
-/// One list row: the spot, then its light on the chosen day (badge with window and score, and the window's start).
-struct ExploreRowView: View {
-    let row: ExploreRow
-    var isHovered = false
-
-    var body: some View {
-        HStack(alignment: .center, spacing: IterSpace.md) {
-            VStack(alignment: .leading, spacing: IterSpace.xxs) {
-                Text(row.spot.name)
-                    .font(IterFont.bodyEmphasis)
-                    .foregroundStyle(IterColor.textPrimary)
-                    .lineLimit(1)
-                HStack(spacing: IterSpace.xs) {
-                    Text(row.spot.locality)
-                        .lineLimit(1)
-                    if row.source == .yours {
-                        ProvenanceTag(origin: .user)
-                    }
-                }
-                .font(IterFont.caption)
-                .foregroundStyle(IterColor.textSecondary)
-            }
-            Spacer(minLength: IterSpace.sm)
-            light
-        }
-        .padding(.vertical, IterSpace.xs)
-        .contentShape(Rectangle())
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(LightText.rowDescription(row))
-    }
-
-    @ViewBuilder private var light: some View {
-        if let window = row.window {
-            VStack(alignment: .leading, spacing: IterSpace.xxs) {
-                LightBadge(window: window, style: .regular, showsSource: false)
-                if let time = LightText.startTime(window, in: row.spot.timeZone) {
-                    Text(time)
-                        .font(IterFont.timeSmall)
-                        .foregroundStyle(IterColor.textSecondary)
-                        .monospacedDigit()
-                }
-            }
-        } else {
-            Text(LightText.noWindowToday)
-                .font(IterFont.caption)
-                .foregroundStyle(IterColor.textSecondary)
         }
     }
 }

@@ -53,9 +53,10 @@ struct TripHarness {
 
     func spot(_ id: String) -> Spot { CuratedSpots.spot(id: id)! }
 
-    func model(for trip: TripRecord, drives: FakeDrives = FakeDrives(), dismissals: SuggestionDismissals = SuggestionDismissals()) -> TripBuilderModel {
+    func model(for trip: TripRecord, drives: FakeDrives = FakeDrives(), dismissals: SuggestionDismissals = SuggestionDismissals(),
+                defaults: UserDefaults = UserDefaults(suiteName: "TripHarness-\(UUID().uuidString)")!) -> TripBuilderModel {
         TripBuilderModel(tripID: trip.id, store: store, scheduler: scheduler, drives: drives, forecasts: forecasts,
-                         dismissals: dismissals, now: { LocalDay(year: 2026, month: 10, day: 6).at(hour: 10, in: Self.denver) })
+                         dismissals: dismissals, defaults: defaults, now: { LocalDay(year: 2026, month: 10, day: 6).at(hour: 10, in: Self.denver) })
     }
 
     /// Two days: day 0 Mesa Arch (sunrise) then Delicate Arch (sunset); day 1 Horseshoe Bend (sunset).

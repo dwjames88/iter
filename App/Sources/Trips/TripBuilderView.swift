@@ -57,15 +57,14 @@ private struct TripBuilderContent: View {
     // MARK: Content
 
     @ViewBuilder private func builderBody(_ plan: TripPlan) -> some View {
-        HSplitView {
+        ResizableSplit(storageKey: "trip", idealWidth: IterSize.listMax) {
             VStack(spacing: 0) {
                 TripHeader(plan: plan, builder: builder) { changesDates = true }
                 Divider()
                 TripPlanList(builder: builder, selection: $selection)
             }
-            .frame(minWidth: IterSize.listIdeal, idealWidth: IterSize.listMax, maxWidth: .infinity)
+        } trailing: {
             TripRouteMap(builder: builder, selection: $selection, chosenDay: $chosenDay)
-                .frame(minWidth: IterSize.listMin, maxWidth: .infinity)
         }
         .background(IterColor.backgroundWindow, ignoresSafeAreaEdges: [])
         .unifiedToolbarBackground()
@@ -185,17 +184,30 @@ private struct TripHeader: View {
                 .onAppear { name = plan.name }
                 .help(Text("Click to rename", comment: "Tooltip"))
                 .accessibilityLabel(Text("Trip name", comment: "Accessibility label"))
-            HStack(spacing: IterSpace.sm) {
-                Button(action: changeDates) {
-                    Label(TimeText.dateRange(from: plan.startDay, to: plan.day(plan.dayCount - 1)), systemImage: "calendar")
-                }
-                .buttonStyle(.borderless)
-                .help(Text("Change Dates…", comment: "Tooltip"))
-                Text(verbatim: "·").accessibilityHidden(true)
-                Text(TimeText.dayAndStops(days: plan.dayCount, stops: plan.stops.count))
-                if builder.totalDriveSeconds >= 60 {
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: IterSpace.sm) {
+                    datesButton
                     Text(verbatim: "·").accessibilityHidden(true)
-                    Text(totalDriving).monospacedDigit()
+                    sizeText
+                    if builder.totalDriveSeconds >= 60 {
+                        Text(verbatim: "·").accessibilityHidden(true)
+                        drivingText
+                    }
+                }
+                .fixedSize(horizontal: true, vertical: false)
+                // Narrow column: dates and size share a line, the driving total sits under them.
+                VStack(alignment: .leading, spacing: IterSpace.xxs) {
+                    HStack(spacing: IterSpace.sm) {
+                        datesButton
+                        Text(verbatim: "·").accessibilityHidden(true)
+                        sizeText
+                    }
+                    if builder.totalDriveSeconds >= 60 { drivingText }
+                }
+                VStack(alignment: .leading, spacing: IterSpace.xxs) {
+                    datesButton
+                    sizeText
+                    if builder.totalDriveSeconds >= 60 { drivingText }
                 }
             }
             .font(IterFont.subheadline)
@@ -204,6 +216,18 @@ private struct TripHeader: View {
         .padding(IterSpace.lg)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
+
+    private var datesButton: some View {
+        Button(action: changeDates) {
+            Label(TimeText.dateRange(from: plan.startDay, to: plan.day(plan.dayCount - 1)), systemImage: "calendar")
+        }
+        .buttonStyle(.borderless)
+        .help(Text("Change Dates…", comment: "Tooltip"))
+    }
+
+    private var sizeText: some View { Text(TimeText.dayAndStops(days: plan.dayCount, stops: plan.stops.count)) }
+
+    private var drivingText: some View { Text(totalDriving).monospacedDigit() }
 
     private var totalDriving: String {
         let base = String(localized: "\(TimeText.distance(builder.totalDriveMeters)) · \(TimeText.duration(builder.totalDriveSeconds)) driving",

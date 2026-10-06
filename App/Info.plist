@@ -24,6 +24,10 @@
 	<string>public.app-category.photography</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Iter uses your location to show photo spots within reach of you.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Iter uses your location to show photo spots within reach of you.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>© 2026 Iter</string>
 	<key>CFBundleDocumentTypes</key>

@@ -24,6 +24,11 @@ struct ExploreView: View {
             Color.clear.onAppear {
                 let made = ExploreModel(app: model)
                 configure?(made)
+                if let id = AppLaunch.expandRowID, made.row(id: id) != nil {
+                    made.select(id, from: .list)
+                    made.toggleExpansion()
+                    made.requestScroll(to: id)
+                }
                 explore = made
             }
         }
@@ -45,11 +50,10 @@ private struct ExploreContent: View {
     @Environment(\.openURL) private var openURL
 
     var body: some View {
-        HSplitView {
+        ResizableSplit(storageKey: "explore", idealWidth: IterSize.listIdeal) {
             ExploreListPanel(explore: explore)
-                .frame(minWidth: IterSize.listMin, idealWidth: IterSize.listIdeal, maxWidth: IterSize.listMax)
+        } trailing: {
             ExploreMapPane(explore: explore)
-                .frame(minWidth: IterSize.listMin, maxWidth: .infinity, maxHeight: .infinity)
         }
         .navigationTitle(Text("Explore", comment: "Window title"))
         .searchable(text: $explore.query, placement: .toolbar,
@@ -64,9 +68,13 @@ private struct ExploreContent: View {
         }
         .task(id: explore.rows.map(\.id)) { explore.requestForecasts() }
         .onAppear {
-            explore.requestFit()
+            explore.start()
+            explore.requestInitialCamera()
             handleRequests()
         }
+        // A fix that arrives later, or a new radius, regroups the list; the camera follows unless the user moved it.
+        .onChange(of: model.location.coordinate) { explore.locationChanged() }
+        .onChange(of: model.location.radiusMiles) { explore.contentChanged() }
         .onChange(of: navigation.focusSearchRequest) { handleRequests() }
         .onChange(of: navigation.addSpotModeRequest) { handleRequests() }
     }
