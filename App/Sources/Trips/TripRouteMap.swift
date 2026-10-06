@@ -41,6 +41,7 @@ struct TripRouteMap: View {
     }
 
     var body: some View {
+        let _ = IterPerf.count("trip.mapBody")
         Group {
             if renderMode == .snapshot {
                 MapStandIn(pins: entries.map { entry in

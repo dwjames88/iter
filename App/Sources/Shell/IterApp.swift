@@ -11,6 +11,8 @@ struct IterApp: App {
     @NSApplicationDelegateAdaptor private var appDelegate: AppDelegate
 
     init() {
+        IterPerf.mark("app.init")
+        TripPerfProbe.start()
         let container: ModelContainer
         do {
             container = try IterSchema.makeContainer(inMemory: AppLaunch.inMemoryStore)
@@ -23,6 +25,11 @@ struct IterApp: App {
         store.actionName = StoreActionText.name
         let model = AppModel.live(store: store, scout: AppLaunch.makeScout())
         _model = State(initialValue: model)
+        // `-IterSeedTrip YES` (with `-IterInMemoryStore YES` only): the Canyon Country sample trip, starting tomorrow,
+        // so `-IterSection trip` opens a 4-day trip for screenshots and measurements without touching real data.
+        if AppLaunch.inMemoryStore, UserDefaults.standard.bool(forKey: "IterSeedTrip") {
+            _ = store.seedSampleTrip(startDay: model.today(in: .current).adding(days: 1))
+        }
         // The smoke hook starts here, not in a view task, so it also runs when the app is launched hidden.
         if AppLaunch.smokeTest {
             Task { @MainActor in

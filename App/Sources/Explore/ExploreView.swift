@@ -42,6 +42,7 @@ struct ExploreView: View {
                     made.requestScroll(to: id)
                 }
                 explore = made
+                if ExplorePerfScript.enabled { Task { await ExplorePerfScript.run(made) } }
             }
         }
     }

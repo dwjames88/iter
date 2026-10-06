@@ -46,6 +46,7 @@ struct RootView: View {
         }
         .focusedSceneValue(\.navigation, navigation)
         .onAppear {
+            IterPerf.once("window.appear")
             model.store.undoManager = undoManager
             restoreSelection()
         }

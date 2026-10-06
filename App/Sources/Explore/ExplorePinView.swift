@@ -8,6 +8,7 @@ struct ExplorePinView: View {
     let pin: ExplorePin
 
     var body: some View {
+        let _ = IterPerf.count("pin.body")
         Group {
             switch pin.style {
             case .dot: dot
@@ -18,6 +19,7 @@ struct ExplorePinView: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(LightText.rowDescription(pin.row))
         .accessibilityAddTraits(pin.style == .selected ? [.isButton, .isSelected] : .isButton)
+        .onAppear { IterPerf.once("pin.firstAppear") }
     }
 
     private var dot: some View {

@@ -10,6 +10,7 @@ struct TripBuilderView: View {
     @Environment(AppModel.self) private var model
 
     var body: some View {
+        let _ = IterPerf.count("trip.viewBody")
         TripBuilderContent(tripID: tripID, model: model)
     }
 }

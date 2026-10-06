@@ -126,7 +126,10 @@ public final class ExploreModel {
                                  appleIDs: appleResults.map(\.id), origin: origin, hasLocation: user != nil,
                                  radiusMiles: app.location.radiusMiles)
         if let cached = derivedCache, cached.stamp == stamp { return cached.value }
-        let value = buildDerived(stamp)
+        IterPerf.count("explore.buildDerived")
+        let value = IterPerf.interval("explore.buildDerived") { buildDerived(stamp) }
+        let shown = value.sections.filter { isMorePlacesOpen || $0.kind != .morePlaces }.flatMap(\.rows)
+        if !shown.isEmpty, shown.allSatisfy({ $0.score != nil }) { IterPerf.once("explore.allScored", "rows=\(shown.count)") }
         derivedCache = (stamp, value)
         return value
     }
@@ -201,6 +204,7 @@ public final class ExploreModel {
         }
         let key = "\(spot.id)|\(spot.coordinate.cacheKey)|\(spot.timeZoneIdentifier)|\(tag)"
         if let hit = windowCache[key] { return hit.event }
+        IterPerf.count("explore.nextEvent")
         let event = app.engine.nextEvent(for: spot, forecast: state.forecast, unavailable: state.unavailableReason, now: app.now())
         windowCache[key] = CachedWindow(event: event)
         return event
@@ -434,6 +438,7 @@ public final class ExploreModel {
     /// Pin hierarchy: the selected spot and the hovered one carry a chip; so do the best few scored spots in view;
     /// everything else is a small dot (pattern #4, critique C28).
     public var pins: [ExplorePin] {
+        IterPerf.count("explore.pins")
         let region = visibleRegion
         let inView = rows.filter { region?.contains($0.spot.coordinate) ?? true }
         let best = inView.filter { $0.score != nil && $0.id != selectedID }
@@ -445,6 +450,11 @@ public final class ExploreModel {
             if row.id == hoveredID || chipIDs.contains(row.id) { return ExplorePin(row: row, style: .chip) }
             return ExplorePin(row: row, style: .dot)
         }
+    }
+
+    /// Perf script only (`-IterPerfScript YES`): asks the map for a region as if the user had moved it there.
+    public func perfRequestCamera(_ region: GeoRegion) {
+        cameraRequest = CameraRequest(id: nextRequestID(), kind: .pan(region))
     }
 
     // MARK: - Apple Maps search

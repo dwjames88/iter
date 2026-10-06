@@ -28,6 +28,7 @@ struct ExploreMapPane: View {
     }
 
     var body: some View {
+        let _ = IterPerf.count("map.paneBody")
         ZStack {
             if renderMode == .snapshot {
                 ExploreMapStandIn(explore: explore)
@@ -99,6 +100,8 @@ struct ExploreMapPane: View {
                 MapScaleView()
             }
             .onMapCameraChange(frequency: .onEnd) { context in
+                IterPerf.once("map.firstSettle")
+                IterPerf.mark("map.settle")
                 let r = context.region
                 // A settle is the user's only when the map wrote a user-positioned value into `position` (see
                 // `.onChange(of: position)`); layout and aspect settles MapKit makes on its own never are.
@@ -126,6 +129,7 @@ struct ExploreMapPane: View {
             if let request { apply(request, animated: true) }
         }
         .onAppear {
+            IterPerf.once("map.created")
             if let request = explore.cameraRequest { apply(request, animated: false) }
         }
     }
