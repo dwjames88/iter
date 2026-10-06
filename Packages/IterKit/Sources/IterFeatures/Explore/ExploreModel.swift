@@ -2,6 +2,7 @@ import Foundation
 import Observation
 import IterCore
 import IterData
+import IterLight
 import IterServices
 
 /// State and derived data for the Explore screen: filters, sort, search, results, selection and camera requests.
@@ -50,6 +51,10 @@ public final class ExploreModel {
     public private(set) var scrollRequest: (id: Int, target: String)?
     /// The map's visible region, reported by the view when the camera settles.
     public private(set) var visibleRegion: GeoRegion?
+    /// The map pane's size in points, reported by the view; the pin clusterer needs its width. Zero until known.
+    public private(set) var mapViewport: CGSize = .zero
+    /// Bumped once per applied batch of scores, so views and the derived cache see new scores in one change.
+    private var scoreRevision = 0
 
     /// Chips on the map besides the selected one.
     public static let pinBudget = 6
@@ -63,9 +68,16 @@ public final class ExploreModel {
     @ObservationIgnored public var searchDebounce: Duration
     @ObservationIgnored public private(set) var searchTask: Task<Void, Never>?
     @ObservationIgnored private var requestCounter = 0
-    @ObservationIgnored private var windowCache: [String: CachedWindow] = [:]
-    @ObservationIgnored private var windowCacheBucket: Int?
+    @ObservationIgnored private var scoreCache: [ScoreKey: CachedWindow] = [:]
+    /// The newest computed event per spot id, shown while a row's key is being rescored.
+    @ObservationIgnored private var lastEvent: [String: CachedWindow] = [:]
+    @ObservationIgnored private var pendingJobs: [ScoreKey: ScoreJob] = [:]
+    @ObservationIgnored private var inFlightKeys: Set<ScoreKey> = []
+    @ObservationIgnored private var scoringTask: Task<Void, Never>?
+    /// How long the scheduler waits after the first missing score before it takes the batch.
+    @ObservationIgnored public var scoringDelay: Duration = .milliseconds(40)
     @ObservationIgnored private var derivedCache: (stamp: DerivedStamp, value: Derived)?
+    @ObservationIgnored private var mapCache: (key: MapKey, value: MapSnapshot)?
     @ObservationIgnored private let defaults: UserDefaults
     @ObservationIgnored public private(set) var cameraPolicy: MapCameraPolicy
 
@@ -94,7 +106,33 @@ public final class ExploreModel {
 
     // MARK: - Derived rows
 
-    private struct CachedWindow { var event: (day: LocalDay, window: LightWindow)? }
+    private struct CachedWindow: Sendable { var event: (day: LocalDay, window: LightWindow)? }
+    /// What a score depends on: the spot (id, place, zone), the forecast state and the five-minute time bucket.
+    private struct ScoreKey: Hashable, Sendable {
+        var spotID: String
+        var coordinate: String
+        var zone: String
+        var forecastTag: String
+        var timeBucket: Int
+    }
+    private struct ScoreJob: Sendable {
+        var key: ScoreKey
+        var spot: Spot
+        var forecast: Forecast?
+        var unavailable: ForecastUnavailableReason?
+        var now: Date
+    }
+    private struct MapKey: Equatable {
+        var stamp: DerivedStamp
+        var region: GeoRegion?
+        var selectedID: String?
+        var hoveredID: String?
+        var viewport: CGSize
+    }
+    private struct MapSnapshot {
+        var items: [ExploreMapItem]
+        var pins: [ExplorePin]
+    }
     private struct DerivedStamp: Equatable {
         /// Five-minute bucket of the clock, so each row's next event rolls over after its sunset.
         var timeBucket: Int
@@ -108,6 +146,8 @@ public final class ExploreModel {
         var origin: Coordinate?
         var hasLocation: Bool
         var radiusMiles: Int
+        /// Changes once per applied batch of scores.
+        var scoreRevision: Int
     }
     private struct Derived {
         var sections: [ExploreSection]
@@ -117,14 +157,20 @@ public final class ExploreModel {
 
     private static func timeBucket(_ date: Date) -> Int { Int(date.timeIntervalSince1970 / 300) }
 
-    private var derived: Derived {
+    private var derived: Derived { derived(for: currentStamp) }
+
+    private var currentStamp: DerivedStamp {
         let user = app.location.coordinate
         let origin: Coordinate? = user ?? (sort == .distance ? visibleRegion?.center : nil)
         let stamp = DerivedStamp(timeBucket: Self.timeBucket(app.now()), forecastRevision: app.forecasts.revision,
                                  storeRevision: app.store.revision, filters: filters, sort: sort,
                                  query: query.trimmingCharacters(in: .whitespacesAndNewlines),
                                  appleIDs: appleResults.map(\.id), origin: origin, hasLocation: user != nil,
-                                 radiusMiles: app.location.radiusMiles)
+                                 radiusMiles: app.location.radiusMiles, scoreRevision: scoreRevision)
+        return stamp
+    }
+
+    private func derived(for stamp: DerivedStamp) -> Derived {
         if let cached = derivedCache, cached.stamp == stamp { return cached.value }
         IterPerf.count("explore.buildDerived")
         let value = IterPerf.interval("explore.buildDerived") { buildDerived(stamp) }
@@ -152,10 +198,10 @@ public final class ExploreModel {
     }
 
     private func buildDerived(_ stamp: DerivedStamp) -> Derived {
-        refreshWindowCache(bucket: stamp.timeBucket)
+        let now = app.now()
         var rows: [ExploreRow] = []
         for (spot, source) in candidates() where Self.matches(spot, source: source, filters: filters, query: stamp.query) {
-            let event = nextEvent(for: spot)
+            let event = nextEvent(for: spot, bucket: stamp.timeBucket, now: now)
             rows.append(ExploreRow(spot: spot, source: source, window: event?.window, day: event?.day,
                                    isLoading: app.forecasts.isLoading(spot.coordinate),
                                    distanceMeters: stamp.origin.map { $0.distance(to: spot.coordinate) }))
@@ -185,16 +231,10 @@ public final class ExploreModel {
         return Derived(sections: sections, rows: flat, byID: Dictionary(flat.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a }))
     }
 
-    private func refreshWindowCache(bucket: Int) {
-        if windowCacheBucket != bucket {
-            windowCache = [:]
-            windowCacheBucket = bucket
-        }
-    }
-
-    /// The spot's next sunrise or sunset. Pure read: it never starts a fetch (see `requestForecasts`).
-    /// Cached per spot, time bucket and forecast state, so scrolling and revision bumps stay cheap.
-    private func nextEvent(for spot: Spot) -> (day: LocalDay, window: LightWindow)? {
+    /// The spot's next sunrise or sunset, read from the score cache. Pure read: it never computes and never starts a
+    /// fetch (see `requestForecasts`). A missing key is queued for the batch scorer, and meanwhile the spot's last
+    /// computed event (if any) stands in, so a row keeps its old score instead of flashing empty.
+    private func nextEvent(for spot: Spot, bucket: Int, now: Date) -> (day: LocalDay, window: LightWindow)? {
         let state = app.forecasts.state(for: spot.coordinate)
         let tag: String
         switch state {
@@ -202,12 +242,70 @@ public final class ExploreModel {
         case .loaded(let f): tag = "F\(f.fetchedAt.timeIntervalSince1970)"
         case .unavailable(let r): tag = "U\(r.hashValue)"
         }
-        let key = "\(spot.id)|\(spot.coordinate.cacheKey)|\(spot.timeZoneIdentifier)|\(tag)"
-        if let hit = windowCache[key] { return hit.event }
-        IterPerf.count("explore.nextEvent")
-        let event = app.engine.nextEvent(for: spot, forecast: state.forecast, unavailable: state.unavailableReason, now: app.now())
-        windowCache[key] = CachedWindow(event: event)
-        return event
+        let key = ScoreKey(spotID: spot.id, coordinate: spot.coordinate.cacheKey, zone: spot.timeZoneIdentifier,
+                           forecastTag: tag, timeBucket: bucket)
+        if let hit = scoreCache[key] { return hit.event }
+        if pendingJobs[key] == nil, !inFlightKeys.contains(key) {
+            pendingJobs[key] = ScoreJob(key: key, spot: spot, forecast: state.forecast, unavailable: state.unavailableReason, now: now)
+            scheduleScoring()
+        }
+        return lastEvent[spot.id]?.event
+    }
+
+    // MARK: Scoring off the main actor
+
+    /// Starts the single coalescing scheduler if it is not running. It waits `scoringDelay` after the first missing
+    /// score, takes everything queued, scores it in one detached task, applies it in one observable change, and
+    /// repeats while more arrived.
+    private func scheduleScoring() {
+        guard scoringTask == nil else { return }
+        scoringTask = Task { [weak self] in
+            while let self {
+                if pendingJobs.isEmpty { scoringTask = nil; return }
+                if scoringDelay > .zero { try? await Task.sleep(for: scoringDelay) }
+                await scoreBatch()
+            }
+        }
+    }
+
+    private func scoreBatch() async {
+        // A job from an earlier time bucket is stale: its row has been queued again under the new bucket.
+        let bucket = Self.timeBucket(app.now())
+        let jobs = pendingJobs.values.filter { $0.key.timeBucket == bucket }
+        pendingJobs = [:]
+        guard !jobs.isEmpty else { return }
+        inFlightKeys = Set(jobs.map(\.key))
+        let engine = app.engine
+        let results = await Task.detached(priority: .userInitiated) { Self.score(jobs, engine: engine) }.value
+        inFlightKeys = []
+        let current = Self.timeBucket(app.now())
+        let fresh = results.filter { $0.0.timeBucket == current }
+        guard !fresh.isEmpty else { return }
+        IterPerf.count("explore.scoreBatch")
+        scoreCache = scoreCache.filter { $0.key.timeBucket == current }
+        for (key, cached) in fresh {
+            scoreCache[key] = cached
+            lastEvent[key.spotID] = cached
+        }
+        scoreRevision += 1
+    }
+
+    private nonisolated static func score(_ jobs: [ScoreJob], engine: LightEngine) -> [(ScoreKey, CachedWindow)] {
+        IterPerf.interval("explore.scoreBatch") {
+            jobs.map { job in
+                (job.key, CachedWindow(event: engine.nextEvent(for: job.spot, forecast: job.forecast,
+                                                               unavailable: job.unavailable, now: job.now)))
+            }
+        }
+    }
+
+    /// Returns when no scores are queued or being computed. For tests: scores arrive some milliseconds after the rows.
+    public func waitForScoring() async {
+        _ = derived
+        while let task = scoringTask {
+            await task.value
+            _ = derived
+        }
     }
 
     // MARK: Filtering and sorting (static so tests can drive them directly)
@@ -433,23 +531,106 @@ public final class ExploreModel {
         if let id = selectedID, derived.byID[id] == nil { selectedID = nil }
     }
 
-    // MARK: Pins
+    // MARK: Pins and clusters
+
+    /// The map pane's size changed.
+    public func setMapViewport(_ size: CGSize) {
+        guard size != mapViewport else { return }
+        mapViewport = size
+    }
+
+    /// What the map draws, already ordered for drawing (dots, clusters, chips, hovered, selected last; by stable id within each) and grouped:
+    /// pins that would overlap at this zoom become clusters. Cached per derived stamp, region, selection, hover and
+    /// viewport, so a body pass that changes none of them does no work.
+    public var mapItems: [ExploreMapItem] { mapSnapshot.items }
+
+    /// The pins drawn individually (everything in `mapItems` that is not a cluster), in the same order.
+    public var pins: [ExplorePin] { mapSnapshot.pins }
+
+    private var mapSnapshot: MapSnapshot {
+        let stamp = currentStamp
+        let key = MapKey(stamp: stamp, region: visibleRegion, selectedID: selectedID, hoveredID: hoveredID, viewport: mapViewport)
+        if let cached = mapCache, cached.key == key { return cached.value }
+        IterPerf.count("explore.pins")
+        let value = IterPerf.interval("explore.mapItems") { buildMapSnapshot(derived(for: stamp)) }
+        mapCache = (key, value)
+        return value
+    }
 
     /// Pin hierarchy: the selected spot and the hovered one carry a chip; so do the best few scored spots in view;
-    /// everything else is a small dot (pattern #4, critique C28).
-    public var pins: [ExplorePin] {
-        IterPerf.count("explore.pins")
+    /// everything else is a small dot (pattern #4, critique C28). The selected and hovered pins are never clustered,
+    /// and the chip budget is spent on pins that stay individual.
+    private func buildMapSnapshot(_ value: Derived) -> MapSnapshot {
         let region = visibleRegion
-        let inView = rows.filter { region?.contains($0.spot.coordinate) ?? true }
-        let best = inView.filter { $0.score != nil && $0.id != selectedID }
-            .sorted { ($0.score ?? 0) > ($1.score ?? 0) }
-            .prefix(Self.pinBudget)
-        let chipIDs = Set(best.map(\.id))
-        return rows.map { row in
-            if row.id == selectedID { return ExplorePin(row: row, style: .selected) }
-            if row.id == hoveredID || chipIDs.contains(row.id) { return ExplorePin(row: row, style: .chip) }
-            return ExplorePin(row: row, style: .dot)
+        let fixed = Set([selectedID, hoveredID].compactMap { $0 })
+        let candidates = value.rows.filter { !fixed.contains($0.id) }.map {
+            PinClusterer.Candidate(id: $0.id, coordinate: $0.spot.coordinate, score: $0.score,
+                                   band: $0.window?.assessment.lightScore?.band)
         }
+        let grouped = PinClusterer.cluster(candidates, region: region, viewportWidth: Double(mapViewport.width))
+        let single = Set(grouped.singles)
+        let chipIDs = Set(value.rows
+            .filter { single.contains($0.id) && $0.score != nil && (region?.contains($0.spot.coordinate) ?? true) }
+            .sorted { ($0.score ?? 0) != ($1.score ?? 0) ? ($0.score ?? 0) > ($1.score ?? 0) : $0.id < $1.id }
+            .prefix(Self.pinBudget).map(\.id))
+        let now = app.now()
+        var pins: [ExplorePin] = []
+        for row in value.rows where single.contains(row.id) || fixed.contains(row.id) {
+            let style: ExplorePinStyle = row.id == selectedID ? .selected : (row.id == hoveredID || chipIDs.contains(row.id)) ? .chip : .dot
+            pins.append(Self.pin(for: row, style: style, now: now))
+        }
+        // Draw order (later is on top): dots, clusters, chips, the hovered pin, the selected pin; by id within each.
+        let (selected, hovered) = (selectedID, hoveredID)
+        let rank: @Sendable (String, ExplorePinStyle?) -> Int = { id, style in
+            if id == selected { return 4 }
+            if id == hovered { return 3 }
+            switch style {
+            case .chip?: return 2
+            case nil: return 1
+            default: return 0
+            }
+        }
+        var items: [ExploreMapItem] = pins.map { .pin($0) } + grouped.clusters.map { .cluster($0) }
+        items.sort { a, b in
+            func r(_ i: ExploreMapItem) -> Int {
+                switch i {
+                case .pin(let p): rank(p.id, p.style)
+                case .cluster(let c): rank(c.id, nil)
+                }
+            }
+            return r(a) != r(b) ? r(a) < r(b) : a.id < b.id
+        }
+        pins.sort { a, b in
+            rank(a.id, a.style) != rank(b.id, b.style) ? rank(a.id, a.style) < rank(b.id, b.style) : a.id < b.id
+        }
+        return MapSnapshot(items: items, pins: pins)
+    }
+
+    private static func pin(for row: ExploreRow, style: ExplorePinStyle, now: Date) -> ExplorePin {
+        var light: ExplorePinLight?
+        if let window = row.window {
+            let score = window.assessment.lightScore.map { ExplorePinLight.Score(value: $0.value, band: $0.band, confidence: $0.confidence) }
+            let isTomorrow = row.day.map { $0 != LocalDay(now, in: row.spot.timeZone) } ?? false
+            light = ExplorePinLight(kind: window.kind, score: score, start: window.span.start, isLoading: row.isLoading,
+                                    isTomorrow: isTomorrow)
+        }
+        return ExplorePin(id: row.id, name: row.spot.name, locality: row.spot.locality, coordinate: row.spot.coordinate,
+                          timeZoneIdentifier: row.spot.timeZoneIdentifier, style: style, light: light)
+    }
+
+    /// A cluster was clicked: zoom the camera to fit its members. Goes through the camera policy as a programmatic
+    /// request, so the settle that follows is never taken for a user move.
+    public func zoomToCluster(_ id: String) {
+        guard let cluster = mapItems.lazy.compactMap({ item -> ExploreCluster? in
+            if case .cluster(let c) = item, c.id == id { return c }
+            return nil
+        }).first else { return }
+        // The fit is the members' extent, never narrower than `minimumFitSpan`: that is below
+        // `PinClusterer.minimumLongitudeSpan`, so the settle that follows unclusters members even at one coordinate.
+        let floor = PinClusterer.minimumFitSpan
+        guard let region = GeoRegion.enclosing(cluster.memberCoordinates, padding: 0.6, minimumDelta: floor) else { return }
+        cameraPolicy.didApplyPan(region)
+        cameraRequest = CameraRequest(id: nextRequestID(), kind: .fit(region))
     }
 
     /// Perf script only (`-IterPerfScript YES`): asks the map for a region as if the user had moved it there.

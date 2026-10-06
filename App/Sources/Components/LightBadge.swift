@@ -126,19 +126,33 @@ struct LightBadge: View {
 /// bands still read against the window.
 struct ScoreChip: View {
     enum Size { case compact, regular, large }
-    let score: LightScore
+    let value: Int
+    let band: LightBand
+    let confidence: Confidence
     var size: Size = .regular
 
+    init(score: LightScore, size: Size = .regular) {
+        self.init(value: score.value, band: score.band, confidence: score.confidence, size: size)
+    }
+
+    /// From the few fields the chip draws (map pins carry these, not the whole score).
+    init(value: Int, band: LightBand, confidence: Confidence, size: Size = .regular) {
+        self.value = value
+        self.band = band
+        self.confidence = confidence
+        self.size = size
+    }
+
     var body: some View {
-        Text(score.value, format: .number)
+        Text(value, format: .number)
             .font(font)
             .monospacedDigit()
-            .foregroundStyle(IterColor.rampText(score.band))
+            .foregroundStyle(IterColor.rampText(band))
             .frame(minWidth: width, minHeight: height)
             .padding(.horizontal, size == .large ? 0 : IterSpace.xs)
-            .background(IterColor.ramp(score.band), in: shape)
+            .background(IterColor.ramp(band), in: shape)
             .overlay(shape.strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
-            .opacity(score.confidence == .low ? 0.85 : 1)
+            .opacity(confidence == .low ? 0.85 : 1)
     }
 
     private var shape: some InsettableShape {

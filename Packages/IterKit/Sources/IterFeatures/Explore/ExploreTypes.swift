@@ -108,10 +108,65 @@ public enum ExplorePinStyle: Equatable, Sendable {
     case dot
 }
 
+/// What a pin draws of its spot's next window, and nothing more: cheap to compare, so an unrelated forecast arriving
+/// leaves every other pin equal and MapKit does not touch its annotation.
+public struct ExplorePinLight: Equatable, Sendable {
+    public struct Score: Equatable, Sendable {
+        public var value: Int
+        public var band: LightBand
+        public var confidence: Confidence
+    }
+    public var kind: LightWindowKind
+    /// nil while there is no forecast.
+    public var score: Score?
+    public var start: Date
+    /// The forecast is in flight (VoiceOver says "loading light").
+    public var isLoading: Bool
+    /// The window falls on a later day than today at the spot.
+    public var isTomorrow: Bool
+}
+
 public struct ExplorePin: Identifiable, Equatable, Sendable {
-    public var row: ExploreRow
+    public var id: String
+    public var name: String
+    public var locality: String
+    public var coordinate: Coordinate
+    public var timeZoneIdentifier: String
     public var style: ExplorePinStyle
-    public var id: String { row.id }
+    public var light: ExplorePinLight?
+
+    public var timeZone: TimeZone { TimeZone(identifier: timeZoneIdentifier) ?? .gmt }
+    public var band: LightBand? { light?.score?.band }
+    public var scoreValue: Int? { light?.score?.value }
+}
+
+/// Several pins that would overlap at this zoom, drawn as one count. The id comes from the grid cell, so it is the same
+/// while the map pans and while the same pins stay in the cell.
+public struct ExploreCluster: Identifiable, Equatable, Sendable {
+    public var id: String
+    /// The mean of the members' coordinates.
+    public var coordinate: Coordinate
+    public var count: Int
+    /// The best member's score and band (nil when no member is scored).
+    public var bestScore: Int?
+    public var bestBand: LightBand?
+    /// Member ids in id order.
+    public var memberIDs: [String]
+    /// The members' coordinates in member order, for the zoom-to-fit.
+    public var memberCoordinates: [Coordinate]
+}
+
+/// One annotation on the map: a pin or a cluster of pins. Ordered by stable id, the selected pin last.
+public enum ExploreMapItem: Identifiable, Equatable, Sendable {
+    case pin(ExplorePin)
+    case cluster(ExploreCluster)
+
+    public var id: String {
+        switch self {
+        case .pin(let p): p.id
+        case .cluster(let c): c.id
+        }
+    }
 }
 
 /// A command for the map camera. The view applies a request when its `id` changes.

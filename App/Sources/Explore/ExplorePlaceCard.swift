@@ -197,26 +197,32 @@ struct ExplorePlaceCard: View {
 /// The spot page's own sections for the card, at compact density. Owns its `SpotModel`; the card keys it by spot and
 /// day so a new selection starts a new model.
 private struct PlaceCardSections: View {
-    @State private var page: SpotModel
+    let app: AppModel
     let spot: Spot
+    let day: LocalDay
+    /// Built once per (spot, day) in `.task(id:)`, never in `init` (an `init` runs on every parent body pass).
+    @State private var page: SpotModel?
 
-    init(app: AppModel, spot: Spot, day: LocalDay) {
-        self.spot = spot
-        _page = State(initialValue: SpotModel(app: app, spot: spot, initialDay: day))
-    }
+    private struct Key: Hashable { let spotID: String; let day: LocalDay }
 
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.lg) {
-            WhenToGoSection(page: page)
-            DayWindowsSection(page: page)
-            PlaceCardUpcoming(page: page)
-            LightTimelineSection(page: page)
-            SkyArcSection(page: page)
-            HourlyWeatherSection(page: page)
+            if let page {
+                WhenToGoSection(page: page)
+                DayWindowsSection(page: page)
+                PlaceCardUpcoming(page: page)
+                LightTimelineSection(page: page)
+                SkyArcSection(page: page)
+                HourlyWeatherSection(page: page)
+            }
             SpotFactsSection(spot: spot)
         }
         .environment(\.spotDensity, .compact)
-        .task { await page.start() }
+        .task(id: Key(spotID: spot.id, day: day)) {
+            let made = SpotModel(app: app, spot: spot, initialDay: day)
+            page = made
+            await made.start()
+        }
     }
 }
 
