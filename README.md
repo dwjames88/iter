@@ -12,6 +12,7 @@ Start with [TESTING.md](TESTING.md). It covers what is in this build, a guided t
 | Where | What |
 |---|---|
 | `docs/ARCHITECTURE.md`, `docs/ROADMAP.md` | How it is built; what milestone 1 contains and what comes next |
+| `docs/DATA-PROVIDERS.md` | Weather sources (Apple Weather, OpenWeather, Windy): what each gives the Light Index, limits, licences, attribution, caching |
 | `docs/reference/` | The approved improvement plan and the prototype's flow briefs |
 | `Design/` | Design tokens (`tokens.json`, DTCG), `TOKENS.md`, `SCREENS.md`, `COMPONENTS.md`, `snapshots/` |
 | `Brand/` | The Step logo (Geist 600) and the First Light palette (`palettes/` also keeps the Alpine study as history) |

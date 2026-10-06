@@ -12,7 +12,7 @@ A coherent Mac app you can use end to end. Anything not listed here is absent fr
 
 **Explore (6.2-B on Mac).** Map with a list panel, one selection driving pin, row and card. Curated spots plus Apple Maps search results. Date control, intent, filters (category, best light, source), sort (light, name, distance, popularity). Click the map in Add Spot mode to drop a pin, name it (reverse geocoded), save it.
 
-**Spot page (P3.3).** Leads with when to go: the best window for the intent over the next days, then a 10-day outlook (fading with confidence), the five windows with scores and reasons, the light timeline (labelled bands, cloud layers, rain), the sun and moon arc with a time scrubber, hourly weather with Apple Weather attribution, Look Around where available, Add to Trip (day picker shows the light per day), Open in Maps, Save.
+**Spot page (P3.3).** Leads with when to go: the best window for the intent over the next days, then a 10-day outlook (fading with confidence), the five windows with scores and reasons, the light timeline (labelled bands, cloud layers, rain), the sun and moon arc with a time scrubber, hourly weather with the provider's attribution, a Windy section with Open in Windy, Look Around where available, Add to Trip (day picker shows the light per day), Open in Maps, Save.
 
 **Trips (6.3-A, P3.5, P4.1, P4.2).** List, create (blank or from a template), rename, change dates, duplicate, delete with undo. Builder: days and stops, one session per stop, drag to reorder within and across days, MapKit drive times, connectors that state feasibility, a backward schedule on every stop ("Leave 4:10 · set up by 5:52 · Sunrise 6:12"), warnings when a drive does not fit, a route map, and a light-first ordering suggestion you accept or ignore.
 
@@ -21,6 +21,8 @@ A coherent Mac app you can use end to end. Anything not listed here is absent fr
 **Saved and your own spots (P3.9).** One idea of saved: a single list with an "Added by you" tag; edit and delete your own spots with undo.
 
 **Getting a trip out (P4.7, partly).** Share or export a trip as an `.iter` file (ShareLink and File > Export); open or import one back. Open any stop in Apple Maps.
+
+**Weather providers.** OpenWeather and Windy beside Apple Weather, chosen in Settings ▸ Weather with an optional fallback. Keys in the Keychain, per-provider caches and daily call caps, honest unknowns when a provider lacks a field, and "Open in Windy" on the spot page and in Explore. See `docs/DATA-PROVIDERS.md`.
 
 **Testing aids.** Debug menu: Sample Data mode (off by default, labelled on every screen), Seed Sample Trip, Reset All Data. Snapshot renderer for every screen and state.
 
@@ -33,6 +35,14 @@ A coherent Mac app you can use end to end. Anything not listed here is absent fr
 * Weather swap (B3) inside 72 hours, once the confidence model has been tested.
 * Calendar export of sessions and GPX; along-the-drive spots (P4.6).
 * "How did it go?" check-in to calibrate the Light Index.
+
+## Before any release (weather providers)
+
+* Ship the Windy logo asset (unscaled, clickable to windy.com) beside "Contains data from the Windy database", and use a Windy Professional key (Testing data is shuffled and development-only).
+* Record real fixtures for OpenWeather and Windy with `ITER_LIVE=1` and replace the documented-schema ones.
+* Confirm whether OpenWeather's free allowance needs a payment card.
+* Consider One Call 4.0, which OpenWeather now recommends for new integrations.
+* An in-app Windy map only with a Map Forecast Professional licence that permits a native app. Until then the map opens windy.com.
 
 ## Milestone 3 · Everywhere
 
