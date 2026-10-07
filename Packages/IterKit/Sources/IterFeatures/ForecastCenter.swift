@@ -92,6 +92,7 @@ public final class ForecastCenter {
     public func request(_ coordinate: Coordinate, force: Bool = false) {
         let key = coordinate.cacheKey
         if !force, states[key] != nil || inFlight[key] != nil { return }
+        IterPerf.once("forecast.firstRequest")
         if states[key] == nil { states[key] = lastGood[key].map { .loaded($0) } ?? .loading }
         let provider = self.provider
         inFlight[key] = Task { [weak self] in
@@ -139,6 +140,8 @@ public final class ForecastCenter {
         }
         inFlight[key] = nil
         revision += 1
+        IterPerf.count("forecast.finish")
+        if inFlight.isEmpty { IterPerf.mark("forecast.idle", "states=\(states.count)") }
     }
 
     public func requestAll(_ coordinates: [Coordinate]) {

@@ -96,17 +96,40 @@ extension LightText {
     /// a window with no data leaves the score out. nil when there is no window.
     static func rowLight(_ row: ExploreRow) -> String? {
         guard let window = row.window else { return nil }
-        var parts = [name(window.kind)]
-        if case .scored(let score) = window.assessment {
+        let score = window.assessment.lightScore.map { (value: $0.value, band: $0.band, confidence: $0.confidence) }
+        return lightDescription(kind: window.kind, score: score, isLoading: row.isLoading, start: window.span.start,
+                                zone: row.spot.timeZone, isTomorrow: isTomorrow(row))
+    }
+
+    /// The same sentence as `rowLight`, from what a map pin carries.
+    static func pinLight(_ pin: ExplorePin) -> String? {
+        guard let light = pin.light else { return nil }
+        let score = light.score.map { (value: $0.value, band: $0.band, confidence: $0.confidence) }
+        return lightDescription(kind: light.kind, score: score, isLoading: light.isLoading, start: light.start,
+                                zone: pin.timeZone, isTomorrow: light.isTomorrow)
+    }
+
+    private static func lightDescription(kind: LightWindowKind, score: (value: Int, band: LightBand, confidence: Confidence)?,
+                                         isLoading: Bool, start: Date, zone: TimeZone, isTomorrow: Bool) -> String {
+        var parts = [name(kind)]
+        if let score {
             parts.append(String(score.value))
             parts.append(name(score.band))
             parts.append(name(score.confidence).lowercased())
-        } else if row.isLoading {
+        } else if isLoading {
             parts.append(String(localized: "loading light", comment: "VoiceOver: the forecast for this row is still loading"))
         }
-        if let time = startTime(window, in: row.spot.timeZone) { parts.append(time) }
-        if isTomorrow(row) { parts.append(String(localized: "tomorrow", comment: "VoiceOver: the next window is tomorrow")) }
+        parts.append(TimeText.time(start, in: zone))
+        if isTomorrow { parts.append(String(localized: "tomorrow", comment: "VoiceOver: the next window is tomorrow")) }
         return parts.joined(separator: ", ")
+    }
+
+    static func pinDescription(_ pin: ExplorePin) -> String {
+        ([pin.name, pin.locality].filter { !$0.isEmpty } + [pinLight(pin)].compactMap { $0 }).joined(separator: ", ")
+    }
+
+    static func clusterDescription(count: Int) -> String {
+        String(localized: "\(count) places, zoom in", comment: "VoiceOver: a group of map pins that are too close to tell apart; the number is how many")
     }
 
     static func rowDescription(_ row: ExploreRow, showsDistance: Bool = false) -> String {

@@ -28,6 +28,7 @@ struct ExploreMapPane: View {
     }
 
     var body: some View {
+        let _ = IterPerf.count("map.paneBody")
         ZStack {
             if renderMode == .snapshot {
                 ExploreMapStandIn(explore: explore)
@@ -47,7 +48,10 @@ struct ExploreMapPane: View {
                     .padding(IterSpace.md)
             }
         }
-        .onGeometryChange(for: CGSize.self) { $0.size } action: { paneSize = $0 }
+        .onGeometryChange(for: CGSize.self) { $0.size } action: {
+            paneSize = $0
+            explore.setMapViewport($0)
+        }
         .overlay(alignment: .bottomTrailing) {
             if let row = explore.selectedRow, !explore.isAddingSpot {
                 ExplorePlaceCard(row: row, size: cardSize) { explore.select(nil, from: .map) }
@@ -78,9 +82,13 @@ struct ExploreMapPane: View {
     private var liveMap: some View {
         MapReader { proxy in
             Map(position: $position, selection: mapSelection) {
-                // MapKit has no z-index: later annotations draw on top, so the selected pin goes last.
-                ForEach(explore.pins.sorted { zOrder($0.style) < zOrder($1.style) }) { pin in
-                    pinAnnotation(pin)
+                // The model hands over the items ordered and clustered (MapKit has no z-index: later annotations draw
+                // on top, so the selected pin is last); nothing is sorted or computed here.
+                ForEach(explore.mapItems) { item in
+                    switch item {
+                    case .pin(let pin): pinAnnotation(pin)
+                    case .cluster(let cluster): clusterAnnotation(cluster)
+                    }
                 }
                 UserLocationMapContent(location: app.location)
                 if let draft = explore.draftCoordinate {
@@ -99,6 +107,8 @@ struct ExploreMapPane: View {
                 MapScaleView()
             }
             .onMapCameraChange(frequency: .onEnd) { context in
+                IterPerf.once("map.firstSettle")
+                IterPerf.mark("map.settle")
                 let r = context.region
                 // A settle is the user's only when the map wrote a user-positioned value into `position` (see
                 // `.onChange(of: position)`); layout and aspect settles MapKit makes on its own never are.
@@ -126,16 +136,26 @@ struct ExploreMapPane: View {
             if let request { apply(request, animated: true) }
         }
         .onAppear {
+            IterPerf.once("map.created")
             if let request = explore.cameraRequest { apply(request, animated: false) }
         }
     }
 
     private func pinAnnotation(_ pin: ExplorePin) -> some MapContent {
         let anchor: UnitPoint = pin.style == .selected ? .bottom : .center
-        return Annotation(pin.row.spot.name, coordinate: clCoordinate(pin.row.spot.coordinate), anchor: anchor) {
+        return Annotation(pin.name, coordinate: clCoordinate(pin.coordinate), anchor: anchor) {
             pinBody(pin)
         }
         .tag(pin.id)
+        .annotationTitles(.hidden)
+    }
+
+    private func clusterAnnotation(_ cluster: ExploreCluster) -> some MapContent {
+        Annotation(LightText.clusterDescription(count: cluster.count), coordinate: clCoordinate(cluster.coordinate), anchor: .center) {
+            Button { explore.zoomToCluster(cluster.id) } label: { ExploreClusterView(cluster: cluster) }
+                .buttonStyle(.plain)
+                .allowsHitTesting(!explore.isAddingSpot)
+        }
         .annotationTitles(.hidden)
     }
 
@@ -145,15 +165,12 @@ struct ExploreMapPane: View {
             .onHover { inside in
                 if inside { explore.hoveredID = pin.id } else if explore.hoveredID == pin.id { explore.hoveredID = nil }
             }
-            .contextMenu { ExploreSpotMenu(spot: pin.row.spot, day: pin.row.day ?? LocalDay.today(in: pin.row.spot.timeZone)) }
-    }
-
-    private func zOrder(_ style: ExplorePinStyle) -> Int {
-        switch style {
-        case .selected: 2
-        case .chip: 1
-        case .dot: 0
-        }
+            .contextMenu {
+                // The menu needs the whole spot; the pin carries only what it draws, so it is looked up when the menu opens.
+                if let row = explore.row(id: pin.id) {
+                    ExploreSpotMenu(spot: row.spot, day: row.day ?? LocalDay.today(in: row.spot.timeZone))
+                }
+            }
     }
 
     private func apply(_ request: CameraRequest, animated: Bool) {
@@ -261,9 +278,11 @@ struct ExploreMapStandIn: View {
             ZStack(alignment: .topLeading) {
                 Rectangle().fill(IterColor.backgroundControl)
                 if let region {
-                    ForEach(explore.pins.sorted { z($0) < z($1) }) { pin in
-                        ExplorePinView(pin: pin)
-                            .position(project(pin.row.spot.coordinate, region, geo.size))
+                    ForEach(explore.mapItems) { item in
+                        switch item {
+                        case .pin(let pin): ExplorePinView(pin: pin).position(project(pin.coordinate, region, geo.size))
+                        case .cluster(let cluster): ExploreClusterView(cluster: cluster).position(project(cluster.coordinate, region, geo.size))
+                        }
                     }
                     if let draft = explore.draftCoordinate {
                         Image(systemName: "mappin.circle.fill").font(.title).foregroundStyle(IterColor.mapPin)
@@ -281,8 +300,6 @@ struct ExploreMapStandIn: View {
         }
         .accessibilityHidden(true)
     }
-
-    private func z(_ pin: ExplorePin) -> Int { pin.style == .selected ? 2 : pin.style == .chip ? 1 : 0 }
 
     private func project(_ c: Coordinate, _ r: GeoRegion, _ size: CGSize) -> CGPoint {
         let x = (c.longitude - (r.center.longitude - r.longitudeDelta / 2)) / r.longitudeDelta

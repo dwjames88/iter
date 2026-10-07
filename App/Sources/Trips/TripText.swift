@@ -24,6 +24,23 @@ extension TimeText {
         String(localized: "\(days) days · \(stops) stops", comment: "Trip size on a trip card, e.g. 4 days · 6 stops")
     }
 
+    /// "Thu 8": a day's cell in the overview strip.
+    static func shortDay(_ day: LocalDay) -> String {
+        String(localized: "\(weekday(day)) \(dayNumber(day))", comment: "A trip day in the overview strip, e.g. Thu 8")
+    }
+
+    /// "Day 2": the day's name.
+    static func dayName(index: Int) -> String {
+        String(localized: "Day \(index + 1)", comment: "A trip day's name, e.g. Day 2")
+    }
+
+    /// "Day 2 · Thu, Oct 8": the map's day switcher.
+    static func daySwitcher(index: Int, day: LocalDay) -> String {
+        var style = Date.FormatStyle().weekday(.abbreviated).month(.abbreviated).day()
+        style.timeZone = utc
+        return String(localized: "Day \(index + 1) · \(day.noon(in: utc).formatted(style))", comment: "Map day switcher, e.g. Day 2 · Thu, Oct 8")
+    }
+
     /// "Day 2 · Thu, Oct 8, 2026"
     static func tripDay(index: Int, day: LocalDay) -> String {
         String(localized: "Day \(index + 1) · \(self.day(day))", comment: "Trip day header, e.g. Day 2 · Wed 7 Oct")
@@ -87,20 +104,12 @@ extension LightText {
 
 /// The backward schedule and its issues, phrased.
 enum ScheduleText {
-    /// "Leave 4:10 AM · park 5:42 AM · set up by 5:52 AM" (the headline). The first stop of the trip has no drive:
-    /// "Set up by 5:52 AM". `previousZone` is where you leave from.
-    static func headline(_ schedule: StopSchedule, in zone: TimeZone, leavingFrom previousZone: TimeZone?) -> String? {
-        guard let setUpBy = schedule.setUpBy else { return nil }
-        let setUp = TimeText.time(setUpBy, in: zone)
-        guard let leaveBy = schedule.leaveBy else {
-            return String(localized: "Set up by \(setUp)", comment: "Backward schedule for the first stop of a trip")
-        }
-        let leave = TimeText.time(leaveBy, in: previousZone ?? zone)
-        if schedule.walkInKnown, let arriveBy = schedule.arriveBy, arriveBy != setUpBy {
-            return String(localized: "Leave \(leave) · park \(TimeText.time(arriveBy, in: zone)) · set up by \(setUp)",
-                          comment: "Backward schedule: leave, park, set up")
-        }
-        return String(localized: "Leave \(leave) · set up by \(setUp)", comment: "Backward schedule: leave and set up")
+    /// "Park 5:42 AM · 25 min walk-in": where the walk starts, when the schedule knows the walk-in. The leave and set-up
+    /// times are in the timeline's gutter, not here.
+    static func parkAndWalk(_ schedule: StopSchedule?, minutes: Int?, in zone: TimeZone) -> String {
+        let walk = walkIn(minutes: minutes)
+        guard let schedule, schedule.walkInKnown, let arriveBy = schedule.arriveBy, arriveBy != schedule.setUpBy else { return walk }
+        return String(localized: "Park \(TimeText.time(arriveBy, in: zone)) · \(walk)", comment: "Park time, then the walk to the shooting spot")
     }
 
     static func walkIn(minutes: Int?) -> String {
@@ -155,6 +164,10 @@ enum ConnectorText {
     }
 
     static let estimated = String(localized: "estimated", comment: "Marks a drive time that is a straight-line estimate, not a road route")
-    static let overnight = String(localized: "Overnight", comment: "Divider between two trip days")
+    /// "Overnight · near Page, AZ"
+    static func overnight(near place: String) -> String {
+        String(localized: "Overnight · near \(place)", comment: "Boundary between two trip days; the place is where you sleep, e.g. Overnight · near Page, AZ")
+    }
+    static let overnight = String(localized: "Overnight", comment: "Boundary between two trip days when the place is unknown")
     static let driveEstimatedHelp = String(localized: "Drive time estimated", comment: "Explains an estimated drive")
 }

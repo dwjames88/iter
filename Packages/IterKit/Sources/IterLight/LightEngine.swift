@@ -116,17 +116,25 @@ public struct LightEngine: Sendable {
     /// The next sunrise or sunset event at the spot by the spot's own clock: golden morning or golden evening of today
     /// through three days on, the first whose window has not ended. Polar fallback: the first daytime window not yet over.
     public func nextEvent(for spot: Spot, forecast: Forecast?, unavailable: ForecastUnavailableReason?, now: Date) -> (day: LocalDay, window: LightWindow)? {
-        let today = LocalDay(now, in: spot.timeZone)
-        let days = (0..<4).map { dayLight(for: spot, on: today.adding(days: $0), forecast: forecast, unavailable: unavailable, now: now) }
-        for dl in days {
-            if let w = dl.windows.first(where: { ($0.kind == .goldenMorning || $0.kind == .goldenEvening) && $0.span.end > now }) {
-                return (dl.day, w)
+        // Lazy: only the sun's geometry is needed to find the window, day by day, and only the chosen window is scored
+        // (no moon, no scoring of the other windows). Same answer as scanning four full `dayLight`s.
+        let zone = spot.timeZone
+        let today = LocalDay(now, in: zone)
+        var fallback: (day: LocalDay, kind: LightWindowKind, span: TimeSpan)?
+        for offset in 0..<4 {
+            let day = today.adding(days: offset)
+            let geo = geometry(sun: ephemeris.sunEvents(on: day, at: spot.coordinate, in: zone), spot: spot, day: day)
+            if let g = geo.first(where: { ($0.kind == .goldenMorning || $0.kind == .goldenEvening) && $0.span.end > now }) {
+                return (day, LightWindow(kind: g.kind, span: g.span,
+                                         assessment: assess(kind: g.kind, span: g.span, spot: spot, forecast: forecast, unavailable: unavailable, now: now)))
+            }
+            if fallback == nil, let g = geo.first(where: { $0.kind != .night && $0.span.end > now }) {
+                fallback = (day, g.kind, g.span)
             }
         }
-        for dl in days {
-            if let w = dl.windows.first(where: { $0.kind != .night && $0.span.end > now }) { return (dl.day, w) }
-        }
-        return nil
+        guard let f = fallback else { return nil }
+        return (f.day, LightWindow(kind: f.kind, span: f.span,
+                                   assessment: assess(kind: f.kind, span: f.span, spot: spot, forecast: forecast, unavailable: unavailable, now: now)))
     }
 
     /// Today's windows that have not ended (spot's zone), then all of tomorrow's, chronologically.

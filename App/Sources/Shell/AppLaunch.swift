@@ -14,6 +14,7 @@ import IterFeatures
 /// selection; `-IterAppearance light|dark` forces the app's appearance. Both exist for screenshot testing.
 /// `-IterSettingsTab general|weather|intelligence|about` opens the Settings window on that tab at launch, and
 /// `-IterSpot <curated spot id>` (for example `mesa-arch`) opens Explore with that spot's page pushed. Also for screenshots.
+/// `-IterSeedTrip conflict` and `-IterTripDay <n>` are described on their properties.
 /// `-IterWindowSize WxH` (for example `1280x820`, `960x652`, or `min` for the window minimum) sets the main window's
 /// content size once at launch; absent, the window opens as usual. Sizes below the minimum are raised to it.
 enum AppLaunch {
@@ -59,6 +60,18 @@ enum AppLaunch {
     }
     /// `-IterCardScrolled YES`: the map's place card opens already scrolled to its lower sections. For screenshots.
     static var cardScrolled: Bool { UserDefaults.standard.bool(forKey: "IterCardScrolled") }
+    /// `-IterSeedTrip YES|conflict`: seeds the sample trip (see `IterApp`); `conflict` also reverses day 2.
+    enum TripSeed { case sample, conflict }
+    static var seedTrip: TripSeed? {
+        let defaults = UserDefaults.standard
+        if defaults.string(forKey: "IterSeedTrip")?.lowercased() == "conflict" { return .conflict }
+        return defaults.bool(forKey: "IterSeedTrip") ? .sample : nil
+    }
+    /// `-IterTripDay <n>` (1-based): the trip builder opens with that day selected. For screenshots.
+    static var tripDay: Int? {
+        guard let day = Int(UserDefaults.standard.string(forKey: "IterTripDay") ?? ""), day >= 1 else { return nil }
+        return day - 1
+    }
     static var appearanceName: String? { UserDefaults.standard.string(forKey: "IterAppearance") }
 
     /// The `-IterWindowSize` request in points, or nil. `min` is the window minimum.

@@ -72,6 +72,7 @@ private func makeExplore(search: FakeSearch = FakeSearch(), weatherDown: Bool = 
     let app = AppModel(store: store, weather: provider ?? (weatherDown ? DownWeather() : sample), search: search, geocoder: NoGeocoder(),
                        drives: NoDrives(), scout: nil, location: location, sampleWeather: sample, defaults: defaults, now: { fixedNow })
     let explore = ExploreModel(app: app, searchDebounce: .zero, defaults: defaults)
+    explore.scoringDelay = .milliseconds(1)
     if fix != nil {
         explore.start()
         for _ in 0..<200 where location.coordinate == nil { await Task.yield() }
@@ -90,6 +91,7 @@ private func place(_ id: String, _ name: String, lat: Double = 38.7, lon: Double
         let explore = try await makeExplore()
         #expect(explore.rows.count == CuratedSpots.all.count)
         _ = await explore.app.forecasts.load(CuratedSpots.all[0].coordinate)
+        await explore.waitForScoring()
         let row = try #require(explore.row(id: CuratedSpots.all[0].id))
         #expect(row.window != nil)
         #expect(row.source == .curated)
@@ -140,6 +142,7 @@ private func place(_ id: String, _ name: String, lat: Double = 38.7, lon: Double
         let explore = try await makeExplore()
         // Only some spots have a forecast loaded; the rest are still "not loaded".
         for spot in CuratedSpots.all.prefix(5) { _ = await explore.app.forecasts.load(spot.coordinate) }
+        await explore.waitForScoring()
         explore.sort = .bestLight
         let scores = explore.rows.map(\.score)
         let firstUnscored = try #require(scores.firstIndex { $0 == nil })
@@ -193,6 +196,7 @@ private func place(_ id: String, _ name: String, lat: Double = 38.7, lon: Double
         let explore = try await makeExplore()
         let spot = try #require(CuratedSpots.spot(id: "mesa-arch"))
         _ = await explore.app.forecasts.load(spot.coordinate)
+        await explore.waitForScoring()
         let row = try #require(explore.row(id: "mesa-arch"))
         // 10:00 in Denver: this evening's golden hour.
         #expect(row.window?.kind == .goldenEvening)
@@ -394,6 +398,7 @@ private func place(_ id: String, _ name: String, lat: Double = 38.7, lon: Double
     @Test func pinBudgetKeepsHierarchy() async throws {
         let explore = try await makeExplore()
         for spot in CuratedSpots.all { _ = await explore.app.forecasts.load(spot.coordinate) }
+        await explore.waitForScoring()
         explore.select("mesa-arch")
         let pins = explore.pins
         #expect(pins.count == explore.rows.count)
@@ -681,3 +686,275 @@ struct FakeFailingWeather: WeatherProviding {
     func forecast(for coordinate: Coordinate) async throws -> Forecast { throw error }
     func attribution() async -> WeatherAttributionInfo? { nil }
 }
+
+// MARK: - Map items, clustering and scoring
+
+private let westUS = GeoRegion(center: Coordinate(latitude: 38, longitude: -115), latitudeDelta: 25, longitudeDelta: 40)
+private let viewport = CGSize(width: 900, height: 700)
+
+private func candidate(_ id: String, _ lat: Double, _ lon: Double, score: Int? = nil) -> PinClusterer.Candidate {
+    PinClusterer.Candidate(id: id, coordinate: Coordinate(latitude: lat, longitude: lon), score: score,
+                           band: score.map { LightBand(score: $0) })
+}
+
+@MainActor
+private func clusteredExplore(region: GeoRegion = westUS) async throws -> ExploreModel {
+    let explore = try await makeExplore()
+    explore.setMapViewport(viewport)
+    explore.cameraDidChange(to: region)
+    return explore
+}
+
+@Suite struct PinClustererTests {
+    // Two pins 0.05 degrees apart and one far away.
+    private let near = [candidate("a", 36.5, -121.5, score: 60), candidate("b", 36.5, -121.45, score: 80), candidate("far", 44, -110)]
+    private let wide = GeoRegion(center: Coordinate(latitude: 40, longitude: -115), latitudeDelta: 8, longitudeDelta: 10)
+
+    @Test func aCellOfTwoOrMoreBecomesOneClusterAndALonePinStays() {
+        let result = PinClusterer.cluster(near, region: wide, viewportWidth: 1000)
+        #expect(result.clusters.count == 1)
+        let cluster = result.clusters[0]
+        #expect(cluster.memberIDs == ["a", "b"] && cluster.count == 2)
+        #expect(cluster.bestScore == 80 && cluster.bestBand == LightBand(score: 80))
+        #expect(abs(cluster.coordinate.longitude - -121.475) < 1e-9)
+        #expect(result.singles == ["far"])
+    }
+
+    @Test func aLonePinIsNeverACluster() {
+        let result = PinClusterer.cluster([candidate("only", 36, -120)], region: wide, viewportWidth: 1000)
+        #expect(result.clusters.isEmpty)
+        #expect(result.singles == ["only"])
+    }
+
+    @Test func theSameInputGivesTheSameIds() {
+        let one = PinClusterer.cluster(near, region: wide, viewportWidth: 1000)
+        let two = PinClusterer.cluster(near.reversed(), region: wide, viewportWidth: 1000)
+        #expect(one.clusters.map(\.id) == two.clusters.map(\.id))
+        #expect(one.clusters == two.clusters)
+    }
+
+    @Test func aSmallPanKeepsTheClusterIds() {
+        let base = PinClusterer.cluster(near, region: wide, viewportWidth: 1000)
+        var panned = wide
+        panned.center.longitude += 0.3
+        panned.center.latitude -= 0.2
+        let moved = PinClusterer.cluster(near, region: panned, viewportWidth: 1000)
+        #expect(moved.clusters.map(\.id) == base.clusters.map(\.id))
+    }
+
+    @Test func zoomingInSplitsAClusterAndChangesItsBucket() {
+        var close = wide
+        close.latitudeDelta = 0.4
+        close.longitudeDelta = 0.5
+        let zoomedOut = PinClusterer.cluster(near, region: wide, viewportWidth: 1000)
+        let zoomedIn = PinClusterer.cluster(near, region: close, viewportWidth: 1000)
+        #expect(zoomedOut.clusters.count == 1)
+        #expect(zoomedIn.clusters.isEmpty)
+        #expect(Set(zoomedIn.singles) == ["a", "b", "far"])
+        #expect(PinClusterer.zoomBucket(region: close, viewportWidth: 1000)! > PinClusterer.zoomBucket(region: wide, viewportWidth: 1000)!)
+    }
+
+    @Test func nothingClustersWithoutARegionOrAWidth() {
+        #expect(PinClusterer.cluster(near, region: nil, viewportWidth: 1000).clusters.isEmpty)
+        #expect(PinClusterer.cluster(near, region: wide, viewportWidth: 0).clusters.isEmpty)
+        #expect(PinClusterer.cluster(near, region: nil, viewportWidth: 0).singles == ["a", "b", "far"])
+    }
+}
+
+@MainActor
+@Suite struct ExploreMapItemsTests {
+    @Test func theMapDoesNotClusterBeforeItHasARegionAndASize() async throws {
+        let explore = try await makeExplore()
+        #expect(explore.mapItems.count == explore.rows.count)
+        explore.setMapViewport(viewport)
+        #expect(explore.mapItems.allSatisfy { if case .pin = $0 { true } else { false } })
+        let other = try await makeExplore()
+        other.cameraDidChange(to: westUS)
+        #expect(other.mapItems.count == other.rows.count)
+    }
+
+    @Test func aWideViewClustersNearbySpotsAndEveryPinIsAccountedFor() async throws {
+        let explore = try await clusteredExplore()
+        var members = 0
+        var clusters = 0
+        for item in explore.mapItems {
+            switch item {
+            case .pin: members += 1
+            case .cluster(let c): members += c.count; clusters += 1; #expect(c.count >= 2)
+            }
+        }
+        #expect(clusters > 0)
+        #expect(members == explore.rows.count)
+    }
+
+    @Test func idsAreStableAcrossAForecastForAnUnrelatedSpot() async throws {
+        let explore = try await clusteredExplore()
+        await explore.waitForScoring()
+        let before = explore.mapItems
+        let spot = try #require(CuratedSpots.all.first { s in
+            before.contains { if case .pin(let p) = $0 { p.id == s.id } else { false } }
+        })
+        _ = await explore.app.forecasts.load(spot.coordinate)
+        await explore.waitForScoring()
+        let after = explore.mapItems
+        // Same identities; only the draw order may change (a new chip moves up).
+        #expect(Set(after.map(\.id)) == Set(before.map(\.id)))
+        let others = { (items: [ExploreMapItem]) in items.filter { $0.id != spot.id } }
+        #expect(others(after) == others(before))
+        #expect(after.first { $0.id == spot.id } != before.first { $0.id == spot.id })
+    }
+
+    @Test func theSelectedPinIsLastAndNeverClustered() async throws {
+        let explore = try await clusteredExplore()
+        let cluster = try #require(explore.mapItems.compactMap { item -> ExploreCluster? in
+            if case .cluster(let c) = item { c } else { nil }
+        }.first)
+        let chosen = cluster.memberIDs[0]
+        explore.select(chosen)
+        let items = explore.mapItems
+        guard case .pin(let last)? = items.last else { Issue.record("expected a pin last"); return }
+        #expect(last.id == chosen && last.style == .selected)
+        #expect(items.allSatisfy { if case .cluster(let c) = $0 { !c.memberIDs.contains(chosen) } else { true } })
+    }
+
+    @Test func drawOrderIsDotsClustersChipsHoveredSelected() async throws {
+        let explore = try await clusteredExplore()
+        for spot in CuratedSpots.all { _ = await explore.app.forecasts.load(spot.coordinate) }
+        await explore.waitForScoring()
+        let singles = explore.mapItems.compactMap { item -> ExplorePin? in if case .pin(let p) = item { p } else { nil } }
+        let selected = try #require(singles.first { $0.style == .dot }).id
+        let hovered = try #require(singles.last { $0.style == .dot }).id
+        explore.select(selected)
+        explore.hoveredID = hovered
+        func rank(_ item: ExploreMapItem) -> Int {
+            switch item {
+            case .cluster: 1
+            case .pin(let p): p.id == selected ? 4 : p.id == hovered ? 3 : p.style == .chip ? 2 : 0
+            }
+        }
+        let items = explore.mapItems
+        let ranks = items.map(rank)
+        #expect(ranks == ranks.sorted())
+        #expect(Set(ranks) == [0, 1, 2, 3, 4])
+        for group in Dictionary(grouping: items, by: rank).values { #expect(group.map(\.id) == group.map(\.id).sorted()) }
+    }
+
+    @Test func coLocatedSpotsAreIndividualPinsBelowTheCutoff() async throws {
+        let explore = try await makeExplore()
+        let spot = CuratedSpots.all[0]
+        let a = explore.app.store.createUserSpot(name: "A", coordinate: spot.coordinate, timeZoneIdentifier: "America/Denver")
+        let b = explore.app.store.createUserSpot(name: "B", coordinate: spot.coordinate, timeZoneIdentifier: "America/Denver")
+        explore.setMapViewport(viewport)
+        explore.cameraDidChange(to: GeoRegion(center: spot.coordinate, latitudeDelta: 3, longitudeDelta: 4))
+        func clusterCount() -> Int { explore.mapItems.filter { if case .cluster = $0 { true } else { false } }.count }
+        let cluster = try #require(explore.mapItems.compactMap { item -> ExploreCluster? in
+            if case .cluster(let c) = item { c } else { nil }
+        }.first { $0.memberIDs.contains(a.spot.id) && $0.memberIDs.contains(b.spot.id) })
+        explore.zoomToCluster(cluster.id)
+        guard case .fit(let region)? = explore.cameraRequest?.kind else { Issue.record("expected a fit"); return }
+        #expect(region.longitudeDelta >= PinClusterer.minimumFitSpan && region.latitudeDelta >= PinClusterer.minimumFitSpan)
+        explore.cameraDidChange(to: region)
+        let ids = Set(explore.mapItems.compactMap { item -> String? in if case .pin(let p) = item { p.id } else { nil } })
+        #expect(ids.contains(a.spot.id) && ids.contains(b.spot.id))
+        #expect(clusterCount() == 0)
+    }
+
+    @Test func theHoveredPinStaysIndividual() async throws {
+        let explore = try await clusteredExplore()
+        let cluster = try #require(explore.mapItems.compactMap { item -> ExploreCluster? in
+            if case .cluster(let c) = item { c } else { nil }
+        }.first)
+        explore.hoveredID = cluster.memberIDs[0]
+        let hovered = explore.mapItems.first { $0.id == cluster.memberIDs[0] }
+        guard case .pin(let pin)? = hovered else { Issue.record("expected the hovered pin to be individual"); return }
+        #expect(pin.style == .chip)
+    }
+
+    @Test func clusterIdsSurviveAPanWithinTheSameZoom() async throws {
+        let explore = try await clusteredExplore()
+        let before = explore.mapItems.map(\.id)
+        var panned = westUS
+        panned.center.longitude += 0.01
+        explore.cameraDidChange(to: panned)
+        #expect(explore.mapItems.map(\.id) == before)
+    }
+
+    @Test func zoomingInSplitsClusters() async throws {
+        let explore = try await clusteredExplore()
+        let out = explore.mapItems.filter { if case .cluster = $0 { true } else { false } }.count
+        explore.cameraDidChange(to: GeoRegion(center: westUS.center, latitudeDelta: 1, longitudeDelta: 1.5))
+        let inn = explore.mapItems.filter { if case .cluster = $0 { true } else { false } }.count
+        #expect(out > 0 && inn < out)
+    }
+
+    @Test func chipsAreSpentOnPinsThatStayIndividual() async throws {
+        let explore = try await clusteredExplore()
+        for spot in CuratedSpots.all { _ = await explore.app.forecasts.load(spot.coordinate) }
+        await explore.waitForScoring()
+        let clustered = Set(explore.mapItems.flatMap { item -> [String] in
+            if case .cluster(let c) = item { c.memberIDs } else { [] }
+        })
+        let chips = explore.pins.filter { $0.style == .chip }
+        #expect(chips.count <= ExploreModel.pinBudget)
+        #expect(chips.allSatisfy { !clustered.contains($0.id) })
+    }
+
+    @Test func clickingAClusterRequestsAFitThatIsNotAUserMove() async throws {
+        let explore = try await clusteredExplore()
+        let cluster = try #require(explore.mapItems.compactMap { item -> ExploreCluster? in
+            if case .cluster(let c) = item { c } else { nil }
+        }.first)
+        let before = explore.cameraRequest?.id ?? 0
+        explore.zoomToCluster(cluster.id)
+        let request = try #require(explore.cameraRequest)
+        #expect(request.id > before)
+        guard case .fit(let region) = request.kind else { Issue.record("expected a fit"); return }
+        #expect(cluster.memberCoordinates.allSatisfy(region.contains))
+        #expect(region.latitudeDelta < westUS.latitudeDelta)
+        #expect(!explore.cameraPolicy.userMovedSinceFit)
+        #expect(explore.cameraPolicy.intendedRegion == region)
+    }
+
+    @Test func cachedItemsAreReusedUntilSomethingTheyDependOnChanges() async throws {
+        let explore = try await clusteredExplore()
+        #expect(explore.mapItems == explore.mapItems)
+        let before = explore.mapItems
+        explore.hoveredID = "no-such-spot"
+        #expect(explore.mapItems == before)
+    }
+}
+
+@MainActor
+@Suite struct ExploreScoringTests {
+    @Test func rowsHaveScoresAfterWaitingForScoring() async throws {
+        let explore = try await makeExplore()
+        for spot in CuratedSpots.all { _ = await explore.app.forecasts.load(spot.coordinate) }
+        await explore.waitForScoring()
+        #expect(explore.rows.allSatisfy { $0.score != nil })
+        // Waiting again with nothing queued returns at once.
+        await explore.waitForScoring()
+    }
+
+    @Test func aRowKeepsItsOldScoreWhenTheTimeBucketRollsOver() async throws {
+        let explore = try await makeExplore()
+        for spot in CuratedSpots.all { _ = await explore.app.forecasts.load(spot.coordinate) }
+        await explore.waitForScoring()
+        let before = explore.rows.map(\.score)
+        #expect(before.allSatisfy { $0 != nil })
+        let later = fixedNowForRollover
+        explore.app.now = { later }
+        // Immediately after the roll-over the scores are still the old ones: nothing flashes empty.
+        #expect(explore.rows.map(\.score) == before)
+        await explore.waitForScoring()
+        #expect(explore.rows.allSatisfy { $0.score != nil })
+    }
+
+    @Test func aMissingForecastIsScoredAsNoForecastNotLeftBlank() async throws {
+        let explore = try await makeExplore(weatherDown: true)
+        explore.app.forecasts.requestAll(CuratedSpots.all.map(\.coordinate))
+        await explore.waitForScoring()
+        #expect(explore.rows.allSatisfy { $0.window != nil && $0.score == nil })
+    }
+}
+
+private let fixedNowForRollover = fixedNow.addingTimeInterval(600)

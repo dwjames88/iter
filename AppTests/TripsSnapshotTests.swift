@@ -37,8 +37,18 @@ enum TripsFixtures {
         return model
     }
 
-    /// Day 1 is backwards (sunset before sunrise); on day 2 the drive between two sunsets cannot be made.
+    /// The sample trip with day 2 reversed: its sunset stop comes before its sunrise stop, so the day has a conflict and a
+    /// Reorder-by-light suggestion (the same thing `-IterSeedTrip conflict` seeds).
     static func conflictedModel() -> AppModel {
+        let model = model()
+        let store = model.store
+        let trip = store.trips()[0]
+        store.reorder(day: 1, in: trip, to: trip.orderedStops(onDay: 1).reversed().map(\.id))
+        return model
+    }
+
+    /// Day 1 is backwards (sunset before sunrise); on day 2 the drive between two sunsets cannot be made.
+    static func backwardsModel() -> AppModel {
         let model = model(seedTrip: false)
         let store = model.store
         let trip = store.createTrip(name: "Arches and Monument Valley", startDay: LocalDay(year: 2026, month: 10, day: 7), dayCount: 2)
@@ -70,24 +80,24 @@ enum TripsFixtures {
     @Test(.enabled(if: Snapshot.enabled)) func builder() async throws {
         let model = TripsFixtures.model()
         let id = model.store.trips()[0].id
-        try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: id) }, model: model), screen: "trip", state: "builder", settle: settle)
+        try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: id, initialDay: 1) }, model: model), screen: "trip", state: "builder", settle: settle)
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func builderWeatherOffline() async throws {
         let model = TripsFixtures.model(weather: .notEnabled)
         let id = model.store.trips()[0].id
-        try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: id) }, model: model), screen: "trip", state: "builder-weather-offline", settle: settle)
+        try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: id, initialDay: nil) }, model: model), screen: "trip", state: "builder-weather-offline", settle: settle)
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func builderConflict() async throws {
         let model = TripsFixtures.conflictedModel()
         let id = model.store.trips()[0].id
-        try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: id) }, model: model), screen: "trip", state: "builder-conflict", settle: settle)
+        try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: id, initialDay: 1) }, model: model), screen: "trip", state: "builder-conflict", settle: settle)
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func builderMissing() async throws {
         let model = TripsFixtures.model(seedTrip: false)
-        try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: UUID()) }, model: model), screen: "trip", state: "builder-missing", settle: settle)
+        try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: UUID(), initialDay: nil) }, model: model), screen: "trip", state: "builder-missing", settle: settle)
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func newSheet() async throws {
@@ -98,16 +108,29 @@ enum TripsFixtures {
         try await Snapshot.render(Fixtures.host(sheet, model: model), screen: "trip", state: "new-sheet", settle: settle)
     }
 
+    /// A day's timeline in a 560 pt column: the drive in, stops, drives between them and Add Stop, as the list draws them.
     @Test(.enabled(if: Snapshot.enabled)) func stopRow() async throws {
-        let model = TripsFixtures.conflictedModel()
+        let model = TripsFixtures.backwardsModel()
         let id = model.store.trips()[0].id
         let builder = TripBuilderModel(tripID: id, store: model.store, scheduler: model.scheduler, drives: model.drives,
                                        forecasts: model.forecasts, now: { Fixtures.now })
         await builder.waitForLegs()
         let rows = VStack(alignment: .leading, spacing: 0) {
-            ForEach(builder.days.flatMap(\.stops)) { entry in
-                ConnectorRowView(entry: entry)
-                StopRowView(entry: entry, builder: builder, selection: .constant(nil))
+            ForEach(builder.layout.groups) { group in
+                DayHeaderRow(group: group).padding(.horizontal)
+                ForEach(group.items) { item in
+                    switch item {
+                    case .driveIn(let drive):
+                        DriveRowView(drive: drive, isDriveIn: true, above: nil, below: RailTone(drive))
+                    case .drive(let drive):
+                        DriveRowView(drive: drive, above: RailTone(drive), below: RailTone(drive))
+                    case .stop(let entry):
+                        StopRowView(entry: entry, builder: builder, selection: .constant(nil), railAbove: nil, railBelow: nil)
+                    case .addStop:
+                        EmptyView()
+                    }
+                }
+                if let boundary = group.overnightAfter { OvernightBoundaryRow(boundary: boundary) }
             }
         }
         .padding()
@@ -117,6 +140,9 @@ enum TripsFixtures {
 
     @Test func fixturesBuild() {
         let model = TripsFixtures.conflictedModel()
-        #expect(model.store.trips().first?.orderedStops.count == 4)
+        #expect(model.store.trips().first?.orderedStops.count == 6)
+        // Keep the model alive while its records are read: the container goes with it.
+        let backwards = TripsFixtures.backwardsModel()
+        #expect(backwards.store.trips().first?.orderedStops.count == 4)
     }
 }

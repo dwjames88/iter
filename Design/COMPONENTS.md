@@ -16,8 +16,8 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 2. [Honesty and provenance](#honesty-and-provenance-components): [SampleDataLabel](#sampledatalabel), [WeatherStatusBanner](#weatherstatusbanner), [WeatherAttributionView](#weatherattributionview) (with ForecastSourceLine, [ForecastSourceLines](#forecastsourcelines) and WeatherDataSources), [WindyLink](#windylink), [ProvenanceTag](#provenancetag), [Warning lines](#warning-lines), [Weather status text and score notes](#weather-status-text-and-score-notes)
 3. [Shared](#shared-components): [AddToTripMenu](#addtotripmenu), [MapStandIn](#mapstandin), [SpotEditorSheet](#spoteditorsheet), [SpotCard](#spotcard)
 4. [Shell](#shell-components): [TripContextMenu](#tripcontextmenu)
-5. [Trips](#trips-components): [TripCard](#tripcard), [TemplateRow](#templaterow), [TripHeader](#tripheader), [TripPlanList](#tripplanlist), [DayHeader](#dayheader), [StopRow](#stoprow), [StopNumberBadge](#stopnumberbadge), [ConnectorRow](#connectorrow), [SuggestionBanner](#suggestionbanner), [TripRouteMap](#triproutemap), [AddStopPopover](#addstoppopover)
-6. [Explore](#explore-components): [ExploreListPanel](#explorelistpanel), [ExploreLocationBanner](#explorelocationbanner), [ExploreRow](#explorerow), [ExploreMapPane](#exploremappane), [ExplorePinView](#explorepinview), [ExplorePlaceCard](#exploreplacecard), [SpotImageStrip](#spotimagestrip), [AddSpotBanner](#addspotbanner)
+5. [Trips](#trips-components): [TripCard](#tripcard), [TemplateRow](#templaterow), [TripHeader](#tripheader), [TripOverviewStrip](#tripoverviewstrip), [TripPlanList](#tripplanlist), [DayHeader](#dayheader), [StopRow](#stoprow), [StopNumberBadge](#stopnumberbadge), [DriveRow](#driverow), [OvernightBoundary](#overnightboundary), [SuggestionBanner](#suggestionbanner), [TripRouteMap](#triproutemap), [AddStopPopover](#addstoppopover)
+6. [Explore](#explore-components): [ExploreListPanel](#explorelistpanel), [ExploreLocationBanner](#explorelocationbanner), [ExploreRow](#explorerow), [ExploreMapPane](#exploremappane), [ExplorePinView](#explorepinview), [ExploreClusterView](#exploreclusterview), [ExplorePlaceCard](#exploreplacecard), [SpotImageStrip](#spotimagestrip), [AddSpotBanner](#addspotbanner)
 7. [Spot page](#spot-page-components): [SpotHeader](#spotheader), [WhenToGoSection](#whentogosection), [SunTimesLine](#suntimesline), [OutlookStrip](#outlookstrip), [DayWindowsSection](#daywindowssection), [WindowRow](#windowrow), [ReasonsGrid](#reasonsgrid), [SignedBar](#signedbar), [ExplainBlock](#explainblock), [LightTimeline](#lighttimeline), [SkyArc](#skyarc), [HourlyStrip](#hourlystrip), [WindySection](#windysection), [SpotFactsRow](#spotfactsrow), [LookAroundSection](#lookaroundsection)
 8. [Saved and Scout](#saved-and-scout-components): [SavedRow](#savedrow), [ScoutResultRow](#scoutresultrow), [ScoutProgress](#scoutprogress)
 9. [Settings components](#settings-components): [ProviderStatusRow](#providerstatusrow)
@@ -186,7 +186,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Anatomy:** `exclamationmark.triangle.fill` (or `exclamationmark.triangle`) + text, both `status/warning`, `type/caption` (`type/callout` in Change Dates). Wraps.
 - **Wording seen:** "Out of order: this Sunrise is earlier than the previous stop's Sunset"; "No Sunset window on this day at this place"; "Drive doesn't fit: 2 hr, 58 min short"; "N stops will move to Day D, the new last day. You can undo this."; "Couldn't look up this place's time zone, so it's estimated from the map position."; "Couldn't search Apple Maps for “query”."
 - **Danger variant:** validation messages in the Spot editor use `status/danger` (raspberry) with `exclamationmark.triangle.fill` at `type/caption`.
-- **Used on:** Trip builder rows and connectors, Change Dates sheet, Spot editor, Explore header.
+- **Used on:** Trip builder rows and drives, Change Dates sheet, Spot editor, Explore header.
 
 ---
 
@@ -264,36 +264,47 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **States:** editing (system text-field focus; the snapshot shows the name selected); an empty name reverts on commit.
 - **Used on:** Trip builder.
 
+### TripOverviewStrip
+
+- **Type, file:** `TripOverviewStrip`, `Trips/TripDayViews.swift`. Data: `TripOverviewCell` (IterFeatures, `TripDayLayout.swift`).
+- **One job:** the whole trip at a glance, and a way to pick a day.
+- **Anatomy:** a horizontal row of equal-width buttons (minimum 104 pt, gap `space/xs`), padding `space/lg` by `space/sm`. Each cell (padding `space/sm`, `radius/control`): "Day 2" (`type/captionStrong`) with a `exclamationmark.triangle.fill` mark in `status/warning` at the right when the day has a conflict; "Thu 8" (`type/caption`, `text/secondary`); "2 stops"; the day's best window as its [WindowSymbol](#windowsymbol), the start time in the stop's zone and a compact [ScoreChip](#scorechip), or "No stops". The best window is the highest-scoring session window of the day's stops (the first stop's when nothing is scored).
+- **States:** unselected (`background/content`, hairline stroke); selected (`accent/primary` at 14% fill, 2 pt accent stroke). With more days than fit, the row scrolls horizontally.
+- **Interaction:** a click selects the day (the list scrolls to it, the map frames it).
+- **Accessibility:** each cell is a button labelled "Day 2, Thursday, October 8, 2 stops, Best light: Sunrise at 7:21 AM, 1 conflict", with the selected trait on the selected day.
+- **Used on:** Trip builder.
+
 ### TripPlanList
 
 - **Type, file:** `TripPlanList`, `Trips/TripPlanList.swift`.
-- **One job:** the plan as day sections of stops and connectors, with drag and drop.
-- **Anatomy:** a system inset List with selection. The [WeatherStatusBanner](#weatherstatusbanner) sits above the list, not in it. Per day: [DayHeader](#dayheader) as the section header, optional [SuggestionBanner](#suggestionbanner), [ConnectorRow](#connectorrow) + [StopRow](#stoprow) pairs, and an **Add Stop** row (`plus` icon and text in `accent/primary`, borderless). Last row: [ForecastSourceLines](#forecastsourcelines) when something is scored.
-- **Drop indicator:** a `stroke/thick` (2 pt) capsule in `accent/primary` at the top of the target row or day.
-- **Non-selectable rows:** banners, connectors, Add Stop, source lines.
+- **One job:** the plan as day containers of stops and drives, with drag and drop.
+- **Anatomy:** a system List with selection on `background/window`, separators hidden. Each day is one container drawn with per-row `listRowBackground` (`DayContainerBackground`): rounded top corners on the first row, rounded bottom corners on the last, `background/content` fill, hairline stroke, accent stroke when the day is selected. Rows of a day: [DayHeader](#dayheader), optional [SuggestionBanner](#suggestionbanner), optional conflict line, the timeline ([DriveRow](#driverow) and [StopRow](#stoprow) items), an **Add Stop** row (`plus` icon and text in `accent/primary`, borderless). Between containers: [OvernightBoundary](#overnightboundary). Last row: [ForecastSourceLines](#forecastsourcelines) when something is scored.
+- **Drop indicator:** a `stroke/thick` (2 pt) capsule in `accent/primary` at the top of the target row, drive row or day header.
+- **Non-selectable rows:** header, banners, conflict line, drives, Add Stop, overnight boundaries, source lines.
+- **Scrolling:** choosing a day in the strip or the map switcher scrolls the list to that day's header.
 
 ### DayHeader
 
-- **Type, file:** `DayHeader`, `Trips/TripPlanList.swift`.
-- **One job:** which day, its light frame and its load.
-- **Anatomy:** left: "Day 2 · Thu, Oct 8, 2026" (`type/headline`), then `sun.horizon` + "Sunrise 07:21 · Sunset 18:53" (`type/caption`, `text/secondary`, monospaced digits). Right: "2 stops · 5 hr, 27 min driving" or "No stops yet" (`type/caption`, `text/secondary`). Vertical padding `space/xs`. Not upper-cased.
-- **States:** drop target (the whole header accepts a dropped stop and puts it at the end of that day).
+- **Type, file:** `DayHeaderRow`, `Trips/TripDayViews.swift`.
+- **One job:** which day, its light bookends and its load.
+- **Anatomy:** the first row of the container, on `background/control`, hairline below. "Day 2" (`type/title/section`) with "Thursday, October 8" (`type/subheadline`, `text/secondary`) beside it; a line with the sunrise and sunset symbols and their times (`type/caption`, `text/secondary`, monospaced digits, in the first stop's zone); "2 stops · 5 hr, 27 min driving" or "No stops yet" (`type/caption`, `text/secondary`).
+- **States:** drop target (the whole header accepts a dropped stop and puts it at the end of that day); a click selects the day.
 - **Accessibility:** combined, header trait.
 
 ### StopRow
 
 - **Type, file:** `StopRowView`, `Trips/StopRow.swift`.
-- **One job:** one stop: when to leave and be set up first, then the session, the light, and the note.
-- **Anatomy:** a horizontal row, gap `space/md`, vertical padding `space/sm`: [StopNumberBadge](#stopnumberbadge) at the left, then a column (gap `space/xs`):
-  1. **Title line:** spot name (`type/headline`, up to two lines; a plain button that opens the spot page) with locality beneath it (`type/caption`, `text/secondary`); at the right a [LightBadge](#lightbadge) regular for the stop's session window (its [WindowSymbol](#windowsymbol), the score chip, the band word and confidence). A stop shows its own session on its assigned day, not the "next event" rule of the lists.
-  2. **Schedule headline** (`type/bodyEmphasis`, monospaced digits): "Leave 05:54 · park 06:50 · set up by 07:00"; "Leave 03:42 · set up by 07:01" (no "park" when walk-in is unknown or equal); "Set up by 17:05" for the first stop of a trip (no drive). The leave time is in the previous stop's time zone.
-  3. **Session line** (`type/caption`, `text/secondary`, one line): a small pop-up menu (the session picker; each item has the window's symbol as its icon and reads like "Sunset · 17:25–18:00 · 7"), "25 min walk-in" (or "walk-in unknown"), "·", and a link button "20 min set-up" that opens the set-up popover.
-  4. **Issue lines** ([Warning lines](#warning-lines)), if any.
-  5. **Note field:** plain text field, "Add a note" placeholder, `type/callout`, 1 to 4 lines.
-- **States:** default; selected (system list selection, and the map pin follows); scored (badge by band); unscored (the score slot is empty, a spinner while the stop's forecast is in flight; the session menu items simply have no score; the screen's weather banner says why); out of order (violet line); window missing (violet line, menu shows "no window this day"); dragging (the row follows the pointer); infeasible incoming drive (shown on the connector above, not on the row).
+- **One job:** one stop on the day's timeline: the set-up time, the session, the light and the note.
+- **Anatomy:** a horizontal row with three columns, padding `space/sm` top and bottom. Left, the time gutter (68 pt): the set-up time in `type/timeSmall` and "Set up" in `type/caption`, `text/secondary`. Middle, the rail (28 pt): the [StopNumberBadge](#stopnumberbadge) node on a content-coloured disc, with the rail line above and below it, coloured by the drive into and out of the stop. Right, a column (gap `space/xs`):
+  1. **Title line:** spot name (`type/headline`, up to two lines; a plain button that opens the spot page) with locality beneath it (`type/caption`, `text/secondary`); at the right a [LightBadge](#lightbadge) regular for the stop's session window.
+  2. **Session line** (`type/caption`, `text/secondary`, one line when it fits): a small pop-up menu (the session picker; each item has the window's symbol and reads like "Sunset · 17:25–18:00 · 7"), "Park 16:40 · 25 min walk-in" (the park time only when the walk-in is known; or "walk-in unknown"), "·", and a link button "20 min set-up" that opens the set-up popover.
+  3. **Issue lines** ([Warning lines](#warning-lines)), if any.
+  4. **Note field:** plain text field, "Add a note" placeholder, `type/callout`, 1 to 4 lines.
+  The old schedule headline ("Leave … · park … · set up by …") is gone: the leave time is in the drive row's gutter, the set-up time in the stop's gutter.
+- **States: default; selected (system list selection, and the map pin follows); scored (badge by band); unscored (the score slot is empty, a spinner while the stop's forecast is in flight; the session menu items simply have no score; the screen's weather banner says why); out of order (violet line); window missing (violet line, menu shows "no window this day"); dragging (the row follows the pointer); infeasible incoming drive (shown on the drive row above, not on the stop).
 - **Context menu:** Open Spot Page, Open in Maps, Move Up, Move Down, Move to Day ▸, Remove from Trip.
 - **Accessibility:** container labelled "Stop 2, Monument Valley"; custom actions Move Up, Move Down, Remove from Trip.
-- **Tokens:** `space/md`, `space/sm`, `space/xs`, `type/headline`, `type/bodyEmphasis`, `type/caption`, `type/callout`.
+- **Tokens:** `space/sm`, `space/xs`, `type/headline`, `type/timeSmall`, `type/caption`, `type/callout`.
 - **Used on:** Trip builder.
 
 ### StopNumberBadge
@@ -303,19 +314,26 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Anatomy:** a 22 pt (`size/badge/height`) circle filled with the system `quaternary` fill (about 10 to 15% of the label colour), the number in `type/captionStrong`, `text/primary`, monospaced digits.
 - **Accessibility:** hidden (the row's label includes the number).
 
-### ConnectorRow
+### DriveRow
 
-- **Type, file:** `ConnectorRowView`, `Trips/StopRow.swift`.
-- **One job:** the drive between two stops and whether it fits; across a day boundary, an explicit overnight break.
-- **Anatomy:** left rail: a 2 pt (`stroke/thick`) by 16 pt (`size/icon/medium`) rounded bar in a 22 pt column, in `route/active` (coral) when the drive fits or `status/warning` (violet) when it does not. Then `car.fill` + "57 min · 41 mi" (`type/caption`, `text/secondary`, monospaced digits). Vertical padding `space/xs`.
-- **Variants:** *same-day:* rail then drive text, left aligned. *Overnight:* rail, then `moon.stars` + "Overnight" (`type/captionStrong`, `text/secondary`), a hairline rule filling the width, then the drive text at the right.
-- **States:** fits (coral); does not fit (violet rail, then "· ⚠ Drive doesn't fit: 12 hr, 57 min short" in violet with a triangle icon); estimated ("· estimated", tooltip "Drive time estimated"); loading (the drive text is absent until MapKit answers; a spinner is in the toolbar).
+- **Type, file:** `DriveRowView`, `Trips/TripTimeline.swift`.
+- **One job:** a drive on the day's timeline and whether it fits. Replaces the old ConnectorRow; the overnight break is now a separate [OvernightBoundary](#overnightboundary).
+- **Anatomy:** the time gutter shows "Leave" with the leave-by time (in the zone of the stop you leave from). On the rail, a `car.fill` node (20 pt disc) with the rail line through it in `route/active` (coral) when the drive fits, `status/warning` (violet) when it does not, `separator/default` while the drive is unknown. Right: "2 hr, 19 min · 101 mi" (`type/caption`, `text/secondary`, monospaced digits), and when the drive is a straight-line estimate "· estimated" (tooltip "Drive time estimated").
+- **Variants:** *between stops:* rail through the row. *Drive in:* the first item of a day, for the drive from the previous day's last stop; the rail starts at the car, and a line "From Horseshoe Bend" (`type/caption`, `text/tertiary`) names where it starts.
+- **States:** fits; does not fit (violet rail, then "⚠ Drive doesn't fit: 12 hr, 57 min short" in violet on a second line); estimated; loading (no drive text until MapKit answers; a spinner is in the toolbar).
 - **Accessibility:** one combined element.
 - **Used on:** Trip builder.
 
+### OvernightBoundary
+
+- **Type, file:** `OvernightBoundaryRow`, `Trips/TripDayViews.swift`. Data: `OvernightBoundary` (IterFeatures).
+- **One job:** say where you sleep between two day containers.
+- **Anatomy:** a hairline rule, `moon.stars` and "Overnight · near Page, AZ" (`type/captionStrong`, `text/secondary`), a hairline rule; vertical padding `space/md`. The place is the locality of the last stop placed on or before the day (its name when it has no locality). It carries no drive information; the drive is the next day's first item.
+- **Not selectable, not a drop target.**
+
 ### SuggestionBanner
 
-- **Type, file:** `SuggestionBanner`, `Trips/TripPlanList.swift`.
+- **Type, file:** `SuggestionBanner`, `Trips/TripPlanList.swift` (drawn inside the day's container).
 - **One job:** offer, never apply, a light-first order for one day.
 - **Anatomy:** a row on `background/control`, `radius/control` (8), hairline border, padding `space/sm`, small controls: `arrow.up.arrow.down` (`text/secondary`); a two-line block, "Reorder by light: fixes 2 conflicts" (`type/subheadline`) and "Puts the stops in the order their light arrives." (`type/caption`, `text/secondary`); trailing **Dismiss** (borderless) and **Apply** (bordered).
 - **States:** one banner per day with a suggestion; disappears on Apply or Dismiss.
@@ -325,8 +343,8 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `TripRouteMap`, `Trips/TripRouteMap.swift`.
 - **One job:** the route sanity check.
-- **Anatomy (live map):** MapKit map filling the right column. **Pins:** numbered circles, 28 pt (`size/mapPin`), 36 pt when selected (`size/mapPinSelected`); in the active day `accent/emphasis` fill with an `accent/onAccent` number; other days `map/pinInactive` fill with a `background/window` number; border `background/window` 1 pt (2 pt when selected); number in `type/captionStrong`. **Routes:** the active day's legs as `route/active` 4 pt (`stroke/route`) over a `background/window` casing 7 pt (`stroke/routeCasing`); other days `route/inactive` 3 pt (`stroke/routeInactive`). Straight lines when the road path is unknown. Controls: zoom stepper, compass, scale. **Your location:** with location permission, MapKit's own blue dot (`UserAnnotation`) and a user-location button leading the controls; with a simulated location (`-IterLocation`) a 14 pt `map/userLocation` dot with a 2.5 pt white ring, labelled "Your location (simulated)", and no button. Without permission, neither. **Day picker:** not on the map; a system segmented control (up to 5 days; a menu beyond that) in the trip builder toolbar (principal placement), shown only when more than one day has stops. The map takes the chosen day through a binding.
-- **States:** a stop selected (the camera recentres on it, zoom kept); the picked day; fit-to-trip on first appearance, never wider than a 40° span; once you move the map the camera is yours, saved per trip and restored on relaunch, and stop changes refit only while you have not touched it.
+- **Anatomy (live map):** MapKit map filling the right column. **Pins:** numbered circles, 28 pt (`size/mapPin`), 36 pt when selected (`size/mapPinSelected`); in the active day `accent/emphasis` fill with an `accent/onAccent` number; other days `map/pinInactive` fill with a `background/window` number, at 55% opacity; border `background/window` 1 pt (2 pt when selected); number in `type/captionStrong`. **Routes:** the active day's legs as `route/active` 4 pt (`stroke/route`) over a `background/window` casing 7 pt (`stroke/routeCasing`); other days `route/inactive` 3 pt (`stroke/routeInactive`). With no day selected, every day is drawn as the active day. Map style: standard, flat, no points of interest. Straight lines when the road path is unknown. Controls: zoom stepper, compass, scale. **Your location:** with location permission, MapKit's own blue dot (`UserAnnotation`) and a user-location button leading the controls; with a simulated location (`-IterLocation`) a 14 pt `map/userLocation` dot with a 2.5 pt white ring, labelled "Your location (simulated)", and no button. Without permission, neither. **Day switcher:** a capsule on `regularMaterial` with a hairline, centred at the top edge with `space/md` margin, shown on trips of more than one day: `chevron.left`, a menu button "Day 2 · Thu, Oct 8" (All Days, divider, one item per day), `chevron.right`. The arrows step through the days with All Days as one more stop in the loop. It edits the same selected day as the [TripOverviewStrip](#tripoverviewstrip).
+- **States:** a stop selected (its day becomes the selected day; the camera frames that day, or recentres on the stop with the zoom kept when the day is already framed); the selected day (its stops are framed unless you have moved the map); fit-to-trip on first appearance, never wider than a 40° span; once you move the map the camera is yours, saved per trip and restored on relaunch, and stop changes refit only while you have not touched it.
 - **Accessibility:** label "Route map"; pins "Stop 2, Monument Valley".
 
 ### AddStopPopover
@@ -372,8 +390,18 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `ExploreMapPane`, `Explore/ExploreMapPane.swift`.
 - **One job:** the map with pin hierarchy, shared selection, the place card and Add Spot mode.
-- **Anatomy:** a MapKit map (standard, flat, points of interest hidden; zoom stepper, compass, scale), the user's location (with location permission, MapKit's own blue dot (`UserAnnotation`) and a user-location button leading the controls; with a simulated location (`-IterLocation`) a 14 pt `map/userLocation` dot with a 2.5 pt white ring, labelled "Your location (simulated)", and no button. Without permission, neither.), pins as [ExplorePinView](#explorepinview), a "New spot" `mappin.circle.fill` (`accent/primary`, title size) at a dropped draft pin; overlays: [AddSpotBanner](#addspotbanner) top, [ExplorePlaceCard](#exploreplacecard) bottom-trailing (slides up with a fade), each inset `space/md`. **Camera:** [MapCameraPolicy](SCREENS.md#explore) fits the Near You set (else every listed spot), never wider than a 40° span; once you move the map it stays yours, is saved for this screen and restored on relaunch, and a change in the list refits only if you have not touched it; selecting a spot pans to it without zooming out.
+- **Anatomy:** a MapKit map (standard, flat, points of interest hidden; zoom stepper, compass, scale), the user's location (with location permission, MapKit's own blue dot (`UserAnnotation`) and a user-location button leading the controls; with a simulated location (`-IterLocation`) a 14 pt `map/userLocation` dot with a 2.5 pt white ring, labelled "Your location (simulated)", and no button. Without permission, neither.), pins as [ExplorePinView](#explorepinview) and, where pins would overlap, [ExploreClusterView](#exploreclusterview) counts, a "New spot" `mappin.circle.fill` (`accent/primary`, title size) at a dropped draft pin; overlays: [AddSpotBanner](#addspotbanner) top, [ExplorePlaceCard](#exploreplacecard) bottom-trailing (slides up with a fade), each inset `space/md`. **Camera:** [MapCameraPolicy](SCREENS.md#explore) fits the Near You set (else every listed spot), never wider than a 40° span; once you move the map it stays yours, is saved for this screen and restored on relaunch, and a change in the list refits only if you have not touched it; selecting a spot pans to it without zooming out.
+- **Items and clustering:** the pane draws `explore.mapItems` and computes nothing in `body`. Items are ordered for drawing: dots, clusters, chips, the hovered pin, then the selected pin on top; by id within each group. Pins that fall in the same cell of a world-fixed grid (about 48 pt at the current zoom, regrouped only when the zoom bucket changes, never by panning) become one cluster; the selected and hovered pins are never clustered, a cell with one pin keeps its normal style, and nothing is clustered before the map's first settle or when the view is narrower than 0.1° of longitude. The chip budget (the best 6 scored pins in view) is spent only on pins that stay individual. A pin's context menu looks its spot up when it opens. The pane reports its size to the model (`setMapViewport`).
 - **States:** default; a selection; Add Spot mode (crosshair cursor, pins not clickable, the card hidden); a draft pin placed (the editor sheet is open).
+
+### ExploreClusterView
+
+- **Type, file:** `ExploreClusterView`, `Explore/ExploreClusterView.swift`.
+- **One job:** stand for several map pins too close to tell apart, with their count.
+- **Anatomy:** a capsule (`surface/content`, minimum `size/badge/height` square) with the count in `type/captionStrong`, `text/primary`; a `stroke/thick` ring in the best member's `light/ramp` band colour, or a hairline `separator` ring when no member is scored.
+- **Behaviour:** clicking zooms the map to fit its members. Not clickable in Add Spot mode.
+- **Accessibility:** one button, "N places, zoom in".
+- **Used on:** [ExploreMapPane](#exploremappane).
 
 ### ExplorePinView
 
@@ -631,7 +659,7 @@ Iter relies on these system controls. Do not restyle them in the design; use the
 | **ContentUnavailableView** | Empty and error states: large grey symbol, bold title, grey description, 0 to 2 action buttons. Used for Trip Not Found, Explore empty, Saved empty and filter-empty, Scout unavailable and failure states, search-empty. |
 | **Map** (MapKit) | Explore: standard style, flat elevation, points of interest hidden, controls zoom stepper, compass, scale, custom annotations, selection. Trip route: polylines and numbered annotations. Spot editor: a small map with pan and zoom, the pin fixed at the centre. Scout: accent-tinted markers with category symbols. |
 | **LookAroundPreview** | Spot page, 224 pt high, `radius/card` clip; only when a scene exists. |
-| **Picker** | Segmented (intent on the Spot page, timeline zoom, trip builder toolbar day picker up to 5 days); menu (session menu, Settings pickers, Category in the editor); inline in menus (Near You Radius and Sort By in the Explore list header menu). |
+| **Picker** | Segmented (intent on the Spot page, timeline zoom); menu (session menu, Settings pickers, Category in the editor); inline in menus (Near You Radius and Sort By in the Explore list header menu). |
 | **Menu** | Add to Trip, Explore list header menu (radius, sort, filters), Saved Sort and Filter, Trip Actions, context menus. |
 | **ShareLink** | Trip (toolbar and context menu; shares a `.iter` document), Spot (header; shares an Apple Maps link and a coordinate message). |
 | **DatePicker, Stepper, TextField, Toggle** | Forms (grouped style) in the sheets and Settings; the Explore Add Spot control is a button-style Toggle. |

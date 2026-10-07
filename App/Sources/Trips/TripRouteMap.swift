@@ -4,15 +4,16 @@ import IterCore
 import IterDesign
 import IterFeatures
 
-/// The route: numbered pins, the selected day's drive in the route colour, other days quieter. The list is the plan;
-/// the map is the sanity check (pattern #9). Selecting a pin selects the stop, and the other way round.
+/// The route: numbered pins, the selected day's drive in the route colour, other days dimmed (with no day selected, every
+/// day is at full strength). The list is the plan; the map is the sanity check (pattern #9). Selecting a pin selects the
+/// stop, and the other way round. A day switcher overlaid at the top matches the overview strip.
 struct TripRouteMap: View {
     @Environment(\.renderMode) private var renderMode
     @Environment(AppModel.self) private var app
     let builder: TripBuilderModel
     @Binding var selection: UUID?
-    /// The day picked in the builder's toolbar picker.
-    @Binding var chosenDay: Int?
+    /// The selected day (0-based), shared with the overview strip and the list; nil: all days.
+    @Binding var selectedDay: Int?
 
     @State private var position: MapCameraPosition
     /// True once the map wrote a user-positioned `position` (pan, zoom, stepper, compass) that has not settled yet.
@@ -20,10 +21,10 @@ struct TripRouteMap: View {
     @State private var paneSize = CGSize.zero
     @State private var appliedRequest = 0
 
-    init(builder: TripBuilderModel, selection: Binding<UUID?>, chosenDay: Binding<Int?>) {
+    init(builder: TripBuilderModel, selection: Binding<UUID?>, selectedDay: Binding<Int?>) {
         self.builder = builder
         _selection = selection
-        _chosenDay = chosenDay
+        _selectedDay = selectedDay
         // Start framed, so MapKit never shows (and reports) its automatic world camera.
         if let r = builder.initialCameraRegion {
             _position = State(initialValue: .region(Self.mkRegion(r)))
@@ -34,19 +35,17 @@ struct TripRouteMap: View {
 
     private var entries: [TripStopEntry] { builder.days.flatMap(\.stops) }
 
-    /// The day whose route is highlighted: the selected stop's, else the one picked, else the first with stops.
-    private var activeDay: Int {
-        if let selection, let entry = entries.first(where: { $0.id == selection }) { return entry.stop.dayIndex }
-        return chosenDay ?? builder.days.first { !$0.stops.isEmpty }?.index ?? 0
-    }
+    /// Whether a day is drawn at full strength: every day when none is selected, else only the selected one.
+    private func isActive(day: Int) -> Bool { selectedDay == nil || selectedDay == day }
 
     var body: some View {
+        let _ = IterPerf.count("trip.mapBody")
         Group {
             if renderMode == .snapshot {
                 MapStandIn(pins: entries.map { entry in
                     MapStandIn.Pin(id: entry.id.uuidString, coordinate: entry.stop.spot.coordinate, label: "\(entry.number)",
-                                   selected: entry.id == selection || entry.stop.dayIndex == activeDay)
-                }, route: routeCoordinates(day: activeDay))
+                                   selected: entry.id == selection || isActive(day: entry.stop.dayIndex))
+                }, route: routeCoordinates())
             } else if paneSize.width > 0, paneSize.height > 0 {
                 // Created only once the pane has a real size: a map framed before layout settles on MapKit's own
                 // default camera, not our region.
@@ -58,18 +57,21 @@ struct TripRouteMap: View {
         .onGeometryChange(for: CGSize.self) { $0.size } action: { paneSize = $0 }
         // MapKit's Map extends itself under the toolbar; clip it to the safe area so the bar is one plain strip.
         .clipped()
+        .overlay(alignment: .top) {
+            TripDaySwitcher(days: builder.layout.groups.map { ($0.index, $0.date) }, selectedDay: $selectedDay)
+                .padding(IterSpace.md)
+        }
         .accessibilityLabel(Text("Route map", comment: "Accessibility label"))
         .onAppear {
-            builder.setFocusDay(chosenDay)
+            builder.setFocusDay(selectedDay)
             builder.requestInitialCamera()
             if let request = builder.cameraRequest { apply(request, animated: false) }
         }
-        .onChange(of: chosenDay) { builder.setFocusDay(chosenDay) }
+        .onChange(of: selectedDay) { builder.setFocusDay(selectedDay) }
         .onChange(of: builder.fitCoordinates) { builder.contentChanged() }
         .onChange(of: builder.cameraRequest) { _, request in
             if let request { apply(request, animated: true) }
         }
-        .onChange(of: selection) { reveal(selection) }
     }
 
     // MARK: Map
@@ -78,7 +80,7 @@ struct TripRouteMap: View {
         Map(position: $position, selection: $selection) {
             ForEach(builder.days) { day in
                 ForEach(legs(into: day.index), id: \.0) { _, coordinates in
-                    if day.index == activeDay {
+                    if isActive(day: day.index) {
                         MapPolyline(coordinates: coordinates).stroke(IterColor.backgroundWindow, lineWidth: IterStroke.routeCasing)
                         MapPolyline(coordinates: coordinates).stroke(IterColor.route, lineWidth: IterStroke.route)
                     } else {
@@ -94,6 +96,7 @@ struct TripRouteMap: View {
                 .tag(entry.id)
             }
         }
+        .mapStyle(.standard(elevation: .flat, pointsOfInterest: .excludingAll))
         .mapControls {
             if app.location.showsSystemIndicator { MapUserLocationButton() }
             MapZoomStepper()
@@ -117,7 +120,7 @@ struct TripRouteMap: View {
 
     private func pin(_ entry: TripStopEntry) -> some View {
         let selected = entry.id == selection
-        let inDay = entry.stop.dayIndex == activeDay
+        let inDay = isActive(day: entry.stop.dayIndex)
         let size = selected ? IterSize.mapPinSelected : IterSize.mapPin
         return Text(entry.number, format: .number)
             .font(IterFont.captionStrong)
@@ -126,8 +129,12 @@ struct TripRouteMap: View {
             .frame(width: size, height: size)
             .background(inDay ? IterColor.accentEmphasis : IterColor.mapPinInactive, in: Circle())
             .overlay(Circle().strokeBorder(IterColor.backgroundWindow, lineWidth: selected ? IterStroke.thick : IterStroke.thin))
+            .opacity(inDay || selected ? 1 : Self.dimmedOpacity)
             .accessibilityLabel(Text("Stop \(entry.number), \(entry.stop.spot.name)", comment: "VoiceOver: map pin"))
     }
+
+    /// Pins of days that are not selected.
+    private static let dimmedOpacity = 0.55
 
     // MARK: Geometry
 
@@ -140,11 +147,14 @@ struct TripRouteMap: View {
         } ?? []
     }
 
-    private func routeCoordinates(day: Int) -> [Coordinate] {
-        builder.days.first { $0.index == day }?.stops.flatMap { entry -> [Coordinate] in
-            guard let leg = entry.schedule?.legFromPrevious else { return [entry.stop.spot.coordinate] }
-            return (leg.path.count >= 2 ? leg.path : [leg.from, leg.to])
-        } ?? []
+    /// The road paths of every day at full strength, for the snapshot stand-in.
+    private func routeCoordinates() -> [Coordinate] {
+        builder.days.filter { isActive(day: $0.index) }.flatMap { day in
+            day.stops.flatMap { entry -> [Coordinate] in
+                guard let leg = entry.schedule?.legFromPrevious else { return [entry.stop.spot.coordinate] }
+                return (leg.path.count >= 2 ? leg.path : [leg.from, leg.to])
+            }
+        }
     }
 
     private static func mkRegion(_ target: GeoRegion) -> MKCoordinateRegion {
@@ -182,10 +192,62 @@ struct TripRouteMap: View {
             position = .region(region)
         }
     }
+}
 
-    /// Pans to the pin of the stop selected in the list without zooming.
-    private func reveal(_ id: UUID?) {
-        guard let id, let entry = entries.first(where: { $0.id == id }) else { return }
-        builder.reveal(entry.stop.spot.coordinate)
+// MARK: - Day switcher
+
+/// "‹  Day 2 · Thu, Oct 8  ›" over the map's top edge, matching the overview strip. The arrows step through the days and
+/// All Days; the title opens a menu of them.
+struct TripDaySwitcher: View {
+    let days: [(index: Int, date: LocalDay)]
+    @Binding var selectedDay: Int?
+
+    var body: some View {
+        if days.count > 1 {
+            HStack(spacing: IterSpace.xs) {
+                Button { step(-1) } label: { Image(systemName: "chevron.left") }
+                    .help(Text("Previous day", comment: "Tooltip"))
+                    .accessibilityLabel(Text("Previous day", comment: "Accessibility label"))
+                Menu {
+                    Button(String(localized: "All Days", comment: "Map day switcher: show every day")) { selectedDay = nil }
+                    Divider()
+                    ForEach(days, id: \.index) { day in
+                        Button(TimeText.daySwitcher(index: day.index, day: day.date)) { selectedDay = day.index }
+                    }
+                } label: {
+                    Text(title).monospacedDigit().frame(minWidth: 150)
+                }
+                .menuStyle(.borderlessButton)
+                .menuIndicator(.hidden)
+                .fixedSize()
+                .help(Text("Choose the day shown on the map", comment: "Tooltip"))
+                Button { step(1) } label: { Image(systemName: "chevron.right") }
+                    .help(Text("Next day", comment: "Tooltip"))
+                    .accessibilityLabel(Text("Next day", comment: "Accessibility label"))
+            }
+            .buttonStyle(.borderless)
+            .font(IterFont.subheadline)
+            .padding(.horizontal, IterSpace.md)
+            .padding(.vertical, IterSpace.xs)
+            .background(.regularMaterial, in: Capsule())
+            .overlay(Capsule().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel(Text("Map day", comment: "Accessibility label of the map's day switcher"))
+        }
+    }
+
+    private var title: String {
+        guard let selectedDay, let day = days.first(where: { $0.index == selectedDay }) else {
+            return String(localized: "All Days", comment: "Map day switcher: every day is shown")
+        }
+        return TimeText.daySwitcher(index: day.index, day: day.date)
+    }
+
+    /// Steps through the days with All Days as one more stop in the loop: previous from the first day, and next from the
+    /// last day, go to All Days.
+    private func step(_ delta: Int) {
+        let slots: [Int?] = [nil] + days.map { Optional($0.index) }
+        let current = slots.firstIndex { $0 == selectedDay } ?? 0
+        selectedDay = slots[(current + delta + slots.count) % slots.count]
     }
 }

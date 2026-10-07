@@ -202,51 +202,56 @@ Left column, top to bottom:
 |---|---|
 | [TripHeader](COMPONENTS.md#tripheader) | Trip name as an in-place text field (`type/title/spot`; click to rename, Return or leaving the field commits). Beneath it, a line in `type/subheadline`, `text/secondary`: a borderless date-range button with a `calendar` icon, then "4 days · 6 stops", then "376 mi · 8 hr, 39 min driving" (suffix "(estimated)" when any drive is a straight-line estimate). The driving total is hidden under one minute. Padding `space/lg`. |
 | Divider | |
-| [Plan list](COMPONENTS.md#tripplanlist) | An inset list on the system list ground, one section per day. The [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner) sits between the header's divider and the list when weather is missing. |
-| Footer | [ForecastSourceLines](COMPONENTS.md#forecastsourcelines) as the last row, only when at least one stop has a score: one quiet source line per distinct source behind the stops' forecasts ("OpenWeather (Apple Weather unavailable)"). No attribution; that is in Settings. |
+| [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner) | Only when weather is missing. |
+| [TripOverviewStrip](COMPONENTS.md#tripoverviewstrip) | One equal-width cell per day (only on trips of more than one day): "Day 2", "Thu 8", "2 stops", the best window (symbol, start time, compact score chip) or "No stops", a warning mark when the day has a conflict. The selected day's cell has an accent fill and stroke. More days than fit scroll horizontally. A divider closes it. |
+| [Plan list](COMPONENTS.md#tripplanlist) | A list on `background/window`. Each day is one bounded container (see below); between containers an [OvernightBoundary](COMPONENTS.md#overnightboundary). |
+| Footer | [ForecastSourceLines](COMPONENTS.md#forecastsourcelines) as the last row, only when at least one stop has a score. No attribution; that is in Settings. |
 
-Each day section, top to bottom:
+Each day container (`background/content`, `radius/card` corners, hairline stroke; accent stroke when the day is selected), top to bottom:
 
-1. [DayHeader](COMPONENTS.md#dayheader): "Day 2 · Thu, Oct 8, 2026" (`type/headline`), a line "☀ Sunrise 07:21 · Sunset 18:53" (`type/caption`), trailing "2 stops · 5 hr, 27 min driving" or "No stops yet".
+1. [DayHeader](COMPONENTS.md#dayheader): "Day 2" (`type/title/section`) with "Thursday, October 8", the light bookends (sunrise and sunset symbols with their times), and "2 stops · 5 hr, 27 min driving" or "No stops yet".
 2. [SuggestionBanner](COMPONENTS.md#suggestionbanner), only when the stops are out of light order.
-3. For each stop: a [ConnectorRow](COMPONENTS.md#connectorrow) (every stop after the first of the trip, including the first of a later day) then the [StopRow](COMPONENTS.md#stoprow).
-4. An **Add Stop** row (accent text, `plus` icon).
+3. A conflict line ("2 conflicts on this day"), only when the day has conflicts.
+4. The timeline. A time gutter on the left (leave time beside a drive, set-up time beside a stop), a rail with numbered stop nodes joined by a line, and the content on the right. The drive from the previous day's last stop is the first item of the day ("From Horseshoe Bend"). Between two stops a [DriveRow](COMPONENTS.md#driverow) sits on the rail. Each stop is a [StopRow](COMPONENTS.md#stoprow).
+5. An **Add Stop** row (accent text, `plus` icon), aligned with the stop content.
 
-Right column: [TripRouteMap](COMPONENTS.md#triproutemap) (with the user's location dot when permitted), full height, with no controls of its own over it; the day picker lives in the toolbar.
+Right column: [TripRouteMap](COMPONENTS.md#triproutemap) (with the user's location dot when permitted), full height. A day switcher floats at its top edge: "‹ Day 2 · Thu, Oct 8 ›" with previous and next buttons, and a menu with All Days.
 
-Toolbar: a segmented **day picker** ("Day 1 | Day 2 ...", system style, principal placement) when more than one day has stops, becoming a menu picker above 5 days; choosing a day highlights its route on the map and clears the stop selection (a selected stop's day wins). Right: a spinner while drive times are fetched ("Fetching drive times"), **Share** (`square.and.arrow.up`, shares the trip as an `.iter` file), and **Trip Actions** (`ellipsis.circle`) with Change Dates… (⇧⌘D), Export… (⇧⌘E), Duplicate, divider, Delete Trip (destructive). The window title is removed because the trip name is the header.
+Day selection has one source of truth. The strip, the map switcher, the list's accent stroke and the map's highlighted day all read it. Choosing a day in the strip or the switcher scrolls the list to that day and frames it on the map; selecting a stop (list or pin) selects its day. With no day selected (All Days) the strip shows no highlight and the map shows every day at full strength; with a day selected, the other days' pins and routes are dimmed.
 
-**Components.** [TripHeader](COMPONENTS.md#tripheader), [DayHeader](COMPONENTS.md#dayheader), [StopRow](COMPONENTS.md#stoprow), [StopNumberBadge](COMPONENTS.md#stopnumberbadge), [ConnectorRow](COMPONENTS.md#connectorrow), [SuggestionBanner](COMPONENTS.md#suggestionbanner), [LightBadge](COMPONENTS.md#lightbadge) (regular), [WindowSymbol](COMPONENTS.md#windowsymbol), [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner), [WarningLine](COMPONENTS.md#warning-lines), [TripRouteMap](COMPONENTS.md#triproutemap), [AddStopPopover](COMPONENTS.md#addstoppopover), [ForecastSourceLines](COMPONENTS.md#forecastsourcelines), [MapStandIn](COMPONENTS.md#mapstandin) (snapshots only).
+Toolbar: a spinner while drive times are fetched ("Fetching drive times"), **Share** (`square.and.arrow.up`, shares the trip as an `.iter` file), and **Trip Actions** (`ellipsis.circle`) with Change Dates… (⇧⌘D), Export… (⇧⌘E), Duplicate, divider, Delete Trip (destructive). The window title is removed because the trip name is the header. There is no day picker in the toolbar.
+
+Launch switches for captures: `-IterSeedTrip conflict` seeds the sample trip with day 2 reversed (a conflict and a Reorder-by-light suggestion); `-IterTripDay <n>` opens the builder with day n (1-based) selected.
+
+**Components.** [TripHeader](COMPONENTS.md#tripheader), [TripOverviewStrip](COMPONENTS.md#tripoverviewstrip), [DayHeader](COMPONENTS.md#dayheader), [StopRow](COMPONENTS.md#stoprow), [StopNumberBadge](COMPONENTS.md#stopnumberbadge), [DriveRow](COMPONENTS.md#driverow), [OvernightBoundary](COMPONENTS.md#overnightboundary), [SuggestionBanner](COMPONENTS.md#suggestionbanner), [LightBadge](COMPONENTS.md#lightbadge) (regular), [WindowSymbol](COMPONENTS.md#windowsymbol), [ScoreChip](COMPONENTS.md#scorechip), [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner), [WarningLine](COMPONENTS.md#warning-lines), [TripRouteMap](COMPONENTS.md#triproutemap), [AddStopPopover](COMPONENTS.md#addstoppopover), [ForecastSourceLines](COMPONENTS.md#forecastsourcelines), [MapStandIn](COMPONENTS.md#mapstandin) (snapshots only).
 
 **Actions.**
 
 - Rename the trip in place. Change dates (header date button).
-- Click a stop to select it (selection is shared with the map pin; the map recentres on it, keeping zoom). Click the stop's name to open its spot page for that day.
+- Click a stop to select it (selection is shared with the map pin and selects the stop's day; the map frames that day, or recentres on the stop keeping zoom when the day is already framed). Click the stop's name to open its spot page for that day.
 - Change a stop's **session** with the menu on the row; each item has the window's symbol and reads "Sunset · 17:25–18:00 · 7" (window, time range, score for that day; no score when there is no forecast). A stop shows its own session on its assigned day.
 - Edit the **set-up time** by clicking "20 min set-up" (popover with a stepper 0 to 120 in steps of 5).
 - Type a **note** under the stop (saved a second after you stop typing, and on leaving the field).
-- **Reorder:** drag a stop onto another stop (goes before it), onto a day header or the Add Stop row (goes to the end of that day). A 2 pt accent line shows the drop spot. Keyboard and VoiceOver: stop context menu Move Up, Move Down, Move to Day ▸.
+- **Reorder:** drag a stop onto another stop or a drive row (goes before the stop), onto a day header or the Add Stop row (goes to the end of that day). A 2 pt accent line shows the drop spot. Keyboard and VoiceOver: stop context menu Move Up, Move Down, Move to Day ▸.
 - **Remove:** Delete key, or context menu Remove from Trip.
 - Stop context menu: Open Spot Page, Open in Maps, Move Up, Move Down, Move to Day ▸ (only on multi-day trips), Remove from Trip.
 - Suggestion banner: **Apply** reorders that day by light order; **Dismiss** hides it. Iter never reorders by itself.
 - Add Stop opens the [AddStopPopover](COMPONENTS.md#addstoppopover).
-- Day picker on the map switches which day's route is highlighted.
+- Click a day cell in the strip, or use the map's day switcher, to select a day. Click a day header to select it too.
 
 **States.**
 
 | State | Trigger | What changes | Snapshots |
 |---|---|---|---|
-| Default, sample weather | Seeded Canyon Country (6 stops over 4 days), sample data on | Stops have scores. Day 1: Horseshoe Bend, the sunset symbol, "7" and "Poor" (pale sand badge). Day 2: overnight divider, Monument Valley, "74" and "Great" (deep amber badge). Connectors are coral (`route/active`). Map shows six numbered `map/pinInactive` pins and one `map/pin`, with a Day 1 to Day 4 segmented picker. | `snapshots/trip-builder-{light,dark}-{1280x820,960x640}.png` |
-| Weather offline | Weather not enabled (the fixture) | The weather banner above the list: "Apple Weather isn't enabled for this build. Choose another source in Settings." with a **Settings…** button. Every stop shows its window symbol and an empty score slot; no stop says "No forecast". The session menu items carry no score. Every time on the page is still exact. | `snapshots/trip-builder-weather-offline-{light,dark}-{1280x820,960x640}.png` |
-| Conflict and suggestion | Day 1 stops are backwards (Sunset stop listed before a Sunrise stop); day 2 has a drive that cannot fit | Day 1 shows the suggestion banner "Reorder by light: fixes 2 conflicts" with Dismiss and Apply. The Sunrise stop shows a violet line "Out of order: this Sunrise is earlier than the previous stop's Sunset". Connectors that cannot be made turn violet: the rail and the text "Drive doesn't fit: 12 hr, 57 min short" with a triangle icon. | `snapshots/trip-builder-conflict-{light,dark}-{1280x820,960x640}.png` |
+| Default, sample weather | Seeded Canyon Country (6 stops over 4 days), day 2 selected, sample data on | Strip with four cells, Day 2 highlighted; Day 1 container, overnight boundary "Overnight · near Page, AZ", Day 2 container with its accent stroke starting with the drive in from Horseshoe Bend. Map shows Day 2's route and pins at full strength, the others dimmed, and the switcher "Day 2 · Thu, Oct 8". | `snapshots/trip-builder-{light,dark}-{1280x820,960x640}.png` |
+| Weather offline | Weather not enabled (the fixture), no day selected | The weather banner above the strip: "Apple Weather isn't enabled for this build. Choose another source in Settings." with a **Settings…** button. No cell is highlighted, the map shows every day and the switcher reads "All Days". Every stop shows its window symbol and an empty score slot. | `snapshots/trip-builder-weather-offline-{light,dark}-{1280x820,960x640}.png` |
+| Conflict and suggestion | Sample trip with day 2 reversed (`-IterSeedTrip conflict`), day 2 selected | Day 2's strip cell has a violet warning mark. Its container shows the suggestion banner "Reorder by light: fixes 2 conflicts" with Dismiss and Apply, then "2 conflicts on this day". Violet rails and "Drive doesn't fit: …" lines on drives that cannot be made; a violet "Out of order" line on the stop. | `snapshots/trip-builder-conflict-{light,dark}-{1280x820,960x640}.png` |
 | Missing trip | The trip was deleted or its creation undone | Empty-state: map icon, "Trip Not Found", "This trip was deleted or its creation was undone.", prominent button **Back to All Trips**. | `snapshots/trip-builder-missing-{light,dark}-{1280x820,960x640}.png` |
-| A stop row (detail) | Component study | Four stops in a 560 pt column with connectors, showing: first stop with "Set up by 17:55" only (no drive), a stop with "Leave 05:54 · park 06:50 · set up by 07:00", walk-in unknown, an out-of-order line, a day-boundary Overnight connector, an infeasible drive, and a blue-hour window ("Evening blue hour"). | `snapshots/trip-stoprow-{light,dark}-{1280x820,960x640}.png` |
+| A stop row (detail) | Component study | Four stops in a 560 pt column as timeline rows, showing: the first stop with its set-up time in the gutter and no drive, drives with their leave times, "Park 06:50 · 10 min walk-in", walk-in unknown, an out-of-order line, an overnight boundary, the drive in at the top of day 2, infeasible drives, and a blue-hour window ("Evening blue hour"). | `snapshots/trip-stoprow-{light,dark}-{1280x820,960x640}.png` |
 | Dragging | A stop is dragged over a drop target | A 2 pt accent capsule appears at the top of the target. | not rendered |
-| Fetching drives | Drive times being fetched | Toolbar spinner; connectors for new legs fill in as MapKit answers. | not rendered |
+| Fetching drives | Drive times being fetched | Toolbar spinner; drive rows for new legs fill in as MapKit answers. | not rendered |
 | Estimated drive | MapKit has no road route | Connector adds "· estimated" (tooltip "Drive time estimated"), and the header total gets "(estimated)". | not rendered |
 | Window missing | The sun does not produce the chosen window that day | Stop line "No Sunset window on this day at this place" (violet, with icon); session menu shows "Sunset · no window this day". | not rendered |
-
-At 960x640 the session line is tight: "25 min walk-in" is truncated to "25 min wal…" and "20 min set-up" wraps to two lines in `trip-builder-weather-offline-light-960x640.png`.
 
 ---
 

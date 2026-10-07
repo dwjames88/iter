@@ -56,6 +56,8 @@ public final class TripBuilderModel {
     public private(set) var legs: [LegKey: DriveLeg] = [:]
     /// Light-first suggestions that have not been dismissed.
     public private(set) var suggestions: [OrderingSuggestion] = []
+    /// The day-first shape of the plan: day groups with their timelines, overnight boundaries and overview cells.
+    public private(set) var layout = TripDayLayout(groups: [])
     /// True while drives are being fetched.
     public private(set) var isLoadingLegs = false
 
@@ -133,6 +135,7 @@ public final class TripBuilderModel {
     /// `byUser` is true only when the user really moved the map. A settle MapKit made on its own is never a user move
     /// and is saved only when it is the camera we asked for; when it is not, a request re-applies our region.
     public func cameraDidChange(to region: GeoRegion, byUser: Bool = false) {
+        IterPerf.count("trip.cameraSettle")
         guard visibleRegion != region else { return }
         visibleRegion = region
         switch cameraPolicy.cameraSettled(region, byUser: byUser) {
@@ -163,6 +166,7 @@ public final class TripBuilderModel {
         self.now = now
         self.defaults = defaults
         self.cameraPolicy = MapCameraPolicy.load(screen: Self.cameraScreenKey(for: tripID), defaults: defaults)
+        IterPerf.count("trip.modelInit")
         refresh()
     }
 
@@ -187,6 +191,7 @@ public final class TripBuilderModel {
             schedule = TripSchedule(stops: [])
             days = []
             suggestions = []
+            layout = TripDayLayout(groups: [])
             return
         }
         let plan = record.plan
@@ -255,11 +260,13 @@ public final class TripBuilderModel {
 
     private func recompute() {
         guard let plan else { return }
+        IterPerf.count("trip.recompute")
         let schedule = scheduler.schedule(plan, legs: legs)
         self.schedule = schedule
         allSuggestions = scheduler.suggestOrdering(plan, legs: legs)
         suggestions = allSuggestions.filter { !dismissals.isDismissed(trip: tripID, day: $0.dayIndex, order: $0.order) }
         days = buildDays(plan: plan, schedule: schedule)
+        layout = TripDayLayout.make(days: days, suggestions: suggestions)
     }
 
     private func buildDays(plan: TripPlan, schedule: TripSchedule) -> [TripDay] {
@@ -420,6 +427,7 @@ public final class TripBuilderModel {
     public func dismiss(_ suggestion: OrderingSuggestion) {
         dismissals.dismiss(trip: tripID, day: suggestion.dayIndex, order: suggestion.order)
         suggestions = allSuggestions.filter { !dismissals.isDismissed(trip: tripID, day: $0.dayIndex, order: $0.order) }
+        layout = TripDayLayout.make(days: days, suggestions: suggestions)
     }
 
     // MARK: - Add stop
