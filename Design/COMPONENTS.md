@@ -69,13 +69,13 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 | Window | Symbol |
 |---|---|
-| Morning blue hour | `moon.haze.fill` |
+| Morning blue hour | `sun.haze.fill` |
 | Sunrise | `sunrise.fill` |
 | Sunset | `sunset.fill` |
 | Evening blue hour | `moon.haze.fill` |
 | Night | `moon.stars.fill` |
 
-- **Why these.** The earlier blue-hour symbols were the outline `sunrise` and `sunset`: weak copies of the golden pair, which read as "the same thing, thinner". `moon.haze.fill` (a crescent over horizon haze: no sun disc, no arrow) says "the cool light when the sun is below the horizon" and differs from the golden pair at a glance at 10 to 16 pt. That matters inside a chip, where the symbol takes the ramp text colour, so the meaning has to come from the silhouette, not from colour. **Morning versus evening is carried by the time and by the order of the list, not by the symbol**, so both blue hours share one glyph.
+- **Why these.** The earlier blue-hour symbols were the outline `sunrise` and `sunset`: weak copies of the golden pair, which read as "the same thing, thinner". The blue hours now use the haze family, which has no horizon line and no arrow, so neither reads as golden hour. Evening blue hour is `moon.haze.fill` (a crescent over haze: the cool light after the sun is down). Morning blue hour is `sun.haze.fill` (a sun in haze: the light before the sun is up). Both differ from the golden pair at a glance at 10 to 16 pt, which matters inside a chip, where the symbol takes the ramp text colour and the meaning has to come from the silhouette. **Morning and evening blue hour are told apart by the symbol as well as by the time and the order of the list.** This is the owner's decision of 2026-10-07. `LightText.symbol(_:)` is the one mapping; an intent resolves through it (`.blueHour`, which has no time of day, takes the evening symbol).
 - **Standalone colour:** outside a chip (an unscored slot, menus, the trip card's Next line) the blue-hour symbols take `light/blueHour` (`#3A4FA0` light, `#8FA4E8` dark, 3:1 or better on paper and on module cards); sunrise, sunset and night take `text/secondary`. A caller can pass another style.
 - **Candidates surveyed** at 16 and 24 pt in both appearances (`Design/blue-hour-symbols-survey.png`): `sun.horizon(.fill)`, `sun.and.horizon(.fill)`, `sun.haze(.fill)`, `moon.haze(.fill)`, `sunrise.circle`, `sunset.circle`, `moonrise(.fill)`, `moonset(.fill)`, `cloud.sun`, `light.max`, `sparkles`, `aqi.low`, `sun.min(.fill)`, `sun.lefthalf.filled`, `sun.righthalf.filled`, `moon.stars`, `sun.dust`. The main rejections:
   - `sun.horizon`, `sun.and.horizon`: the sun disc again, which still reads as golden hour.
@@ -83,7 +83,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
   - `light.max`: dashes at 16 pt.
   - `sparkles`: Apple Intelligence, and the astro category.
   - `aqi.low`: air quality.
-  - `sun.haze`: a risen sun in haze.
+  - `sun.haze`: first rejected as "a risen sun in haze"; the owner chose it on 2026-10-07 for the morning blue hour, where the haze is the light before the sun is up.
   - `cloud.sun`: weather.
   No new twilight symbol exists in the SF Symbols on macOS 27 (`name_availability` lists none after 2023 for this family).
 - **Accessibility:** the window's word is the tooltip and the VoiceOver label ("Sunset"). Headings on the spot page and the window rows there keep the word itself.

@@ -37,11 +37,12 @@ enum LightText {
         }
     }
 
-    /// One symbol per window: the rising or setting sun is golden hour (morning, evening), the hazy moon is the blue
-    /// hour (before sunrise and after sunset share it; the window's name and time say which), the starry moon is night.
+    /// One symbol per window, fixed by the owner (2026-10-07): the rising or setting sun is golden hour, the sun in haze
+    /// is the blue hour before sunrise, the moon in haze is the blue hour after sunset, the starry moon is night.
+    /// This is the one mapping; every window symbol in the app comes from here.
     static func symbol(_ kind: LightWindowKind) -> String {
         switch kind {
-        case .blueMorning: "moon.haze.fill"
+        case .blueMorning: "sun.haze.fill"
         case .goldenMorning: "sunrise.fill"
         case .goldenEvening: "sunset.fill"
         case .blueEvening: "moon.haze.fill"
@@ -49,12 +50,14 @@ enum LightText {
         }
     }
 
+    /// An intent is a preference, not a time of day, so `.blueHour` cannot say morning or evening; it takes the
+    /// evening symbol. Everything else routes through the window mapping.
     static func symbol(_ intent: LightIntent) -> String {
         switch intent {
-        case .sunrise: "sunrise.fill"
-        case .sunset: "sunset.fill"
-        case .blueHour: "moon.haze.fill"
-        case .night: "moon.stars.fill"
+        case .sunrise: symbol(LightWindowKind.goldenMorning)
+        case .sunset: symbol(LightWindowKind.goldenEvening)
+        case .blueHour: symbol(LightWindowKind.blueEvening)
+        case .night: symbol(LightWindowKind.night)
         }
     }
 

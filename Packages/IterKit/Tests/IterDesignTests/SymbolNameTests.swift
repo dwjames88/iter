@@ -32,6 +32,24 @@ struct SymbolNameTests {
     struct Use { let name: String; let file: String; let line: Int }
     struct Gap { let expression: String; let file: String; let line: Int }
 
+    /// The five window symbols (`LightText.symbol(_ kind:)`), fixed by the owner on 2026-10-07.
+    static let windowSymbols = ["sun.haze.fill", "sunrise.fill", "sunset.fill", "moon.haze.fill", "moon.stars.fill"]
+
+    @Test func windowSymbolsResolve() throws {
+        for name in Self.windowSymbols {
+            #expect(NSImage(systemSymbolName: name, accessibilityDescription: nil) != nil, "Window symbol \"\(name)\" does not exist on this macOS.")
+        }
+        // The mapping itself must still use all five, so a rename in LightText cannot drift from this list.
+        let root = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent().deletingLastPathComponent()
+            .deletingLastPathComponent().deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let source = try String(contentsOf: root.appendingPathComponent("App/Sources/Text/LightText.swift"), encoding: .utf8)
+        for name in Self.windowSymbols {
+            #expect(source.contains("\"\(name)\""), "LightText.swift no longer maps \"\(name)\".")
+        }
+    }
+
     @Test func everySymbolNameResolves() throws {
         let root = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent().deletingLastPathComponent()   // IterDesignTests, Tests
