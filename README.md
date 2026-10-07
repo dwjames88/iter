@@ -59,7 +59,7 @@ Iter checks for updates once a day (turn that off in **Settings ▸ Updates**), 
 
 ## Licence
 
-Source available; see LICENSE once the owner has chosen one. Not open source.
+Source available under the [PolyForm Noncommercial License 1.0.0](LICENSE). Not open source.
 
 ## For developers
 
