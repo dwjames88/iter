@@ -86,6 +86,8 @@ public final class SpotModel {
     public private(set) var selectedWindow: LightWindowKind?
     /// The time under the pointer on the timeline; nil when nothing is being scrubbed.
     public var scrub: Date?
+    /// The time the user picked by scrubbing (rose slider, rose drag, timeline drag); persists after the gesture ends.
+    public private(set) var chosenTime: Date?
     public private(set) var focus: TimelineFocus = .fullDay
     public private(set) var expanded: Set<LightWindowKind> = []
     public private(set) var explanation: ExplanationState = .idle
@@ -167,6 +169,7 @@ public final class SpotModel {
     @ObservationIgnored private var dayCache: [LocalDay: DayLight] = [:]
     @ObservationIgnored private var bestCache: [LightIntent: BestWindow?] = [:]
     @ObservationIgnored private var pathCache: [LocalDay: SkyPaths] = [:]
+    @ObservationIgnored private var roseCache: [LocalDay: SkyRose] = [:]
 
     private func validateCache() {
         let key = CacheKey(revision: app.forecasts.revision, today: today, spot: spot, sample: app.sampleDataEnabled)
@@ -175,6 +178,7 @@ public final class SpotModel {
             dayCache = [:]
             bestCache = [:]
             pathCache = [:]
+            roseCache = [:]
         }
     }
 
@@ -245,6 +249,22 @@ public final class SpotModel {
         return value
     }
 
+    /// The selected day on the compass rose: arcs, events and the sunrise or sunset fact.
+    public var rose: SkyRose {
+        validateCache()
+        if let cached = roseCache[day] { return cached }
+        let p = paths
+        let light = dayLight
+        let (start, end) = dayInterval
+        let value = SkyRose.make(
+            sun: p.sun.map { SkyRose.Sample(date: $0.date, position: $0.position) },
+            moon: p.moon.map { SkyRose.Sample(date: $0.date, position: $0.position) },
+            sunEvents: light.sun, moonEvents: light.moon, facing: spot.facing,
+            ephemeris: app.ephemeris, coordinate: spot.coordinate, dayStart: start, dayEnd: end)
+        roseCache[day] = value
+        return value
+    }
+
     /// Sunrise and sunset next to come (today's if still ahead, else tomorrow's), with whether the sun rises at all.
     public var nextSunTimes: SunTimes {
         let now = app.now()
@@ -302,14 +322,39 @@ public final class SpotModel {
         }
     }
 
-    /// The instant the arc, the readout and the timeline marker show: the scrub, else the selected window's middle,
-    /// else the day's headline window, else solar noon.
+    /// The instant the arc, the readout and the timeline marker show: the transient scrub, else the time the user chose,
+    /// else the selected window's middle, else the day's headline window, else solar noon.
     public var markerTime: Date {
         if let scrub { return clamp(scrub) }
+        if let chosenTime { return chosenTime }
         if let window = selectedLightWindow { return window.span.midpoint }
         if let window = headline(on: day) { return window.span.midpoint }
         return dayLight.sun.solarNoon
     }
+
+    /// True when the user has picked a time (or is scrubbing one) rather than the marker following the selection.
+    public var hasChosenTime: Bool { scrub != nil || chosenTime != nil }
+
+    /// Picks a time on the selected day (clamped to it) and ends any transient scrub.
+    public func setTime(_ date: Date) {
+        chosenTime = clamp(date)
+        scrub = nil
+    }
+
+    /// Moves the marker by whole minutes (negative goes back), clamped to the day.
+    public func stepTime(minutes: Int) {
+        setTime(markerTime.addingTimeInterval(TimeInterval(minutes * 60)))
+    }
+
+    /// Keeps the scrubbed time once the gesture ends.
+    public func commitScrub() {
+        guard let scrub else { return }
+        chosenTime = clamp(scrub)
+        self.scrub = nil
+    }
+
+    /// The moon's phase at an instant, for the readout.
+    public func moonPhase(at date: Date) -> MoonPhase { app.ephemeris.moonPhase(at: date) }
 
     private func clamp(_ date: Date) -> Date {
         let (start, end) = dayInterval
@@ -343,6 +388,7 @@ public final class SpotModel {
         guard new != day else { return }
         day = new
         scrub = nil
+        chosenTime = nil
         expanded = []
         focus = .fullDay
         selectedWindow = defaultWindow(on: new)
@@ -363,6 +409,7 @@ public final class SpotModel {
         guard kind != selectedWindow else { return }
         selectedWindow = kind
         scrub = nil
+        chosenTime = nil
         resetExplanation()
     }
 

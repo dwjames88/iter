@@ -1,5 +1,6 @@
 import Foundation
 import Testing
+import CoreGraphics
 import IterCore
 import IterData
 import IterServices
@@ -213,6 +214,82 @@ private let tromso = Spot(id: "tromso", name: "Tromsø harbour", locality: "Trom
         #expect(model.markerTime == t)
         model.scrub = model.dayInterval.end.addingTimeInterval(9999)
         #expect(model.markerTime == model.dayInterval.end)
+    }
+
+    @Test func chosenTimePersistsUnderTheTransientScrub() async throws {
+        let model = SpotModel(app: try makeApp(), spot: mesaArch, explainer: FakeExplainer())
+        await model.start()
+        #expect(!model.hasChosenTime)
+        let chosen = model.dayInterval.start.addingTimeInterval(10 * 3600)
+        model.setTime(chosen)
+        #expect(model.markerTime == chosen)
+        #expect(model.chosenTime == chosen)
+        #expect(model.hasChosenTime)
+        let hover = chosen.addingTimeInterval(3600)
+        model.scrub = hover
+        #expect(model.markerTime == hover)
+        model.scrub = nil
+        #expect(model.markerTime == chosen)
+        // A drag ends by committing the scrub.
+        model.scrub = hover
+        model.commitScrub()
+        #expect(model.scrub == nil)
+        #expect(model.markerTime == hover)
+        #expect(model.chosenTime == hover)
+    }
+
+    @Test func steppingMovesTheMarkerAndStopsAtTheDayEdges() async throws {
+        let model = SpotModel(app: try makeApp(), spot: mesaArch, explainer: FakeExplainer())
+        await model.start()
+        let (start, end) = model.dayInterval
+        model.setTime(start.addingTimeInterval(12 * 3600))
+        model.stepTime(minutes: 15)
+        #expect(model.markerTime == start.addingTimeInterval(12 * 3600 + 900))
+        model.stepTime(minutes: 60)
+        #expect(model.markerTime == start.addingTimeInterval(13 * 3600 + 900))
+        model.stepTime(minutes: -60)
+        #expect(model.markerTime == start.addingTimeInterval(12 * 3600 + 900))
+        model.setTime(end.addingTimeInterval(-600))
+        model.stepTime(minutes: 60)
+        #expect(model.markerTime == end)
+        model.setTime(start.addingTimeInterval(600))
+        model.stepTime(minutes: -60)
+        #expect(model.markerTime == start)
+    }
+
+    @Test func selectingAWindowOrADayClearsTheChosenTime() async throws {
+        let model = SpotModel(app: try makeApp(), spot: mesaArch, explainer: FakeExplainer())
+        await model.start()
+        model.setTime(model.dayInterval.start.addingTimeInterval(5 * 3600))
+        let other = try #require(model.dayLight.windows.first { $0.kind != model.selectedWindow })
+        model.selectWindow(other.kind)
+        #expect(model.chosenTime == nil)
+        #expect(model.markerTime == other.span.midpoint)
+        model.setTime(model.dayInterval.start.addingTimeInterval(5 * 3600))
+        let otherDay = model.today.adding(days: 3) == model.day ? model.today.adding(days: 2) : model.today.adding(days: 3)
+        model.selectDay(otherDay)
+        #expect(model.chosenTime == nil)
+        #expect(!model.hasChosenTime)
+    }
+
+    @Test func roseToModelToRoseRoundTrip() async throws {
+        let model = SpotModel(app: try makeApp(), spot: mesaArch, explainer: FakeExplainer())
+        await model.start()
+        let sunset = try #require(model.dayLight.sun.sunset)
+        let t = sunset.addingTimeInterval(-3600 + 23)
+        let pos = model.readout(at: t).sun
+        let proj = RoseProjection(center: CGPoint(x: 200, y: 200), radius: 160)
+        let original = proj.point(azimuth: pos.azimuth, altitude: pos.altitude)
+        let hit = try #require(model.rose.nearestTime(to: original, projection: proj, maxDistance: 24))
+        #expect(hit.body == .sun)
+        model.setTime(hit.date)
+        #expect(abs(model.markerTime.timeIntervalSince(t)) < 60)
+        let back = model.readout(at: model.markerTime).sun
+        let backPoint = proj.point(azimuth: back.azimuth, altitude: back.altitude)
+        #expect(hypot(backPoint.x - original.x, backPoint.y - original.y) < 1)
+        #expect(model.rose.dayStart == model.dayInterval.start)
+        #expect(model.rose.event(.sunset)?.date == sunset)
+        _ = model.moonPhase(at: t)
     }
 
     @Test func zoomDomainIsFourHoursAroundTheEvent() async throws {
