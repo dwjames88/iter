@@ -10,10 +10,14 @@ import IterFeatures
 
 /// Launch-time switches. `-IterInMemoryStore YES` runs on a throwaway store; `-IterSmokeTest YES` walks the main
 /// view models once and logs what it found (used by the background smoke test; no UI interaction needed).
-/// `-IterSection explore|saved|scout|trips|trip` (`trip` = the first trip in the store) opens the main window on that sidebar section, overriding the restored
+/// `-IterSection explore|locations|trips|trip` (`trip` = the first pinned trip, else the most recent; `saved` is the old name of Locations, `scout` of Explore) opens the main window on that sidebar section, overriding the restored
 /// selection; `-IterAppearance light|dark` forces the app's appearance. Both exist for screenshot testing.
 /// `-IterSettingsTab general|weather|intelligence|about` opens the Settings window on that tab at launch, and
 /// `-IterSpot <curated spot id>` (for example `mesa-arch`) opens Explore with that spot's page pushed. Also for screenshots.
+/// `-IterAsk <text>` makes Explore run an Ask with that text at launch (the field holds the text, the Ask section answers it).
+/// `-IterScoutStub unavailable|results` replaces the Apple Intelligence scout with a stub, for screenshots only and honoured only with
+/// `-IterInMemoryStore YES` (see `makeScout`): `unavailable` reports Apple Intelligence as turned off, `results` answers with three real
+/// curated spots near the asked-about map region and canned notes.
 /// `-IterWindowSize WxH` (for example `1280x820`, `960x652`, or `min` for the window minimum) sets the main window's
 /// content size once at launch; absent, the window opens as usual. Sizes below the minimum are raised to it.
 enum AppLaunch {
@@ -28,12 +32,19 @@ enum AppLaunch {
     static var section: SidebarItem? {
         switch sectionName {
         case "explore": .explore
-        case "saved": .saved
-        case "scout": .scout
+        case "locations", "saved": .locations   // `saved` is the old name of Locations
+        case "scout": .explore   // the Scout screen is part of Explore now
         case "trips": .trips
         default: nil
         }
     }
+    /// `-IterSeedLibrary YES`: a pinned trip, trip folders (one with a subfolder), location folders and saved spots, for
+    /// screenshots of the sidebar and Locations (see `LibrarySeed`). Honoured only with `-IterInMemoryStore YES`.
+    static var seedLibrary: Bool { inMemoryStore && UserDefaults.standard.bool(forKey: "IterSeedLibrary") }
+    /// `-IterLocationFolder <name>`: selects the location folder with that name at launch.
+    static var locationFolderName: String? { UserDefaults.standard.string(forKey: "IterLocationFolder") }
+    /// `-IterExpandFolders YES`: every sidebar folder shows expanded.
+    static var expandFolders: Bool { UserDefaults.standard.bool(forKey: "IterExpandFolders") }
     static var settingsTab: SettingsTab? {
         switch UserDefaults.standard.string(forKey: "IterSettingsTab") {
         case "general": .general
@@ -57,6 +68,8 @@ enum AppLaunch {
         guard parts.count == 3, let lat = Double(parts[0]), let lon = Double(parts[1]) else { return nil }
         return (Coordinate(latitude: lat, longitude: lon), parts[2])
     }
+    /// `-IterAsk <text>`: Explore puts that text to the ask engine at launch (screenshots of the Ask section).
+    static var askText: String? { UserDefaults.standard.string(forKey: "IterAsk") }
     /// `-IterCardScrolled YES`: the map's place card opens already scrolled to its lower sections. For screenshots.
     static var cardScrolled: Bool { UserDefaults.standard.bool(forKey: "IterCardScrolled") }
     static var appearanceName: String? { UserDefaults.standard.string(forKey: "IterAppearance") }
@@ -70,9 +83,29 @@ enum AppLaunch {
         return CGSize(width: parts[0], height: parts[1])
     }
 
+    /// `-IterCaptureWindow <name.png>` writes the main window's content to a PNG in the app's temporary folder `-IterCaptureDelay` seconds (default
+    /// 8) after launch, then quits. It renders the view hierarchy itself, so it works with the display asleep or locked,
+    /// where `screencapture` returns black. Live maps may draw blank in it. For screenshots of a test instance only.
+    static var captureWindowPath: String? { UserDefaults.standard.string(forKey: "IterCaptureWindow") }
+    static var captureDelay: Double {
+        let value = UserDefaults.standard.double(forKey: "IterCaptureDelay")
+        return value > 0 ? value : 8
+    }
+
     /// The Apple Intelligence scout over MapKit and the curated set. It reports its own availability at run time.
+    ///
+    /// For screenshots only: with `-IterInMemoryStore YES`, `-IterScoutStub unavailable` returns a stub that reports
+    /// `.appleIntelligenceNotEnabled`, and `-IterScoutStub results` returns a stub that answers every request with three
+    /// real curated spots nearest the map region and canned notes. Never used with the real store.
     static func makeScout() -> (any Scouting)? {
-        AppleIntelligenceScout(search: MapKitPlaceSearch(), geocoder: MapKitGeocoder(), drives: MapKitDriveTimes(),
+        if inMemoryStore, let stub = UserDefaults.standard.string(forKey: "IterScoutStub") {
+            switch stub {
+            case "unavailable": return StubScout(answers: false)
+            case "results": return StubScout(answers: true)
+            default: break
+            }
+        }
+        return AppleIntelligenceScout(search: MapKitPlaceSearch(), geocoder: MapKitGeocoder(), drives: MapKitDriveTimes(),
                                curated: CuratedSpots.all)
     }
 }
@@ -86,6 +119,7 @@ struct MainWindowConfigurator: NSViewRepresentable {
 
     final class Coordinator {
         var appliedLaunchSize = false
+        var scheduledCapture = false
         var observer: NSObjectProtocol?
         deinit { if let observer { NotificationCenter.default.removeObserver(observer) } }
     }
@@ -112,9 +146,50 @@ struct MainWindowConfigurator: NSViewRepresentable {
                 }
                 publish()
             }
+            if !coordinator.scheduledCapture, let path = AppLaunch.captureWindowPath {
+                coordinator.scheduledCapture = true
+                WindowCapture.schedule(window, to: path, after: AppLaunch.captureDelay)
+            }
             guard !coordinator.appliedLaunchSize, let size = AppLaunch.windowSize else { return }
             coordinator.appliedLaunchSize = true
             window.setContentSize(CGSize(width: max(size.width, minSize.width), height: max(size.height, minSize.height)))
         }
     }
 }
+
+/// The screenshot scout behind `-IterScoutStub` (see `AppLaunch.makeScout`). Not a model: canned notes on real spots.
+private struct StubScout: Scouting {
+    let answers: Bool
+
+    func availability() -> ScoutAvailability { answers ? .available : .appleIntelligenceNotEnabled }
+
+    func scout(_ request: String, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
+        try await scout(request, near: nil, progress: progress)
+    }
+
+    func scout(_ request: String, near area: GeoRegion?, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
+        guard answers else { throw ScoutError.unavailable(.appleIntelligenceNotEnabled) }
+        let centre = area?.center
+        let nearest = CuratedSpots.all
+            .sorted { a, b in
+                guard let centre else { return a.name < b.name }
+                return centre.distance(to: a.coordinate) < centre.distance(to: b.coordinate)
+            }
+            .prefix(3)
+        progress(.understanding)
+        try await Task.sleep(for: .milliseconds(300))
+        progress(.searching("the map"))
+        try await Task.sleep(for: .milliseconds(300))
+        progress(.writing)
+        let notes = [
+            "Open view toward the horizon, so the first and last light reach the whole scene.",
+            "A classic frame for this kind of request; the light skims the foreground at the edges of the day.",
+            "Quieter than the headline spots nearby, with room to work and several angles.",
+        ]
+        return nearest.enumerated().map { index, spot in
+            ScoutSuggestion(id: spot.id, spot: spot, provenance: .curated, why: notes[index % notes.count],
+                            suggestedWindow: nil, driveSeconds: TimeInterval(1800 + index * 1500))
+        }
+    }
+}
+

@@ -313,7 +313,7 @@ enum LightText {
         case .curated: String(localized: "Curated", comment: "Spot provenance")
         case .user: String(localized: "Added by you", comment: "Spot provenance")
         case .appleMaps: String(localized: "Apple Maps", comment: "Spot provenance")
-        case .scout: String(localized: "Scout", comment: "Spot provenance: found by the Apple Intelligence scout")
+        case .scout: String(localized: "Ask Iter", comment: "Spot provenance: found by Ask Iter (Apple Intelligence) in Explore")
         }
     }
 

@@ -62,6 +62,8 @@ struct RootView: View {
         .onChange(of: navigation.selection) { _, new in
             storedSelection = try? JSONEncoder().encode(new)
         }
+        // A selected trip or folder that is deleted (or whose creation is undone) falls back to its section's landing.
+        .onChange(of: model.store.revision) { fixStaleSelection() }
     }
 
     @State private var showsImportError = false
@@ -84,12 +86,26 @@ struct RootView: View {
         }
     }
 
+    /// The landing a selection falls back to when the trip or folder it points at no longer exists.
+    private func fixStaleSelection() {
+        switch navigation.selection {
+        case .trip(let id) where model.store.trip(id: id) == nil: navigation.selection = .trips
+        case .locationFolder(let id) where model.store.folder(id: id) == nil: navigation.selection = .locations
+        default: break
+        }
+    }
+
     private func restoreSelection() {
         defer {
             if let forced = AppLaunch.section {
                 navigation.selection = forced
-            } else if AppLaunch.sectionName == "trip", let first = model.store.trips().first {
+            } else if AppLaunch.sectionName == "trip", let first = model.store.pinnedTrips().first ?? model.store.trips().first {
                 navigation.selection = .trip(first.id)
+            }
+            if let name = AppLaunch.locationFolderName,
+               let folder = model.store.folders(kind: .locations).flatMap({ [$0] + model.store.subfolders(of: $0) })
+                   .first(where: { $0.name == name }) {
+                navigation.selection = .locationFolder(folder.id)
             }
             if let spot = AppLaunch.spot {
                 navigation.selection = .explore
@@ -97,11 +113,8 @@ struct RootView: View {
             }
         }
         guard let data = storedSelection, let item = try? JSONDecoder().decode(SidebarItem?.self, from: data) else { return }
-        if case .trip(let id) = item, model.store.trip(id: id) == nil {
-            navigation.selection = .trips
-        } else {
-            navigation.selection = item
-        }
+        navigation.selection = item
+        fixStaleSelection()
     }
 }
 
@@ -125,13 +138,13 @@ struct DetailView: View {
             NavigationStack(path: $navigation.explorePath) {
                 ExploreView().spotDestination()
             }
-        case .saved:
-            NavigationStack(path: $navigation.savedPath) {
-                SavedView().spotDestination()
+        case .locations:
+            NavigationStack(path: $navigation.locationsPath) {
+                LocationsView(folderID: nil).id("all-locations").spotDestination()
             }
-        case .scout:
-            NavigationStack(path: $navigation.scoutPath) {
-                ScoutView().spotDestination()
+        case .locationFolder(let id):
+            NavigationStack(path: $navigation.locationsPath) {
+                LocationsView(folderID: id).id(id).spotDestination()
             }
         }
     }

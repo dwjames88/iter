@@ -25,6 +25,7 @@ extension LightText {
 
     static func name(_ section: ExploreSectionKind) -> String {
         switch section {
+        case .ask: String(localized: "Ask Iter", comment: "List section: places suggested for a request")
         case .spots: String(localized: "Spots", comment: "List section: curated and your own spots")
         case .nearYou: String(localized: "Near You", comment: "List section: spots close to your location")
         case .popular: String(localized: "Popular", comment: "List section: iconic spots beyond the near-you radius")

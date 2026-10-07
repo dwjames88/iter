@@ -4,15 +4,9 @@ import Testing
 import IterCore
 import IterData
 import IterServices
+import IterDesign
 import IterFeatures
 @testable import Iter
-
-/// Scout double for snapshots: reports a fixed availability and never answers.
-private struct SnapshotScout: Scouting {
-    var state: ScoutAvailability = .available
-    func availability() -> ScoutAvailability { state }
-    func scout(_ request: String, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] { [] }
-}
 
 private struct FailingGeocoder: Geocoding {
     func reverseGeocode(_ coordinate: Coordinate) async throws -> PlaceResult { throw URLError(.notConnectedToInternet) }
@@ -31,17 +25,61 @@ private struct FailingGeocoder: Geocoding {
 
     private static func screen<V: View>(_ view: V) -> some View { NavigationStack { view } }
 
-    // MARK: Saved
+    // MARK: Locations
 
-    @Test(.enabled(if: Snapshot.enabled)) func saved() async throws {
-        let model = Fixtures.model(weather: .sample)
+    /// A model with two location folders of saved curated spots and one unfiled spot.
+    private static func libraryModel() -> (AppModel, coast: FolderRecord) {
+        let model = Fixtures.model(weather: .sample, saved: ["haystack-rock", "bixby-bridge", "point-reyes-lighthouse", "mesa-arch", "tunnel-view"])
+        let coast = model.store.createFolder(name: "Coast", kind: .locations)
+        let desert = model.store.createFolder(name: "Desert", kind: .locations)
+        let saved = model.store.savedPlaces()
+        model.store.movePlaces(saved.filter { ["haystack-rock", "bixby-bridge", "point-reyes-lighthouse"].contains($0.curatedID ?? "") }, to: coast, index: nil)
+        model.store.movePlaces(saved.filter { $0.curatedID == "mesa-arch" }, to: desert, index: nil)
+        return (model, coast)
+    }
+
+    @Test(.enabled(if: Snapshot.enabled)) func locations() async throws {
+        let (model, coast) = Self.libraryModel()
         _ = Self.addUserSpot(model)
-        try await Snapshot.render(Fixtures.host(Self.screen(SavedView()), model: model), screen: "saved", state: "list")
+        try await Snapshot.render(Fixtures.host(Self.screen(LocationsView(folderID: nil)), model: model), screen: "locations", state: "all")
+        try await Snapshot.render(Fixtures.host(Self.screen(LocationsView(folderID: coast.id)), model: model), screen: "locations", state: "folder")
         let empty = Fixtures.model(weather: .sample, seedTrip: false, saved: [])
-        try await Snapshot.render(Fixtures.host(Self.screen(SavedView()), model: empty), screen: "saved", state: "empty")
+        try await Snapshot.render(Fixtures.host(Self.screen(LocationsView(folderID: nil)), model: empty), screen: "locations", state: "empty")
+        let emptyFolder = empty.store.createFolder(name: "Someday", kind: .locations)
+        try await Snapshot.render(Fixtures.host(Self.screen(LocationsView(folderID: emptyFolder.id)), model: empty), screen: "locations", state: "empty-folder")
         let noWeather = Fixtures.model(weather: .notEnabled)
         _ = Self.addUserSpot(noWeather)
-        try await Snapshot.render(Fixtures.host(Self.screen(SavedView()), model: noWeather), screen: "saved", state: "noforecast")
+        try await Snapshot.render(Fixtures.host(Self.screen(LocationsView(folderID: nil)), model: noWeather), screen: "locations", state: "noforecast")
+    }
+
+    // MARK: Sidebar
+
+    @Test(.enabled(if: Snapshot.enabled)) func sidebar() async throws {
+        let (model, _) = Self.libraryModel()
+        let trips = model.store.trips()
+        if let first = trips.first { model.store.setPinned(first, true) }
+        let utah = model.store.createFolder(name: "Utah 2027", kind: .trips)
+        model.store.createFolder(name: "Scouting", kind: .trips, parent: utah)
+        let canyon = model.store.createTrip(name: "Canyon Country", startDay: LocalDay(year: 2027, month: 4, day: 3), dayCount: 4)
+        model.store.moveTrips([canyon], to: utah, index: nil)
+        model.store.createTrip(name: "Weekend Away", startDay: LocalDay(year: 2026, month: 11, day: 14), dayCount: 2)
+        let sidebar = SidebarView().frame(width: IterSize.sidebarIdeal, height: 560)
+        try await Snapshot.render(Fixtures.host(sidebar, model: model), screen: "sidebar", state: "library", sizes: [Snapshot.regular])
+    }
+
+    @Test func libraryFixtureFilesPlaces() {
+        let (model, coast) = Self.libraryModel()
+        #expect(model.store.savedPlaces(in: coast).count == 3)
+        #expect(model.store.savedPlaces().count == 5)
+    }
+
+    @Test func offlineStatusWordsMatchTheSpec() {
+        #expect(OfflineStatusText.label(.none) == nil)
+        #expect(OfflineStatusText.label(.downloading(done: 3, total: 9)) == "Downloading for offline use, 3 of 9")
+        #expect(OfflineStatusText.label(.ready(savedAt: Fixtures.now)) == "Ready offline")
+        #expect(OfflineStatusText.label(.stale(savedAt: Fixtures.now, reason: .tripChanged)) == "Trip changed since download")
+        #expect(OfflineStatusText.label(.stale(savedAt: Fixtures.now, reason: .forecastOld)) == "Forecast is more than 12 hours old")
+        #expect(OfflineStatusText.label(.stale(savedAt: Fixtures.now, reason: .incomplete)) == "Some items didn't download")
     }
 
     // MARK: Editor
@@ -55,57 +93,6 @@ private struct FailingGeocoder: Geocoding {
         let failing = AppModel(store: model.store, weather: FailingWeather(error: .notEnabled), search: StubSearch(),
                                geocoder: FailingGeocoder(), drives: EstimateDrives(), scout: nil, now: { Fixtures.now })
         try await Snapshot.render(Fixtures.host(SpotEditorSheet(mode: .create(Self.pin)), model: failing), screen: "editor", state: "create-lookup-failed")
-    }
-
-    // MARK: Scout
-
-    private static func suggestions() -> [ScoutSuggestion] {
-        let mesa = CuratedSpots.spot(id: "mesa-arch")!
-        let tunnel = CuratedSpots.spot(id: "tunnel-view")!
-        let maps1 = Spot(id: "maps-1", name: "Latourell Falls", locality: "Corbett, OR", coordinate: Coordinate(latitude: 45.5370, longitude: -122.2161),
-                         timeZoneIdentifier: "America/Los_Angeles", category: .waterfall, origin: .appleMaps)
-        let maps2 = Spot(id: "maps-2", name: "Hoyt Arboretum", locality: "Portland, OR", coordinate: Coordinate(latitude: 45.5100, longitude: -122.7160),
-                         timeZoneIdentifier: "America/Los_Angeles", category: .forest, origin: .appleMaps)
-        return [
-            ScoutSuggestion(id: "maps-2", spot: maps2, provenance: .appleMaps,
-                            why: "Tall conifers hold fog well into the morning, and the paths run east so the first sun comes through the trunks.",
-                            suggestedWindow: .goldenMorning, driveSeconds: 12 * 60),
-            ScoutSuggestion(id: "maps-1", spot: maps1, provenance: .appleMaps,
-                            why: "A tall waterfall in a mossy gorge; overcast keeps the water even.", suggestedWindow: .goldenMorning, driveSeconds: 38 * 60),
-            ScoutSuggestion(id: "tunnel-view", spot: tunnel, provenance: .curated,
-                            why: "Valley fog fills below the viewpoint at first light.", suggestedWindow: .goldenMorning, driveSeconds: 95 * 60),
-            ScoutSuggestion(id: "mesa-arch", spot: mesa, provenance: .curated, why: "", suggestedWindow: .goldenMorning, driveSeconds: nil),
-        ]
-    }
-
-    private static let request = "Foggy forest spots within two hours of Portland for sunrise"
-
-    @Test(.enabled(if: Snapshot.enabled)) func scout() async throws {
-        let model = Fixtures.model(weather: .sample)
-        func scoutModel(_ app: AppModel, _ availability: ScoutAvailability = .available, state: ScoutState = .idle, request: String = "") -> ScoutModel {
-            ScoutModel(app: app, scout: SnapshotScout(state: availability), state: state, request: request)
-        }
-        try await Snapshot.render(Fixtures.host(Self.screen(ScoutView(model: scoutModel(model))), model: model), screen: "scout", state: "idle")
-        let running = scoutModel(model, state: .running(stage: .searching("Portland, Oregon"), started: Fixtures.now.addingTimeInterval(-14)), request: Self.request)
-        try await Snapshot.render(Fixtures.host(Self.screen(ScoutView(model: running)), model: model), screen: "scout", state: "running")
-        let results = scoutModel(model, state: .results(Self.suggestions()), request: Self.request)
-        try await Snapshot.render(Fixtures.host(Fixtures.inDetailColumn(Self.screen(ScoutView(model: results))), model: model), screen: "scout", state: "results", settle: .seconds(1))
-
-        let bare = Fixtures.model(weather: .notEnabled)
-        let offline = scoutModel(bare, state: .results(Self.suggestions()), request: Self.request)
-        try await Snapshot.render(Fixtures.host(Fixtures.inDetailColumn(Self.screen(ScoutView(model: offline))), model: bare), screen: "scout", state: "results-weather-offline", settle: .seconds(1))
-
-        let unavailable: [(String, ScoutAvailability)] = [("unavailable-not-enabled", .appleIntelligenceNotEnabled),
-                                                          ("unavailable-device", .deviceNotEligible),
-                                                          ("unavailable-downloading", .modelNotReady)]
-        for (state, availability) in unavailable {
-            let m = scoutModel(model, availability)
-            try await Snapshot.render(Fixtures.host(Self.screen(ScoutView(model: m)), model: model), screen: "scout", state: state, sizes: [Snapshot.regular])
-        }
-        let none = scoutModel(model, state: .failed(.noResults), request: Self.request)
-        try await Snapshot.render(Fixtures.host(Self.screen(ScoutView(model: none)), model: model), screen: "scout", state: "no-results", sizes: [Snapshot.regular])
-        let guardrail = scoutModel(model, state: .failed(.guardrail), request: "x")
-        try await Snapshot.render(Fixtures.host(Self.screen(ScoutView(model: guardrail)), model: model), screen: "scout", state: "guardrail", sizes: [Snapshot.regular])
     }
 
     // MARK: Settings

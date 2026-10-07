@@ -1,0 +1,234 @@
+import SwiftUI
+import IterCore
+import IterData
+import IterDesign
+import IterFeatures
+
+/// Locations: the spots you saved and the ones you added, in one list beside their map. In a folder it shows that
+/// folder's spots (and its subfolders'). Replaces Saved (plan P3.9, critique C65).
+struct LocationsView: View {
+    /// The location folder to show; nil = All Locations.
+    let folderID: UUID?
+
+    @Environment(AppModel.self) private var model
+    @Environment(AppNavigation.self) private var navigation
+    @State private var query = ""
+    @State private var sort: SavedSort = .name
+    @State private var filter: SavedFilter = .all
+    @State private var selection: Set<UUID> = []
+    @State private var editing: PlaceRecord?
+    @State private var pendingDelete: PlaceRecord?
+
+    private var folder: FolderRecord? { folderID.flatMap { model.store.folder(id: $0) } }
+
+    private var title: String { folder?.name ?? String(localized: "All Locations", comment: "Screen title") }
+
+    var body: some View {
+        let all = items
+        let shown = SavedArranger.arrange(all, query: query, filter: filter, sort: sort)
+        Group {
+            if all.isEmpty {
+                empty
+            } else {
+                ResizableSplit(storageKey: "locations", idealWidth: IterSize.listIdeal) {
+                    list(shown)
+                } trailing: {
+                    LocationsMap(items: shown, selection: $selection)
+                }
+                .searchable(text: $query, placement: .toolbar, prompt: Text("Search locations", comment: "Search field prompt"))
+                .toolbar { ToolbarItem { sortMenu } }
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .navigationTitle(title)
+        .unifiedToolbarBackground()
+        .sheet(item: $editing) { record in
+            SpotEditorSheet(mode: .edit(record))
+        }
+        .confirmationDialog(LightText.deleteTitle(pendingDelete?.name ?? ""), isPresented: Binding(get: { pendingDelete != nil }, set: { if !$0 { pendingDelete = nil } }),
+                            titleVisibility: .visible, presenting: pendingDelete) { record in
+            Button(role: .destructive) { delete(record) } label: { Text(LightText.deleteSpot) }
+        } message: { record in
+            Text(LightText.deleteMessage(stops: record.stops?.count ?? 0))
+        }
+    }
+
+    // MARK: Data
+
+    private var items: [SavedItem] {
+        _ = model.store.revision
+        _ = model.forecasts.revision
+        let records: [PlaceRecord]
+        if let folderID {
+            records = model.store.folder(id: folderID).map { model.store.savedPlaces(in: $0) } ?? []
+        } else {
+            records = model.store.savedPlaces()
+        }
+        return records.map { record in
+            let spot = record.spot
+            let score = model.nextLight(for: spot)?.window.score
+            return SavedItem(id: record.id, spot: spot, todayScore: score)
+        }
+    }
+
+    private func records(_ ids: Set<UUID>) -> [PlaceRecord] { ids.compactMap { model.store.place(id: $0) } }
+
+    // MARK: Empty
+
+    @ViewBuilder private var empty: some View {
+        if folderID == nil {
+            ContentUnavailableView {
+                Label(String(localized: "Nothing saved yet", comment: "Locations empty title"), systemImage: "mappin.and.ellipse")
+            } description: {
+                Text("Save a spot from Explore and it shows up here with its next sunrise or sunset. Spots you add yourself live here too.",
+                     comment: "Locations empty explanation")
+            } actions: {
+                Button { navigation.show(.explore) } label: { Text("Browse Explore", comment: "Button") }
+                    .buttonStyle(.borderedProminent)
+                Button {
+                    navigation.show(.explore)
+                    navigation.addSpotModeRequest += 1
+                } label: { Text("Add Your Own Spot", comment: "Button: drop a pin on the Explore map") }
+            }
+        } else {
+            ContentUnavailableView {
+                Label(String(localized: "This folder is empty", comment: "Locations folder empty title"), systemImage: "folder")
+            } description: {
+                Text("Drag locations here from All Locations, or choose Move to Folder from a location's menu.",
+                     comment: "Locations folder empty explanation")
+            } actions: {
+                Button { navigation.show(.locations) } label: { Text("Show All Locations", comment: "Button") }
+            }
+        }
+    }
+
+    // MARK: List
+
+    private func list(_ shown: [SavedItem]) -> some View {
+        List(selection: $selection) {
+            ForEach(shown) { item in
+                SavedRow(item: item)
+                    .tag(item.id)
+                    .draggable(containerItemID: item.id)
+            }
+        }
+        .dragContainer(for: LibraryDragItem.self) { ids in ids.map { LibraryDragItem.place($0) } }
+        .listStyle(.inset)
+        .paperListBackground()
+        .contextMenu(forSelectionType: UUID.self) { ids in
+            menu(for: ids)
+        } primaryAction: { ids in
+            if let item = shown.first(where: { ids.contains($0.id) }) { navigation.open(SpotRoute(spot: item.spot)) }
+        }
+        .onDeleteCommand { deleteSelection() }
+        .overlay {
+            if shown.isEmpty {
+                if query.isEmpty {
+                    filterEmpty
+                } else {
+                    ContentUnavailableView.search(text: query)
+                }
+            }
+        }
+        .safeAreaInset(edge: .top, spacing: 0) { WeatherStatusBanner(status: model.weatherStatus) }
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            VStack(spacing: 0) {
+                Divider()
+                HStack {
+                    Text("\(shown.count) spots", comment: "Locations count footer")
+                        .font(IterFont.caption)
+                        .foregroundStyle(IterColor.textSecondary)
+                    Spacer()
+                    ForecastSourceLines(app: model, coordinates: shown.map(\.spot.coordinate))
+                }
+                .padding(.horizontal, IterSpace.lg)
+                .padding(.vertical, IterSpace.sm)
+                .background(.bar)
+            }
+        }
+    }
+
+    private var sortMenu: some View {
+        Menu {
+            Picker(selection: $sort) {
+                ForEach(SavedSort.allCases, id: \.self) { (option: SavedSort) in Text(LightText.name(option)).tag(option) }
+            } label: { Text("Sort By", comment: "Menu") }
+            Picker(selection: $filter) {
+                ForEach(SavedFilter.allCases, id: \.self) { (option: SavedFilter) in Text(LightText.name(option)).tag(option) }
+            } label: { Text("Show", comment: "Menu") }
+        } label: {
+            Label(String(localized: "Sort and Filter", comment: "Toolbar button"), systemImage: "line.3.horizontal.decrease.circle")
+        }
+        .help(Text("Sort and filter locations", comment: "Tooltip"))
+    }
+
+    private var filterEmpty: some View {
+        ContentUnavailableView {
+            Label(String(localized: "No spots here", comment: "Locations filter result empty"), systemImage: "line.3.horizontal.decrease.circle")
+        } description: {
+            Text("No saved spots match this filter.", comment: "Locations filter empty explanation")
+        }
+    }
+
+    // MARK: Actions
+
+    @ViewBuilder private func menu(for ids: Set<UUID>) -> some View {
+        let chosen = records(ids)
+        if let record = chosen.first, chosen.count == 1 {
+            let spot = record.spot
+            Button { navigation.open(SpotRoute(spot: spot)) } label: { Label(String(localized: "Open", comment: "Menu item"), systemImage: "arrow.right.circle") }
+            AddToTripMenu(spot: spot)
+            Divider()
+        }
+        if !chosen.isEmpty {
+            let shared = Set(chosen.map { $0.folder?.id })
+            MoveToFolderMenu(kind: .locations, currentFolderID: shared.count == 1 ? shared.first ?? nil : nil,
+                             inNoFolder: shared == [nil]) { target in
+                model.store.movePlaces(chosen, to: target, index: nil)
+            }
+            Button(String(localized: "New Folder with Selection", comment: "Context menu")) {
+                navigation.newFolder(model: model, kind: .locations, places: chosen)
+            }
+            if folderID != nil {
+                Button(String(localized: "Remove from Folder", comment: "Context menu")) {
+                    model.store.movePlaces(chosen, to: nil, index: nil)
+                }
+            }
+            Divider()
+            removal(chosen)
+        }
+    }
+
+    @ViewBuilder private func removal(_ chosen: [PlaceRecord]) -> some View {
+        if let record = chosen.first, chosen.count == 1 {
+            if record.origin == .user {
+                Button { editing = record } label: { Label(String(localized: "Edit…", comment: "Menu item"), systemImage: "pencil") }
+                Button(role: .destructive) { requestDelete(record) } label: { Label(String(localized: "Delete", comment: "Menu item"), systemImage: "trash") }
+            } else {
+                Button { model.store.setSaved(record.spot, false) } label: { Label(String(localized: "Unsave", comment: "Menu item"), systemImage: "bookmark.slash") }
+            }
+        } else {
+            Button { for r in chosen where r.origin != .user { model.store.setSaved(r.spot, false) } } label: {
+                Label(String(localized: "Unsave", comment: "Menu item"), systemImage: "bookmark.slash")
+            }
+        }
+    }
+
+    /// The Delete key: removes your own spot (undoable), or unsaves a saved one.
+    private func deleteSelection() {
+        for record in records(selection) {
+            if record.origin == .user { requestDelete(record) } else { model.store.setSaved(record.spot, false) }
+        }
+        selection = []
+    }
+
+    /// Deleting a spot that trips use also removes those stops, so ask first; otherwise just do it (it is undoable).
+    private func requestDelete(_ record: PlaceRecord) {
+        if (record.stops?.count ?? 0) > 0 { pendingDelete = record } else { delete(record) }
+    }
+
+    private func delete(_ record: PlaceRecord) {
+        model.store.deletePlace(record)
+        pendingDelete = nil
+    }
+}

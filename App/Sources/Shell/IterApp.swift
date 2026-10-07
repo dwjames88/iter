@@ -21,8 +21,15 @@ struct IterApp: App {
         }
         let store = IterStore(container: container)
         store.actionName = StoreActionText.name
-        let model = AppModel.live(store: store, scout: AppLaunch.makeScout())
+        // An in-memory or test run keeps its offline packs in a throwaway folder so it never cleans up the real ones.
+        let throwaway = AppLaunch.inMemoryStore || AppLaunch.isRunningTests
+        let packs = throwaway ? FileManager.default.temporaryDirectory.appending(path: "IterOfflinePacks-\(UUID().uuidString)", directoryHint: .isDirectory)
+                              : OfflinePackStore.defaultRoot()
+        let model = AppModel.live(store: store, scout: AppLaunch.makeScout(), offlinePacks: packs)
         _model = State(initialValue: model)
+        if AppLaunch.seedLibrary { LibrarySeed.run(model) }
+        model.offline.attach(imagery: .shared, pointSize: CGSize(width: IterSize.placeCardWidth, height: IterSize.placeCardImageHeight), scale: 2)
+        if !AppLaunch.isRunningTests { model.offline.start() }
         // The smoke hook starts here, not in a view task, so it also runs when the app is launched hidden.
         if AppLaunch.smokeTest {
             Task { @MainActor in
