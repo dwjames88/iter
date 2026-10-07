@@ -55,6 +55,27 @@ private let fixedNow = testDay.at(hour: 10, in: denver)
 
 private func at(_ hour: Int, _ minute: Int = 0) -> Date { testDay.at(hour: hour, minute: minute, in: denver) }
 
+// MARK: - The classic-view label is always placed
+
+@MainActor @Suite struct SkyRoseWedgeLabelTests {
+    @Test(arguments: [0.0, 90, 180, 263, 270, 359], [CGSize(width: 361, height: 400), CGSize(width: 330, height: 330), CGSize(width: 288, height: 288)])
+    func wedgeLabelIsAlwaysPlaced(facing: Double, size: CGSize) {
+        var placed: CGRect?
+        var cardinalHit = false
+        let content = Canvas { ctx, canvasSize in
+            let proj = RoseRenderer.projection(size: canvasSize, rotation: 0)
+            let rings = RoseRenderer.ringLabelRects(ctx, proj: proj)
+            placed = RoseRenderer.wedgeLabel(ctx, proj: proj, size: canvasSize, facing: facing, ringTexts: rings)?.rect
+            if let r = placed { cardinalHit = rings.contains { $0.cardinal && $0.rect.intersects(r) } }
+        }.frame(width: size.width, height: size.height)
+        let renderer = ImageRenderer(content: content)
+        _ = renderer.uiImage
+        #expect(placed != nil)
+        #expect(!cardinalHit)
+        if let placed { #expect(CGRect(origin: .zero, size: size).contains(placed)) }
+    }
+}
+
 // MARK: - Shared time between the rose, the scrubber and the timeline
 
 @MainActor @Suite struct SkyRoseIOSTests {

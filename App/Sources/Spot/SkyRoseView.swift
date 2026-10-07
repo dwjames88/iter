@@ -230,6 +230,73 @@ enum RoseRenderer {
         [CGPoint(x: r.minX, y: r.minY), CGPoint(x: r.maxX, y: r.minY), CGPoint(x: r.minX, y: r.maxY), CGPoint(x: r.maxX, y: r.maxY)]
     }
 
+    struct RingLabel { var az: Double; var line: Line; var rect: CGRect; var cardinal: Bool }
+
+    /// The N/E/S/W, intercardinal and degree labels in the outer band, measured.
+    static func ringLabelRects(_ ctx: GraphicsContext, proj: RoseProjection) -> [RingLabel] {
+        let labelRadius = proj.radius + SpotLayout.roseLabelBand / 2
+        var out: [RingLabel] = []
+        func add(_ az: Double, _ name: String, primary: Bool, cardinal: Bool) {
+            let line = Line(ink: primary ? IterColor.textPrimary : IterColor.textSecondary) { Text(verbatim: name)
+                .font(primary ? IterFont.moduleTitle : IterFont.timeSmall).foregroundStyle($0) }
+            let s = measure(ctx, line), p = proj.point(azimuth: az, radius: labelRadius)
+            out.append(RingLabel(az: az, line: line, rect: CGRect(x: p.x - s.width / 2, y: p.y - s.height / 2, width: s.width, height: s.height),
+                                 cardinal: cardinal))
+        }
+        for (az, name) in [(0.0, "N"), (90, "E"), (180, "S"), (270, "W")] { add(az, name, primary: true, cardinal: true) }
+        for (az, name) in [(45.0, "NE"), (135, "SE"), (225, "SW"), (315, "NW")] { add(az, name, primary: false, cardinal: false) }
+        for az in [30.0, 60, 120, 150, 210, 240, 300, 330] { add(az, "\(Int(az))", primary: false, cardinal: false) }
+        return out
+    }
+
+    /// The classic-view label outside the rim at the facing azimuth. Always returns a placement: every candidate (one or
+    /// two lines, slid along the rim, pulled back inside the canvas) is scored by what it breaks, and the cheapest wins.
+    static func wedgeLabel(_ ctx: GraphicsContext, proj: RoseProjection, size: CGSize, facing: Double,
+                           ringTexts: [RingLabel]) -> (lines: [Line], rect: CGRect)? {
+        let c = proj.center, R = proj.radius
+        guard R > 0 else { return nil }
+        let tip = proj.point(azimuth: facing, radius: R)
+        let v = CGVector(dx: (tip.x - c.x) / R, dy: (tip.y - c.y) / R)
+        let t = CGVector(dx: -v.dy, dy: v.dx)
+        let canvas = CGRect(origin: .zero, size: size).insetBy(dx: IterStroke.thick, dy: IterStroke.thick)
+        let forms: [[Line]] = [
+            [Line(ink: IterColor.textSecondary) { Text(LightText.viewShort(facing)).font(IterFont.timeSmall).foregroundStyle($0) }],
+            [Line(ink: IterColor.textSecondary) { Text(LightText.viewWord).font(IterFont.timeSmall).foregroundStyle($0) },
+             Line(ink: IterColor.textSecondary) { Text(LightText.degrees(facing)).font(IterFont.timeSmall).foregroundStyle($0) }]]
+        var best: (lines: [Line], rect: CGRect, cost: CGFloat)?
+        for lines in forms {
+            let sizes = lines.map { measure(ctx, $0) }
+            let w = sizes.map(\.width).max() ?? 0, h = sizes.map(\.height).reduce(0, +)
+            let extent = abs(v.dx) * w / 2 + abs(v.dy) * h / 2
+            let dist = R + IterSpace.xxs + extent
+            for shift in stride(from: CGFloat(0), through: SpotLayout.roseLabelBand * 2, by: IterStroke.regular) {
+                for sign in [1.0, -1.0] as [CGFloat] {
+                    var rect = CGRect(x: c.x + v.dx * dist + t.dx * shift * sign - w / 2,
+                                      y: c.y + v.dy * dist + t.dy * shift * sign - h / 2, width: w, height: h)
+                    // Pull back inside the canvas; the distance moved is a cost.
+                    var pulled: CGFloat = 0
+                    if rect.width <= canvas.width, rect.height <= canvas.height {
+                        let x = min(max(rect.minX, canvas.minX), canvas.maxX - w)
+                        let y = min(max(rect.minY, canvas.minY), canvas.maxY - h)
+                        pulled = abs(x - rect.minX) + abs(y - rect.minY)
+                        rect.origin = CGPoint(x: x, y: y)
+                    }
+                    let extraLines: CGFloat = CGFloat(lines.count - 1) * 2
+                    var cost: CGFloat = shift + pulled * 4 + extraLines
+                    if !canvas.contains(rect) { cost += 10_000 }
+                    // Over the disc.
+                    let pad = rect.insetBy(dx: -IterSpace.xxs, dy: -IterSpace.xxs)
+                    let closest = CGPoint(x: min(max(c.x, rect.minX), rect.maxX), y: min(max(c.y, rect.minY), rect.maxY))
+                    let inside = max(0, R - hypot(closest.x - c.x, closest.y - c.y))
+                    cost += inside * 20
+                    for ring in ringTexts where ring.rect.intersects(pad) { cost += ring.cardinal ? 1_000 : 0 }
+                    if best == nil || cost < best!.cost { best = (lines, rect, cost) }
+                }
+            }
+        }
+        return best.map { ($0.lines, $0.rect) }
+    }
+
     static func draw(_ ctx: inout GraphicsContext, size: CGSize, data d: RoseDrawData, rotation: Double) {
         let proj = projection(size: size, rotation: rotation)
         let c = proj.center
@@ -291,19 +358,14 @@ enum RoseRenderer {
             ctx.stroke(tick, with: .color(cardinal ? IterColor.textSecondary.color : IterColor.separator), lineWidth: IterStroke.thin)
         }
 
-        // d. Labels in the outer band, upright.
-        let labelRadius = R + SpotLayout.roseLabelBand / 2
-        for (az, name) in [(0.0, "N"), (90, "E"), (180, "S"), (270, "W")] {
-            ctx.draw(Text(verbatim: name).font(IterFont.moduleTitle).foregroundStyle(IterColor.textPrimary),
-                     at: rim(az, labelRadius), anchor: .center)
-        }
-        for (az, name) in [(45.0, "NE"), (135, "SE"), (225, "SW"), (315, "NW")] {
-            ctx.draw(Text(verbatim: name).font(IterFont.timeSmall).foregroundStyle(IterColor.textSecondary),
-                     at: rim(az, labelRadius), anchor: .center)
-        }
-        for az in [30.0, 60, 120, 150, 210, 240, 300, 330] {
-            ctx.draw(Text(verbatim: "\(Int(az))").font(IterFont.timeSmall).foregroundStyle(IterColor.textSecondary),
-                     at: rim(az, labelRadius), anchor: .center)
+        // d. Labels in the outer band, upright. The classic-view label sits just outside the rim at the facing azimuth;
+        // ring labels it would touch are skipped, except the cardinals, which make it slide along the rim instead.
+        let ringTexts = ringLabelRects(ctx, proj: proj)
+        var wedgeText: (lines: [Line], rect: CGRect)?
+        if let facing = d.facing { wedgeText = wedgeLabel(ctx, proj: proj, size: size, facing: facing, ringTexts: ringTexts) }
+        for label in ringTexts {
+            if let w = wedgeText, !label.cardinal, label.rect.intersects(w.rect.insetBy(dx: -IterSpace.xxs, dy: -IterSpace.xxs)) { continue }
+            drawText(&ctx, label.line, at: CGPoint(x: label.rect.midX, y: label.rect.midY), anchor: .center, halo: bg)
         }
 
         // e. Classic view wedge.
@@ -391,45 +453,8 @@ enum RoseRenderer {
         }
         }
 
-        // Sun labels first, then the wedge label around them, then the moon's.
+        // Sun labels first, then the moon's.
         placeEvents(rose.events.filter { $0.body == .sun })
-        // The wedge label: fully inside the wedge, clear of both edges; two lines, else one short line.
-        var wedgeText: (lines: [Line], rect: CGRect)?
-        if let facing = d.facing {
-            let half = SkyRose.viewHalfWidth
-            func inWedge(_ rect: CGRect) -> Bool {
-                let r = rect.insetBy(dx: -IterSpace.xs, dy: -IterSpace.xs)
-                return corners(r).allSatisfy { p in
-                    let pos = proj.position(at: p)
-                    return SkyRose.angularDifference(pos.azimuth, facing) <= half - 1 && hypot(p.x - c.x, p.y - c.y) <= R - IterSpace.xs
-                }
-            }
-            func place(_ lines: [Line]) -> (rect: CGRect, hits: Int)? {
-                let sizes = lines.map { measure(ctx, $0) }
-                let w = sizes.map(\.width).max() ?? 0, h = sizes.map(\.height).reduce(0, +)
-                var best: (rect: CGRect, hits: Int)?
-                for fraction in [0.6, 0.5, 0.7, 0.4, 0.8, 0.9, 0.3] as [CGFloat] {
-                    for shift in [0, 0.5, -0.5, 1, -1] as [CGFloat] {
-                        let along = proj.point(azimuth: facing, radius: R * fraction)
-                        let across = proj.point(azimuth: facing + 90, radius: w * shift)
-                        let p = CGPoint(x: along.x + across.x - c.x, y: along.y + across.y - c.y)
-                        let rect = CGRect(x: p.x - w / 2, y: p.y - h / 2, width: w, height: h)
-                        guard inWedge(rect) else { continue }
-                        if obstacles.contains(where: { $0.intersects(rect.insetBy(dx: -IterSpace.xs, dy: -IterSpace.xxs)) }) { continue }
-                        let hits = pathHits(rect)
-                        if best == nil || hits < best!.hits { best = (rect, hits) }
-                        if hits == 0 { return best }
-                    }
-                }
-                return best
-            }
-            let two = [Line(ink: IterColor.textSecondary) { Text(LightText.classicView).font(IterFont.timeSmall).foregroundStyle($0) },
-                       Line(ink: IterColor.textSecondary) { Text(LightText.degrees(facing)).font(IterFont.timeSmall).foregroundStyle($0) }]
-            let one = [Line(ink: IterColor.textSecondary) { Text(LightText.viewShort(facing)).font(IterFont.timeSmall).foregroundStyle($0) }]
-            if let hit = place(two) { wedgeText = (two, hit.rect) } else if let hit = place(one) { wedgeText = (one, hit.rect) }
-            if let wedgeText { obstacles.append(wedgeText.rect.insetBy(dx: -IterSpace.xs, dy: -IterSpace.xxs)) }
-        }
-
         placeEvents(rose.events.filter { $0.body == .moon })
 
         // f. Paths: the moon under the sun, continuous.

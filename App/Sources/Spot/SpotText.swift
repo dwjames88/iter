@@ -170,6 +170,7 @@ extension LightText {
     static let viewUp = String(localized: "View up", comment: "Sun and moon rose: the classic view's direction is at the top")
     static let orientationHelp = String(localized: "Turn the rose so north, or the classic view, is at the top", comment: "Help for the rose orientation control")
     static let classicView = String(localized: "Classic view", comment: "Sun and moon rose: label on the wedge showing the direction the classic composition faces")
+    static let viewWord = String(localized: "View", comment: "Sun and moon rose: first line of the two-line classic view label outside the rim")
     static func viewShort(_ bearing: Double) -> String {
         String(localized: "View \(degrees(bearing))", comment: "Sun and moon rose: short label on the classic view wedge when the full label does not fit")
     }

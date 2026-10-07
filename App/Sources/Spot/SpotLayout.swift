@@ -32,8 +32,8 @@ enum SpotLayout {
     // MARK: Compass rose
     /// Widest the rose is drawn (45 grid units). Narrower columns draw it at their width.
     static let roseMaxDiameter: CGFloat = IterGrid.unit * 45
-    /// Outer band that holds the compass labels (3 grid units).
-    static let roseLabelBand: CGFloat = IterGrid.unit * 3
+    /// Outer band that holds the compass labels (5 grid units: room for the classic-view label outside the rim).
+    static let roseLabelBand: CGFloat = IterGrid.unit * 5
     /// How near a drag must be to a path to pick a time on it.
     static let roseHitDistance: CGFloat = IterGrid.unit * 3
     /// Event marks on the rim and the observer dot at the centre.
@@ -41,8 +41,6 @@ enum SpotLayout {
     static let roseObserverDot: CGFloat = IterSpace.xs
     /// Fixed screen angle (clockwise from straight up) where the altitude rings carry their labels.
     static let roseRingLabelAngle: Double = 22.5
-    /// The classic-view label sits this far along the wedge, as a fraction of the horizon radius.
-    static let roseWedgeLabelFraction: CGFloat = 0.6
     static let roseWedgeOpacity = 0.07
     static let roseSightOpacity = 0.4
     /// Page density: the readout column beside the rose needs at least this much width.
