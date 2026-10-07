@@ -63,8 +63,10 @@ struct IOSRootView: View {
         }
         shell.follow(navigation.selection)
         switch AppLaunch.sectionName {
-        case "settings": shell.showSettings()
-        case "search": shell.phoneTab = .search
+        // Deferred: the selection change above reaches `follow` on the next update and would otherwise pull the tab back to Explore.
+        case "settings": Task { @MainActor in shell.showSettings() }
+        // Deferred like Settings: the selection change above reaches `follow` afterwards and would put Explore back.
+        case "search": Task { @MainActor in shell.phoneTab = .search }
         default: break
         }
     }

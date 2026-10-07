@@ -18,6 +18,11 @@ struct IterIOSApp: App {
         // first-run forecast source is OpenWeather (a key from Settings, the Keychain or `-ITER_OPENWEATHER_KEY`). A source
         // chosen in Settings is stored in the app domain and always wins over this registered default.
         UserDefaults.standard.register(defaults: ["iter.weather.primary": "openWeather"])
+        // A fresh iOS container has no Application Support folder; SwiftData's default store lives there and logs a
+        // recovery error on first launch unless the folder exists.
+        if let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
+            try? FileManager.default.createDirectory(at: support, withIntermediateDirectories: true)
+        }
         let container: ModelContainer
         do {
             container = try IterSchema.makeContainer(inMemory: AppLaunch.inMemoryStore)
@@ -39,7 +44,7 @@ struct IterIOSApp: App {
             }
         }
         if AppLaunch.seedLibrary { LibrarySeed.run(model) }
-        model.offline.attach(imagery: .shared, pointSize: CGSize(width: IterSize.placeCardWidth, height: IterSize.placeCardImageHeight), scale: 3)
+        model.offline.attach(imagery: .shared, pointSize: CGSize(width: IterSize.imageRequestWidth, height: IterSize.imageStripHeight), scale: 3)
         if !AppLaunch.isRunningTests { model.offline.start() }
         if AppLaunch.smokeTest {
             Task { @MainActor in
