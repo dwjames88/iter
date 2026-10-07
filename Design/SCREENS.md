@@ -9,7 +9,7 @@ Iter is a native macOS 26 app. Its promise: **"Be in the right place when the li
 - **Tokens** are written as `space/md`, `light/ramp/good`, `type/headline`. Look them up in TOKENS.md. Where the code uses a system control or system colour, the text says so.
 - **Components** link to COMPONENTS.md anchors. A component that is only a system control is listed under "System components" there.
 - **Snapshot paths** are relative to `Design/`. They are written compactly: `snapshots/trips-list-{light,dark}-{1280x820,960x640}.png` means four files. Sizes: `1280x820` (the default window), `960x640` (a small window), `1280x2600` (the spot page, tall, to show all of it). PNGs are 2x pixels (2560x1640).
-- **What the snapshots are.** Every screen except the shell is rendered alone in a navigation stack, with no sidebar and no toolbar contents. Only `shell-default` shows sidebar plus detail. Explore and Scout results are the exception: they split their own width, so they are rendered beside a blank 240 pt strip that stands in for the sidebar, which gives them the detail width a real window has. The date in every snapshot is fixed: **Tue, Oct 6, 2026, 10:00 in Denver**. Times follow the Mac's clock, which is 24-hour in these renders ("17:25", not "5:25 PM"). Sample weather is on in every "sample" render, so those screens carry the Sample data label.
+- **What the snapshots are.** Every screen except the shell is rendered alone in a navigation stack, with no sidebar and no toolbar contents. Only `shell-default` shows sidebar plus detail. Explore and Locations are the exception: they split their own width, so they are rendered beside a blank 240 pt strip that stands in for the sidebar, which gives them the detail width a real window has. The sidebar has its own render (`sidebar-library`). New snapshot names (`explore-ask-*`, `locations-*`, `sidebar-library`) come from `scripts/snapshots.sh`; the older `saved-*` and `scout-*` files in `snapshots/` are from before the restructure and are no longer produced. The date in every snapshot is fixed: **Tue, Oct 6, 2026, 10:00 in Denver**. Times follow the Mac's clock, which is 24-hour in these renders ("17:25", not "5:25 PM"). Sample weather is on in every "sample" render, so those screens carry the Sample data label.
 - **What the snapshots cannot show** is listed in [Not in the snapshots](#not-in-the-snapshots). Read it before trusting a blank area.
 - "Light mode" and "dark mode" are the system appearances. The sidebar, toolbar, Settings and sheets keep system colours; what the app draws itself uses First Light paper and ink (see "Where First Light stops" in TOKENS.md).
 
@@ -23,13 +23,12 @@ Iter is a native macOS 26 app. Its promise: **"Be in the right place when the li
 6. [Trip builder](#trip-builder)
 7. [Explore](#explore)
 8. [Spot page](#spot-page)
-9. [Saved](#saved)
+9. [Locations](#locations)
 10. [Spot editor sheet](#spot-editor-sheet)
-11. [Scout](#scout)
-12. [Settings](#settings)
-13. [Menus, popovers, dialogs not in the snapshots](#menus-popovers-and-dialogs)
-14. [Not in the snapshots](#not-in-the-snapshots)
-15. [Cross-screen conventions](#cross-screen-conventions)
+11. [Settings](#settings)
+12. [Menus, popovers, dialogs not in the snapshots](#menus-popovers-and-dialogs)
+13. [Not in the snapshots](#not-in-the-snapshots)
+14. [Cross-screen conventions](#cross-screen-conventions)
 
 ---
 
@@ -38,20 +37,21 @@ Iter is a native macOS 26 app. Its promise: **"Be in the right place when the li
 | Surface | Kind | Reached from |
 |---|---|---|
 | Sidebar: All Trips | Detail root | Sidebar, Go > Trips (⌘1), the app opens here |
-| Sidebar: one entry per trip | Detail root (Trip builder) | Sidebar, a trip card, a template, New Trip (after Create), Debug > Seed Sample Trip |
-| Sidebar: Explore | Detail root | Sidebar, Go > Explore (⌘2), Find Spots (⌘F), Add Spot on Map (⇧⌘N), Saved empty-state buttons, Scout "Search Places in Explore" |
-| Sidebar: Saved | Detail root | Sidebar, Go > Saved (⌘3) |
-| Sidebar: Scout | Detail root | Sidebar, Go > Scout (⌘4) |
-| Spot page | Pushed onto the current section's navigation stack | Explore (Open, double-click, Return), Saved (Open, double-click), Scout (Open, double-click), Trip builder (stop name, context menu). Each section keeps its own stack, so switching sections keeps your place. |
+| Sidebar: one entry per trip (pinned, in a folder or unfiled) | Detail root (Trip builder) | Sidebar, a trip card, a template, New Trip (after Create), Debug > Seed Sample Trip |
+| Sidebar: Explore | Detail root | Sidebar, Go > Explore (⌘2), Find Spots (⌘F), Add Spot on Map (⇧⌘N), New Location in the sidebar's New menu, Locations empty-state buttons |
+| Sidebar: All Locations | Detail root | Sidebar, Go > Locations (⌘3) |
+| Sidebar: one entry per location folder | Detail root (Locations, filtered) | Sidebar |
+| Ask (a section inside Explore) | Part of the Explore list | Return on request-like text, the sparkles toggle, the "Ask Iter…" row, Go > Ask Iter… (⌘4) |
+| Spot page | Pushed onto the current section's navigation stack | Explore (Open, double-click, Return, including Ask rows), Locations (Open, double-click), Trip builder (stop name, context menu). Each section keeps its own stack, so switching sections keeps your place. |
 | New Trip sheet | Sheet | New Trip (menu, toolbar, empty-state button, template row) |
 | Change Dates sheet | Sheet | Trip builder: date line in the header, or Trip Actions menu |
-| Spot editor sheet | Sheet | Explore (after a click in Add Spot mode), Spot page Edit (your own spots), Saved context menu Edit… |
+| Spot editor sheet | Sheet | Explore (after a click in Add Spot mode), Spot page Edit (your own spots), Locations context menu Edit… |
 | Add Stop popover | Popover | Trip builder: "Add Stop" row under each day |
 | Set-up time popover | Popover | Trip builder: the "20 min set-up" link on a stop |
 | Settings | Separate window, four tabs | App menu > Settings… (⌘,) |
 | Place card | Floating panel over the Explore map | Selecting a pin or row |
 
-A new section's detail replaces the previous one. Trips are listed first in the sidebar because the plan makes the trip the home of the app. The main window restores its last sidebar selection on launch (falls back to All Trips if that trip is gone).
+A new section's detail replaces the previous one. Trips are listed first in the sidebar because the plan makes the trip the home of the app. The main window restores its last sidebar selection on launch (falls back to All Trips if that trip or folder is gone). Folder rows in the Trips group only open and close; they are not destinations.
 
 ---
 
@@ -62,18 +62,19 @@ From `App/Sources/Shell/AppCommands.swift`, plus screen-level shortcuts. None of
 | Menu | Item | Shortcut | Notes |
 |---|---|---|---|
 | File (replaces "New") | New Trip | ⌘N | Switches to All Trips (unless already in a trip) and opens the New Trip sheet. |
+| File | New Folder | ⌥⌘N | Makes a folder in Trips, or in Locations when a Locations screen is open, and puts its sidebar row into rename. |
 | File | Add Spot on Map | ⇧⌘N | Switches to Explore and turns on Add Spot mode. |
 | File | Import Trip… | ⌘O | Opens a file picker for `.iter` (or .json) files; imports as a new trip. |
 | Edit (after text editing) | Find Spots | ⌘F | Switches to Explore and focuses the search field. |
 | Go | Trips | ⌘1 | |
 | Go | Explore | ⌘2 | |
-| Go | Saved | ⌘3 | |
-| Go | Scout | ⌘4 | |
+| Go | Locations | ⌘3 | |
+| Go | Ask Iter… | ⌘4 | Switches to Explore, turns on Ask mode and focuses the search field. |
 | Light | Refresh Forecasts | ⌘R | Re-requests only the forecasts that failed (no key, rejected key, cap reached, offline). Forecasts that loaded are kept. Changing anything in Settings > Weather is different: it drops every forecast and every screen refetches. |
 | Debug | Use Sample Weather (toggle) | none | Off by default. When on, scores use made-up weather and "Sample data" is labelled. |
 | Debug | Seed Sample Trip | none | Adds the Canyon Country trip starting tomorrow and opens it. |
 | Debug | Reset All Data… | none | Destructive. System alert "Delete all trips and spots? This can't be undone." Buttons Delete Everything, Cancel. |
-| Edit | Undo / Redo | ⌘Z / ⇧⌘Z | Names the action ("Undo Move Stop"). Every move, removal, rename, date change, duplicate, delete, save and spot edit is undoable. |
+| Edit | Undo / Redo | ⌘Z / ⇧⌘Z | Names the action ("Undo Move Stop"). Every move, removal, rename, date change, duplicate, delete, save, spot edit, folder change and pin is undoable. |
 | Iter | Settings… | ⌘, | Opens the Settings window. |
 
 Screen-level shortcuts:
@@ -86,9 +87,10 @@ Screen-level shortcuts:
 | Spot page | ⌘E | Edit (your own spots only) |
 | Trip builder | ⇧⌘D | Change Dates… (Trip Actions menu) |
 | Trip builder | ⇧⌘E | Export… (Trip Actions menu) |
-| Trip builder, Saved | Delete | Remove the selected stop; in Saved, delete your own spot or unsave a saved one |
+| Trip builder, Locations | Delete | Remove the selected stop; in Locations, delete your own spot or unsave a saved one |
 | Sheets (New Trip, Change Dates, Spot editor) | Return / Esc | Default action (Create, Change Dates, Add Spot or Save) / Cancel |
-| Scout | Return / Esc | Find Places / Cancel while running |
+| Sidebar rename field | Return / Esc | Save the name / leave it unchanged |
+| Explore search field | Return | Ask when Ask mode is on or the text reads like a request, else an Apple Maps search |
 
 ---
 
@@ -102,15 +104,16 @@ Screen-level shortcuts:
 
 | Region | Contents |
 |---|---|
-| Sidebar, top | Section header **Trips**. Rows: **All Trips** (icon `map`), then one row per trip (icon `point.topleft.down.to.point.bottomright.curvepath`, trip name). |
-| Sidebar, middle | Section header **Find**. Rows: **Explore** (`binoculars`), **Saved** (`bookmark`), **Scout** (`sparkle.magnifyingglass`). |
+| Sidebar, Trips | Section header **Trips**. Rows, in order: **All Trips** (`map`); pinned trips; trip folders; unfiled trips. A trip row is the icon `point.topleft.down.to.point.bottomright.curvepath`, the name and, at the trailing edge, for a pinned trip a small `pin.fill` (tooltip "Pinned: kept ready offline") and an [OfflineStatusBadge](COMPONENTS.md#offlinestatusbadge) in its row style. A pinned trip shows only in this pinned group, never inside its folder. A folder is a disclosure row (`folder`, name) that opens to its subfolders, then its trips; clicking it or its arrow opens and closes it, and which folders are open is remembered. Folders nest one level. |
+| Sidebar, Locations | Section header **Locations**. Rows: **All Locations** (`mappin.and.ellipse`), then one row per location folder (`folder`, name), selectable; a folder with subfolders is a disclosure row, its subfolders selectable inside it. |
+| Sidebar, Find | Section header **Find**. Row: **Explore** (`binoculars`). |
 | Sidebar, bottom | Only when Sample data mode is on: a [SampleDataLabel](COMPONENTS.md#sampledatalabel) in banner style, padded `space/sm`, pinned to the bottom edge. |
-| Sidebar toolbar | One button: New Trip (`plus`). Tooltip "New Trip (⌘N)". |
+| Sidebar toolbar | One menu button, `plus`, labelled "New", tooltip "New Trip, Folder or Location". Items: **New Trip** (⌘N), **New Folder** (⌥⌘N; made in the section the current selection belongs to, trips by default) and **New Location** (opens Explore in Add Spot mode). |
 | Detail | A navigation stack holding the selected section. Window title is the section's title ("All Trips", "Explore", ...). |
 
-**Components.** [SampleDataLabel](COMPONENTS.md#sampledatalabel) (banner), system sidebar List, [TripContextMenu](COMPONENTS.md#tripcontextmenu).
+**Components.** [SampleDataLabel](COMPONENTS.md#sampledatalabel) (banner), system sidebar List, [SidebarTripRow](COMPONENTS.md#sidebar-rows) and the folder rows, [OfflineStatusBadge](COMPONENTS.md#offlinestatusbadge), [TripContextMenu](COMPONENTS.md#tripcontextmenu), [FolderContextMenu](COMPONENTS.md#foldercontextmenu).
 
-**Actions.** Click a row to select. Trip rows: right-click for Open, Duplicate, Share…, Delete Trip. The sidebar selection is the accent-tinted system pill (a neutral grey pill in the snapshots, because the offscreen window is inactive).
+**Actions.** Click a row to select. Trip rows: right-click for Open, Pin Trip or Unpin Trip, Move to Folder ▸, New Folder with Selection, Rename, Duplicate, Share…, Delete Trip. Folder rows: right-click for New Folder Inside (top-level folders only), Rename, Delete Folder (its contents move up a level). Rename edits the name in the row: Return saves, Esc cancels, an empty name is ignored. Drag a trip onto a folder to file it, onto another trip to put it before that trip in its container, onto a pinned trip to pin it, or onto All Trips to unfile it; drag a location from the Locations list onto a location folder; drag a folder onto a top-level folder to nest it. Every one of these is undoable. The sidebar selection is the accent-tinted system pill (a neutral grey pill in the snapshots, because the offscreen window is inactive).
 
 **States.**
 
@@ -119,6 +122,7 @@ Screen-level shortcuts:
 | Default (sample data on) | App open, All Trips selected, one trip (Canyon Country) | Sidebar as above, Sample data banner at the bottom, detail shows the All Trips list with one trip card. | `snapshots/shell-default-{light,dark}-{1280x820,960x640}.png` |
 | No sample banner | Sample data off | Banner absent; nothing else changes. | not rendered |
 | Trip renamed or created | Store changes | Sidebar rows follow the store. | not rendered |
+| Library | A pinned trip, a trip folder with a subfolder, unfiled trips, no sample banner | The sidebar alone at 240 pt wide, 560 pt high: pinned trip (pin and status glyph), folders with their trips, Locations, Find. | `snapshots/sidebar-library-{light,dark}-1280x820.png` |
 
 Note for the redesign: in the snapshots the toolbar and the sidebar-toggle render as blank rounded squares, and the traffic lights are absent (see [Not in the snapshots](#not-in-the-snapshots)). The window title "All Trips" appears top-left of the detail.
 
@@ -200,7 +204,7 @@ Left column, top to bottom:
 
 | Region | Contents |
 |---|---|
-| [TripHeader](COMPONENTS.md#tripheader) | Trip name as an in-place text field (`type/title/spot`; click to rename, Return or leaving the field commits). Beneath it, a line in `type/subheadline`, `text/secondary`: a borderless date-range button with a `calendar` icon, then "4 days · 6 stops", then "376 mi · 8 hr, 39 min driving" (suffix "(estimated)" when any drive is a straight-line estimate). The driving total is hidden under one minute. Padding `space/lg`. |
+| [TripHeader](COMPONENTS.md#tripheader) | Trip name as an in-place text field (`type/title/spot`; click to rename, Return or leaving the field commits). Beneath it, a line in `type/subheadline`, `text/secondary`: a borderless date-range button with a `calendar` icon, then "4 days · 6 stops", then "376 mi · 8 hr, 39 min driving" (suffix "(estimated)" when any drive is a straight-line estimate). The driving total is hidden under one minute. Padding `space/lg`. For a pinned trip, one more line under the dates: the [OfflineStatusBadge](COMPONENTS.md#offlinestatusbadge) in header style (glyph and words, for example "Ready offline"; hover for the note that the base map is not stored offline). Nothing is drawn for a trip that is not pinned. |
 | Divider | |
 | [Plan list](COMPONENTS.md#tripplanlist) | An inset list on the system list ground, one section per day. The [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner) sits between the header's divider and the list when weather is missing. |
 | Footer | [ForecastSourceLines](COMPONENTS.md#forecastsourcelines) as the last row, only when at least one stop has a score: one quiet source line per distinct source behind the stops' forecasts ("OpenWeather (Apple Weather unavailable)"). No attribution; that is in Settings. |
@@ -274,19 +278,32 @@ Toolbar (all primary-action placement), left to right. The window toolbar draws 
 
 | Item | Control |
 |---|---|
-| Search | System search field in the toolbar, prompt "Search" (⌘F focuses it). Return runs an Apple Maps search. |
+| Search | System search field in the toolbar, prompt "Search" ("Ask Iter…" while Ask mode is on; ⌘F focuses it). Return asks, or runs an Apple Maps search: see the Ask section below. |
 | Windy | Button, `wind`, label "Windy". Tooltip "Open this map area on windy.com". Opens `windy.com` in the browser at the map's centre, with a zoom taken from the visible latitude span (see [WindyLink](COMPONENTS.md#windylink)). Disabled until the map has reported its region. Before Add Spot. |
 | Add Spot | Toggle button, `mappin.and.ellipse`. Tooltip "Add your own spot: click the map to drop a pin (Esc to cancel)". |
+| Ask Iter | Toggle button, `sparkles`, label "Ask Iter". Tooltip "Ask Iter in your own words: the search field describes the scenery, the area and the light". On = Ask mode (⌘4 turns it on): every Return is an Ask. VoiceOver value On or Off. |
 
 **Search status slot** (in the header): while searching, a spinner with "Searching Apple Maps…" and a small Cancel button; on failure a violet `exclamationmark.triangle` line "Couldn't search Apple Maps for “query”." with a Retry button; when the field has text that has not been searched, a link-style row "Search Apple Maps for “query”" with a magnifier.
 
-**Components.** [ExploreRow](COMPONENTS.md#explorerow), [ExplorePinView](COMPONENTS.md#explorepinview), [ExplorePlaceCard](COMPONENTS.md#exploreplacecard), [AddSpotBanner](COMPONENTS.md#addspotbanner), [WindowSymbol](COMPONENTS.md#windowsymbol), [ScoreChip](COMPONENTS.md#scorechip), [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner), [ProvenanceTag](COMPONENTS.md#provenancetag), [AddToTripMenu](COMPONENTS.md#addtotripmenu), [SampleDataLabel](COMPONENTS.md#sampledatalabel), [ForecastSourceLines](COMPONENTS.md#forecastsourcelines), [WindyLink](COMPONENTS.md#windylink), [SpotEditorSheet](COMPONENTS.md#spoteditorsheet), ContentUnavailableView, [MapStandIn](COMPONENTS.md#mapstandin)-style stand-in (snapshots).
+**Components.** [ExploreAskSection](COMPONENTS.md#exploreasksection) (offer row, running, failure, results), [ExploreRow](COMPONENTS.md#explorerow), [ExplorePinView](COMPONENTS.md#explorepinview), [ExplorePlaceCard](COMPONENTS.md#exploreplacecard), [AddSpotBanner](COMPONENTS.md#addspotbanner), [WindowSymbol](COMPONENTS.md#windowsymbol), [ScoreChip](COMPONENTS.md#scorechip), [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner), [ProvenanceTag](COMPONENTS.md#provenancetag), [AddToTripMenu](COMPONENTS.md#addtotripmenu), [SampleDataLabel](COMPONENTS.md#sampledatalabel), [ForecastSourceLines](COMPONENTS.md#forecastsourcelines), [WindyLink](COMPONENTS.md#windylink), [SpotEditorSheet](COMPONENTS.md#spoteditorsheet), ContentUnavailableView, [MapStandIn](COMPONENTS.md#mapstandin)-style stand-in (snapshots).
 
 **Actions.** Click a row to select it: the place card opens over the map ([ExplorePlaceCard](COMPONENTS.md#exploreplacecard)), carrying the images, the next-event summary, When to go, the day's windows, "Coming Up" (today's remaining windows and tomorrow's), the timeline, sun and moon, hourly weather, Good to know, Save, Add to Trip, the source line and **Show Full Page**. Rows do not expand in place. The arrow keys move the selection. Double-click (or Return) opens the spot page for the row's day. Click a pin to select (the list scrolls to it and the same card opens). A row selection recentres the map without zooming out. Right-click on a row or pin: Open, Save or Unsave (not on your own spots), Add to Trip ▸, divider, Open in Maps, Copy Coordinates. Hovering a pin gives it a chip. In Add Spot mode a click on the map drops a pin and opens the [Spot editor sheet](#spot-editor-sheet); the cursor is a crosshair and pins do not respond.
 
-**Which window a row shows.** One rule for Explore, Saved and Scout: the next sunrise or sunset event at the spot, in the spot's own local time. A window counts until it ends; after today's sunset the row shows tomorrow's sunrise; it looks up to 4 days ahead; where the sun gives neither (polar) it falls back to the first non-night window not yet over. Blue hours and night are never in a list row; they are on the card and the spot page. The start time's tooltip says "Tomorrow" when the window is tomorrow's.
+**Which window a row shows.** One rule for Explore, Locations and Ask: the next sunrise or sunset event at the spot, in the spot's own local time. A window counts until it ends; after today's sunset the row shows tomorrow's sunrise; it looks up to 4 days ahead; where the sun gives neither (polar) it falls back to the first non-night window not yet over. Blue hours and night are never in a list row; they are on the card and the spot page. The start time's tooltip says "Tomorrow" when the window is tomorrow's.
 
-**Weather for any location.** A spot's score comes from a forecast fetched for its own coordinate (curated, your own, Apple Maps, Scout, trip stops), shared per spot per hour and counted against the daily cap. A spot you add is fetched as soon as you save it.
+**Ask.** Describe the place in your own words ("Foggy forest within two hours of Portland for sunrise"); Apple Intelligence finds real places and the Light Index scores them. It is part of the Explore list, not a screen. Return in the field is an Ask when Ask mode is on, or when the text reads like a request (five or more words, a question mark, a request opener such as "find", "show me" or "where", or a constraint such as "within", "hours of" or "for sunset"); otherwise it is an Apple Maps search. Ask uses the area the map shows when the request names no place. Rows come only from places the model's tools returned (grounded); the model's own words are the note under each row and are labelled as Apple Intelligence's.
+
+| Ask state | Trigger | What the list shows |
+|---|---|---|
+| Offer | The field has text and no Ask is running or shown for that text | At the top of the list (and above the empty state): a row with `sparkles` (accent), "Ask Iter “text”" (`type/bodyEmphasis`) and "Find real places that fit, with a note on why" (`type/caption`, `text/secondary`). Clicking it asks. |
+| Running | An Ask is in progress | An **Ask Iter** section first, header `sparkles` + "Ask Iter" with the request in quotes under it. One row: a small spinner, the stage ("Understanding your request", "Searching near Portland, Oregon" or "Searching for places", "Checking the drive to <place>" or "Checking the drive", "Choosing the best matches"), then "Step 2 of 4 · 0:14" (`type/caption`, `text/secondary`, digits monospaced), after 10 seconds "Still working. A request can take up to a minute.", and a small **Cancel** button (tooltip "Stop looking"). Cancel keeps the text in the field. |
+| Results | The scout returned places | The Ask Iter section, first, with the count at its trailing edge. Each row is the normal [ExploreRow](COMPONENTS.md#explorerow), then, when the scout checked one, `car` + "1 hr, 30 min drive", then the note (`sparkles` and the note in `type/callout`, tooltip "Note from Apple Intelligence"). A caption closes the section: "Places come from Apple Maps and Iter's curated list. Iter checks every place exists; the notes are written by Apple Intelligence." Ask rows ignore the text query and the filters, a place shown here is not repeated below, and the map fits them. |
+| Failed | Nothing matched, the request was declined, too long, in an unsupported language, or it failed | The section holds `symbol` + title ("Nothing matched", "Ask Iter can't help with that request", "That request is too long", "Ask Iter doesn't support that language", "Ask Iter couldn't finish"), a sentence of detail, and **Search Apple Maps Instead** (prominent) and **Try Again** (small). |
+| Unavailable | Apple Intelligence cannot run | The same layout, with the honest reason and no Try Again: "Apple Intelligence is turned off" (`sparkles`, detail "Turn on Apple Intelligence in System Settings to describe the place you want in your own words.", also **Open System Settings**), "This Mac can't run Apple Intelligence" (`macbook.slash`), "Apple Intelligence is still downloading" (`arrow.down.circle`), "Ask Iter isn't available right now" (`exclamationmark.triangle`). **Search Apple Maps Instead** drops the Ask, turns Ask mode off and searches Apple Maps for the same text. |
+
+Clearing the search field removes the Ask section. Snapshots: `snapshots/explore-ask-results-{light,dark}-{1280x820,960x640}.png` and `snapshots/explore-ask-unavailable-{light,dark}-{1280x820,960x640}.png`.
+
+**Weather for any location.** A spot's score comes from a forecast fetched for its own coordinate (curated, your own, Apple Maps, Ask results, trip stops), shared per spot per hour and counted against the daily cap. A spot you add is fetched as soon as you save it.
 
 **States.**
 
@@ -317,7 +334,7 @@ Explore snapshots show "Sample data" once in the sample states, in the header (t
 
 **Purpose.** Answer "when should I be here?" in the first screenful, then show the evidence: windows, timeline, sun and moon, weather, facts.
 
-**Placement.** Pushed onto the current section's navigation stack (Explore, Saved, Scout, trips). Window title is the spot's name. Back is the system back button.
+**Placement.** Pushed onto the current section's navigation stack (Explore, Locations, trips). Window title is the spot's name. Back is the system back button.
 
 **Layout.** A single scrolling column on `background/window`, under the [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner) when weather is missing. Content is at most 940 pt wide (`layout/listMax` + `layout/inspectorMax` = 520 + 420), including side padding, and centred; side padding `space/xl`; sections spaced `space/xl`. The charts share one left gutter (44 pt: `size/control/heightLarge` + `space/sm`) and a right inset of `space/lg`, so their x-axes line up.
 
@@ -366,25 +383,31 @@ Explore snapshots show "Sample data" once in the sample states, in the header (t
 
 ---
 
-## Saved
+## Locations
 
-**Purpose.** One list of everything you kept: curated and Apple Maps spots you saved, and every spot you added, each with its next sunrise or sunset.
+**Purpose.** Everything you kept: curated and Apple Maps spots you saved, and every spot you added, each with its next sunrise or sunset, beside its own map. Folders sort them. Replaces Saved.
 
-**Placement.** Sidebar > Saved. Window title "Saved".
+**Placement.** Sidebar > All Locations, or a location folder. Window title "All Locations" or the folder's name. A folder shows its own spots and its subfolders' spots, and only those.
 
-**Regions (list).** Full-width inset list. Toolbar: search field "Search saved spots", and a **Sort and Filter** menu (`line.3.horizontal.decrease.circle`) with two inline pickers: **Sort By** (Name, Light Today, Kind) and **Show** (All Spots, Added by You, Curated, Apple Maps). Bottom bar (a system bar material with a divider above): "3 spots" on the left and the [ForecastSourceLines](COMPONENTS.md#forecastsourcelines) on the right (quiet source lines for the shown spots).
+**Regions.** A split like Explore's (`ResizableSplit`): list column (min 300, ideal 360, max 520 pt, `layout/listMin`, `listIdeal`, `listMax`) beside a map. Toolbar: search field "Search locations" and a **Sort and Filter** menu (`line.3.horizontal.decrease.circle`) with two inline pickers: **Sort By** (Name, Light Today, Kind) and **Show** (All Spots, Added by You, Curated, Apple Maps). Bottom bar of the list (a system bar material with a divider above): "3 spots" on the left and the [ForecastSourceLines](COMPONENTS.md#forecastsourcelines) on the right. The [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner) sits above the list when weather is missing.
 
-Each [SavedRow](COMPONENTS.md#savedrow): category symbol (32 pt column), name (`type/headline`), locality (or the category) and a [ProvenanceTag](COMPONENTS.md#provenancetag), and on the right the window's [WindowSymbol](COMPONENTS.md#windowsymbol), a compact score chip and its start time, by the same rule as Explore (the spot's next sunrise or sunset in its own time; "Tomorrow" is the tooltip and VoiceOver label, not a word in the row). The [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner) sits above the list when weather is missing.
+List rows are [SavedRow](COMPONENTS.md#savedrow)s (the type keeps its old name): category symbol, name, locality and a [ProvenanceTag](COMPONENTS.md#provenancetag), and the window's [WindowSymbol](COMPONENTS.md#windowsymbol), a compact score chip and start time, by the same rule as Explore. Multi-selection is on.
 
-**Actions.** Double-click or Return opens the spot page. Context menu: Open, Add to Trip ▸, divider, then for your own spots Edit… and Delete, for saved spots Unsave. Delete key removes your own spot (asks first if trips use it) or unsaves a saved one. Multi-selection offers Unsave.
+Map: [LocationsMap](COMPONENTS.md#locationsmap), one marker per listed spot, framed to fit them.
+
+**Components.** [SavedRow](COMPONENTS.md#savedrow), [LocationsMap](COMPONENTS.md#locationsmap), [WindowSymbol](COMPONENTS.md#windowsymbol), [ScoreChip](COMPONENTS.md#scorechip), [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner), [ForecastSourceLines](COMPONENTS.md#forecastsourcelines), [ProvenanceTag](COMPONENTS.md#provenancetag), [AddToTripMenu](COMPONENTS.md#addtotripmenu), ContentUnavailableView, [MapStandIn](COMPONENTS.md#mapstandin) (snapshots).
+
+**Actions.** Double-click or Return opens the spot page. Selecting a marker selects its row, and the other way round; clicking empty map clears the selection. Context menu: for one spot Open and Add to Trip ▸; then for any selection Move to Folder ▸ (No Folder, each folder, each subfolder as "Folder › Subfolder"; the current one is checked), New Folder with Selection, and inside a folder Remove from Folder; then for your own spot Edit… and Delete, for a saved one Unsave (several: Unsave). Drag rows onto a location folder in the sidebar to file them, or onto All Locations to unfile them. The Delete key removes your own spot (asks first if trips use it) or unsaves a saved one. Filing and unfiling are undoable.
 
 **States.**
 
 | State | Trigger | What changes | Snapshots |
 |---|---|---|---|
-| List | Saved spots exist, sample weather | Three rows: Back field at Lone Pine ("Added by you"), Mesa Arch and Tunnel View, each with its next window's symbol, score chip and start time. At 10:00 the sunrise has passed, so the sunrise spots show tomorrow's sunrise and the Sunset spot today's sunset. Footer "3 spots" plus Sample data label. | `snapshots/saved-list-{light,dark}-{1280x820,960x640}.png` |
-| Empty | Nothing saved | "Nothing saved yet" (`bookmark`), "Save a spot from Explore or Scout and it shows up here with its next sunrise or sunset. Spots you add yourself live here too.", prominent **Browse Explore**, and **Add Your Own Spot** (goes to Explore in Add Spot mode). | `snapshots/saved-empty-{light,dark}-{1280x820,960x640}.png` |
-| Weather not enabled | Weather not enabled | The weather banner at the top of the list ("Apple Weather isn't enabled for this build. Choose another source in Settings.", **Settings…**). Every row keeps its symbol and start time with an empty chip slot. No Sample data label. | `snapshots/saved-noforecast-{light,dark}-{1280x820,960x640}.png` |
+| All | Saved spots exist, sample weather | Rows for every saved and own spot with their next window's symbol, score chip and start time; the map beside them. Footer "5 spots" plus Sample data label. | `snapshots/locations-all-{light,dark}-{1280x820,960x640}.png` |
+| Folder | A location folder selected | Title is the folder name; only its spots, and the map frames them. | `snapshots/locations-folder-{light,dark}-{1280x820,960x640}.png` |
+| Empty | Nothing saved | "Nothing saved yet" (`mappin.and.ellipse`), "Save a spot from Explore and it shows up here with its next sunrise or sunset. Spots you add yourself live here too.", prominent **Browse Explore**, and **Add Your Own Spot** (goes to Explore in Add Spot mode). | `snapshots/locations-empty-{light,dark}-{1280x820,960x640}.png` |
+| Empty folder | A folder with no spots | "This folder is empty" (`folder`), "Drag locations here from All Locations, or choose Move to Folder from a location's menu.", **Show All Locations**. | `snapshots/locations-empty-folder-{light,dark}-{1280x820,960x640}.png` |
+| Weather not enabled | Weather not enabled | The weather banner at the top of the list. Every row keeps its symbol and start time with an empty chip slot. No Sample data label. | `snapshots/locations-noforecast-{light,dark}-{1280x820,960x640}.png` |
 | Filter or search empty | A filter matches nothing / a query matches nothing | "No spots here" ("No saved spots match this filter.") or the system search-empty view. | not rendered |
 | Delete confirmation | Deleting your own spot that trip stops use | Dialog "Delete “name”?" with "It is also removed from N trip stops. You can undo this with Edit > Undo." and **Delete Spot** (singular: "1 trip stop"). | not rendered |
 
@@ -424,43 +447,6 @@ Each [SavedRow](COMPONENTS.md#savedrow): category symbol (32 pt column), name (`
 
 ---
 
-## Scout
-
-**Purpose.** Describe a place in your own words ("Foggy forest spots within two hours of Portland for sunrise"); Apple Intelligence finds real places; the Light Index scores them. Everything the model writes is labelled as the scout's note.
-
-**Placement.** Sidebar > Scout. Window title "Scout".
-
-**Regions.** When Apple Intelligence is available, a **request bar** on top (padding `space/lg`): a rounded text field "What are you looking for?" (1 to 3 lines) and a button: **Find Places** (prominent) or **Cancel** while running. Divider. Then the content area, which depends on the state. When Apple Intelligence is not available, the request bar is not shown at all.
-
-Results state, left to right: a result list (min 300, ideal 360, max 520 pt) and a map. As in Explore, beside the 240 pt sidebar the list is 520 pt in a 1280 pt window and 360 pt in a 960 pt window.
-
-- [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner) at the top of the list when weather is missing. List header: "4 places for “request”" (`type/subheadline`, `text/secondary`, two lines max) and a Sample data label when sample mode is on.
-- [ScoutResultRow](COMPONENTS.md#scoutresultrow)s in an inset list with visible separators.
-- Footer (divider above): "Places come from Apple Maps and Iter's curated list. Iter checks every place exists; the notes are written by Apple Intelligence." and the [ForecastSourceLines](COMPONENTS.md#forecastsourcelines) for the results' coordinates (source lines only).
-- Map: one marker per result (accent tint), selection shared with the list.
-
-**Components.** [ScoutResultRow](COMPONENTS.md#scoutresultrow), [WindowSymbol](COMPONENTS.md#windowsymbol), [ScoreChip](COMPONENTS.md#scorechip), [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner), [ProvenanceTag](COMPONENTS.md#provenancetag), [AddToTripMenu](COMPONENTS.md#addtotripmenu), [ScoutProgress](COMPONENTS.md#scoutprogress), ContentUnavailableView, [MapStandIn](COMPONENTS.md#mapstandin), [ForecastSourceLines](COMPONENTS.md#forecastsourcelines), [SampleDataLabel](COMPONENTS.md#sampledatalabel).
-
-**Actions.** Type and press Return or Find Places. Click an example to run it immediately. Cancel (button or Esc) stops. Select a result row or pin; Open (or double-click) pushes its spot page; Save toggles; Add to Trip ▸.
-
-**States.**
-
-| State | Trigger | What changes | Snapshots |
-|---|---|---|---|
-| Idle | Open, available | Empty field, disabled Find Places. Explanatory body text, caption "Try", four example cards (accent `text.magnifyingglass` icon, text), and the source line in `text/tertiary`. Content column max 820 pt, centred. | `snapshots/scout-idle-{light,dark}-{1280x820,960x640}.png` |
-| Running | A request is running | The field is disabled and shows the request; the top button is Cancel. Centre stack: large spinner, stage text ("Searching near Portland, Oregon"), four capsules (24 x 4 pt; filled accent up to the current stage, `separator/default` after), "Step 2 of 4", then after 10 seconds a mono-digit elapsed time ("0:14") and "Still working. A request can take up to a minute.", then Cancel. Stages: Understanding your request, Searching for places, Checking the drive, Choosing the best matches. | `snapshots/scout-running-{light,dark}-{1280x820,960x640}.png` |
-| Results | Results arrive, sample weather | Four rows. Each: name, locality, provenance tag (Apple Maps or Curated) top right; the window symbol, a compact score chip and the start time of the spot's next sunrise or sunset ("87", "07:25"), with the drive ("12 min drive"); a "Scout's note" label with a sparkle icon and the note; buttons Open, Save or Saved, Add to Trip ▾ (small, bordered). A curated spot with no note and no drive shows only the light line. First row preselected (system selection pill); its pin is accent, the others grey, labelled with names. | `snapshots/scout-results-{light,dark}-{1280x820,960x640}.png` |
-| Results, weather offline | Weather not enabled | The weather banner above the list header. Same rows; each keeps its window symbol and start time with an empty chip slot. No Sample data label. | `snapshots/scout-results-weather-offline-{light,dark}-{1280x820,960x640}.png` |
-| Unavailable: Apple Intelligence off | The user has not turned it on | No request bar. Centred empty-state: `sparkles`, "Apple Intelligence is turned off", "Turn on Apple Intelligence in System Settings to describe the place you want in your own words.", prominent **Open System Settings** and **Search Places in Explore**. | `snapshots/scout-unavailable-not-enabled-{light,dark}-1280x820.png` |
-| Unavailable: device | This Mac cannot run it | `macbook.slash`, "This Mac can't run Apple Intelligence", "Scout needs Apple Intelligence, which this Mac doesn't support. Searching places in Explore works without it.", button **Search Places in Explore**. | `snapshots/scout-unavailable-device-{light,dark}-1280x820.png` |
-| Unavailable: downloading | The model is still downloading | `arrow.down.circle`, "Apple Intelligence is still downloading", "Scout will be ready when the download finishes. It can take a while the first time.", **Search Places in Explore**. | `snapshots/scout-unavailable-downloading-{light,dark}-1280x820.png` |
-| No results | The search found nothing | Request bar stays. `magnifyingglass`, "Nothing matched", "Nothing matched; try a wider area or a simpler description.", **Try Again** (prominent) and **Search Places in Explore**. | `snapshots/scout-no-results-{light,dark}-1280x820.png` |
-| Guardrail | Apple Intelligence declined the request | `hand.raised`, "Scout can't help with that request", "Apple Intelligence declined it. Try describing the kind of scenery and the area you want.", **Try Again**, **Search Places in Explore**. | `snapshots/scout-guardrail-{light,dark}-1280x820.png` |
-| Other failures | Too long, unsupported language, generic | Same empty-state layout: "That request is too long" (`text.line.first.and.arrowtriangle.forward`), "Scout doesn't support that language" (`character.bubble`), "Scout couldn't finish" and "Scout isn't available right now" (`exclamationmark.triangle`). | not rendered |
-| Checking the forecast | A result's forecast is loading | The light line is a small spinner alone. | not rendered |
-
----
-
 ## Settings
 
 **Purpose.** Units, set-up time; forecast and Apple Intelligence status; about.
@@ -484,7 +470,7 @@ Results state, left to right: a result list (min 300, ideal 360, max 520 pt) and
 
 Status line strings ([ProviderStatusRow](COMPONENTS.md#providerstatusrow)): "Working · last update 19:40" (button **Check**); "Needs an API key"; "Not enabled for this build" (**Check Again**); "Testing key: Windy's data is shuffled, so Iter won't score from it" (**Check**); "Key rejected" (**Check Again**); "Daily cap reached (800 of 800)" (**Check Again**); "Couldn't reach OpenWeather" (**Check Again**, and the technical detail under it, selectable); "Not checked yet" (**Check**); "Checking…" with a spinner. Opening the tab checks Apple Weather always, and OpenWeather or Windy only when it is the primary or fallback and has a key.
 
-**Apple Intelligence.** Section "Scout": a status row. Ready: `checkmark.circle` "Apple Intelligence is ready" and "Scout understands your request with the model on this Mac, then looks up real places in Apple Maps and Iter's curated list." Otherwise the same notice as Scout's unavailable states (title with icon, detail) and, when it is turned off, **Open System Settings**.
+**Apple Intelligence.** Section "Ask Iter": a status row. Ready: `checkmark.circle` "Apple Intelligence is ready" and "Ask Iter, in Explore's search, understands your request with the model on this Mac, then looks up real places in Apple Maps and Iter's curated list." Otherwise the same notice as Ask's unavailable states (title with icon, detail) and, when it is turned off, **Open System Settings**.
 
 **About.** Centred: logo (64 pt high, the `Logo` image set), "Iter" (`type/title/section`), "Version 0.1 (1)" (`type/caption`), the tagline "Be in the right place when the light is right." (`type/body`), and the data-sources paragraph, then the same **Data Sources and Attribution** block (heading `type/caption`, `text/secondary`; `WeatherDataSources`, left-aligned, max 360 pt) (paragraph: `type/caption`, `text/secondary`, centred, max 360 pt): "Sun and moon times are calculated on this Mac. Weather is from the source you choose in Settings ▸ Weather: Apple Weather, OpenWeather or Windy (contains data from the Windy database). Places and drive times are from Apple Maps, alongside Iter's curated spots."
 
@@ -501,7 +487,7 @@ Status line strings ([ProviderStatusRow](COMPONENTS.md#providerstatusrow)): "Wor
 | Weather: checking | Probe in flight | Spinner and "Checking…" in that provider's status row. | not rendered |
 | Weather: failed | Probe fails | Violet triangle "Couldn't reach Apple Weather" (or the provider's name) with **Check Again**, and the technical text under it. | not rendered |
 | Weather: key rejected, daily cap, key from environment or launch argument | Real keys | "Key rejected"; "Daily cap reached (800 of 800)"; a read-only "From environment (ITER_WINDY_KEY)" row in place of the field. | not rendered |
-| Apple Intelligence: unavailable | The scout reports it cannot run | In the snapshot: `exclamationmark.triangle` "Scout isn't available right now", "Apple Intelligence reported it can't run. Searching places in Explore still works." | `snapshots/settings-intelligence-{light,dark}-1280x820.png` |
+| Apple Intelligence: unavailable | The scout reports it cannot run | In the snapshot: `exclamationmark.triangle` "Ask Iter isn't available right now", "Apple Intelligence reported it can't run. Searching places in Explore still works." | `snapshots/settings-intelligence-{light,dark}-1280x820.png` |
 | Apple Intelligence: ready, off, device, downloading | Real availability | Ready and the three unavailable variants as described. | not rendered |
 | About | Open the tab | As above. | `snapshots/settings-about-{light,dark}-1280x820.png` |
 
@@ -515,16 +501,18 @@ These exist in the app but are **not drawn in any snapshot** (menus, popovers an
 
 | Element | Where | Contents |
 |---|---|---|
-| [AddToTripMenu](COMPONENTS.md#addtotripmenu) | Explore place card, Explore row and pin context menus, Spot page header, Saved context menu, Scout rows | Button "Add to Trip" with `plus.circle`. One submenu per trip, named by the trip; inside, one item per day: "Day 2 · Thu, Oct 8, 2026 · 64" with the sunset symbol as its icon (just the date and the symbol when there is no score). Divider. "New Trip with This Spot". |
+| [AddToTripMenu](COMPONENTS.md#addtotripmenu) | Explore place card, Explore row and pin context menus, Spot page header, Locations context menu, Ask rows | Button "Add to Trip" with `plus.circle`. One submenu per trip, named by the trip; inside, one item per day: "Day 2 · Thu, Oct 8, 2026 · 64" with the sunset symbol as its icon (just the date and the symbol when there is no score). Divider. "New Trip with This Spot". |
 | [AddStopPopover](COMPONENTS.md#addstoppopover) | Trip builder, Add Stop | 480 x 504 pt popover: search field "Search spots", caption "Nearest to <stop> first", then a list of candidate spots (see component). Stays open so several stops can be added. |
 | Set-up time popover | Trip builder, "20 min set-up" | A stepper "Set up 20 min before the window", padding `space/md`. |
 | Session menu | Trip builder stop row | System pop-up menu; one item per window of that day: "Sunrise · 07:21–07:56 · 74". |
 | Trip actions menu | Trip builder toolbar | Change Dates… (⇧⌘D), Export… (⇧⌘E), Duplicate, divider, Delete Trip. |
-| Trip context menu | Sidebar trip rows, trip cards | Open, Duplicate, Share…, divider, Delete Trip. |
+| Trip context menu | Sidebar trip rows, trip cards | Open, Pin Trip or Unpin Trip, divider, Move to Folder ▸ (No Folder, folders, subfolders), New Folder with Selection, Rename, divider, Duplicate, Share…, divider, Delete Trip. |
+| Folder context menu | Sidebar folder rows | New Folder Inside (top-level folders only), Rename, divider, Delete Folder. |
+| Library menus | Sidebar New menu, File menu | New Trip, New Folder, New Location; File also has New Folder (⌥⌘N). |
 | Stop context menu | Trip builder | See Trip builder. |
 | Explore radius, sort and filter menu | Explore list header | See Explore. |
 | Spot and pin context menu | Explore | Open, Save/Unsave, Add to Trip ▸, divider, Open in Maps, Copy Coordinates. |
-| Saved sort and filter menu | Saved toolbar | Sort By (Name, Light Today, Kind), Show (All Spots, Added by You, Curated, Apple Maps). |
+| Locations sort and filter menu | Locations toolbar | Sort By (Name, Light Today, Kind), Show (All Spots, Added by You, Curated, Apple Maps). |
 | Share sheet | Trip builder, Spot page | System share sheet (a trip is shared as an `.iter` file; a spot as an Apple Maps link). |
 | File importer and exporter | Import Trip…, Export… | System open and save panels. Default file name derived from the trip name. |
 | Alerts and dialogs | Reset All Data…, Couldn't Open or Import or Export Trip, Delete spot | System alerts and confirmation dialogs. Strings are in the code (see each screen). |
@@ -534,10 +522,10 @@ These exist in the app but are **not drawn in any snapshot** (menus, popovers an
 
 | Thing | Why it is missing or looks wrong |
 |---|---|
-| Live MapKit maps (Explore, Trip route, Scout, Spot editor) | MapKit does not draw offscreen. A stand-in draws a flat `background/control` ground with a "Map (snapshot stand-in)" label (`type/caption`, `text/tertiary`) and the same pins at projected positions. The real map has Apple's cartography, a zoom stepper, a compass and a scale. In the Trip builder stand-in, the pins of the active day are all drawn selected-size and accent; in the live map, only the selected stop's pin is large (36 pt) and the other pins of the active day are 28 pt accent, pins of other days 28 pt `text/secondary`. |
+| Live MapKit maps (Explore, Locations, Trip route, Spot editor) | MapKit does not draw offscreen. A stand-in draws a flat `background/control` ground with a "Map (snapshot stand-in)" label (`type/caption`, `text/tertiary`) and the same pins at projected positions. The real map has Apple's cartography, a zoom stepper, a compass and a scale. In the Trip builder stand-in, the pins of the active day are all drawn selected-size and accent; in the live map, only the selected stop's pin is large (36 pt) and the other pins of the active day are 28 pt accent, pins of other days 28 pt `text/secondary`. |
 | Toolbar items | Render as blank rounded squares (width and position are right, content is not). Use the toolbar lists in each screen section. Grouped toolbar controls can also be drawn partly at the top-left of the window in offscreen renders; that is a renderer artifact, not app layout, so use the Explore toolbar table instead. |
 | Window traffic lights, the sidebar toggle | Not drawn (a stray partial icon sits at the left edge). |
-| Window title position | The title appears top-left ("Explore", "Saved") because the render has no title bar chrome. |
+| Window title position | The title appears top-left ("Explore", "All Locations") because the render has no title bar chrome. |
 | Look Around | Omitted offscreen. In the app it appears as the last section of the spot page when Apple has imagery: a 224 pt high (`chart/arcHeight` + `chart/timelineHeight`) clipped panel with 12 pt corners under the heading "Look Around". |
 | Menus, popovers, pop-up buttons opened, system sheets and alerts | Not rendered (see the table above). |
 | Sidebar selection colour | A neutral grey pill, not the accent pill of an active window. |

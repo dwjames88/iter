@@ -6,7 +6,7 @@ Plan references are to `docs/reference/plan/` (P = phase item, numbers = section
 
 A coherent Mac app you can use end to end. Anything not listed here is absent from the UI, not present and dead.
 
-**Shell (6.1-A, trip-first).** Sidebar: Trips (each trip listed, New Trip), then Explore, Saved, Scout. Toolbar, menu commands with shortcuts, Settings window, Debug menu, window state restoration, light and dark appearance.
+**Shell (6.1-A, trip-first).** Sidebar: Trips (All Trips, pinned trips, trip folders, then unfiled trips, with a New menu for trip, folder and location), Locations (All Locations and location folders), Find (Explore). Toolbar, menu commands with shortcuts, Settings window, Debug menu, window state restoration, light and dark appearance.
 
 **Light Index (2.3-C, 6.4-A with B one click away).** Intent picker (Sunrise, Sunset, Blue hour, Night), default from the spot's best light. Every score names its window ("Sunset · 38"), shows confidence and, for days 4 and later, a range. Reasons by factor one click away; a plain-language explanation from Apple Intelligence when available. "No forecast" with the specific reason; never a placeholder score. Single-hue light ramp with band words.
 
@@ -16,9 +16,11 @@ A coherent Mac app you can use end to end. Anything not listed here is absent fr
 
 **Trips (6.3-A, P3.5, P4.1, P4.2).** List, create (blank or from a template), rename, change dates, duplicate, delete with undo. Builder: days and stops, one session per stop, drag to reorder within and across days, MapKit drive times, connectors that state feasibility, a backward schedule on every stop ("Leave 4:10 · set up by 5:52 · Sunrise 6:12"), warnings when a drive does not fit, a route map, and a light-first ordering suggestion you accept or ignore.
 
-**Scout (P3.7).** Apple Intelligence via Foundation Models with tool calling over MapKit and the curated set; results land as map objects with provenance and drive time, scored by the Light Index; progress and cancel; specific unavailable states; ordinary search works without it.
+**Ask inside Explore (P3.7).** The Scout screen is gone; its engine answers requests typed in Explore's search field. Apple Intelligence via Foundation Models with tool calling over MapKit and the curated set, working from the area the map shows; text that reads like a request (or the sparkles toggle, ⌘4) goes to Ask, a place name still searches Apple Maps. Results land first in the list as an Ask section with a note per place, as map objects with provenance and drive time, scored by the Light Index; progress and cancel; specific unavailable states with "Search Apple Maps Instead".
 
-**Saved and your own spots (P3.9).** One idea of saved: a single list with an "Added by you" tag; edit and delete your own spots with undo.
+**Locations with folders (P3.9).** One idea of saved: a Locations screen with a list and its own map, an "Added by you" tag, folders (one level) to sort spots into, and drag and drop; edit and delete your own spots with undo. Replaces Saved.
+
+**Pinned trips offline (partial C2).** Pin a trip to keep its forecasts, drive times and route lines, spot images and spot details on this Mac, with a status badge, refreshed hourly while the app runs. The base map is not cached (see Milestone 3).
 
 **Getting a trip out (P4.7, partly).** Share or export a trip as an `.iter` file (ShareLink and File > Export); open or import one back. Open any stop in Apple Maps.
 
@@ -47,7 +49,7 @@ A coherent Mac app you can use end to end. Anything not listed here is absent fr
 ## Milestone 3 · Everywhere
 
 * iCloud sync of trips and spots (SwiftData + CloudKit), then shared trips with CloudKit sharing and the no-account guest link (P3.6, P5.5).
-* Offline trip packs (C2), never paywalled: area, legs, windows, last forecast with its age.
+* Offline trip packs (C2), never paywalled: area, legs, windows, last forecast with its age. Pinning already covers forecasts, legs, images and spot details; what is left is the base map. It is not cached because MapKit has no public API to download map tiles for offline use. A future option would need a different map source or Apple adding one.
 * The iOS app over the same IterKit, with the "Tonight" Live Activity (C1).
 * Widgets (C7).
 
