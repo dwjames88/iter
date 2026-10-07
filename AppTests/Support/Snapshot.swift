@@ -33,8 +33,8 @@ import Testing
 //    `performAsCurrentDrawingAppearance`, and the window and hosting view get the appearance explicitly.
 
 /// Renders a SwiftUI view offscreen (no window is shown) to PNG.
-/// Files go to the host app's container tmp (the app is sandboxed): `scripts/snapshots.sh` copies them to
-/// Design/snapshots. Name: <screen>-<state>-<appearance>-<size>.png
+/// Files go to `ITER_SNAPSHOT_DIR` when set (`scripts/snapshots.sh` passes an absolute folder under build/ and copies
+/// the PNGs to Design/snapshots), else to the temporary directory. Name: <screen>-<state>-<appearance>-<size>.png
 @MainActor
 enum Snapshot {
     enum Appearance: String, CaseIterable { case light, dark }
@@ -46,7 +46,10 @@ enum Snapshot {
     nonisolated static let scale: CGFloat = 2
 
     static var outputDirectory: URL {
-        // One folder per run so parallel runs from different checkouts (same bundle ID, same container) don't collide.
+        if let dir = ProcessInfo.processInfo.environment["ITER_SNAPSHOT_DIR"], !dir.isEmpty {
+            return URL(fileURLWithPath: dir, isDirectory: true)
+        }
+        // One folder per run so parallel runs from different checkouts don't collide.
         let run = ProcessInfo.processInfo.environment["ITER_SNAPSHOT_RUN"] ?? "default"
         return FileManager.default.temporaryDirectory.appendingPathComponent("IterSnapshots/\(run)", isDirectory: true)
     }
@@ -176,7 +179,7 @@ enum Snapshot {
         if let layer = root.layer { repair(layer) }
     }
 
-    /// Debug aid: `ITER_SNAPSHOT_DUMP=1` appends the view tree of each capture to `<container tmp>/IterSnapshots/tree.txt`.
+    /// Debug aid: `ITER_SNAPSHOT_DUMP=1` appends the view tree of each capture to `<temporary directory>/IterSnapshots/tree.txt`.
     private static func dumpTree(_ v: NSView, _ depth: Int) {
         let line = String(repeating: "  ", count: depth) + "\(String(describing: type(of: v)).prefix(60)) \(v.frame) hidden=\(v.isHidden) contents=\(v.layer?.contents != nil)\n"
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("IterSnapshots/tree.txt")

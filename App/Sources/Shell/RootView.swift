@@ -72,6 +72,7 @@ struct RootView: View {
 
     private func importTrip(from url: URL) {
         guard url.isFileURL else { return }
+        // False when unsandboxed (or the URL needs no scope): the read below still proceeds.
         let scoped = url.startAccessingSecurityScopedResource()
         defer { if scoped { url.stopAccessingSecurityScopedResource() } }
         do {

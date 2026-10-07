@@ -5,9 +5,9 @@ import IterDesign
 import IterServices
 import IterFeatures
 
-enum SettingsTab: Hashable { case general, weather, intelligence, about }
+enum SettingsTab: Hashable { case general, weather, intelligence, updates, about }
 
-/// The Settings window: General, Weather, Apple Intelligence, About.
+/// The Settings window: General, Weather, Apple Intelligence, Updates, About.
 struct SettingsView: View {
     @State private var tab: SettingsTab
 
@@ -26,6 +26,11 @@ struct SettingsView: View {
             IntelligenceSettingsPane()
                 .tabItem { Label(String(localized: "Apple Intelligence", comment: "Settings tab"), systemImage: "sparkles") }
                 .tag(SettingsTab.intelligence)
+            #if os(macOS)
+            UpdatesSettingsPane()
+                .tabItem { Label(String(localized: "Updates", comment: "Settings tab"), systemImage: "arrow.down.circle") }
+                .tag(SettingsTab.updates)
+            #endif
             AboutSettingsPane()
                 .tabItem { Label(String(localized: "About", comment: "Settings tab"), systemImage: "info.circle") }
                 .tag(SettingsTab.about)
@@ -131,10 +136,5 @@ private struct AboutSettingsPane: View {
         .task { await model.loadAttribution() }
     }
 
-    private var version: String {
-        let info = Bundle.main.infoDictionary
-        let short = info?["CFBundleShortVersionString"] as? String ?? "0"
-        let build = info?["CFBundleVersion"] as? String ?? "0"
-        return String(localized: "Version \(short) (\(build))", comment: "About: version and build")
-    }
+    private var version: String { VersionText.current }
 }

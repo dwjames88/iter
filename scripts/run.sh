@@ -17,8 +17,9 @@ for arg in "$@"; do
 done
 command -v xcodegen >/dev/null || { echo "XcodeGen is needed (brew install xcodegen)" >&2; exit 1; }
 xcodegen generate --quiet
+VERSION_ARGS=($("$ROOT/scripts/version.sh"))   # build number and git hash (scripts/version.sh)
 xcodebuild -project Iter.xcodeproj -scheme Iter -configuration Debug -derivedDataPath build/DerivedData \
-  ${EXTRA[@]+"${EXTRA[@]}"} build -quiet 2>&1 | grep -E "error:|warning: .*Iter/(App|Packages)" || true
+  "${VERSION_ARGS[@]}" ${EXTRA[@]+"${EXTRA[@]}"} build -quiet 2>&1 | grep -E "error:|warning: .*Iter/(App|Packages)" || true
 APP="build/DerivedData/Build/Products/Debug/Iter.app"
 [ -d "$APP" ] || { echo "Build failed." >&2; exit 1; }
 rm -rf build/Iter.app && ditto "$APP" build/Iter.app

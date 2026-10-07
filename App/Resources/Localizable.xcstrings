@@ -67,6 +67,17 @@
         }
       }
     },
+    "%@ (%@)" : {
+      "comment" : "App version and build number, e.g. 0.1.0 (412); the build reads dev when built outside the scripts",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ (%2$@)"
+          }
+        }
+      }
+    },
     "%@ (estimated)" : {
       "comment" : "Trip driving total that includes estimated drives"
     },
@@ -361,6 +372,9 @@
     "A few days out: expect the score to move a little." : {
       "comment" : "Confidence in words"
     },
+    "A new version of Iter is available" : {
+      "comment" : "Update window title"
+    },
     "A thick upper deck mutes the colour." : {
       "comment" : "Light reason"
     },
@@ -369,6 +383,9 @@
     },
     "About" : {
       "comment" : "Settings tab"
+    },
+    "About Iter" : {
+      "comment" : "Menu item"
     },
     "Access, gear, crowds, permits" : {
       "comment" : "Notes placeholder"
@@ -593,7 +610,7 @@
       "comment" : "Settings field"
     },
     "Cancel" : {
-      "comment" : "Alert button\nButton\nButton: stop the running Ask"
+      "comment" : "Alert button\nButton\nButton: stop the running Ask\nUpdate window button"
     },
     "Category" : {
       "comment" : "Filters submenu\nSpot editor field: single choice"
@@ -622,11 +639,26 @@
     "Change how long before the window you want to be set up" : {
       "comment" : "Tooltip"
     },
+    "Channel" : {
+      "comment" : "Settings field"
+    },
     "Check" : {
       "comment" : "Button: test a weather provider now"
     },
     "Check Again" : {
       "comment" : "Button"
+    },
+    "Check Now" : {
+      "comment" : "Settings button"
+    },
+    "Check for Updates…" : {
+      "comment" : "Menu item"
+    },
+    "Check for updates automatically" : {
+      "comment" : "Settings field"
+    },
+    "Checking for updates…" : {
+      "comment" : "Update window title while checking"
     },
     "Checking the drive" : {
       "comment" : "Ask progress stage"
@@ -745,6 +777,9 @@
     "Curated" : {
       "comment" : "Saved filter\nSource filter: Iter's hand-picked spots\nSpot provenance"
     },
+    "Current version" : {
+      "comment" : "Settings field"
+    },
     "Daily cap reached (%lld of %lld)" : {
       "comment" : "Settings weather status",
       "localizations" : {
@@ -821,6 +856,9 @@
     "Distance" : {
       "comment" : "Sort option: nearest first; from your location, or from the middle of the map when there is no location"
     },
+    "Download from GitHub" : {
+      "comment" : "Update window button"
+    },
     "Downloading for offline use, %lld of %lld" : {
       "comment" : "Offline status of a pinned trip while it downloads",
       "localizations" : {
@@ -828,6 +866,20 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Downloading for offline use, %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "Downloading…" : {
+      "comment" : "Update window: download in progress"
+    },
+    "Downloading… %@ of %@" : {
+      "comment" : "Update window: download progress, e.g. Downloading… 3.2 MB of 12.4 MB",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Downloading… %1$@ of %2$@"
           }
         }
       }
@@ -1059,6 +1111,12 @@
     "In Certificates, Identifiers & Profiles, enable WeatherKit for the App ID com.dwjames.iter, on both the Capabilities and App Services tabs." : {
       "comment" : "WeatherKit setup step"
     },
+    "Install and Relaunch" : {
+      "comment" : "Update window button"
+    },
+    "Installing…" : {
+      "comment" : "Update window: replacing the app"
+    },
     "It is also removed from %lld trip stops. You can undo this with Edit > Undo." : {
       "comment" : "Delete spot confirmation message",
       "localizations" : {
@@ -1088,6 +1146,35 @@
     "Iter" : {
       "comment" : "App name"
     },
+    "Iter %@ is now available — you have %@. Would you like to install it now?" : {
+      "comment" : "Update window: the first placeholder is the new version, the second the current version and build",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Iter %1$@ is now available — you have %2$@. Would you like to install it now?"
+          }
+        }
+      }
+    },
+    "Iter %@ is the newest version available." : {
+      "comment" : "Update window: no newer version; the placeholder is the version and build"
+    },
+    "Iter can't write to “%@”. Move Iter to your Applications folder, or download the update from GitHub." : {
+      "comment" : "Update blocked: the folder holding Iter is read-only; the placeholder is a folder name"
+    },
+    "Iter checks once a day, when it opens." : {
+      "comment" : "Settings footer"
+    },
+    "Iter couldn't check for updates. Try again later." : {
+      "comment" : "Update failure: unexpected error"
+    },
+    "Iter couldn't install the update. Your current version is unchanged." : {
+      "comment" : "Update failure: replacing the app failed"
+    },
+    "Iter couldn't reach the update server. Check your connection and try again." : {
+      "comment" : "Update failure"
+    },
     "Iter couldn't read that file. Nothing was imported." : {
       "comment" : "Import error"
     },
@@ -1111,6 +1198,9 @@
     },
     "Landscape" : {
       "comment" : "Spot category"
+    },
+    "Last checked" : {
+      "comment" : "Settings field"
     },
     "Last quarter" : {
       "comment" : "Moon phase"
@@ -1289,6 +1379,9 @@
     "Needs an API key" : {
       "comment" : "Settings weather status"
     },
+    "Never" : {
+      "comment" : "Settings: updates have not been checked yet"
+    },
     "New" : {
       "comment" : "Toolbar button"
     },
@@ -1433,7 +1526,7 @@
       "comment" : "Locations empty title"
     },
     "OK" : {
-      "comment" : "Alert button"
+      "comment" : "Alert button\nUpdate window button"
     },
     "Off" : {
       "comment" : "VoiceOver value: Ask mode is off"
@@ -1574,6 +1667,9 @@
     "Popularity" : {
       "comment" : "Sort option: most popular first"
     },
+    "Pre-release channels may come later." : {
+      "comment" : "Settings footer"
+    },
     "Previous day" : {
       "comment" : "Accessibility label\nTooltip"
     },
@@ -1609,6 +1705,18 @@
     },
     "Refresh Forecasts" : {
       "comment" : "Menu item"
+    },
+    "Relaunching…" : {
+      "comment" : "Update window: about to restart"
+    },
+    "Release Notes" : {
+      "comment" : "Update window: heading above the release notes"
+    },
+    "Releases" : {
+      "comment" : "Settings: the update channel"
+    },
+    "Remind Me Later" : {
+      "comment" : "Update window button"
     },
     "Remove" : {
       "comment" : "Button"
@@ -1784,6 +1892,12 @@
     "Sign in to Xcode with an Apple Developer Program account." : {
       "comment" : "WeatherKit setup step"
     },
+    "Skip This Version" : {
+      "comment" : "Update window button"
+    },
+    "Software Update" : {
+      "comment" : "Update window title"
+    },
     "Some items didn't download" : {
       "comment" : "Offline status: part of the download failed"
     },
@@ -1919,6 +2033,18 @@
     "That request is too long" : {
       "comment" : "Ask failure title"
     },
+    "The download isn't signed by Iter's release key, so it wasn't installed." : {
+      "comment" : "Update failure: bad signature"
+    },
+    "The download isn't the version the update server announced, so it wasn't installed." : {
+      "comment" : "Update failure: wrong app or version inside the zip"
+    },
+    "The download was damaged, so it wasn't installed. Try again." : {
+      "comment" : "Update failure: size or checksum mismatch"
+    },
+    "The downloaded update couldn't be opened, so it wasn't installed." : {
+      "comment" : "Update failure: bad zip"
+    },
     "The explanation didn't match the numbers, so it was discarded. Try again." : {
       "comment" : "Explanation failure"
     },
@@ -1927,6 +2053,9 @@
     },
     "The forecast is close, so the score is firm." : {
       "comment" : "Confidence in words"
+    },
+    "The new version's code signature isn't valid, so it wasn't installed." : {
+      "comment" : "Update failure: bad code signature"
     },
     "The sun doesn't rise here on this day. The light is the blue hour either side of noon." : {
       "comment" : "Polar night: no sunrise"
@@ -1955,14 +2084,35 @@
     "The trip couldn't be saved to that location." : {
       "comment" : "Export error"
     },
+    "The update didn't finish" : {
+      "comment" : "Update window title after a failure"
+    },
+    "The update server sent something Iter couldn't read. Try again later." : {
+      "comment" : "Update failure"
+    },
+    "The update was cancelled." : {
+      "comment" : "Update failure: cancelled"
+    },
     "There is no score to explain for this window." : {
       "comment" : "Explanation failure"
     },
     "This Mac can't run Apple Intelligence" : {
       "comment" : "Ask unavailable title"
     },
+    "This build is signed but not yet notarised by Apple. Iter installs it directly, so macOS won't ask again." : {
+      "comment" : "Update window: note about an update that Apple has not notarised"
+    },
+    "This build of Iter has no update feed, so it can't check for updates." : {
+      "comment" : "Update failure: no feed URL"
+    },
+    "This build of Iter has no update signing key, so it can't verify updates. Install a release build from GitHub." : {
+      "comment" : "Update blocked: no public key in this build"
+    },
     "This can't be undone." : {
       "comment" : "Reset alert message"
+    },
+    "This copy of Iter runs in the App Sandbox, so it can't replace itself. Download the new version from GitHub instead." : {
+      "comment" : "Update blocked: the app is sandboxed"
     },
     "This day has schedule conflicts" : {
       "comment" : "Tooltip"
@@ -1973,11 +2123,17 @@
     "This folder is empty" : {
       "comment" : "Locations folder empty title"
     },
+    "This only takes a moment." : {
+      "comment" : "Update window: checking for updates"
+    },
     "This trip was deleted or its creation was undone." : {
       "comment" : "Empty state explanation"
     },
     "This trip was saved by a newer version of Iter (file format %lld). Update Iter to open it. Nothing was imported." : {
       "comment" : "Import error"
+    },
+    "This update has no download link. Try again later, or download it from GitHub." : {
+      "comment" : "Update failure"
     },
     "Time zone" : {
       "comment" : "Spot editor field"
@@ -2036,6 +2192,18 @@
     "Updated %@" : {
       "comment" : "Forecast age"
     },
+    "Updates" : {
+      "comment" : "Settings tab"
+    },
+    "Updates can't be installed here" : {
+      "comment" : "Settings section"
+    },
+    "Updating Iter" : {
+      "comment" : "Update window title while installing"
+    },
+    "Updating to Iter %@" : {
+      "comment" : "Update window title while installing; the placeholder is a version"
+    },
     "Urban" : {
       "comment" : "Spot category"
     },
@@ -2048,8 +2216,11 @@
     "Use Sample Weather" : {
       "comment" : "Debug menu item"
     },
+    "Verifying…" : {
+      "comment" : "Update window: checking the download"
+    },
     "Version %@ (%@)" : {
-      "comment" : "About: version and build",
+      "comment" : "About: version and build, e.g. Version 0.1.0 (412)",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2157,6 +2328,9 @@
     "Yesterday" : {
       "comment" : "Relative day"
     },
+    "You're up to date" : {
+      "comment" : "Update window title: no newer version"
+    },
     "Your Spots" : {
       "comment" : "Source filter: spots the user added"
     },
@@ -2209,6 +2383,9 @@
     },
     "loading light" : {
       "comment" : "VoiceOver: the forecast for this row is still loading"
+    },
+    "macOS is running Iter from a temporary location because it was opened from Downloads. Move Iter to your Applications folder, open it again, then check for updates." : {
+      "comment" : "Update blocked: Gatekeeper path randomisation"
     },
     "mid" : {
       "comment" : "Cloud layer name inside a sentence"

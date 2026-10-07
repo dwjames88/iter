@@ -17,7 +17,7 @@ struct IterApp: App {
         TripPerfProbe.start()
         let container: ModelContainer
         do {
-            container = try IterSchema.makeContainer(inMemory: AppLaunch.inMemoryStore)
+            container = try StoreBootstrap.makeContainer(inMemory: AppLaunch.inMemoryStore)
         } catch {
             // A store that cannot open must not take the app down; run in memory and say so in the log.
             AppLaunch.log.error("Store failed to open, using memory: \(String(describing: error), privacy: .public)")
@@ -64,7 +64,10 @@ struct IterApp: App {
         .defaultSize(width: 1280, height: 820)
         // Under the test runner the host app opens no window, so tests never take over the screen.
         .defaultLaunchBehavior(AppLaunch.isRunningTests ? .suppressed : .automatic)
-        .commands { AppCommands(model: model) }
+        .commands {
+            AppCommands(model: model)
+            UpdateCommands()
+        }
 
         Settings {
             SettingsView()
@@ -82,6 +85,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         case "dark": NSApp.appearance = NSAppearance(named: .darkAqua)
         default: break
         }
+    }
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        // The daily update check and the clean-up of old downloads; does nothing under tests, in-memory or smoke runs.
+        UpdateController.shared.start()
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { false }

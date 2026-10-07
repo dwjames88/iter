@@ -18,4 +18,5 @@ Start with [TESTING.md](TESTING.md). It covers what is in this build, a guided t
 | `Brand/` | The Step logo (Geist 600) and the First Light palette (`palettes/` also keeps the Alpine study as history) |
 | `Packages/IterKit/` | Everything that is not Mac UI: domain, light engine, astronomy, data, services, view models |
 | `App/` | The macOS app: views, menus, settings, assets, the String Catalog |
-| `scripts/` | `run.sh`, `test.sh`, `snapshots.sh`, `tokens.sh` (design tokens round trip), `make-icon.sh`, `strings.sh` |
+| `docs/DISTRIBUTION.md`, `CHANGELOG.md` | Versions, cutting a release, the signed update feed and keys, Gatekeeper; what changed in each version |
+| `scripts/` | `run.sh`, `test.sh`, `snapshots.sh`, `tokens.sh` (design tokens round trip), `make-icon.sh`, `strings.sh`, `release.sh`, `bump.sh`, `version.sh`, `updater-e2e.sh` |

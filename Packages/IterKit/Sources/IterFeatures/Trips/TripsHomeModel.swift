@@ -125,7 +125,7 @@ public final class TripsHomeModel {
         }
     }
 
-    /// Imports from a file the user picked (handles the sandbox's security scope).
+    /// Imports from a file the user picked. Security scope applies only in the sandbox: unsandboxed, `start...` returns false and the read still proceeds.
     public func importTrip(contentsOf url: URL) -> Result<UUID, TripImportFailure> {
         let scoped = url.startAccessingSecurityScopedResource()
         defer { if scoped { url.stopAccessingSecurityScopedResource() } }

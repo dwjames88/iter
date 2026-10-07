@@ -20,6 +20,12 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>IterGitCommit</key>
+	<string>$(ITER_GIT_COMMIT)</string>
+	<key>IterUpdateFeedURL</key>
+	<string>$(ITER_UPDATE_FEED_URL)</string>
+	<key>IterUpdatePublicKey</key>
+	<string>$(ITER_UPDATE_PUBLIC_KEY)</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.photography</string>
 	<key>LSMinimumSystemVersion</key>
