@@ -1,3 +1,4 @@
+#if os(macOS)  // The direct-download Mac build's store location and its one-time move out of the App Sandbox container.
 import Foundation
 
 /// Where the Mac app's data lives, and the one-time move from the old App Sandbox container.
@@ -139,3 +140,5 @@ public enum StoreLocation {
         return copied
     }
 }
+
+#endif
