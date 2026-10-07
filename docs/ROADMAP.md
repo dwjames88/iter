@@ -50,8 +50,16 @@ A coherent Mac app you can use end to end. Anything not listed here is absent fr
 
 * iCloud sync of trips and spots (SwiftData + CloudKit), then shared trips with CloudKit sharing and the no-account guest link (P3.6, P5.5).
 * Offline trip packs (C2), never paywalled: area, legs, windows, last forecast with its age. Pinning already covers forecasts, legs, images and spot details; what is left is the base map. It is not cached because MapKit has no public API to download map tiles for offline use. A future option would need a different map source or Apple adding one.
-* The iOS app over the same IterKit, with the "Tonight" Live Activity (C1).
-* Widgets (C7).
+* **The iOS app, first cut (shipped, see [TESTING-iOS.md](../TESTING-iOS.md)).** An iPhone and iPad app over the same IterKit: Explore with a map and a bottom sheet, the light panel and spot page, search with Ask, Trips with the builder (days, reordering, share and import of `.iter` files), Locations with folders and Settings. iPad has the sidebar split view. No Now mode, Live Activity, widgets or CarPlay yet, and no iCloud sync, so a trip made on the Mac is not on the iPhone.
+* Widgets and the Live Activity: see "Next on iOS".
+
+## Next on iOS
+
+* **Now mode (E1, P4.5).** Opens to the next three hours during a trip. Needs a session within 3 hours, the trip's schedule from `TripScheduler`, the user's location and the drive time to the next stop, and a Night (red) token set. The shell shows it as the first tab or a banner.
+* **"Tonight" Live Activity (C1, P5.4).** Leave by, set up by, the window and the score. Needs an ActivityKit widget extension target in `project-ios.yml`, `NSSupportsLiveActivities`, an App Group for shared state, a start per session from the trip schedule, and push or scheduled updates for the forecast. The Lock Screen and Dynamic Island show it, and the CarPlay Dashboard and Apple Watch show a Live Activity automatically.
+* **Widgets (C7).** A WidgetKit extension and an App Group that shares the store or a snapshot of it, with a timeline from `LightEngine`.
+* **CarPlay: not planned.** There is no CarPlay app: no CarPlay app category fits a trip planner and eligibility is unconfirmed (`docs/reference/plan/08-not-doing.md`). The Live Activity is how Iter reaches the CarPlay Dashboard.
+* **Offline base map tiles** are still not possible with MapKit (see Milestone 3), and **iCloud sync** (Milestone 3) is what makes a Mac trip appear on the iPhone.
 
 ## Milestone 4 · Business
 

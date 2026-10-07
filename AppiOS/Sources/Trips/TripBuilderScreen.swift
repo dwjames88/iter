@@ -62,12 +62,22 @@ private struct TripBuilderContent: View {
         let _ = model.offline.status(for: plan.id)
         Group {
             if sizeClass == .regular {
-                HStack(spacing: 0) {
-                    planColumn(showsMap: false)
-                        .frame(maxWidth: 480)
-                    Divider()
-                    TripRouteMapView(builder: builder, selectedDay: $selectedDay, onSelectStop: scrollToStop)
-                        .frame(maxWidth: .infinity)
+                // The plan beside a full-height map only when the plan column can be at least 380 pt and the map at
+                // least as wide; otherwise (iPad portrait with the sidebar showing) the map is the collapsible header,
+                // as on iPhone, so stop names and schedules never wrap into a narrow column.
+                GeometryReader { geometry in
+                    let planWidth = min(480, max(380, geometry.size.width * 0.5))
+                    if geometry.size.width >= planWidth * 2 {
+                        HStack(spacing: 0) {
+                            planColumn(showsMap: false)
+                                .frame(width: planWidth)
+                            Divider()
+                            TripRouteMapView(builder: builder, selectedDay: $selectedDay, onSelectStop: scrollToStop)
+                                .frame(maxWidth: .infinity)
+                        }
+                    } else {
+                        planColumn(showsMap: true)
+                    }
                 }
             } else {
                 planColumn(showsMap: true)

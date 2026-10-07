@@ -1,12 +1,13 @@
 # Iter
 
-A native Mac road-trip planner for photographers. *Be in the right place when the light is right.*
+A native road-trip planner (Mac, iPhone and iPad) for photographers. *Be in the right place when the light is right.*
 
 `scripts/run.sh` builds and opens the app (`build/Iter.app`), and `scripts/test.sh` runs every test.
-Start with [TESTING.md](TESTING.md). It covers what is in this build, a guided tour, the Debug menu, and how to switch on real weather.
+The iPhone and iPad app builds from the same project (scheme `Iter iOS`); `scripts/test-ios.sh` builds it and runs its tests on a Simulator, and [TESTING-iOS.md](TESTING-iOS.md) covers running it on a Simulator and on your iPhone.
+Start with [TESTING.md](TESTING.md) for the Mac app. It covers what is in this build, a guided tour, the Debug menu, and how to switch on real weather.
 
 - SwiftUI, MapKit, WeatherKit, Apple Intelligence (Foundation Models), SwiftData, Swift Charts. No third-party code.
-- macOS 26 or later. Swift 6 with complete concurrency checking. Tests use Swift Testing.
+- macOS 26 or later; iOS 26 or later for the iPhone and iPad app. Swift 6 with complete concurrency checking. Tests use Swift Testing.
 - The Xcode project is generated from `project.yml` by XcodeGen (`brew install xcodegen`).
 
 | Where | What |
@@ -17,6 +18,7 @@ Start with [TESTING.md](TESTING.md). It covers what is in this build, a guided t
 | `Design/` | Design tokens (`tokens.json`, DTCG), `TOKENS.md`, `SCREENS.md`, `COMPONENTS.md`, `snapshots/` |
 | `Brand/` | The Step logo (Geist 600) and the First Light palette (`palettes/` also keeps the Alpine study as history) |
 | `Packages/IterKit/` | Everything that is not Mac UI: domain, light engine, astronomy, data, services, view models |
-| `App/` | The macOS app: views, menus, settings, assets, the String Catalog |
+| `App/` | The macOS app's scenes, menus and settings, plus the views, assets and String Catalog that the iOS app compiles too |
+| `AppiOS/`, `AppiOSTests/` | The iPhone and iPad app: shell, Explore, Trips, Locations, Settings, Info.plist (target in `project-ios.yml`) and its tests |
 | `docs/DISTRIBUTION.md`, `CHANGELOG.md` | Versions, cutting a release, the signed update feed and keys, Gatekeeper; what changed in each version |
-| `scripts/` | `run.sh`, `test.sh`, `snapshots.sh`, `tokens.sh` (design tokens round trip), `make-icon.sh`, `strings.sh`, `release.sh`, `bump.sh`, `version.sh`, `updater-e2e.sh` |
+| `scripts/` | `run.sh`, `test.sh`, `test-ios.sh`, `snapshots.sh`, `tokens.sh` (design tokens round trip), `make-icon.sh`, `strings.sh`, `release.sh`, `bump.sh`, `version.sh`, `updater-e2e.sh` |

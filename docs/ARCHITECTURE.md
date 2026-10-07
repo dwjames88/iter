@@ -5,14 +5,16 @@ Iter is a native macOS app (SwiftUI, Swift 6 language mode with complete concurr
 ## Layout
 
 ```
-project.yml              XcodeGen spec (app target, hosted test target, signing, entitlements)
-App/                     macOS UI only: scenes, windows, views, commands, settings, assets, string catalog
+project.yml              XcodeGen spec (Mac app target, hosted test target, signing, entitlements); includes project-ios.yml
+project-ios.yml          the iPhone and iPad target (Iter iOS) and its test target, in the same Iter.xcodeproj
+App/                     the Mac app's scenes, windows, commands and settings, plus the views, assets and string catalog both apps share
 AppTests/                hosted tests: snapshot renderer (Design/snapshots) and live service checks
-Packages/IterKit/        everything that is not macOS UI, reusable by a future iOS target
+AppiOS/, AppiOSTests/    iPhone and iPad shell and screens, Info.plist; the iOS app tests
+Packages/IterKit/        everything that is not UI: shared by both apps
 Design/                  tokens.json (DTCG), TOKENS.md, SCREENS.md, COMPONENTS.md, snapshots/
 Brand/                   Step (Geist 600) logo files and the First Light palette (Alpine kept in the palette files as history)
 docs/                    this file, ROADMAP.md, reference/ (the approved plan and flow briefs)
-scripts/                 run.sh, test.sh, tokens.sh, make-icon.sh, snapshots.sh
+scripts/                 run.sh, test.sh, test-ios.sh, tokens.sh, make-icon.sh, snapshots.sh
 ```
 
 ## Modules (Packages/IterKit)
@@ -28,7 +30,27 @@ scripts/                 run.sh, test.sh, tokens.sh, make-icon.sh, snapshots.sh
 | `IterFeatures` | all above | `@Observable @MainActor` view models for Explore (including Ask: `SearchIntent`, `ExploreModel+Ask`, `ScoutModel` as the engine), Spot, Trips and Trip builder, plus `AppEnvironment` (the service container). `Library/` holds the offline packs of pinned trips (`PinnedTripDownloader`, `OfflinePack` and `OfflinePackStore`, `OfflineDriveTimes`) and `LibraryDragItem` (what a sidebar or Locations drag carries). Platform-neutral. |
 | `iter-tokens` | Design | Exports `Design/tokens.json` (DTCG) and the app's asset-catalog colour sets from the registry; imports an edited `tokens.json` back into the registry. |
 
-The app target holds only views, scenes, menus and AppKit glue (map click handling, window restoration). An iOS target would add its own views over the same view models.
+The Mac app target holds views, scenes, menus and AppKit glue (map click handling, window restoration). The iOS target (`Iter iOS`) compiles most of the same views and adds its own shell and screens over the same view models; see "Platforms" below.
+
+## Platforms: what is shared and what is per platform
+
+`project-ios.yml` is included from `project.yml` (`include: [project-ios.yml]`), so `xcodegen generate` writes one `Iter.xcodeproj` with both apps. The iOS target is `Iter iOS` (iPhone and iPad, iOS 26.0, bundle id `com.dwjames.iter.ios`, automatic signing with the same Personal Team) with the test target `IterAppTests iOS` (Swift Testing) and the scheme `Iter iOS`. `scripts/test-ios.sh` runs the package tests and the iOS tests on a Simulator.
+
+| | Shared by both apps | Mac only | iOS only |
+|---|---|---|---|
+| Code | `Packages/IterKit` (every module); the views in `App/Sources` that compile on both | `App/Sources`: `Shell/IterApp`, `AppCommands`, `RootView`; the sidebar (`SidebarView`, `SidebarTripsSection`, `SidebarLocationsSection`; the context menus, badges and folder helpers in `Sidebar/` are shared); the AppKit-backed Explore (`ExploreView`, list panel, map pane), Locations (`LocationsView`, `LocationsMap`) and builder (`TripBuilderView`, `TripPlanList`, `TripRouteMap`); `ResizableSplit`; `Packages/IterUpdater` | `AppiOS/Sources/{Shell,Explore,Spot,Trips,Locations,Settings,Platform}` |
+| Resources | The asset catalog (colours, app icon; iOS has an added 1024 pt icon) and the String Catalog | Mac entitlements and the updater public key in Info.plist | `AppiOS/Info.plist` |
+| Version | `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` from `project.yml` | The updater and release scripts | Nothing: no updater yet (TestFlight or the App Store later) |
+
+**The contributor rule.** A file added to `App/Sources` is compiled into both apps. If it needs AppKit, either exclude it in `project-ios.yml` (the Mac-only list) or guard it with `#if os(macOS)`. Shared views that differ in small ways use shims: `Components/PlatformStyles.swift` holds the link and checkbox style differences, and `AppiOS/Sources/Platform/PlatformBridge.swift` aliases `NSFont` to `UIFont` for shared text-measuring code and provides the `openIterSettings` environment action (iOS has no Settings scene).
+
+**Navigation.** One `AppNavigation` (the same type on both platforms) is the source of truth: the selection (`SidebarItem`) and the paths of pushed spot routes. On iOS, `ShellState` maps the selection onto the iPhone tabs (Explore, Trips, Locations, Settings, and the search tab), and each phone stack is a computed binding over `AppNavigation`'s paths, so a shared view calling `navigation.show(.trip(id))` or `navigation.open(route)` works the same way on both platforms. The iPad uses `NavigationSplitView` with the sidebar Trips, Locations and Find and shows Settings as a sheet; at compact width it uses the phone shell.
+
+**The Explore sheet is custom.** The iPhone Explore tab is a full-bleed map with a bottom sheet drawn inside the tab (detents peek, half and full). A system `presentationDetents` sheet was tried and covers the iOS 26 tab bar (verified on the Simulator), so the sheet is our own view.
+
+**FoundationModels is weak-linked on iOS** (`-weak_framework FoundationModels`). Built with the iOS 27 SDK, the `@Generable` code referenced a symbol that iOS 26.5 does not have and the app stopped at launch. Ask checks availability before it uses the model.
+
+**The first-run forecast source on iOS is OpenWeather.** WeatherKit needs a paid team, so the registered default for `iter.weather.primary` is OpenWeather. The key goes in Settings ▸ Weather (Keychain) or in a launch argument; see [TESTING-iOS.md](../TESTING-iOS.md).
 
 ## Data flow
 
