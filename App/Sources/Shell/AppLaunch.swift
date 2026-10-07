@@ -60,7 +60,7 @@ enum AppLaunch {
     }
     static var spot: Spot? { UserDefaults.standard.string(forKey: "IterSpot").flatMap { CuratedSpots.spot(id: $0) } }
     /// `-IterSelectRow <spot id>` (for example `mesa-arch`): Explore selects that row, scrolls it into view once when it
-    /// is first built, and so shows its place card. For screenshots.
+    /// is first built, and so opens its place panel. For screenshots.
     static var selectRowID: String? { UserDefaults.standard.string(forKey: "IterSelectRow") }
     /// `-IterSearch <text>`: Explore runs that Apple Maps search at launch (screenshots of search results).
     static var searchText: String? { UserDefaults.standard.string(forKey: "IterSearch") }
@@ -74,8 +74,8 @@ enum AppLaunch {
     }
     /// `-IterAsk <text>`: Explore puts that text to the ask engine at launch (screenshots of the Ask section).
     static var askText: String? { UserDefaults.standard.string(forKey: "IterAsk") }
-    /// `-IterCardScrolled YES`: the map's place card opens already scrolled to its lower sections. For screenshots.
-    static var cardScrolled: Bool { UserDefaults.standard.bool(forKey: "IterCardScrolled") }
+    /// `-IterPanelScrolled YES`: the place panel opens already scrolled to its lower half (When to go at the top). For screenshots.
+    static var panelScrolled: Bool { UserDefaults.standard.bool(forKey: "IterPanelScrolled") }
     /// `-IterSeedTrip YES|conflict`: seeds the sample trip (see `IterApp`); `conflict` also reverses day 2.
     enum TripSeed { case sample, conflict }
     static var seedTrip: TripSeed? {

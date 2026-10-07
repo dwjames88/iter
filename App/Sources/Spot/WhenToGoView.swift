@@ -40,7 +40,7 @@ struct WhenToGoSection: View {
     /// The one strong fact: the best window as the large event unit, beside (page) or above (compact) a text column:
     /// the caption, the day, the top reason, the forecast age, and the way to open that day.
     private func bestLead(_ best: BestWindow) -> some View {
-        let layout = density == .compact ? AnyLayout(VStackLayout(alignment: .leading, spacing: IterSpace.sm))
+        let layout = density == .panel ? AnyLayout(VStackLayout(alignment: .leading, spacing: IterSpace.sm))
                                          : AnyLayout(HStackLayout(alignment: .top, spacing: IterGrid.inset))
         return layout {
             EventScore(window: best.window, zone: page.timeZone, timeStyle: .range, variant: .large,

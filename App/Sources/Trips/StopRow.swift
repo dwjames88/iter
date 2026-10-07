@@ -133,21 +133,30 @@ struct StopRowView: View {
         .popover(isPresented: $editsBuffer, arrowEdge: .bottom) { bufferEditor }
     }
 
+    /// The closed menu names the session and its time; the score is in the event unit above it, so it is not repeated.
+    /// The open menu lists every window with its score for the day, which is what you compare to choose.
     private var sessionMenu: some View {
-        Picker(selection: sessionBinding) {
-            ForEach(entry.windows) { window in
-                Label(LightText.sessionMenuItem(window, in: zone), systemImage: LightText.symbol(window.kind)).tag(window.kind)
+        Menu {
+            Picker(selection: sessionBinding) {
+                ForEach(entry.windows) { window in
+                    Label(LightText.sessionMenuItem(window, in: zone), systemImage: LightText.symbol(window.kind)).tag(window.kind)
+                }
+                if entry.sessionWindow == nil {
+                    Text(LightText.noSession(entry.stop.session)).tag(entry.stop.session)
+                }
+            } label: {
+                Text("Session", comment: "Accessibility label of the session menu")
             }
-            if entry.sessionWindow == nil {
-                Text(LightText.noSession(entry.stop.session)).tag(entry.stop.session)
-            }
+            .pickerStyle(.inline)
+            .labelsHidden()
         } label: {
-            Text("Session", comment: "Accessibility label of the session menu")
+            Text(entry.sessionWindow.map { LightText.sessionLabel($0, in: zone) } ?? LightText.noSession(entry.stop.session))
         }
-        .pickerStyle(.menu)
-        .labelsHidden()
+        .menuStyle(.button)
         .controlSize(.small)
         .fixedSize()
+        .accessibilityLabel(Text("Session", comment: "Accessibility label of the session menu"))
+        .accessibilityValue(Text(entry.sessionWindow.map { LightText.sessionLabel($0, in: zone) } ?? LightText.noSession(entry.stop.session)))
         .help(Text("Which light to shoot here: each window with its time and score for this day", comment: "Tooltip"))
     }
 

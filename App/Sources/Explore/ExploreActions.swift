@@ -10,7 +10,7 @@ import IterCore
 import IterData
 import IterFeatures
 
-/// The actions every row, pin and the place card share: Open, Save, Add to Trip, Open in Maps, Copy Coordinates.
+/// The actions every row, pin and the place panel share: Open, Save, Add to Trip, Open in Maps, Copy Coordinates.
 enum ExploreActions {
     @MainActor static func open(_ spot: Spot, day: LocalDay, navigation: AppNavigation) {
         navigation.open(SpotRoute(spot: spot, day: day))
