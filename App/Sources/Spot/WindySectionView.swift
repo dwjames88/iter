@@ -9,22 +9,19 @@ struct WindySection: View {
     @Environment(\.openURL) private var openURL
 
     var body: some View {
-        VStack(alignment: .leading, spacing: IterSpace.md) {
-            SpotSectionTitle(LightText.windyTitle)
-            SpotCard {
-                HStack(alignment: .center, spacing: IterSpace.md) {
-                    Text(LightText.windyExplanation)
-                        .font(IterFont.callout)
-                        .foregroundStyle(IterColor.textSecondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Spacer(minLength: IterSpace.md)
-                    Button {
-                        openURL(WindyLink.url(center: coordinate, zoom: WindyLink.spotZoom))
-                    } label: {
-                        Label(LightText.openInWindy, systemImage: "arrow.up.forward.square")
-                    }
-                    .help(String(localized: "Open this spot on windy.com in your browser", comment: "Tooltip"))
+        ModuleCard(title: LightText.windyTitle, symbol: "wind") {
+            HStack(alignment: .center, spacing: IterGrid.inset) {
+                Text(LightText.windyExplanation)
+                    .font(IterFont.body)
+                    .foregroundStyle(IterColor.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: IterGrid.inset)
+                Button {
+                    openURL(WindyLink.url(center: coordinate, zoom: WindyLink.spotZoom))
+                } label: {
+                    Label(LightText.openInWindy, systemImage: "arrow.up.forward.square")
                 }
+                .help(String(localized: "Open this spot on windy.com in your browser", comment: "Tooltip"))
             }
         }
         .accessibilityElement(children: .contain)

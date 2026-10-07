@@ -9,6 +9,8 @@ public enum IterFont {
     public static let bodyEmphasis = make("type/bodyEmphasis")
     public static let callout = make("type/callout")
     public static let subheadline = make("type/subheadline")
+    public static let secondary = make("type/secondary")
+    public static let moduleTitle = make("type/moduleTitle")
     public static let footnote = make("type/footnote")
     public static let caption = make("type/caption")
     public static let captionStrong = make("type/captionStrong")

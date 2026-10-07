@@ -53,9 +53,7 @@ private struct GeneralSettingsPane: View {
             }
             Section {
                 Stepper(value: $setUpBuffer, in: 0...90, step: 5) {
-                    LabeledContent {
-                        Text("\(setUpBuffer) min", comment: "Minutes, e.g. 20 min").monospacedDigit()
-                    } label: { Text("Set-up time before a window", comment: "Settings field") }
+                    Text("Set-up time before a window: \(setUpBuffer) min", comment: "Settings field with its value, e.g. Set-up time before a window: 20 min")
                 }
             } footer: {
                 Text("How long before a light window starts that a new stop wants you set up. Each stop can change it.", comment: "Settings footer")
@@ -79,18 +77,23 @@ private struct IntelligenceSettingsPane: View {
                     Label {
                         Text("Apple Intelligence is ready", comment: "Settings Apple Intelligence status")
                     } icon: { Image(systemName: "checkmark.circle") }
-                    Text("Scout understands your request with the model on this Mac, then looks up real places in Apple Maps and Iter's curated list.",
-                         comment: "Settings: how Scout works")
-                        .font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
                 } else {
                     let notice = LightText.scoutUnavailable(availability)
                     Label(notice.title, systemImage: notice.symbol)
-                    Text(notice.detail).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
                     if availability == .appleIntelligenceNotEnabled, let url = URL(string: "x-apple.systempreferences:com.apple.Siri-Settings.extension") {
                         Button { openURL(url) } label: { Text("Open System Settings", comment: "Button") }
                     }
                 }
-            } header: { Text("Scout", comment: "Settings section") }
+            } header: {
+                Text("Scout", comment: "Settings section")
+            } footer: {
+                if availability == .available {
+                    Text("Scout understands your request with the model on this Mac, then looks up real places in Apple Maps and Iter's curated list.",
+                         comment: "Settings: how Scout works")
+                } else {
+                    Text(LightText.scoutUnavailable(availability).detail)
+                }
+            }
         }
         .formStyle(.grouped)
     }
@@ -101,33 +104,31 @@ private struct IntelligenceSettingsPane: View {
 private struct AboutSettingsPane: View {
     @Environment(AppModel.self) private var model
     var body: some View {
-        VStack(spacing: IterSpace.md) {
-            Image("Logo")
-                .resizable()
-                .scaledToFit()
-                .frame(height: IterSize.lightRingLarge)
-                .accessibilityLabel(Text("Iter", comment: "App name"))
-            Text("Iter", comment: "App name").font(IterFont.titleSection)
-            Text(version).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-            Text("Be in the right place when the light is right.", comment: "Tagline")
-                .font(IterFont.body)
-            Text("Sun and moon times are calculated on this Mac. Weather is from the source you choose in Settings ▸ Weather: Apple Weather, OpenWeather or Windy (contains data from the Windy database). Places and drive times are from Apple Maps, alongside Iter's curated spots.",
-                 comment: "About: data sources")
-                .font(IterFont.caption)
-                .foregroundStyle(IterColor.textSecondary)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: IterSize.listIdeal)
-            VStack(alignment: .leading, spacing: IterSpace.xs) {
-                Text("Data Sources and Attribution", comment: "About: heading for provider credits")
-                    .font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-                WeatherDataSources()
+        Form {
+            Section {
+                VStack(spacing: IterSpace.sm) {
+                    Image("Logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: IterSize.lightRingLarge)
+                        .accessibilityLabel(Text("Iter", comment: "App name"))
+                    Text("Iter", comment: "App name").font(IterFont.titleSection)
+                    Text(version).foregroundStyle(IterColor.textSecondary)
+                    Text("Be in the right place when the light is right.", comment: "Tagline")
+                }
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: IterSize.listIdeal, alignment: .leading)
-            .task { await model.loadAttribution() }
+            Section {
+                WeatherDataSources()
+            } header: {
+                Text("Data Sources and Attribution", comment: "About: heading for provider credits")
+            } footer: {
+                Text("Sun and moon times are calculated on this Mac. Weather is from the source you choose in Settings ▸ Weather: Apple Weather, OpenWeather or Windy (contains data from the Windy database). Places and drive times are from Apple Maps, alongside Iter's curated spots.",
+                     comment: "About: data sources")
+            }
         }
-        .padding(IterSpace.xl)
-        .frame(maxWidth: .infinity)
+        .formStyle(.grouped)
+        .task { await model.loadAttribution() }
     }
 
     private var version: String {

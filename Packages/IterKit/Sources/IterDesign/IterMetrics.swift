@@ -2,15 +2,54 @@ import SwiftUI
 
 private func d(_ name: String) -> CGFloat { CGFloat(TokenValues.dimension(name)) }
 
-/// 4-pt base spacing (with one half step).
+/// 8-pt spacing scale. `xs` (4) is only for hairline-tight pairs; `md` (12) and `xxs` (2) stay for old code and are not used in new layout.
 public enum IterSpace {
     public static let xxs = d("space/xxs")
     public static let xs = d("space/xs")
     public static let sm = d("space/sm")
     public static let md = d("space/md")
     public static let lg = d("space/lg")
+    /// The standard macOS sheet margin (20).
+    public static let sheet = d("space/sheet")
     public static let xl = d("space/xl")
     public static let xxl = d("space/xxl")
+}
+
+/// The invisible layout grid: lanes, insets and row heights (see Design/HIERARCHY.md).
+public enum IterGrid {
+    public static let unit = d("grid/unit")
+    public static let inset = d("grid/inset")
+    public static let laneGap = d("grid/lane/gap")
+    public static let disclosureLane = d("grid/lane/disclosure")
+    public static let rowSingle = d("grid/row/single")
+    public static let rowDouble = d("grid/row/double")
+}
+
+/// The event unit (window symbol + score + time) and the map pin label that wraps it.
+public enum IterEvent {
+    public static let heightCompact = d("event/height/compact")
+    public static let heightRegular = d("event/height/regular")
+    public static let heightLarge = d("event/height/large")
+    public static let symbolCompact = d("event/symbol/compact")
+    public static let symbolRegular = d("event/symbol/regular")
+    public static let symbolLarge = d("event/symbol/large")
+    public static let gap = d("event/gap")
+    public static let padding = d("event/padding")
+    public static let paddingCompact = d("event/paddingCompact")
+    public static let pinShadowRadius = d("event/pinShadowRadius")
+    public static let pinShadowRadiusSelected = d("event/pinShadowRadiusSelected")
+    /// A scale factor, stored as a dimension token.
+    public static let pinScaleSelected = d("event/pinScaleSelected")
+    /// An opacity, stored as a dimension token.
+    public static let lowConfidenceOpacity = Double(TokenValues.dimension("event/lowConfidenceOpacity"))
+    /// An opacity, stored as a dimension token: the band colour behind the time in the unit's tail.
+    public static let tailOpacity = Double(TokenValues.dimension("event/tailOpacity"))
+}
+
+/// Debug layout-grid overlay opacities (ratios stored as dimension tokens).
+public enum IterDebug {
+    public static let gridOpacity = Double(TokenValues.dimension("debug/gridOpacity"))
+    public static let laneOpacity = Double(TokenValues.dimension("debug/laneOpacity"))
 }
 
 public enum IterRadius {

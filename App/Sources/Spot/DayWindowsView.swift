@@ -3,53 +3,62 @@ import IterCore
 import IterDesign
 import IterFeatures
 
+/// The lane widths shared by every window row, measured once.
+@MainActor enum WindowLanes {
+    static let unit = EventScore.unitWidth(.regular, timeStyle: .range)
+    static let band = BandConfidence.laneWidth
+    /// Where the label lane starts: inset, disclosure lane, lane gap. Dividers and reasons indent to it.
+    static let labelStart = IterGrid.inset + IterGrid.disclosureLane + IterGrid.laneGap
+}
+
 /// The selected day's windows in chronological order. Each row opens to its reasons (pattern #21): every factor
 /// with its value, a sentence and a signed bar, the forecast age and the confidence in words.
+/// Rows sit on fixed lanes: disclosure, label, event unit (symbol, score and time range), band and confidence (HIERARCHY.md).
 struct DayWindowsSection: View {
     let page: SpotModel
     @Environment(\.spotDensity) private var density
 
     var body: some View {
         let light = page.dayLight
-        VStack(alignment: .leading, spacing: IterSpace.md) {
-            if density == .compact {
-                Text(LightText.windowsTitle).font(IterFont.headline)
-            } else {
-                HStack(alignment: .firstTextBaseline) {
-                    Text(LightText.windowsTitle).font(IterFont.titleSection)
-                    Text(LightText.relativeDay(page.day, today: page.today) == TimeText.day(page.day)
-                         ? TimeText.day(page.day)
-                         : "\(LightText.relativeDay(page.day, today: page.today)) · \(TimeText.day(page.day))")
-                        .font(IterFont.subheadline)
-                        .foregroundStyle(IterColor.textSecondary)
-                    Spacer()
-                    if page.day != page.today {
-                        Button(LightText.backToToday) { page.goToToday() }
-                            .controlSize(.small)
-                            .help(String(localized: "Return to today at this spot", comment: "Help"))
-                    }
-                }
-            }
+        ModuleCard(title: LightText.windowsTitle, symbol: "sun.horizon", flush: true) {
+            if density == .page { dayControls }
+        } content: {
             let rows = windowRows(light)
             if rows.isEmpty {
                 Label(light.sun.kind == .polarDay ? LightText.polarDay : light.sun.kind == .polarNight ? LightText.polarNight : LightText.noWindowsPolar,
                       systemImage: light.sun.kind == .polarDay ? "sun.max" : "moon.stars")
-                    .font(IterFont.callout)
+                    .font(IterFont.body)
                     .foregroundStyle(IterColor.textSecondary)
+                    .padding(.horizontal, IterGrid.inset)
+                    .padding(.bottom, IterSpace.sm)
             } else {
                 VStack(spacing: 0) {
                     ForEach(Array(rows.enumerated()), id: \.offset) { index, row in
-                        if index > 0 { Divider() }
-                        if row.day != page.day, index == 0 || rows[index - 1].day == page.day {
-                            laterDayHeader(row.day)
+                        let startsGroup = row.day != page.day && (index == 0 || rows[index - 1].day == page.day)
+                        if startsGroup {
+                            WindowGroupHeader(title: LightText.relativeDay(row.day, today: page.today))
+                        } else if index > 0 {
+                            Divider().padding(.leading, WindowLanes.labelStart)
                         }
                         WindowRow(page: page, window: row.window, day: row.day)
                     }
                 }
-                .background(IterColor.backgroundControl, in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
-                .overlay(RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous)
-                    .strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
-                .clipShape(RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
+                .layoutGrid(lanes: LayoutLane.standardRowLanes(disclosure: true, event: .regular, band: true, time: .range))
+            }
+        }
+    }
+
+    /// The day this list shows, and the way back to today.
+    private var dayControls: some View {
+        HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
+            let relative = LightText.relativeDay(page.day, today: page.today)
+            Text(relative == TimeText.day(page.day) ? TimeText.day(page.day) : "\(relative) · \(TimeText.day(page.day))")
+                .font(IterFont.secondary)
+                .foregroundStyle(IterColor.textSecondary)
+            if page.day != page.today {
+                Button(LightText.backToToday) { page.goToToday() }
+                    .controlSize(.small)
+                    .help(String(localized: "Return to today at this spot", comment: "Help"))
             }
         }
     }
@@ -64,14 +73,22 @@ extension DayWindowsSection {
         }
         return light.windows.map { (day: light.day, window: $0) }
     }
+}
 
-    fileprivate func laterDayHeader(_ day: LocalDay) -> some View {
-        Text(LightText.relativeDay(day, today: page.today))
-            .font(IterFont.captionStrong)
+/// A sub-group label ("Tomorrow"): the module-title style, on the label lane, 16 above and 4 below.
+struct WindowGroupHeader: View {
+    let title: String
+    var top: CGFloat = IterGrid.inset
+
+    var body: some View {
+        Text(title)
+            .font(IterFont.moduleTitle)
             .foregroundStyle(IterColor.textSecondary)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, IterSpace.md)
-            .padding(.vertical, IterSpace.xs)
+            .padding(.leading, WindowLanes.labelStart)
+            .padding(.trailing, IterGrid.inset)
+            .padding(.top, top)
+            .padding(.bottom, IterSpace.xs)
             .accessibilityAddTraits(.isHeader)
     }
 }
@@ -94,23 +111,32 @@ private struct WindowRow: View {
             Button {
                 if isOtherDay { page.selectDay(day) } else if isExpandable { page.toggleExpanded(window.kind) }
             } label: {
-                HStack(spacing: IterSpace.sm) {
+                HStack(alignment: .firstTextBaseline, spacing: IterGrid.laneGap) {
+                    // Disclosure lane: kept on rows that cannot expand, so the label lane starts at one x.
                     Image(systemName: "chevron.right")
-                        .font(IterFont.captionStrong)
+                        .font(IterFont.moduleTitle)
                         .foregroundStyle(IterColor.textSecondary)
                         .rotationEffect(.degrees(isExpanded ? 90 : 0))
-                        .frame(width: IterSize.iconSmall)
+                        .frame(width: IterGrid.disclosureLane)
                         .opacity(isExpandable ? 1 : 0)
                         .accessibilityHidden(true)
-                    LightBadge(window: window, style: .regular, isLoading: page.isLoadingForecast,
-                               showsName: density == .page)
-                    Spacer()
-                    Text(TimeText.timeRange(window.span, in: page.timeZone))
-                        .font(IterFont.time)
+                    // Label lane (flexible): the window's name; the narrow place card uses the short name ("Blue PM"),
+                    // as the timeline does, so the lane never truncates. The full name stays in VoiceOver.
+                    Text(density == .page ? LightText.name(window.kind) : LightText.shortName(window.kind))
+                        .font(IterFont.headline)
                         .foregroundStyle(IterColor.textPrimary)
+                        .lineLimit(1)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    EventScore(window: window, zone: page.timeZone, timeStyle: .range, variant: .regular,
+                               isLoading: page.isLoadingForecast)
+                    Group {
+                        if let score = window.assessment.lightScore { BandConfidence(score: score) }
+                    }
+                    .frame(width: WindowLanes.band, alignment: .leading)
                 }
-                .padding(.horizontal, IterSpace.md)
+                .padding(.horizontal, IterGrid.inset)
                 .padding(.vertical, IterSpace.sm)
+                .frame(minHeight: IterGrid.rowSingle)
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
@@ -123,9 +149,9 @@ private struct WindowRow: View {
                   : String(localized: "Show the reasons behind this window", comment: "Help"))
             if isExpanded {
                 Reasons(page: page, window: window)
-                    .padding(.horizontal, IterSpace.md)
-                    .padding(.bottom, IterSpace.md)
-                    .padding(.leading, density == .compact ? 0 : IterSize.iconSmall + IterSpace.sm)
+                    .padding(.leading, WindowLanes.labelStart)
+                    .padding(.trailing, IterGrid.inset)
+                    .padding(.bottom, IterGrid.inset)
             }
         }
         .background(isSelected ? IterColor.selection : .clear)
@@ -150,20 +176,20 @@ private struct Reasons: View {
     }
 
     @ViewBuilder private func scored(_ score: LightScore) -> some View {
-        Text(LightText.reasonsTitle).font(IterFont.captionStrong).foregroundStyle(IterColor.textSecondary)
+        Text(LightText.reasonsTitle).font(IterFont.moduleTitle).foregroundStyle(IterColor.textSecondary)
         let scale = max(10, score.contributors.map { abs($0.points) }.max() ?? 10)
         if density == .compact {
             VStack(alignment: .leading, spacing: IterSpace.sm) {
                 ForEach(score.contributors) { c in
-                    VStack(alignment: .leading, spacing: IterSpace.xxs) {
+                    VStack(alignment: .leading, spacing: IterSpace.xs) {
                         HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
-                            Text(LightText.title(c.factor)).font(IterFont.bodyEmphasis)
+                            Text(LightText.title(c.factor)).font(IterFont.headline)
                             Text(LightText.value(c, notes: score.notes)).font(IterFont.time).foregroundStyle(IterColor.textSecondary)
                             Spacer(minLength: 0)
                             SignedBar(points: c.points, scale: scale, effect: c.effect)
                         }
                         Text(LightText.sentence(c, kind: window.kind, notes: score.notes))
-                            .font(IterFont.callout)
+                            .font(IterFont.body)
                             .foregroundStyle(IterColor.textPrimary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
@@ -172,15 +198,15 @@ private struct Reasons: View {
                 }
             }
         } else {
-            Grid(alignment: .leadingFirstTextBaseline, horizontalSpacing: IterSpace.md, verticalSpacing: IterSpace.sm) {
+            Grid(alignment: .leadingFirstTextBaseline, horizontalSpacing: IterSpace.lg, verticalSpacing: IterSpace.sm) {
                 ForEach(score.contributors) { c in
                     GridRow {
-                        Text(LightText.title(c.factor)).font(IterFont.bodyEmphasis)
+                        Text(LightText.title(c.factor)).font(IterFont.headline)
                         Text(LightText.value(c, notes: score.notes)).font(IterFont.time).foregroundStyle(IterColor.textSecondary)
                             .gridColumnAlignment(.trailing)
                         SignedBar(points: c.points, scale: scale, effect: c.effect)
                         Text(LightText.sentence(c, kind: window.kind, notes: score.notes))
-                            .font(IterFont.callout)
+                            .font(IterFont.body)
                             .foregroundStyle(IterColor.textPrimary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
@@ -191,41 +217,41 @@ private struct Reasons: View {
         }
         VStack(alignment: .leading, spacing: IterSpace.xs) {
             if density == .compact {
-                VStack(alignment: .leading, spacing: IterSpace.xxs) {
+                VStack(alignment: .leading, spacing: IterSpace.xs) {
                     HStack(spacing: IterSpace.sm) {
                         ConfidenceMark(confidence: score.confidence)
-                        Text(LightText.name(score.confidence)).font(IterFont.subheadline)
+                        Text(LightText.name(score.confidence)).font(IterFont.secondary)
                         if let range = LightText.range(score) {
                             Text(verbatim: "·").foregroundStyle(IterColor.textSecondary)
-                            Text("Likely \(range)", comment: "Score range for days further out").font(IterFont.subheadline)
+                            Text("Likely \(range)", comment: "Score range for days further out").font(IterFont.secondary)
                         }
                     }
                     Text(LightText.sourceUpdated(score.source, model: score.model, fetchedAt: score.forecastFetchedAt,
                                                  fallbackFrom: page.forecast?.source == score.source ? page.forecast?.fallbackFrom ?? [] : []))
-                        .font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
+                        .font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             } else {
                 HStack(spacing: IterSpace.sm) {
                     ConfidenceMark(confidence: score.confidence)
-                    Text(LightText.name(score.confidence)).font(IterFont.subheadline)
+                    Text(LightText.name(score.confidence)).font(IterFont.secondary)
                     if let range = LightText.range(score) {
                         Text(verbatim: "·").foregroundStyle(IterColor.textSecondary)
-                        Text("Likely \(range)", comment: "Score range for days further out").font(IterFont.subheadline)
+                        Text("Likely \(range)", comment: "Score range for days further out").font(IterFont.secondary)
                     }
                     Text(verbatim: "·").foregroundStyle(IterColor.textSecondary)
                     Text(LightText.sourceUpdated(score.source, model: score.model, fetchedAt: score.forecastFetchedAt,
                                                  fallbackFrom: page.forecast?.source == score.source ? page.forecast?.fallbackFrom ?? [] : []))
-                        .font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
+                        .font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
                 }
             }
             Text("\(LightText.confidenceExplained(score.confidence)) \(LightText.leadNote(hours: score.leadHours))")
-                .font(IterFont.footnote)
+                .font(IterFont.secondary)
                 .foregroundStyle(IterColor.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
             ForEach(score.notes, id: \.self) { note in
                 Text(LightText.note(note, source: score.source))
-                    .font(IterFont.footnote)
+                    .font(IterFont.secondary)
                     .foregroundStyle(IterColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -286,19 +312,19 @@ private struct ExplainBlock: View {
                 case .loading:
                     HStack(spacing: IterSpace.sm) {
                         ProgressView().controlSize(.small)
-                        Text(LightText.explaining).font(IterFont.callout).foregroundStyle(IterColor.textSecondary)
+                        Text(LightText.explaining).font(IterFont.body).foregroundStyle(IterColor.textSecondary)
                         Button(LightText.cancel) { page.cancelExplanation() }.controlSize(.small)
                     }
                 case .done(let text):
-                    Text(text).font(IterFont.callout).fixedSize(horizontal: false, vertical: true).textSelection(.enabled)
+                    Text(text).font(IterFont.body).fixedSize(horizontal: false, vertical: true).textSelection(.enabled)
                     HStack(spacing: IterSpace.sm) {
                         Label(LightText.writtenByAppleIntelligence, systemImage: "apple.intelligence")
-                            .font(IterFont.caption)
+                            .font(IterFont.secondary)
                             .foregroundStyle(IterColor.textSecondary)
                         button(LightText.explainAgain)
                     }
                 case .failed(let failure):
-                    Text(LightText.explanationFailure(failure)).font(IterFont.callout).foregroundStyle(IterColor.textSecondary)
+                    Text(LightText.explanationFailure(failure)).font(IterFont.body).foregroundStyle(IterColor.textSecondary)
                     button(LightText.explain)
                 }
             }

@@ -25,15 +25,16 @@ struct ChangeDatesSheet: View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Change Dates", comment: "Sheet title")
                 .font(IterFont.titleSection)
-                .padding([.horizontal, .top], IterSpace.lg)
+                .padding([.horizontal, .top], IterSpace.sheet)
             Form {
                 DatePicker(String(localized: "Starts", comment: "Change dates field"), selection: Binding(
                     get: { startDay.noon(in: Self.utc) }, set: { startDay = LocalDay($0, in: Self.utc) }),
                            displayedComponents: .date)
+                    .datePickerStyle(.compact)
                     .environment(\.timeZone, Self.utc)
-                Stepper(value: $dayCount, in: 1...TripsHomeModel.maximumDayCount) {
-                    LabeledContent(String(localized: "Days", comment: "Change dates field")) {
-                        Text(dayCount, format: .number).monospacedDigit()
+                Picker(String(localized: "Days", comment: "Change dates field"), selection: $dayCount) {
+                    ForEach(1...TripsHomeModel.maximumDayCount, id: \.self) { days in
+                        Text("^[\(days) day](inflect: true)", comment: "Number of days in a trip, e.g. 3 days").tag(days)
                     }
                 }
                 LabeledContent(String(localized: "Ends", comment: "Change dates field")) {
@@ -48,11 +49,11 @@ struct ChangeDatesSheet: View {
                         Image(systemName: "exclamationmark.triangle.fill")
                     }
                     .foregroundStyle(IterColor.warning)
-                    .font(IterFont.callout)
                 }
             }
             .formStyle(.grouped)
             .scrollDisabled(true)
+            .fixedSize(horizontal: false, vertical: true)
             HStack {
                 Spacer()
                 Button(String(localized: "Cancel", comment: "Button"), role: .cancel) { dismiss() }
@@ -62,10 +63,10 @@ struct ChangeDatesSheet: View {
                     dismiss()
                 }
                 .keyboardShortcut(.defaultAction)
-                .buttonStyle(.borderedProminent)
             }
-            .padding([.horizontal, .bottom], IterSpace.lg)
+            .padding([.horizontal, .bottom], IterSpace.sheet)
         }
         .frame(width: NewTripSheet.width)
+        .tint(nil)
     }
 }

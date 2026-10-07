@@ -65,7 +65,7 @@ struct SpotEditorSheet: View {
             Text(isCreate ? "New Spot" : "Edit Spot", comment: "Spot editor title")
                 .font(IterFont.titleSection)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding([.horizontal, .top], IterSpace.lg)
+                .padding([.horizontal, .top], IterSpace.sheet)
                 .padding(.bottom, IterSpace.sm)
             Form {
                 Section { pinMap } footer: { pinFooter }
@@ -105,6 +105,7 @@ struct SpotEditorSheet: View {
             buttons
         }
         .frame(width: IterSize.listMax, height: IterSize.windowMinHeight + IterSize.listMin / 2)
+        .tint(nil)
         .task(id: draft.coordinate) { await lookUp() }
     }
 
@@ -246,9 +247,8 @@ struct SpotEditorSheet: View {
                 .keyboardShortcut(.cancelAction)
             Button { save() } label: { Text(isCreate ? "Add Spot" : "Save", comment: "Button: save the spot editor") }
                 .keyboardShortcut(.defaultAction)
-                .buttonStyle(.borderedProminent)
         }
-        .padding(IterSpace.lg)
+        .padding(IterSpace.sheet)
     }
 
     // MARK: Lookup

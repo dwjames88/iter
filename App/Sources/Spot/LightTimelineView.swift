@@ -31,9 +31,9 @@ struct LightTimelineSection: View {
 
     var body: some View {
         let data = Self.data(page)
-        VStack(alignment: .leading, spacing: IterSpace.md) {
-            header
-            SpotCard {
+        ModuleCard(title: LightText.timelineTitle, symbol: "chart.line.uptrend.xyaxis") {
+            zoomPicker
+        } content: {
                 VStack(alignment: .leading, spacing: IterSpace.sm) {
                     readout
                     Canvas { ctx, size in TimelineRenderer.draw(&ctx, size: size, data: data) }
@@ -57,7 +57,6 @@ struct LightTimelineSection: View {
                         .accessibilityAdjustableAction { direction in stepWindow(direction) }
                     if data.hasWeather { legend(data) } else { noWeather }
                 }
-            }
         }
     }
 
@@ -65,21 +64,17 @@ struct LightTimelineSection: View {
 
     @Environment(\.spotDensity) private var density
 
-    private var header: some View {
-        let layout = density == .compact ? AnyLayout(VStackLayout(alignment: .leading, spacing: IterSpace.sm))
-                                         : AnyLayout(HStackLayout(alignment: .firstTextBaseline))
-        return layout {
-            SpotSectionTitle(LightText.timelineTitle)
-            if density == .page { Spacer() }
-            if page.availableFoci.count > 1 {
-                Picker(selection: Binding(get: { page.focus }, set: { page.setFocus($0) })) {
-                    ForEach(page.availableFoci) { focus in Text(label(focus)).tag(focus) }
-                } label: { Text("Zoom", comment: "Timeline zoom picker label") }
-                .pickerStyle(.segmented)
-                .labelsHidden()
-                .fixedSize()
-                .help(String(localized: "Zoom the timeline, arc and hourly strip to sunrise or sunset", comment: "Help"))
-            }
+    /// The zoom control, at the module title's trailing edge.
+    @ViewBuilder private var zoomPicker: some View {
+        if page.availableFoci.count > 1 {
+            Picker(selection: Binding(get: { page.focus }, set: { page.setFocus($0) })) {
+                ForEach(page.availableFoci) { focus in Text(label(focus)).tag(focus) }
+            } label: { Text("Zoom", comment: "Timeline zoom picker label") }
+            .pickerStyle(.segmented)
+            .controlSize(.small)
+            .labelsHidden()
+            .fixedSize()
+            .help(String(localized: "Zoom the timeline, arc and hourly strip to sunrise or sunset", comment: "Help"))
         }
     }
 
@@ -90,23 +85,23 @@ struct LightTimelineSection: View {
         return HStack(spacing: IterSpace.sm) {
             Text(LightText.readout(hour: TimeText.time(t, in: page.timeZone), cloud: r.cloud, rain: r.rain,
                                          rainMm: r.rain == nil ? page.forecast?.hour(at: t)?.precipitationMm : nil))
-                .font(IterFont.bodyEmphasis)
+                .font(IterFont.headline)
                 .monospacedDigit()
             if let window {
                 Text(verbatim: "·").foregroundStyle(IterColor.textSecondary)
-                Text(LightText.name(window.kind)).font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
+                Text(LightText.name(window.kind)).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
             }
             Spacer()
             if page.scrub == nil {
                 Text("Hover or drag to read any time", comment: "Hint on the timeline")
-                    .font(IterFont.caption).foregroundStyle(IterColor.textTertiary)
+                    .font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
             }
         }
         .frame(minHeight: IterSize.badgeHeight)
     }
 
     private func legend(_ data: TimelineData) -> some View {
-        HStack(spacing: IterSpace.md) {
+        HStack(spacing: IterSpace.lg) {
             if data.hasLayers {
                 swatch(IterColor.cloudHigh, LightText.cloudHighLegend)
                 swatch(IterColor.cloudMid, LightText.cloudMidLegend)
@@ -117,14 +112,14 @@ struct LightTimelineSection: View {
             swatch(IterColor.skyBlue, data.hours.contains { $0.precipitationChance != nil } ? LightText.rainLegend : LightText.rainAmountLegend)
             Spacer()
         }
-        .font(IterFont.caption)
+        .font(IterFont.secondary)
         .foregroundStyle(IterColor.textSecondary)
     }
 
     private func swatch(_ color: Color, _ title: String) -> some View {
         HStack(spacing: IterSpace.xs) {
-            RoundedRectangle(cornerRadius: IterSpace.xxs).fill(color).frame(width: IterSpace.md, height: IterSpace.md)
-                .overlay(RoundedRectangle(cornerRadius: IterSpace.xxs).strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
+            RoundedRectangle(cornerRadius: IterStroke.thin).fill(color).frame(width: IterSpace.sm, height: IterSpace.sm)
+                .overlay(RoundedRectangle(cornerRadius: IterStroke.thin).strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
             Text(title)
         }
     }
@@ -133,7 +128,7 @@ struct LightTimelineSection: View {
     @ViewBuilder private var noWeather: some View {
         if page.isLoadingForecast {
             Label { Text(LightText.checkingForecast) } icon: { ProgressView().controlSize(.small) }
-                .font(IterFont.subheadline)
+                .font(IterFont.secondary)
                 .foregroundStyle(IterColor.textSecondary)
         }
     }
@@ -208,14 +203,14 @@ enum TimelineRenderer {
 
     static func layout(_ d: TimelineData, width: CGFloat) -> Layout {
         let tiersHeight = CGFloat(d.tiers) * SpotLayout.labelTier
-        let bracketY = tiersHeight + IterSpace.xxs
-        let skyTop = bracketY + SpotLayout.bracketDrop + IterSpace.xxs
+        let bracketY = tiersHeight + IterSpace.xs
+        let skyTop = bracketY + SpotLayout.bracketDrop + IterSpace.xs
         let skyBottom = skyTop + IterSize.timelineHeight
         let axisBottom = skyBottom + IterSize.timelineAxisHeight
         let plotTop = axisBottom + IterSpace.sm
         let plotBottom = plotTop + (d.hasWeather ? SpotLayout.plotHeight : 0)
         return Layout(tiersHeight: tiersHeight, bracketY: bracketY, skyTop: skyTop, skyBottom: skyBottom, axisBottom: axisBottom,
-                      plotTop: plotTop, plotBottom: plotBottom, totalHeight: d.hasWeather ? plotBottom + IterSpace.xxs : axisBottom)
+                      plotTop: plotTop, plotBottom: plotBottom, totalHeight: d.hasWeather ? plotBottom + IterSpace.xs : axisBottom)
     }
 
     /// Sky colour for a sun altitude: night below -18, blue hour -6 to the horizon, golden hour to +6, then day.
@@ -411,7 +406,7 @@ enum TimelineRenderer {
             ctx.stroke(bracket, with: .color(color), lineWidth: selected ? IterStroke.thick : IterStroke.regular)
 
             let text = Text(verbatim: LightText.windowChartLabel(w))
-                .font(selected ? IterFont.captionStrong : IterFont.caption)
+                .font(selected ? IterFont.moduleTitle : IterFont.secondary)
                 .foregroundStyle(w.score == nil ? IterColor.textSecondary : IterColor.textPrimary)
             let resolved = ctx.resolve(text)
             let measured = resolved.measure(in: CGSize(width: 400, height: SpotLayout.labelTier))

@@ -30,6 +30,7 @@ public enum IterColor {
     public static let brandDot = make("brand/dot")
     public static let sun = make("map/sun")
     public static let moon = make("map/moon")
+    public static let blueHour = make("light/blueHour")
     // Status (always with an icon)
     public static let warning = make("status/warning")
     public static let danger = make("status/danger")
@@ -52,7 +53,11 @@ public enum IterColor {
     public static let backgroundWindow = make("background/window")
     public static let backgroundControl = make("background/control")
     public static let backgroundContent = make("background/content")
+    public static let backgroundModule = make("background/module")
     public static let backgroundSystemWindow = make("background/systemWindow")
+    // Debug overlays
+    public static let debugGrid = make("debug/grid")
+    public static let debugLane = make("debug/lane")
 
     /// Fill for a Light Index band. Single hue, ordered by lightness; always print the band word beside it.
     public static func ramp(_ band: LightBand) -> Color { rampColors[band.rawValue] }

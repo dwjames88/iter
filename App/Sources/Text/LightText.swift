@@ -37,14 +37,14 @@ enum LightText {
         }
     }
 
-    /// One symbol per window, readable apart at 16 pt without colour: the arrow says morning (up) or evening (down),
-    /// the filled sun is golden hour and the outlined sun is the blue hour on the same side of the day.
+    /// One symbol per window: the rising or setting sun is golden hour (morning, evening), the hazy moon is the blue
+    /// hour (before sunrise and after sunset share it; the window's name and time say which), the starry moon is night.
     static func symbol(_ kind: LightWindowKind) -> String {
         switch kind {
-        case .blueMorning: "sunrise"
+        case .blueMorning: "moon.haze.fill"
         case .goldenMorning: "sunrise.fill"
         case .goldenEvening: "sunset.fill"
-        case .blueEvening: "sunset"
+        case .blueEvening: "moon.haze.fill"
         case .night: "moon.stars.fill"
         }
     }
@@ -53,7 +53,7 @@ enum LightText {
         switch intent {
         case .sunrise: "sunrise.fill"
         case .sunset: "sunset.fill"
-        case .blueHour: "sunset"
+        case .blueHour: "moon.haze.fill"
         case .night: "moon.stars.fill"
         }
     }

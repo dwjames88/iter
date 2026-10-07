@@ -9,6 +9,8 @@ import IterDesign
 struct IterApp: App {
     @State private var model: AppModel
     @NSApplicationDelegateAdaptor private var appDelegate: AppDelegate
+    /// Debug ▸ Show Layout Grid. A launch argument `-IterShowLayoutGrid YES` sets it too (the argument domain wins).
+    @AppStorage("IterShowLayoutGrid") private var showLayoutGrid = false
 
     init() {
         let container: ModelContainer
@@ -37,6 +39,7 @@ struct IterApp: App {
             RootView()
                 .tint(IterColor.accent)
                 .environment(model)
+                .environment(\.showsLayoutGrid, showLayoutGrid)
                 .modelContainer(model.store.container)
                 .task { await model.loadAttribution() }
         }

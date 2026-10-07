@@ -79,12 +79,15 @@ struct StopRowView: View {
                 .buttonStyle(.plain)
                 .help(Text("Open spot page", comment: "Tooltip"))
                 if !spot.locality.isEmpty {
-                    Text(spot.locality).font(IterFont.caption).foregroundStyle(IterColor.textSecondary).lineLimit(1)
+                    Text(spot.locality).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary).lineLimit(1)
                 }
             }
             Spacer(minLength: IterSpace.sm)
             if let window = entry.sessionWindow {
-                LightBadge(window: window, style: .regular, isLoading: model.forecasts.isLoading(spot.coordinate))
+                HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
+                    EventScore(window: window, zone: zone, timeStyle: .start, variant: .regular, isLoading: model.forecasts.isLoading(spot.coordinate))
+                    if case .scored(let score) = window.assessment { BandConfidence(score: score) }
+                }
             }
         }
     }
@@ -159,7 +162,7 @@ struct StopRowView: View {
             Text("Set up \(entry.stop.setUpBufferMinutes) min before the window", comment: "Set-up buffer editor")
                 .monospacedDigit()
         }
-        .padding(IterSpace.md)
+        .padding(IterSpace.lg)
     }
 }
 

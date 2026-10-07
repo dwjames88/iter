@@ -48,8 +48,8 @@ struct ExplorePlaceCard: View {
                             }
                             .id(Self.actionsID)
                         }
-                        .padding(.horizontal, IterSpace.md)
-                        .padding(.bottom, IterSpace.md)
+                        .padding(.horizontal, IterGrid.inset)
+                        .padding(.bottom, IterGrid.inset)
                     }
                 }
                 .scrollBounceBehavior(.basedOnSize)
@@ -73,8 +73,8 @@ struct ExplorePlaceCard: View {
         }
         .frame(width: size.width, height: size.height, alignment: .top)
         .background(background)
+        .layoutGrid()
         .clipShape(shape)
-        .overlay(shape.strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
         .shadow(radius: IterSpace.xs)
         .environment(\.spotDensity, .compact)
         .accessibilityElement(children: .contain)
@@ -88,16 +88,17 @@ struct ExplorePlaceCard: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: IterSpace.sm) {
             HStack(alignment: .top, spacing: IterSpace.sm) {
-                VStack(alignment: .leading, spacing: IterSpace.xxs) {
-                    Text(spot.name).font(IterFont.headline).foregroundStyle(IterColor.textPrimary)
+                VStack(alignment: .leading, spacing: IterSpace.xs) {
+                    Text(spot.name).font(IterFont.titleSection).foregroundStyle(IterColor.textPrimary)
                         .lineLimit(2)
                     HStack(spacing: IterSpace.xs) {
                         if !spot.locality.isEmpty {
                             Text(spot.locality).lineLimit(1)
+                            Text(verbatim: "·")
                         }
                         ProvenanceTag(origin: spot.origin)
                     }
-                    .font(IterFont.subheadline)
+                    .font(IterFont.secondary)
                     .foregroundStyle(IterColor.textSecondary)
                 }
                 Spacer(minLength: IterSpace.sm)
@@ -110,25 +111,18 @@ struct ExplorePlaceCard: View {
             }
             lightSummary
         }
-        .padding(IterSpace.md)
+        .padding(IterGrid.inset)
     }
 
+    /// The card's one strong fact: the next window as the large event unit, "Tomorrow" beside it on the same baseline.
     @ViewBuilder private var lightSummary: some View {
         if let window = row.window {
-            HStack(spacing: IterSpace.sm) {
-                WindowSymbol(kind: window.kind)
-                if let score = window.assessment.lightScore {
-                    ScoreChip(score: score, size: .regular)
-                } else if row.isLoading {
-                    ProgressView().controlSize(.small)
-                }
-                Text(TimeText.time(window.span.start, in: spot.timeZone))
-                    .font(IterFont.timeSmall)
-                    .foregroundStyle(IterColor.textSecondary)
-                    .monospacedDigit()
+            HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
+                EventScore(window: window, zone: spot.timeZone, timeStyle: .start, variant: .large,
+                           isLoading: row.isLoading, isTomorrow: LightText.isTomorrow(row))
                 if LightText.isTomorrow(row) {
                     Text("Tomorrow", comment: "Place card: the next window is tomorrow")
-                        .font(IterFont.subheadline)
+                        .font(IterFont.secondary)
                         .foregroundStyle(IterColor.textSecondary)
                 }
                 Spacer(minLength: 0)
@@ -157,12 +151,13 @@ struct ExplorePlaceCard: View {
         VStack(alignment: .leading, spacing: IterSpace.sm) {
             if let forecast = model.forecasts.state(for: spot.coordinate).forecast {
                 ForecastSourceLine(info: ForecastSourceInfo(forecast))
+                    .font(IterFont.secondary)
             }
             Button {
                 ExploreActions.open(spot, day: day, navigation: navigation)
             } label: {
                 Text("Show Full Page", comment: "Place card: open the spot's full page")
-                    .font(IterFont.subheadline)
+                    .font(IterFont.secondary)
             }
             .buttonStyle(.link)
             .help(String(localized: "Open the spot page", comment: "Tooltip"))
@@ -209,7 +204,6 @@ private struct PlaceCardSections: View {
         VStack(alignment: .leading, spacing: IterSpace.lg) {
             WhenToGoSection(page: page)
             DayWindowsSection(page: page)
-            PlaceCardUpcoming(page: page)
             LightTimelineSection(page: page)
             SkyArcSection(page: page)
             HourlyWeatherSection(page: page)
@@ -217,35 +211,5 @@ private struct PlaceCardSections: View {
         }
         .environment(\.spotDensity, .compact)
         .task { await page.start() }
-    }
-}
-
-/// The next windows after today's, one line each: the day, the window symbol, the score and the start time.
-private struct PlaceCardUpcoming: View {
-    let page: SpotModel
-
-    var body: some View {
-        let windows = page.upcomingWindows
-        if !windows.isEmpty {
-            VStack(alignment: .leading, spacing: IterSpace.sm) {
-                Text("Coming Up", comment: "Place card: the next sunrise and sunset windows").font(IterFont.headline)
-                ForEach(Array(windows.enumerated()), id: \.offset) { _, item in
-                    HStack(spacing: IterSpace.sm) {
-                        Text(LightText.relativeDay(item.day, today: page.today))
-                            .font(IterFont.subheadline)
-                            .foregroundStyle(IterColor.textSecondary)
-                        Spacer(minLength: 0)
-                        WindowSymbol(kind: item.window.kind)
-                        if let score = item.window.assessment.lightScore {
-                            ScoreChip(score: score, size: .compact)
-                        }
-                        Text(TimeText.time(item.window.span.start, in: page.spot.timeZone))
-                            .font(IterFont.timeSmall)
-                            .foregroundStyle(IterColor.textSecondary)
-                            .monospacedDigit()
-                    }
-                }
-            }
-        }
     }
 }

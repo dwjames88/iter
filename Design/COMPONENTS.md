@@ -5,81 +5,138 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 ## How to read this
 
 - Each component names its Swift type and file (under `App/Sources/`), its one job, its anatomy, variants, states, tokens, accessibility and the screens that use it.
-- **Token names** are written the design-tool way: `space/md` is `IterSpace.md`, `light/ramp/good` is `IterColor.ramp(.good)`, `type/headline` is `IterFont.headline`, `size/badge/height` is `IterSize.badgeHeight`, `stroke/hairline` is `IterStroke.hairline`, `radius/card` is `IterRadius.card`. "System" means a system colour, material or control that Iter does not restyle.
-- "Compact", "regular" and "large" are the real variant names in the code.
-- Text is always in `text/primary` unless a row says otherwise. Every card is `background/control` with a `stroke/hairline` border in `separator/default`.
-- Scores are always paired with their window: the window's symbol in compact places (list rows, pins, the card header, trip stops, Saved and Scout rows, the Add to Trip menu), with the word as tooltip and VoiceOver label; the word itself on the spot page and in headings. Bands: Poor, Fair, Good, Great, Epic. Confidence: Low, Medium, High (three bars).
+- **Token names** are written the design-tool way: `space/md` is `IterSpace.md`, `light/ramp/good` is `IterColor.ramp(.good)`, `type/headline` is `IterFont.headline`, `event/height/regular` is `IterEvent.heightRegular`, `stroke/hairline` is `IterStroke.hairline`, `radius/card` is `IterRadius.card`. "System" means a system colour, material or control that Iter does not restyle.
+- "Compact", "regular", "large" and "pin" are the real variant names of the event unit in the code.
+- Text is always in `text/primary` unless a row says otherwise. The spot page's and the place card's modules are [ModuleCard](#modulecard)s: `background/module`, `radius/card`, 16 padding, no border. The trip cards and template rows on All Trips are `background/control` with a `stroke/hairline` border in `separator/default`.
+- The type scale has five levels (Display, Title, Headline, Body, Secondary) and the layout an 8 pt grid; the rules are in [HIERARCHY.md](HIERARCHY.md). Metadata is always `type/secondary` in `text/secondary`.
+- Scores are always paired with their window by the [event unit](#eventscore-the-event-unit): the window's symbol sits inside the score chip, with the window's word as tooltip and VoiceOver label; the spot page's window rows and headings use the word itself. Bands: Poor, Fair, Good, Great, Epic. Confidence: Low, Medium, High (three bars).
 
 ## Contents
 
-1. [Light Index components](#light-index-components): [LightBadge](#lightbadge), [ScoreChip](#scorechip), [WindowSymbol](#windowsymbol), [ConfidenceMark](#confidencemark)
+1. [Light Index components](#light-index-components): [EventScore (the event unit)](#eventscore-the-event-unit), [WindowSymbol](#windowsymbol), [BandConfidence](#bandconfidence), [ConfidenceMark](#confidencemark), [WindowLanes](#windowlanes), [EventLane](#eventlane), [LayoutGridOverlay](#layoutgridoverlay)
 2. [Honesty and provenance](#honesty-and-provenance-components): [SampleDataLabel](#sampledatalabel), [WeatherStatusBanner](#weatherstatusbanner), [WeatherAttributionView](#weatherattributionview) (with ForecastSourceLine, [ForecastSourceLines](#forecastsourcelines) and WeatherDataSources), [WindyLink](#windylink), [ProvenanceTag](#provenancetag), [Warning lines](#warning-lines), [Weather status text and score notes](#weather-status-text-and-score-notes)
-3. [Shared](#shared-components): [AddToTripMenu](#addtotripmenu), [MapStandIn](#mapstandin), [SpotEditorSheet](#spoteditorsheet), [SpotCard](#spotcard)
+3. [Shared](#shared-components): [AddToTripMenu](#addtotripmenu), [MapStandIn](#mapstandin), [SpotEditorSheet](#spoteditorsheet), [ModuleCard](#modulecard)
 4. [Shell](#shell-components): [TripContextMenu](#tripcontextmenu)
 5. [Trips](#trips-components): [TripCard](#tripcard), [TemplateRow](#templaterow), [TripHeader](#tripheader), [TripPlanList](#tripplanlist), [DayHeader](#dayheader), [StopRow](#stoprow), [StopNumberBadge](#stopnumberbadge), [ConnectorRow](#connectorrow), [SuggestionBanner](#suggestionbanner), [TripRouteMap](#triproutemap), [AddStopPopover](#addstoppopover)
 6. [Explore](#explore-components): [ExploreListPanel](#explorelistpanel), [ExploreLocationBanner](#explorelocationbanner), [ExploreRow](#explorerow), [ExploreMapPane](#exploremappane), [ExplorePinView](#explorepinview), [ExplorePlaceCard](#exploreplacecard), [SpotImageStrip](#spotimagestrip), [AddSpotBanner](#addspotbanner)
 7. [Spot page](#spot-page-components): [SpotHeader](#spotheader), [WhenToGoSection](#whentogosection), [SunTimesLine](#suntimesline), [OutlookStrip](#outlookstrip), [DayWindowsSection](#daywindowssection), [WindowRow](#windowrow), [ReasonsGrid](#reasonsgrid), [SignedBar](#signedbar), [ExplainBlock](#explainblock), [LightTimeline](#lighttimeline), [SkyArc](#skyarc), [HourlyStrip](#hourlystrip), [WindySection](#windysection), [SpotFactsRow](#spotfactsrow), [LookAroundSection](#lookaroundsection)
 8. [Saved and Scout](#saved-and-scout-components): [SavedRow](#savedrow), [ScoutResultRow](#scoutresultrow), [ScoutProgress](#scoutprogress)
 9. [Settings components](#settings-components): [ProviderStatusRow](#providerstatusrow)
-10. [System components](#system-components)
-11. [Rules that cut across components](#rules-that-cut-across-components)
+10. [Controls](#controls)
+11. [System components](#system-components)
+12. [Rules that cut across components](#rules-that-cut-across-components)
 
 ---
 
 ## Light Index components
 
-### LightBadge
+### EventScore (the event unit)
 
-- **Type, file:** `LightBadge`, `Components/LightBadge.swift`. Also `WindowLightLine` in the same file (the compact badge and a start time, used by Saved and Scout rows).
-- **One job:** show one Light Index window: its [WindowSymbol](#windowsymbol) beside the number, the band word and the confidence. Without a score the score slot is empty, or a small spinner while that spot's forecast is in flight. There is no "no forecast" variant; the screen's [WeatherStatusBanner](#weatherstatusbanner) says why a score is missing.
-- **Input:** a `LightWindow` (kind: Morning blue hour, Sunrise, Sunset, Evening blue hour, Night; assessment: scored or unscored) and a style. Options: `showsSource` (add an inline [SampleDataLabel](#sampledatalabel) for sample-weather scores; off for rows and pins), `isLoading` (spinner in an unscored slot), `showsName` (regular only: the window's full name beside its symbol, used in the spot page's window rows).
-- **Variants and anatomy:**
+- **Type, file:** `EventScore`, `Components/EventScore.swift`. Same file: `TimeStyle`, `BandConfidence`, `ConfidenceMark`. The row-level block that places the unit in measured lanes is `EventLane`, `Explore/ExploreRowLayout.swift` (see [EventLane](#eventlane)).
+- **One job:** one light window as one fact: which window, how good, when. It replaces the earlier badge, chip and window-symbol-plus-chip pairs.
+- **What it is:** **one capsule with two segments**, clipped by a single `Capsule`. The **head** is filled with the band's ramp colour (`light/ramp/*`) and holds the window's SF Symbol and then the score, both in the band's ramp text colour (`light/rampText/*`), on one first baseline, gap `event/gap` (4). The **tail**, to the right inside the same capsule, holds the time ("18:09" or "18:06–18:40", `text/primary`, monospaced digits) on the same band ramp colour at `event/tailOpacity` (0.22), on the same first baseline. Padding per segment is the variant's padding. Symbol, score and time are one tightly grouped piece in every variant; the time is never drawn outside the unit or in a column of its own. **Why:** owner direction: "the direction was to include the time in that module with the icon and score." An earlier chip with the time as a trailing label made the time float as a separate column.
+- **Input:** a `LightWindow` (kind: Morning blue hour, Sunrise, Sunset, Evening blue hour, Night; assessment: scored or unscored) and the spot's time zone (required), `timeStyle` (`start` "18:09", `range` "18:09–18:43"), a variant, `isLoading`, `isTomorrow` (VoiceOver and tooltip only) and `isSelected` (pin only). A second initializer, `EventScore(kind:start:zone:variant:)`, draws the unscored form from a kind and a start alone (the trips list "Next:" line).
+- **Variants:**
 
-| Style | Scored | Unscored |
-|---|---|---|
-| **compact** | [WindowSymbol](#windowsymbol) (16 pt) + [ScoreChip](#scorechip) compact (18 pt tall, 26 wide). Gap `space/xs`. **No word, no band word, no confidence.** | The symbol and an empty 18 x 18 slot (spinner while loading). |
-| **regular** | One line, gap `space/sm`: [WindowSymbol](#windowsymbol) (with `showsName`, followed by the window's full name in `type/bodyEmphasis`, `text/primary`: "Morning blue hour", "Evening blue hour"), [ScoreChip](#scorechip) regular (22 pt tall, min 36 wide), then `type/caption` `text/secondary`: band word, [ConfidenceMark](#confidencemark), optional Sample data. | The symbol (and name) and an empty slot, min 28 wide by 22 tall (spinner while loading). |
-| **large** | [ScoreChip](#scorechip) large (64 pt) + block (gap `space/xxs`): headline "Sunset · 87" (`type/headline`), then `type/subheadline` `text/secondary`: band word, and "· Likely 72–100" when the range is not a single value; then a `type/caption` row: ConfidenceMark and "Low confidence" (also Medium, High), optional Sample data. | An empty 64 pt slot (spinner while loading) and the window's name as the headline. |
+| Variant | Height | Symbol | Number | Padding (per segment) | Tail time | Used on |
+|---|---|---|---|---|---|---|
+| **compact** | 20 (`event/height/compact`) | 10 pt (`event/symbol/compact`) | `type/score/badge` | 4 (`event/paddingCompact`) | `type/timeSmall` | Scout rows, the Add Stop popover rows, the outlook cells and day list |
+| **regular** | 24 (`event/height/regular`) | 12 pt (`event/symbol/regular`) | `type/headline` | 8 (`event/padding`) | `type/time` | Explore and Saved rows, trip stops, window rows (Light windows) |
+| **large** | 44 (`event/height/large`) | 20 pt (`event/symbol/large`) | `type/score/large` | 8 | `type/headline` | The place card header, the spot header, When to go (the module's one strong fact) |
+| **pin** | as compact (20), with a pointer | as compact | as compact | 4 | `type/timeSmall`, `text/primary`, on a material tail | Map pins (see [ExplorePinView](#explorepinview)) |
 
-- **States:** scored (band Poor to Epic, colour from the band); low confidence (chip at 85% opacity); unscored (empty slot); loading (spinner in the slot); sample data (inline label when `showsSource`). An unscored badge never shows a number, a band or a ring.
-- **Tokens:** `type/subheadline`, `type/caption`, `type/headline`, `type/bodyEmphasis`, `text/primary`, `text/secondary`, `space/xs`, `space/sm`, `space/md`, `space/xxs`; chip tokens below.
-- **Accessibility:** one element (children ignored). Label: "Sunset, Light Index 87, Great, High confidence", or just the window's name when unscored.
-- **Used on:** Trip builder stop rows (regular), Spot page lead (large) and window rows (regular with `showsName`), Add Stop rows (compact), pins (symbol and chip, see [ExplorePinView](#explorepinview)), Saved and Scout rows (compact, through `WindowLightLine`). Explore rows and the place card draw the symbol and a [ScoreChip](#scorechip) directly, not a LightBadge.
+  The **pin** variant is the same compact capsule with the start time in the tail on every pin, selected or not. Over the map the tail uses `regularMaterial` (flat `background/content` in snapshots) instead of the tinted fill so the time stays legible; a small downward pointer (8 wide, 4 high) sits below, so the anchor is the bottom tip. Selection is scale and shadow (see ExplorePinView).
+- **Unscored:** the head is neutral (`background/module`) and holds the window's symbol alone, at the variant's symbol size, in its standalone colour ([WindowSymbol](#windowsymbol): `light/blueHour` for the two blue hours, `text/secondary` otherwise), with a mini spinner beside it while that spot's forecast is in flight. The tail stays, on a neutral fill (`separator/default` at `event/tailOpacity`), and the time still shows. An unscored unit never shows a number, a band or a ring; the screen's [WeatherStatusBanner](#weatherstatusbanner) says why a score is missing.
+- **Hairline:** only on Poor and Fair, one `stroke/hairline` border in `separator/default` around the whole capsule, because those fills are too pale to reach 3:1 on paper. Good, Great and Epic have no border. There is no stroke between the segments.
+- **Low confidence:** the whole capsule drops to `event/lowConfidenceOpacity` (0.85). Medium and High are fully opaque. The band word and confidence bars are not part of the unit: [BandConfidence](#bandconfidence) is a separate lane on the spot page.
+- **Colour by band** (fill / text, light then dark; values in TOKENS.md): Poor `light/ramp/poor` / `light/rampText/poor`; Fair `fair`; Good `good`; Great `great`; Epic `epic`. Never green, red or coral.
+- **Measured widths:** `EventScore.laneWidth(variant)` is the head's fixed width: 2 x padding + 1.25 x symbol size + `event/gap` + the width of "100" at the number's font, rounded up. The tail's fixed width (`tailWidth`) is 2 x padding + `timeLaneWidth(style, variant:)`, the widest time the Mac's locale and clock format can produce, sampled at :58 past every hour, in the variant's time font. `EventScore.unitWidth(variant, timeStyle:)` is their sum, so every unit of a variant and time style has the same width and stacks align. Nothing is typed in. See [WindowLanes](#windowlanes) and [EventLane](#eventlane).
+- **Accessibility:** one element, children ignored. Label: "Sunset, Light Index 87, Great, High confidence, 18:09"; "…, tomorrow at 07:20" when the window is tomorrow's; just the window's name and time when unscored. The same string is the tooltip. A "Today" or "Tomorrow" word printed beside the unit stays outside it.
+- **Where it appears, by variant:** see the table. Explore and Saved rows use regular; Scout rows and the Add Stop popover use compact; the outlook uses compact; the place card header, the spot header and When to go use large; map pins use pin.
 
-### ScoreChip
+**Rejected alternatives.** The unit was drawn four ways (render: `Design/event-unit-alternatives.png`). Chosen: **D refined**, a band-coloured head (symbol and score) plus a quiet tinted tail (the time) in one capsule.
 
-- **Type, file:** `ScoreChip`, `Components/LightBadge.swift`.
-- **One job:** the number on its band fill.
-- **Anatomy:** the score as text (monospaced digits) on a rounded rectangle filled with the band colour, with a `stroke/hairline` border in `separator/default` (so pale bands show against the window), and a `light/rampText/*` text colour.
-- **Sizes:**
-
-| Size | Height | Min width | Type | Corner radius | Horizontal padding |
-|---|---|---|---|---|---|
-| compact | 18 (`size/badge/heightCompact`) | 18 frame + 2 x 4 padding = 26 built | `type/score/badge` | `radius/badge` (6) | `space/xs` |
-| regular | 22 (`size/badge/height`) | 28 (`size/badge/minWidth`) + 2 x 4 padding = 36 built | `type/score/medium` | `radius/badge` | `space/xs` |
-| large | 64 (`size/lightRing/large`) | 64 | `type/score/large` | `radius/card` (12) | none |
-
-- **States, by band** (fill / text, light then dark; see TOKENS.md for the values): Poor `light/ramp/poor` / `light/rampText/poor`; Fair `fair`; Good `good`; Great `great`; Epic `epic`. Low confidence: 85% opacity. Never green, red or coral.
-- **Used on:** inside every LightBadge, and by itself on the [OutlookStrip](#outlookstrip) cells (regular size, no band word; the band is implied by the colour and the day's caption shows the range).
-- **Accessibility:** the parent supplies the label.
+- **A: a symbol-and-score chip with the time as a separate trailing label.** Owner: the time floated as a separate column, away from the symbol and score.
+- **B: the symbol as a separate glyph in the band colour, beside the chip.** Pale bands (Fair, Poor) make a glyph in the band colour illegible on paper, and it still reads as two things (a symbol, then a number).
+- **C: the symbol stacked above the number.** 38 pt tall. It breaks the shared row baselines and the 32 and 48 pt row heights.
+- **D as first drawn (a heavy tail).** The time competed with the score for attention. Refined: the tail is primary text on the band colour at 0.22 opacity, so the score stays the loud part, and fixed measured widths keep the unit compact enough to stack.
 
 ### WindowSymbol
 
-- **Type, file:** `WindowSymbol`, `Components/WindowLight.swift` (16 pt, `IterSize.windowSymbol`; 12 pt inside pins).
-- **One job:** name a light window in a compact place with an SF Symbol instead of a word.
-- **Symbols** (`LightText.symbol(_:)`): `sunrise.fill` sunrise (golden morning), `sunset.fill` sunset (golden evening), `sunrise` (outline) morning blue hour, `sunset` (outline) evening blue hour, `moon.stars.fill` night. The arrow says morning (up) or evening (down); filled is golden hour and outline is blue hour on the same side of the day, so the five read apart at 16 pt without colour.
-- **Anatomy:** the symbol, monochrome, `text/secondary` by default (a caller can pass another style).
-- **Accessibility:** the window's word is the tooltip and the VoiceOver label ("Sunset"). Headings on the spot page and window rows there keep the word itself.
-- **Used on:** [LightBadge](#lightbadge), [ExploreRow](#explorerow), [ExplorePinView](#explorepinview), [ExplorePlaceCard](#exploreplacecard), [StopRow](#stoprow) (and the session menu items), [SavedRow](#savedrow), [ScoutResultRow](#scoutresultrow), [AddToTripMenu](#addtotripmenu).
+- **Type, file:** `WindowSymbol`, `Components/WindowLight.swift` (16 pt, `IterSize.windowSymbol`; the event unit sizes its own symbol: 10, 12 or 20 pt).
+- **One job:** name a light window with an SF Symbol instead of a word. Inside the event unit the symbol is drawn by the chip and takes the chip's ramp text colour; on its own (an unscored slot, the trip card's Next line, menu items) it is a `WindowSymbol`.
+- **Symbols** (`LightText.symbol(_:)`):
+
+| Window | Symbol |
+|---|---|
+| Morning blue hour | `moon.haze.fill` |
+| Sunrise | `sunrise.fill` |
+| Sunset | `sunset.fill` |
+| Evening blue hour | `moon.haze.fill` |
+| Night | `moon.stars.fill` |
+
+- **Why these.** The earlier blue-hour symbols were the outline `sunrise` and `sunset`: weak copies of the golden pair, which read as "the same thing, thinner". `moon.haze.fill` (a crescent over horizon haze: no sun disc, no arrow) says "the cool light when the sun is below the horizon" and differs from the golden pair at a glance at 10 to 16 pt. That matters inside a chip, where the symbol takes the ramp text colour, so the meaning has to come from the silhouette, not from colour. **Morning versus evening is carried by the time and by the order of the list, not by the symbol**, so both blue hours share one glyph.
+- **Standalone colour:** outside a chip (an unscored slot, menus, the trip card's Next line) the blue-hour symbols take `light/blueHour` (`#3A4FA0` light, `#8FA4E8` dark, 3:1 or better on paper and on module cards); sunrise, sunset and night take `text/secondary`. A caller can pass another style.
+- **Candidates surveyed** at 16 and 24 pt in both appearances (`Design/blue-hour-symbols-survey.png`): `sun.horizon(.fill)`, `sun.and.horizon(.fill)`, `sun.haze(.fill)`, `moon.haze(.fill)`, `sunrise.circle`, `sunset.circle`, `moonrise(.fill)`, `moonset(.fill)`, `cloud.sun`, `light.max`, `sparkles`, `aqi.low`, `sun.min(.fill)`, `sun.lefthalf.filled`, `sun.righthalf.filled`, `moon.stars`, `sun.dust`. The main rejections:
+  - `sun.horizon`, `sun.and.horizon`: the sun disc again, which still reads as golden hour.
+  - `moonrise`, `moonset`: they mean the moon's own events, which the sky arc shows.
+  - `light.max`: dashes at 16 pt.
+  - `sparkles`: Apple Intelligence, and the astro category.
+  - `aqi.low`: air quality.
+  - `sun.haze`: a risen sun in haze.
+  - `cloud.sun`: weather.
+  No new twilight symbol exists in the SF Symbols on macOS 27 (`name_availability` lists none after 2023 for this family).
+- **Accessibility:** the window's word is the tooltip and the VoiceOver label ("Sunset"). Headings on the spot page and the window rows there keep the word itself.
+- **Used on:** [EventScore](#eventscore-the-event-unit) (inside the chip, and alone when unscored), [TripCard](#tripcard) (Next line), the session menu items in [StopRow](#stoprow) and the day items in [AddToTripMenu](#addtotripmenu) (as the item's icon).
+
+### BandConfidence
+
+- **Type, file:** `BandConfidence`, `Components/EventScore.swift`.
+- **One job:** the band word and how far to trust it, in the one secondary style.
+- **Anatomy:** the band word ("Great", `type/secondary`, `text/secondary`, one line), gap `space/xs`, a [ConfidenceMark](#confidencemark), on one first baseline. Not drawn for an unscored window.
+- **Measured lane:** `BandConfidence.laneWidth` is the widest band word in the current language at the secondary size, plus the gap and the mark.
+- **Used on:** the band lane of [WindowLanes](#windowlanes) (Light windows) and the trip stop's title line.
 
 ### ConfidenceMark
 
-- **Type, file:** `ConfidenceMark`, `Components/LightBadge.swift`.
+- **Type, file:** `ConfidenceMark`, `Components/EventScore.swift`.
 - **One job:** how far to trust the score, as three ascending bars.
-- **Anatomy:** three bars, each 2 pt wide (`stroke/thick`), heights one third, two thirds and full of 14 pt (`size/confidenceMark`), 1 pt gap (`stroke/thin`), corner radius 1. Filled bars `text/secondary`, unfilled `separator/default`.
+- **Anatomy:** three bars, each 2 pt wide (`stroke/thick`), heights one third, two thirds and full of 14 pt (`size/confidenceMark`), 1 pt gap (`stroke/thin`), corner radius 1; total width 8. Filled bars `text/secondary`, unfilled `separator/default`.
 - **States:** low = 1 bar, medium = 2, high = 3.
 - **Accessibility:** label "High confidence" (Medium, Low).
-- **Used on:** regular and large LightBadge, [ReasonsGrid](#reasonsgrid) confidence line.
+- **Used on:** [BandConfidence](#bandconfidence), [ReasonsGrid](#reasonsgrid) confidence line.
+
+### WindowLanes
+
+- **Type, file:** `WindowLanes`, `Spot/DayWindowsView.swift` (the measured widths); `LayoutLane.standardRowLanes`, `Components/LayoutGridOverlay.swift` (the same lanes as guides).
+- **One job:** the lane spec of a window row, so every row in Light windows lines up, and the list matches [HIERARCHY.md](HIERARCHY.md).
+- **Lanes, left to right**, gap `grid/lane/gap` (8), all rows on the first text baseline:
+
+| Lane | Holds | Width |
+|---|---|---|
+| disclosure | a chevron (`type/moduleTitle`, `text/secondary`; rotates 90 degrees when open), or kept blank on rows that cannot expand | 16 (`grid/lane/disclosure`) |
+| label | the window's name (`type/headline`, `text/primary`, one line) in page density; in the place card (compact density) the chip's symbol names the window and the lane is left empty | flexible |
+| event unit | a regular [EventScore](#eventscore-the-event-unit) with `.range`: symbol, score and time range "07:25–08:01" in one capsule (spinner while loading; neutral head when unscored) | measured (`EventScore.unitWidth(.regular, timeStyle: .range)`) |
+| band + confidence | [BandConfidence](#bandconfidence), leading-aligned | measured (`BandConfidence.laneWidth`) |
+
+- **Row:** minimum height 32 (`grid/row/single`), 8 vertical padding (`space/sm`), 16 horizontal padding (`grid/inset`) so the first lane starts 16 pt from the card edge and the last ends 16 pt from it (the card is `flush`, see [ModuleCard](#modulecard)). Rows are separated by a hairline divider inset to the label lane (16 + 16 + 8 = 40 from the card edge); no divider above the first row. A sub-group label ("Tomorrow") is `type/moduleTitle` in `text/secondary` on the label lane, 16 above and 4 below (8 above the first), and replaces the divider at a group change.
+- **Used on:** [WindowRow](#windowrow) and [DayWindowsSection](#daywindowssection).
+
+### EventLane
+
+- **Type, file:** `EventLane`, `Explore/ExploreRowLayout.swift`.
+- **One job:** the trailing event unit of an Explore or Saved row: one regular capsule (symbol, score, start time) in one fixed-width trailing lane, so units stack and align down the whole list.
+- **Anatomy:** a single [EventScore](#eventscore-the-event-unit) of `EventScore.unitWidth(.regular, timeStyle: .start)`. With no window the block stays empty at the same width so the label lane does not move.
+- **Accessibility:** one element; label and tooltip as [EventScore](#eventscore-the-event-unit), with "tomorrow at" when the window is tomorrow's.
+- **Used on:** [ExploreRow](#explorerow), [SavedRow](#savedrow). Guides: `LayoutLane.eventRow(disclosure:)`.
+
+### LayoutGridOverlay
+
+- **Type, file:** `LayoutGridOverlay`, `Components/LayoutGridOverlay.swift`: the `layoutGrid(lanes:inset:)` view modifier, `LayoutLane`, and the `showsLayoutGrid` environment value (set once at the window root).
+- **One job:** let the design be checked against the grid on a live screen. Debug only; it ships off and adds nothing when off.
+- **Turned on by:** **Debug ▸ Show Layout Grid** (a toggle, remembered between launches), or the launch argument `-IterShowLayoutGrid YES` (same key; the argument wins). Screenshots use the argument.
+- **Draws** (over the view, never taking clicks): the 8 pt grid as hairlines in `debug/grid` at `debug/gridOpacity` (0.12); the two 16 pt inset edges (`grid/inset`) in `debug/grid` at four times that, 1 pt; and each given lane as a band in `debug/lane` at `debug/laneOpacity` (0.18) with hairline edges. A lane is a width and an offset from the leading or trailing edge, taken from the measured widths (`LayoutLane.standardRowLanes`), so what the overlay shows is what the layout uses.
+- **Used on:** the Explore list, Saved, the Light windows list, the place card.
 
 ---
 
@@ -93,7 +150,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 | Style | Anatomy | Tokens |
 |---|---|---|
-| **inline** | `flask` icon + "Sample data" | `type/captionStrong`, `status/warning` (violet) |
+| **inline** | `flask` icon + "Sample data", plain secondary text | `type/secondary`, `text/secondary` |
 | **banner** | A rounded box: `flask` icon (violet), title "Sample data" (`type/captionStrong`), body "Scores use made-up weather. Turn off in the Debug menu." (`type/caption`, `text/secondary`, wraps). Full width, padding `space/sm`, corner `radius/control` (8), fill `background/control`, 1 pt (`stroke/thin`) `status/warning` border. | as shown |
 
 - **States:** shown only in Sample data mode. The banner lives at the bottom of the sidebar; the inline label is used in headers, footers and reasons. See the "once per screen" rule below.
@@ -174,8 +231,8 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 ### ProvenanceTag
 
 - **Type, file:** `ProvenanceTag`, `Components/ProvenanceTag.swift`.
-- **One job:** where a spot came from.
-- **Anatomy:** a capsule with a `stroke/hairline` `separator/default` outline and no fill; text `type/caption`, `text/secondary`; padding `space/xs` horizontal, `space/xxs` vertical.
+- **One job:** where a spot came from, as one more piece of metadata, not a badge.
+- **Anatomy:** plain secondary text: `type/secondary`, `text/secondary`. No capsule, no outline, no fill. It sits in the metadata line beside the locality, separated by a middle dot where the line has one ("Big Sur, CA · Added by you"; on headers "Moab, UT · Curated · Landscape").
 - **States (text):** Curated, Added by you, Apple Maps, Scout. (Scout results use Curated or Apple Maps only.)
 - **Used on:** Explore place card (always), Explore rows (only "Added by you"), Spot header, Saved rows, Scout rows.
 
@@ -211,17 +268,20 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `SpotEditorSheet`, `Components/SpotEditorSheet.swift`.
 - **One job:** create or edit your own spot.
-- **Anatomy and states:** see [Spot editor sheet](SCREENS.md#spot-editor-sheet). 520 x 750 pt. Title `type/title/section`; map `chart/arcHeight` 168 high, `radius/card`, hairline; pin SF Symbol `mappin` (largest title size) in `accent/primary` with a small shadow, tip at the map centre; fields in a system grouped form; buttons Cancel and Add Spot or Save.
-- **Tokens:** `space/lg`, `space/sm`, `space/xs`, `radius/card`, `stroke/hairline`, `accent/primary`, `status/warning`, `status/danger`, `text/secondary`.
+- **Anatomy and states:** see [Spot editor sheet](SCREENS.md#spot-editor-sheet). Sized to its content, with a 20 pt sheet margin (`space/sheet`) like the other sheets. Title `type/title/section`; map `chart/arcHeight` 168 high, `radius/card`, hairline; pin SF Symbol `mappin` (largest title size) in `accent/primary` with a small shadow, tip at the map centre; fields in a system grouped form; buttons Cancel and Add Spot or Save.
+- **Tokens:** `space/sheet`, `space/sm`, `space/xs`, `radius/card`, `stroke/hairline`, `accent/primary`, `status/warning`, `status/danger`, `text/secondary`.
 - **Accessibility:** map labelled "Map with the spot's pin at the centre" with the coordinates as its value.
 - **Used on:** Explore (create), Spot page and Saved (edit).
 
-### SpotCard
+### ModuleCard
 
-- **Type, file:** `SpotCard`, `Spot/SpotLayout.swift`.
-- **One job:** the card surface for the spot page's lead and charts.
-- **Anatomy:** content padded `space/md`, full width, `background/control`, `radius/card` (12), 0.5 pt hairline `separator/default`.
-- **Used on:** Spot page (When to go lead, timeline, arc, hourly strip, facts).
+- **Type, file:** `ModuleCard`, `Spot/SpotLayout.swift` (replaces `SpotCard`).
+- **One job:** the one container for every module of the spot page and the place card, in the macOS Weather idiom: a quiet title, one strong fact, the same padding and radius everywhere.
+- **Anatomy:** fill `background/module`, `radius/card` (12, continuous corners), padding 16 (`grid/inset`), **no stroke**. Inside, top to bottom, gap `space/sm` (8): the **title row** at the card's top-left (a leading SF Symbol and the title, gap `space/xs`, `type/moduleTitle`, all `text/secondary`, one line, header trait), with an optional **accessory** at its trailing edge (a control such as the day label and Today button, or the timeline zoom picker; where the two do not fit side by side the accessory drops below the title); then the content.
+- **Variants:** `flush` lets a list inside run edge to edge of the card: the card's horizontal padding is 0, the title row keeps its 16 pt inset, rows carry their own 16 pt inset, and the bottom padding is 8. Used by the two window lists so their lanes measure from the card edge ([WindowLanes](#windowlanes)).
+- **Module titles and symbols:** When to go `calendar`; Light windows `sun.horizon`; Light through the day `chart.line.uptrend.xyaxis`; Sun and moon `moon.stars`; Hour by hour `cloud.sun`; Windy `wind`; Good to know `info.circle`; Look Around `binoculars`.
+- **Rules:** one subject and one strong fact per module; no border and no second container inside it (inside a card, grouping is whitespace and hairline dividers inset to the label lane). In page density the cards are spaced `space/xl` (24) apart; in the place card, `space/lg` (16).
+- **Used on:** the spot page and the place card ([WhenToGoSection](#whentogosection), [DayWindowsSection](#daywindowssection), [LightTimeline](#lighttimeline), [SkyArc](#skyarc), [HourlyStrip](#hourlystrip), [WindySection](#windysection), [SpotFactsRow](#spotfactsrow), [LookAroundSection](#lookaroundsection)).
 
 ---
 
@@ -243,7 +303,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Type, file:** `TripCard` (private), `Trips/TripsHomeView.swift`.
 - **One job:** one trip on All Trips, with its next session.
 - **Anatomy (top to bottom, gap `space/sm`):** name (`type/title/spot`, up to two lines); date range "Wed 7 – Sat, Oct 10" (`type/subheadline`, `text/primary`) and "4 days · 6 stops" (`type/subheadline`, `text/secondary`); divider; footer (see states). Padding `space/md`; card surface as above (`radius/card`).
-- **States (footer):** next session: icon of the window kind (`sunset`, `sunrise`, ...; `text/secondary`) and "Next: Horseshoe Bend · Sunset from 17:25, Wed" (`type/subheadline`, up to two lines); no stops: `plus.circle` (`accent/primary`) and "No stops yet. Open the trip to add the first."; all passed: `checkmark.circle` and "All sessions have passed".
+- **States (footer):** next session: one line on a first baseline, gap `space/sm`: "Next: Horseshoe Bend" (`type/secondary`, `text/secondary`, one line), then the [WindowSymbol](#windowsymbol) (standalone colour: `light/blueHour` for a blue hour, `text/secondary` otherwise) and "Sunset from 17:25, Wed" (`type/secondary`, `text/secondary`, one line). VoiceOver reads it as one phrase, "Next: Horseshoe Bend · Sunset from 17:25, Wed"; no stops: `plus.circle` (`accent/primary`) and "No stops yet. Open the trip to add the first."; all passed: `checkmark.circle` and "All sessions have passed".
 - **Interaction:** the whole card is a button; context menu = [TripContextMenu](#tripcontextmenu). There is no custom hover style.
 - **Accessibility:** one combined element, hint "Opens the trip".
 - **Used on:** All Trips.
@@ -285,12 +345,12 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Type, file:** `StopRowView`, `Trips/StopRow.swift`.
 - **One job:** one stop: when to leave and be set up first, then the session, the light, and the note.
 - **Anatomy:** a horizontal row, gap `space/md`, vertical padding `space/sm`: [StopNumberBadge](#stopnumberbadge) at the left, then a column (gap `space/xs`):
-  1. **Title line:** spot name (`type/headline`, up to two lines; a plain button that opens the spot page) with locality beneath it (`type/caption`, `text/secondary`); at the right a [LightBadge](#lightbadge) regular for the stop's session window (its [WindowSymbol](#windowsymbol), the score chip, the band word and confidence). A stop shows its own session on its assigned day, not the "next event" rule of the lists.
+  1. **Title line:** spot name (`type/headline`, up to two lines; a plain button that opens the spot page) with locality beneath it (`type/secondary`, `text/secondary`); at the right, on one first baseline (gap `space/sm`), the stop's session as a regular [EventScore](#eventscore-the-event-unit) with its start time, then [BandConfidence](#bandconfidence) (band word and confidence mark). A stop shows its own session on its assigned day, not the "next event" rule of the lists.
   2. **Schedule headline** (`type/bodyEmphasis`, monospaced digits): "Leave 05:54 · park 06:50 · set up by 07:00"; "Leave 03:42 · set up by 07:01" (no "park" when walk-in is unknown or equal); "Set up by 17:05" for the first stop of a trip (no drive). The leave time is in the previous stop's time zone.
   3. **Session line** (`type/caption`, `text/secondary`, one line): a small pop-up menu (the session picker; each item has the window's symbol as its icon and reads like "Sunset · 17:25–18:00 · 7"), "25 min walk-in" (or "walk-in unknown"), "·", and a link button "20 min set-up" that opens the set-up popover.
   4. **Issue lines** ([Warning lines](#warning-lines)), if any.
   5. **Note field:** plain text field, "Add a note" placeholder, `type/callout`, 1 to 4 lines.
-- **States:** default; selected (system list selection, and the map pin follows); scored (badge by band); unscored (the score slot is empty, a spinner while the stop's forecast is in flight; the session menu items simply have no score; the screen's weather banner says why); out of order (violet line); window missing (violet line, menu shows "no window this day"); dragging (the row follows the pointer); infeasible incoming drive (shown on the connector above, not on the row).
+- **States:** default; selected (system list selection, and the map pin follows); scored (chip by band); unscored (the window's symbol alone with a spinner beside it while the stop's forecast is in flight; the session menu items simply have no score; the screen's weather banner says why); out of order (violet line); window missing (violet line, menu shows "no window this day"); dragging (the row follows the pointer); infeasible incoming drive (shown on the connector above, not on the row).
 - **Context menu:** Open Spot Page, Open in Maps, Move Up, Move Down, Move to Day ▸, Remove from Trip.
 - **Accessibility:** container labelled "Stop 2, Monument Valley"; custom actions Move Up, Move Down, Remove from Trip.
 - **Tokens:** `space/md`, `space/sm`, `space/xs`, `type/headline`, `type/bodyEmphasis`, `type/caption`, `type/callout`.
@@ -333,7 +393,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `AddStopPopover`, `Trips/AddStopPopover.swift`.
 - **One job:** add stops to a day, nearest first, each with its score for that day.
-- **Anatomy:** popover 480 x 504 pt. Header (padding `space/md`): a search field (28 pt high, `background/control`, `radius/control`, hairline, magnifier, clear button) and "Nearest to <stop> first" (`type/caption`, `text/secondary`). Divider. Plain list of rows: name (`type/body`, one line) + `bookmark.fill` when saved (`type/caption`, `text/secondary`), a detail line "Page, AZ · 25 mi" (`type/caption`, `text/secondary`), then at the right a compact [LightBadge](#lightbadge) and `plus.circle` (`accent/primary`) or `checkmark.circle.fill` (`text/secondary`) once added.
+- **Anatomy:** popover 480 x 504 pt. Header (padding `space/md`): a search field (28 pt high, `background/control`, `radius/control`, hairline, magnifier, clear button) and "Nearest to <stop> first" (`type/caption`, `text/secondary`). Divider. Plain list of rows: name (`type/body`, one line) + `bookmark.fill` when saved (`type/caption`, `text/secondary`), a detail line "Page, AZ · 25 mi" (`type/caption`, `text/secondary`), then at the right a compact [EventScore](#eventscore-the-event-unit) with its start time and `plus.circle` (`accent/primary`) or `checkmark.circle.fill` (`text/secondary`) once added.
 - **States:** empty search result (system search-empty view); added (tick; the row stays); the spot already on that day shows the tick.
 - **Accessibility:** rows "Add <name>", value "Added".
 
@@ -345,7 +405,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `ExploreListPanel`, `Explore/ExploreListPanel.swift`.
 - **One job:** the reading surface of Explore: count, the weather banner, search status, the list, the source lines.
-- **Anatomy:** see [Explore](SCREENS.md#explore). Background `background/content`. Header: "45 places" (`type/subheadline`, `text/secondary`), a small spinner while forecasts load, and **one borderless menu button** labelled `line.3.horizontal.decrease.circle` (filled, with a count, when filters are on). The menu: inline picker **Near You Radius** (100, 200, 300, 500 mi; default 300), inline picker **Sort By** (Best Light, Name, Distance, Popularity; Distance by default when Iter knows where you are), submenus **Category** (10 categories), **Known For** (Sunrise, Sunset, Blue hour, Night sky, Midday, Overcast) and **Source** (Curated, Your Spots, Apple Maps), divider, Clear Filters. There is no light choice and no date: the list shows each spot's next sunrise or sunset. Under the header row: a Sample data label when sample weather is on, then the search status. After a divider: the [WeatherStatusBanner](#weatherstatusbanner), then the [ExploreLocationBanner](#explorelocationbanner), then the list. Section headers: `type/captionStrong`, `text/secondary`, with a count at right; with a location they read "Near You · Within 300 mi", "Popular", "More Places" (collapsed until opened, or while a search narrows the list) and "Apple Maps"; without one, a single "Spots" section under the location banner. Footer: [ForecastSourceLines](#forecastsourcelines) for the scored rows.
+- **Anatomy:** see [Explore](SCREENS.md#explore). Background `background/content`. Header: "45 places" (`type/secondary`, `text/secondary`), a small spinner while forecasts load, and **one borderless menu button** labelled `line.3.horizontal.decrease.circle` (filled, with a count, when filters are on). The menu: inline picker **Near You Radius** (100, 200, 300, 500 mi; default 300), inline picker **Sort By** (Best Light, Name, Distance, Popularity; Distance by default when Iter knows where you are), submenus **Category** (10 categories), **Known For** (Sunrise, Sunset, Blue hour, Night sky, Midday, Overcast) and **Source** (Curated, Your Spots, Apple Maps), divider, Clear Filters. There is no light choice and no date: the list shows each spot's next sunrise or sunset. Under the header row: a Sample data label when sample weather is on, then the search status. After a divider: the [WeatherStatusBanner](#weatherstatusbanner), then the [ExploreLocationBanner](#explorelocationbanner), then the list. Section headers: `type/moduleTitle`, `text/secondary` (24 above, 8 below), with a count; with a location they read "Near You · Within 300 mi", "Popular", "More Places" (collapsed until opened, or while a search narrows the list) and "Apple Maps"; without one, a single "Spots" section under the location banner. Footer: [ForecastSourceLines](#forecastsourcelines) for the scored rows.
 - **Forecast fetching:** rows are requested in list order as they appear; a collapsed "More Places" is requested when it is opened. Each row's score slot shows a small spinner until its own forecast is in.
 - **States:** list; loading (small spinner); searching; search failed; empty ("No Matching Spots" or "No places found", via ContentUnavailableView, with Clear Filters).
 - **Interaction:** click selects a row (the place card opens over the map); double-click or Return opens the spot page; context menu Open, Save or Unsave (not on your own spots), Add to Trip ▸, divider, Open in Maps, Copy Coordinates.
@@ -355,16 +415,14 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Type, file:** `ExploreRowView`, `Explore/ExploreRowView.swift`; lane widths in `ExploreRowLayout`, `Explore/ExploreRowLayout.swift`.
 - **One job:** one spot and its next sunrise or sunset, with every row's light on the same grid. A row is only light.
 - **Which window:** the next sunrise or sunset event at the spot, in the spot's own local time (`LightEngine.nextEvent`): a window counts until it ends; after today's sunset the next is tomorrow's sunrise; it looks up to 4 days ahead; the polar fallback is the first non-night window not yet over. Blue hours and night are not in the list.
-- **Anatomy:** row, gap `space/md`, vertical padding `space/xs`. Left: spot name (`type/bodyEmphasis`, up to two lines, wraps rather than truncates) over locality (`type/caption`, `text/secondary`), then, when Iter knows where you are, the distance after it ("Big Sur, CA · 101 mi"; the distance is never the part cut off), then a [ProvenanceTag](#provenancetag) for your own spots. Right: the **light column**, three fixed lanes separated by `space/sm`:
+- **Anatomy:** a row of two parts on one first baseline, gap `grid/lane/gap` (8); vertical padding `space/sm` (8), minimum height 48 (`grid/row/double`), because the label lane has two lines. Left, the **label lane** (flexible): the spot name (`type/headline`, `text/primary`, up to two lines, wraps rather than truncates) over one metadata line (`type/secondary`, `text/secondary`): the locality, then, when Iter knows where you are, "· 101 mi" (the distance is never the part cut off), then the [ProvenanceTag](#provenancetag) "Added by you" for your own spots. Gap between the two lines `space/xs`. Right, the **event block** ([EventLane](#eventlane)), two measured lanes separated by 8:
 
 | Lane | Holds | Width |
 |---|---|---|
-| symbol | the [WindowSymbol](#windowsymbol) (16 pt) | 16 pt plus `space/xs` |
-| chip | a regular [ScoreChip](#scorechip); with no score, empty, or a small spinner while the forecast is in flight | the larger of `size/badgeMinWidth` and three digits at the score font, plus the chip padding |
-| time | the window's start time (`type/timeSmall`, `text/secondary`, monospaced digits, trailing), e.g. "19:54"; its tooltip says "Tomorrow" when the window is tomorrow's | the widest time the locale and clock format can produce (sampled at :58 past every hour) |
+| event unit | a regular [EventScore](#eventscore-the-event-unit) (24 pt, `.start`): symbol and score in the band head, the start time (e.g. "19:54") in the tail, one capsule; unscored: neutral head with the symbol, mini spinner while loading, time still shown; the tooltip says "Tomorrow" when the window is tomorrow's | `EventScore.unitWidth(.regular, timeStyle: .start)` |
 
-  Each width is measured once, at the lane's own font, so nothing in the column is typed in and all rows line up. No word, band or confidence is drawn in the row; the symbol's tooltip and the VoiceOver label carry the window's name.
-- **States:** scored; unscored (empty chip lane, start time still shown); loading (spinner in the chip lane); no window (the light column is blank; a spot with neither sunrise nor sunset ahead); selected (system list selection); hovered (the map pin gets a chip; the row itself has no distinct hover style).
+  Each width is measured once, so nothing in the column is typed in and all rows line up. No word, band or confidence is drawn in the row; the chip's tooltip and the VoiceOver label carry the window's name and band. Section headers above the rows are `type/moduleTitle` (see [ExploreListPanel](#explorelistpanel)).
+- **States:** scored; unscored (the symbol alone in the chip lane, start time still shown); loading (a mini spinner beside the symbol); no window (the light column is blank; a spot with neither sunrise nor sunset ahead); selected (system list selection); hovered (the map pin gets a chip; the row itself has no distinct hover style). The whole row is the click target (a plain row, not a button with its own styling).
 - **Interaction:** a click selects the row and opens its [ExplorePlaceCard](#exploreplacecard) on the map. Double-click (or Return) opens the spot page. Rows do not expand.
 - **Accessibility:** one element: name, locality, the distance when a location is known, then the window's words, score, band, confidence and start time ("Sunrise, Light Index 68, Good, Medium confidence, starts 07:20").
 
@@ -383,21 +441,22 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 | Style | Drawn as |
 |---|---|
-| **dot** | 12 pt (`space/md`) circle filled with the band colour (`light/ramp/*`) with a 0.5 pt `separator/default` ring; with no score, a `background/control` circle with the same ring. |
-| **chip** | A capsule (`background/content`, hairline `separator/default`, padding `space/xs` by `space/xxs`) holding the [WindowSymbol](#windowsymbol) (12 pt) and a compact [ScoreChip](#scorechip) (no chip when unscored). With no window: a dot. |
-| **selected** | A capsule (`background/content`, **2 pt `map/pin` border**, padding `space/sm` by `space/xs`) holding the symbol, a compact score chip (when scored) and the window start time (`type/timeSmall`, `text/primary`); with no window the spot name (`type/captionStrong`). Below it a small down-pointing triangle in `map/pin` (`type/caption`), so the anchor is the bottom tip. |
+| **dot** | 12 pt (`space/sm` + `space/xs`) circle filled with the band colour (`light/ramp/*`) with a 0.5 pt `separator/default` ring; with no score, a `background/control` circle with the same ring. |
+| **chip** | The `pin` variant of [EventScore](#eventscore-the-event-unit) **with its time**: one compact capsule (20 pt): band head (symbol and score) and a material tail with the start time (`regularMaterial`; flat `background/content` in snapshots), with a small downward pointer; shadow radius `event/pinShadowRadius` (4). With no window: a dot. |
+| **selected** | The same pin **with the start time** (`type/timeSmall`, `text/primary`) after the chip, scaled by `event/pinScaleSelected` (1.15) anchored at the pointer's tip, with a larger shadow (`event/pinShadowRadiusSelected`, 12). With no window, the spot name (`type/captionStrong`) in the same capsule. |
 
-- **Rules:** the selected pin always wins; a hovered pin and the best **six** scored spots in view (`pinBudget = 6`, excluding the selected one) are chips; everything else is a dot. The selected pin is drawn on top, then chips, then dots. The window is the same next sunrise or sunset as the list row.
-- **Accessibility:** button (and selected) trait; label as the list row.
+- **Selection is scale and shadow**, the Apple Maps idiom: the selected pin grows and lifts. There is no coral (or any) outline and no border on any pin.
+- **Rules:** the selected pin always wins; a hovered pin and the best **six** scored spots in view (`pinBudget = 6`, excluding the selected one) are chips; everything else is a dot. The selected pin is drawn on top, then chips, then dots. The window is the same next sunrise or sunset as the list row. Pins are map annotations, so they stay custom.
+- **Accessibility:** button trait (and selected trait on the selected pin); label as the list row.
 
 ### ExplorePlaceCard
 
 - **Type, file:** `ExplorePlaceCard`, `Explore/ExplorePlaceCard.swift`.
 - **One job:** the selected spot, its next light and a preview of its page, without leaving the map. It opens for a list row or a pin selection.
-- **Anatomy:** a panel at the map's bottom-trailing corner, inset `space/md`. Width `layout/placeCardWidth` (360); height up to `layout/placeCardMaxHeight` (560), and never more than half the map's height so the selected pin stays visible. `radius/panel` (16), a `regularMaterial` fill (flat `background/content` in snapshots), hairline `separator/default`, a soft shadow. Top to bottom:
-  1. **Pinned header** (padding `space/md`, stays put while the body scrolls): name (`type/headline`, up to two lines), locality (`type/subheadline`, `text/secondary`) with a [ProvenanceTag](#provenancetag), a close button at top right (`xmark.circle.fill`, `text/tertiary`, tooltip "Deselect", label "Close"), and the **next-event summary**: the [WindowSymbol](#windowsymbol), a regular [ScoreChip](#scorechip) (or a spinner while loading), the start time (`type/timeSmall`) and "Tomorrow" (`type/subheadline`, `text/secondary`) when it is tomorrow's. No summary when the spot has no such window.
+- **Anatomy:** a panel at the map's bottom-trailing corner, inset `space/md`. Width `layout/placeCardWidth` (360); height up to `layout/placeCardMaxHeight` (560), and never more than half the map's height so the selected pin stays visible. `radius/panel` (16), a `regularMaterial` fill (flat `background/content` in snapshots), a soft shadow; no border. The [layout grid overlay](#layoutgridoverlay) can be switched on over it. Top to bottom:
+  1. **Pinned header** (padding 16, `grid/inset`; stays put while the body scrolls): name (`type/title/section`, `text/primary`, up to two lines); under it one metadata line (`type/secondary`, `text/secondary`): locality, a middle dot, then the [ProvenanceTag](#provenancetag) ("Moab, UT · Curated"); a close button at top right (`xmark.circle.fill`, `text/tertiary`, tooltip "Deselect", label "Close"). Below, with 8 between, the **card's one strong fact**: the next window as a large [EventScore](#eventscore-the-event-unit) (44 pt, start time in the tail in `type/headline`) and, when it is tomorrow's, "Tomorrow" (`type/secondary`, `text/secondary`) beside it on the same baseline. A spinner stands in for the score while loading. No summary when the spot has no such window.
   2. **Image strip** ([SpotImageStrip](#spotimagestrip)), `size/placeCardImageHeight` (200) high, edge to edge.
-  3. **Spot sections** (scrolling, compact density, gap `space/lg`): When to go, Light windows, **Coming Up**, the light timeline, sun and moon, Hour by hour, Good to know (the access notes and facts). "Coming Up" (`type/headline`) lists today's windows that have not ended, then tomorrow's, one line each: the day (`type/subheadline`, `text/secondary`), then at the right the [WindowSymbol](#windowsymbol), a compact score chip and the start time (`type/timeSmall`).
+  3. **Spot sections** (scrolling, compact density, [ModuleCard](#modulecard)s with 16 between and a 16 pt side margin): When to go (with the outlook as a day list), Light windows (today's remaining windows and tomorrow's, each row named), Light through the day, Sun and moon, Hour by hour, Good to know (the access notes and facts). Windy and Look Around are on the full page only.
   4. **Actions:** **Save** / **Saved** (hidden for your own spots) and [AddToTripMenu](#addtotripmenu).
   5. **Source line:** [ForecastSourceLine](#forecastsourceline), then a link-style **Show Full Page** that opens the spot page for the chosen day. (There is no Open button.)
 - **States:** scored; unscored (empty chip, the sections still show sun and moon); loading; no window; saved; your own spot (no Save button); scrolled (see `-IterCardScrolled` in TESTING.md). The weather banner is on the list, not the card.
@@ -436,7 +495,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `SpotHeaderView`, `Spot/SpotHeaderView.swift`.
 - **One job:** who this place is and what you can do with it.
-- **Anatomy:** see [Spot page](SCREENS.md#spot-page). Name `type/title/spot` (header trait); line of locality (`type/subheadline`, `text/secondary`), [ProvenanceTag](#provenancetag), category symbol and name (`type/subheadline`, `text/secondary`); action row spaced `space/sm`.
+- **Anatomy:** see [Spot page](SCREENS.md#spot-page). Gap 16 between the groups. **Title group** (gap `space/xs`): name (`type/title/spot`, header trait), then one metadata line (`type/secondary`, `text/secondary`) of locality, [ProvenanceTag](#provenancetag) and category (symbol and name), **separated by middle dots** ("Moab, UT · Curated · Landscape"). **Strong fact:** when the spot has an upcoming window, its next event as a large [EventScore](#eventscore-the-event-unit) (44 pt, start time in the tail) with the relative day ("Today", "Tomorrow") beside it in `type/secondary`. **Action row** spaced `space/sm` (system bordered buttons; Add to Trip is the one prominent button).
 - **Variants:** titled buttons, or icon-only when the width is tight. Your own spots: Edit and Delete after a divider, no Save.
 - **States:** saved (`bookmark.fill`, "Saved"); not saved; delete confirmation when trips use the spot.
 
@@ -444,14 +503,14 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `WhenToGoSection`, `Spot/WhenToGoView.swift`.
 - **One job:** lead the page with "when should I be here?".
-- **Anatomy:** title ("When to go", `type/title/section`; there is no intent picker, the page follows the spot's own best light), a [SpotCard](#spotcard) lead, the [OutlookStrip](#outlookstrip).
+- **Anatomy:** a [ModuleCard](#modulecard) titled "When to go" (`calendar`; there is no intent picker, the page follows the spot's own best light), holding the lead and then the [OutlookStrip](#outlookstrip), 16 apart.
 - **Lead states:**
 
 | State | Contents |
 |---|---|
-| Best window | Large [LightBadge](#lightbadge) at left. Right column (gap `space/xs`): "Best sunrise in the next 8 days" (`type/caption`, `text/secondary`; the number is the days the forecast covers, at most 10); "Mon, Oct 12, 2026 · 07:25–08:01" (`type/headline`, monospaced digits; "Today" or "Tomorrow" in place of the date when relevant); the top factor's sentence (`type/callout`); "Updated 09:00" (`type/footnote`, `text/secondary`); **Show this day** (small) when the page is on a different day or window. |
-| Loading | Small spinner + "Checking the forecast…" (`type/callout`, `text/secondary`), then [SunTimesLine](#suntimesline). |
-| No score | [SunTimesLine](#suntimesline) alone. No ring, no reason, no Retry; the screen's [WeatherStatusBanner](#weatherstatusbanner) says why. |
+| Best window | The module's one strong fact: a large [EventScore](#eventscore-the-event-unit) (`.range`: the time range is in the unit's tail) for the best window, and beside it (page density) or below it (compact density), gap `space/xs`, a text column in this order: "Best sunrise in the next 8 days" (`type/secondary`, `text/secondary`; the number is the days the forecast covers, at most 10); "Mon, Oct 12, 2026" (`type/headline`; "Today" or "Tomorrow" in place of the date when relevant; the time range is in the unit, not repeated here); the top factor's sentence (`type/body`); "Updated 09:00" (`type/secondary`, `text/secondary`). Then **Show this day** (small system button) when the page is on a different day or window. |
+| Loading | Small spinner + "Checking the forecast…" (`type/body`, `text/secondary`), then [SunTimesLine](#suntimesline). |
+| No score | [SunTimesLine](#suntimesline) alone. No chip, no reason, no Retry; the screen's [WeatherStatusBanner](#weatherstatusbanner) says why. |
 
 ### SunTimesLine
 
@@ -463,29 +522,33 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `OutlookStrip`, `Spot/WhenToGoView.swift`.
 - **One job:** the coming days at a glance for the page's intent, fading with confidence.
-- **Anatomy:** caption "8-day outlook for Sunrise" (`type/subheadline`, `text/secondary`; the number is the days shown); a row of equal cells (gap `space/xs`); key line "Fainter days are less certain." (`type/caption`, `text/tertiary`). **Length:** the days the forecast covers, at most 10 (`LightEngine.outlookDayCount`; 8 with OpenWeather, never past the provider's horizon). If today's window has already passed, the strip starts tomorrow. Each cell, top to bottom (gap `space/xxs`, vertical padding `space/xs`): a **Best** tab (`type/captionStrong`, `accent/onAccent` on an `accent/emphasis` capsule; an empty line on other days; a star in compact density), weekday (`type/caption`, `text/secondary`), day number (`type/bodyEmphasis`, monospaced), a [ScoreChip](#scorechip) (regular, or compact in compact density) or an empty slot of the same size (a spinner while loading), and, on the page, a caption (up to two lines, `type/caption`, `text/secondary`, min height 24): the range "65–81", "No window" or empty.
-- **States:** default; selected day (fill `selection/fill`, 1.5 pt `accent/primary` outline, `radius/control`); best day (the Best tab); confidence fade (medium 80% opacity, low 60%; days scored by persistence are low); unscored (empty slot, no caption); no window ("No window").
+- **Anatomy:** a sub-title "8-day outlook for Sunrise" (`type/moduleTitle`, `text/secondary`; the number is the days shown), the days, then the key line "Fainter days are less certain." (`type/secondary`, `text/secondary`). **Length:** the days the forecast covers, at most 10 (`LightEngine.outlookDayCount`; 8 with OpenWeather, never past the provider's horizon). If today's window has already passed, the list starts tomorrow.
+  - **Page density:** a row of equal cells (no gap between them). Each cell, top to bottom (gap `space/xs`, vertical padding `space/sm`): the **Best** capsule (`type/moduleTitle`, `accent/onAccent` on an `accent/emphasis` capsule; an empty line on other days), weekday (`type/secondary`, `text/secondary`), day number (`type/headline`, monospaced), a **compact** [EventScore](#eventscore-the-event-unit) with its start time in the tail (or an empty slot of the same size, with a spinner while loading), and a caption (up to two lines, `type/secondary`, `text/secondary`, min height 24): the range "65–81", "No window" or empty.
+  - **Compact density (the place card):** a **vertical day list on the lane grid**, one row per day, on the same lanes as the window lists: the day in the label lane (`type/headline`), the compact unit (`.start`) in the unit lane, and the range or "No window" in `type/secondary` (`text/secondary`) in the trailing lane, all on one first baseline; rows at least 32 pt (`grid/row/single`), hairline dividers inset to the label lane. The best day carries the Best capsule. A horizontal strip of ten cells does not fit 360 pt, which is why the card uses the list.
+- **States:** default; selected day (fill `selection/fill` on the cell or row, `radius/control`; no outline); best day (the Best capsule); confidence fade (medium 80% opacity, low 60%; days scored by persistence are low); unscored (empty slot, no caption); no window ("No window").
+- **Custom, and why:** the Best capsule is data (it marks one day), so it is drawn rather than a system control. Each cell or row is a plain button whose whole area is the target.
 - **Accessibility:** each cell is a button, label "Monday, October 12, Sunrise, Light Index 87, Great, Low confidence, Best", selected trait.
 
 ### DayWindowsSection
 
 - **Type, file:** `DayWindowsSection`, `Spot/DayWindowsView.swift`.
 - **One job:** the selected day's windows in time order.
-- **Anatomy:** header "Light windows" (`type/title/section`) + day label (`type/subheadline`, `text/secondary`) + **Today** (small, when not today). A card of [WindowRow](#windowrow)s separated by dividers; clipped to `radius/card`. On today the card lists the windows that have not ended, then tomorrow's under a small day header ("Tomorrow", `type/captionStrong`, `text/secondary`); on any other day, all of that day's windows. If no windows (polar): `moon.stars` or `sun.max` with the sentence, or "No golden hour, blue hour or night window today."
+- **Anatomy:** a flush [ModuleCard](#modulecard) titled "Light windows" (`sun.horizon`). In page density the title row's accessory is the day label (`type/secondary`, `text/secondary`, e.g. "Today · Tue, Oct 6, 2026") and a small **Today** button when the day is not today; in the place card the accessory is absent. Inside, [WindowRow](#windowrow)s on the [WindowLanes](#windowlanes), separated by hairline dividers inset to the label lane. On today the card lists the windows that have not ended, then tomorrow's under a sub-group label ("Tomorrow", `type/moduleTitle`, `text/secondary`); on any other day, all of that day's windows. If no windows (polar): `moon.stars` or `sun.max` with the sentence, or "No golden hour, blue hour or night window today."
 
 ### WindowRow
 
 - **Type, file:** `WindowRow` (private), `Spot/DayWindowsView.swift`.
 - **One job:** one window with its score, expandable to its reasons.
-- **Anatomy:** a button row, padding `space/md` by `space/sm`: `chevron.right` (`type/captionStrong`, `text/secondary`, 14 pt column; rotates 90 degrees when open; hidden when the row cannot expand), a regular [LightBadge](#lightbadge) with the window's name beside its symbol (compact density: symbol only), then at the right the time range "07:25–08:01" (`type/time`). When open, [ReasonsGrid](#reasonsgrid) below, indented past the chevron, padding `space/md` at the bottom.
-- **States:** collapsed; expanded; selected (row fill `selection/fill`, `accent/primary` stroke); unscored (empty slot, a spinner while loading; the row does not expand); a row from another day (tomorrow's, listed under today's): clicking opens that day instead of expanding.
-- **Accessibility:** combined; value "Expanded" or "Collapsed"; hint "Shows why this window scores as it does" (or "Opens this day" for another day's row).
+- **Anatomy:** a plain button row on the [WindowLanes](#windowlanes): `chevron.right` in the disclosure lane (kept, but invisible, on a row that cannot expand), the window's name (`type/headline`, `text/primary`, one line; the full name on the page, the short name in the place card: "Blue AM", "Sunrise", "Sunset", "Blue PM", "Night", as the timeline labels; VoiceOver keeps the full name), the regular [EventScore](#eventscore-the-event-unit) (`.range`, so the time range is inside the unit) and [BandConfidence](#bandconfidence). When open, [ReasonsGrid](#reasonsgrid) below, indented to the label lane, 16 below.
+- **States:** collapsed; expanded; selected (row fill `selection/fill`, no stroke); unscored (the symbol alone in the chip lane, a spinner beside it while loading; no band; the row does not expand); a row from another day (tomorrow's, listed under today's): clicking opens that day instead of expanding.
+- **Custom, and why:** the whole row is the click target, so it is a plain button, not a bordered control.
+- **Accessibility:** combined; label "Sunset, Light Index 87, Great, High confidence, 17:25–18:00"; value "Expanded" or "Collapsed"; hint "Shows why this window scores as it does" (or "Opens this day" for another day's row).
 
 ### ReasonsGrid
 
 - **Type, file:** `Reasons` (private), `Spot/DayWindowsView.swift`.
 - **One job:** why the score is what it is.
-- **Anatomy:** "Why this score" (`type/captionStrong`, `text/secondary`). A grid, gap `space/md` by `space/sm`, one row per factor: name (`type/bodyEmphasis`: Low cloud, Mid and high cloud, Cloud cover, Clear sky, Rain, Visibility, Moonlight, Dark sky, Wind, Sun direction), measured value (`type/time`, `text/secondary`, right aligned: "29%", "15 mi", "12 mph", "34°"), a [SignedBar](#signedbar), and a sentence (`type/callout`; it names the cloud layers when the provider gave them, see [Weather status text](#weather-status-text-and-score-notes)). Then a confidence line (gap `space/sm`): [ConfidenceMark](#confidencemark), "Low confidence" (`type/subheadline`), "· Likely 72–100", then the source and time ("· Windy · GFS · updated 09:00", `text/secondary`; for sample data the Sample data label), with a fallback named as in [ForecastSourceLine](#forecastsourceline). Then a footnote (`type/footnote`, `text/secondary`): the confidence meaning plus "Forecast is about 6 days ahead of this window." Then one footnote line per score note (see [Weather status text and score notes](#weather-status-text-and-score-notes)). Then [ExplainBlock](#explainblock).
+- **Anatomy:** "Why this score" (`type/moduleTitle`, `text/secondary`). A grid, gap `space/md` by `space/sm`, one row per factor: name (`type/bodyEmphasis`: Low cloud, Mid and high cloud, Cloud cover, Clear sky, Rain, Visibility, Moonlight, Dark sky, Wind, Sun direction), measured value (`type/time`, `text/secondary`, right aligned: "29%", "15 mi", "12 mph", "34°"), a [SignedBar](#signedbar), and a sentence (`type/callout`; it names the cloud layers when the provider gave them, see [Weather status text](#weather-status-text-and-score-notes)). Then a confidence line (gap `space/sm`): [ConfidenceMark](#confidencemark), "Low confidence" (`type/secondary`), "· Likely 72–100", then the source and time ("· Windy · GFS · updated 09:00", `text/secondary`; for sample data the Sample data label), with a fallback named as in [ForecastSourceLine](#forecastsourceline). Then a footnote (`type/footnote`, `text/secondary`): the confidence meaning plus "Forecast is about 6 days ahead of this window." Then one footnote line per score note (see [Weather status text and score notes](#weather-status-text-and-score-notes)). Then [ExplainBlock](#explainblock).
 
 ### SignedBar
 
@@ -504,8 +567,8 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `LightTimelineSection` and `TimelineRenderer`, `Spot/LightTimelineView.swift`.
 - **One job:** the 24 hours of light: sky by sun altitude, the five windows with scores, cloud by altitude, rain chance, and a scrubber.
-- **Anatomy** (a canvas inside a [SpotCard](#spotcard); left gutter 44 pt, right inset `space/lg`):
-  1. **Readout line:** "07:43 · 44% cloud · 3% rain" (`type/bodyEmphasis`, monospaced), "·" and the window name under the marker (`type/subheadline`, `text/secondary`); right, "Hover or drag to read any time" (`type/caption`, `text/tertiary`) when not scrubbing. Min height 22.
+- **Anatomy** (a [ModuleCard](#modulecard) titled "Light through the day", with the zoom picker as its trailing accessory when more than one zoom is available; a canvas inside it, left gutter 40 pt (`SpotLayout.gutter`, 5 grid units), right inset 16):
+  1. **Readout line:** "07:43 · 44% cloud · 3% rain" (`type/headline`, monospaced), "·" and the window name under the marker (`type/secondary`, `text/secondary`); right, "Hover or drag to read any time" (`type/secondary`, `text/secondary`) when not scrubbing. Min height 22.
   2. **Bracket label tiers** (3 tiers of 16 pt in Full day, 2 in zoomed views): each window gets a bracket over its span and a label "Sunrise 87", "Blue AM 85", "Sunset 56", "Blue PM 54", "Night 30" (short name + score, no score when no forecast), `type/caption` (`type/captionStrong` for the selected window), `text/primary` (`text/secondary` with no score). Labels move up a tier when they would overlap, with a hairline leader. Bracket 4 pt drop, `text/secondary` 1.5 pt; selected 2 pt `accent/primary`.
   3. **Sky band:** 56 pt tall (`chart/timelineHeight`), corner `radius/badge`, a left-to-right gradient coloured by the sun's altitude: below −18° `sky/night`, −18° to −6° night to `sky/blueHour`, −6° to the horizon `sky/blueHour`, across the horizon blueHour to `sky/golden`, up to +6° `sky/golden`, to +14° golden to `sky/day`, then `sky/day`.
   4. **Axis:** 18 pt, ticks 4 pt long in `text/secondary`, hour labels `type/timeSmall` (every 3 hours in Full day, hourly when zoomed), in the spot's time zone.
@@ -521,7 +584,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `SkyArcSection` and `ArcRenderer`, `Spot/SkyArcView.swift`.
 - **One job:** where the sun and moon are, by compass direction and height, at the shared marker time.
-- **Anatomy** (canvas in a [SpotCard](#spotcard); plot 168 pt high (`chart/arcHeight`), 20 pt above and 34 pt below for labels; total about 222 pt):
+- **Anatomy** (canvas in a [ModuleCard](#modulecard) titled "Sun and moon"; plot 168 pt high (`chart/arcHeight`), 20 pt above and 34 pt below for labels; total about 222 pt):
   - Sky above the horizon filled `sky/day` at 20%; ground below `sky/night` at 10%; plot outlined hairline `separator/default`.
   - Height gridlines every 30°, labelled "30°", "60°" (`type/timeSmall`, `text/secondary`) left of the plot; "0°" at the horizon; the horizon line `text/secondary` 1 pt with "Horizon" (`type/caption`).
   - Compass along the bottom: N, E, S, W, N (`type/captionStrong`, `text/primary`) with ticks; minor ticks at 45° steps. Axis titles "Compass direction →" and "↑ Height above the horizon" (`type/caption`, `text/secondary`).
@@ -530,7 +593,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
   - **Paths:** the sun's path `text/primary` 2 pt; the moon's path `map/moon` 2 pt; drawn only above the horizon.
   - **Markers** (14 pt, `chart/arcMarker`): the sun marker is `map/sun` with a 1.5 pt `background/window` ring when above the horizon, and a hollow `background/window` disc with a 2 pt `map/sun` ring when below (down to −20°); the moon marker is `map/moon` with the same ring, only when above the horizon.
   - **Legend:** 12 pt dot `map/sun` "Sun", dot `map/moon` "Moon", a 2 pt `accent/primary` bar "Classic view" (only when facing is known); `type/caption`, `text/secondary`.
-  - **Text lines:** "At 07:43 the sun is 3° above the horizon, toward 102° ESE." (`type/callout`); "The sun is in your frame." (`type/callout`, `text/secondary`; also "off to one side", "behind you"); the moon line with its phase symbol (20 pt, `text/primary`) and "Waxing crescent · 6% lit · rises 09:38 · sets 19:33" (`type/callout`, `text/secondary`).
+  - **Text lines:** "At 07:43 the sun is 3° above the horizon, toward 102° ESE." (`type/headline`, the module's one strong fact); "The sun is in your frame." (`type/body`, `text/secondary`; also "off to one side", "behind you"); the moon line with its phase symbol (20 pt, `text/primary`) and "Waxing crescent · 6% lit · rises 09:38 · sets 19:33" (`type/callout`, `text/secondary`).
 - **States:** default; no classic view; sun below the horizon ("At 18:25 the sun is below the horizon."); polar (a near-flat path).
 - **Accessibility:** one element, label "Sun and moon for Monday, October 12" with sunrise and sunset directions and the facing.
 
@@ -538,7 +601,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `HourlyWeatherSection`, `Spot/HourlyWeatherView.swift`.
 - **One job:** the day's weather hour by hour, on the timeline's x-axis.
-- **Anatomy:** header "Hour by hour" (`type/title/section`) with, at the trailing edge, the [ForecastSourceLine](#forecastsourceline) with its time ("Windy · GFS · updated 09:00", `type/caption`, `text/secondary`). A [SpotCard](#spotcard) containing a 5-row grid (rows 22 pt, `space/xxs` added to `size/icon/large`): a multicolour weather symbol (`type/subheadline`), then **Temp**, **Cloud**, **Rain**, **Wind** rows in `type/timeSmall`, monospaced digits. Row labels sit in the left gutter (`type/caption`, `text/secondary`). Rain shows a percent only at 20% or more, in `accent/text`. Temperature follows the Settings unit. Window spans are tinted with their sky colour at 20%, the selected window with `accent/primary` at 16%, the marker hour with `text/primary` at 8%. Under the strip: "Wind in mph" (or km/h; "Rain in mm/h · Wind in mph" when rain is an amount rather than a chance, as with Windy; `type/caption`, `text/secondary`).
+- **Anatomy:** a [ModuleCard](#modulecard) titled "Hour by hour" (`cloud.sun`); in page density the trailing accessory is the [ForecastSourceLine](#forecastsourceline) with its time ("Windy · GFS · updated 09:00", `type/secondary`, `text/secondary`); the place card omits it (its footer carries the source line) and adds a visibility line (`eye`). Inside, a 5-row grid (rows 24 pt, `SpotLayout.hourlyRow`): a multicolour weather symbol (`type/secondary`), then **Temp**, **Cloud**, **Rain**, **Wind** rows in `type/timeSmall`, monospaced digits. Row labels sit in the left gutter (`type/secondary`, `text/secondary`). Rain shows a percent only at 20% or more, in `accent/text`. Temperature follows the Settings unit. Window spans are tinted with their sky colour at 20%, the selected window with `accent/primary` at 16%, the marker hour with `text/primary` at 8%. Under the strip: "Wind in mph" (or km/h; "Rain in mm/h · Wind in mph" when rain is an amount rather than a chance, as with Windy; `type/secondary`, `text/secondary`).
 - **States:** with a forecast only. Without one the whole section is absent.
 - **Accessibility:** a summary of every third hour ("6 AM: 36°, 43% cloud").
 
@@ -546,7 +609,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `WindySection`, `Spot/WindySectionView.swift`.
 - **One job:** hand the user to Windy's map, which Iter may not embed.
-- **Anatomy:** a column, gap `space/md`: title "Windy" (`type/title/section`), then a [SpotCard](#spotcard) with a row, gap `space/md`: the sentence "Windy's map shows cloud by height, rain and wind around this spot. It opens on windy.com: Windy doesn't allow its map inside other weather apps." (`type/callout`, `text/secondary`, wraps), a spacer, and a bordered **Open in Windy** button (`arrow.up.forward.square`). Tooltip "Open this spot on windy.com in your browser". Opens [WindyLink](#windylink) at the spot, zoom 9.
+- **Anatomy:** a [ModuleCard](#modulecard) titled "Windy" (`wind`) with a row, gap 16: the sentence "Windy's map shows cloud by height, rain and wind around this spot. It opens on windy.com: Windy doesn't allow its map inside other weather apps." (`type/body`, `text/secondary`, wraps), a spacer, and a bordered system **Open in Windy** button (`arrow.up.forward.square`). Tooltip "Open this spot on windy.com in your browser". Opens [WindyLink](#windylink) at the spot, zoom 9. Full page only.
 - **States:** always shown, whatever the forecast state; sits after Hour by hour and before Good to know. Not an embedded map and not part of the shared selection.
 - **Accessibility:** a container; the button is labelled "Open in Windy".
 
@@ -554,13 +617,13 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `SpotFactsSection`, `Spot/SpotFactsView.swift`.
 - **One job:** the practical facts.
-- **Anatomy:** header "Good to know" (`type/title/section`); a [SpotCard](#spotcard) with an adaptive grid of facts (min 150 pt per item, gap `space/sm`), each a Label with a `text/secondary` icon and `type/callout` text: `figure.walk` "10 min walk-in" (or "Walk-in unknown" in `text/secondary`), `mountain.2` "6,102 ft elevation" (when known; feet or metres by locale), `safari` "Faces 100° E" (or "Facing unknown"), `sun.horizon` "Best at sunrise" (when set), `clock` "Mountain Time · 1 h ahead of you" (only when the spot's zone differs from the Mac's). Then the blurb (`type/body`), and "Notes" (`type/captionStrong`, `text/secondary`) with the notes (`type/callout`).
+- **Anatomy:** a [ModuleCard](#modulecard) titled "Good to know" (`info.circle`) with an adaptive grid of facts (min 150 pt per item, gap `space/sm`), each a Label with a `text/secondary` icon and `type/body` text: `figure.walk` "10 min walk-in" (or "Walk-in unknown" in `text/secondary`), `mountain.2` "6,102 ft elevation" (when known; feet or metres by locale), `safari` "Faces 100° E" (or "Facing unknown"), `sun.horizon` "Best at sunrise" (when set), `clock` "Mountain Time · 1 h ahead of you" (only when the spot's zone differs from the Mac's). Then the blurb (`type/body`), and "Notes" (`type/moduleTitle`, `text/secondary`) with the notes (`type/body`).
 
 ### LookAroundSection
 
 - **Type, file:** `LookAroundSection`, `Spot/SpotFactsView.swift`.
 - **One job:** show Apple's street-level imagery where it exists.
-- **Anatomy:** header "Look Around" (`type/title/section`) and a system Look Around preview, 224 pt high, clipped to `radius/card`.
+- **Anatomy:** a [ModuleCard](#modulecard) titled "Look Around" (`binoculars`) and a system Look Around preview, 224 pt high, clipped to `radius/control`. Full page only.
 - **States:** absent when Apple has no imagery, and in snapshots. The place card's [SpotImageStrip](#spotimagestrip) shows Look Around too, with a satellite image where Apple has none.
 
 ---
@@ -571,17 +634,17 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 - **Type, file:** `SavedRow` (private), `Saved/SavedView.swift`.
 - **One job:** a kept spot and its next sunrise or sunset.
-- **Anatomy:** row, gap `space/md`, vertical padding `space/xs`: category symbol (`title3`, `text/secondary`, 32 pt column, hidden from VoiceOver); a column of name (`type/headline`, one line) and, gap `space/sm`, locality (or category if there is none; `type/subheadline`, `text/secondary`) plus a [ProvenanceTag](#provenancetag); at the right a `WindowLightLine`: the [WindowSymbol](#windowsymbol), a compact [ScoreChip](#scorechip) (empty, or a spinner while loading, when unscored) and the window's start time in the spot's own zone (`type/caption`, `text/secondary`, monospaced digits). The window is the spot's next sunrise or sunset by the same rule as [ExploreRow](#explorerow); its tooltip and VoiceOver label say "Tomorrow" when it is tomorrow's.
-- **States:** scored; unscored (empty slot); loading (spinner); tomorrow's window; selected.
+- **Anatomy:** a row on the same lanes as [ExploreRow](#explorerow), gap `grid/lane/gap` (8), vertical padding `space/sm`, minimum height 48 (`grid/row/double`): the category symbol in the disclosure lane (16 pt column, `text/secondary`, hidden from VoiceOver); the label lane: name (`type/headline`, one line) over one metadata line (`type/secondary`, `text/secondary`): the locality (or the category if there is none) and the [ProvenanceTag](#provenancetag); then the [EventLane](#eventlane): a regular [EventScore](#eventscore-the-event-unit) with the window's start time in its tail, in the spot's own zone. The window is the spot's next sunrise or sunset by the same rule as [ExploreRow](#explorerow); its tooltip and VoiceOver label say "Tomorrow" when it is tomorrow's.
+- **States:** scored; unscored (the symbol alone in the chip lane); loading (a mini spinner beside the symbol); tomorrow's window; selected.
 - **Accessibility:** one combined element.
 
 ### ScoutResultRow
 
 - **Type, file:** `ScoutResultRow` (private), `Scout/ScoutView.swift`.
 - **One job:** one suggested place, its light, drive and the scout's note.
-- **Anatomy (gap `space/sm`, vertical padding `space/sm`):** name (`type/headline`) over locality (`type/subheadline`, `text/secondary`), a [ProvenanceTag](#provenancetag) at the right (Curated or Apple Maps); a line: a `WindowLightLine` (the [WindowSymbol](#windowsymbol), a compact score chip and the start time of the spot's next sunrise or sunset) and `car` + "12 min drive" (`type/caption`, `text/secondary`); the note block (only when there is a note): `sparkles` + "Scout's note" (`type/captionStrong`, `text/secondary`) and the note (`type/callout`); buttons (small, bordered): **Open**, **Save** or **Saved** (`bookmark` / `bookmark.fill`), **Add to Trip**.
-- **Light-line states:** scored; unscored (empty chip slot); loading (a small spinner alone); no event ahead (nothing drawn). The screen's [WeatherStatusBanner](#weatherstatusbanner) says why scores are missing.
-- **Accessibility:** container; the light line's label names the window, score and start time (and "Tomorrow").
+- **Anatomy (gap `space/sm`, vertical padding `space/sm`):** name (`type/headline`) over locality (`type/secondary`, `text/secondary`), a [ProvenanceTag](#provenancetag) at the right (Curated or Apple Maps); a line on one first baseline: a compact [EventScore](#eventscore-the-event-unit) with the start time of the spot's next sunrise or sunset, and `car` + "12 min drive" (`type/secondary`, `text/secondary`); the note block (only when there is a note): `sparkles` + "Scout's note" (`type/captionStrong`, `text/secondary`) and the note (`type/callout`); buttons (small, bordered system buttons): **Open**, **Save** or **Saved** (`bookmark` / `bookmark.fill`), **Add to Trip**.
+- **Light-line states:** scored; unscored (the symbol alone); loading (a small spinner alone); no event ahead (nothing drawn). The screen's [WeatherStatusBanner](#weatherstatusbanner) says why scores are missing.
+- **Accessibility:** container; the event unit's label names the window, score and start time (and "Tomorrow").
 
 ### ScoutProgress
 
@@ -614,8 +677,33 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 | Checking | "Checking…" | small spinner | none |
 
 - **Key row:** secure field (label "API key", prompt "Paste your key", or "Saved in Keychain. Paste to replace") + **Save** (disabled while empty; Return also saves) + destructive **Remove** once a key exists. A key from the environment or a launch argument replaces the field with a read-only value: "From environment (ITER_WINDY_KEY)" or "From launch argument". Keychain errors: "Couldn't save the key to your Keychain." / "Couldn't remove the key from your Keychain." in `status/danger`, `type/caption`. A key is never displayed.
-- **Calls today:** "12 of 800", monospaced digits, with a stepper (0 to 10,000, step 50) that sets the daily cap. OpenWeather and Windy only.
+- **Calls today:** a system labelled row "Calls today" with the count ("12", monospaced digits), and below it a `Stepper` whose label carries its value, "Daily cap: 800 calls" (0 to 10,000, step 50), that sets the daily cap. OpenWeather and Windy only.
 - **Used on:** Settings > Weather, three times (Apple Weather without key row or calls).
+
+## Controls
+
+Sheets and Settings use **system controls only**. Standard controls are not restyled; Iter configures them and draws nothing around them.
+
+- **Form:** the grouped Form (`.formStyle(.grouped)`), scrolling off in a sheet. Sections and footers are the system's; a footer carries the explanation (for example, why Days is disabled under a template).
+- **Date:** a compact `DatePicker` (date only, shown in UTC so the date does not shift).
+- **Day count:** a menu `Picker` whose items read as inflected text ("1 day", "3 days"), not a stepper, because the range is small and the value is the label.
+- **Value that is a number you nudge:** a `Stepper` **whose label carries its value** ("Set-up time before a window: 20 min", "Daily cap: 800 calls", "Set up 20 min before the window"), so the value is never a separate, unlabelled number.
+- **Choices:** menu `Picker`s ("Start from", Temperature, forecast sources), `Toggle`s, a secure field for keys, system `TextField`s.
+- **Buttons:** the system **Cancel** (`.cancelAction`, Esc) and the system default button (`.defaultAction`, Return; the accent-filled default). No custom button styles in a sheet or in Settings.
+- **Tint:** `.tint(nil)` at the sheet root, so the app-wide coral tint does not paint the neutral buttons and pickers; the default button keeps the system's own default-button look.
+- **Margin:** a sheet is sized to its content, with a 20 pt margin (`space/sheet`) around it.
+
+**What stays custom, and why:**
+
+| Custom | Why |
+|---|---|
+| The event unit ([EventScore](#eventscore-the-event-unit)) | The product's one fact: symbol, score and time as one band-coloured capsule. No system control draws it. It is the one deliberate custom chip. |
+| Map pins ([ExplorePinView](#explorepinview), trip route pins) | They are map annotations: positioned, scaled and layered by the map. |
+| The outlook "Best" capsule | It is data (it marks the best day), not a control. |
+| Image-strip overlay captions and dots ([SpotImageStrip](#spotimagestrip)) | Materials over imagery; the system has no equivalent. |
+| Row-sized plain buttons where the whole row is the target (Explore, Saved and Scout rows, window rows, outlook cells, stop rows) | The row is the control: a bordered button inside a list row would be a second, smaller target for the same action. |
+
+---
 
 ## System components
 
@@ -634,7 +722,7 @@ Iter relies on these system controls. Do not restyle them in the design; use the
 | **Picker** | Segmented (intent on the Spot page, timeline zoom, trip builder toolbar day picker up to 5 days); menu (session menu, Settings pickers, Category in the editor); inline in menus (Near You Radius and Sort By in the Explore list header menu). |
 | **Menu** | Add to Trip, Explore list header menu (radius, sort, filters), Saved Sort and Filter, Trip Actions, context menus. |
 | **ShareLink** | Trip (toolbar and context menu; shares a `.iter` document), Spot (header; shares an Apple Maps link and a coordinate message). |
-| **DatePicker, Stepper, TextField, Toggle** | Forms (grouped style) in the sheets and Settings; the Explore Add Spot control is a button-style Toggle. |
+| **DatePicker, Picker, Stepper, TextField, Toggle** | Forms (grouped style) in the sheets and Settings, in their default styles (see [Controls](#controls)); the Explore Add Spot control is a button-style Toggle. |
 | **Sheet, popover, confirmationDialog, alert, fileImporter, fileExporter** | As listed in SCREENS.md. |
 | **TabView** | Settings (four tabs). |
 | **Materials** | `regularMaterial` for the place card, Add Spot banner; `bar` for the Saved footer. Flat colours in snapshots. |
@@ -645,16 +733,16 @@ Iter relies on these system controls. Do not restyle them in the design; use the
 
 ## Rules that cut across components
 
-1. **Every score is paired with its window.** A number is never alone: in compact places (list rows, pins, the card header, trip stops, Saved and Scout rows, the Add to Trip menu) the window's [WindowSymbol](#windowsymbol) sits beside the chip, with the word as tooltip and VoiceOver label; on the spot page the word is used ("Sunset · 87" in the large badge, the name beside the symbol in window rows). Outlook cells inherit the window from context (the outlook title "8-day outlook for Sunrise").
+1. **Every score is paired with its window, inside one unit.** A number is never alone: the window's symbol sits inside the unit with the score and the time ([EventScore](#eventscore-the-event-unit)), with the word as tooltip and VoiceOver label; the spot page's window rows name the window in the label lane. Outlook cells inherit the window from context (the outlook title "8-day outlook for Sunrise").
 2. **No weather is one banner, never a number, never a low score.** The only no-data situations (no key, offline, provider error) show one [WeatherStatusBanner](#weatherstatusbanner) at the top of the screen. Rows keep their last cached score or leave the score slot empty (a small spinner while the forecast is in flight). Nothing per row says "No forecast"; there is no dashed ring. Beyond the provider's forecast a window is still scored, by persistence, at Low confidence. Sun and moon times stay exact and visible.
-3. **The band word is always printed beside the ramp colour** in the regular and large badges. Colour alone never carries the band. (The compact badge, list-row chips, the outlook chips and pin dots rely on the number or context; see the inconsistencies reported with this document.) A badge always has its hairline, because Poor and Fair are too pale to reach 3:1 on the window.
+3. **The band is printed beside the ramp colour where there is room**: [BandConfidence](#bandconfidence) in the window lists and trip stops. Colour alone never carries the band; compact places (list-row chips, outlook chips, pins) rely on the number, and the VoiceOver label always names the band. The ramp appears only inside the event unit and the pin dot. Poor and Fair chips carry a hairline, because those fills are too pale to reach 3:1 on the window.
 4. **Coral is used with restraint.** `accent/primary` is the one thing that acts or is selected, `route/active` the route, `map/pin` the pins and `map/sun` the sun. Never a score, a status, an error or a large fill behind text. Small text uses `accent/text`; small text on a coral fill uses `accent/emphasis`. It is never "good".
 5. **A warning is violet (`status/warning`) and always has an icon.** Failure and validation are raspberry (`status/danger`) with an icon and words. Never amber, never coral, never green. Green is not used anywhere.
 6. **"Sample data" appears once per screen.** The banner sits in the sidebar; screens that show sample scores carry one inline label; [WeatherAttributionView](#weatherattributionview) shows the label in place of a provider credit (in Settings).
 7. **Source wherever weather appears; attribution in Settings.** Each provider's own credit (Apple mark and Legal attribution; "Weather data © OpenWeather"; "Contains data from the Windy database" and Windy.com) plus "Light Index modified from forecast data" now lives only in Settings > Weather and Settings > About (owner's instruction, 2026-10-06; to be revisited before release). Elsewhere a quiet [ForecastSourceLine](#forecastsourceline) names the source. Lists and the spot page also name the source and model in words, and a fallback is always named ("OpenWeather (Apple Weather unavailable)").
-8. **Confidence is shown, and low confidence fades.** Three bars on regular and large badges; ranges ("Likely 72–100") for days four and later; outlook cells fade to 80% and 60%.
+8. **Confidence is shown, and low confidence fades.** Three bars in [BandConfidence](#bandconfidence); low-confidence chips at 85% opacity; ranges ("Likely 72–100") for days four and later; outlook cells fade to 80% and 60%.
 9. **Times are the spot's own and monospaced; units follow the Mac and Settings.**
-10. **System chrome stays system.** The sidebar, toolbar, Settings, sheets and standard controls keep the system's materials and colours and take coral only through the app accent. What the app draws itself uses First Light paper and ink (`text/*`, `background/*`), plus the ramp, accent, route, pin, status, sky and cloud colours.
+10. **System chrome stays system.** The sidebar, toolbar, Settings, sheets and standard controls (see [Controls](#controls)) keep the system's materials and colours and take coral only through the app accent. What the app draws itself uses First Light paper and ink (`text/*`, `background/*`), plus the ramp, accent, route, pin, status, sky and cloud colours.
 11. **Never reorder or change a plan automatically.** Suggestions are offered, and every edit is undoable.
 12. **The scout's words are labelled** ("Scout's note", "Written by Apple Intelligence from the factors listed above."). Iter scores the light, not the model.
 
@@ -662,12 +750,12 @@ Iter relies on these system controls. Do not restyle them in the design; use the
 
 Found in the hand-off audit and left for the design work, because each one is a design decision rather than a bug:
 
-1. **Band word in compact places.** Compact badges (map pins, Saved, Scout and Add Stop rows), Explore rows and the outlook cells show the window symbol and the number but not the band word. The VoiceOver label includes the band. Decide whether compact spaces carry the word, a glyph, or nothing.
+1. **Band word in compact places.** Compact chips (map pins, Scout and Add Stop rows), Explore and Saved rows and the outlook show the window symbol and the number but not the band word. The VoiceOver label includes the band. This is deliberate: the band shows in the ramp colour and in the window lists' [BandConfidence](#bandconfidence) lane.
 2. **"Sample data" can appear twice on one screen**, in the header and in the Settings credits (Settings ▸ Weather). The rule says once per screen.
 3. **Rain colour.** There is no rain token. The timeline's rain bars use `sky/blueHour`, and the hourly strip's rain figures use `accent/text`. A `weather/rain` token is needed.
 4. **Accent on the outlook "Best" tag** (`accent/emphasis`) marks the best day. Accent is for interaction and the route, so this edges toward accent meaning "good".
 5. **Serif beyond place names.** `type/title/spot` (New York) is also used for trip names and the empty-state headline.
-6. **Literal opacities** in `App/Sources/Spot/SpotLayout.swift` (chart layers) and the low-confidence chip opacity (0.85) are not tokens yet.
+6. **Literal opacities** in `App/Sources/Spot/SpotLayout.swift` (chart layers) are not tokens yet. (The low-confidence chip opacity is `event/lowConfidenceOpacity`.)
 7. **Explore rows have no hover style** (`ExploreRowView.isHovered` is unused); only the pin reacts to hover.
 8. **At 960×640 the trip builder's session line truncates** ("25 min wal…").
 

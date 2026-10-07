@@ -44,13 +44,13 @@ private struct FakeImagery: SpotImageryProviding {
 
     /// The card alone, on a flat stand-in for the map, at the size the map pane gives it.
     private func card(_ model: AppModel, spotID: String = "mesa-arch", imagery: any SpotImageryProviding,
-                      scrolled: Bool = false) -> some View {
+                      scrolled: Bool = false, height: CGFloat = 680) -> some View {
         let spot = CuratedSpots.spot(id: spotID)!
         let row = ExploreModel(app: model).rows.first { $0.spot.id == spotID }!
         return Fixtures.host(
             ZStack(alignment: .bottomTrailing) {
                 IterColor.backgroundControl
-                ExplorePlaceCard(row: row, size: CGSize(width: IterSize.placeCardWidth, height: 680),
+                ExplorePlaceCard(row: row, size: CGSize(width: IterSize.placeCardWidth, height: height),
                                  startsScrolled: scrolled) {}
                     .padding(IterSpace.md)
             }
@@ -67,11 +67,28 @@ private struct FakeImagery: SpotImageryProviding {
                                   screen: "placecard", state: "images", sizes: [Self.cardSize], settle: .seconds(2), chrome: .bare)
     }
 
+    /// Debug ▸ Show Layout Grid on: the 8 pt grid and the 16 pt insets over the card.
+    @Test(.enabled(if: Snapshot.enabled)) func gridOn() async throws {
+        let model = Fixtures.model(weather: .sample)
+        _ = await model.forecasts.load(CuratedSpots.spot(id: "mesa-arch")!.coordinate)
+        try await Snapshot.render(card(model, imagery: FakeImagery(sources: [.lookAround, .satellite])).environment(\.showsLayoutGrid, true),
+                                  screen: "placecard", state: "grid", sizes: [Self.cardSize], settle: .seconds(2), chrome: .bare)
+    }
+
     @Test(.enabled(if: Snapshot.enabled)) func placeholder() async throws {
         let model = Fixtures.model(weather: .sample)
         _ = await model.forecasts.load(CuratedSpots.spot(id: "mesa-arch")!.coordinate)
         try await Snapshot.render(card(model, imagery: FakeImagery(sources: [])),
                                   screen: "placecard", state: "placeholder", sizes: [Self.cardSize], settle: .seconds(2), chrome: .bare)
+    }
+
+    /// The whole card unrolled, to see every section in one image.
+    @Test(.enabled(if: Snapshot.enabled)) func tall() async throws {
+        let model = Fixtures.model(weather: .sample)
+        _ = await model.forecasts.load(CuratedSpots.spot(id: "mesa-arch")!.coordinate)
+        try await Snapshot.render(card(model, imagery: FakeImagery(sources: []), height: 2600),
+                                  screen: "placecard", state: "tall", sizes: [Snapshot.Size(name: "420x2700", width: 420, height: 2700)],
+                                  settle: .seconds(2), chrome: .bare)
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func scrolledToActions() async throws {

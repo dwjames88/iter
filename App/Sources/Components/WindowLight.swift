@@ -8,13 +8,21 @@ import IterFeatures
 struct WindowSymbol: View {
     let kind: LightWindowKind
     var font: Font = .system(size: IterSize.windowSymbol)
-    var color: AnyShapeStyle = AnyShapeStyle(IterColor.textSecondary)
+    /// nil: the standalone colour, which is `light/blueHour` for the blue-hour windows and `text/secondary` otherwise.
+    var color: AnyShapeStyle? = nil
+
+    private var standaloneColor: AnyShapeStyle {
+        switch kind {
+        case .blueMorning, .blueEvening: AnyShapeStyle(IterColor.blueHour)
+        case .goldenMorning, .goldenEvening, .night: AnyShapeStyle(IterColor.textSecondary)
+        }
+    }
 
     var body: some View {
         Image(systemName: LightText.symbol(kind))
             .symbolRenderingMode(.monochrome)
             .font(font)
-            .foregroundStyle(color)
+            .foregroundStyle(color ?? standaloneColor)
             .help(LightText.name(kind))
             .accessibilityLabel(LightText.name(kind))
     }

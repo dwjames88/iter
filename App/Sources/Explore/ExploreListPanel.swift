@@ -217,13 +217,28 @@ struct ExploreListPanel: View {
             .accessibilityElement(children: .combine)
             .accessibilityAddTraits(.isButton)
             .accessibilityValue(open ? Text("Expanded", comment: "VoiceOver: the section is open") : Text("Collapsed", comment: "VoiceOver: the section is closed"))
-            .font(IterFont.captionStrong)
+            .font(IterFont.moduleTitle)
             .foregroundStyle(IterColor.textSecondary)
+            .padding(.top, IterSpace.sm)
+            .padding(.bottom, IterSpace.sm)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(IterColor.backgroundContent)
         } else {
             headerLabel(section)
-                .font(IterFont.captionStrong)
+                .font(IterFont.moduleTitle)
                 .foregroundStyle(IterColor.textSecondary)
+                .padding(.top, IterSpace.sm)
+                .padding(.bottom, IterSpace.sm)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(IterColor.backgroundContent)
                 .accessibilityElement(children: .combine)
+        }
+    }
+
+    /// 24 pt between one section and the next header (HIERARCHY.md); none after the last, none inside a pinned header.
+    @ViewBuilder private func sectionGap(after section: ExploreSection) -> some View {
+        if section.id != explore.sections.last?.id {
+            Color.clear.frame(height: IterSpace.xl).accessibilityHidden(true)
         }
     }
 
@@ -248,26 +263,34 @@ struct ExploreListPanel: View {
         }
     }
 
+    /// The collapsible "More places" section is always last, and the expandable `Section` takes no footer.
+    @ViewBuilder private func listSection(_ section: ExploreSection) -> some View {
+        if section.kind == .morePlaces {
+            Section(isExpanded: moreExpanded) {
+                rows(in: section)
+            } header: {
+                sectionHeader(section)
+            }
+        } else {
+            Section {
+                rows(in: section)
+            } header: {
+                sectionHeader(section)
+            } footer: {
+                sectionGap(after: section)
+            }
+        }
+    }
+
     private var list: some View {
         ScrollViewReader { proxy in
             List(selection: selection) {
                 ForEach(explore.sections) { section in
-                    if section.kind == .morePlaces {
-                        Section(isExpanded: moreExpanded) {
-                            rows(in: section)
-                        } header: {
-                            sectionHeader(section)
-                        }
-                    } else {
-                        Section {
-                            rows(in: section)
-                        } header: {
-                            sectionHeader(section)
-                        }
-                    }
+                    listSection(section)
                 }
             }
             .listStyle(.inset)
+            .layoutGrid(lanes: LayoutLane.eventRow())
             .paperListBackground()
             .contextMenu(forSelectionType: String.self) { ids in
                 if let id = ids.first, let row = explore.row(id: id) {

@@ -94,8 +94,30 @@ enum TripsFixtures {
         let model = TripsFixtures.model()
         let sheet = NewTripSheet(initialStart: LocalDay(year: 2026, month: 10, day: 7), initialTemplate: "canyon-country")
             .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+            .fixedSize() // a sheet is its ideal size, centred in the window
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         try await Snapshot.render(Fixtures.host(sheet, model: model), screen: "trip", state: "new-sheet", settle: settle)
+    }
+
+    @Test(.enabled(if: Snapshot.enabled)) func newSheetEmpty() async throws {
+        let model = TripsFixtures.model()
+        let sheet = NewTripSheet(initialStart: LocalDay(year: 2026, month: 10, day: 7))
+            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+            .fixedSize() // a sheet is its ideal size, centred in the window
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        try await Snapshot.render(Fixtures.host(sheet, model: model), screen: "trip", state: "new-sheet-empty", settle: settle)
+    }
+
+    @Test(.enabled(if: Snapshot.enabled)) func changeDatesSheet() async throws {
+        let model = TripsFixtures.model()
+        let id = model.store.trips()[0].id
+        let builder = TripBuilderModel(tripID: id, store: model.store, scheduler: model.scheduler, drives: model.drives,
+                                       forecasts: model.forecasts, now: { Fixtures.now })
+        let sheet = ChangeDatesSheet(builder: builder)
+            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+            .fixedSize() // a sheet is its ideal size, centred in the window
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        try await Snapshot.render(Fixtures.host(sheet, model: model), screen: "trip", state: "change-dates-sheet", settle: settle)
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func stopRow() async throws {

@@ -79,6 +79,7 @@ struct SavedView: View {
                 .tag(item.id)
         }
         .listStyle(.inset)
+        .layoutGrid(lanes: LayoutLane.eventRow(disclosure: true))
         .contextMenu(forSelectionType: UUID.self) { ids in
             menu(for: ids)
         } primaryAction: { ids in
@@ -189,29 +190,31 @@ private struct SavedRow: View {
     var body: some View {
         let spot = item.spot
         let next = model.nextLight(for: spot)
-        HStack(spacing: IterSpace.md) {
+        HStack(alignment: .firstTextBaseline, spacing: IterGrid.laneGap) {
             Image(systemName: LightText.symbol(spot.category))
-                .font(.title3)
+                .font(IterFont.body)
                 .foregroundStyle(IterColor.textSecondary)
-                .frame(width: IterSize.lightRingSmall)
+                .frame(width: IterGrid.disclosureLane)
                 .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: IterSpace.xxs) {
-                Text(spot.name).font(IterFont.headline).lineLimit(1)
-                HStack(spacing: IterSpace.sm) {
+            VStack(alignment: .leading, spacing: IterSpace.xs) {
+                Text(spot.name)
+                    .font(IterFont.headline)
+                    .foregroundStyle(IterColor.textPrimary)
+                    .lineLimit(1)
+                HStack(spacing: IterSpace.xs) {
                     Text(spot.locality.isEmpty ? LightText.name(spot.category) : spot.locality)
-                        .font(IterFont.subheadline)
-                        .foregroundStyle(IterColor.textSecondary)
                         .lineLimit(1)
                     ProvenanceTag(origin: spot.origin)
                 }
+                .font(IterFont.secondary)
+                .foregroundStyle(IterColor.textSecondary)
             }
-            Spacer(minLength: IterSpace.sm)
-            if let next {
-                WindowLightLine(window: next.window, zone: spot.timeZone, isLoading: model.forecasts.isLoading(spot.coordinate),
-                                isTomorrow: next.day > model.today(in: spot.timeZone))
-            }
+            Spacer(minLength: 0)
+            EventLane(window: next?.window, zone: spot.timeZone, isLoading: model.forecasts.isLoading(spot.coordinate),
+                      isTomorrow: next.map { $0.day > model.today(in: spot.timeZone) } ?? false)
         }
-        .padding(.vertical, IterSpace.xs)
+        .padding(.vertical, IterSpace.sm)
+        .frame(minHeight: IterGrid.rowDouble, alignment: .leading)
         .accessibilityElement(children: .combine)
     }
 }

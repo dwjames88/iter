@@ -358,8 +358,8 @@ private struct ScoutResultRow: View {
     @ViewBuilder private var light: some View {
         switch model.light(for: suggestion) {
         case .window(let day, let window):
-            WindowLightLine(window: window, zone: spot.timeZone, isLoading: app.forecasts.isLoading(spot.coordinate),
-                            isTomorrow: day > app.today(in: spot.timeZone))
+            EventScore(window: window, zone: spot.timeZone, timeStyle: .start, variant: .compact,
+                       isLoading: app.forecasts.isLoading(spot.coordinate), isTomorrow: day > app.today(in: spot.timeZone))
         case .loading:
             ProgressView().controlSize(.small)
         case .none:

@@ -4,8 +4,12 @@ import IterDesign
 import IterFeatures
 
 /// One map pin. Three weights give the map hierarchy (critique C28): the selected spot, a few chips, the rest dots.
+/// Chips and the selected pin are the event unit (`EventScore` `.pin`): symbol, score and time are one capsule, with no
+/// outline. Selection is scale, elevation and shadow (the Apple Maps idiom), never a coral border.
 struct ExplorePinView: View {
     let pin: ExplorePin
+
+    @Environment(\.renderMode) private var renderMode
 
     var body: some View {
         Group {
@@ -28,59 +32,39 @@ struct ExplorePinView: View {
                 Circle().fill(IterColor.backgroundControl)
             }
         }
-        .frame(width: IterSpace.md, height: IterSpace.md)
+        .frame(width: IterSpace.sm + IterSpace.xs, height: IterSpace.sm + IterSpace.xs)
         .overlay(Circle().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
     }
 
-    /// The window symbol and, when scored, the score. Without a score the chip is plain (a neutral chip while loading).
-    private func lightContent(_ window: LightWindow, chipSize: ScoreChip.Size) -> some View {
-        HStack(spacing: IterSpace.xs) {
-            WindowSymbol(kind: window.kind, font: .system(size: IterSize.pinSymbol))
-            if let score = window.assessment.lightScore {
-                ScoreChip(score: score, size: chipSize)
-            }
-        }
-    }
-
+    /// The chip: the pin variant, with its time.
     @ViewBuilder private var chip: some View {
         if let window = pin.row.window {
-            lightContent(window, chipSize: .compact)
-                .padding(.horizontal, IterSpace.xs)
-                .padding(.vertical, IterSpace.xxs)
-                .background(IterColor.backgroundContent, in: Capsule())
-                .overlay(Capsule().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
+            EventScore(window: window, zone: pin.row.spot.timeZone, timeStyle: .start, variant: .pin, isLoading: pin.row.isLoading,
+                       isTomorrow: LightText.isTomorrow(pin.row), isSelected: false)
         } else {
             dot
         }
     }
 
-    private var selected: some View {
-        VStack(spacing: IterSpace.xxs) {
-            Group {
-                if let window = pin.row.window {
-                    HStack(spacing: IterSpace.xs) {
-                        lightContent(window, chipSize: .compact)
-                        if let time = LightText.startTime(window, in: pin.row.spot.timeZone) {
-                            Text(time).font(IterFont.timeSmall).foregroundStyle(IterColor.textPrimary)
-                        }
-                    }
-                } else {
-                    Text(pin.row.spot.name).font(IterFont.captionStrong)
-                }
-            }
-            .padding(.horizontal, IterSpace.sm)
-            .padding(.vertical, IterSpace.xs)
-            .background(IterColor.backgroundContent, in: Capsule())
-            .overlay(Capsule().strokeBorder(IterColor.mapPin, lineWidth: IterStroke.thick))
-            Image(systemName: "arrowtriangle.down.fill")
-                .font(IterFont.caption)
-                .foregroundStyle(IterColor.mapPin)
-                .accessibilityHidden(true)
+    @ViewBuilder private var selected: some View {
+        if let window = pin.row.window {
+            EventScore(window: window, zone: pin.row.spot.timeZone, timeStyle: .start, variant: .pin,
+                       isLoading: pin.row.isLoading, isTomorrow: LightText.isTomorrow(pin.row), isSelected: true)
+        } else {
+            Text(pin.row.spot.name)
+                .font(IterFont.captionStrong)
+                .foregroundStyle(IterColor.textPrimary)
+                .lineLimit(1)
+                .padding(.vertical, IterSpace.xs)
+                .padding(.horizontal, IterSpace.sm)
+                .background(fill, in: Capsule())
+                .shadow(radius: IterEvent.pinShadowRadiusSelected, y: 1)
+                .scaleEffect(IterEvent.pinScaleSelected, anchor: .bottom)
         }
     }
-}
 
-extension IterSize {
-    /// The window symbol inside a map pin chip.
-    static let pinSymbol: CGFloat = 12
+    private var fill: AnyShapeStyle {
+        // An offscreen render has no backdrop for materials.
+        renderMode == .snapshot ? AnyShapeStyle(IterColor.backgroundContent) : AnyShapeStyle(.regularMaterial)
+    }
 }

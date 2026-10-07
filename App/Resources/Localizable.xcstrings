@@ -340,9 +340,7 @@
         }
       }
     },
-    "%lld." : {
-
-    },
+    "%lld." : {},
     "%lld° %@" : {
       "comment" : "A compass bearing, e.g. 100° E",
       "localizations" : {
@@ -659,9 +657,6 @@
     },
     "Collapsed" : {
       "comment" : "VoiceOver state\nVoiceOver: the section is closed"
-    },
-    "Coming Up" : {
-      "comment" : "Place card: the next sunrise and sunset windows"
     },
     "Compass direction →" : {
       "comment" : "Sky arc x axis"
@@ -1245,9 +1240,7 @@
     "Needs an API key" : {
       "comment" : "Settings weather status"
     },
-    "New Spot" : {
-
-    },
+    "New Spot" : {},
     "New Trip" : {
       "comment" : "Default trip name\nMenu item\nPrimary button on the empty trips screen\nSheet title\nToolbar button\nUndo action name"
     },
@@ -1435,9 +1428,7 @@
     "Park, town or region" : {
       "comment" : "Locality placeholder"
     },
-    "Paste your key" : {
-
-    },
+    "Paste your key" : {},
     "Pick your spots and days. Iter works out when to leave so you are set up before the light arrives." : {
       "comment" : "Empty trips screen explanation"
     },
@@ -1564,9 +1555,7 @@
     "Saved in Keychain" : {
       "comment" : "Settings: the key is in the Keychain"
     },
-    "Saved in Keychain. Paste to replace" : {
-
-    },
+    "Saved in Keychain. Paste to replace" : {},
     "Scored from a daily summary: beyond %@'s hourly forecast." : {
       "comment" : "Score footnote: daily summary only. Argument is the provider name"
     },
@@ -2063,9 +2052,7 @@
     "^[%lld place](inflect: true)" : {
       "comment" : "Number of places listed in Explore"
     },
-    "^[%lld stop](inflect: true)" : {
-
-    },
+    "^[%lld stop](inflect: true)" : {},
     "^[%lld stop](inflect: true) will move to Day %lld, the new last day. You can undo this." : {
       "comment" : "Warning when shortening a trip moves stops; the number is how many",
       "localizations" : {
@@ -2113,11 +2100,12 @@
     "walk-in unknown" : {
       "comment" : "Walk from parking to the shooting spot is not known"
     },
-    "· %@" : {
-
-    },
+    "· %@" : {},
     "↑ Height above the horizon" : {
       "comment" : "Sky arc y axis"
+    },
+    "Show Layout Grid" : {
+      "comment" : "Debug menu item: overlay the 8 pt grid and lane guides"
     }
   },
   "version" : "1.0"

@@ -27,13 +27,16 @@ struct WeatherSettingsPane: View {
                     LabeledContent {
                         SampleDataLabel(style: .inline)
                     } label: { Text("Sample Data", comment: "Settings field") }
-                    Text("Scores use made-up weather, not a real forecast. Turn this off in the Debug menu.", comment: "Settings: sample data explanation")
-                        .font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
                 }
             } header: {
                 Text("Forecast source", comment: "Settings section")
             } footer: {
-                Text("If the first source can't answer, Iter asks the second. A fallback is always named next to the forecast.", comment: "Settings footer")
+                VStack(alignment: .leading) {
+                    Text("If the first source can't answer, Iter asks the second. A fallback is always named next to the forecast.", comment: "Settings footer")
+                    if model.sampleDataEnabled {
+                        Text("Scores use made-up weather, not a real forecast. Turn this off in the Debug menu.", comment: "Settings: sample data explanation")
+                    }
+                }
             }
             ForEach(WeatherSetup.providers, id: \.self) { source in
                 WeatherProviderSection(source: source)
@@ -74,7 +77,7 @@ struct WeatherSettingsPane: View {
 
     private func step(_ n: Int, _ text: Text) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
-            Text("\(n).").monospacedDigit().foregroundStyle(IterColor.textSecondary)
+            Text("\(n).").monospacedDigit()
             text.fixedSize(horizontal: false, vertical: true)
         }
     }
@@ -102,8 +105,6 @@ private struct WeatherProviderSection: View {
 
     var body: some View {
         Section {
-            Text(WeatherSettingsText.description(source)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-                .fixedSize(horizontal: false, vertical: true)
             statusRow
             if source.needsAPIKey { keyRows }
             if source == .windy { windyChoices }
@@ -113,6 +114,8 @@ private struct WeatherProviderSection: View {
             }
         } header: {
             Text(LightText.name(source))
+        } footer: {
+            Text(WeatherSettingsText.description(source))
         }
     }
 
@@ -120,26 +123,31 @@ private struct WeatherProviderSection: View {
 
     private var statusRow: some View {
         let display = WeatherSettingsText.status(status, source: source)
-        return VStack(alignment: .leading, spacing: IterSpace.xs) {
-            HStack {
+        return Group {
+            LabeledContent {
+                if let action = display.action {
+                    Button { Task { await setup.check(source) } } label: { Text(action) }
+                }
+            } label: {
                 Label {
                     Text(display.text)
                 } icon: {
                     if status == .checking {
                         ProgressView().controlSize(.small)
                     } else {
-                        icon(display.icon).foregroundStyle(display.warns ? AnyShapeStyle(IterColor.warning) : AnyShapeStyle(IterColor.textSecondary))
+                        icon(display.icon).foregroundStyle(iconStyle(display))
                     }
-                }
-                Spacer()
-                if let action = display.action {
-                    Button { Task { await setup.check(source) } } label: { Text(action) }
                 }
             }
             if case .failed(let detail) = status, !detail.isEmpty {
-                Text(detail).font(IterFont.caption).foregroundStyle(IterColor.textSecondary).textSelection(.enabled)
+                Text(detail).foregroundStyle(IterColor.textSecondary).textSelection(.enabled)
             }
         }
+    }
+
+    private func iconStyle(_ display: WeatherSettingsText.Display) -> AnyShapeStyle {
+        if display.icon == .rejected { return AnyShapeStyle(IterColor.danger) }
+        return display.warns ? AnyShapeStyle(IterColor.warning) : AnyShapeStyle(IterColor.textSecondary)
     }
 
     @ViewBuilder private func icon(_ icon: WeatherSettingsText.Icon) -> some View {
@@ -175,7 +183,7 @@ private struct WeatherProviderSection: View {
                 }
             }
             if let saveError {
-                Text(saveError).font(IterFont.caption).foregroundStyle(IterColor.danger)
+                Label(saveError, systemImage: "exclamationmark.triangle.fill").foregroundStyle(IterColor.danger)
             }
         }
     }
@@ -216,10 +224,13 @@ private struct WeatherProviderSection: View {
     // MARK: Calls
 
     private func usageRow(_ calls: Int, _ cap: Int) -> some View {
-        Stepper(value: Binding(get: { cap }, set: { setup.setCap($0, for: source) }), in: 0...10_000, step: 50) {
+        Group {
             LabeledContent {
-                Text("\(calls) of \(cap)", comment: "Settings: calls made today of the daily cap, e.g. 12 of 800").monospacedDigit()
+                Text(calls, format: .number).monospacedDigit()
             } label: { Text("Calls today", comment: "Settings field") }
+            Stepper(value: Binding(get: { cap }, set: { setup.setCap($0, for: source) }), in: 0...10_000, step: 50) {
+                Text("Daily cap: \(cap) calls", comment: "Settings: the daily call allowance of a weather provider, e.g. Daily cap: 800 calls")
+            }
         }
     }
 }

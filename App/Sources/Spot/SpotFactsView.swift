@@ -11,10 +11,8 @@ struct SpotFactsSection: View {
     let spot: Spot
 
     var body: some View {
-        VStack(alignment: .leading, spacing: IterSpace.md) {
-            SpotSectionTitle(LightText.factsTitle)
-            SpotCard {
-                VStack(alignment: .leading, spacing: IterSpace.md) {
+        ModuleCard(title: LightText.factsTitle, symbol: "info.circle") {
+            VStack(alignment: .leading, spacing: IterGrid.inset) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: IterSize.listMin / 2), alignment: .leading)], alignment: .leading, spacing: IterSpace.sm) {
                         fact("figure.walk", LightText.walkIn(spot.walkInMinutes), known: spot.walkInMinutes != nil)
                         if let elevation = spot.elevationMeters {
@@ -33,11 +31,10 @@ struct SpotFactsSection: View {
                     }
                     if !spot.notes.isEmpty {
                         VStack(alignment: .leading, spacing: IterSpace.xs) {
-                            Text(LightText.notesTitle).font(IterFont.captionStrong).foregroundStyle(IterColor.textSecondary)
-                            Text(spot.notes).font(IterFont.callout).fixedSize(horizontal: false, vertical: true)
+                            Text(LightText.notesTitle).font(IterFont.moduleTitle).foregroundStyle(IterColor.textSecondary)
+                            Text(spot.notes).font(IterFont.body).fixedSize(horizontal: false, vertical: true)
                         }
                     }
-                }
             }
         }
     }
@@ -48,7 +45,7 @@ struct SpotFactsSection: View {
         } icon: {
             Image(systemName: symbol).foregroundStyle(IterColor.textSecondary)
         }
-        .font(IterFont.callout)
+        .font(IterFont.body)
     }
 }
 
@@ -61,11 +58,10 @@ struct LookAroundSection: View {
     var body: some View {
         Group {
             if renderMode == .live, let scene {
-                VStack(alignment: .leading, spacing: IterSpace.md) {
-                    SpotSectionTitle(LightText.lookAroundTitle)
+                ModuleCard(title: LightText.lookAroundTitle, symbol: "binoculars") {
                     LookAroundPreview(initialScene: scene)
                         .frame(height: IterSize.arcHeight + IterSize.timelineHeight)
-                        .clipShape(RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
+                        .clipShape(RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous))
                 }
             }
         }

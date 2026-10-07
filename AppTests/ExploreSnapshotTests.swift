@@ -66,6 +66,13 @@ import IterFeatures
         try await Snapshot.render(screen(model), screen: "explore", state: "location-denied", settle: .seconds(2))
     }
 
+    /// Debug ▸ Show Layout Grid on: the 8 pt grid and the row lanes over the list.
+    @Test(.enabled(if: Snapshot.enabled)) func gridOn() async throws {
+        let model = Fixtures.model(weather: .sample)
+        try await Snapshot.render(screen(model) { selectRow($0) }.environment(\.showsLayoutGrid, true),
+                                  screen: "explore", state: "grid", settle: .seconds(3))
+    }
+
     @Test(.enabled(if: Snapshot.enabled)) func defaultState() async throws {
         let model = Fixtures.model(weather: .sample)
         try await Snapshot.render(screen(model), screen: "explore", state: "default", settle: .seconds(2))
