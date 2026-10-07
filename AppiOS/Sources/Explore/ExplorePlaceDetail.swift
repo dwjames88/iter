@@ -27,7 +27,8 @@ struct ExplorePlaceDetail: View {
                     VStack(alignment: .leading, spacing: IterSpace.lg) {
                         TimelineView(.periodic(from: .now, by: 30)) { context in
                             let _ = context.date
-                            LightStatusBand(status: LightStatus(window: row.window, isLoading: row.isLoading, now: model.now()))
+                            LightStatusBand(status: LightStatus(window: row.window, isLoading: row.isLoading, now: model.now()),
+                                            showsScore: row.window == nil)
                         }
                         if let window = row.window {
                             LightHeadline(window: window, zone: spot.timeZone,

@@ -13,7 +13,6 @@ import IterFeatures
 /// screen's banner says why.
 struct BestWindowLead: View {
     let page: SpotModel
-    @Environment(\.spotDensity) private var density
 
     var body: some View { lead }
 
@@ -31,41 +30,37 @@ struct BestWindowLead: View {
         }
     }
 
-    /// The one strong fact: the best window as the large event unit, beside (page) or above (compact) a text column:
-    /// the caption, the day, the top reason, the forecast age, and the way to open that day.
+    /// The best window as a left-aligned text column: the caption, the day, the top reason, the forecast age, and the
+    /// way to open that day. No event unit here (the header's unit is the one score on the card); VoiceOver still hears
+    /// the best window's score on the caption.
     private func bestLead(_ best: BestWindow) -> some View {
-        let layout = density == .panel ? AnyLayout(VStackLayout(alignment: .leading, spacing: IterSpace.sm))
-                                         : AnyLayout(HStackLayout(alignment: .top, spacing: IterGrid.inset))
-        return layout {
-            EventScore(window: best.window, zone: page.timeZone, timeStyle: .range, variant: .large,
-                       isLoading: page.isLoadingForecast)
-            VStack(alignment: .leading, spacing: IterSpace.xs) {
-                Text(LightText.bestIn(days: page.stripDays.count, intent: page.intent))
+        VStack(alignment: .leading, spacing: IterSpace.xs) {
+            Text(LightText.bestIn(days: page.stripDays.count, intent: page.intent))
+                .font(IterFont.secondary)
+                .foregroundStyle(IterColor.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityLabel("\(LightText.bestIn(days: page.stripDays.count, intent: page.intent)), \(LightText.accessibilityDescription(best.window))")
+            Text(LightText.relativeDay(best.day, today: page.today))
+                .font(IterFont.headline)
+                .monospacedDigit()
+            if let top = best.window.assessment.lightScore?.contributors.first {
+                Text(LightText.sentence(top, kind: best.window.kind))
+                    .font(IterFont.body)
+                    .foregroundStyle(IterColor.textPrimary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            if let score = best.window.assessment.lightScore {
+                Text(TimeText.updated(score.forecastFetchedAt))
                     .font(IterFont.secondary)
                     .foregroundStyle(IterColor.textSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                Text(LightText.relativeDay(best.day, today: page.today))
-                    .font(IterFont.headline)
-                    .monospacedDigit()
-                if let top = best.window.assessment.lightScore?.contributors.first {
-                    Text(LightText.sentence(top, kind: best.window.kind))
-                        .font(IterFont.body)
-                        .foregroundStyle(IterColor.textPrimary)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                if let score = best.window.assessment.lightScore {
-                    Text(TimeText.updated(score.forecastFetchedAt))
-                        .font(IterFont.secondary)
-                        .foregroundStyle(IterColor.textSecondary)
-                }
-                if best.day != page.day || best.window.kind != page.selectedWindow {
-                    Button(LightText.showThisDay) { page.showBest() }
-                        .controlSize(.small)
-                        .padding(.top, IterSpace.xs)
-                }
             }
-            if density == .page { Spacer(minLength: 0) }
+            if best.day != page.day || best.window.kind != page.selectedWindow {
+                Button(LightText.showThisDay) { page.showBest() }
+                    .controlSize(.small)
+                    .padding(.top, IterSpace.xs)
+            }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var noScore: some View {

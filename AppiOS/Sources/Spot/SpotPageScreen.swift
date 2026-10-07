@@ -98,7 +98,8 @@ struct SpotPageScreen: View {
             .padding(.horizontal, IterSpace.lg)
             TimelineView(.periodic(from: .now, by: 30)) { context in
                 let _ = context.date
-                LightStatusBand(status: LightStatus(window: next?.window, isLoading: page.isLoadingForecast, now: model.now()))
+                LightStatusBand(status: LightStatus(window: next?.window, isLoading: page.isLoadingForecast, now: model.now()),
+                                showsScore: next == nil)
             }
             if let next {
                 LightHeadline(window: next.window, zone: page.timeZone,

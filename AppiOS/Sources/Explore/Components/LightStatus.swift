@@ -46,6 +46,9 @@ struct LightStatus: Equatable {
 /// primary text (the ramp fills are now dark, for white text), neutral when there is no confident score.
 struct LightStatusBand: View {
     let status: LightStatus
+    /// False where the large event unit sits right under the band for the same window: the unit is the one visible
+    /// score, so the band drops the number (VoiceOver still hears it). A "No forecast yet" line is not a score and stays.
+    var showsScore = true
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
@@ -54,7 +57,7 @@ struct LightStatusBand: View {
             Image(systemName: status.symbol).accessibilityHidden(true)
             Text(status.title).font(.headline)
             Spacer(minLength: IterSpace.sm)
-            if let detail = status.detail {
+            if let detail = status.detail, showsScore || status.spokenDetail == nil {
                 Text(detail).font(.headline).monospacedDigit()
             }
         }
