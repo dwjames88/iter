@@ -33,16 +33,34 @@ struct OnboardingView: View {
         VStack(spacing: 0) {
             OnboardingStepDots(index: onboarding.position.index, count: onboarding.position.count)
                 .padding(.top, IterSpace.xl)
+            #if os(iOS)
+            // The sheet fills the device (iPhone) or a form sheet (iPad); the step scrolls when it does not fit, and
+            // the buttons stay at the bottom.
+            ScrollView {
+                content
+                    .padding(.horizontal, IterSpace.xl)
+                    .padding(.vertical, IterSpace.xl)
+                    .frame(maxWidth: .infinity, alignment: .top)
+            }
+            .scrollBounceBehavior(.basedOnSize)
+            .scrollDismissesKeyboard(.interactively)
+            #else
             content
                 .padding(.horizontal, IterSpace.xxl)
                 .padding(.vertical, IterSpace.xl)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            #endif
             Divider()
             buttonBar
                 .padding(.horizontal, IterSpace.sheet)
                 .padding(.vertical, IterSpace.lg)
         }
+        #if os(macOS)
         .frame(width: Self.sheetWidth)
+        #else
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(IterColor.backgroundSystemWindow)
+        #endif
         .onReceive(NotificationCenter.default.publisher(for: Self.becameActive)) { _ in activations += 1 }
     }
 
@@ -139,6 +157,9 @@ struct OnboardingView: View {
             .font(.system(.body, design: .monospaced))
             .textFieldStyle(.roundedBorder)
             .autocorrectionDisabled()
+            #if os(iOS)
+            .textInputAutocapitalization(.never)
+            #endif
             .accessibilityLabel(Text("OpenWeather API key", comment: "Onboarding weather: key field accessibility label"))
             keyStatus
             Text("New keys can take up to two hours to start working.", comment: "Onboarding weather: activation delay")
@@ -216,8 +237,7 @@ struct OnboardingView: View {
         VStack(spacing: IterSpace.lg) {
             symbol("sparkles")
             title(String(localized: "Ask Iter", comment: "Onboarding Ask: title"))
-            Text("Ask finds places from a plain question, such as “quiet lakes for sunrise near Bishop”, and explains a score in words. It uses Apple Intelligence, which runs on this Mac.",
-                 comment: "Onboarding Ask: what it does (Mac)")
+            Text(Self.askIntro)
                 .font(IterFont.body)
                 .multilineTextAlignment(.center)
             Text(Self.requirement)
@@ -227,6 +247,16 @@ struct OnboardingView: View {
             availabilityRow
         }
         .frame(maxWidth: .infinity)
+    }
+
+    private static var askIntro: String {
+        #if os(macOS)
+        String(localized: "Ask finds places from a plain question, such as “quiet lakes for sunrise near Bishop”, and explains a score in words. It uses Apple Intelligence, which runs on this Mac.",
+               comment: "Onboarding Ask: what it does (Mac)")
+        #else
+        String(localized: "Ask finds places from a plain question, such as “quiet lakes for sunrise near Bishop”, and explains a score in words. It uses Apple Intelligence, which runs on this device.",
+               comment: "Onboarding Ask: what it does (iPhone and iPad)")
+        #endif
     }
 
     private static var requirement: String {
@@ -319,6 +349,10 @@ struct OnboardingView: View {
                  destination: URL(string: "https://github.com/dwjames88/iter#a-short-tour")!)
             #if os(macOS)
             Text("Open this guide again from Help ▸ Welcome to Iter.", comment: "Onboarding done: how to reopen the guide (Mac)")
+                .font(IterFont.footnote)
+                .foregroundStyle(IterColor.textSecondary)
+            #else
+            Text("Open this guide again from Settings ▸ Welcome to Iter.", comment: "Onboarding done: how to reopen the guide (iPhone and iPad)")
                 .font(IterFont.footnote)
                 .foregroundStyle(IterColor.textSecondary)
             #endif

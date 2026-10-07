@@ -11,6 +11,7 @@ import IterFeatures
 struct IOSSettingsScreen: View {
     @Environment(AppModel.self) private var model
     @Environment(\.openURL) private var openURL
+    @Environment(ShellState.self) private var shell
     @State private var launchPage: SettingsTab?
     @State private var didLaunch = false
     @AppStorage(AppSettings.temperatureUnit) private var temperatureUnit = "system"
@@ -40,6 +41,13 @@ struct IOSSettingsScreen: View {
                 Text("Updates arrive through TestFlight. There is nothing to check from inside Iter.", comment: "Settings footer: how updates work")
             }
             Section {
+                Button {
+                    Task { await shell.showWelcome(model.onboarding) }
+                } label: {
+                    Label(String(localized: "Welcome to Iter", comment: "Help menu item: reopens the first-run guide\nOnboarding: welcome title"), systemImage: "hand.wave")
+                        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                }
+                .foregroundStyle(IterColor.textPrimary)
                 NavigationLink { AboutSettingsPage() } label: {
                     row(String(localized: "About Iter", comment: "Settings row"), symbol: "info.circle", detail: IOSSettingsText.version)
                 }

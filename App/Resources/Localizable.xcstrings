@@ -562,6 +562,9 @@
     "Ask finds places from a plain question, such as “quiet lakes for sunrise near Bishop”, and explains a score in words. It uses Apple Intelligence, which runs on this Mac." : {
       "comment" : "Onboarding Ask: what it does (Mac)"
     },
+    "Ask finds places from a plain question, such as “quiet lakes for sunrise near Bishop”, and explains a score in words. It uses Apple Intelligence, which runs on this device." : {
+      "comment" : "Onboarding Ask: what it does (iPhone and iPad)"
+    },
     "Ask to use your location" : {
       "comment" : "Tooltip"
     },
@@ -1705,6 +1708,9 @@
     },
     "Open this guide again from Help ▸ Welcome to Iter." : {
       "comment" : "Onboarding done: how to reopen the guide (Mac)"
+    },
+    "Open this guide again from Settings ▸ Welcome to Iter." : {
+      "comment" : "Onboarding done: how to reopen the guide (iPhone and iPad)"
     },
     "Open this location in Apple Maps" : {
       "comment" : "Help"

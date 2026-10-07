@@ -15,6 +15,7 @@ struct IOSRootView: View {
     @State private var importError: String?
 
     var body: some View {
+        @Bindable var onboarding = model.onboarding
         IOSExploreHost {
             Group {
                 if sizeClass == .regular {
@@ -27,9 +28,15 @@ struct IOSRootView: View {
         .environment(navigation)
         .environment(shell)
         .environment(\.openIterSettings, OpenIterSettingsAction { shell.showSettings() })
+        // The first-run guide: a sheet over everything. A form sheet on iPad, full height on iPhone (the step scrolls).
+        .sheet(isPresented: $onboarding.isPresented, onDismiss: { model.onboarding.dismissed() }) {
+            OnboardingView()
+                .presentationSizing(.form)
+        }
         .onAppear {
             model.store.undoManager = undoManager
             applyLaunchSelection()
+            AppLaunch.presentOnboardingIfWanted(model)
         }
         .onChange(of: undoManager) { _, new in model.store.undoManager = new }
         .onChange(of: navigation.selection) { _, new in shell.follow(new) }
@@ -125,6 +132,16 @@ final class ShellState {
 
     func showSettings() {
         if usesTabs { phoneTab = .settings } else { showsSettingsSheet = true }
+    }
+
+    /// Opens the first-run guide at its first step from Settings. On iPad Settings is itself a sheet, and a second sheet
+    /// cannot present over a sheet that is still on screen, so Settings closes first.
+    func showWelcome(_ onboarding: OnboardingModel) async {
+        if showsSettingsSheet {
+            showsSettingsSheet = false
+            try? await Task.sleep(for: .milliseconds(500))
+        }
+        onboarding.present(at: .welcome)
     }
 
     /// Mirrors a selection change made anywhere (a shared view calling `navigation.show`) onto the phone's tabs.
