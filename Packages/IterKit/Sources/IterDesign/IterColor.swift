@@ -59,7 +59,7 @@ public enum IterColor {
     public static let debugGrid = make("debug/grid")
     public static let debugLane = make("debug/lane")
 
-    /// Fill for a Light Index band. Single hue, ordered by lightness; always print the band word beside it.
+    /// Fill for a Light Index band. Single hue, ordered by lightness.
     public static func ramp(_ band: LightBand) -> Color { rampColors[band.rawValue] }
 
     /// Text or icon colour on `ramp(band)` (4.5:1 or better).

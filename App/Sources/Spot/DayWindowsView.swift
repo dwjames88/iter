@@ -184,7 +184,6 @@ private struct Reasons: View {
             if density == .panel {
                 VStack(alignment: .leading, spacing: IterSpace.xs) {
                     HStack(spacing: IterSpace.sm) {
-                        ConfidenceMark(confidence: score.confidence)
                         Text(LightText.name(score.confidence)).font(IterFont.secondary)
                         if let range = LightText.range(score) {
                             Text(verbatim: "·").foregroundStyle(IterColor.textSecondary)
@@ -198,7 +197,6 @@ private struct Reasons: View {
                 }
             } else {
                 HStack(spacing: IterSpace.sm) {
-                    ConfidenceMark(confidence: score.confidence)
                     Text(LightText.name(score.confidence)).font(IterFont.secondary)
                     if let range = LightText.range(score) {
                         Text(verbatim: "·").foregroundStyle(IterColor.textSecondary)

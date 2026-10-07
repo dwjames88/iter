@@ -10,7 +10,7 @@ Do not edit the generated files by hand. Edit `TokenValues.swift` (or `tokens.js
 
 ## The identity, in one paragraph
 
-Everything is First Light. The palette is warm espresso ink, cream paper and a coral accent, used throughout: the interface accent, selection, focus, links, route lines, map pins, the sun marker, the logo dot and the app icon. The coral is used with restraint: it marks the one thing that acts or is selected, the route and the sun. The Light Index is a single-hue ramp from neutral sand to deep amber, ordered by lightness, and the band word is always printed beside it. Status colours have their own hues and always come with an icon: warning is violet, danger is raspberry. Text, separators and the app's own backgrounds are our First Light inks and paper, not system colours. The system colours in the registry are `background/systemWindow`, for snapshot stand-ins, and `map/userLocation` (system blue), for the simulated location dot.
+Everything is First Light. The palette is warm espresso ink, cream paper and a coral accent, used throughout: the interface accent, selection, focus, links, route lines, map pins, the sun marker, the logo dot and the app icon. The coral is used with restraint: it marks the one thing that acts or is selected, the route and the sun. The Light Index is a single-hue ramp from neutral sand to deep amber, ordered by lightness. Status colours have their own hues and always come with an icon: warning is violet, danger is raspberry. Text, separators and the app's own backgrounds are our First Light inks and paper, not system colours. The system colours in the registry are `background/systemWindow`, for snapshot stand-ins, and `map/userLocation` (system blue), for the simulated location dot.
 
 ## Colour role rules (what each colour must never be used for)
 
@@ -59,7 +59,7 @@ Previous fills (for reference): light `#E4DCCB #D8C08E #D9A646 #986808 #6B3800`,
 
 ### Ramp next to a coral accent
 
-The accent sits at OKLCH hue 35 in light mode and 42 in dark mode. The ramp hues are Good 80 (80 dark), Great 76 (81 dark) and Epic 59 (77 dark). Only Great moved: it was at 64 light and 74 dark, and is now at 76 and 81, toward amber and away from coral. Good was already well clear. Epic is at 66 in light mode, 24 degrees from the accent, because it is the deepest and darkest band (lightness 0.40 against the accent's 0.59), the order is carried by lightness and it is always printed with its band word.
+The accent sits at OKLCH hue 35 in light mode and 42 in dark mode. The ramp hues are Good 80 (80 dark), Great 76 (81 dark) and Epic 59 (77 dark). Only Great moved: it was at 64 light and 74 dark, and is now at 76 and 81, toward amber and away from coral. Good was already well clear. Epic is at 66 in light mode, 24 degrees from the accent, because it is the deepest and darkest band (lightness 0.40 against the accent's 0.59), the order is carried by lightness.
 
 ## Contrast numbers (WCAG 2.x, checked in tests)
 

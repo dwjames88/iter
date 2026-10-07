@@ -35,7 +35,7 @@ extension LayoutLane {
     /// from the trailing edge, and lanes are `IterGrid.laneGap` apart. `disclosure` adds the leading chevron lane
     /// after the inset.
     @MainActor
-    static func standardRowLanes(disclosure: Bool, event: EventScore.Variant, band: Bool = false, time: TimeStyle) -> [LayoutLane] {
+    static func standardRowLanes(disclosure: Bool, event: EventScore.Variant, time: TimeStyle) -> [LayoutLane] {
         var lanes: [LayoutLane] = []
         if disclosure {
             lanes.append(LayoutLane(edge: .leading, x: IterGrid.inset, width: IterGrid.disclosureLane))
@@ -46,8 +46,6 @@ extension LayoutLane {
             lanes.append(LayoutLane(edge: .trailing, x: x, width: width))
             x += width + IterGrid.laneGap
         }
-        // `band` is deprecated and only still honoured for DayWindowsView, which is being moved off BandConfidence.
-        if band { add(BandConfidence.laneWidth) }
         add(EventScore.unitWidth(event, timeStyle: time))
         return lanes
     }

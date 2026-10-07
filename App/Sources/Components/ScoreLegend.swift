@@ -54,14 +54,6 @@ struct ScoreLegend: View {
                 Text("Scores further out are less certain. A score is high confidence within about 36 hours of the forecast, medium to about 72 hours, and low beyond that. It is also low for days built from a daily summary and for days past the end of the forecast, where the last forecast day's weather is carried forward. Missing forecast fields or three-hourly data lower it a step. A low-confidence score is drawn slightly faded.", comment: "Score legend: how confidence works")
                     .font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
-                HStack(spacing: IterSpace.lg) {
-                    ForEach(Array(Confidence.allCases.reversed()), id: \.self) { confidence in
-                        HStack(spacing: IterSpace.xs) {
-                            ConfidenceMark(confidence: confidence)
-                            Text(LightText.shortName(confidence)).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
-                        }
-                    }
-                }
             }
             if let source, source != .sample {
                 Text("Light Index modified from \(LightText.name(source)) forecast data.", comment: "Score legend: the forecast source")
