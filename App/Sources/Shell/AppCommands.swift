@@ -68,12 +68,14 @@ struct AppCommands: Commands {
 struct DebugCommands: Commands {
     let model: AppModel
     let navigation: AppNavigation?
+    @AppStorage("IterShowLayoutGrid") private var showLayoutGrid = false
 
     var body: some Commands {
         CommandMenu(String(localized: "Debug", comment: "Menu title")) {
             Toggle(String(localized: "Use Sample Weather", comment: "Debug menu item"), isOn: Binding(
                 get: { model.sampleDataEnabled },
                 set: { model.setSampleData($0) }))
+            Toggle(String(localized: "Show Layout Grid", comment: "Debug menu item: overlay the 8 pt grid and lane guides"), isOn: $showLayoutGrid)
             Button(String(localized: "Seed Sample Trip", comment: "Debug menu item")) {
                 let trip = model.store.seedSampleTrip(startDay: model.today(in: .current).adding(days: 1))
                 navigation?.show(.trip(trip.id))

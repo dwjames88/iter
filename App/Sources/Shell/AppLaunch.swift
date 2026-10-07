@@ -19,6 +19,7 @@ import IterFeatures
 /// `-IterScoutStub unavailable|results` replaces the Apple Intelligence scout with a stub, for screenshots only and honoured only with
 /// `-IterInMemoryStore YES` (see `makeScout`): `unavailable` reports Apple Intelligence as turned off, `results` answers with three real
 /// curated spots near the asked-about map region and canned notes.
+/// `-IterShowLayoutGrid YES` draws the 8 pt layout grid and lane guides over lists and cards (Debug ▸ Show Layout Grid).
 /// `-IterWindowSize WxH` (for example `1280x820`, `960x652`, or `min` for the window minimum) sets the main window's
 /// content size once at launch; absent, the window opens as usual. Sizes below the minimum are raised to it.
 enum AppLaunch {
@@ -85,6 +86,8 @@ enum AppLaunch {
         guard let day = Int(UserDefaults.standard.string(forKey: "IterTripDay") ?? ""), day >= 1 else { return nil }
         return day - 1
     }
+    /// `-IterShowLayoutGrid YES`: the layout grid overlay is on (same key as Debug ▸ Show Layout Grid). For screenshots.
+    static var showLayoutGrid: Bool { UserDefaults.standard.bool(forKey: "IterShowLayoutGrid") }
     static var appearanceName: String? { UserDefaults.standard.string(forKey: "IterAppearance") }
 
     /// The `-IterWindowSize` request in points, or nil. `min` is the window minimum.
@@ -96,14 +99,6 @@ enum AppLaunch {
         return CGSize(width: parts[0], height: parts[1])
     }
 
-    /// `-IterCaptureWindow <name.png>` writes the main window's content to a PNG in the app's temporary folder `-IterCaptureDelay` seconds (default
-    /// 8) after launch, then quits. It renders the view hierarchy itself, so it works with the display asleep or locked,
-    /// where `screencapture` returns black. Live maps may draw blank in it. For screenshots of a test instance only.
-    static var captureWindowPath: String? { UserDefaults.standard.string(forKey: "IterCaptureWindow") }
-    static var captureDelay: Double {
-        let value = UserDefaults.standard.double(forKey: "IterCaptureDelay")
-        return value > 0 ? value : 8
-    }
 
     /// The Apple Intelligence scout over MapKit and the curated set. It reports its own availability at run time.
     ///
@@ -132,7 +127,6 @@ struct MainWindowConfigurator: NSViewRepresentable {
 
     final class Coordinator {
         var appliedLaunchSize = false
-        var scheduledCapture = false
         var observer: NSObjectProtocol?
         deinit { if let observer { NotificationCenter.default.removeObserver(observer) } }
     }
@@ -158,10 +152,6 @@ struct MainWindowConfigurator: NSViewRepresentable {
                     MainActor.assumeIsolated { publish() }
                 }
                 publish()
-            }
-            if !coordinator.scheduledCapture, let path = AppLaunch.captureWindowPath {
-                coordinator.scheduledCapture = true
-                WindowCapture.schedule(window, to: path, after: AppLaunch.captureDelay)
             }
             guard !coordinator.appliedLaunchSize, let size = AppLaunch.windowSize else { return }
             coordinator.appliedLaunchSize = true

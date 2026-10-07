@@ -179,14 +179,19 @@ private struct TripCard: View {
 
     @ViewBuilder private var footer: some View {
         if let next = summary.next {
-            Label {
-                Text(LightText.nextSession(next))
-                    .font(IterFont.subheadline)
-                    .foregroundStyle(IterColor.textPrimary)
-                    .lineLimit(2)
-            } icon: {
-                Image(systemName: LightText.symbol(next.kind)).foregroundStyle(IterColor.textSecondary)
+            HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
+                Text("Next: \(next.spotName)", comment: "A trip card's next spot, before its session")
+                    .font(IterFont.secondary)
+                    .foregroundStyle(IterColor.textSecondary)
+                    .lineLimit(1)
+                EventScore(kind: next.kind, start: next.start, zone: next.timeZone, variant: .compact)
+                Text(TimeText.weekday(next.day))
+                    .font(IterFont.secondary)
+                    .foregroundStyle(IterColor.textSecondary)
+                    .lineLimit(1)
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text(LightText.nextSession(next)))
         } else if summary.stopCount == 0 {
             // A deliberate empty card, not a missing image (C59).
             Label {

@@ -252,16 +252,10 @@ private struct OverviewCellView: View {
 
     private var stopsText: String { String(AttributedString(localized: "^[\(cell.stopCount) stop](inflect: true)").characters) }
 
+    /// The day's best window as the event unit (symbol, score and start time in one capsule).
     @ViewBuilder private var bestWindow: some View {
         if let best = cell.bestWindow {
-            HStack(spacing: IterSpace.xs) {
-                WindowSymbol(kind: best.window.kind)
-                Text(TimeText.time(best.window.span.start, in: best.zone))
-                    .font(IterFont.caption)
-                    .monospacedDigit()
-                    .foregroundStyle(IterColor.textSecondary)
-                if case .scored(let score) = best.window.assessment { ScoreChip(score: score, size: .compact) }
-            }
+            EventScore(window: best.window, zone: best.zone, timeStyle: .start, variant: .compact)
         }
     }
 

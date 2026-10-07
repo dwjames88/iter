@@ -18,32 +18,23 @@ struct HourlyWeatherSection: View {
     var body: some View {
         let hours = page.hours.filter { page.domain.contains($0.date) || page.domain.contains($0.date.addingTimeInterval(3599)) }
         if page.forecast != nil, !hours.isEmpty {
-            VStack(alignment: .leading, spacing: IterSpace.md) {
-                if density == .compact {
-                    Text(LightText.hourlyTitle).font(IterFont.headline)
-                } else {
-                    HStack(alignment: .firstTextBaseline) {
-                        Text(LightText.hourlyTitle).font(IterFont.titleSection)
-                        Spacer()
-                        if let forecast = page.forecast {
-                            ForecastSourceLine(info: ForecastSourceInfo(forecast))
-                        }
-                    }
+            ModuleCard(title: LightText.hourlyTitle, symbol: "cloud.sun") {
+                if density == .page, let forecast = page.forecast {
+                    ForecastSourceLine(info: ForecastSourceInfo(forecast))
                 }
-                SpotCard {
-                    VStack(alignment: .leading, spacing: IterSpace.sm) {
-                        stripBody(hours)
-                            .frame(height: SpotLayout.hourlyRow * CGFloat(Self.rowCount))
-                            .accessibilityElement(children: .ignore)
-                            .accessibilityLabel(accessibilitySummary(hours))
-                        if density == .compact, let visibility = visibilityText(hours) {
-                            Label(visibility, systemImage: "eye")
-                                .font(IterFont.caption)
-                                .foregroundStyle(IterColor.textSecondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                        footer(hours)
+            } content: {
+                VStack(alignment: .leading, spacing: IterSpace.sm) {
+                    stripBody(hours)
+                        .frame(height: SpotLayout.hourlyRow * CGFloat(Self.rowCount))
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel(accessibilitySummary(hours))
+                    if density == .compact, let visibility = visibilityText(hours) {
+                        Label(visibility, systemImage: "eye")
+                            .font(IterFont.secondary)
+                            .foregroundStyle(IterColor.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
+                    footer(hours)
                 }
             }
         }
@@ -53,7 +44,7 @@ struct HourlyWeatherSection: View {
         let units = Text(hours.contains { $0.precipitationChance == nil && $0.precipitationMm != nil }
                          ? String(localized: "Rain in mm/h · Wind in \(LightText.windUnit)", comment: "Hourly strip footnote naming the rain and wind units when rain is an amount")
                          : String(localized: "Wind in \(LightText.windUnit)", comment: "Hourly strip footnote naming the wind unit"))
-            .font(IterFont.caption)
+            .font(IterFont.secondary)
             .foregroundStyle(IterColor.textSecondary)
         units
     }
@@ -85,7 +76,7 @@ struct HourlyWeatherSection: View {
         return HStack(alignment: .top, spacing: 0) {
             VStack(alignment: .trailing, spacing: 0) {
                 ForEach([LightText.rowTemp, LightText.rowCloud, LightText.rowRain, LightText.rowWind], id: \.self) { title in
-                    Text(title).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
+                    Text(title).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
                         .frame(height: SpotLayout.hourlyRow)
                 }
             }
@@ -137,7 +128,7 @@ struct HourlyWeatherSection: View {
                 // Row labels in the gutter.
                 VStack(alignment: .trailing, spacing: 0) {
                     ForEach([LightText.rowTemp, LightText.rowCloud, LightText.rowRain, LightText.rowWind], id: \.self) { title in
-                        Text(title).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
+                        Text(title).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
                             .frame(height: SpotLayout.hourlyRow)
                     }
                 }
@@ -171,7 +162,7 @@ struct HourlyWeatherSection: View {
         VStack(spacing: 0) {
             Image(systemName: h.symbolName)
                 .symbolRenderingMode(.multicolor)
-                .font(IterFont.subheadline)
+                .font(IterFont.secondary)
                 .frame(height: SpotLayout.hourlyRow)
             cell(AppSettings.temperature(h.temperatureC, unitSetting: temperatureUnit))
             cell(Int((h.cloudCover * 100).rounded()).formatted())

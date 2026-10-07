@@ -11,8 +11,8 @@ struct SampleDataLabel: View {
         case .inline:
             Label(String(localized: "Sample data", comment: "Label on scores made from sample weather"), systemImage: "flask")
                 .labelStyle(.titleAndIcon)
-                .font(IterFont.captionStrong)
-                .foregroundStyle(IterColor.warning)
+                .font(IterFont.secondary)
+                .foregroundStyle(IterColor.textSecondary)
         case .banner:
             Label {
                 VStack(alignment: .leading, spacing: 0) {

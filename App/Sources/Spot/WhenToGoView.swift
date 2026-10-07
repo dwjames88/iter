@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 import IterCore
 import IterDesign
 import IterFeatures
@@ -10,10 +11,11 @@ struct WhenToGoSection: View {
     @Environment(\.spotDensity) private var density
 
     var body: some View {
-        VStack(alignment: .leading, spacing: IterSpace.md) {
-            SpotSectionTitle(LightText.whenToGo)
-            SpotCard { lead }
-            OutlookStrip(page: page)
+        ModuleCard(title: LightText.whenToGo, symbol: "calendar") {
+            VStack(alignment: .leading, spacing: IterGrid.inset) {
+                lead
+                OutlookStrip(page: page)
+            }
         }
     }
 
@@ -23,7 +25,7 @@ struct WhenToGoSection: View {
         } else if page.isLoadingForecast {
             HStack(spacing: IterSpace.sm) {
                 ProgressView().controlSize(.small)
-                Text(LightText.checkingForecast).font(IterFont.callout).foregroundStyle(IterColor.textSecondary)
+                Text(LightText.checkingForecast).font(IterFont.body).foregroundStyle(IterColor.textSecondary)
             }
             SunTimesLine(page: page)
         } else {
@@ -31,38 +33,37 @@ struct WhenToGoSection: View {
         }
     }
 
+    /// The one strong fact: the best window as the large event unit, beside (page) or above (compact) a text column:
+    /// the caption, the day, the top reason, the forecast age, and the way to open that day.
     private func bestLead(_ best: BestWindow) -> some View {
-        let layout = density == .compact ? AnyLayout(VStackLayout(alignment: .leading, spacing: IterSpace.md))
-                                         : AnyLayout(HStackLayout(alignment: .top, spacing: IterSpace.lg))
+        let layout = density == .compact ? AnyLayout(VStackLayout(alignment: .leading, spacing: IterSpace.sm))
+                                         : AnyLayout(HStackLayout(alignment: .top, spacing: IterGrid.inset))
         return layout {
-            LightBadge(window: best.window, style: .large, isLoading: page.isLoadingForecast)
+            EventScore(window: best.window, zone: page.timeZone, timeStyle: .range, variant: .large,
+                       isLoading: page.isLoadingForecast)
             VStack(alignment: .leading, spacing: IterSpace.xs) {
                 Text(LightText.bestIn(days: page.outlookStripDays.count, intent: page.intent))
-                    .font(IterFont.caption)
+                    .font(IterFont.secondary)
                     .foregroundStyle(IterColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
-                if density == .compact {
-                    Text(LightText.relativeDay(best.day, today: page.today)).font(IterFont.headline)
-                    Text(TimeText.timeRange(best.window.span, in: page.timeZone)).font(IterFont.headline).monospacedDigit()
-                } else {
-                    Text("\(LightText.relativeDay(best.day, today: page.today)) · \(TimeText.timeRange(best.window.span, in: page.timeZone))")
-                        .font(IterFont.headline)
-                        .monospacedDigit()
+                Text(LightText.relativeDay(best.day, today: page.today))
+                    .font(IterFont.headline)
+                    .monospacedDigit()
+                if let top = best.window.assessment.lightScore?.contributors.first {
+                    Text(LightText.sentence(top, kind: best.window.kind))
+                        .font(IterFont.body)
+                        .foregroundStyle(IterColor.textPrimary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 if let score = best.window.assessment.lightScore {
-                    if let top = score.contributors.first {
-                        Text(LightText.sentence(top, kind: best.window.kind))
-                            .font(IterFont.callout)
-                            .foregroundStyle(IterColor.textPrimary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
                     Text(TimeText.updated(score.forecastFetchedAt))
-                        .font(IterFont.footnote)
+                        .font(IterFont.secondary)
                         .foregroundStyle(IterColor.textSecondary)
                 }
                 if best.day != page.day || best.window.kind != page.selectedWindow {
                     Button(LightText.showThisDay) { page.showBest() }
                         .controlSize(.small)
+                        .padding(.top, IterSpace.xs)
                 }
             }
             if density == .page { Spacer(minLength: 0) }
@@ -82,9 +83,9 @@ struct SunTimesLine: View {
         let times = page.nextSunTimes
         switch times.kind {
         case .polarNight:
-            Label(LightText.polarNight, systemImage: "moon.stars").font(IterFont.callout).foregroundStyle(IterColor.textSecondary)
+            Label(LightText.polarNight, systemImage: "moon.stars").font(IterFont.body).foregroundStyle(IterColor.textSecondary)
         case .polarDay:
-            Label(LightText.polarDay, systemImage: "sun.max").font(IterFont.callout).foregroundStyle(IterColor.textSecondary)
+            Label(LightText.polarDay, systemImage: "sun.max").font(IterFont.body).foregroundStyle(IterColor.textSecondary)
         case .normal:
             HStack(spacing: IterSpace.lg) {
                 if let rise = times.sunrise {
@@ -95,7 +96,7 @@ struct SunTimesLine: View {
                 }
                 Spacer(minLength: 0)
             }
-            .font(IterFont.callout)
+            .font(IterFont.body)
             .monospacedDigit()
         }
     }
@@ -113,14 +114,85 @@ struct OutlookStrip: View {
         let best = page.best
         let days = shownDays
         VStack(alignment: .leading, spacing: IterSpace.sm) {
-            Text(LightText.outlookTitle(days: days.count, intent: page.intent)).font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
-            HStack(alignment: .top, spacing: IterSpace.xs) {
-                ForEach(days, id: \.day) { light in
-                    cell(light, isBest: best?.day == light.day)
+            Text(LightText.outlookTitle(days: days.count, intent: page.intent)).font(IterFont.moduleTitle).foregroundStyle(IterColor.textSecondary)
+            if density == .page {
+                HStack(alignment: .top, spacing: 0) {
+                    ForEach(days, id: \.day) { light in
+                        cell(light, isBest: best?.day == light.day).frame(maxWidth: .infinity)
+                    }
                 }
+            } else {
+                dayList(days, best: best)
             }
-            Text(LightText.outlookKey).font(IterFont.caption).foregroundStyle(IterColor.textTertiary)
+            Text(LightText.outlookKey).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
         }
+    }
+
+    // MARK: Compact list
+
+    /// The label lane: the widest "Wed 28" plus the "Best" marker, to the next multiple of the 8 pt unit.
+    private static let labelLane: CGFloat = {
+        let label = NSFont.preferredFont(forTextStyle: .headline)
+        let marker = NSFont.preferredFont(forTextStyle: .subheadline)
+        let width = ceil(("Wed 28" as NSString).size(withAttributes: [.font: label]).width
+                         + IterSpace.xs + ("Best" as NSString).size(withAttributes: [.font: marker]).width)
+        return (width / IterGrid.unit).rounded(.up) * IterGrid.unit
+    }()
+
+    /// The widest range, "100–100", at the secondary text style.
+    private static let rangeLane: CGFloat = {
+        let font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.preferredFont(forTextStyle: .subheadline).pointSize, weight: .regular)
+        return ceil(("100–100" as NSString).size(withAttributes: [.font: font]).width)
+    }()
+
+    /// A vertical list in a narrow host, the Weather ten-day idiom on the light windows' lane grid: the day, the
+    /// chip, the range at the trailing edge. Ten days never fit across 296 pt, so the days stack.
+    private func dayList(_ days: [DayLight], best: BestWindow?) -> some View {
+        VStack(spacing: 0) {
+            ForEach(Array(days.enumerated()), id: \.element.day) { index, light in
+                if index > 0 { Divider().padding(.leading, IterSpace.sm) }
+                listRow(light, isBest: best?.day == light.day)
+            }
+        }
+    }
+
+    private func listRow(_ light: DayLight, isBest: Bool) -> some View {
+        let window = light.headline(for: page.intent)
+        let selected = light.day == page.day
+        let label = light.day == page.today ? LightText.relativeDay(light.day, today: page.today)
+                                            : String(localized: "\(TimeText.weekday(light.day)) \(TimeText.dayNumber(light.day))",
+                                                     comment: "Outlook row: weekday and day of the month, e.g. Thu 8")
+        return Button {
+            page.selectDay(light.day)
+        } label: {
+            HStack(alignment: .center, spacing: IterGrid.laneGap) {
+                HStack(spacing: IterSpace.xs) {
+                    Text(label).font(IterFont.headline).foregroundStyle(IterColor.textPrimary).lineLimit(1)
+                    if isBest {
+                        Text(LightText.bestMarker).font(IterFont.moduleTitle).foregroundStyle(IterColor.accentText)
+                    }
+                    Spacer(minLength: 0)
+                }
+                .frame(width: Self.labelLane, alignment: .leading)
+                chip(window)
+                Spacer(minLength: 0)
+                Text(caption(window).trimmingCharacters(in: .whitespaces))
+                    .font(IterFont.secondary)
+                    .monospacedDigit()
+                    .foregroundStyle(IterColor.textSecondary)
+                    .lineLimit(1)
+                    .frame(width: Self.rangeLane, alignment: .trailing)
+            }
+            .padding(.horizontal, IterSpace.sm)
+            .frame(minHeight: IterGrid.rowSingle)
+            .background(selected ? IterColor.selection : .clear,
+                        in: RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous))
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(accessibilityLabel(light, window: window, isBest: isBest))
+        .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
     }
 
     /// The strip's days. A leading day whose window has already passed has no score to show, so the strip starts
@@ -130,28 +202,24 @@ struct OutlookStrip: View {
     private func cell(_ light: DayLight, isBest: Bool) -> some View {
         let window = light.headline(for: page.intent)
         let selected = light.day == page.day
-        let score = window?.assessment.lightScore
         return Button {
             page.selectDay(light.day)
         } label: {
-            VStack(spacing: IterSpace.xxs) {
+            VStack(spacing: 0) {
                 bestBubble(isBest)
-                Text(TimeText.weekday(light.day)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
-                Text(TimeText.dayNumber(light.day)).font(IterFont.bodyEmphasis).monospacedDigit()
-                chip(window)
-                if density == .page {
-                    Text(caption(window)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
+                VStack(spacing: IterSpace.xs) {
+                    Text(TimeText.weekday(light.day)).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
+                    Text(TimeText.dayNumber(light.day)).font(IterFont.headline).monospacedDigit()
+                    chip(window)
+                    Text(caption(window)).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
                         .lineLimit(2).multilineTextAlignment(.center)
                         .frame(minHeight: IterSpace.xl)
                 }
             }
-            .padding(.vertical, IterSpace.xs)
+            .padding(.bottom, IterSpace.sm)
             .frame(maxWidth: .infinity)
-            .opacity(fade(score))
             .background(selected ? IterColor.selection : .clear,
                         in: RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous)
-                .strokeBorder(selected ? IterColor.accent : .clear, lineWidth: IterStroke.regular))
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -160,31 +228,24 @@ struct OutlookStrip: View {
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
     }
 
-    /// "Best" on the best day; in a narrow host a star, since ten cells leave no room for the word.
-    @ViewBuilder private func bestBubble(_ isBest: Bool) -> some View {
-        if density == .compact {
-            Image(systemName: isBest ? "star.fill" : "star")
-                .font(IterFont.captionStrong)
-                .foregroundStyle(isBest ? IterColor.accentText : IterColor.textTertiary.color)
-                .opacity(isBest ? 1 : 0)
-        } else {
-            Text(isBest ? LightText.bestMarker : " ")
-                .font(IterFont.captionStrong)
-                .foregroundStyle(IterColor.onAccent)
-                .padding(.horizontal, IterSpace.xs)
-                .background(isBest ? AnyShapeStyle(IterColor.accentEmphasis) : AnyShapeStyle(.clear), in: Capsule())
-        }
+    /// "Best" on the best day, in a capsule on the cell's top edge. Every cell keeps the capsule's height, with no
+    /// gap below it, so the weekdays line up.
+    private func bestBubble(_ isBest: Bool) -> some View {
+        Text(isBest ? LightText.bestMarker : " ")
+            .font(IterFont.moduleTitle)
+            .foregroundStyle(IterColor.onAccent)
+            .padding(.horizontal, IterSpace.xs)
+            .background(isBest ? AnyShapeStyle(IterColor.accentEmphasis) : AnyShapeStyle(.clear), in: Capsule())
     }
 
     @ViewBuilder private func chip(_ window: LightWindow?) -> some View {
-        if let score = window?.assessment.lightScore {
-            ScoreChip(score: score, size: density == .compact ? .compact : .regular)
+        if let window {
+            EventScore(window: window, zone: page.timeZone, timeStyle: .start, variant: .compact, isLoading: page.isLoadingForecast)
         } else {
             ZStack {
                 if page.isLoadingForecast { ProgressView().controlSize(.small) }
             }
-            .frame(width: density == .compact ? IterSize.badgeHeightCompact : IterSize.badgeMinWidth,
-                   height: density == .compact ? IterSize.badgeHeightCompact : IterSize.badgeHeight)
+            .frame(width: EventScore.unitWidth(.compact, timeStyle: .start), height: IterEvent.heightCompact)
         }
     }
 
@@ -193,14 +254,6 @@ struct OutlookStrip: View {
         switch window.assessment {
         case .scored(let score): return LightText.range(score) ?? " "
         case .noForecast: return " "
-        }
-    }
-
-    private func fade(_ score: LightScore?) -> Double {
-        switch score?.confidence {
-        case .low: SpotLayout.fadeLow
-        case .medium: SpotLayout.fadeMedium
-        default: 1
         }
     }
 

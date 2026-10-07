@@ -245,7 +245,7 @@ struct ContrastTests {
         let window = mode.hex("background/window")
         let control = mode.hex("background/control")
         for n in ["accent/primary", "route/active", "route/inactive", "focus/ring", "status/noForecast", "map/moon", "map/sun",
-                  "status/warning", "status/danger", "map/pin", "map/pinInactive", "accent/emphasis", "brand/dot"] {
+                  "status/warning", "status/danger", "map/pin", "map/pinInactive", "accent/emphasis", "brand/dot", "light/blueHour"] {
             #expect(contrast(mode.hex(n), window) >= 3, "\(n) \(mode) on window: \(contrast(mode.hex(n), window))")
             #expect(contrast(mode.hex(n), control) >= 3, "\(n) \(mode) on control: \(contrast(mode.hex(n), control))")
         }
@@ -258,6 +258,11 @@ struct ContrastTests {
             #expect(contrast(mode.hex(n), window) >= 4.5, "\(n) \(mode) on window: \(contrast(mode.hex(n), window))")
             #expect(contrast(mode.hex(n), control) >= 4.5, "\(n) \(mode) on control: \(contrast(mode.hex(n), control))")
         }
+        let module = mode.hex("background/module")
+        for n in ["text/primary", "text/secondary"] {
+            #expect(contrast(mode.hex(n), module) >= 4.5, "\(n) \(mode) on module: \(contrast(mode.hex(n), module))")
+        }
+        #expect(contrast(mode.hex("light/blueHour"), module) >= 3, "blueHour \(mode) on module")
         let selection = mode.hex("selection/fill")
         for n in ["text/primary", "text/secondary", "accent/text"] {
             #expect(contrast(mode.hex(n), selection) >= 4.5, "\(n) \(mode) on selection: \(contrast(mode.hex(n), selection))")

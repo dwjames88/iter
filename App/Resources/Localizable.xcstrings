@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "%@ %@" : {
+      "comment" : "A trip day in the overview strip, e.g. Thu 8\nOutlook row: weekday and day of the month, e.g. Thu 8\nVoiceOver: a day's sunrise or sunset and its time",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -239,7 +240,7 @@
       "comment" : "Weather banner: testing key; argument is the provider"
     },
     "%@, %@" : {
-      "comment" : "VoiceOver: a window with its start time\nVoiceOver: template",
+      "comment" : "VoiceOver: a window with its time\nVoiceOver: an overview cell's day\nVoiceOver: template",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -271,7 +272,7 @@
       }
     },
     "%@, tomorrow at %@" : {
-      "comment" : "VoiceOver: a window tomorrow, with its start time",
+      "comment" : "VoiceOver: a window tomorrow, with its time",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -306,25 +307,14 @@
     "%lld filters active" : {
       "comment" : "VoiceOver: number of active filters"
     },
-    "%lld min" : {
-      "comment" : "Minutes, e.g. 20 min"
-    },
     "%lld min set-up" : {
       "comment" : "Minutes to be set up before the window starts"
     },
     "%lld min walk-in" : {
       "comment" : "Spot fact: walk from parking\nWalk from parking to the shooting spot"
     },
-    "%lld of %lld" : {
-      "comment" : "Settings: calls made today of the daily cap, e.g. 12 of 800",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld of %2$lld"
-          }
-        }
-      }
+    "%lld places, zoom in" : {
+      "comment" : "VoiceOver: a group of map pins that are too close to tell apart; the number is how many"
     },
     "%lld spots" : {
       "comment" : "Locations count footer"
@@ -424,6 +414,9 @@
     },
     "Added by you" : {
       "comment" : "Spot provenance"
+    },
+    "All Days" : {
+      "comment" : "Map day switcher: every day is shown\nMap day switcher: show every day"
     },
     "All Locations" : {
       "comment" : "Screen title\nSidebar item"
@@ -567,6 +560,17 @@
     "Best light (choose any)" : {
       "comment" : "Spot editor section: multiple choice"
     },
+    "Best light: %@ at %@" : {
+      "comment" : "VoiceOver: the day's best window and its start time",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Best light: %1$@ at %2$@"
+          }
+        }
+      }
+    },
     "Beyond the forecast: the last forecast day's weather carried forward." : {
       "comment" : "Score footnote: scored by persistence beyond the provider's horizon"
     },
@@ -636,7 +640,7 @@
     "Checking…" : {
       "comment" : "Settings weather status"
     },
-    "Choose the day whose route is highlighted on the map" : {
+    "Choose the day shown on the map" : {
       "comment" : "Tooltip"
     },
     "Choosing the best matches" : {
@@ -692,9 +696,6 @@
     },
     "Collapsed" : {
       "comment" : "VoiceOver state\nVoiceOver: the section is closed"
-    },
-    "Coming Up" : {
-      "comment" : "Place card: the next sunrise and sunset windows"
     },
     "Compass direction →" : {
       "comment" : "Sky arc x axis"
@@ -755,6 +756,9 @@
         }
       }
     },
+    "Daily cap: %lld calls" : {
+      "comment" : "Settings: the daily call allowance of a weather provider, e.g. Daily cap: 800 calls"
+    },
     "Dark sky" : {
       "comment" : "Light factor"
     },
@@ -762,10 +766,10 @@
       "comment" : "About: heading for provider credits\nSettings section"
     },
     "Day %lld" : {
-      "comment" : "Route day picker segment"
+      "comment" : "A trip day's name, e.g. Day 2"
     },
     "Day %lld · %@" : {
-      "comment" : "Trip day header, e.g. Day 2 · Wed 7 Oct\nTrip day in Add to Trip menu",
+      "comment" : "Map day switcher, e.g. Day 2 · Thu, Oct 8\nTrip day header, e.g. Day 2 · Wed 7 Oct\nTrip day in Add to Trip menu",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -948,6 +952,9 @@
     "Forest" : {
       "comment" : "Spot category"
     },
+    "From %@" : {
+      "comment" : "Under the drive into a day's first stop: where the drive starts"
+    },
     "From environment (%@)" : {
       "comment" : "Settings: the key comes from an environment variable"
     },
@@ -1108,27 +1115,8 @@
     "Last quarter" : {
       "comment" : "Moon phase"
     },
-    "Leave %@ · park %@ · set up by %@" : {
-      "comment" : "Backward schedule: leave, park, set up",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Leave %1$@ · park %2$@ · set up by %3$@"
-          }
-        }
-      }
-    },
-    "Leave %@ · set up by %@" : {
-      "comment" : "Backward schedule: leave and set up",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Leave %1$@ · set up by %2$@"
-          }
-        }
-      }
+    "Leave" : {
+      "comment" : "Label under a drive's leave-by time"
     },
     "Leave Add Spot (Esc)" : {
       "comment" : "Tooltip"
@@ -1216,6 +1204,9 @@
     },
     "Map (snapshot stand-in)" : {
       "comment" : "Label on the static map used in snapshot renders"
+    },
+    "Map day" : {
+      "comment" : "Accessibility label of the map's day switcher"
     },
     "Map with the spot's pin at the centre" : {
       "comment" : "VoiceOver"
@@ -1337,6 +1328,9 @@
     "New spot" : {
       "comment" : "Map pin label"
     },
+    "Next day" : {
+      "comment" : "Accessibility label\nTooltip"
+    },
     "Next image" : {
       "comment" : "VoiceOver and tooltip"
     },
@@ -1345,6 +1339,9 @@
     },
     "Next sunset %@" : {
       "comment" : "Sun time when there is no score"
+    },
+    "Next: %@" : {
+      "comment" : "A trip card's next spot, before its session"
     },
     "Next: %@ · %@" : {
       "comment" : "A trip's next session on its card",
@@ -1389,6 +1386,9 @@
     },
     "No spots here" : {
       "comment" : "Locations filter result empty"
+    },
+    "No stops" : {
+      "comment" : "Overview cell of a day with no stops\nVoiceOver: a day with no stops"
     },
     "No stops yet" : {
       "comment" : "Day header for a day with no stops"
@@ -1513,7 +1513,21 @@
       "comment" : "Best light a spot is known for"
     },
     "Overnight" : {
-      "comment" : "Divider between two trip days"
+      "comment" : "Boundary between two trip days when the place is unknown"
+    },
+    "Overnight · near %@" : {
+      "comment" : "Boundary between two trip days; the place is where you sleep, e.g. Overnight · near Page, AZ"
+    },
+    "Park %@ · %@" : {
+      "comment" : "Park time, then the walk to the shooting spot",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Park %1$@ · %2$@"
+          }
+        }
+      }
     },
     "Park, town or region" : {
       "comment" : "Locality placeholder"
@@ -1559,6 +1573,9 @@
     },
     "Popularity" : {
       "comment" : "Sort option: most popular first"
+    },
+    "Previous day" : {
+      "comment" : "Accessibility label\nTooltip"
     },
     "Previous image" : {
       "comment" : "VoiceOver and tooltip"
@@ -1634,9 +1651,6 @@
     },
     "Return to today at this spot" : {
       "comment" : "Help"
-    },
-    "Route day" : {
-      "comment" : "Accessibility label of the route day picker"
     },
     "Route map" : {
       "comment" : "Accessibility label"
@@ -1716,14 +1730,14 @@
     "Session" : {
       "comment" : "Accessibility label of the session menu"
     },
+    "Set up" : {
+      "comment" : "Label under a stop's set-up time"
+    },
     "Set up %lld min before the window" : {
       "comment" : "Set-up buffer editor"
     },
-    "Set up by %@" : {
-      "comment" : "Backward schedule for the first stop of a trip"
-    },
-    "Set-up time before a window" : {
-      "comment" : "Settings field"
+    "Set-up time before a window: %lld min" : {
+      "comment" : "Settings field with its value, e.g. Set-up time before a window: 20 min"
     },
     "Settings…" : {
       "comment" : "Weather banner: open Settings ▸ Weather"
@@ -1752,6 +1766,9 @@
     "Show Full Page" : {
       "comment" : "Place card: open the spot's full page"
     },
+    "Show Layout Grid" : {
+      "comment" : "Debug menu item: overlay the 8 pt grid and lane guides"
+    },
     "Show spots near you" : {
       "comment" : "Explore banner title when location is not yet allowed"
     },
@@ -1759,7 +1776,7 @@
       "comment" : "Help"
     },
     "Show this day" : {
-      "comment" : "Button that selects the best day"
+      "comment" : "Button that selects the best day\nTooltip"
     },
     "Shows why this window scores as it does" : {
       "comment" : "VoiceOver hint"
@@ -1856,7 +1873,7 @@
       "comment" : "Light factor"
     },
     "Sunrise" : {
-      "comment" : "Best light a spot is known for\nLight intent\nLight window: golden hour after sunrise\nShort light window name for pins"
+      "comment" : "Best light a spot is known for\nDay header: sunrise\nLight intent\nLight window: golden hour after sunrise\nShort light window name for pins"
     },
     "Sunrise %@" : {
       "comment" : "A day's sunrise only\nSky arc label"
@@ -1876,7 +1893,7 @@
       "comment" : "Timeline zoom option"
     },
     "Sunset" : {
-      "comment" : "Best light a spot is known for\nLight intent\nLight window: golden hour before sunset\nShort light window name for pins"
+      "comment" : "Best light a spot is known for\nDay header: sunset\nLight intent\nLight window: golden hour before sunset\nShort light window name for pins"
     },
     "Sunset %@" : {
       "comment" : "A day's sunset only\nSky arc label"
@@ -1933,7 +1950,7 @@
       "comment" : "Light reason"
     },
     "The template sets the number of days. You can add, move and remove stops afterwards." : {
-      "comment" : "Explains the days stepper is fixed by a template"
+      "comment" : "Explains the days picker is fixed by a template"
     },
     "The trip couldn't be saved to that location." : {
       "comment" : "Export error"
@@ -1946,6 +1963,9 @@
     },
     "This can't be undone." : {
       "comment" : "Reset alert message"
+    },
+    "This day has schedule conflicts" : {
+      "comment" : "Tooltip"
     },
     "This file isn't an Iter trip, or it is damaged. Nothing was imported." : {
       "comment" : "Import error"
@@ -1969,7 +1989,7 @@
       "comment" : "Button that returns the page to today\nRelative day"
     },
     "Tomorrow" : {
-      "comment" : "Place card: the next window is tomorrow\nRelative day\nTooltip on a row's start time: the next window is tomorrow"
+      "comment" : "Place card: the next window is tomorrow\nRelative day"
     },
     "Trip Actions" : {
       "comment" : "Toolbar menu"
@@ -1982,6 +2002,9 @@
     },
     "Trip changed since download" : {
       "comment" : "Offline status: the pinned trip was edited after it downloaded"
+    },
+    "Trip days" : {
+      "comment" : "Accessibility label of the trip overview strip"
     },
     "Trip name" : {
       "comment" : "Accessibility label\nPlaceholder"
@@ -2145,6 +2168,15 @@
     },
     "Zoom the timeline, arc and hourly strip to sunrise or sunset" : {
       "comment" : "Help"
+    },
+    "^[%lld conflict](inflect: true)" : {
+
+    },
+    "^[%lld conflict](inflect: true) on this day" : {
+      "comment" : "Day summary: how many schedule conflicts the day has"
+    },
+    "^[%lld day](inflect: true)" : {
+      "comment" : "Number of days in a trip, e.g. 3 days"
     },
     "^[%lld place](inflect: true)" : {
       "comment" : "Number of places listed in Explore"

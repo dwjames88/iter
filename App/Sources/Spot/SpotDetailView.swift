@@ -32,7 +32,7 @@ struct SpotPage: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: IterSpace.xl) {
-                SpotHeaderView(spot: liveSpot)
+                SpotHeaderView(spot: liveSpot, nextEvent: page.upcomingWindows.first, today: page.today, zone: page.timeZone)
                 WhenToGoSection(page: page)
                 DayWindowsSection(page: page)
                 LightTimelineSection(page: page)

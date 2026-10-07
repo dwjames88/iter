@@ -70,6 +70,10 @@ Window grounds are First Light paper: light `#FFF8F0`, dark `#150C0A`. Cards are
 | `text/secondary` on `background/window` | 6.22 | 8.52 | text 4.5 |
 | `text/secondary` on `background/control` | 6.45 | 7.90 | text 4.5 |
 | `text/secondary` on `background/systemWindow` | 5.54 | 7.36 | text 4.5 (Settings) |
+| `text/primary` on `background/module` | 15.82 | 15.47 | text 4.5 |
+| `text/secondary` on `background/module` | 5.56 | 7.41 | text 4.5 |
+| `light/blueHour` on `background/window` | 7.11 | 7.94 | graphic 3 |
+| `light/blueHour` on `background/module` | 6.36 | 6.91 | graphic 3 |
 | `text/tertiary` on `background/window` | 2.73 | 3.65 | decoration only |
 | `accent/text` on `background/window` | 5.70 | 8.30 | text 4.5 |
 | `accent/text` on `background/control` | 5.91 | 7.70 | text 4.5 |
@@ -145,6 +149,7 @@ Every token, its values and its one job. Generated from the registry.
 | `light/rampText/good` | `#2B1A00` | `#FFFFFF` |  | Band word or number on light/ramp/good. |
 | `light/rampText/great` | `#FFFFFF` | `#1F1300` |  | Band word or number on light/ramp/great. |
 | `light/rampText/epic` | `#FFFFFF` | `#1F1300` |  | Band word or number on light/ramp/epic. |
+| `light/blueHour` | `#3A4FA0` | `#8FA4E8` |  | Blue-hour window symbol when it stands alone, outside a chip (3:1 graphic on background/window). Inside the event unit the symbol takes the band's ramp text colour. |
 | `text/primary` | `#1E0F0A` | `#FFF4E8` |  | Primary text: First Light ink (espresso / warm cream). |
 | `text/secondary` | `#6B5A51` | `#BBA99D` |  | Secondary text, 4.5:1 or better on paper, cards and the system window. |
 | `text/tertiary` | `#A6958B` | `#7A685E` |  | Decoration and placeholders only; never information. |
@@ -153,19 +158,45 @@ Every token, its values and its one job. Generated from the registry.
 | `background/window` | `#FFF8F0` | `#150C0A` |  | First Light paper: the ground of the app's own content (spot page, trip builder, trips home, list panels). |
 | `background/control` | `#FFFDF9` | `#1F1512` |  | Cards and lifted surfaces on paper. |
 | `background/content` | `#FFFDF9` | `#1F1512` |  | Lists, text areas and pin labels on paper. |
+| `background/module` | `#F5EBE0` | `#261B17` |  | Module card fill on paper (the Weather-style module: When to go, Light windows). text/primary and text/secondary are 4.5:1 or better on it. |
 | `background/systemWindow` | `#ECECEC` | `#1E1E1E` | `windowBackgroundColor` | The system window colour, for snapshot stand-ins of system-drawn surfaces (sidebar, settings). Not for the app's own content. |
 
 ### Dimensions (points)
 
 | Token | Value | Single job |
 |---|---|---|
+| `debug/grid` | `#FF2D55` | `#FF6482` |  | Debug ▸ Show Layout Grid: the 8 pt grid lines, drawn at debug/gridOpacity. Never shipped in a screen. |
+| `debug/lane` | `#00A3BF` | `#4FD8EB` |  | Debug ▸ Show Layout Grid: lane bands and their edges, drawn at debug/laneOpacity. |
+| `debug/gridOpacity` | 0.12 | Opacity of the layout-grid lines (a ratio, not points). Debug only. |
+| `debug/laneOpacity` | 0.18 | Opacity of the layout-grid lane bands (a ratio, not points). Debug only. |
 | `space/xxs` | 2 | Half step: icon to label inside a badge. |
 | `space/xs` | 4 | Tight gap: inline items. |
 | `space/sm` | 8 | Default gap between related items. |
 | `space/md` | 12 | Padding inside cards and rows. |
 | `space/lg` | 16 | Gap between groups; content margin. |
+| `space/sheet` | 20 | Standard macOS sheet margin. |
 | `space/xl` | 24 | Gap between sections. |
 | `space/xxl` | 32 | Page-level margin and large separations. |
+| `grid/unit` | 8 | The layout grid unit. Every gap, inset and row height is a multiple of it. |
+| `grid/inset` | 16 | Inset of every module card and list: first lane starts, last lane ends this far from the edge. |
+| `grid/lane/gap` | 8 | Gap between lanes in a row. |
+| `grid/lane/disclosure` | 16 | Width of the disclosure (chevron) lane. |
+| `grid/row/single` | 32 | Minimum height of a single-line row. |
+| `grid/row/double` | 48 | Minimum height of a two-line row. |
+| `event/height/compact` | 20 | Event unit chip height in dense lists. |
+| `event/height/regular` | 24 | Event unit chip height, default. |
+| `event/height/large` | 44 | Event unit chip height in headers and When to go. |
+| `event/symbol/compact` | 10 | Window symbol point size inside the compact chip. |
+| `event/symbol/regular` | 12 | Window symbol point size inside the regular chip. |
+| `event/symbol/large` | 20 | Window symbol point size inside the large chip. |
+| `event/gap` | 4 | Gap between the window symbol and the score inside the chip (a hairline-tight pair). |
+| `event/padding` | 8 | Horizontal padding inside the regular and large chip. |
+| `event/paddingCompact` | 4 | Horizontal padding inside the compact chip (a hairline-tight pair). |
+| `event/pinShadowRadius` | 4 | Shadow radius under a map pin label. |
+| `event/pinShadowRadiusSelected` | 12 | Shadow radius under the selected map pin label. |
+| `event/pinScaleSelected` | 1.15 | Scale factor (a ratio, not points) of the selected map pin label, anchored at its pointer. |
+| `event/lowConfidenceOpacity` | 0.85 | Opacity of an event chip whose score has low confidence (a ratio, not points). |
+| `event/tailOpacity` | 0.22 | Opacity of the band ramp colour behind the time in the event unit's tail (a ratio, not points). |
 | `radius/badge` | 6 | Corner radius of Light Index badges and chips. |
 | `radius/control` | 8 | Corner radius of custom controls. |
 | `radius/card` | 12 | Corner radius of cards and thumbnails. |
@@ -232,6 +263,8 @@ Every token, its values and its one job. Generated from the registry.
 | `type/callout` | `callout` | regular | standard | false | Explanations and reasons. |
 | `type/subheadline` | `subheadline` | regular | standard | false | Secondary lines. |
 | `type/footnote` | `footnote` | regular | standard | false | Footnotes and forecast age. |
+| `type/secondary` | `subheadline` | regular | standard | false | All secondary metadata: locality, distance, band word, confidence word, axis labels. Used in text/secondary. |
+| `type/moduleTitle` | `subheadline` | semibold | standard | false | Module card titles, in text/secondary with a leading symbol. |
 | `type/caption` | `caption` | regular | standard | false | Captions. |
 | `type/captionStrong` | `caption` | semibold | standard | false | Emphasised captions and badge words. |
 | `type/score/large` | `largeTitle` | semibold | standard | true | Headline Light Index number. |
@@ -240,7 +273,7 @@ Every token, its values and its one job. Generated from the registry.
 | `type/time` | `body` | regular | standard | true | Clock times and durations. |
 | `type/timeSmall` | `footnote` | regular | standard | true | Small times and chart axes. |
 
-Spacing is on a 4-pt grid (`space/xxs` is the one half step). Type uses system fonts only: SF Pro, with New York (`.serif` design) for the spot and trip title voice, and monospaced digits for every number, time and score. Each type token names a `Font.TextStyle`, weight and design, so system sizing and Dynamic Type still apply; the px size in `tokens.json` is the macOS default for that style, for reference in design tools.
+Spacing is on an 8-pt scale (`space/sm` 8, `space/lg` 16, `space/xl` 24, `space/xxl` 32; the `grid/*` tokens name the lane, inset and row-height steps). 4 (`space/xs`) is only for hairline-tight pairs, such as a symbol and its number inside the event unit. `space/md` (12) and `space/xxs` (2) are kept for old code and are not used in new layout. Event-unit tokens (`event/*`) size the one score chip; `event/pinScaleSelected`, `event/lowConfidenceOpacity`, `event/tailOpacity` and `debug/*Opacity` are ratios stored as dimension tokens. Type uses system fonts only: SF Pro, with New York (`.serif` design) for the spot and trip title voice, and monospaced digits for every number, time and score. Each type token names a `Font.TextStyle`, weight and design, so system sizing and Dynamic Type still apply; the px size in `tokens.json` is the macOS default for that style, for reference in design tools.
 
 ## Where First Light stops
 

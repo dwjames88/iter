@@ -25,7 +25,7 @@ struct AddStopPopover: View {
                         .foregroundStyle(IterColor.textSecondary)
                 }
             }
-            .padding(IterSpace.md)
+            .padding(IterSpace.lg)
             Divider()
             if list.candidates.isEmpty {
                 ContentUnavailableView.search(text: query)
@@ -44,22 +44,15 @@ struct AddStopPopover: View {
     }
 
     private var searchField: some View {
-        HStack(spacing: IterSpace.xs) {
-            Image(systemName: "magnifyingglass").foregroundStyle(IterColor.textSecondary).accessibilityHidden(true)
+        HStack(spacing: IterSpace.sm) {
             TextField(String(localized: "Search spots", comment: "Add stop search field"), text: $query)
-                .textFieldStyle(.plain)
+                .textFieldStyle(.roundedBorder)
             if !query.isEmpty {
                 Button { query = "" } label: { Image(systemName: "xmark.circle.fill") }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(IterColor.textSecondary)
+                    .buttonStyle(.borderless)
                     .accessibilityLabel(Text("Clear search", comment: "Accessibility label"))
             }
         }
-        .padding(.horizontal, IterSpace.sm)
-        .frame(height: IterSize.controlHeight)
-        .background(IterColor.backgroundControl, in: RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous)
-            .strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
     }
 }
 
@@ -84,7 +77,7 @@ private struct AddStopRow: View {
                     Text(detail).font(IterFont.caption).foregroundStyle(IterColor.textSecondary).lineLimit(1)
                 }
                 Spacer(minLength: IterSpace.sm)
-                if let window = window { LightBadge(window: window, style: .compact, showsSource: false) }
+                if let window = window { EventScore(window: window, zone: candidate.spot.timeZone, timeStyle: .start, variant: .compact) }
                 Image(systemName: isAdded ? "checkmark.circle.fill" : "plus.circle")
                     .font(IterFont.callout)
                     .foregroundStyle(isAdded ? IterColor.textSecondary.color : IterColor.accent)

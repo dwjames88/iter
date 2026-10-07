@@ -23,9 +23,7 @@ struct SkyArcSection: View {
     var body: some View {
         let data = Self.data(page)
         let t = page.markerTime
-        VStack(alignment: .leading, spacing: IterSpace.md) {
-            SpotSectionTitle(LightText.skyTitle)
-            SpotCard {
+        ModuleCard(title: LightText.skyTitle, symbol: "moon.stars") {
                 VStack(alignment: .leading, spacing: IterSpace.sm) {
                     Canvas { ctx, size in ArcRenderer.draw(&ctx, size: size, data: data) }
                         .frame(height: ArcRenderer.height)
@@ -33,35 +31,34 @@ struct SkyArcSection: View {
                         .accessibilityLabel(accessibilitySummary(data, time: t))
                     legend
                     Text(LightText.sunAt(time: TimeText.time(t, in: page.timeZone), sun: data.markerSun))
-                        .font(IterFont.callout)
+                        .font(IterFont.headline)
                     if let note = LightText.frameNote(sun: data.markerSun, facing: data.facing) {
-                        Text(note).font(IterFont.callout).foregroundStyle(IterColor.textSecondary)
+                        Text(note).font(IterFont.body).foregroundStyle(IterColor.textSecondary)
                     }
                     moonRow
                 }
-            }
         }
     }
 
     private var legend: some View {
-        HStack(spacing: IterSpace.md) {
+        HStack(spacing: IterSpace.lg) {
             HStack(spacing: IterSpace.xs) {
-                Circle().fill(IterColor.sun).frame(width: IterSpace.md, height: IterSpace.md)
+                Circle().fill(IterColor.sun).frame(width: IterSpace.sm, height: IterSpace.sm)
                 Text(LightText.sunLegend)
             }
             HStack(spacing: IterSpace.xs) {
-                Circle().fill(IterColor.moon).frame(width: IterSpace.md, height: IterSpace.md)
+                Circle().fill(IterColor.moon).frame(width: IterSpace.sm, height: IterSpace.sm)
                 Text(LightText.moonLegend)
             }
             if page.spot.facing != nil {
                 HStack(spacing: IterSpace.xs) {
-                    Rectangle().fill(IterColor.accent).frame(width: IterStroke.thick, height: IterSpace.md)
+                    Rectangle().fill(IterColor.accent).frame(width: IterStroke.thick, height: IterSpace.lg)
                     Text("Classic view", comment: "Sky arc legend for the facing direction")
                 }
             }
             Spacer()
         }
-        .font(IterFont.caption)
+        .font(IterFont.secondary)
         .foregroundStyle(IterColor.textSecondary)
     }
 
@@ -73,7 +70,7 @@ struct SkyArcSection: View {
                 .foregroundStyle(IterColor.textPrimary)
                 .accessibilityHidden(true)
             Text(LightText.moonLine(phase: phase, events: page.dayLight.moon, in: page.timeZone))
-                .font(IterFont.callout)
+                .font(IterFont.body)
                 .foregroundStyle(IterColor.textSecondary)
         }
     }
@@ -147,8 +144,8 @@ enum ArcRenderer {
         horizonLine.move(to: CGPoint(x: left, y: horizon))
         horizonLine.addLine(to: CGPoint(x: right, y: horizon))
         ctx.stroke(horizonLine, with: .color(IterColor.textSecondary.color), lineWidth: IterStroke.thin)
-        ctx.draw(Text(LightText.horizon).font(IterFont.caption).foregroundStyle(IterColor.textSecondary),
-                 at: CGPoint(x: left + IterSpace.xs, y: horizon - IterSpace.xxs), anchor: .bottomLeading)
+        ctx.draw(Text(LightText.horizon).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary),
+                 at: CGPoint(x: left + IterSpace.xs, y: horizon - IterSpace.xs), anchor: .bottomLeading)
 
         // Compass along the bottom: north at both ends because the sky is a circle.
         for (azimuth, name) in [(0.0, "N"), (90.0, "E"), (180.0, "S"), (270.0, "W"), (360.0, "N")] {
@@ -156,18 +153,18 @@ enum ArcRenderer {
             tick.move(to: CGPoint(x: x(azimuth), y: bottom))
             tick.addLine(to: CGPoint(x: x(azimuth), y: bottom + IterSpace.xs))
             ctx.stroke(tick, with: .color(IterColor.textSecondary.color), lineWidth: IterStroke.thin)
-            ctx.draw(Text(verbatim: name).font(IterFont.captionStrong).foregroundStyle(IterColor.textPrimary),
+            ctx.draw(Text(verbatim: name).font(IterFont.moduleTitle).foregroundStyle(IterColor.textPrimary),
                      at: CGPoint(x: x(azimuth), y: bottom + IterSpace.xs), anchor: .top)
         }
         for azimuth in [45.0, 135.0, 225.0, 315.0] {
             var tick = Path()
             tick.move(to: CGPoint(x: x(azimuth), y: bottom))
-            tick.addLine(to: CGPoint(x: x(azimuth), y: bottom + IterSpace.xxs))
+            tick.addLine(to: CGPoint(x: x(azimuth), y: bottom + IterSpace.xs))
             ctx.stroke(tick, with: .color(IterColor.separator), lineWidth: IterStroke.thin)
         }
-        ctx.draw(Text(LightText.arcAxisX).font(IterFont.caption).foregroundStyle(IterColor.textSecondary),
+        ctx.draw(Text(LightText.arcAxisX).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary),
                  at: CGPoint(x: plot.midX, y: size.height), anchor: .bottom)
-        ctx.draw(Text(LightText.arcAxisY).font(IterFont.caption).foregroundStyle(IterColor.textSecondary),
+        ctx.draw(Text(LightText.arcAxisY).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary),
                  at: CGPoint(x: left + IterSpace.xs, y: top + IterSpace.xs), anchor: .topLeading)
 
         // The direction the classic composition faces.
@@ -176,10 +173,10 @@ enum ArcRenderer {
             line.move(to: CGPoint(x: x(facing), y: top))
             line.addLine(to: CGPoint(x: x(facing), y: bottom))
             ctx.stroke(line, with: .color(IterColor.accent), style: StrokeStyle(lineWidth: IterStroke.regular, dash: [IterStroke.dashLength, IterStroke.dashGap]))
-            let label = ctx.resolve(Text(LightText.facingNote(facing)).font(IterFont.captionStrong).foregroundStyle(IterColor.accentText))
+            let label = ctx.resolve(Text(LightText.facingNote(facing)).font(IterFont.moduleTitle).foregroundStyle(IterColor.accentText))
             let w = label.measure(in: CGSize(width: 600, height: 40)).width
             let lx = min(max(left, x(facing) - w / 2), right - w)
-            ctx.draw(label, at: CGPoint(x: lx + w / 2, y: top - IterSpace.xxs), anchor: .bottom)
+            ctx.draw(label, at: CGPoint(x: lx + w / 2, y: top - IterSpace.xs), anchor: .bottom)
         }
 
         // Sunrise and sunset directions, labelled on the horizon.
@@ -189,12 +186,12 @@ enum ArcRenderer {
             mark.move(to: CGPoint(x: ex, y: horizon - IterSpace.xs))
             mark.addLine(to: CGPoint(x: ex, y: horizon + IterSpace.xs))
             ctx.stroke(mark, with: .color(IterColor.textPrimary.color), lineWidth: IterStroke.thick)
-            let line1 = ctx.resolve(Text(event.label).font(IterFont.caption).foregroundStyle(IterColor.textPrimary))
-            let line2 = ctx.resolve(Text(LightText.degrees(event.azimuth)).font(IterFont.caption).foregroundStyle(IterColor.textSecondary))
+            let line1 = ctx.resolve(Text(event.label).font(IterFont.secondary).foregroundStyle(IterColor.textPrimary))
+            let line2 = ctx.resolve(Text(LightText.degrees(event.azimuth)).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary))
             let w = max(line1.measure(in: CGSize(width: 400, height: 40)).width, line2.measure(in: CGSize(width: 400, height: 40)).width)
             let lx = min(max(left, ex - w / 2), right - w)
-            ctx.draw(line1, at: CGPoint(x: lx + w / 2, y: horizon + IterSpace.xs + IterSpace.xxs), anchor: .top)
-            ctx.draw(line2, at: CGPoint(x: lx + w / 2, y: horizon + IterSpace.xs + IterSpace.xxs + SpotLayout.labelTier - IterSpace.xs), anchor: .top)
+            ctx.draw(line1, at: CGPoint(x: lx + w / 2, y: horizon + IterSpace.xs + IterSpace.xs), anchor: .top)
+            ctx.draw(line2, at: CGPoint(x: lx + w / 2, y: horizon + IterSpace.xs + IterSpace.xs + SpotLayout.labelTier - IterSpace.xs), anchor: .top)
         }
 
         // Paths. Segments that wrap through north or sink below the plot are not joined.

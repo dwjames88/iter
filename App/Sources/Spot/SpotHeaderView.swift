@@ -12,11 +12,15 @@ struct SpotHeaderView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
     let spot: Spot
+    /// The spot's next event (the first upcoming window; SpotModel has no separate next-event API), and what to read it in.
+    var nextEvent: (day: LocalDay, window: LightWindow)?
+    var today: LocalDay?
+    var zone: TimeZone?
     @State private var editing: PlaceRecord?
     @State private var confirmingDelete = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: IterSpace.md) {
+        VStack(alignment: .leading, spacing: IterGrid.inset) {
             VStack(alignment: .leading, spacing: IterSpace.xs) {
                 Text(spot.name)
                     .font(IterFont.titleSpot)
@@ -25,11 +29,22 @@ struct SpotHeaderView: View {
                     .accessibilityAddTraits(.isHeader)
                 HStack(spacing: IterSpace.sm) {
                     if !spot.locality.isEmpty {
-                        Text(spot.locality).font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
+                        Text(spot.locality)
+                        Text(verbatim: "·")
                     }
                     ProvenanceTag(origin: spot.origin)
+                    Text(verbatim: "·")
                     Label(LightText.name(spot.category), systemImage: LightText.symbol(spot.category))
-                        .font(IterFont.subheadline)
+                }
+                .font(IterFont.secondary)
+                .foregroundStyle(IterColor.textSecondary)
+            }
+            if let nextEvent, let zone, let today {
+                HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
+                    EventScore(window: nextEvent.window, zone: zone, timeStyle: .start, variant: .large,
+                               isTomorrow: nextEvent.day != today)
+                    Text(LightText.relativeDay(nextEvent.day, today: today))
+                        .font(IterFont.secondary)
                         .foregroundStyle(IterColor.textSecondary)
                 }
             }

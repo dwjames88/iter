@@ -114,6 +114,7 @@ struct LocationsView: View {
         }
         .dragContainer(for: LibraryDragItem.self) { ids in ids.map { LibraryDragItem.place($0) } }
         .listStyle(.inset)
+        .layoutGrid(lanes: LayoutLane.eventRow(disclosure: true))
         .paperListBackground()
         .contextMenu(forSelectionType: UUID.self) { ids in
             menu(for: ids)

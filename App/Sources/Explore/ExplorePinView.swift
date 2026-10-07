@@ -4,8 +4,12 @@ import IterDesign
 import IterFeatures
 
 /// One map pin. Three weights give the map hierarchy (critique C28): the selected spot, a few chips, the rest dots.
+/// Chips and the selected pin are the event unit (`EventScore` `.pin`): symbol, score and time are one capsule, with no
+/// outline. Selection is scale, elevation and shadow (the Apple Maps idiom), never a coral border.
 struct ExplorePinView: View {
     let pin: ExplorePin
+
+    @Environment(\.renderMode) private var renderMode
 
     var body: some View {
         let _ = IterPerf.count("pin.body")
@@ -30,57 +34,37 @@ struct ExplorePinView: View {
                 Circle().fill(IterColor.backgroundControl)
             }
         }
-        .frame(width: IterSpace.md, height: IterSpace.md)
+        .frame(width: IterSpace.sm + IterSpace.xs, height: IterSpace.sm + IterSpace.xs)
         .overlay(Circle().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
     }
 
-    /// The window symbol and, when scored, the score. Without a score the chip is plain (a neutral chip while loading).
-    private func lightContent(_ light: ExplorePinLight, chipSize: ScoreChip.Size) -> some View {
-        HStack(spacing: IterSpace.xs) {
-            WindowSymbol(kind: light.kind, font: .system(size: IterSize.pinSymbol))
-            if let score = light.score {
-                ScoreChip(value: score.value, band: score.band, confidence: score.confidence, size: chipSize)
-            }
-        }
-    }
-
+    /// The chip: the pin variant of the event unit, with its time.
     @ViewBuilder private var chip: some View {
         if let light = pin.light {
-            lightContent(light, chipSize: .compact)
-                .padding(.horizontal, IterSpace.xs)
-                .padding(.vertical, IterSpace.xxs)
-                .background(IterColor.backgroundContent, in: Capsule())
-                .overlay(Capsule().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
+            EventScore(pin: light, zone: pin.timeZone, isSelected: false)
         } else {
             dot
         }
     }
 
-    private var selected: some View {
-        VStack(spacing: IterSpace.xxs) {
-            Group {
-                if let light = pin.light {
-                    HStack(spacing: IterSpace.xs) {
-                        lightContent(light, chipSize: .compact)
-                        Text(TimeText.time(light.start, in: pin.timeZone)).font(IterFont.timeSmall).foregroundStyle(IterColor.textPrimary)
-                    }
-                } else {
-                    Text(pin.name).font(IterFont.captionStrong)
-                }
-            }
-            .padding(.horizontal, IterSpace.sm)
-            .padding(.vertical, IterSpace.xs)
-            .background(IterColor.backgroundContent, in: Capsule())
-            .overlay(Capsule().strokeBorder(IterColor.mapPin, lineWidth: IterStroke.thick))
-            Image(systemName: "arrowtriangle.down.fill")
-                .font(IterFont.caption)
-                .foregroundStyle(IterColor.mapPin)
-                .accessibilityHidden(true)
+    @ViewBuilder private var selected: some View {
+        if let light = pin.light {
+            EventScore(pin: light, zone: pin.timeZone, isSelected: true)
+        } else {
+            Text(pin.name)
+                .font(IterFont.captionStrong)
+                .foregroundStyle(IterColor.textPrimary)
+                .lineLimit(1)
+                .padding(.vertical, IterSpace.xs)
+                .padding(.horizontal, IterSpace.sm)
+                .background(fill, in: Capsule())
+                .shadow(radius: IterEvent.pinShadowRadiusSelected, y: 1)
+                .scaleEffect(IterEvent.pinScaleSelected, anchor: .bottom)
         }
     }
-}
 
-extension IterSize {
-    /// The window symbol inside a map pin chip.
-    static let pinSymbol: CGFloat = 12
+    private var fill: AnyShapeStyle {
+        // An offscreen render has no backdrop for materials.
+        renderMode == .snapshot ? AnyShapeStyle(IterColor.backgroundContent) : AnyShapeStyle(.regularMaterial)
+    }
 }
