@@ -45,4 +45,4 @@ Module titles use `type/moduleTitle` (subheadline 11 semibold, `text/secondary`,
 - `text/primary` for the one thing a row is about; `text/secondary` for everything that qualifies it; `text/tertiary` never carries information.
 - The Light Index ramp appears only inside the event unit (and the pin dot). The symbol inside the chip takes the chip's ramp text colour, so the window and its score read as one fact.
 - Coral marks only what acts or is selected; it never decorates a section, header or border.
-- Standard controls (buttons, pickers, steppers, date pickers, toggles, forms) are system controls in their default styles. The event unit is the one deliberate custom chip.
+- Standard controls (buttons, pickers, steppers, date pickers, toggles, forms) are system controls in their default styles. The event unit is the one deliberate custom chip. Tabs (a mutually exclusive choice of a few views or scopes, such as the timeline zoom) are the system segmented `Picker`, full width, equal segments: `.pickerStyle(.segmented)`, `.labelsHidden()`, `.frame(maxWidth: .infinity)`, no pills, custom backgrounds or `.fixedSize()`.
