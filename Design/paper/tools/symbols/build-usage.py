@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Builds USAGE.json: {symbol name: [file:line, ...]} for Iter (run from anywhere)."""
 import json, os, re, sys
-ROOT = "/path/to/Iter"
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
 EXTRA = ["sidebar.left","chevron.down","chevron.up.chevron.down","chevron.right","checkmark","xmark","plus","minus",
  "magnifyingglass","star.fill","location.north.fill","ellipsis",
  # hourly weather (WeatherKit symbolName values, incl. .fill variants the provider returns)

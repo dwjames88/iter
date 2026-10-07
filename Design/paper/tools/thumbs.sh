@@ -5,7 +5,7 @@
 # Resize uses sips (macOS built-in). Re-runnable. Never opens a window.
 set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"; PAPER="$(cd "$HERE/.." && pwd)"
-OUT="$PAPER/assets/thumbs"; TMP="/tmp/scratch/scratchpad/paper/thumbs-tmp"
+OUT="$PAPER/assets/thumbs"; TMP="/tmp/iter-scratch/paper/thumbs-tmp"
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 mkdir -p "$OUT" "$TMP"
 LIST=$(node -e '

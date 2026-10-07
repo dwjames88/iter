@@ -1,7 +1,7 @@
 #!/bin/bash
 # render.sh [--2x] [id ...]  -> scratchpad/timeline-options/renders/<id>.png (1x) and <id>@2x.png (with --2x). Headless Chrome only.
 HERE="$(cd "$(dirname "$0")" && pwd)"; ROOT="$(dirname "$HERE")"
-OUTD="/tmp/scratch/scratchpad/timeline-options/renders"
+OUTD="/tmp/iter-scratch/timeline-options/renders"
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 X2=0; [ "$1" = "--2x" ] && X2=1 && shift
 mkdir -p "$OUTD"

@@ -23,7 +23,7 @@ On the canvas: **F02 Type scale** (complete, reviewed) and **F01 Colour** (parti
 
 ## File
 
-- Paper file: **Iter** (new file in the Field Frames team, Projects folder). Nothing else in the team was opened or changed.
+- Paper file: **Iter** (new file in a Paper team, Projects folder). Nothing else in the team was opened or changed.
 - Pages, in order of creation: Foundations, Components, Screens (Light), Screens (Dark), Flows. (Paper lists them newest first in its API; reorder by dragging in the page list if wanted.)
 - Tokens: all 277 entries of `tokens.paper.json` created (180 colours, 40 spacing, 4 radius, 11 container, 2 families, 15 sizes, 2 weights, 15 line heights, 8 opacities).
 

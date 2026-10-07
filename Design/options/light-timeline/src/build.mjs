@@ -6,7 +6,7 @@
  *
  * Build:    node Design/options/light-timeline/src/build.mjs [id-or-file ...]      (no args = every src/artboards/*.mjs)
  * Render:   Design/options/light-timeline/tools/render.sh [--2x] [id ...]           (no ids = every artboard in the manifest)
- *           -> /tmp/scratch/scratchpad/timeline-options/renders/<id>.png
+ *           -> /tmp/iter-scratch/timeline-options/renders/<id>.png
  *              (and <id>@2x.png with --2x). Headless Chrome only; nothing opens a window.
  * An artboard module (src/artboards/NN-name.mjs) exports `artboards = [{ id, width, height, appearance: 'light'|'dark', html }]` where
  * html is a FUNCTION returning Html/string. It runs inside withTheme(appearance), so c()/canvas() resolve to that theme.

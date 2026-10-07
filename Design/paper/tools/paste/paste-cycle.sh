@@ -1,9 +1,9 @@
 #!/bin/zsh
 # Paper paste cycle: one subcommand per step. See header of PASTE-LOG.md.
 set -u
-SCRATCH="${PASTE_SCRATCH:-/tmp/scratch/scratchpad/paste}"
+SCRATCH="${PASTE_SCRATCH:-/tmp/iter-scratch/paste}"
 BIN="$SCRATCH/bin"
-PAPER_DIR="/path/to/Iter/Design/paper"
+PAPER_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 LOG="${PASTE_LOG:-$PAPER_DIR/PASTE-LOG.md}"
 PAPER_BID="com.todesktop.2601167vjw8xe"
 EXPECT_TITLE="Iter"

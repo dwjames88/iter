@@ -33,7 +33,7 @@ F01 Colour is **not in the paste order.** The partial F01 artboard (fragments 1 
 
 ## Log
 
-2026-10-05T16:26:54 SHOT window=12892 /tmp/scratch/scratchpad/paste/shots/20261005-162654-trial-F03-look.png
+2026-10-05T16:26:54 SHOT window=12892 /tmp/iter-scratch/paste/shots/20261005-162654-trial-F03-look.png
 2026-10-05T16:26:59 PASTE-START /path/to/Iter/Design/paper/paste/foundations/003-F03-spacing-radii.html mode=both bytes=90827 window=12892 prev_front=com.dwjames.iter
 2026-10-05T16:26:59 owner clipboard saved
 2026-10-05T16:26:59 clipboard set changeCount=26
@@ -44,49 +44,49 @@ FAIL 2026-10-05T16:27:15 /path/to/Iter/Design/paper/paste/foundations/003-F03-sp
 2026-10-05T16:27:20 clipboard set changeCount=27
 2026-10-05T16:27:20 Paper frontmost
 2026-10-05T16:27:20 KEYSTROKE cmd+v sent
-2026-10-05T16:27:24 SHOT window=12892 /tmp/scratch/scratchpad/paste/shots/20261005-162724-003-F03-spacing-radii-after.png
+2026-10-05T16:27:24 SHOT window=12892 /tmp/iter-scratch/paste/shots/20261005-162724-003-F03-spacing-radii-after.png
 FAIL 2026-10-05T16:27:32 /path/to/Iter/Design/paper/paste/foundations/003-F03-spacing-radii.html both flavours: no nodes created
 2026-10-05T16:27:32 PASTE-START /path/to/Iter/Design/paper/paste/foundations/003-F03-spacing-radii.html mode=plain bytes=90827 window=12892 prev_front=com.dwjames.iter
 2026-10-05T16:27:32 owner clipboard already saved this cycle (kept)
 2026-10-05T16:27:32 clipboard set changeCount=28
 2026-10-05T16:27:32 Paper frontmost
 2026-10-05T16:27:33 KEYSTROKE cmd+v sent
-2026-10-05T16:27:36 SHOT window=12892 /tmp/scratch/scratchpad/paste/shots/20261005-162736-003-F03-spacing-radii-after.png
+2026-10-05T16:27:36 SHOT window=12892 /tmp/iter-scratch/paste/shots/20261005-162736-003-F03-spacing-radii-after.png
 2026-10-05T16:27:53 UNDO 1/1 sent
-2026-10-05T16:27:55 SHOT window=12892 /tmp/scratch/scratchpad/paste/shots/20261005-162755-undo-undo.png
+2026-10-05T16:27:55 SHOT window=12892 /tmp/iter-scratch/paste/shots/20261005-162755-undo-undo.png
 2026-10-05T16:28:17 UNDO 1/1 sent
-2026-10-05T16:28:19 SHOT window=12892 /tmp/scratch/scratchpad/paste/shots/20261005-162819-undo-undo.png
+2026-10-05T16:28:19 SHOT window=12892 /tmp/iter-scratch/paste/shots/20261005-162819-undo-undo.png
 2026-10-05T16:28:29 owner clipboard restored
 2026-10-05T16:28:30 activated previous front com.dwjames.iter
 FAIL 2026-10-05T16:28:30 /path/to/Iter/Design/paper/paste/foundations/003-F03-spacing-radii.html TRIAL: plain-text paste WORKED (artboard F03 created, tokens bound, layer names, real text) but landed at -183,-448 over F01; undone with 2x cmd-Z, file verified clean. Not counted as done.
-2026-10-05T16:30:32 SHOT window=12892 /tmp/scratch/scratchpad/paste/shots/20261005-163032-trial2-look.png
-2026-10-05T16:30:41 PASTE-START /tmp/scratch/scratchpad/paste/t2/F03-pos.html mode=plain bytes=90849 window=12892 prev_front=com.dwjames.iter
+2026-10-05T16:30:32 SHOT window=12892 /tmp/iter-scratch/paste/shots/20261005-163032-trial2-look.png
+2026-10-05T16:30:41 PASTE-START /tmp/iter-scratch/paste/t2/F03-pos.html mode=plain bytes=90849 window=12892 prev_front=com.dwjames.iter
 2026-10-05T16:30:41 owner clipboard saved
 2026-10-05T16:30:41 clipboard set changeCount=30
 2026-10-05T16:30:42 Paper frontmost
 2026-10-05T16:30:43 KEYSTROKE cmd+v sent
-2026-10-05T16:30:46 SHOT window=12892 /tmp/scratch/scratchpad/paste/shots/20261005-163046-F03-pos-after.png
+2026-10-05T16:30:46 SHOT window=12892 /tmp/iter-scratch/paste/shots/20261005-163046-F03-pos-after.png
 2026-10-05T16:30:46 KEY escape sent
-2026-10-05T16:30:48 SHOT window=12892 /tmp/scratch/scratchpad/paste/shots/20261005-163048-key-escape-key.png
+2026-10-05T16:30:48 SHOT window=12892 /tmp/iter-scratch/paste/shots/20261005-163048-key-escape-key.png
 2026-10-05T16:31:01 KEY escape sent
-2026-10-05T16:31:03 SHOT window=12892 /tmp/scratch/scratchpad/paste/shots/20261005-163103-key-escape-key.png
-2026-10-05T16:31:13 PASTE-START /tmp/scratch/scratchpad/paste/t2/F04-pos.html mode=plain bytes=33449 window=12892 prev_front=com.dwjames.iter
+2026-10-05T16:31:03 SHOT window=12892 /tmp/iter-scratch/paste/shots/20261005-163103-key-escape-key.png
+2026-10-05T16:31:13 PASTE-START /tmp/iter-scratch/paste/t2/F04-pos.html mode=plain bytes=33449 window=12892 prev_front=com.dwjames.iter
 2026-10-05T16:31:13 owner clipboard already saved this cycle (kept)
 2026-10-05T16:31:13 clipboard set changeCount=31
 2026-10-05T16:31:13 Paper frontmost
 2026-10-05T16:31:13 KEYSTROKE cmd+v sent
-2026-10-05T16:31:17 SHOT window=12892 /tmp/scratch/scratchpad/paste/shots/20261005-163117-F04-pos-after.png
+2026-10-05T16:31:17 SHOT window=12892 /tmp/iter-scratch/paste/shots/20261005-163117-F04-pos-after.png
 2026-10-05T16:31:18 KEY right sent
-2026-10-05T16:31:19 SHOT window=12892 /tmp/scratch/scratchpad/paste/shots/20261005-163119-key-right-key.png
+2026-10-05T16:31:19 SHOT window=12892 /tmp/iter-scratch/paste/shots/20261005-163119-key-right-key.png
 2026-10-05T16:31:34 ABORT owner active (keys: fn  idle: 16.19)
 2026-10-05T16:31:55 UNDO 1/3 sent
 2026-10-05T16:31:55 UNDO 2/3 sent
 2026-10-05T16:31:56 UNDO 3/3 sent
-2026-10-05T16:31:58 SHOT window=12892 /tmp/scratch/scratchpad/paste/shots/20261005-163158-undo-undo.png
+2026-10-05T16:31:58 SHOT window=12892 /tmp/iter-scratch/paste/shots/20261005-163158-undo-undo.png
 2026-10-05T16:32:07 UNDO 1/2 sent
 2026-10-05T16:32:08 UNDO 2/2 sent
-2026-10-05T16:32:10 SHOT window=12892 /tmp/scratch/scratchpad/paste/shots/20261005-163210-undo-undo.png
+2026-10-05T16:32:10 SHOT window=12892 /tmp/iter-scratch/paste/shots/20261005-163210-undo-undo.png
 2026-10-05T16:32:20 owner clipboard restored
 2026-10-05T16:32:22 activated previous front com.dwjames.iter
-FAIL 2026-10-05T16:32:22 /tmp/scratch/scratchpad/paste/t2/F04-pos.html TRIAL 2: top level after Escape; position ignored (landed -103,72); undone
-FAIL 2026-10-05T16:32:22 /tmp/scratch/scratchpad/paste/t2/F03-pos.html TRIAL 2: position ignored (landed -183,-448); undone; file verified clean
+FAIL 2026-10-05T16:32:22 /tmp/iter-scratch/paste/t2/F04-pos.html TRIAL 2: top level after Escape; position ignored (landed -103,72); undone
+FAIL 2026-10-05T16:32:22 /tmp/iter-scratch/paste/t2/F03-pos.html TRIAL 2: position ignored (landed -183,-448); undone; file verified clean

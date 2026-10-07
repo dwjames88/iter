@@ -8,7 +8,7 @@ in the PDF to convert. This replaces the planned pdf2svg.py.)
 """
 import json, re, sys, os, html
 HERE = os.path.dirname(os.path.abspath(__file__))
-RAW = sys.argv[1] if len(sys.argv) > 1 else "/tmp/scratch/scratchpad/paper/symbols/raw-outlines.json"
+RAW = sys.argv[1] if len(sys.argv) > 1 else "/tmp/iter-scratch/paper/symbols/raw-outlines.json"
 SCALE = 0.5
 tok = re.compile(r'([MLCQZ])([^MLCQZ]*)')
 def fmt(v):

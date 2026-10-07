@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.dirname(HERE);
-const SCRATCH = '/tmp/scratch/scratchpad/timeline-options';
+const SCRATCH = '/tmp/iter-scratch/timeline-options';
 const RENDERS = `${SCRATCH}/renders`;
 const TMP = `${SCRATCH}/preview`;
 fs.mkdirSync(TMP, { recursive: true });

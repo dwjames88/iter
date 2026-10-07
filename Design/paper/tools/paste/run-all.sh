@@ -1,10 +1,10 @@
 #!/bin/zsh
 # Full paste run, one step per invocation. Usage: run-all.sh next | status
 set -u
-SCRATCH="${PASTE_SCRATCH:-/tmp/scratch/scratchpad/paste}"
+SCRATCH="${PASTE_SCRATCH:-/tmp/iter-scratch/paste}"
 BIN="$SCRATCH/bin"
 HERE="${0:A:h}"
-PAPER_DIR="/path/to/Iter/Design/paper"
+PAPER_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 LOG="${PASTE_LOG:-$PAPER_DIR/PASTE-LOG.md}"
 ORDER="$HERE/ORDER.txt"
 CYCLE="$HERE/paste-cycle.sh"

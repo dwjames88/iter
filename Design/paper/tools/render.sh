@@ -5,7 +5,7 @@
 # Never opens a window: --headless=new only.
 set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
-SCRATCH="/tmp/scratch/scratchpad/paper/renders"
+SCRATCH="/tmp/iter-scratch/paper/renders"
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 SIDE=0
 [ "$1" = "--side" ] && SIDE=1 && shift

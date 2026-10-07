@@ -8,9 +8,9 @@
 import AppKit
 import Foundation
 
-let usage = URL(fileURLWithPath: "/path/to/Iter/Design/paper/tools/symbols/USAGE.json")
+let usage = URL(fileURLWithPath: "Design/paper/tools/symbols/USAGE.json")
 let outPath = CommandLine.arguments.count > 1 ? CommandLine.arguments[1]
-    : "/tmp/scratch/scratchpad/paper/symbols/raw-outlines.json"
+    : "/tmp/iter-scratch/paper/symbols/raw-outlines.json"
 let names = ((try JSONSerialization.jsonObject(with: Data(contentsOf: usage))) as! [String: Any]).keys.sorted()
 let pointSize: CGFloat = 100
 

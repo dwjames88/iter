@@ -23,7 +23,7 @@ const repo = path.resolve(paperDir, '..', '..');
 const argv = process.argv.slice(2);
 const FAST = argv.includes('--fast'), STRICT = argv.includes('--strict');
 const filters = argv.filter((a) => !a.startsWith('--'));
-const SCRATCH = '/tmp/scratch/scratchpad/paper/check';
+const SCRATCH = '/tmp/iter-scratch/paper/check';
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const MAX_LINES = 15, WARN_BYTES = 200 * 1024;
 
