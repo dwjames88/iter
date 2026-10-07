@@ -5,7 +5,7 @@
 ## What is in this build
 
 - **iPhone:** a tab bar with Explore, Trips, Locations and Settings, and a separate round search button (a search tab) that holds Apple Maps and Ask suggestions.
-- **Explore:** a full-bleed map with a bottom sheet that sits above the tab bar and has three heights (peek, half, full). The header has a very large title, round buttons and a row of chips. Selecting a pin or a row puts the light panel in the sheet. **Show full page** (or opening a spot from anywhere) pushes the spot page.
+- **Explore:** a full-bleed map with a bottom sheet that sits above the tab bar and has three heights (peek, half, full). The header has a very large title, round buttons and a sort control (Near you, Best light, Popular) and a row of filter chips. Selecting a pin or a row puts the light panel in the sheet. **Show full page** (or opening a spot from anywhere) pushes the spot page.
 - **Trips:** a list with filter chips, New Trip, import, and swipe and context actions; the builder has days, stops, drive times, a route map, reordering through **Edit**, and Share.
 - **Locations:** your spots and folders. **Settings:** Weather, Apple Intelligence, Location, General, This build, Updates, What the scores mean (the colour and score legend) and About.
 - **iPad (regular width):** a split view with the sidebar Trips, Locations and Find, like the Mac. Settings opens as a sheet. At compact width (Slide Over, narrow Split View) the iPad uses the phone layout.
@@ -75,7 +75,7 @@ Launch with the seed switches (`-IterInMemoryStore YES -IterSeedLibrary YES -Ite
 ### iPhone
 
 1. **Explore.** The map fills the screen and the sheet rests at its middle height (half). Drag the sheet's header up to full and down to peek; it should stop at each of the three heights and the tab bar should stay visible and tappable at all of them. (Simulator: `-IterSheet peek|half|full`.)
-2. **Chips.** The row under the title filters the list (for example by when and by kind). Pick one and the list and the pins change together.
+2. **Sort and chips.** The segmented control under the title sorts the list (Near you, Best light, Popular; one at a time, full width). The chip row under it filters the list (for example by when and by kind). Pick one and the list and the pins change together.
 3. **A pin.** Tap a pin or a row. The sheet shows the light panel: small caps overline, big title, a status band in the colour of the next window, large times, fact chips, two cards, Good to know and an action pill. The round button at the top closes it and returns to the list where you left it. A round map button in Explore's control stack (and at the corner of the Locations and trip route maps) chooses Standard, Satellite or Hybrid for every map, and the choice is remembered. Selecting a place also moves the map to about 25 miles around it (it only pans when you are already zoomed in closer), and closing the panel leaves the map where it is. (Simulator: `-IterSelectRow mesa-arch`.)
 4. **Search and Ask.** Tap the round search button. Typing shows two suggestions, Apple Maps and Ask Iter, the likelier first. Try "Skógafoss", then "waterfalls near here for sunrise". (Simulator: `-IterSection search -IterQuery "text"`, `-IterSearch "Skógafoss"`, `-IterAsk "…"`, `-IterScoutStub results`.)
 5. **Spot page.** From the panel choose the full page: when to go, the five windows, the light timeline, the sun and moon arc, hourly weather, sun and weather facts. Back returns to Explore. (Simulator: `-IterSpot mesa-arch`.)

@@ -41,6 +41,9 @@ struct ExploreBrowser: View {
                 shareButton
             }
             .sheetDrag(drag)
+            FullWidthSegmentedPicker(label: String(localized: "Sort", comment: "VoiceOver label of the Explore sort control"),
+                                     options: sortOptions, selection: $explore.sort)
+                .padding(.horizontal, IterSpace.lg)
             ChipRow(chips: chips)
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
@@ -93,18 +96,17 @@ struct ExploreBrowser: View {
         return c.url
     }
 
-    // MARK: Chips (each one is a real model filter or sort)
+    // MARK: Sort and filter chips (sort is the segmented control; chips are multi-select filters)
+
+    private var sortOptions: [(value: ExploreSort, title: String)] {
+        [(.distance, explore.hasLocation ? String(localized: "Near you", comment: "Sort segment: nearest first")
+                                         : String(localized: "Nearest", comment: "Sort segment: nearest to the map centre first")),
+         (.bestLight, String(localized: "Best light", comment: "Sort segment: by Light Index")),
+         (.popularity, String(localized: "Popular", comment: "Sort segment: most popular first"))]
+    }
 
     private var chips: [ChipItem] {
         var out: [ChipItem] = []
-        func sortChip(_ id: String, _ title: String, _ symbol: String, _ sort: ExploreSort) {
-            out.append(ChipItem(id: id, title: title, symbol: symbol, isSelected: explore.sort == sort) { explore.sort = sort })
-        }
-        sortChip("near", explore.hasLocation ? String(localized: "Near you", comment: "Chip: sort nearest first")
-                                             : String(localized: "Nearest", comment: "Chip: sort nearest to the map centre first"),
-                 "location.fill", .distance)
-        sortChip("best", String(localized: "Best light", comment: "Chip: sort by Light Index"), "sparkles", .bestLight)
-        sortChip("popular", String(localized: "Popular", comment: "Chip: sort most popular first"), "flame.fill", .popularity)
         for best in [BestLight.sunrise, .sunset] {
             let on = explore.filters.bestLight.contains(best)
             out.append(ChipItem(id: "best-\(best.rawValue)", title: LightText.name(best), symbol: LightText.symbol(best == .sunrise ? LightIntent.sunrise : .sunset),
