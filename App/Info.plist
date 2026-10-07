@@ -69,6 +69,26 @@
 				</array>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>com.dwjames.iter.library-item</string>
+			<key>UTTypeDescription</key>
+			<string>Iter Library Item</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+		</dict>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>com.dwjames.iter.trip-stop</string>
+			<key>UTTypeDescription</key>
+			<string>Iter Trip Stop</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

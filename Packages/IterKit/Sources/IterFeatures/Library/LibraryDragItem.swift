@@ -26,7 +26,8 @@ public enum LibraryDragItem: Codable, Hashable, Sendable, Transferable, Identifi
 }
 
 extension UTType {
-    /// In-app drag of a trip, saved place or folder. Not declared in Info.plist on purpose: it never leaves the app.
+    /// In-app drag of a trip, saved place or folder. Declared in Info.plist (an undeclared exported type logs a runtime
+    /// fault), though it never leaves the app.
     public static let iterLibraryItem = UTType(exportedAs: "com.dwjames.iter.library-item")
 }
 
