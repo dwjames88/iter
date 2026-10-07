@@ -43,21 +43,23 @@ Green is not used anywhere, and in particular never for "good". Success is ink w
 
 ## Light Index ramp
 
-Single hue (amber), sand to deep amber. In light mode the fills get darker as light gets better; in dark mode they get lighter (a brighter amber glows on a dark ground). Both are strictly monotonic in luminance, so the order survives greyscale. Adjacent bands differ by at least 1.2:1 in luminance, and Good versus Epic stays at 1.8:1 or more after a deuteranopia simulation (Machado 2009), so lightness, not hue, separates them. These are checked by `ContrastTests`.
+Single hue (amber), sand at the low end. Every band fill carries **white** text (the score, the symbol and the time of the event unit), so every fill is dark enough for white at 4.5:1 or better, in both appearances (checked by `ContrastTests.whiteOnEveryRampFillIsAtLeast4_5`). `light/rampText/*` is `#FFFFFF` in both appearances (kept as tokens so the text colour stays one switch).
 
-| Band | Light fill | Light text | Text contrast | Dark fill | Dark text | Text contrast |
-|---|---|---|---|---|---|---|
-| Poor | `#E4DCCB` | `#2B2112` | 11.59 | `#3A362F` | `#F2EBDD` | 10.12 |
-| Fair | `#D8C08E` | `#2B2112` | 8.92 | `#5C4F36` | `#FFF3DA` | 7.27 |
-| Good | `#D9A646` | `#2B1A00` | 7.59 | `#8F6A21` | `#FFFFFF` | 4.94 |
-| Great | `#986808` | `#FFFFFF` | 4.86 | `#D49E2E` | `#1F1300` | 7.58 |
-| Epic | `#6B3800` | `#FFFFFF` | 9.59 | `#FFC05A` | `#1F1300` | 11.24 |
+**Light mode:** Poor is the lightest fill that passes and Epic the darkest; fills get darker as light gets better. **Dark mode:** the old order (brighter is better) cannot survive white text, so the order is by lightness *and* saturation together: Poor is the dimmest and least saturated sand, Epic the lightest and most saturated amber that still holds white at 4.5:1. Both are strictly monotonic in luminance, so the order survives greyscale. Adjacent bands differ by 1.23 to 1.31:1 (light) and 1.25 to 1.29:1 (dark) in luminance contrast (at least 1.2:1 is tested), and Good versus Epic stays at 1.6:1 or more after a deuteranopia simulation (Machado 2009; it was 1.8:1 before the ramp had to fit under white text, whose range is only luminance 0.04 to 0.18).
 
-Known limit: the lightest fills (Poor, Fair) cannot reach 3:1 against the window and be sand at the same time. A badge therefore always carries its word or number (4.5:1 or better on the fill) and a hairline stroke in `separator/default`; the fill alone is never the only signal.
+| Band | Light fill | White on it | Dark fill | White on it |
+|---|---|---|---|---|
+| Poor | `#837353` | 4.62 | `#3B3527` | 12.18 |
+| Fair | `#7E6326` | 5.68 | `#514224` | 9.75 |
+| Good | `#755304` | 7.01 | `#6B4F18` | 7.62 |
+| Great | `#654303` | 8.91 | `#855D07` | 5.89 |
+| Epic | `#543003` | 11.66 | `#9B6B0B` | 4.66 |
+
+Previous fills (for reference): light `#E4DCCB #D8C08E #D9A646 #986808 #6B3800`, dark `#3A362F #5C4F36 #8F6A21 #D49E2E #FFC05A`. The fills are produced by `compass/ramp_contrast.py` style OKLCH steps at hues 85 to 66 (light) and 85 to 77 (dark). Because fills are now dark, pin dots (`light/ramp`) read as dark amber dots, and the iOS status band tints its ground with the ramp and keeps primary text.
 
 ### Ramp next to a coral accent
 
-The accent sits at OKLCH hue 35 in light mode and 42 in dark mode. The ramp hues are Good 80 (80 dark), Great 76 (81 dark) and Epic 59 (77 dark). Only Great moved: it was at 64 light and 74 dark, and is now at 76 and 81, toward amber and away from coral. Good was already well clear. Epic stays at 59 in light mode, 24 degrees from the accent, because it is the deepest and darkest band (lightness 0.40 against the accent's 0.59), the order is carried by lightness and it is always printed with its band word.
+The accent sits at OKLCH hue 35 in light mode and 42 in dark mode. The ramp hues are Good 80 (80 dark), Great 76 (81 dark) and Epic 59 (77 dark). Only Great moved: it was at 64 light and 74 dark, and is now at 76 and 81, toward amber and away from coral. Good was already well clear. Epic is at 66 in light mode, 24 degrees from the accent, because it is the deepest and darkest band (lightness 0.40 against the accent's 0.59), the order is carried by lightness and it is always printed with its band word.
 
 ## Contrast numbers (WCAG 2.x, checked in tests)
 
@@ -139,17 +141,17 @@ Every token, its values and its one job. Generated from the registry.
 | `cloud/low` | `#8A94A3` | `#9AA3B2` |  | Low cloud layer fill in the cloud-by-altitude chart. |
 | `cloud/mid` | `#B4BCC8` | `#6F7888` |  | Mid cloud layer fill. |
 | `cloud/high` | `#DCE1E8` | `#4A5160` |  | High cloud layer fill. |
-| `light/ramp/poor` | `#E4DCCB` | `#3A362F` |  | Light Index fill, Poor band. Sand. Single hue ramp, ordered by lightness. Always printed with the band word. |
-| `light/ramp/fair` | `#D8C08E` | `#5C4F36` |  | Light Index fill, Fair band. |
-| `light/ramp/good` | `#D9A646` | `#8F6A21` |  | Light Index fill, Good band. Amber, not green. |
-| `light/ramp/great` | `#986808` | `#D49E2E` |  | Light Index fill, Great band. |
-| `light/ramp/epic` | `#6B3800` | `#FFC05A` |  | Light Index fill, Epic band. Deepest amber in light mode, brightest in dark mode. |
-| `light/rampText/poor` | `#2B2112` | `#F2EBDD` |  | Band word or number on light/ramp/poor (4.5:1 or better). |
-| `light/rampText/fair` | `#2B2112` | `#FFF3DA` |  | Band word or number on light/ramp/fair. |
-| `light/rampText/good` | `#2B1A00` | `#FFFFFF` |  | Band word or number on light/ramp/good. |
-| `light/rampText/great` | `#FFFFFF` | `#1F1300` |  | Band word or number on light/ramp/great. |
-| `light/rampText/epic` | `#FFFFFF` | `#1F1300` |  | Band word or number on light/ramp/epic. |
-| `light/blueHour` | `#3A4FA0` | `#8FA4E8` |  | Blue-hour window symbol when it stands alone, outside a chip (3:1 graphic on background/window). Inside the event unit the symbol takes the band's ramp text colour. |
+| `light/ramp/poor` | `#837353` | `#3B3527` |  | Light Index fill, Poor band. Sand. White text on every band fill passes 4.5:1. Light mode: lightest fill is Poor, darker is better. Dark mode: dimmest and least saturated is Poor, brighter and more saturated is better. |
+| `light/ramp/fair` | `#7E6326` | `#514224` |  | Light Index fill, Fair band. |
+| `light/ramp/good` | `#755304` | `#6B4F18` |  | Light Index fill, Good band. Amber, not green. |
+| `light/ramp/great` | `#654303` | `#855D07` |  | Light Index fill, Great band. |
+| `light/ramp/epic` | `#543003` | `#9B6B0B` |  | Light Index fill, Epic band. Deepest amber in light mode, most saturated amber in dark mode. |
+| `light/rampText/poor` | `#FFFFFF` | `#FFFFFF` |  | White on light/ramp/poor (4.5:1 or better in both appearances). Score, symbol and time in the event unit. |
+| `light/rampText/fair` | `#FFFFFF` | `#FFFFFF` |  | White on light/ramp/fair (4.5:1 or better in both appearances). Score, symbol and time in the event unit. |
+| `light/rampText/good` | `#FFFFFF` | `#FFFFFF` |  | White on light/ramp/good (4.5:1 or better in both appearances). Score, symbol and time in the event unit. |
+| `light/rampText/great` | `#FFFFFF` | `#FFFFFF` |  | White on light/ramp/great (4.5:1 or better in both appearances). Score, symbol and time in the event unit. |
+| `light/rampText/epic` | `#FFFFFF` | `#FFFFFF` |  | White on light/ramp/epic (4.5:1 or better in both appearances). Score, symbol and time in the event unit. |
+| `light/blueHour` | `#3A4FA0` | `#8FA4E8` |  | Blue-hour window symbol when it stands alone, outside a chip (3:1 graphic on background/window). Inside the event unit the symbol is white. |
 | `text/primary` | `#1E0F0A` | `#FFF4E8` |  | Primary text: First Light ink (espresso / warm cream). |
 | `text/secondary` | `#6B5A51` | `#BBA99D` |  | Secondary text, 4.5:1 or better on paper, cards and the system window. |
 | `text/tertiary` | `#A6958B` | `#7A685E` |  | Decoration and placeholders only; never information. |
@@ -183,19 +185,32 @@ Every token, its values and its one job. Generated from the registry.
 | `grid/lane/disclosure` | 16 | Width of the disclosure (chevron) lane. |
 | `grid/row/single` | 32 | Minimum height of a single-line row. |
 | `grid/row/double` | 48 | Minimum height of a two-line row. |
-| `event/height/compact` | 20 | Event unit chip height in dense lists. |
-| `event/height/regular` | 24 | Event unit chip height, default. |
-| `event/height/large` | 44 | Event unit chip height in headers and When to go. |
-| `event/symbol/compact` | 10 | Window symbol point size inside the compact chip. |
-| `event/symbol/regular` | 12 | Window symbol point size inside the regular chip. |
-| `event/symbol/large` | 20 | Window symbol point size inside the large chip. |
-| `event/gap` | 4 | Gap between the window symbol and the score inside the chip (a hairline-tight pair). |
-| `event/padding` | 8 | Horizontal padding inside the regular and large chip. |
-| `event/paddingCompact` | 4 | Horizontal padding inside the compact chip (a hairline-tight pair). |
+| `event/height/compact` | 28 | Event unit height for pins and outlook days (a rounded rectangle, not a capsule). |
+| `event/height/regular` | 44 | Event unit height in rows. |
+| `event/height/large` | 64 | Event unit height in panel and page headers and trip overview cells. Width is about 2.15 x height. |
+| `event/cornerRatio` | 0.25 | Event unit corner radius as a fraction of its height (a ratio, not points). |
+| `event/score/compact` | 18 | Score numeral point size in the compact unit (heavy weight, about 0.64 x height). |
+| `event/score/regular` | 30 | Score numeral point size in the regular unit. |
+| `event/score/large` | 44 | Score numeral point size in the large unit. |
+| `event/time/compact` | 8 | Start time point size in the compact unit (light weight; 8 pt is the legible minimum). |
+| `event/time/regular` | 10 | Start time point size in the regular unit (about a third of the numeral). |
+| `event/time/large` | 15 | Start time point size in the large unit. |
+| `event/symbol/compact` | 8 | Window symbol point size above the time in the compact unit. |
+| `event/symbol/regular` | 10 | Window symbol point size above the time in the regular unit. |
+| `event/symbol/large` | 14 | Window symbol point size above the time in the large unit. |
+| `event/stackGap/compact` | 2 | Gap between the symbol and the time in the compact unit. |
+| `event/stackGap/regular` | 4 | Gap between the symbol and the time in the regular unit. |
+| `event/stackGap/large` | 8 | Gap between the symbol and the time in the large unit. |
+| `event/gap` | 6 | Gap between the numeral and the symbol-and-time stack, regular unit. |
+| `event/gapCompact` | 4 | Gap between the numeral and the stack, compact unit. |
+| `event/gapLarge` | 8 | Gap between the numeral and the stack, large unit. |
+| `event/padding` | 10 | Horizontal padding inside the regular unit. |
+| `event/paddingCompact` | 6 | Horizontal padding inside the compact unit. |
+| `event/paddingLarge` | 14 | Horizontal padding inside the large unit. |
 | `event/pinShadowRadius` | 4 | Shadow radius under a map pin label. |
 | `event/pinShadowRadiusSelected` | 12 | Shadow radius under the selected map pin label. |
 | `event/pinScaleSelected` | 1.15 | Scale factor (a ratio, not points) of the selected map pin label, anchored at its pointer. |
-| `event/lowConfidenceOpacity` | 0.85 | Opacity of an event chip whose score has low confidence (a ratio, not points). |
+| `event/lowConfidenceOpacity` | 0.85 | Opacity of an event unit whose score has low confidence (a ratio, not points). |
 | `radius/badge` | 6 | Corner radius of Light Index badges and chips. |
 | `radius/control` | 8 | Corner radius of custom controls. |
 | `radius/card` | 12 | Corner radius of cards and thumbnails. |
@@ -270,6 +285,9 @@ Every token, its values and its one job. Generated from the registry.
 | `type/score/badge` | `caption` | semibold | standard | true | Number inside a badge. |
 | `type/time` | `body` | regular | standard | true | Clock times and durations. |
 | `type/timeSmall` | `footnote` | regular | standard | true | Small times and chart axes. |
+| `type/event/score` | `largeTitle` | heavy | standard | true | Score numeral in the event unit. Weight and design only: the size is event/score/* (a fixed-height unit does not scale with Dynamic Type). |
+| `type/event/time` | `caption2` | thin | standard | true | Start time in the large event unit. Size is event/time/*. |
+| `type/event/timeSmall` | `caption2` | light | standard | true | Start time in the regular and compact event unit (thin hairlines vanish at 7 to 10 pt). Size is event/time/*. |
 
 Spacing is on an 8-pt scale (`space/sm` 8, `space/lg` 16, `space/xl` 24, `space/xxl` 32; the `grid/*` tokens name the lane, inset and row-height steps). 4 (`space/xs`) is only for hairline-tight pairs, such as a symbol and its number inside the event unit. `space/md` (12) and `space/xxs` (2) are kept for old code and are not used in new layout. Event-unit tokens (`event/*`) size the one score chip; `event/pinScaleSelected`, `event/lowConfidenceOpacity` and `debug/*Opacity` are ratios stored as dimension tokens. Type uses system fonts only: SF Pro, with New York (`.serif` design) for the spot and trip title voice, and monospaced digits for every number, time and score. Each type token names a `Font.TextStyle`, weight and design, so system sizing and Dynamic Type still apply; the px size in `tokens.json` is the macOS default for that style, for reference in design tools.
 

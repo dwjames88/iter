@@ -38,14 +38,13 @@ struct LightStatus: Equatable {
     }
 }
 
-/// The full-width status band under a detail header. Dark tinted ground and bright text in the next window's band
-/// colour (the ramp), neutral when there is no confident score.
+/// The full-width status band under a detail header. A tinted ground in the next window's band colour (the ramp) with
+/// primary text (the ramp fills are now dark, for white text), neutral when there is no confident score.
 struct LightStatusBand: View {
     let status: LightStatus
     @Environment(\.colorScheme) private var scheme
 
     var body: some View {
-        let tint = status.band.map { scheme == .dark ? IterColor.ramp($0) : IterColor.rampText($0) }
         let wash = status.band.map { IterColor.ramp($0) }
         HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
             Image(systemName: status.symbol).accessibilityHidden(true)
@@ -57,7 +56,7 @@ struct LightStatusBand: View {
         }
         .lineLimit(1)
         .minimumScaleFactor(0.75)
-        .foregroundStyle(tint ?? IterColor.textSecondary.color)
+        .foregroundStyle(status.band == nil ? IterColor.textSecondary.color : IterColor.textPrimary.color)
         .padding(.horizontal, IterSpace.lg)
         .padding(.vertical, IterSpace.md)
         .frame(maxWidth: .infinity, alignment: .leading)

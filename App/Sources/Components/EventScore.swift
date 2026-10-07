@@ -16,16 +16,17 @@ enum TimeStyle: Sendable {
     case range
 }
 
-/// The event unit: a light window's symbol, its score and its time as ONE capsule in one continuous fill.
+/// The event unit: a light window's score, symbol and time as ONE rounded rectangle in one continuous fill.
 ///
-/// A scored unit is filled with the band's ramp colour, and the symbol, the number and the time all sit on it in the
-/// band's ramp text colour, on one first baseline. The number is semibold; the time is regular (medium in the large
-/// variant), so the score stays the strongest element. Poor and Fair (pale fills) carry one hairline around the
-/// capsule. A window without a score is one neutral capsule with the symbol in its standalone colour (and a mini
-/// spinner while the forecast loads) and the time in primary text. The symbol and number take a fixed measured width
-/// and the time another, per variant and time style (`unitWidth`), so units stack and align. The `pin` variant is
-/// the compact unit over the map, with a pointer, a shadow and a selected scale; an unscored pin is a material so the
-/// time stays legible over any map.
+/// A scored unit is filled with the band's ramp colour (corner radius a quarter of the height, not a capsule). On the
+/// left sits the score as a very large, heavy, monospaced-digit numeral that takes nearly the full height; on the
+/// right a column centred vertically: the window's symbol above, the start time below in a thin weight, about a third
+/// of the numeral's size. Everything is white, which every ramp fill passes at 4.5:1 (see `ContrastTests`). A window
+/// without a score is the same size with no fill and a hairline outline, the symbol over the time in the text
+/// colours (and a mini spinner beside the symbol while the forecast loads). The numeral and the stack take fixed
+/// measured widths per variant and time style (`unitWidth`), so units stack and align. Sizes are fixed points from the
+/// `event/*` tokens, not Dynamic Type: the unit is a fixed-height badge. The `pin` variant is the compact unit over the
+/// map, with a pointer, a shadow and a selected scale; an unscored pin is a material so the time stays legible over any map.
 struct EventScore: View {
     enum Variant: Sendable { case compact, regular, large, pin }
 
@@ -113,56 +114,64 @@ struct EventScore: View {
 
     private var unit: some View {
         let v = unitVariant
-        let headWidth = Self.laneWidth(v)
-        let tailWidth = Self.tailWidth(v, timeStyle)
-        return HStack(alignment: .firstTextBaseline, spacing: 0) {
-            head
-                .frame(width: headWidth)
-            timeText
-                .frame(width: tailWidth)
+        let height = Self.height(v)
+        let shape = RoundedRectangle(cornerRadius: height * IterEvent.cornerRatio, style: .continuous)
+        return Group {
+            if let score {
+                HStack(spacing: Self.gap(v)) {
+                    Text(score.value, format: .number)
+                        .font(IterFont.eventScore(size: Self.scoreSize(v)))
+                        .monospacedDigit()
+                        .foregroundStyle(IterColor.rampText(score.band))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
+                        .frame(width: Self.scoreWidth(v))
+                    stack(color: IterColor.rampText(score.band))
+                        .frame(width: Self.stackWidth(v, timeStyle))
+                }
+                .padding(.horizontal, Self.padding(v))
+            } else {
+                stack(color: IterColor.textPrimary.color)
+                    .frame(maxWidth: .infinity)
+            }
         }
-        .frame(height: Self.height(v))
-        .background(unitFill, in: Capsule())
+        .frame(width: Self.unitWidth(v, timeStyle: timeStyle), height: height)
+        .background(unitFill, in: shape)
         .overlay {
-            if let score, score.band <= .fair { Capsule().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline) }
+            if score == nil { shape.strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline) }
         }
         .opacity(score?.confidence == .low ? IterEvent.lowConfidenceOpacity : 1)
     }
 
-    /// The head: symbol and number on one first baseline, or the unscored symbol.
-    @ViewBuilder private var head: some View {
+    /// The symbol above the start time, centred. A scored unit draws both in one colour (white); an unscored one
+    /// draws the symbol in its standalone colour and a spinner beside it while loading.
+    private func stack(color: Color) -> some View {
         let v = unitVariant
-        if let score {
-            HStack(alignment: .firstTextBaseline, spacing: IterEvent.gap) {
+        return VStack(spacing: Self.stackGap(v)) {
+            if score != nil {
                 Image(systemName: LightText.symbol(kind))
                     .symbolRenderingMode(.monochrome)
                     .font(.system(size: Self.symbolSize(v)))
-                Text(score.value, format: .number)
-                    .font(Self.numberFont(v))
-                    .monospacedDigit()
+                    .foregroundStyle(color)
+            } else {
+                HStack(spacing: IterSpace.xs) {
+                    WindowSymbol(kind: kind, font: .system(size: Self.symbolSize(v)))
+                    if isLoading { ProgressView().controlSize(.mini) }
+                }
             }
-            .foregroundStyle(IterColor.rampText(score.band))
-        } else {
-            HStack(alignment: .firstTextBaseline, spacing: IterEvent.gap) {
-                WindowSymbol(kind: kind, font: .system(size: Self.symbolSize(v)))
-                if isLoading { ProgressView().controlSize(.mini) }
-            }
+            Text(timeString)
+                .font(Self.timeFont(v))
+                .monospacedDigit()
+                .foregroundStyle(color)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
         }
     }
 
-    private var timeText: some View {
-        Text(timeString)
-            .font(Self.timeFont(unitVariant))
-            .monospacedDigit()
-            .foregroundStyle(score.map { IterColor.rampText($0.band) } ?? IterColor.textPrimary.color)
-            .lineLimit(1)
-            .minimumScaleFactor(0.8)
-    }
-
-    /// The one fill: the band's ramp colour, or neutral when unscored.
+    /// The one fill: the band's ramp colour; none when unscored (a pin gets a material).
     private var unitFill: AnyShapeStyle {
         if let score { return AnyShapeStyle(IterColor.ramp(score.band)) }
-        return variant == .pin ? pinFill : AnyShapeStyle(IterColor.backgroundModule)
+        return variant == .pin ? pinFill : AnyShapeStyle(Color.clear)
     }
 
     private var timeString: String {
@@ -203,57 +212,68 @@ struct EventScore: View {
 
     // MARK: Metrics
 
-    static func height(_ v: Variant) -> CGFloat {
-        switch v { case .compact, .pin: IterEvent.heightCompact; case .regular: IterEvent.heightRegular; case .large: IterEvent.heightLarge }
+    private static func pick(_ v: Variant, _ compact: CGFloat, _ regular: CGFloat, _ large: CGFloat) -> CGFloat {
+        switch v { case .compact, .pin: compact; case .regular: regular; case .large: large }
     }
-    static func symbolSize(_ v: Variant) -> CGFloat {
-        switch v { case .compact, .pin: IterEvent.symbolCompact; case .regular: IterEvent.symbolRegular; case .large: IterEvent.symbolLarge }
-    }
-    static func padding(_ v: Variant) -> CGFloat {
-        switch v { case .compact, .pin: IterEvent.paddingCompact; case .regular, .large: IterEvent.padding }
-    }
-    static func numberFont(_ v: Variant) -> Font {
-        switch v { case .compact, .pin: IterFont.scoreBadge; case .regular: IterFont.headline; case .large: IterFont.scoreLarge }
-    }
-    static func timeFont(_ v: Variant) -> Font {
-        switch v { case .compact, .pin: IterFont.timeSmall; case .regular: IterFont.time; case .large: IterFont.headline.weight(.medium) }
+    static func height(_ v: Variant) -> CGFloat { pick(v, IterEvent.heightCompact, IterEvent.heightRegular, IterEvent.heightLarge) }
+    static func scoreSize(_ v: Variant) -> CGFloat { pick(v, IterEvent.scoreCompact, IterEvent.scoreRegular, IterEvent.scoreLarge) }
+    static func timeSize(_ v: Variant) -> CGFloat { pick(v, IterEvent.timeCompact, IterEvent.timeRegular, IterEvent.timeLarge) }
+    static func symbolSize(_ v: Variant) -> CGFloat { pick(v, IterEvent.symbolCompact, IterEvent.symbolRegular, IterEvent.symbolLarge) }
+    static func stackGap(_ v: Variant) -> CGFloat { pick(v, IterEvent.stackGapCompact, IterEvent.stackGapRegular, IterEvent.stackGapLarge) }
+    static func gap(_ v: Variant) -> CGFloat { pick(v, IterEvent.gapCompact, IterEvent.gap, IterEvent.gapLarge) }
+    static func padding(_ v: Variant) -> CGFloat { pick(v, IterEvent.paddingCompact, IterEvent.padding, IterEvent.paddingLarge) }
+    static func timeFont(_ v: Variant) -> Font { IterFont.eventTime(size: timeSize(v), large: v == .large) }
+
+    private static func nsWeight(_ w: FontWeightName) -> NSFont.Weight {
+        switch w {
+        case .ultraLight: .ultraLight
+        case .thin: .thin
+        case .light: .light
+        case .regular: .regular
+        case .medium: .medium
+        case .semibold: .semibold
+        case .bold: .bold
+        case .heavy: .heavy
+        case .black: .black
+        }
     }
 
     // MARK: Measured widths
 
-    /// The width of one whole unit of the variant and time style: the symbol-and-number lane and the time lane, both fixed, so every unit
-    /// of a variant and style is as wide as the widest it can be and stacks align perfectly.
+    /// The width of one whole unit of the variant and time style: padding, numeral lane, gap, stack lane, padding.
+    /// Fixed, so every unit of a variant and style is the same size and stacks align perfectly.
     static func unitWidth(_ variant: Variant, timeStyle: TimeStyle) -> CGFloat {
         let v = variant == .pin ? .compact : variant
         return laneWidth(v) + tailWidth(v, timeStyle)
     }
 
-    /// The head: the widest "100" and a symbol, with the variant's padding either side. The symbol's width is taken
-    /// as its point size times 1.25 (SF Symbols are wider than tall; this covers the widest window symbol).
+    /// The head: left padding, the numeral lane and the gap to the stack.
     static func laneWidth(_ variant: Variant) -> CGFloat {
         let v = variant == .pin ? .compact : variant
-        let number = ceil(measure("100", font: numberNSFont(v)))
-        return ceil(padding(v) * 2 + symbolSize(v) * 1.25 + IterEvent.gap + number)
+        return padding(v) + scoreWidth(v) + gap(v)
     }
 
-    /// The tail: the widest time of the style, with the variant's padding either side.
+    /// The tail: the stack lane and the right padding.
     static func tailWidth(_ variant: Variant, _ style: TimeStyle) -> CGFloat {
         let v = variant == .pin ? .compact : variant
-        return padding(v) * 2 + timeLaneWidth(style, variant: v)
+        return stackWidth(v, style) + padding(v)
+    }
+
+    /// The numeral lane: two heavy digits ("88", the widest). A 100 shrinks to fit rather than widening every unit.
+    static func scoreWidth(_ v: Variant) -> CGFloat {
+        ceil(measure("88", font: NSFont.monospacedDigitSystemFont(ofSize: scoreSize(v), weight: nsWeight(IterFont.eventScoreWeight()))))
+    }
+
+    /// The stack lane: the wider of the symbol (point size times 1.25: SF Symbols are wider than tall) and the widest time.
+    static func stackWidth(_ v: Variant, _ style: TimeStyle) -> CGFloat {
+        max(ceil(symbolSize(v) * 1.25), timeLaneWidth(style, variant: v))
     }
 
     /// The widest time label of the style that the current locale and clock format can produce, sampled at :58 past
-    /// every hour, in the variant's time font.
+    /// every hour, in the variant's time font. A `.range` is one line, "05:45–06:20", in the time slot.
     static func timeLaneWidth(_ style: TimeStyle, variant: Variant) -> CGFloat {
-        let font: NSFont
-        switch variant {
-        case .compact, .pin:
-            font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.preferredFont(forTextStyle: .footnote).pointSize, weight: .regular)
-        case .regular:
-            font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.preferredFont(forTextStyle: .body).pointSize, weight: .regular)
-        case .large:
-            font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.preferredFont(forTextStyle: .headline).pointSize, weight: .medium)
-        }
+        let v = variant == .pin ? .compact : variant
+        let font = NSFont.monospacedDigitSystemFont(ofSize: timeSize(v), weight: nsWeight(IterFont.eventTimeWeight(large: v == .large)))
         let utc = TimeZone(identifier: "UTC")!
         let midnight = LocalDay(year: 2026, month: 1, day: 1).at(hour: 0, in: utc)
         let widest = (0..<24).map { hour -> CGFloat in
@@ -264,15 +284,6 @@ struct EventScore: View {
             return measure(text, font: font)
         }.max() ?? 0
         return ceil(widest) + 1
-    }
-
-    /// AppKit has no `.largeTitle` style on every OS we measure on, so the large number is measured at the larger of
-    /// `.title1` and 26 pt (the macOS largeTitle size); measured values only need to be at least as wide as drawn ones.
-    private static func numberNSFont(_ v: Variant) -> NSFont {
-        let style: NSFont.TextStyle
-        switch v { case .compact, .pin: style = .caption1; case .regular: style = .headline; case .large: style = .title1 }
-        let size = NSFont.preferredFont(forTextStyle: style).pointSize
-        return NSFont.monospacedDigitSystemFont(ofSize: v == .large ? max(size, 26) : size, weight: .semibold)
     }
 
     fileprivate static func measure(_ string: String, font: NSFont) -> CGFloat {

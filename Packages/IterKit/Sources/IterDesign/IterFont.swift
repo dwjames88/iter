@@ -20,6 +20,21 @@ public enum IterFont {
     public static let time = make("type/time")
     public static let timeSmall = make("type/timeSmall")
 
+    /// The event unit's numeral at a fixed point size (weight, design and monospaced digits from `type/event/score`).
+    public static func eventScore(size: CGFloat) -> Font { fixed("type/event/score", size: size) }
+    /// The event unit's time at a fixed point size: thin in the large unit, light below it.
+    public static func eventTime(size: CGFloat, large: Bool) -> Font { fixed(large ? "type/event/time" : "type/event/timeSmall", size: size) }
+    /// Weight of those two tokens, for text measurement.
+    public static func eventScoreWeight() -> FontWeightName { TokenValues.typography("type/event/score").weight }
+    public static func eventTimeWeight(large: Bool) -> FontWeightName { TokenValues.typography(large ? "type/event/time" : "type/event/timeSmall").weight }
+
+    private static func fixed(_ name: String, size: CGFloat) -> Font {
+        let t = TokenValues.typography(name)
+        var font = Font.system(size: size, weight: t.weight.swiftUI, design: t.design.swiftUI)
+        if t.monospacedDigits { font = font.monospacedDigit() }
+        return font
+    }
+
     public static func make(_ name: String) -> Font { font(for: TokenValues.typography(name)) }
 
     public static func font(for token: TypographyToken) -> Font {

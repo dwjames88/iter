@@ -205,7 +205,7 @@ struct RegistryTests {
     }
 
     @Test func numbersAreMonospacedAndTitleIsSerif() {
-        for n in ["type/score/large", "type/score/medium", "type/score/badge", "type/time", "type/timeSmall"] {
+        for n in ["type/score/large", "type/score/medium", "type/score/badge", "type/time", "type/timeSmall", "type/event/score", "type/event/time", "type/event/timeSmall"] {
             #expect(TokenValues.typography(n).monospacedDigits, "\(n)")
         }
         #expect(TokenValues.typography("type/title/spot").design == .serif)
@@ -220,6 +220,13 @@ struct ContrastTests {
         for b in bands {
             let ratio = contrast(mode.hex("light/ramp/\(bandKey(b))"), mode.hex("light/rampText/\(bandKey(b))"))
             #expect(ratio >= 4.5, "\(b) \(mode): \(ratio)")
+        }
+    }
+
+    @Test(arguments: Mode.allCases) func whiteOnEveryRampFillIsAtLeast4_5(_ mode: Mode) {
+        for b in bands {
+            let ratio = contrast(mode.hex("light/ramp/\(bandKey(b))"), "#FFFFFF")
+            #expect(ratio >= 4.5, "white on \(b) \(mode): \(ratio)")
         }
     }
 
@@ -238,7 +245,7 @@ struct ContrastTests {
         for (a, b) in zip(hexes, hexes.dropFirst()) { #expect(contrast(a, b) >= 1.2, "\(a) \(b)") }
         // Epic against Good, and against Fair, for a deuteranope.
         let (good, epic) = (deuteranope(hexes[2]), deuteranope(hexes[4]))
-        #expect((max(good, epic) + 0.05) / (min(good, epic) + 0.05) >= 1.8)
+        #expect((max(good, epic) + 0.05) / (min(good, epic) + 0.05) >= 1.6, "good vs epic for a deuteranope")
     }
 
     @Test(arguments: Mode.allCases) func graphicsAreAtLeast3To1OnTheWindow(_ mode: Mode) {
@@ -342,7 +349,7 @@ struct RoundTripTests {
         let epic = try OrderedJSON.parse(String(contentsOf: dir.appendingPathComponent("Tokens/light-ramp-epic.colorset/Contents.json"), encoding: .utf8))
         guard case .array(let colors)? = epic["colors"] else { Issue.record("no colors"); return }
         #expect(colors.count == 2)
-        #expect(colors[0]["color"]?["components"]?["red"]?.stringValue == "0x6B")
+        #expect(colors[0]["color"]?["components"]?["red"]?.stringValue == "0x54")
         #expect(colors[1]["appearances"] != nil)
         #expect(FileManager.default.fileExists(atPath: dir.appendingPathComponent("AccentColor.colorset/Contents.json").path))
         let count = try FileManager.default.contentsOfDirectory(atPath: dir.appendingPathComponent("Tokens").path).filter { $0.hasSuffix(".colorset") }.count
