@@ -9,11 +9,12 @@ public enum StoreAction: String, Sendable, CaseIterable {
     case createTrip, createTripFromTemplate, renameTrip, setTripNotes, setDates, duplicateTrip, deleteTrip, importTrip
     case addStop, removeStop, moveStop, reorderStops, setSession, setNote, setBuffer
     case setSaved, createUserSpot, updatePlace, deletePlace
+    case createFolder, newFolderWithSelection, renameFolder, deleteFolder, moveFolder, moveTrips, movePlaces, pinTrip, unpinTrip
 }
 
 /// The only way the app changes data. Main-actor, small-data (hundreds of rows), saves after every edit.
 ///
-/// Undo: each mutation snapshots the trips and places it touches before and after, and registers an undo on
+/// Undo: each mutation snapshots the trips, places and folders it touches before and after, and registers an undo on
 /// `undoManager` that restores the "before" snapshots (recreating deleted records with the same IDs and
 /// relationships). The undo registers the redo the same way. The SwiftData container must be attached to the UI
 /// with model-context undo disabled, otherwise undo would be applied twice.
@@ -128,6 +129,12 @@ public final class IterStore {
                 new.setUpBufferMinutes = stop.setUpBufferMinutes
                 new.note = stop.note
             }
+            // Filed with the original, right after it.
+            copy.folder = trip.folder
+            var siblings = tripsSorted(in: trip.folder).filter { $0.id != copy.id }
+            let at = siblings.firstIndex { $0.id == trip.id }.map { $0 + 1 } ?? siblings.count
+            siblings.insert(copy, at: at)
+            renumber(siblings)
             return copy
         }
     }
@@ -252,6 +259,7 @@ public final class IterStore {
             } else if let place = existing {
                 touch(place)
                 place.isSaved = false
+                place.folder = nil
                 place.updatedAt = .now
                 pruneIfOrphaned(place, excludingStops: [])
             }
@@ -344,6 +352,7 @@ public final class IterStore {
         undoManager?.removeAllActions(withTarget: self)
         for trip in (try? context.fetch(FetchDescriptor<TripRecord>())) ?? [] { context.delete(trip) }
         for place in (try? context.fetch(FetchDescriptor<PlaceRecord>())) ?? [] { context.delete(place) }
+        for folder in (try? context.fetch(FetchDescriptor<FolderRecord>())) ?? [] { context.delete(folder) }
         save()
         revision += 1
     }
@@ -369,9 +378,10 @@ public final class IterStore {
         save()
         revision += 1
         if undoable, undoManager != nil {
-            var after = StoreState(tripIDs: before.tripIDs, placeIDs: before.placeIDs)
+            var after = StoreState(tripIDs: before.tripIDs, placeIDs: before.placeIDs, folderIDs: before.folderIDs)
             for id in before.tripIDs { if let trip = trip(id: id) { after.trips[id] = TripSnapshot(trip) } }
             for id in before.placeIDs { if let place = place(id: id) { after.places[id] = PlaceSnapshot(place) } }
+            for id in before.folderIDs { if let folder = folder(id: id) { after.folders[id] = FolderSnapshot(folder) } }
             register(StoreChange(before: before, after: after), action)
         }
         return result
@@ -387,6 +397,12 @@ public final class IterStore {
         pending?.places[place.id] = PlaceSnapshot(place)
     }
 
+    private func touch(_ folder: FolderRecord) {
+        guard pending?.folderIDs.insert(folder.id).inserted == true else { return }
+        pending?.folders[folder.id] = FolderSnapshot(folder)
+    }
+
+    private func touchNew(folder id: UUID) { pending?.folderIDs.insert(id) }
     private func touchNew(trip id: UUID) { pending?.tripIDs.insert(id) }
     private func touchNew(place id: UUID) { pending?.placeIDs.insert(id) }
 
@@ -403,6 +419,20 @@ public final class IterStore {
 
     /// Makes the records in `state` exactly as snapshotted: recreates, updates or deletes them.
     private func restore(_ state: StoreState) {
+        // Folders first (fields, then parents once every folder exists), so places and trips can link to them.
+        for id in state.folderIDs {
+            guard let snapshot = state.folders[id] else { continue }
+            let record = folder(id: id) ?? {
+                let new = FolderRecord(id: id)
+                context.insert(new)
+                return new
+            }()
+            snapshot.write(to: record)
+        }
+        for id in state.folderIDs {
+            guard let snapshot = state.folders[id], let record = folder(id: id) else { continue }
+            record.parent = snapshot.parentID.flatMap { folder(id: $0) }
+        }
         for id in state.placeIDs {
             guard let snapshot = state.places[id] else { continue }
             let record = place(id: id) ?? {
@@ -411,6 +441,7 @@ public final class IterStore {
                 return new
             }()
             snapshot.write(to: record)
+            record.folder = snapshot.folderID.flatMap { folder(id: $0) }
         }
         for id in state.tripIDs {
             guard let snapshot = state.trips[id] else {
@@ -423,6 +454,7 @@ public final class IterStore {
                 return new
             }()
             snapshot.write(to: trip)
+            trip.folder = snapshot.folderID.flatMap { folder(id: $0) }
             var existing = Dictionary((trip.stops ?? []).map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
             for stopSnapshot in snapshot.stops {
                 let record = existing.removeValue(forKey: stopSnapshot.id) ?? {
@@ -438,6 +470,9 @@ public final class IterStore {
         }
         for id in state.placeIDs where state.places[id] == nil {
             if let place = place(id: id) { context.delete(place) }
+        }
+        for id in state.folderIDs where state.folders[id] == nil {
+            if let folder = folder(id: id) { context.delete(folder) }
         }
     }
 
@@ -460,6 +495,7 @@ public final class IterStore {
         trip.name = name
         trip.startDay = startDay
         trip.dayCount = max(1, dayCount)
+        trip.sortOrder = firstSortOrder(unfiledTripsExcluding: trip.id)
         return trip
     }
 
@@ -486,6 +522,14 @@ public final class IterStore {
         renumber(list)
         trip.updatedAt = .now
         return stop
+    }
+
+    /// Renumbers trips 0... in the given order, touching those that change.
+    private func renumber(_ trips: [TripRecord]) {
+        for (i, trip) in trips.enumerated() where trip.sortOrder != Double(i) {
+            touch(trip)
+            trip.sortOrder = Double(i)
+        }
     }
 
     private func renumber(_ stops: [StopRecord]) {
@@ -538,5 +582,282 @@ public final class IterStore {
         }
         place.isSaved = spot.origin == .user
         return place
+    }
+}
+
+// MARK: - Folders
+
+/// Folders and filing. Trips and locations never share a folder; nesting is one level (a subfolder's parent is a root
+/// folder of the same kind). Invalid requests are silent no-ops. Moves only change order and membership; they do not
+/// change a trip's `updatedAt`.
+extension IterStore {
+    /// Root folders of a kind, ordered (sort order, name, id).
+    public func folders(kind: FolderKind) -> [FolderRecord] {
+        allFolders().filter { $0.kind == kind && $0.parent == nil }.sorted(by: Self.folderOrder)
+    }
+
+    /// A root folder's subfolders, ordered. Empty for a subfolder.
+    public func subfolders(of folder: FolderRecord) -> [FolderRecord] {
+        (folder.children ?? []).sorted(by: Self.folderOrder)
+    }
+
+    public func folder(id: UUID) -> FolderRecord? {
+        var descriptor = FetchDescriptor<FolderRecord>(predicate: #Predicate { $0.id == id })
+        descriptor.fetchLimit = 1
+        return try? context.fetch(descriptor).first
+    }
+
+    /// The trips directly in `folder` (nil = unfiled), pinned ones included, ordered (sort order, newest edit, id).
+    public func trips(in folder: FolderRecord?) -> [TripRecord] {
+        tripsSorted(in: folder)
+    }
+
+    /// Pinned trips in the order they were pinned.
+    public func pinnedTrips() -> [TripRecord] {
+        let all = (try? context.fetch(FetchDescriptor<TripRecord>())) ?? []
+        return all.filter(\.isPinned).sorted {
+            ($0.pinnedAt ?? .distantFuture, $0.id.uuidString) < ($1.pinnedAt ?? .distantFuture, $1.id.uuidString)
+        }
+    }
+
+    /// Saved and user places filed in `folder` or, for a root folder, in its subfolders; the folder's own first.
+    public func savedPlaces(in folder: FolderRecord) -> [PlaceRecord] {
+        let saved = ((try? context.fetch(FetchDescriptor<PlaceRecord>())) ?? []).filter { $0.isSaved || $0.origin == .user }
+        func direct(_ target: FolderRecord) -> [PlaceRecord] {
+            saved.filter { $0.folder?.id == target.id }.sorted(by: Self.placeOrder)
+        }
+        return direct(folder) + subfolders(of: folder).flatMap(direct)
+    }
+
+    /// A new, empty folder at the end of its siblings. A `parent` that is not a root folder of the same kind is ignored
+    /// (the folder becomes a root folder).
+    @discardableResult
+    public func createFolder(name: String, kind: FolderKind, parent: FolderRecord? = nil) -> FolderRecord {
+        createFolder(name: name, kind: kind, parent: parent, trips: [], places: [])
+    }
+
+    /// A new folder holding the given selection (trips only for `.trips` folders, places only for `.locations`).
+    /// With an empty selection this is a plain `createFolder`.
+    @discardableResult
+    public func createFolder(name: String, kind: FolderKind, parent: FolderRecord? = nil,
+                             trips: [TripRecord] = [], places: [PlaceRecord] = []) -> FolderRecord {
+        let trips = kind == .trips ? unique(trips) : []
+        let places = kind == .locations ? unique(places) : []
+        let action: StoreAction = trips.isEmpty && places.isEmpty ? .createFolder : .newFolderWithSelection
+        return perform(action) {
+            let folder = FolderRecord()
+            context.insert(folder)
+            touchNew(folder: folder.id)
+            folder.name = name
+            folder.kind = kind
+            if let parent, canNest(under: parent, kind: kind) { folder.parent = parent }
+            folder.sortOrder = nextFolderSortOrder(under: folder.parent, kind: kind, excluding: folder.id)
+            for (i, trip) in trips.enumerated() {
+                touch(trip)
+                trip.folder = folder
+                trip.sortOrder = Double(i)
+            }
+            for (i, place) in places.enumerated() {
+                touch(place)
+                place.folder = folder
+                place.sortOrder = Double(i)
+            }
+            return folder
+        }
+    }
+
+    public func renameFolder(_ folder: FolderRecord, to name: String) {
+        guard folder.name != name else { return }
+        perform(.renameFolder) {
+            touch(folder)
+            folder.name = name
+            folder.updatedAt = .now
+        }
+    }
+
+    /// Deletes the folder; its subfolders, trips and places move to the folder's parent (or to the top level / unfiled),
+    /// after what is already there.
+    public func deleteFolder(_ folder: FolderRecord) {
+        perform(.deleteFolder) {
+            touch(folder)
+            let parent = folder.parent
+            let kind = folder.kind
+            let doomed = folder.id
+
+            var folderOrder = nextFolderSortOrder(under: parent, kind: kind, excluding: doomed)
+            for child in subfolders(of: folder) {
+                touch(child)
+                child.parent = parent
+                child.sortOrder = folderOrder
+                folderOrder += 1
+                child.updatedAt = .now
+            }
+            if kind == .trips {
+                var order = parent.map { nextTripSortOrder(in: $0) } ?? nextTripSortOrder(in: nil)
+                for trip in tripsSorted(in: folder) {
+                    touch(trip)
+                    trip.folder = parent
+                    trip.sortOrder = order
+                    order += 1
+                }
+            } else {
+                var order = parent.map { nextPlaceSortOrder(in: $0) } ?? 0
+                for place in (folder.places ?? []).sorted(by: Self.placeOrder) {
+                    touch(place)
+                    place.folder = parent
+                    place.sortOrder = parent == nil ? 0 : order
+                    order += 1
+                }
+            }
+            context.delete(folder)
+        }
+    }
+
+    /// Re-parents and/or reorders a folder. `parent` nil = top level. `index` is a position in the target's ordered
+    /// list as it is now (before the move); nil = end. No-op if the parent is not a root folder of the same kind, is the
+    /// folder itself, or the folder has subfolders of its own and `parent` is not nil.
+    public func moveFolder(_ folder: FolderRecord, to parent: FolderRecord?, index: Int?) {
+        if let parent {
+            guard canNest(under: parent, kind: folder.kind), parent.id != folder.id, (folder.children ?? []).isEmpty else { return }
+        }
+        let target = parent.map { subfolders(of: $0) } ?? folders(kind: folder.kind)
+        let ordered = Self.inserting([folder], into: target, at: index) { $0.id }
+        guard folder.parent?.id != parent?.id || ordered.map(\.id) != target.map(\.id) else { return }
+        perform(.moveFolder) {
+            touch(folder)
+            if folder.parent?.id != parent?.id { folder.parent = parent }
+            folder.updatedAt = .now
+            for (i, item) in ordered.enumerated() where item.sortOrder != Double(i) {
+                touch(item)
+                item.sortOrder = Double(i)
+            }
+        }
+    }
+
+    /// Files trips in `folder` (nil = unfiled) at `index` and renumbers the target. `index` is a position in the target's
+    /// ordered list as it is now (before the move, like `onMove`'s destination); nil = end. No-op for a non-trip folder.
+    public func moveTrips(_ trips: [TripRecord], to folder: FolderRecord?, index: Int?) {
+        if let folder, folder.kind != .trips { return }
+        let moving = unique(trips)
+        guard !moving.isEmpty else { return }
+        let target = tripsSorted(in: folder)
+        let ordered = Self.inserting(moving, into: target, at: index) { $0.id }
+        guard moving.contains(where: { $0.folder?.id != folder?.id }) || ordered.map(\.id) != target.map(\.id) else { return }
+        perform(.moveTrips) {
+            for (i, trip) in ordered.enumerated() where trip.folder?.id != folder?.id || trip.sortOrder != Double(i) {
+                touch(trip)
+                trip.folder = folder
+                trip.sortOrder = Double(i)
+            }
+        }
+    }
+
+    /// Files places in a location folder at `index` (see `moveTrips`), or unfiles them with nil (the index is ignored).
+    /// No-op for a trip folder.
+    public func movePlaces(_ places: [PlaceRecord], to folder: FolderRecord?, index: Int?) {
+        if let folder, folder.kind != .locations { return }
+        let moving = unique(places)
+        guard !moving.isEmpty else { return }
+        guard let folder else {
+            guard moving.contains(where: { $0.folder != nil }) else { return }
+            perform(.movePlaces) {
+                for place in moving where place.folder != nil {
+                    touch(place)
+                    place.folder = nil
+                    place.sortOrder = 0
+                }
+            }
+            return
+        }
+        let target = (folder.places ?? []).sorted(by: Self.placeOrder)
+        let ordered = Self.inserting(moving, into: target, at: index) { $0.id }
+        guard moving.contains(where: { $0.folder?.id != folder.id }) || ordered.map(\.id) != target.map(\.id) else { return }
+        perform(.movePlaces) {
+            for (i, place) in ordered.enumerated() where place.folder?.id != folder.id || place.sortOrder != Double(i) {
+                touch(place)
+                place.folder = folder
+                place.sortOrder = Double(i)
+            }
+        }
+    }
+
+    /// Pins or unpins a trip. A pinned trip keeps its folder.
+    public func setPinned(_ trip: TripRecord, _ pinned: Bool) {
+        guard trip.isPinned != pinned else { return }
+        perform(pinned ? .pinTrip : .unpinTrip) {
+            touch(trip)
+            trip.isPinned = pinned
+            trip.pinnedAt = pinned ? .now : nil
+        }
+    }
+
+    // MARK: Helpers
+
+    private func allFolders() -> [FolderRecord] {
+        (try? context.fetch(FetchDescriptor<FolderRecord>())) ?? []
+    }
+
+    private static func folderOrder(_ a: FolderRecord, _ b: FolderRecord) -> Bool {
+        if a.sortOrder != b.sortOrder { return a.sortOrder < b.sortOrder }
+        switch a.name.localizedStandardCompare(b.name) {
+        case .orderedAscending: return true
+        case .orderedDescending: return false
+        case .orderedSame: return a.id.uuidString < b.id.uuidString
+        }
+    }
+
+    private static func placeOrder(_ a: PlaceRecord, _ b: PlaceRecord) -> Bool {
+        if a.sortOrder != b.sortOrder { return a.sortOrder < b.sortOrder }
+        switch a.name.localizedStandardCompare(b.name) {
+        case .orderedAscending: return true
+        case .orderedDescending: return false
+        case .orderedSame: return a.id.uuidString < b.id.uuidString
+        }
+    }
+
+    func tripsSorted(in folder: FolderRecord?) -> [TripRecord] {
+        let all = (try? context.fetch(FetchDescriptor<TripRecord>())) ?? []
+        return all.filter { $0.folder?.id == folder?.id }.sorted {
+            if $0.sortOrder != $1.sortOrder { return $0.sortOrder < $1.sortOrder }
+            if $0.updatedAt != $1.updatedAt { return $0.updatedAt > $1.updatedAt }
+            return $0.id.uuidString < $1.id.uuidString
+        }
+    }
+
+    /// One level only, same kind.
+    private func canNest(under parent: FolderRecord, kind: FolderKind) -> Bool {
+        parent.parent == nil && parent.kind == kind
+    }
+
+    private func nextFolderSortOrder(under parent: FolderRecord?, kind: FolderKind, excluding id: UUID) -> Double {
+        let siblings = parent.map { subfolders(of: $0) } ?? folders(kind: kind)
+        return (siblings.filter { $0.id != id }.map(\.sortOrder).max() ?? -1) + 1
+    }
+
+    private func nextTripSortOrder(in folder: FolderRecord?) -> Double {
+        (tripsSorted(in: folder).map(\.sortOrder).max() ?? -1) + 1
+    }
+
+    private func nextPlaceSortOrder(in folder: FolderRecord) -> Double {
+        ((folder.places ?? []).map(\.sortOrder).max() ?? -1) + 1
+    }
+
+    /// New unfiled trips go first: one below the smallest unfiled sort order.
+    func firstSortOrder(unfiledTripsExcluding id: UUID) -> Double {
+        (tripsSorted(in: nil).filter { $0.id != id }.map(\.sortOrder).min() ?? 1) - 1
+    }
+
+    private func unique<R: PersistentModel>(_ records: [R]) -> [R] {
+        var seen = Set<PersistentIdentifier>()
+        return records.filter { seen.insert($0.persistentModelID).inserted }
+    }
+
+    /// `list` with `items` removed and re-inserted before the element that was at `index` (nil or past the end = end).
+    private static func inserting<T>(_ items: [T], into list: [T], at index: Int?, id: (T) -> UUID) -> [T] {
+        let moving = Set(items.map(id))
+        let at = min(max(0, index ?? list.count), list.count)
+        let before = list[..<at].filter { !moving.contains(id($0)) }
+        let after = list[at...].filter { !moving.contains(id($0)) }
+        return before + items + after
     }
 }
