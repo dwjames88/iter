@@ -13,7 +13,7 @@ import Foundation
 ///   " for the milky way").
 ///
 /// Anything else is `.place` ("Portland", "Mesa Arch", "Cannon Beach Oregon"). Case, diacritics, punctuation and
-/// curly apostrophes do not matter. An explicit Ask toggle in the UI overrides this.
+/// curly apostrophes do not matter. `SearchSuggestions` uses it to rank the Apple Maps and Ask suggestions.
 public enum SearchIntent: Equatable, Sendable {
     case place
     case ask

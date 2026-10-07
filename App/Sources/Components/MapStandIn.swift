@@ -10,6 +10,15 @@ struct MapStandIn: View {
         var coordinate: Coordinate
         var label: String
         var selected = false
+        /// An event-unit pin (as on the Explore and Locations maps) instead of the plain marker.
+        var event: Event?
+    }
+
+    struct Event {
+        var window: LightWindow
+        var zone: TimeZone
+        var isLoading = false
+        var isTomorrow = false
     }
 
     let pins: [Pin]
@@ -30,6 +39,13 @@ struct MapStandIn: View {
                     .stroke(IterColor.route, lineWidth: IterStroke.route)
                     ForEach(pins) { pin in
                         let p = project(pin.coordinate, region, geo.size)
+                        if let event = pin.event {
+                            // The pin's bottom tip sits on the coordinate, like the live map's bottom-anchored annotation.
+                            EventScore(window: event.window, zone: event.zone, timeStyle: .start, variant: .pin,
+                                       isLoading: event.isLoading, isTomorrow: event.isTomorrow, isSelected: pin.selected)
+                                .fixedSize()
+                                .position(x: p.x, y: p.y - (EventScore.height(.pin) + IterSpace.xs) / 2)
+                        } else {
                         VStack(spacing: IterSpace.xxs) {
                             Circle()
                                 .fill(pin.selected ? IterColor.mapPin : IterColor.mapPinInactive)
@@ -39,6 +55,7 @@ struct MapStandIn: View {
                         }
                         .fixedSize()
                         .position(p)
+                        }
                     }
                 }
                 Text("Map (snapshot stand-in)", comment: "Label on the static map used in snapshot renders")

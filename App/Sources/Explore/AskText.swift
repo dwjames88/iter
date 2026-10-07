@@ -6,22 +6,55 @@ import IterFeatures
 /// Phrasing for Ask in Explore's search field (the old Scout screen's words, moved). The model's own wording is
 /// always labelled as Apple Intelligence's; everything else here is Iter's.
 extension LightText {
-    // MARK: Field and offer
+    // MARK: Suggestions
 
-    static let askPrompt = String(localized: "Ask Iter…", comment: "Explore search field prompt when Ask mode is on")
-    static let askToggleLabel = String(localized: "Ask Iter", comment: "Toolbar toggle and VoiceOver label: put the search text to Apple Intelligence")
-    static let askToggleHelp = String(localized: "Ask Iter in your own words: the search field describes the scenery, the area and the light",
-                                      comment: "Tooltip on the Ask toggle")
-    static let askOn = String(localized: "On", comment: "VoiceOver value: Ask mode is on")
-    static let askOff = String(localized: "Off", comment: "VoiceOver value: Ask mode is off")
-
-    static func askOffer(_ query: String) -> String {
-        String(localized: "Ask Iter “\(query)”", comment: "List row that puts the search text to Apple Intelligence")
+    static func suggestionGroup(_ suggestion: SearchSuggestion) -> String {
+        switch suggestion.kind {
+        case .appleMaps: String(localized: "Apple Maps", comment: "Search suggestions group title: place lookup")
+        case .ask: String(localized: "Ask Iter", comment: "Search suggestions group title: ask Apple Intelligence")
+        }
     }
-    static let askOfferDetail = String(localized: "Find real places that fit, with a note on why",
-                                       comment: "Second line of the Ask Iter row")
-    static func askOfferAccessibility(_ query: String) -> String {
-        String(localized: "Ask Iter: \(query)", comment: "VoiceOver label of the Ask row")
+
+    static func suggestionTitle(_ suggestion: SearchSuggestion) -> String {
+        switch suggestion.kind {
+        case .appleMaps(let query): searchApple(query)
+        case .ask(let query, _): String(localized: "Ask Iter: \(query)", comment: "Search suggestion that puts the search text to Apple Intelligence")
+        }
+    }
+
+    /// Second line: what the row does, or, for an Ask that cannot run, why not.
+    static func suggestionDetail(_ suggestion: SearchSuggestion) -> String? {
+        switch suggestion.kind {
+        case .appleMaps: nil
+        case .ask(_, let availability):
+            availability == .available
+                ? String(localized: "Find real places that fit, with a note on why", comment: "Second line of the Ask Iter suggestion")
+                : askUnavailableShort(availability)
+        }
+    }
+
+    static func askUnavailableShort(_ availability: ScoutAvailability) -> String {
+        switch availability {
+        case .available, .unavailable:
+            String(localized: "Ask Iter isn't available right now", comment: "Ask suggestion, disabled: no specific reason")
+        case .deviceNotEligible:
+            String(localized: "Ask Iter isn't available: this Mac can't run Apple Intelligence", comment: "Ask suggestion, disabled: device not eligible")
+        case .appleIntelligenceNotEnabled:
+            String(localized: "Ask Iter isn't available: Apple Intelligence is off", comment: "Ask suggestion, disabled: Apple Intelligence off")
+        case .modelNotReady:
+            String(localized: "Ask Iter isn't available: Apple Intelligence is still downloading", comment: "Ask suggestion, disabled: model not ready")
+        }
+    }
+
+    static func suggestionAccessibility(_ suggestion: SearchSuggestion) -> String {
+        switch suggestion.kind {
+        case .appleMaps(let query):
+            String(localized: "Search Apple Maps for \(query)", comment: "VoiceOver label of the Apple Maps suggestion")
+        case .ask(let query, let availability):
+            availability == .available
+                ? String(localized: "Ask Iter: \(query)", comment: "VoiceOver label of the Ask suggestion")
+                : String(localized: "Ask Iter: \(query), unavailable. \(askUnavailableShort(availability))", comment: "VoiceOver label of the disabled Ask suggestion, with the reason")
+        }
     }
 
     // MARK: Section

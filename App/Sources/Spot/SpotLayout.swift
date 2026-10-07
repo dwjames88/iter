@@ -15,6 +15,12 @@ enum SpotLayout {
     static let tickLength: CGFloat = IterSpace.xs
     /// Height of the cloud and rain plot.
     static let plotHeight: CGFloat = IterSize.hourlyTintHeight * 2
+    /// Panel density (the Explore column's place panel): the sky band and the cloud and rain plot are taller, since the
+    /// timeline is the panel's centrepiece and has no label gutter. 88 and 112.
+    static let panelSkyHeight: CGFloat = IterGrid.unit * 11
+    static let panelPlotHeight: CGFloat = IterGrid.unit * 14
+    /// Below this column width (the list column's minimum, 340, plus a little) the timeline's "Drag to read any time" hint is dropped.
+    static let panelHintMinWidth: CGFloat = 350
     /// Rows of the hourly strip.
     static let hourlyRow: CGFloat = IterGrid.unit * 3
 
@@ -24,10 +30,11 @@ enum SpotLayout {
     static let belowHorizonOpacity = 0.35
 }
 
-/// Where the spot page's sections are drawn. `.page` is the full spot page; `.compact` is a narrow host (an
-/// expanded Explore row, the map's place card, about 300–360 pt wide) where sections drop their large titles and
-/// page-only chrome and fit the width they are given.
-enum SpotDensity: Sendable { case page, compact }
+/// Where the spot page's sections are drawn. `.page` is the full spot page; `.panel` is the Explore column's place
+/// panel (340 to 520 pt wide) where sections drop page-only chrome, fit the width they are given, and the light
+/// timeline is drawn wide (no label gutter, a taller band and plot). Module titles sit on the panel's 16 pt inset
+/// with no card fill; lists of windows keep a filled card.
+enum SpotDensity: Sendable { case page, panel }
 
 extension EnvironmentValues {
     @Entry var spotDensity: SpotDensity = .page
@@ -41,6 +48,7 @@ struct ModuleCard<Accessory: View, Content: View>: View {
     let title: String
     let symbol: String
     var flush = false
+    @Environment(\.spotDensity) private var density
     @ViewBuilder var accessory: Accessory
     @ViewBuilder var content: Content
 
@@ -54,6 +62,10 @@ struct ModuleCard<Accessory: View, Content: View>: View {
     }
 
     var body: some View {
+        if density == .panel { panelBody } else { cardBody }
+    }
+
+    private var cardBody: some View {
         VStack(alignment: .leading, spacing: IterSpace.sm) {
             titleRow
                 .padding(.horizontal, flush ? IterGrid.inset : 0)
@@ -64,6 +76,27 @@ struct ModuleCard<Accessory: View, Content: View>: View {
         .padding(.bottom, flush ? IterSpace.sm : IterGrid.inset)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(IterColor.backgroundModule, in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
+        .accessibilityElement(children: .contain)
+    }
+
+    /// In the panel the title sits on the column's 16 pt inset and the content runs the column's full inset width (so
+    /// the timeline gets all the room). A flush list (window rows) keeps its filled card, 16 in from the column edge.
+    private var panelBody: some View {
+        VStack(alignment: .leading, spacing: IterSpace.sm) {
+            titleRow
+                .padding(.horizontal, IterGrid.inset)
+            if flush {
+                content
+                    .padding(.vertical, IterSpace.sm)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(IterColor.backgroundModule, in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
+                    .padding(.horizontal, IterGrid.inset)
+            } else {
+                content
+                    .padding(.horizontal, IterGrid.inset)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .contain)
     }
 

@@ -8,6 +8,9 @@ extension LightText {
 
     static let whenToGo = String(localized: "When to go", comment: "Spot page section title")
     static let windowsTitle = String(localized: "Light windows", comment: "Spot page section title")
+    static let todayTitle = String(localized: "Today", comment: "Place panel section title: the day's light windows still ahead")
+    static let comingUpTitle = String(localized: "Coming up", comment: "Place panel section title: tomorrow's light windows")
+    static let nothingLeftToday = String(localized: "No light windows are left today.", comment: "Place panel: every window of today is over")
     static let timelineTitle = String(localized: "Light through the day", comment: "Spot page section title")
     static let skyTitle = String(localized: "Sun and moon", comment: "Spot page section title")
     static let hourlyTitle = String(localized: "Hour by hour", comment: "Spot page section title")

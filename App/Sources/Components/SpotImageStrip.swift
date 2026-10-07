@@ -36,7 +36,7 @@ struct SpotImageStrip: View {
                 pager
             }
         }
-        .frame(height: IterSize.placeCardImageHeight)
+        .frame(height: IterSize.imageStripHeight)
         .frame(maxWidth: .infinity)
         .clipped()
     }
@@ -136,9 +136,13 @@ private struct SpotImagePage: View {
     let item: SpotImage
     let spotName: String
     var body: some View {
-        Image(decorative: item.image, scale: 1)
-            .resizable()
-            .scaledToFill()
+        // Sized by its container, not by the image, so a narrow column does not make the page wider than the strip.
+        Color.clear
+            .overlay {
+                Image(decorative: item.image, scale: 1)
+                    .resizable()
+                    .scaledToFill()
+            }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .clipped()
             .overlay(alignment: .topLeading) {
@@ -148,7 +152,7 @@ private struct SpotImagePage: View {
                     .padding(.horizontal, IterSpace.sm)
                     .padding(.vertical, IterSpace.xs)
                     .background(.regularMaterial, in: Capsule())
-                    .padding(IterSpace.sm)
+                    .padding(IterGrid.inset)
                     .accessibilityHidden(true)
             }
             .accessibilityElement(children: .ignore)
@@ -183,7 +187,7 @@ struct SpotImages: View {
 
     private var request: SpotImageRequest {
         SpotImageRequest(spotID: spot.id, coordinate: spot.coordinate,
-                         pointSize: CGSize(width: IterSize.placeCardWidth, height: IterSize.placeCardImageHeight),
+                         pointSize: CGSize(width: IterSize.imageRequestWidth, height: IterSize.imageStripHeight),
                          scale: displayScale)
     }
 

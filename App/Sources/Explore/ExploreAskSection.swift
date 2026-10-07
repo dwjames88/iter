@@ -4,36 +4,79 @@ import IterDesign
 import IterFeatures
 import IterServices
 
-/// The "Ask Iter…" row at the top of the list: offered whenever the field has text and no ask is running or shown for it.
-struct ExploreAskOfferRow: View {
-    let query: String
+/// The search field's suggestions at the top of the list: an "Apple Maps" group and an "Ask Iter" group, ranked by
+/// what the text reads like (`SearchSuggestions`). Return runs the first row; every row is a button. An Ask the device
+/// cannot run stays, quiet and disabled, with the reason.
+struct ExploreSuggestionsView: View {
+    let suggestions: [SearchSuggestion]
+    let action: (SearchSuggestion) -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: IterSpace.sm) {
+            ForEach(suggestions) { suggestion in
+                VStack(alignment: .leading, spacing: IterSpace.xs) {
+                    Text(LightText.suggestionGroup(suggestion))
+                        .font(IterFont.moduleTitle)
+                        .foregroundStyle(IterColor.textSecondary)
+                        .accessibilityAddTraits(.isHeader)
+                    ExploreSuggestionRow(suggestion: suggestion, runsOnReturn: suggestion.id == suggestions.first?.id) { action(suggestion) }
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, IterSpace.xs)
+    }
+}
+
+struct ExploreSuggestionRow: View {
+    let suggestion: SearchSuggestion
+    /// The top suggestion: the one Return runs.
+    var runsOnReturn = false
     let action: () -> Void
+
+    private var symbol: String {
+        if case .ask = suggestion.kind { "sparkles" } else { "magnifyingglass" }
+    }
 
     var body: some View {
         Button(action: action) {
             HStack(spacing: IterSpace.md) {
-                Image(systemName: "sparkles")
-                    .foregroundStyle(IterColor.accent)
+                Image(systemName: symbol)
+                    .foregroundStyle(suggestion.isAvailable ? AnyShapeStyle(IterColor.accent) : AnyShapeStyle(IterColor.textSecondary))
                     .frame(width: IterSize.iconSmall)
                 VStack(alignment: .leading, spacing: IterSpace.xxs) {
-                    Text(LightText.askOffer(query))
+                    Text(LightText.suggestionTitle(suggestion))
                         .font(IterFont.bodyEmphasis)
-                        .foregroundStyle(IterColor.textPrimary)
+                        .foregroundStyle(suggestion.isAvailable ? AnyShapeStyle(IterColor.textPrimary) : AnyShapeStyle(IterColor.textSecondary))
                         .lineLimit(2)
-                    Text(LightText.askOfferDetail)
-                        .font(IterFont.caption)
-                        .foregroundStyle(IterColor.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    if let detail = LightText.suggestionDetail(suggestion) {
+                        Text(detail)
+                            .font(IterFont.caption)
+                            .foregroundStyle(IterColor.textSecondary)
+                            .lineLimit(2)
+                    }
                 }
                 Spacer(minLength: 0)
+                if runsOnReturn && suggestion.isAvailable {
+                    Image(systemName: "return")
+                        .font(IterFont.caption)
+                        .foregroundStyle(IterColor.textSecondary)
+                        .help(String(localized: "Press Return", comment: "Tooltip on the top search suggestion"))
+                        .accessibilityHidden(true)
+                }
             }
             .padding(.vertical, IterSpace.xs)
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .disabled(!suggestion.isAvailable)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(LightText.askOfferAccessibility(query))
+        .accessibilityLabel(LightText.suggestionAccessibility(suggestion))
         .accessibilityAddTraits(.isButton)
+        .accessibilityHint(runsOnReturn && suggestion.isAvailable
+            ? Text("Runs when you press Return", comment: "VoiceOver hint on the top search suggestion") : Text(verbatim: ""))
     }
 }
 

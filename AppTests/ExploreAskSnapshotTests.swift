@@ -2,6 +2,7 @@ import SwiftUI
 import Testing
 import IterCore
 import IterData
+import IterDesign
 import IterServices
 import IterFeatures
 @testable import Iter
@@ -61,5 +62,34 @@ private struct SnapshotScout: Scouting {
             explore.askModel.request = Self.request
             explore.askModel.run(area: nil)
         }, screen: "explore", state: "ask-unavailable", settle: .seconds(1))
+    }
+
+    // MARK: Search suggestions (the Apple Maps and Ask Iter groups under the one search field)
+    // The toolbar's search field cannot render offscreen (see Support/Snapshot.swift: text in it makes AppKit's toolbar
+    // layout loop), so these draw the list column alone, at its ideal width, with the field's text already in the model.
+
+    private func listColumn(query: String, scout: SnapshotScout, state: String) async throws {
+        let model = Fixtures.model(weather: .sample, scout: scout)
+        let explore = ExploreModel(app: model)
+        explore.start()
+        explore.query = query
+        let column = Fixtures.host(ExploreListPanel(explore: explore).frame(width: IterSize.listIdeal).frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(IterColor.backgroundContent), model: model)
+        try await Snapshot.render(column, screen: "explore", state: state, settle: .seconds(1), chrome: .bare)
+    }
+
+    /// A place-like query: the Apple Maps group first.
+    @Test(.enabled(if: Snapshot.enabled)) func searchPlaceQuery() async throws {
+        try await listColumn(query: "Mesa Arch", scout: SnapshotScout(), state: "search-place")
+    }
+
+    /// A request-like query: the Ask Iter group first.
+    @Test(.enabled(if: Snapshot.enabled)) func searchRequestQuery() async throws {
+        try await listColumn(query: "foggy forest within two hours of Portland", scout: SnapshotScout(), state: "search-request")
+    }
+
+    /// Apple Intelligence off: the Ask row stays, quiet and disabled, with the reason.
+    @Test(.enabled(if: Snapshot.enabled)) func searchAskUnavailable() async throws {
+        try await listColumn(query: "foggy forest within two hours of Portland", scout: SnapshotScout(state: .appleIntelligenceNotEnabled), state: "search-unavailable")
     }
 }

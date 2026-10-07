@@ -50,18 +50,6 @@ private let moabRegion = GeoRegion(center: Coordinate(latitude: 38.6, longitude:
 @Suite(.serialized) struct ExploreAskTests {
     // MARK: Routing
 
-    @Test func askModeAsksWhateverTheText() async throws {
-        let fake = FakeScout(outcome: .success([scoutSuggestion("mesa-arch")]))
-        let explore = try makeAsk(scout: fake)
-        explore.askMode = true
-        explore.query = "Portland"
-        explore.submitSearch()
-        await settle()
-        #expect(fake.requests == ["Portland"])
-        #expect(explore.searchState == .idle)
-        #expect(explore.askState == .results([scoutSuggestion("mesa-arch")]))
-    }
-
     @Test func requestsReadingLikeAsksRouteToTheScout() async throws {
         let fake = FakeScout(outcome: .success([scoutSuggestion("mesa-arch")]))
         let explore = try makeAsk(scout: fake)
@@ -255,7 +243,7 @@ private let moabRegion = GeoRegion(center: Coordinate(latitude: 38.6, longitude:
         let fake = FakeScout(availability: .appleIntelligenceNotEnabled)
         let explore = try makeAsk(scout: fake)
         explore.query = "find waterfalls near me"
-        explore.submitSearch()
+        explore.ask()
         await settle()
         #expect(explore.askState == .failed(.unavailable(.appleIntelligenceNotEnabled)))
         #expect(explore.askSubmittedRequest == "find waterfalls near me")
@@ -274,31 +262,61 @@ private let moabRegion = GeoRegion(center: Coordinate(latitude: 38.6, longitude:
     @Test func searchAppleMapsInsteadDropsTheAskAndSearches() async throws {
         let fake = FakeScout(availability: .deviceNotEligible)
         let explore = try makeAsk(scout: fake, search: AskSearch(results: [applePlace("a1", "Moab Brewery")]))
-        explore.askMode = true
         explore.query = "find waterfalls near me"
         explore.ask()
         #expect(explore.hasAskContent)
         explore.searchAppleMapsInstead()
         await settle()
         #expect(!explore.hasAskContent)
-        #expect(!explore.askMode)
         #expect(explore.searchState == .finished(query: "find waterfalls near me", count: 1))
     }
 
-    @Test func theAskRowIsOfferedUntilAnAskIsRunningOrShownForThatText() async throws {
+    @Test func suggestionsAreOfferedUntilTheChosenActionRunsOrIsShownForThatText() async throws {
         let fake = FakeScout(outcome: .success([scoutSuggestion("mesa-arch")]))
         let explore = try makeAsk(scout: fake)
-        #expect(!explore.offersAsk)                         // empty field
+        #expect(explore.searchSuggestions.isEmpty)           // empty field
         explore.query = "Moab"
-        #expect(explore.offersAsk)                          // text, nothing asked
+        #expect(explore.searchSuggestions.count == 2)        // text, nothing run
         fake.holdUntilReleased()
         explore.ask()
         await settle()
-        #expect(!explore.offersAsk)                         // running
+        #expect(explore.searchSuggestions.isEmpty)           // running
         fake.release()
         await settle()
-        #expect(!explore.offersAsk)                         // shown for that text
+        #expect(explore.searchSuggestions.isEmpty)           // shown for that text
         explore.query = "Moab Utah"
-        #expect(explore.offersAsk)                          // the text moved on
+        #expect(explore.searchSuggestions.count == 2)        // the text moved on
+    }
+
+    @Test func suggestionsGoOnceAnAppleMapsSearchIsUnderWayForTheText() async throws {
+        let explore = try makeAsk(scout: FakeScout(), search: AskSearch(results: [applePlace("a1", "Moab Brewery")]))
+        explore.query = "Moab"
+        explore.run(try #require(explore.searchSuggestions.first))
+        #expect(explore.searchSuggestions.isEmpty)
+        await settle()
+        #expect(explore.searchSuggestions.isEmpty)
+        explore.query = "Moab Utah"
+        #expect(!explore.searchSuggestions.isEmpty)
+    }
+
+    @Test func anUnavailableAskDoesNothingWhenChosen() async throws {
+        let fake = FakeScout(availability: .appleIntelligenceNotEnabled)
+        let explore = try makeAsk(scout: fake)
+        explore.query = "find waterfalls near me"
+        let ask = try #require(explore.searchSuggestions.first { $0.id == "ask" })
+        #expect(!ask.isAvailable)
+        explore.run(ask)
+        #expect(!explore.hasAskContent)
+        #expect(fake.requests.isEmpty)
+    }
+
+    @Test func returnRunsAppleMapsWhenAskCannotRun() async throws {
+        let fake = FakeScout(availability: .appleIntelligenceNotEnabled)
+        let explore = try makeAsk(scout: fake, search: AskSearch(results: [applePlace("a1", "Moab Brewery")]))
+        explore.query = "find waterfalls near me"
+        explore.submitSearch()
+        await settle()
+        #expect(fake.requests.isEmpty)
+        #expect(explore.searchState == .finished(query: "find waterfalls near me", count: 1))
     }
 }

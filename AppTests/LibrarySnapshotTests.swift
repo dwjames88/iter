@@ -52,6 +52,14 @@ private struct FailingGeocoder: Geocoding {
         try await Snapshot.render(Fixtures.host(Self.screen(LocationsView(folderID: nil)), model: noWeather), screen: "locations", state: "noforecast")
     }
 
+    /// The whole Locations screen with Mesa Arch selected (its pin scaled and shadowed, drawn last).
+    @Test(.enabled(if: Snapshot.enabled)) func locationsMapSelected() async throws {
+        let (model, _) = Self.libraryModel()
+        let mesa = model.store.savedPlaces().first { $0.spot.name == "Mesa Arch" }
+        let screen = Self.screen(LocationsView(folderID: nil, selected: mesa.map { [$0.id] } ?? []))
+        try await Snapshot.render(Fixtures.host(screen, model: model), screen: "locations", state: "map-selected", settle: .seconds(2))
+    }
+
     // MARK: Sidebar
 
     @Test(.enabled(if: Snapshot.enabled)) func sidebar() async throws {

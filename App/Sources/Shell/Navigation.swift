@@ -31,8 +31,6 @@ final class AppNavigation {
 
     /// Explore's search field focus request (Edit > Find).
     var focusSearchRequest = 0
-    /// Explore: focus the search field in Ask mode (Go > Ask Iter…, ⌘4).
-    var askRequest = 0
     /// Explore: add-spot mode (click the map to drop a pin).
     var addSpotModeRequest = 0
     /// Trips: a "New Trip" request from the menu or toolbar.

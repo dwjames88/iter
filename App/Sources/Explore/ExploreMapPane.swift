@@ -6,7 +6,8 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// The map: pins with hierarchy, one selection shared with the list, the place card, and Add Spot mode.
+/// The map: pins with hierarchy, one selection shared with the list (the selected pin is the only mark of it here;
+/// the place itself opens in the list column), and Add Spot mode.
 struct ExploreMapPane: View {
     @Bindable var explore: ExploreModel
     @Environment(\.renderMode) private var renderMode
@@ -52,24 +53,6 @@ struct ExploreMapPane: View {
             paneSize = $0
             explore.setMapViewport($0)
         }
-        .overlay(alignment: .bottomTrailing) {
-            if let row = explore.selectedRow, !explore.isAddingSpot {
-                ExplorePlaceCard(row: row, size: cardSize) { explore.select(nil, from: .map) }
-                    .padding(IterSpace.md)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-            }
-        }
-        .animation(.smooth, value: explore.selectedID)
-    }
-
-    /// The card's width is its token, shrunk to fit a narrow pane. Its height is at most half the pane (less the
-    /// padding), so the selected pin, which the camera centres, stays visible above it.
-    private var cardSize: CGSize {
-        guard paneSize != .zero else { return CGSize(width: IterSize.placeCardWidth, height: IterSize.placeCardMaxHeight) }
-        let inset = IterSpace.md * 2
-        let width = min(IterSize.placeCardWidth, max(0, paneSize.width - inset))
-        let height = min(IterSize.placeCardMaxHeight, max(0, (paneSize.height - inset) * 0.5))
-        return CGSize(width: width, height: height)
     }
 
     // MARK: Live map

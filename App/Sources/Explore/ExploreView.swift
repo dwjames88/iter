@@ -10,7 +10,7 @@ import IterFeatures
 /// with its light), so it deserves a column of its own that never hides pins or fights the map's controls.
 /// `HSplitView` gives the native draggable divider, remembers nothing it should not, and keeps the map's visible
 /// region honest: whatever the camera reports is what the user sees, so "pan the selection into view" needs no
-/// panel-inset arithmetic. The place card is the only thing that floats over the map.
+/// panel-inset arithmetic. Nothing floats over the map but its own controls: a selected place opens in the list column.
 struct ExploreView: View {
     @Environment(AppModel.self) private var model
     @State private var explore: ExploreModel?
@@ -43,6 +43,7 @@ struct ExploreView: View {
                 }
                 if let id = AppLaunch.selectRowID, made.row(id: id) != nil {
                     made.select(id, from: .list)
+                    made.openPanel()
                     made.requestScroll(to: id)
                 }
                 explore = made
@@ -56,7 +57,6 @@ struct ExploreView: View {
 @MainActor private enum HandledRequests {
     static var focus: [ObjectIdentifier: Int] = [:]
     static var addSpot: [ObjectIdentifier: Int] = [:]
-    static var ask: [ObjectIdentifier: Int] = [:]
 }
 
 private struct ExploreContent: View {
@@ -74,7 +74,7 @@ private struct ExploreContent: View {
         }
         .navigationTitle(Text("Explore", comment: "Window title"))
         .searchable(text: $explore.query, placement: .toolbar,
-                    prompt: explore.askMode ? Text(LightText.askPrompt) : Text("Search", comment: "Explore search field prompt"))
+                    prompt: Text("Search places or ask Iter", comment: "Explore search field prompt: one field for place names and requests"))
         .searchFocused($searchFocused)
         .onSubmit(of: .search) { explore.submitSearch() }
         .toolbar { toolbar }
@@ -94,7 +94,6 @@ private struct ExploreContent: View {
         .onChange(of: model.location.radiusMiles) { explore.contentChanged() }
         .onChange(of: navigation.focusSearchRequest) { handleRequests() }
         .onChange(of: navigation.addSpotModeRequest) { handleRequests() }
-        .onChange(of: navigation.askRequest) { handleRequests() }
     }
 
     private var draftPresented: Binding<Bool> {
@@ -105,11 +104,6 @@ private struct ExploreContent: View {
         let key = ObjectIdentifier(navigation)
         if navigation.focusSearchRequest != HandledRequests.focus[key, default: 0] {
             HandledRequests.focus[key] = navigation.focusSearchRequest
-            searchFocused = true
-        }
-        if navigation.askRequest != HandledRequests.ask[key, default: 0] {
-            HandledRequests.ask[key] = navigation.askRequest
-            explore.askMode = true
             searchFocused = true
         }
         if navigation.addSpotModeRequest != HandledRequests.addSpot[key, default: 0] {
@@ -139,15 +133,6 @@ private struct ExploreContent: View {
             }
             .toggleStyle(.button)
             .help(String(localized: "Add your own spot: click the map to drop a pin (Esc to cancel)", comment: "Tooltip"))
-        }
-        ToolbarItem(placement: .primaryAction) {
-            Toggle(isOn: $explore.askMode) {
-                Label(LightText.askToggleLabel, systemImage: "sparkles")
-            }
-            .toggleStyle(.button)
-            .help(LightText.askToggleHelp)
-            .accessibilityLabel(LightText.askToggleLabel)
-            .accessibilityValue(explore.askMode ? LightText.askOn : LightText.askOff)
         }
     }
 }

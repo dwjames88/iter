@@ -10,6 +10,7 @@ struct LocationsMap: View {
     let items: [SavedItem]
     @Binding var selection: Set<UUID>
     @Environment(\.renderMode) private var renderMode
+    @Environment(AppModel.self) private var model
     @State private var position: MapCameraPosition
     @State private var paneSize = CGSize.zero
 
@@ -23,8 +24,11 @@ struct LocationsMap: View {
     var body: some View {
         ZStack {
             if renderMode == .snapshot {
-                MapStandIn(pins: items.map {
-                    .init(id: $0.id.uuidString, coordinate: $0.spot.coordinate, label: $0.spot.name, selected: selection.contains($0.id))
+                MapStandIn(pins: drawOrder.map { item in
+                    let event = model.savedEvent(for: item.spot)
+                    return .init(id: item.id.uuidString, coordinate: item.spot.coordinate, label: item.spot.name,
+                                 selected: selection.contains(item.id),
+                                 event: event.map { .init(window: $0.window, zone: item.spot.timeZone, isLoading: $0.isLoading, isTomorrow: $0.isTomorrow) })
                 })
             } else if paneSize.width > 0, paneSize.height > 0 {
                 liveMap
@@ -40,11 +44,15 @@ struct LocationsMap: View {
 
     private var liveMap: some View {
         Map(position: $position, selection: mapSelection) {
-            ForEach(items) { item in
-                Marker(item.spot.name, systemImage: LightText.symbol(item.spot.category),
-                       coordinate: CLLocationCoordinate2D(latitude: item.spot.coordinate.latitude, longitude: item.spot.coordinate.longitude))
-                    .tint(selection.contains(item.id) ? IterColor.mapPin : IterColor.mapPinInactive)
-                    .tag(item.id)
+            ForEach(drawOrder) { item in
+                let selected = selection.contains(item.id)
+                Annotation(item.spot.name,
+                           coordinate: CLLocationCoordinate2D(latitude: item.spot.coordinate.latitude, longitude: item.spot.coordinate.longitude),
+                           anchor: selected ? .bottom : .center) {
+                    LocationsPinView(spot: item.spot, event: model.savedEvent(for: item.spot), isSelected: selected)
+                }
+                .tag(item.id)
+                .annotationTitles(.hidden)
             }
         }
         .mapStyle(.standard(elevation: .flat, pointsOfInterest: .excludingAll))
@@ -53,6 +61,11 @@ struct LocationsMap: View {
             MapCompass()
             MapScaleView()
         }
+    }
+
+    /// The selected pins last, so they draw on top.
+    private var drawOrder: [SavedItem] {
+        items.filter { !selection.contains($0.id) } + items.filter { selection.contains($0.id) }
     }
 
     /// One marker selected on the map selects its row; a click on empty map clears the selection.
@@ -66,5 +79,46 @@ struct LocationsMap: View {
         return .region(MKCoordinateRegion(
             center: CLLocationCoordinate2D(latitude: r.center.latitude, longitude: r.center.longitude),
             span: MKCoordinateSpan(latitudeDelta: r.latitudeDelta, longitudeDelta: r.longitudeDelta)))
+    }
+}
+
+/// One Locations map pin: the event unit exactly as Explore draws it (`EventScore` pin variant, borderless, selection
+/// by scale and shadow), showing the spot's next sunrise or sunset, the same window as its list row.
+private struct LocationsPinView: View {
+    let spot: Spot
+    let event: SavedEvent?
+    let isSelected: Bool
+
+    @Environment(\.renderMode) private var renderMode
+
+    var body: some View {
+        Group {
+            if let event {
+                EventScore(window: event.window, zone: spot.timeZone, timeStyle: .start, variant: .pin,
+                           isLoading: event.isLoading, isTomorrow: event.isTomorrow, isSelected: isSelected)
+            } else if isSelected {
+                Text(spot.name)
+                    .font(IterFont.captionStrong)
+                    .foregroundStyle(IterColor.textPrimary)
+                    .lineLimit(1)
+                    .padding(.vertical, IterSpace.xs)
+                    .padding(.horizontal, IterSpace.sm)
+                    .background(fill, in: Capsule())
+                    .shadow(radius: IterEvent.pinShadowRadiusSelected, y: 1)
+                    .scaleEffect(IterEvent.pinScaleSelected, anchor: .bottom)
+            } else {
+                Circle().fill(IterColor.backgroundControl)
+                    .frame(width: IterSpace.sm + IterSpace.xs, height: IterSpace.sm + IterSpace.xs)
+                    .overlay(Circle().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
+            }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(spot.name))
+        .accessibilityValue(event.map { Text(LightText.accessibilityDescription($0.window)) } ?? Text(verbatim: ""))
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
+    }
+
+    private var fill: AnyShapeStyle {
+        renderMode == .snapshot ? AnyShapeStyle(IterColor.backgroundContent) : AnyShapeStyle(.regularMaterial)
     }
 }

@@ -19,6 +19,55 @@ struct DayWindowsSection: View {
     @Environment(\.spotDensity) private var density
 
     var body: some View {
+        if density == .panel { panelBody } else { pageBody }
+    }
+
+    // MARK: Panel
+
+    /// The Explore panel: "Today" (the windows still ahead, with the date) and "Coming up" (tomorrow's), two cards.
+    /// Both keep the spot page's rows; a row from the other day opens that day on the timeline.
+    @ViewBuilder private var panelBody: some View {
+        let ahead = page.upcomingWindows
+        let today = ahead.filter { $0.day == page.today }
+        let later = ahead.filter { $0.day != page.today }
+        VStack(alignment: .leading, spacing: IterSpace.xl) {
+            ModuleCard(title: LightText.todayTitle, symbol: "sun.horizon", flush: true) {
+                Text(TimeText.day(page.today)).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
+            } content: {
+                if today.isEmpty {
+                    let sun = page.dayLight(on: page.today).sun.kind
+                    Text(sun == .polarDay ? LightText.polarDay : sun == .polarNight ? LightText.polarNight : LightText.nothingLeftToday)
+                        .font(IterFont.secondary)
+                        .foregroundStyle(IterColor.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.horizontal, IterGrid.inset)
+                } else {
+                    windowList(today)
+                }
+            }
+            if let first = later.first {
+                ModuleCard(title: LightText.comingUpTitle, symbol: "calendar.badge.clock", flush: true) {
+                    Text(TimeText.day(first.day)).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
+                } content: {
+                    windowList(later)
+                }
+            }
+        }
+    }
+
+    private func windowList(_ rows: [(day: LocalDay, window: LightWindow)]) -> some View {
+        VStack(spacing: 0) {
+            ForEach(Array(rows.enumerated()), id: \.offset) { index, row in
+                if index > 0 { Divider().padding(.leading, WindowLanes.labelStart) }
+                WindowRow(page: page, window: row.window, day: row.day)
+            }
+        }
+        .layoutGrid(lanes: LayoutLane.standardRowLanes(disclosure: true, event: .regular, band: true, time: .range))
+    }
+
+    // MARK: Page
+
+    @ViewBuilder private var pageBody: some View {
         let light = page.dayLight
         ModuleCard(title: LightText.windowsTitle, symbol: "sun.horizon", flush: true) {
             if density == .page { dayControls }
@@ -178,7 +227,7 @@ private struct Reasons: View {
     @ViewBuilder private func scored(_ score: LightScore) -> some View {
         Text(LightText.reasonsTitle).font(IterFont.moduleTitle).foregroundStyle(IterColor.textSecondary)
         let scale = max(10, score.contributors.map { abs($0.points) }.max() ?? 10)
-        if density == .compact {
+        if density == .panel {
             VStack(alignment: .leading, spacing: IterSpace.sm) {
                 ForEach(score.contributors) { c in
                     VStack(alignment: .leading, spacing: IterSpace.xs) {
@@ -216,7 +265,7 @@ private struct Reasons: View {
             }
         }
         VStack(alignment: .leading, spacing: IterSpace.xs) {
-            if density == .compact {
+            if density == .panel {
                 VStack(alignment: .leading, spacing: IterSpace.xs) {
                     HStack(spacing: IterSpace.sm) {
                         ConfidenceMark(confidence: score.confidence)

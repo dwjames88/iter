@@ -5,12 +5,19 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// The leading column: summary, honest notices, search status, the list, and the forecast source.
+/// The leading column, in two states. The list: summary, honest notices, search status, the list, and the forecast
+/// source. Or, once a place is opened, that place's light panel (`ExploreLightPanel`) in its place. The list stays
+/// mounted underneath, hidden, so its scroll position survives.
 struct ExploreListPanel: View {
     @Bindable var explore: ExploreModel
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @FocusState private var listFocused: Bool
+    /// A click waits out the double-click interval before it opens the panel, so a double-click can open the spot page.
+    @State private var pendingOpen: Task<Void, Never>?
+    /// A double-click's second click must not schedule the panel again after the spot page opened.
+    @State private var openSuppressedUntil = Date.distantPast
     @State private var didInitialScroll = false
     /// True for a few seconds after the launch scroll, while regrouping (the location fix) may still move rows.
     @State private var launchScrollSettling = false
@@ -30,6 +37,24 @@ struct ExploreListPanel: View {
     }
 
     var body: some View {
+        ZStack {
+            listState
+                .opacity(explore.showsPanel ? 0 : 1)
+                .allowsHitTesting(!explore.showsPanel)
+                .accessibilityHidden(explore.showsPanel)
+            if explore.showsPanel, let row = explore.selectedRow {
+                ExploreLightPanel(explore: explore, row: row)
+                    .transition(reduceMotion ? .identity : .move(edge: .trailing).combined(with: .opacity))
+            }
+        }
+        .animation(reduceMotion ? nil : .snappy(duration: 0.2), value: explore.showsPanel)
+        .onChange(of: explore.showsPanel) { _, shows in
+            // Back: the list takes the keyboard again, the row still selected.
+            if !shows { listFocused = true } else { pendingOpen?.cancel() }
+        }
+    }
+
+    private var listState: some View {
         VStack(spacing: 0) {
             header
             Divider()
@@ -44,6 +69,21 @@ struct ExploreListPanel: View {
         }
         .frame(maxHeight: .infinity)
         .background(IterColor.backgroundContent, ignoresSafeAreaEdges: [])
+    }
+
+    // MARK: Opening the panel
+
+    private var isKeyEvent: Bool { NSApp.currentEvent?.type == .keyDown }
+
+    /// A click selected `id`: the panel opens after the double-click interval unless a double-click arrives first.
+    private func scheduleOpen(_ id: String) {
+        pendingOpen?.cancel()
+        guard Date() >= openSuppressedUntil else { return }
+        pendingOpen = Task {
+            try? await Task.sleep(for: .seconds(NSEvent.doubleClickInterval))
+            guard !Task.isCancelled, explore.selectedID == id else { return }
+            explore.openPanel()
+        }
     }
 
     // MARK: Header
@@ -162,22 +202,8 @@ struct ExploreListPanel: View {
                     .controlSize(.small)
             }
         case .idle, .finished:
-            if !trimmedQuery.isEmpty, !isSearched(trimmedQuery) {
-                Button {
-                    explore.searchAppleMaps()
-                } label: {
-                    Label(LightText.searchApple(trimmedQuery), systemImage: "magnifyingglass")
-                        .lineLimit(1)
-                }
-                .buttonStyle(.link)
-                .font(IterFont.caption)
-            }
+            EmptyView()
         }
-    }
-
-    private func isSearched(_ query: String) -> Bool {
-        if case .finished(let q, _) = explore.searchState { return q == query }
-        return false
     }
 
     // MARK: List
@@ -185,8 +211,8 @@ struct ExploreListPanel: View {
     @ViewBuilder private var content: some View {
         if explore.rows.isEmpty, !explore.searchState.isSearching, !explore.hasAskContent {
             VStack(spacing: 0) {
-                if explore.offersAsk {
-                    ExploreAskOfferRow(query: trimmedQuery) { explore.ask() }
+                if !explore.searchSuggestions.isEmpty {
+                    ExploreSuggestionsView(suggestions: explore.searchSuggestions) { explore.run($0) }
                         .padding(.horizontal, IterSpace.md)
                         .padding(.vertical, IterSpace.sm)
                     Divider()
@@ -198,8 +224,15 @@ struct ExploreListPanel: View {
         }
     }
 
+    /// A selection made with the arrow keys opens the panel at once; one made with the mouse selects now and opens
+    /// after the double-click interval (the row's tap, below).
     private var selection: Binding<String?> {
-        Binding(get: { explore.selectedID }, set: { explore.select($0, from: .list) })
+        Binding(get: { explore.selectedID }, set: { id in
+            let changed = id != explore.selectedID
+            explore.select(id, from: isKeyEvent ? .keyboard : .list)
+            guard changed, let id else { return }
+            if isKeyEvent { explore.openPanel() } else { scheduleOpen(id) }
+        })
     }
 
     private var moreExpanded: Binding<Bool> {
@@ -258,13 +291,15 @@ struct ExploreListPanel: View {
         }
     }
 
-    /// One row per spot. A click selects it (the list's selection) and shows its place card on the map.
+    /// One row per spot. A click selects it (the list's selection, so its pin is highlighted) and opens its panel.
     @ViewBuilder private func rows(in section: ExploreSection) -> some View {
         ForEach(section.rows) { row in
             ExploreRowView(row: row, isHovered: explore.hoveredID == row.id, showsDistance: explore.hasLocation)
                 .id(row.id)
                 .tag(row.id)
                 .onAppear { explore.requestForecast(for: row.id) }
+                // Also when the row is already selected (after Back), which changes no selection.
+                .simultaneousGesture(TapGesture().onEnded { scheduleOpen(row.id) })
                 .onHover { inside in
                     if inside { explore.hoveredID = row.id } else if explore.hoveredID == row.id { explore.hoveredID = nil }
                 }
@@ -293,8 +328,8 @@ struct ExploreListPanel: View {
     private var list: some View {
         ScrollViewReader { proxy in
             List(selection: selection) {
-                if explore.offersAsk {
-                    ExploreAskOfferRow(query: trimmedQuery) { explore.ask() }
+                if !explore.searchSuggestions.isEmpty {
+                    ExploreSuggestionsView(suggestions: explore.searchSuggestions) { explore.run($0) }
                 }
                 if explore.hasAskContent { ExploreAskSection(explore: explore) }
                 ForEach(explore.sections.filter { $0.kind != .ask }) { section in
@@ -309,10 +344,19 @@ struct ExploreListPanel: View {
                     ExploreSpotMenu(spot: row.spot, day: row.day ?? model.today(in: row.spot.timeZone))
                 }
             } primaryAction: { ids in
-                // Double-click opens the spot page.
                 guard let id = ids.first, let row = explore.row(id: id) else { return }
-                ExploreActions.open(row.spot, day: row.day ?? model.today(in: row.spot.timeZone), navigation: navigation)
+                pendingOpen?.cancel()
+                if isKeyEvent {
+                    // Return opens the panel.
+                    explore.select(id, from: .keyboard)
+                    explore.openPanel()
+                } else {
+                    // Double-click opens the spot page.
+                    openSuppressedUntil = Date().addingTimeInterval(NSEvent.doubleClickInterval)
+                    ExploreActions.open(row.spot, day: row.day ?? model.today(in: row.spot.timeZone), navigation: navigation)
+                }
             }
+            .focused($listFocused)
             .onAppear {
                 // `-IterSelectRow` (and the snapshot tests) ask for one program scroll when the list is first built.
                 if AppLaunch.selectRowID != nil || AppLaunch.isRunningTests, !didInitialScroll, let target = explore.scrollRequest?.target {

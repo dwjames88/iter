@@ -28,7 +28,7 @@ struct HourlyWeatherSection: View {
                         .frame(height: SpotLayout.hourlyRow * CGFloat(Self.rowCount))
                         .accessibilityElement(children: .ignore)
                         .accessibilityLabel(accessibilitySummary(hours))
-                    if density == .compact, let visibility = visibilityText(hours) {
+                    if density == .panel, let visibility = visibilityText(hours) {
                         Label(visibility, systemImage: "eye")
                             .font(IterFont.secondary)
                             .foregroundStyle(IterColor.textSecondary)
@@ -63,10 +63,10 @@ struct HourlyWeatherSection: View {
         return String(localized: "Visibility \(format(low)) to \(format(high))", comment: "Compact hourly weather: range of horizontal visibility over the day")
     }
 
-    private var rightInset: CGFloat { density == .compact ? IterSpace.xs : SpotLayout.rightInset }
+    private var rightInset: CGFloat { density == .panel ? IterSpace.xs : SpotLayout.rightInset }
 
     @ViewBuilder private func stripBody(_ hours: [HourlyConditions]) -> some View {
-        if density == .compact { scrollingStrip(hours) } else { strip(hours) }
+        if density == .panel { scrollingStrip(hours) } else { strip(hours) }
     }
 
     /// Narrow host: fixed-width hour columns in a horizontal scroll view beside a pinned label gutter, so

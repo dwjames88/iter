@@ -6,7 +6,7 @@ import IterLight
 import IterServices
 
 /// State and derived data for the Explore screen: filters, sort, search, results, selection and camera requests.
-/// One selection drives pin, row and place card (pattern #5). Platform-neutral; the view draws it.
+/// One selection drives pin, row and the place panel that replaces the list column (pattern #5). Platform-neutral; the view draws it.
 @MainActor
 @Observable
 public final class ExploreModel {
@@ -34,8 +34,6 @@ public final class ExploreModel {
     public var query = "" {
         didSet { if oldValue != query { queryChanged() } }
     }
-    /// Ask mode: the user turned the sparkle toggle on (or pressed ⌘4). Submitting then always asks, whatever the text.
-    public var askMode = false
     public var isAddingSpot = false {
         didSet { if !isAddingSpot { draftCoordinate = nil } }
     }
@@ -50,6 +48,9 @@ public final class ExploreModel {
     public private(set) var searchState: ExploreSearchState = .idle
     public private(set) var selectedID: String?
     public private(set) var selectionSource: SelectionSource = .program
+    /// The list column shows the selected place's light panel instead of the list. Only while a place is selected;
+    /// `closePanel()` (back, Escape) returns to the list and keeps the selection.
+    public private(set) var showsPanel = false
     public private(set) var cameraRequest: CameraRequest?
     /// Asks the list to scroll a row into view when `id` changes.
     public private(set) var scrollRequest: (id: Int, target: String)?
@@ -433,8 +434,15 @@ public final class ExploreModel {
     // MARK: - Selection and camera
 
     /// Selects a row (or clears with nil). The list follows a map selection by scrolling; the map follows a
-    /// list selection by panning only if the pin is out of view (pattern #5).
+    /// list selection by panning only if the pin is out of view (pattern #5). A map selection opens the panel (a
+    /// different pin while it is open switches it); clearing returns to the list. A list click opens the panel
+    /// through `openPanel()`, which the view calls once it knows the click was not the first of a double-click.
     public func select(_ id: String?, from source: SelectionSource = .program) {
+        if id == nil {
+            showsPanel = false
+        } else if source == .map, let id, derived.byID[id] != nil {
+            showsPanel = true
+        }
         guard selectedID != id else { return }
         selectedID = id
         selectionSource = source
@@ -446,16 +454,49 @@ public final class ExploreModel {
         reveal(row.spot.coordinate)
     }
 
+    // MARK: Panel
+
+    /// Shows the panel for the current selection. Does nothing without one.
+    public func openPanel() {
+        guard selectedRow != nil else { return }
+        showsPanel = true
+    }
+
+    /// Back to the list (the header's Back button, Escape). The selection stays, so the row is still highlighted.
+    public func closePanel() { showsPanel = false }
+
+    /// The selected place's place in the list, for the header ("3 of 16"). `index` counts from 1. Nil without a selection.
+    public var panelPosition: (index: Int, count: Int)? {
+        let all = rows
+        guard let id = selectedID, let i = all.firstIndex(where: { $0.id == id }) else { return nil }
+        return (i + 1, all.count)
+    }
+    public var canSelectNext: Bool { panelPosition.map { $0.index < $0.count } ?? false }
+    public var canSelectPrevious: Bool { panelPosition.map { $0.index > 1 } ?? false }
+
+    /// Steps to the next place in list order (the order `rows` and the list draw). Stays put at the end. Steps into
+    /// "More Places" open it, as `select` does. The panel keeps its state; the list scrolls to the row meanwhile.
+    public func selectNext() { step(by: 1) }
+    public func selectPrevious() { step(by: -1) }
+
+    private func step(by offset: Int) {
+        let all = rows
+        guard let id = selectedID, let i = all.firstIndex(where: { $0.id == id }), all.indices.contains(i + offset) else { return }
+        let target = all[i + offset].id
+        select(target, from: .keyboard)
+        requestScroll(to: target)
+    }
+
     /// Asks the list to scroll a row into view (launch-time screenshots; selection from the map does this itself).
     public func requestScroll(to id: String) {
         guard derived.byID[id] != nil else { return }
         scrollRequest = (nextRequestID(), id)
     }
 
-    /// The place card covers up to the lower half of the map, so a revealed pin is kept in the upper part.
-    static let revealMargins = MapCameraPolicy.Margins(bottom: 0.5)
+    /// Nothing covers the map, so a revealed pin is kept just inside the edge on every side.
+    static let revealMargins = MapCameraPolicy.Margins()
 
-    /// Pans the map so the coordinate is comfortably in view (clear of the place card); does nothing when it already
+    /// Pans the map so the coordinate is comfortably in view; does nothing when it already
     /// is, and never changes the zoom.
     public func reveal(_ coordinate: Coordinate) {
         // Before the map has settled anywhere, the starting camera already includes the selection (see
@@ -562,7 +603,10 @@ public final class ExploreModel {
     }
 
     private func dropSelectionIfHidden() {
-        if let id = selectedID, derived.byID[id] == nil { selectedID = nil }
+        if let id = selectedID, derived.byID[id] == nil {
+            selectedID = nil
+            showsPanel = false
+        }
     }
 
     // MARK: Pins and clusters
@@ -675,6 +719,8 @@ public final class ExploreModel {
     // MARK: - Apple Maps search
 
     private func queryChanged() {
+        // A new or cleared search is about the list.
+        closePanel()
         let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmed.isEmpty {
             searchTask?.cancel()
@@ -686,15 +732,18 @@ public final class ExploreModel {
         resultSetChanged()
     }
 
-    /// Return in the search field: an Ask when Ask mode is on or the text reads like a request
-    /// (`SearchIntent.classify`), else the Apple Maps search.
+    /// Return in the search field: runs the top suggestion (`SearchSuggestions`): an Ask when the text reads like a
+    /// request and Apple Intelligence can run it, else the Apple Maps search.
     public func submitSearch() {
-        if askMode || SearchIntent.classify(query) == .ask { ask() } else { searchAppleMaps() }
+        closePanel()
+        let top = SearchSuggestions.make(query: query, askAvailability: askAvailability).first
+        if let top { run(top) }
     }
 
     /// Runs the Apple Maps search near the visible region. Debounced and cancellable: a second submit
     /// replaces the first, and clearing the field cancels it.
     public func searchAppleMaps() {
+        closePanel()
         let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
         searchTask?.cancel()
@@ -762,6 +811,7 @@ public final class ExploreModel {
         // Filters could hide the new spot; the user just made it, so make sure it shows.
         if !filters.sources.contains(.yours) { filters.sources.insert(.yours) }
         select(spot.id, from: .program)
+        openPanel()
         reveal(spot.coordinate)
     }
 }

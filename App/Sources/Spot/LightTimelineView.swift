@@ -18,6 +18,8 @@ struct TimelineData {
     var tiers: Int
     var tickEveryHours: Int
     var hasWeather: Bool
+    /// Panel density: no label gutter, labels inside the plot, a taller band and plot, a time pill on the axis.
+    var panel = false
 
     var span: TimeInterval { max(1, domain.upperBound.timeIntervalSince(domain.lowerBound)) }
 }
@@ -28,13 +30,21 @@ struct TimelineData {
 struct LightTimelineSection: View {
     let page: SpotModel
     @State private var width: CGFloat = 0
+    /// Panel: the legend's items and the "Drag to read" hint, measured, to decide which line carries the hint.
+    @State private var legendItemsWidth: CGFloat = 0
+    @State private var hintWidth: CGFloat = 0
+
+    @Environment(\.spotDensity) private var density
+    private var isPanel: Bool { density == .panel }
 
     var body: some View {
-        let data = Self.data(page)
+        let data = Self.data(page, panel: isPanel)
         ModuleCard(title: LightText.timelineTitle, symbol: "chart.line.uptrend.xyaxis") {
-            zoomPicker
+            if !isPanel { zoomPicker }
         } content: {
                 VStack(alignment: .leading, spacing: IterSpace.sm) {
+                    // The panel has the room: the zoom control runs the full width under the title.
+                    if isPanel { zoomPicker }
                     readout
                     Canvas { ctx, size in TimelineRenderer.draw(&ctx, size: size, data: data) }
                         .frame(height: Self.height(data))
@@ -62,23 +72,50 @@ struct LightTimelineSection: View {
 
     // MARK: Pieces
 
-    @Environment(\.spotDensity) private var density
+    /// The zoom control: at the module title's trailing edge (page), or full width under it (panel).
 
-    /// The zoom control, at the module title's trailing edge.
     @ViewBuilder private var zoomPicker: some View {
         if page.availableFoci.count > 1 {
-            Picker(selection: Binding(get: { page.focus }, set: { page.setFocus($0) })) {
+            let picker = Picker(selection: Binding(get: { page.focus }, set: { page.setFocus($0) })) {
                 ForEach(page.availableFoci) { focus in Text(label(focus)).tag(focus) }
             } label: { Text("Zoom", comment: "Timeline zoom picker label") }
             .pickerStyle(.segmented)
-            .controlSize(.small)
             .labelsHidden()
-            .fixedSize()
             .help(String(localized: "Zoom the timeline, arc and hourly strip to sunrise or sunset", comment: "Help"))
+            if isPanel {
+                picker.controlSize(.regular)
+            } else {
+                picker.controlSize(.small).fixedSize()
+            }
         }
     }
 
-    private var readout: some View {
+    /// The panel's "Drag to read any time" hint is shown from `panelHintMinWidth` up.
+    private var panelShowsHint: Bool { isPanel && width + IterGrid.inset * 2 >= SpotLayout.panelHintMinWidth }
+    /// The legend line has room for its items and the hint.
+    private var legendHasRoomForHint: Bool {
+        legendItemsWidth == 0 || hintWidth == 0 || legendItemsWidth + hintWidth + IterSpace.sm <= width
+    }
+
+    private var hintText: some View {
+        Text("Drag to read any time", comment: "Hint at the end of the timeline legend in the Explore panel")
+            .font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
+            .lineLimit(1).fixedSize()
+    }
+
+    @ViewBuilder private var readout: some View {
+        if panelShowsHint && !legendHasRoomForHint {
+            // The legend is full: the hint takes the readout line's trailing edge, if the readout leaves room.
+            ViewThatFits(in: .horizontal) {
+                readoutRow(withHint: true)
+                readoutRow(withHint: false)
+            }
+        } else {
+            readoutRow(withHint: false)
+        }
+    }
+
+    private func readoutRow(withHint: Bool) -> some View {
         let t = page.markerTime
         let r = page.readout(at: t)
         let window = page.window(at: t)
@@ -92,7 +129,8 @@ struct LightTimelineSection: View {
                 Text(LightText.name(window.kind)).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
             }
             Spacer()
-            if page.scrub == nil {
+            if withHint { hintText }
+            if page.scrub == nil, !isPanel {
                 Text("Hover or drag to read any time", comment: "Hint on the timeline")
                     .font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
             }
@@ -101,7 +139,7 @@ struct LightTimelineSection: View {
     }
 
     private func legend(_ data: TimelineData) -> some View {
-        HStack(spacing: IterSpace.lg) {
+        let items = HStack(spacing: isPanel ? IterSpace.sm : IterSpace.lg) {
             if data.hasLayers {
                 swatch(IterColor.cloudHigh, LightText.cloudHighLegend)
                 swatch(IterColor.cloudMid, LightText.cloudMidLegend)
@@ -110,7 +148,25 @@ struct LightTimelineSection: View {
                 swatch(IterColor.cloudMid, LightText.cloudTotalLegend)
             }
             swatch(IterColor.skyBlue, data.hours.contains { $0.precipitationChance != nil } ? LightText.rainLegend : LightText.rainAmountLegend)
-            Spacer()
+        }
+        .lineLimit(1)
+        .fixedSize()
+        return Group {
+            if isPanel {
+                // The hint sits at the trailing end when the legend leaves room for it; otherwise on the readout line.
+                // The hint is an overlay, so it never widens the row (the row's width decides whether it fits).
+                HStack { items.onGeometryChange(for: CGFloat.self, of: { $0.size.width }, action: { legendItemsWidth = $0 }); Spacer(minLength: 0) }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .overlay(alignment: .trailing) {
+                        if panelShowsHint && legendHasRoomForHint { hintText }
+                    }
+                    .background(alignment: .leading) {
+                        hintText.hidden().onGeometryChange(for: CGFloat.self, of: { $0.size.width }, action: { hintWidth = $0 })
+                            .accessibilityHidden(true)
+                    }
+            } else {
+                HStack { items; Spacer() }
+            }
         }
         .font(IterFont.secondary)
         .foregroundStyle(IterColor.textSecondary)
@@ -144,8 +200,8 @@ struct LightTimelineSection: View {
     // MARK: Interaction
 
     private func date(atX x: CGFloat, data: TimelineData) -> Date {
-        let plotWidth = max(1, width - SpotLayout.gutter - SpotLayout.rightInset)
-        let fraction = min(1, max(0, (x - SpotLayout.gutter) / plotWidth))
+        let (left, right) = TimelineRenderer.plotEdges(width: width, panel: data.panel)
+        let fraction = min(1, max(0, (x - left) / max(1, right - left)))
         return data.domain.lowerBound.addingTimeInterval(data.span * Double(fraction))
     }
 
@@ -169,7 +225,7 @@ struct LightTimelineSection: View {
 
     // MARK: Data and size
 
-    static func data(_ page: SpotModel) -> TimelineData {
+    static func data(_ page: SpotModel, panel: Bool = false) -> TimelineData {
         let domain = page.domain
         let sun = page.paths.sun
         let sky = sun.filter { $0.date >= domain.lowerBound.addingTimeInterval(-3600) && $0.date <= domain.upperBound.addingTimeInterval(3600) }
@@ -179,7 +235,7 @@ struct LightTimelineSection: View {
                             selected: page.selectedWindow, sky: sky, hours: page.hours, hasLayers: page.hasCloudLayers,
                             marker: page.markerTime, scrubbing: page.scrub != nil,
                             tiers: page.focus == .fullDay ? 3 : 2,
-                            tickEveryHours: page.focus == .fullDay ? 3 : 1, hasWeather: hasWeather)
+                            tickEveryHours: page.focus == .fullDay ? 3 : 1, hasWeather: hasWeather, panel: panel)
     }
 
     static func height(_ data: TimelineData) -> CGFloat {
@@ -201,14 +257,20 @@ enum TimelineRenderer {
         var totalHeight: CGFloat
     }
 
+    /// The plot's left and right x: the page leaves a gutter for the y-axis labels and a right inset; the panel runs the
+    /// whole width (its percent labels sit inside the plot).
+    static func plotEdges(width: CGFloat, panel: Bool) -> (left: CGFloat, right: CGFloat) {
+        panel ? (0, width) : (SpotLayout.gutter, width - SpotLayout.rightInset)
+    }
+
     static func layout(_ d: TimelineData, width: CGFloat) -> Layout {
         let tiersHeight = CGFloat(d.tiers) * SpotLayout.labelTier
         let bracketY = tiersHeight + IterSpace.xs
         let skyTop = bracketY + SpotLayout.bracketDrop + IterSpace.xs
-        let skyBottom = skyTop + IterSize.timelineHeight
+        let skyBottom = skyTop + (d.panel ? SpotLayout.panelSkyHeight : IterSize.timelineHeight)
         let axisBottom = skyBottom + IterSize.timelineAxisHeight
         let plotTop = axisBottom + IterSpace.sm
-        let plotBottom = plotTop + (d.hasWeather ? SpotLayout.plotHeight : 0)
+        let plotBottom = plotTop + (d.hasWeather ? (d.panel ? SpotLayout.panelPlotHeight : SpotLayout.plotHeight) : 0)
         return Layout(tiersHeight: tiersHeight, bracketY: bracketY, skyTop: skyTop, skyBottom: skyBottom, axisBottom: axisBottom,
                       plotTop: plotTop, plotBottom: plotBottom, totalHeight: d.hasWeather ? plotBottom + IterSpace.xs : axisBottom)
     }
@@ -237,8 +299,7 @@ enum TimelineRenderer {
 
     static func draw(_ ctx: inout GraphicsContext, size: CGSize, data d: TimelineData) {
         let lay = layout(d, width: size.width)
-        let left = SpotLayout.gutter
-        let right = size.width - SpotLayout.rightInset
+        let (left, right) = plotEdges(width: size.width, panel: d.panel)
         let plotW = right - left
         guard plotW > 0 else { return }
         func x(_ date: Date) -> CGFloat { left + CGFloat(date.timeIntervalSince(d.domain.lowerBound) / d.span) * plotW }
@@ -289,6 +350,8 @@ enum TimelineRenderer {
             ctx.fill(Path(ellipseIn: knob), with: .color(IterColor.textPrimary.color))
             ctx.stroke(Path(ellipseIn: knob), with: .color(IterColor.backgroundWindow), lineWidth: IterStroke.thin)
         }
+        // The panel's time pill over the marker line.
+        drawPill(&ctx, d, lay, x: x, left: left, right: right)
     }
 
     private static func extent(_ w: LightWindow, x: (Date) -> CGFloat, left: CGFloat, right: CGFloat) -> (CGFloat, CGFloat) {
@@ -304,6 +367,10 @@ enum TimelineRenderer {
     }
 
     private static func drawAxis(_ ctx: inout GraphicsContext, _ d: TimelineData, _ lay: Layout, x: (Date) -> CGFloat, left: CGFloat, right: CGFloat) {
+        // The panel's marker time is a pill on the axis (drawn over the marker line afterwards); labels it would touch are skipped.
+        let pill = pillGeometry(&ctx, d, lay, x: x, left: left, right: right)
+        // The page draws no pill; a label the marker line would run through is skipped the same way.
+        let markerX: CGFloat? = (!d.panel && d.domain.contains(d.marker)) ? x(d.marker) : nil
         for hour in stride(from: 0, through: 24, by: d.tickEveryHours) {
             let date = d.day.at(hour: hour, in: d.zone)
             guard d.domain.contains(date) else { continue }
@@ -313,8 +380,41 @@ enum TimelineRenderer {
             tick.addLine(to: CGPoint(x: tx, y: lay.skyBottom + SpotLayout.tickLength))
             ctx.stroke(tick, with: .color(IterColor.textSecondary.color), lineWidth: IterStroke.thin)
             let text = Text(verbatim: LightText.hourLabel(date, in: d.zone)).font(IterFont.timeSmall).foregroundStyle(IterColor.textSecondary)
-            ctx.draw(text, at: CGPoint(x: tx, y: lay.skyBottom + SpotLayout.tickLength), anchor: .top)
+            if d.panel {
+                // The plot runs to the canvas edge: keep the end labels inside it.
+                let resolved = ctx.resolve(text)
+                let width = resolved.measure(in: CGSize(width: 100, height: IterSize.timelineAxisHeight)).width
+                if let pill, abs(tx - pill.x) < (pill.width + width) / 2 + IterSpace.xs { continue }
+                let anchor: UnitPoint = tx - width / 2 < left ? .topLeading : tx + width / 2 > right ? .topTrailing : .top
+                ctx.draw(resolved, at: CGPoint(x: tx, y: lay.skyBottom + SpotLayout.tickLength), anchor: anchor)
+            } else {
+                if let markerX {
+                    let width = ctx.resolve(text).measure(in: CGSize(width: 100, height: IterSize.timelineAxisHeight)).width
+                    if abs(tx - markerX) < width / 2 + IterSpace.xs { continue }
+                }
+                ctx.draw(text, at: CGPoint(x: tx, y: lay.skyBottom + SpotLayout.tickLength), anchor: .top)
+            }
         }
+    }
+
+    /// The panel's time pill: where it sits on the axis and how to draw it.
+    private static func pillGeometry(_ ctx: inout GraphicsContext, _ d: TimelineData, _ lay: Layout, x: (Date) -> CGFloat,
+                                     left: CGFloat, right: CGFloat) -> (x: CGFloat, width: CGFloat, rect: CGRect, text: GraphicsContext.ResolvedText)? {
+        guard d.panel, d.domain.contains(d.marker) else { return nil }
+        let text = Text(verbatim: TimeText.time(d.marker, in: d.zone)).font(IterFont.timeSmall).foregroundStyle(IterColor.backgroundWindow)
+        let resolved = ctx.resolve(text)
+        let size = resolved.measure(in: CGSize(width: 200, height: IterSize.timelineAxisHeight))
+        let width = size.width + IterSpace.sm * 2
+        let height = IterSize.timelineAxisHeight - IterStroke.thin
+        let mx = min(max(x(d.marker), left + width / 2), right - width / 2)
+        let rect = CGRect(x: mx - width / 2, y: lay.skyBottom + IterStroke.thin, width: width, height: height)
+        return (mx, width, rect, resolved)
+    }
+
+    private static func drawPill(_ ctx: inout GraphicsContext, _ d: TimelineData, _ lay: Layout, x: (Date) -> CGFloat, left: CGFloat, right: CGFloat) {
+        guard let pill = pillGeometry(&ctx, d, lay, x: x, left: left, right: right) else { return }
+        ctx.fill(Path(roundedRect: pill.rect, cornerRadius: IterRadius.badge), with: .color(IterColor.textPrimary.color))
+        ctx.draw(pill.text, at: CGPoint(x: pill.rect.midX, y: pill.rect.midY), anchor: .center)
     }
 
     private static func drawPlot(_ ctx: inout GraphicsContext, _ d: TimelineData, _ lay: Layout, x: (Date) -> CGFloat, left: CGFloat, right: CGFloat) {
@@ -336,8 +436,10 @@ enum TimelineRenderer {
             grid.move(to: CGPoint(x: left, y: y(fraction)))
             grid.addLine(to: CGPoint(x: right, y: y(fraction)))
             ctx.stroke(grid, with: .color(IterColor.separator), lineWidth: IterStroke.hairline)
-            let label = Text(verbatim: LightText.percent(fraction)).font(IterFont.timeSmall).foregroundStyle(IterColor.textSecondary)
-            ctx.draw(label, at: CGPoint(x: left - IterSpace.xs, y: y(fraction)), anchor: .trailing)
+            if !d.panel {
+                let label = Text(verbatim: LightText.percent(fraction)).font(IterFont.timeSmall).foregroundStyle(IterColor.textSecondary)
+                ctx.draw(label, at: CGPoint(x: left - IterSpace.xs, y: y(fraction)), anchor: .trailing)
+            }
         }
 
         let hours = d.hours.filter {
@@ -379,6 +481,15 @@ enum TimelineRenderer {
                 layer.fill(Path(roundedRect: rect, cornerRadius: IterStroke.thin), with: .color(IterColor.skyBlue))
             }
         }
+        if d.panel {
+            // Percent labels inside the plot at its leading edge, over the data: under the top line, above the others.
+            for fraction in [0.0, 0.5, 1.0] {
+                let top = fraction == 1
+                let label = Text(verbatim: LightText.percent(fraction)).font(IterFont.timeSmall).foregroundStyle(IterColor.textSecondary)
+                ctx.draw(label, at: CGPoint(x: left + IterSpace.xs, y: y(fraction) + (top ? IterStroke.thin : -IterStroke.thin)),
+                         anchor: top ? .topLeading : .bottomLeading)
+            }
+        }
     }
 
     /// Millimetres per hour that fill the plot's height when the provider gives no chance of rain.
@@ -412,7 +523,7 @@ enum TimelineRenderer {
             let measured = resolved.measure(in: CGSize(width: 400, height: SpotLayout.labelTier))
             var lx = x0
             if lx + measured.width > right { lx = right - measured.width }
-            lx = max(left - IterSpace.sm, lx)
+            lx = max(d.panel ? left : left - IterSpace.sm, lx)
             let gap = IterSpace.xs
             var tier = 0
             while tier < d.tiers - 1, lx < tierEnds[tier] + gap { tier += 1 }

@@ -196,7 +196,6 @@ Every token, its values and its one job. Generated from the registry.
 | `event/pinShadowRadiusSelected` | 12 | Shadow radius under the selected map pin label. |
 | `event/pinScaleSelected` | 1.15 | Scale factor (a ratio, not points) of the selected map pin label, anchored at its pointer. |
 | `event/lowConfidenceOpacity` | 0.85 | Opacity of an event chip whose score has low confidence (a ratio, not points). |
-| `event/tailOpacity` | 0.22 | Opacity of the band ramp colour behind the time in the event unit's tail (a ratio, not points). |
 | `radius/badge` | 6 | Corner radius of Light Index badges and chips. |
 | `radius/control` | 8 | Corner radius of custom controls. |
 | `radius/card` | 12 | Corner radius of cards and thumbnails. |
@@ -214,7 +213,7 @@ Every token, its values and its one job. Generated from the registry.
 | `size/icon/medium` | 16 | Default symbol size. |
 | `size/icon/large` | 20 | Large symbol size. |
 | `size/confidenceMark` | 14 | Confidence mark diameter. |
-| `size/placeCardImageHeight` | 200 | Height of the image strip at the top of the map's place card: about 16:9 at the card's width. |
+| `size/imageStripHeight` | 200 | Height of the place image strip (Look Around or satellite) at the top of Explore's light panel and the offline image request. |
 | `size/lightRing/small` | 32 | Score ring in rows. |
 | `size/lightRing/medium` | 44 | Score ring on cards. |
 | `size/lightRing/large` | 64 | Score ring in headers. |
@@ -235,8 +234,7 @@ Every token, its values and its one job. Generated from the registry.
 | `layout/inspectorMin` | 280 | Inspector minimum width. |
 | `layout/inspectorIdeal` | 320 | Inspector ideal width. |
 | `layout/inspectorMax` | 420 | Inspector maximum width. |
-| `layout/placeCardWidth` | 360 | Width of the place card floating over the map: the content list's ideal width, which the spot sections are built to fit, and about a third of the narrowest map pane. |
-| `layout/placeCardMaxHeight` | 560 | Tallest the place card grows; it is also capped to half the map's height so the selected pin stays visible. |
+| `layout/imageRequestWidth` | 360 | The point width at which place images are requested and cached (the list column's ideal width); the strip draws them at the column's width. |
 | `layout/windowMinWidth` | 761 | Main window minimum width, derived: layout/listColumnMin (340) + layout/detailMin (420) + a 1 pt divider, so with the sidebar collapsed no column clips. The sidebar collapses on its own below layout/sidebarIdeal plus this. |
 | `layout/windowMinHeight` | 600 | Main window minimum height. |
 | `stroke/hairline` | 0.5 | Hairline border on cards and badges. |
@@ -273,7 +271,7 @@ Every token, its values and its one job. Generated from the registry.
 | `type/time` | `body` | regular | standard | true | Clock times and durations. |
 | `type/timeSmall` | `footnote` | regular | standard | true | Small times and chart axes. |
 
-Spacing is on an 8-pt scale (`space/sm` 8, `space/lg` 16, `space/xl` 24, `space/xxl` 32; the `grid/*` tokens name the lane, inset and row-height steps). 4 (`space/xs`) is only for hairline-tight pairs, such as a symbol and its number inside the event unit. `space/md` (12) and `space/xxs` (2) are kept for old code and are not used in new layout. Event-unit tokens (`event/*`) size the one score chip; `event/pinScaleSelected`, `event/lowConfidenceOpacity`, `event/tailOpacity` and `debug/*Opacity` are ratios stored as dimension tokens. Type uses system fonts only: SF Pro, with New York (`.serif` design) for the spot and trip title voice, and monospaced digits for every number, time and score. Each type token names a `Font.TextStyle`, weight and design, so system sizing and Dynamic Type still apply; the px size in `tokens.json` is the macOS default for that style, for reference in design tools.
+Spacing is on an 8-pt scale (`space/sm` 8, `space/lg` 16, `space/xl` 24, `space/xxl` 32; the `grid/*` tokens name the lane, inset and row-height steps). 4 (`space/xs`) is only for hairline-tight pairs, such as a symbol and its number inside the event unit. `space/md` (12) and `space/xxs` (2) are kept for old code and are not used in new layout. Event-unit tokens (`event/*`) size the one score chip; `event/pinScaleSelected`, `event/lowConfidenceOpacity` and `debug/*Opacity` are ratios stored as dimension tokens. Type uses system fonts only: SF Pro, with New York (`.serif` design) for the spot and trip title voice, and monospaced digits for every number, time and score. Each type token names a `Font.TextStyle`, weight and design, so system sizing and Dynamic Type still apply; the px size in `tokens.json` is the macOS default for that style, for reference in design tools.
 
 ## Where First Light stops
 

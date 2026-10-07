@@ -50,11 +50,6 @@ struct AppCommands: Commands {
                 .keyboardShortcut("2")
             Button(String(localized: "Locations", comment: "Menu item")) { navigation?.show(.locations) }
                 .keyboardShortcut("3")
-            Button(String(localized: "Ask Iter…", comment: "Menu item: focus the Explore search field in Ask mode")) {
-                navigation?.selection = .explore
-                navigation?.askRequest += 1
-            }
-            .keyboardShortcut("4")
         }
         CommandMenu(String(localized: "Light", comment: "Menu title")) {
             Button(String(localized: "Refresh Forecasts", comment: "Menu item")) { model.forecasts.retryFailed() }

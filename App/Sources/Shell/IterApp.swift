@@ -41,7 +41,7 @@ struct IterApp: App {
             }
         }
         if AppLaunch.seedLibrary { LibrarySeed.run(model) }
-        model.offline.attach(imagery: .shared, pointSize: CGSize(width: IterSize.placeCardWidth, height: IterSize.placeCardImageHeight), scale: 2)
+        model.offline.attach(imagery: .shared, pointSize: CGSize(width: IterSize.imageRequestWidth, height: IterSize.imageStripHeight), scale: 2)
         if !AppLaunch.isRunningTests { model.offline.start() }
         // The smoke hook starts here, not in a view task, so it also runs when the app is launched hidden.
         if AppLaunch.smokeTest {

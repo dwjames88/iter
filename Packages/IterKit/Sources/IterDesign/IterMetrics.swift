@@ -42,8 +42,6 @@ public enum IterEvent {
     public static let pinScaleSelected = d("event/pinScaleSelected")
     /// An opacity, stored as a dimension token.
     public static let lowConfidenceOpacity = Double(TokenValues.dimension("event/lowConfidenceOpacity"))
-    /// An opacity, stored as a dimension token: the band colour behind the time in the unit's tail.
-    public static let tailOpacity = Double(TokenValues.dimension("event/tailOpacity"))
 }
 
 /// Debug layout-grid overlay opacities (ratios stored as dimension tokens).
@@ -73,7 +71,7 @@ public enum IterSize {
     public static let iconMedium = d("size/icon/medium")
     public static let iconLarge = d("size/icon/large")
     public static let confidenceMark = d("size/confidenceMark")
-    public static let placeCardImageHeight = d("size/placeCardImageHeight")
+    public static let imageStripHeight = d("size/imageStripHeight")
     public static let lightRingSmall = d("size/lightRing/small")
     public static let lightRingMedium = d("size/lightRing/medium")
     public static let lightRingLarge = d("size/lightRing/large")
@@ -96,8 +94,7 @@ public enum IterSize {
     public static let inspectorMin = d("layout/inspectorMin")
     public static let inspectorIdeal = d("layout/inspectorIdeal")
     public static let inspectorMax = d("layout/inspectorMax")
-    public static let placeCardWidth = d("layout/placeCardWidth")
-    public static let placeCardMaxHeight = d("layout/placeCardMaxHeight")
+    public static let imageRequestWidth = d("layout/imageRequestWidth")
     public static let mainWindowMinWidth = d("layout/windowMinWidth")
     public static let windowMinHeight = d("layout/windowMinHeight")
 }

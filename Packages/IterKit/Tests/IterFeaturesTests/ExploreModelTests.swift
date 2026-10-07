@@ -958,3 +958,174 @@ private func clusteredExplore(region: GeoRegion = westUS) async throws -> Explor
 }
 
 private let fixedNowForRollover = fixedNow.addingTimeInterval(600)
+
+/// The list column's second state: the selected place's panel replaces the list (and the map keeps its pins).
+@MainActor
+@Suite struct ExplorePanelTests {
+    @Test func startsInTheListState() async throws {
+        let explore = try await makeExplore()
+        #expect(!explore.showsPanel)
+        #expect(explore.panelPosition == nil)
+    }
+
+    @Test func selectingFromTheMapOpensThePanel() async throws {
+        let explore = try await makeExplore()
+        explore.select("mesa-arch", from: .map)
+        #expect(explore.showsPanel)
+        #expect(explore.selectedID == "mesa-arch")
+    }
+
+    @Test func clickingAMapPinOfTheAlreadySelectedRowOpensThePanel() async throws {
+        let explore = try await makeExplore()
+        explore.select("mesa-arch", from: .list)
+        #expect(!explore.showsPanel)
+        explore.select("mesa-arch", from: .map)
+        #expect(explore.showsPanel)
+    }
+
+    @Test func aListSelectionHighlightsFirstAndOpenPanelOpensIt() async throws {
+        let explore = try await makeExplore()
+        explore.select("mesa-arch", from: .list)
+        #expect(explore.selectedID == "mesa-arch")
+        #expect(!explore.showsPanel)
+        explore.openPanel()
+        #expect(explore.showsPanel)
+    }
+
+    @Test func openPanelNeedsASelection() async throws {
+        let explore = try await makeExplore()
+        explore.openPanel()
+        #expect(!explore.showsPanel)
+    }
+
+    @Test func backKeepsTheSelectionAndShowsTheList() async throws {
+        let explore = try await makeExplore()
+        explore.select("mesa-arch", from: .map)
+        explore.closePanel()
+        #expect(!explore.showsPanel)
+        #expect(explore.selectedID == "mesa-arch")
+        explore.openPanel()
+        #expect(explore.showsPanel)
+    }
+
+    @Test func clearingTheSelectionFromTheMapReturnsToTheList() async throws {
+        let explore = try await makeExplore()
+        explore.select("mesa-arch", from: .map)
+        explore.select(nil, from: .map)
+        #expect(!explore.showsPanel)
+        #expect(explore.selectedID == nil)
+    }
+
+    @Test func selectingAnotherPinWhileOpenSwitchesThePanel() async throws {
+        let explore = try await makeExplore()
+        explore.select("mesa-arch", from: .map)
+        explore.select("tunnel-view", from: .map)
+        #expect(explore.showsPanel)
+        #expect(explore.selectedID == "tunnel-view")
+    }
+
+    @Test func positionIsOneBasedInListOrder() async throws {
+        let explore = try await makeExplore()
+        let ids = explore.rows.map(\.id)
+        explore.select(ids[2], from: .list)
+        let position = try #require(explore.panelPosition)
+        #expect(position.index == 3)
+        #expect(position.count == ids.count)
+    }
+
+    @Test func steppingFollowsTheListOrderAndStopsAtTheEnds() async throws {
+        let explore = try await makeExplore()
+        let ids = explore.rows.map(\.id)
+        explore.select(ids[0], from: .map)
+        #expect(!explore.canSelectPrevious && explore.canSelectNext)
+        explore.selectPrevious()
+        #expect(explore.selectedID == ids[0])
+        explore.selectNext()
+        #expect(explore.selectedID == ids[1])
+        explore.selectNext()
+        #expect(explore.selectedID == ids[2])
+        explore.selectPrevious()
+        #expect(explore.selectedID == ids[1])
+        #expect(explore.showsPanel)
+        explore.select(ids[ids.count - 1], from: .map)
+        #expect(!explore.canSelectNext)
+        explore.selectNext()
+        #expect(explore.selectedID == ids[ids.count - 1])
+        #expect(explore.panelPosition?.index == ids.count)
+    }
+
+    @Test func steppingScrollsTheListAndRevealsThePin() async throws {
+        let explore = try await makeExplore()
+        let ids = explore.rows.map(\.id)
+        explore.select(ids[0], from: .map)
+        let before = explore.scrollRequest?.id
+        explore.selectNext()
+        #expect(explore.scrollRequest?.target == ids[1])
+        #expect(explore.scrollRequest?.id != before)
+    }
+
+    @Test func steppingIntoMorePlacesOpensIt() async throws {
+        // Far from every curated spot but a few: the rest are "More Places" (collapsed until opened).
+        let explore = try await makeExplore(at: Coordinate(latitude: 37.77, longitude: -122.42), radius: 25)
+        let more = try #require(explore.sections.first { $0.kind == .morePlaces })
+        let firstMore = try #require(more.rows.first)
+        let all = explore.rows.map(\.id)
+        let index = try #require(all.firstIndex(of: firstMore.id))
+        try #require(index > 0)
+        explore.setMorePlacesOpen(false)
+        explore.select(all[index - 1], from: .map)
+        explore.selectNext()
+        #expect(explore.selectedID == firstMore.id)
+        #expect(explore.isMorePlacesOpen)
+    }
+
+    @Test func aNewSearchReturnsToTheList() async throws {
+        let explore = try await makeExplore()
+        for action in [{ explore.submitSearch() }, { explore.searchAppleMaps() }, { explore.ask() }] as [() -> Void] {
+            explore.query = "mesa"
+            explore.select("mesa-arch", from: .map)
+            #expect(explore.showsPanel)
+            action()
+            #expect(!explore.showsPanel)
+            explore.cancelSearch()
+            explore.cancelAsk()
+            explore.query = ""
+        }
+    }
+
+    @Test func changingOrClearingTheQueryReturnsToTheList() async throws {
+        let explore = try await makeExplore()
+        explore.select("mesa-arch", from: .map)
+        explore.query = "arch"
+        #expect(!explore.showsPanel)
+        #expect(explore.selectedID == "mesa-arch")
+        explore.openPanel()
+        explore.query = ""
+        #expect(!explore.showsPanel)
+        explore.openPanel()
+        explore.query = ""   // unchanged
+        #expect(explore.showsPanel)
+    }
+
+    @Test func droppingAHiddenSelectionClosesThePanel() async throws {
+        let explore = try await makeExplore()
+        explore.select("mesa-arch", from: .map)
+        explore.filters.categories = [.waterfall]
+        #expect(explore.selectedID == nil)
+        #expect(!explore.showsPanel)
+    }
+
+    @Test func nothingCoversTheMapSoTheRevealMarginsAreSymmetric() async throws {
+        let margins = ExploreModel.revealMargins
+        #expect(margins == MapCameraPolicy.Margins())
+        #expect(margins.top == margins.bottom && margins.leading == margins.trailing)
+        // A pin just below the centre is already in view: it is no longer pushed into the upper half.
+        let explore = try await makeExplore()
+        let mesa = try #require(CuratedSpots.spot(id: "mesa-arch"))
+        let region = GeoRegion(center: Coordinate(latitude: mesa.coordinate.latitude + 0.4, longitude: mesa.coordinate.longitude),
+                               latitudeDelta: 2, longitudeDelta: 2)
+        explore.cameraDidChange(to: region)
+        explore.select("mesa-arch", from: .list)
+        #expect(explore.cameraRequest == nil)
+    }
+}

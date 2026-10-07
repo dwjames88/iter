@@ -4,7 +4,7 @@ import IterServices
 
 /// Ask in Explore: the search field's natural-language path. The engine is `ScoutModel`; this is the glue that gives it
 /// the visible map region, turns its grounded suggestions into the Ask section (see `ExploreModel.buildDerived`) and
-/// keeps the offer, cancel and reset rules in one place.
+/// keeps the suggestions, cancel and reset rules in one place.
 extension ExploreModel {
     /// The grounded suggestions of the current ask; empty unless it finished with results.
     var askSuggestions: [ScoutSuggestion] {
@@ -20,15 +20,30 @@ extension ExploreModel {
     /// The Ask section has something to draw: stages, a failure, or results.
     public var hasAskContent: Bool { askModel.state != .idle }
 
-    /// The "Ask Iter…" row is offered when the field has text and no ask is running or shown for that text.
-    public var offersAsk: Bool {
+    /// What the field offers for its text, ranked; empty while the field is empty or the chosen action is already
+    /// running or shown for that text (an Apple Maps search under way or done, an ask running or shown).
+    public var searchSuggestions: [SearchSuggestion] {
         let text = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !text.isEmpty, !askModel.isRunning else { return false }
-        return askModel.state == .idle || askModel.submittedRequest != text
+        guard !text.isEmpty else { return [] }
+        if askModel.isRunning || (askModel.state != .idle && askModel.submittedRequest == text) { return [] }
+        switch searchState {
+        case .searching(let q), .failed(let q), .finished(let q, _): if q == text { return [] }
+        case .idle: break
+        }
+        return SearchSuggestions.make(query: text, askAvailability: askAvailability)
+    }
+
+    /// Runs one suggestion. An unavailable Ask does nothing.
+    public func run(_ suggestion: SearchSuggestion) {
+        switch suggestion.kind {
+        case .appleMaps: searchAppleMaps()
+        case .ask: if suggestion.isAvailable { ask() }
+        }
     }
 
     /// Puts the field's text to the ask engine, with the map's visible region as the area. Replaces a running ask.
     public func ask() {
+        closePanel()
         let text = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return }
         if askModel.isRunning { askModel.cancel() }
@@ -51,7 +66,6 @@ extension ExploreModel {
 
     /// "Search Apple Maps Instead": drops the ask and runs the ordinary search for the same text.
     public func searchAppleMapsInstead() {
-        askMode = false
         dismissAsk()
         searchAppleMaps()
     }

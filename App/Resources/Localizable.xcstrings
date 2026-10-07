@@ -324,6 +324,17 @@
     "%lld min walk-in" : {
       "comment" : "Spot fact: walk from parking\nWalk from parking to the shooting spot"
     },
+    "%lld of %lld" : {
+      "comment" : "Place panel header: the place's position in the list, e.g. 3 of 16",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld"
+          }
+        }
+      }
+    },
     "%lld places, zoom in" : {
       "comment" : "VoiceOver: a group of map pins that are too close to tell apart; the number is how many"
     },
@@ -341,9 +352,7 @@
         }
       }
     },
-    "%lld." : {
-
-    },
+    "%lld." : {},
     "%lld° %@" : {
       "comment" : "A compass bearing, e.g. 100° E",
       "localizations" : {
@@ -472,7 +481,7 @@
       "comment" : "Ask unavailable detail: other reason"
     },
     "Apple Maps" : {
-      "comment" : "List section: places found by searching Apple Maps\nSaved filter\nSource filter: places found by searching Apple Maps\nSpot provenance"
+      "comment" : "List section: places found by searching Apple Maps\nSaved filter\nSearch suggestions group title: place lookup\nSource filter: places found by searching Apple Maps\nSpot provenance"
     },
     "Apple Weather" : {
       "comment" : "Weather provider name"
@@ -487,7 +496,7 @@
       "comment" : "Spot category"
     },
     "Ask Iter" : {
-      "comment" : "List section: places suggested for a request\nSettings section: the Apple Intelligence search in Explore\nSpot provenance: found by Ask Iter (Apple Intelligence) in Explore\nToolbar toggle and VoiceOver label: put the search text to Apple Intelligence"
+      "comment" : "List section: places suggested for a request\nSearch suggestions group title: ask Apple Intelligence\nSettings section: the Apple Intelligence search in Explore\nSpot provenance: found by Ask Iter (Apple Intelligence) in Explore"
     },
     "Ask Iter can't help with that request" : {
       "comment" : "Ask failure title"
@@ -498,11 +507,17 @@
     "Ask Iter doesn't support that language" : {
       "comment" : "Ask failure title"
     },
-    "Ask Iter in your own words: the search field describes the scenery, the area and the light" : {
-      "comment" : "Tooltip on the Ask toggle"
-    },
     "Ask Iter isn't available right now" : {
-      "comment" : "Ask unavailable title"
+      "comment" : "Ask suggestion, disabled: no specific reason\nAsk unavailable title"
+    },
+    "Ask Iter isn't available: Apple Intelligence is off" : {
+      "comment" : "Ask suggestion, disabled: Apple Intelligence off"
+    },
+    "Ask Iter isn't available: Apple Intelligence is still downloading" : {
+      "comment" : "Ask suggestion, disabled: model not ready"
+    },
+    "Ask Iter isn't available: this Mac can't run Apple Intelligence" : {
+      "comment" : "Ask suggestion, disabled: device not eligible"
     },
     "Ask Iter needs Apple Intelligence, which this Mac doesn't support. Searching places in Explore works without it." : {
       "comment" : "Ask unavailable detail: device not eligible"
@@ -510,17 +525,22 @@
     "Ask Iter will be ready when the download finishes. It can take a while the first time." : {
       "comment" : "Ask unavailable detail: model not ready"
     },
-    "Ask Iter “%@”" : {
-      "comment" : "List row that puts the search text to Apple Intelligence"
-    },
     "Ask Iter, in Explore's search, understands your request with the model on this Mac, then looks up real places in Apple Maps and Iter's curated list." : {
       "comment" : "Settings: how Ask Iter works"
     },
     "Ask Iter: %@" : {
-      "comment" : "VoiceOver label of the Ask row"
+      "comment" : "Search suggestion that puts the search text to Apple Intelligence\nVoiceOver label of the Ask suggestion"
     },
-    "Ask Iter…" : {
-      "comment" : "Explore search field prompt when Ask mode is on\nMenu item: focus the Explore search field in Ask mode"
+    "Ask Iter: %@, unavailable. %@" : {
+      "comment" : "VoiceOver label of the disabled Ask suggestion, with the reason",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Ask Iter: %1$@, unavailable. %2$@"
+          }
+        }
+      }
     },
     "Ask to use your location" : {
       "comment" : "Tooltip"
@@ -544,6 +564,12 @@
     },
     "Back to All Trips" : {
       "comment" : "Button"
+    },
+    "Back to places" : {
+      "comment" : "VoiceOver"
+    },
+    "Back to places (Esc)" : {
+      "comment" : "Tooltip on the place panel's back button"
     },
     "Bare sky: clean light, flat colour." : {
       "comment" : "Light reason for a cloudless golden hour"
@@ -702,9 +728,6 @@
     "Click to rename" : {
       "comment" : "Tooltip"
     },
-    "Close" : {
-      "comment" : "VoiceOver"
-    },
     "Cloud" : {
       "comment" : "Hourly row label"
     },
@@ -728,6 +751,9 @@
     },
     "Collapsed" : {
       "comment" : "VoiceOver state\nVoiceOver: the section is closed"
+    },
+    "Coming up" : {
+      "comment" : "Place panel section title: tomorrow's light windows"
     },
     "Compass direction →" : {
       "comment" : "Sky arc x axis"
@@ -844,9 +870,6 @@
     "Delete “%@”?" : {
       "comment" : "Delete spot confirmation title"
     },
-    "Deselect" : {
-      "comment" : "Tooltip on the place card's close button"
-    },
     "Desert" : {
       "comment" : "Spot category"
     },
@@ -889,6 +912,9 @@
     },
     "Drag the map to move the pin." : {
       "comment" : "Spot editor map hint"
+    },
+    "Drag to read any time" : {
+      "comment" : "Hint at the end of the timeline legend in the Explore panel"
     },
     "Drive doesn't fit: %@ short" : {
       "comment" : "Schedule issue: the drive takes longer than the time available"
@@ -978,7 +1004,7 @@
       "comment" : "Menu item"
     },
     "Find real places that fit, with a note on why" : {
-      "comment" : "Second line of the Ask Iter row"
+      "comment" : "Second line of the Ask Iter suggestion"
     },
     "Finding your location…" : {
       "comment" : "Progress in the Explore banner while the location is being found"
@@ -1397,9 +1423,7 @@
     "New Location" : {
       "comment" : "Menu item: drops a pin on the Explore map"
     },
-    "New Spot" : {
-
-    },
+    "New Spot" : {},
     "New Trip" : {
       "comment" : "Default trip name\nMenu item\nPrimary button on the empty trips screen\nSheet title\nToolbar button\nUndo action name"
     },
@@ -1426,6 +1450,12 @@
     },
     "Next image" : {
       "comment" : "VoiceOver and tooltip"
+    },
+    "Next place" : {
+      "comment" : "VoiceOver"
+    },
+    "Next place (Down Arrow)" : {
+      "comment" : "Tooltip"
     },
     "Next sunrise %@" : {
       "comment" : "Sun time when there is no score"
@@ -1470,6 +1500,9 @@
     },
     "No images of %@" : {
       "comment" : "VoiceOver: the place card's image placeholder when there are none"
+    },
+    "No light windows are left today." : {
+      "comment" : "Place panel: every window of today is over"
     },
     "No places found" : {
       "comment" : "Empty state after a real Apple Maps search"
@@ -1527,12 +1560,6 @@
     },
     "OK" : {
       "comment" : "Alert button\nUpdate window button"
-    },
-    "Off" : {
-      "comment" : "VoiceOver value: Ask mode is off"
-    },
-    "On" : {
-      "comment" : "VoiceOver value: Ask mode is on"
     },
     "Open" : {
       "comment" : "Context menu\nContext menu: open the spot page\nMenu item"
@@ -1625,9 +1652,7 @@
     "Park, town or region" : {
       "comment" : "Locality placeholder"
     },
-    "Paste your key" : {
-
-    },
+    "Paste your key" : {},
     "Pick your spots and days. Iter works out when to leave so you are set up before the light arrives." : {
       "comment" : "Empty trips screen explanation"
     },
@@ -1646,11 +1671,22 @@
     "Place" : {
       "comment" : "Spot editor field"
     },
-    "Place card for %@" : {
+    "Place %lld of %lld" : {
+      "comment" : "VoiceOver",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Place %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "Place panel for %@" : {
       "comment" : "VoiceOver"
     },
     "Places" : {
-      "comment" : "VoiceOver label of the Explore list"
+      "comment" : "Place panel: back to the list of places\nVoiceOver label of the Explore list"
     },
     "Places come from Apple Maps and Iter's curated list. Iter checks every place exists; the notes are written by Apple Intelligence." : {
       "comment" : "Ask section footer: where places and notes come from"
@@ -1670,11 +1706,20 @@
     "Pre-release channels may come later." : {
       "comment" : "Settings footer"
     },
+    "Press Return" : {
+      "comment" : "Tooltip on the top search suggestion"
+    },
     "Previous day" : {
       "comment" : "Accessibility label\nTooltip"
     },
     "Previous image" : {
       "comment" : "VoiceOver and tooltip"
+    },
+    "Previous place" : {
+      "comment" : "VoiceOver"
+    },
+    "Previous place (Up Arrow)" : {
+      "comment" : "Tooltip"
     },
     "Professional" : {
       "comment" : "Windy key type"
@@ -1763,6 +1808,9 @@
     "Route map" : {
       "comment" : "Accessibility label"
     },
+    "Runs when you press Return" : {
+      "comment" : "VoiceOver hint on the top search suggestion"
+    },
     "Sample Data" : {
       "comment" : "Settings field"
     },
@@ -1776,7 +1824,7 @@
       "comment" : "VoiceOver: image of a spot"
     },
     "Save" : {
-      "comment" : "Button\nContext menu\nPlace card: save the spot"
+      "comment" : "Button\nContext menu\nPlace panel: save the spot"
     },
     "Save Spot" : {
       "comment" : "Undo action name"
@@ -1788,14 +1836,12 @@
       "comment" : "Help\nTooltip"
     },
     "Saved" : {
-      "comment" : "Accessibility label\nButton state\nPlace card: the spot is saved"
+      "comment" : "Accessibility label\nButton state\nPlace panel: the spot is saved"
     },
     "Saved in Keychain" : {
       "comment" : "Settings: the key is in the Keychain"
     },
-    "Saved in Keychain. Paste to replace" : {
-
-    },
+    "Saved in Keychain. Paste to replace" : {},
     "Scored from a daily summary: beyond %@'s hourly forecast." : {
       "comment" : "Score footnote: daily summary only. Argument is the provider name"
     },
@@ -1808,17 +1854,20 @@
     "Scores use made-up weather. Turn off in the Debug menu." : {
       "comment" : "Banner explanation"
     },
-    "Search" : {
-      "comment" : "Explore search field prompt"
-    },
     "Search Apple Maps Instead" : {
       "comment" : "Button under an Ask that could not run: use the ordinary place search"
+    },
+    "Search Apple Maps for %@" : {
+      "comment" : "VoiceOver label of the Apple Maps suggestion"
     },
     "Search Apple Maps for “%@”" : {
       "comment" : "List row that runs an Apple Maps search"
     },
     "Search locations" : {
       "comment" : "Search field prompt"
+    },
+    "Search places or ask Iter" : {
+      "comment" : "Explore search field prompt: one field for place names and requests"
     },
     "Search spots" : {
       "comment" : "Add stop search field"
@@ -1872,7 +1921,7 @@
       "comment" : "Button"
     },
     "Show Full Page" : {
-      "comment" : "Place card: open the spot's full page"
+      "comment" : "Place panel: open the spot's full page"
     },
     "Show Layout Grid" : {
       "comment" : "Debug menu item: overlay the 8 pt grid and lane guides"
@@ -2142,10 +2191,10 @@
       "comment" : "Settings section: WeatherKit setup steps"
     },
     "Today" : {
-      "comment" : "Button that returns the page to today\nRelative day"
+      "comment" : "Button that returns the page to today\nPlace panel section title: the day's light windows still ahead\nRelative day"
     },
     "Tomorrow" : {
-      "comment" : "Place card: the next window is tomorrow\nRelative day"
+      "comment" : "Place panel: the next window is tomorrow\nRelative day"
     },
     "Trip Actions" : {
       "comment" : "Toolbar menu"
@@ -2343,9 +2392,7 @@
     "Zoom the timeline, arc and hourly strip to sunrise or sunset" : {
       "comment" : "Help"
     },
-    "^[%lld conflict](inflect: true)" : {
-
-    },
+    "^[%lld conflict](inflect: true)" : {},
     "^[%lld conflict](inflect: true) on this day" : {
       "comment" : "Day summary: how many schedule conflicts the day has"
     },
@@ -2355,9 +2402,7 @@
     "^[%lld place](inflect: true)" : {
       "comment" : "Number of places listed in Explore"
     },
-    "^[%lld stop](inflect: true)" : {
-
-    },
+    "^[%lld stop](inflect: true)" : {},
     "^[%lld stop](inflect: true) will move to Day %lld, the new last day. You can undo this." : {
       "comment" : "Warning when shortening a trip moves stops; the number is how many",
       "localizations" : {
@@ -2408,12 +2453,8 @@
     "walk-in unknown" : {
       "comment" : "Walk from parking to the shooting spot is not known"
     },
-    "·" : {
-
-    },
-    "· %@" : {
-
-    },
+    "·" : {},
+    "· %@" : {},
     "“%@”" : {
       "comment" : "The request an Ask section answers, shown under its header"
     },

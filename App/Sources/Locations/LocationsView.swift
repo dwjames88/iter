@@ -19,6 +19,12 @@ struct LocationsView: View {
     @State private var editing: PlaceRecord?
     @State private var pendingDelete: PlaceRecord?
 
+    /// `selected` opens the screen with those rows selected (snapshots show a selected pin in context).
+    init(folderID: UUID?, selected: Set<UUID> = []) {
+        self.folderID = folderID
+        _selection = State(initialValue: selected)
+    }
+
     private var folder: FolderRecord? { folderID.flatMap { model.store.folder(id: $0) } }
 
     private var title: String { folder?.name ?? String(localized: "All Locations", comment: "Screen title") }
