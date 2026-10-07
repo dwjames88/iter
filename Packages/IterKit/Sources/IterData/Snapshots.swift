@@ -12,6 +12,8 @@ struct PlaceSnapshot: Sendable {
     var isSaved: Bool
     var createdAt: Date
     var updatedAt: Date
+    var folderID: UUID?
+    var sortOrder: Double
 
     init(_ record: PlaceRecord) {
         id = record.id
@@ -21,8 +23,11 @@ struct PlaceSnapshot: Sendable {
         isSaved = record.isSaved
         createdAt = record.createdAt
         updatedAt = record.updatedAt
+        folderID = record.folder?.id
+        sortOrder = record.sortOrder
     }
 
+    /// Writes the fields; the folder link is set by the store (`folderID`), once folders exist.
     func write(to record: PlaceRecord) {
         record.curatedID = curatedID
         record.externalID = externalID
@@ -30,6 +35,7 @@ struct PlaceSnapshot: Sendable {
         record.isSaved = isSaved
         record.createdAt = createdAt
         record.updatedAt = updatedAt
+        record.sortOrder = sortOrder
     }
 }
 
@@ -69,6 +75,10 @@ struct TripSnapshot: Sendable {
     var notes: String
     var createdAt: Date
     var updatedAt: Date
+    var folderID: UUID?
+    var sortOrder: Double
+    var isPinned: Bool
+    var pinnedAt: Date?
     var stops: [StopSnapshot]
 
     init(_ record: TripRecord) {
@@ -79,6 +89,10 @@ struct TripSnapshot: Sendable {
         notes = record.notes
         createdAt = record.createdAt
         updatedAt = record.updatedAt
+        folderID = record.folder?.id
+        sortOrder = record.sortOrder
+        isPinned = record.isPinned
+        pinnedAt = record.pinnedAt
         stops = (record.stops ?? []).map(StopSnapshot.init)
     }
 
@@ -89,15 +103,49 @@ struct TripSnapshot: Sendable {
         record.notes = notes
         record.createdAt = createdAt
         record.updatedAt = updatedAt
+        record.sortOrder = sortOrder
+        record.isPinned = isPinned
+        record.pinnedAt = pinnedAt
     }
 }
 
-/// The state of a set of records at one moment. An ID in `tripIDs` or `placeIDs` with no snapshot means "does not exist".
+struct FolderSnapshot: Sendable {
+    var id: UUID
+    var name: String
+    var kindRaw: String
+    var sortOrder: Double
+    var parentID: UUID?
+    var createdAt: Date
+    var updatedAt: Date
+
+    init(_ record: FolderRecord) {
+        id = record.id
+        name = record.name
+        kindRaw = record.kindRaw
+        sortOrder = record.sortOrder
+        parentID = record.parent?.id
+        createdAt = record.createdAt
+        updatedAt = record.updatedAt
+    }
+
+    /// Writes the fields; the parent link is set by the store (`parentID`), once every folder exists.
+    func write(to record: FolderRecord) {
+        record.name = name
+        record.kindRaw = kindRaw
+        record.sortOrder = sortOrder
+        record.createdAt = createdAt
+        record.updatedAt = updatedAt
+    }
+}
+
+/// The state of a set of records at one moment. An ID in `tripIDs`, `placeIDs` or `folderIDs` with no snapshot means "does not exist".
 struct StoreState: Sendable {
     var tripIDs: Set<UUID> = []
     var placeIDs: Set<UUID> = []
+    var folderIDs: Set<UUID> = []
     var trips: [UUID: TripSnapshot] = [:]
     var places: [UUID: PlaceSnapshot] = [:]
+    var folders: [UUID: FolderSnapshot] = [:]
 }
 
 /// One edit: the state of everything it touched before and after.

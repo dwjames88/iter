@@ -35,7 +35,11 @@ struct ExploreView: View {
                 }
                 if let text = AppLaunch.searchText {
                     made.query = text
-                    made.submitSearch()
+                    made.searchAppleMaps()
+                }
+                if let text = AppLaunch.askText {
+                    made.query = text
+                    made.ask()
                 }
                 if let id = AppLaunch.selectRowID, made.row(id: id) != nil {
                     made.select(id, from: .list)
@@ -52,6 +56,7 @@ struct ExploreView: View {
 @MainActor private enum HandledRequests {
     static var focus: [ObjectIdentifier: Int] = [:]
     static var addSpot: [ObjectIdentifier: Int] = [:]
+    static var ask: [ObjectIdentifier: Int] = [:]
 }
 
 private struct ExploreContent: View {
@@ -69,7 +74,7 @@ private struct ExploreContent: View {
         }
         .navigationTitle(Text("Explore", comment: "Window title"))
         .searchable(text: $explore.query, placement: .toolbar,
-                    prompt: Text("Search", comment: "Explore search field prompt"))
+                    prompt: explore.askMode ? Text(LightText.askPrompt) : Text("Search", comment: "Explore search field prompt"))
         .searchFocused($searchFocused)
         .onSubmit(of: .search) { explore.submitSearch() }
         .toolbar { toolbar }
@@ -89,6 +94,7 @@ private struct ExploreContent: View {
         .onChange(of: model.location.radiusMiles) { explore.contentChanged() }
         .onChange(of: navigation.focusSearchRequest) { handleRequests() }
         .onChange(of: navigation.addSpotModeRequest) { handleRequests() }
+        .onChange(of: navigation.askRequest) { handleRequests() }
     }
 
     private var draftPresented: Binding<Bool> {
@@ -99,6 +105,11 @@ private struct ExploreContent: View {
         let key = ObjectIdentifier(navigation)
         if navigation.focusSearchRequest != HandledRequests.focus[key, default: 0] {
             HandledRequests.focus[key] = navigation.focusSearchRequest
+            searchFocused = true
+        }
+        if navigation.askRequest != HandledRequests.ask[key, default: 0] {
+            HandledRequests.ask[key] = navigation.askRequest
+            explore.askMode = true
             searchFocused = true
         }
         if navigation.addSpotModeRequest != HandledRequests.addSpot[key, default: 0] {
@@ -128,6 +139,15 @@ private struct ExploreContent: View {
             }
             .toggleStyle(.button)
             .help(String(localized: "Add your own spot: click the map to drop a pin (Esc to cancel)", comment: "Tooltip"))
+        }
+        ToolbarItem(placement: .primaryAction) {
+            Toggle(isOn: $explore.askMode) {
+                Label(LightText.askToggleLabel, systemImage: "sparkles")
+            }
+            .toggleStyle(.button)
+            .help(LightText.askToggleHelp)
+            .accessibilityLabel(LightText.askToggleLabel)
+            .accessibilityValue(explore.askMode ? LightText.askOn : LightText.askOff)
         }
     }
 }

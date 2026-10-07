@@ -49,12 +49,25 @@ public struct AppleIntelligenceScout: Scouting {
     static let candidateLimit = 14
 
     public func scout(_ request: String, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
+        try await scout(request, near: nil, progress: progress)
+    }
+
+    /// The extra gathering line when the request comes from a map with a visible area.
+    static let mapAreaInstruction = """
+    The map shows the area around "the map". If the request names no place, use near: "the map".
+    """
+
+    static func gatheringInstructions(hasArea: Bool) -> String {
+        hasArea ? gatheringInstructions + "\n" + mapAreaInstruction : gatheringInstructions
+    }
+
+    public func scout(_ request: String, near area: GeoRegion?, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
         let state = availability()
         guard state == .available else { throw ScoutError.unavailable(state) }
 
         progress(.understanding)
         let registry = ScoutRegistry()
-        let context = ScoutToolContext(search: search, geocoder: geocoder, drives: drives, curated: curated, registry: registry, progress: progress)
+        let context = ScoutToolContext(search: search, geocoder: geocoder, drives: drives, curated: curated, registry: registry, progress: progress, area: area)
         var tools: [any Tool] = [FindPlacesTool(context: context), CuratedSpotsTool(context: context)]
         if drives != nil { tools.append(DriveTimeTool(context: context)) }
 
@@ -69,7 +82,7 @@ public struct AppleIntelligenceScout: Scouting {
             while true {
                 gatherAttempt += 1
                 do {
-                    let gatherer = LanguageModelSession(model: .default, tools: tools, instructions: Self.gatheringInstructions)
+                    let gatherer = LanguageModelSession(model: .default, tools: tools, instructions: Self.gatheringInstructions(hasArea: area != nil))
                     let options = gatherAttempt == 1 ? GenerationOptions(maximumResponseTokens: 40)
                                                      : GenerationOptions(samplingMode: .greedy, maximumResponseTokens: 40)
                     _ = try await gatherer.respond(to: request, options: options)

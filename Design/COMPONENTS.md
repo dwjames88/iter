@@ -8,18 +8,18 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Token names** are written the design-tool way: `space/md` is `IterSpace.md`, `light/ramp/good` is `IterColor.ramp(.good)`, `type/headline` is `IterFont.headline`, `size/badge/height` is `IterSize.badgeHeight`, `stroke/hairline` is `IterStroke.hairline`, `radius/card` is `IterRadius.card`. "System" means a system colour, material or control that Iter does not restyle.
 - "Compact", "regular" and "large" are the real variant names in the code.
 - Text is always in `text/primary` unless a row says otherwise. Every card is `background/control` with a `stroke/hairline` border in `separator/default`.
-- Scores are always paired with their window: the window's symbol in compact places (list rows, pins, the card header, trip stops, Saved and Scout rows, the Add to Trip menu), with the word as tooltip and VoiceOver label; the word itself on the spot page and in headings. Bands: Poor, Fair, Good, Great, Epic. Confidence: Low, Medium, High (three bars).
+- Scores are always paired with their window: the window's symbol in compact places (list rows, pins, the card header, trip stops, Locations and Ask rows, the Add to Trip menu), with the word as tooltip and VoiceOver label; the word itself on the spot page and in headings. Bands: Poor, Fair, Good, Great, Epic. Confidence: Low, Medium, High (three bars).
 
 ## Contents
 
 1. [Light Index components](#light-index-components): [LightBadge](#lightbadge), [ScoreChip](#scorechip), [WindowSymbol](#windowsymbol), [ConfidenceMark](#confidencemark)
 2. [Honesty and provenance](#honesty-and-provenance-components): [SampleDataLabel](#sampledatalabel), [WeatherStatusBanner](#weatherstatusbanner), [WeatherAttributionView](#weatherattributionview) (with ForecastSourceLine, [ForecastSourceLines](#forecastsourcelines) and WeatherDataSources), [WindyLink](#windylink), [ProvenanceTag](#provenancetag), [Warning lines](#warning-lines), [Weather status text and score notes](#weather-status-text-and-score-notes)
 3. [Shared](#shared-components): [AddToTripMenu](#addtotripmenu), [MapStandIn](#mapstandin), [SpotEditorSheet](#spoteditorsheet), [SpotCard](#spotcard)
-4. [Shell](#shell-components): [TripContextMenu](#tripcontextmenu)
+4. [Shell](#shell-components): [TripContextMenu](#tripcontextmenu), [FolderContextMenu](#foldercontextmenu), [Sidebar rows](#sidebar-rows), [OfflineStatusBadge](#offlinestatusbadge)
 5. [Trips](#trips-components): [TripCard](#tripcard), [TemplateRow](#templaterow), [TripHeader](#tripheader), [TripOverviewStrip](#tripoverviewstrip), [TripPlanList](#tripplanlist), [DayHeader](#dayheader), [StopRow](#stoprow), [StopNumberBadge](#stopnumberbadge), [DriveRow](#driverow), [OvernightBoundary](#overnightboundary), [SuggestionBanner](#suggestionbanner), [TripRouteMap](#triproutemap), [AddStopPopover](#addstoppopover)
 6. [Explore](#explore-components): [ExploreListPanel](#explorelistpanel), [ExploreLocationBanner](#explorelocationbanner), [ExploreRow](#explorerow), [ExploreMapPane](#exploremappane), [ExplorePinView](#explorepinview), [ExploreClusterView](#exploreclusterview), [ExplorePlaceCard](#exploreplacecard), [SpotImageStrip](#spotimagestrip), [AddSpotBanner](#addspotbanner)
 7. [Spot page](#spot-page-components): [SpotHeader](#spotheader), [WhenToGoSection](#whentogosection), [SunTimesLine](#suntimesline), [OutlookStrip](#outlookstrip), [DayWindowsSection](#daywindowssection), [WindowRow](#windowrow), [ReasonsGrid](#reasonsgrid), [SignedBar](#signedbar), [ExplainBlock](#explainblock), [LightTimeline](#lighttimeline), [SkyArc](#skyarc), [HourlyStrip](#hourlystrip), [WindySection](#windysection), [SpotFactsRow](#spotfactsrow), [LookAroundSection](#lookaroundsection)
-8. [Saved and Scout](#saved-and-scout-components): [SavedRow](#savedrow), [ScoutResultRow](#scoutresultrow), [ScoutProgress](#scoutprogress)
+8. [Locations and Ask](#locations-and-ask-components): [SavedRow](#savedrow), [LocationsMap](#locationsmap), [ExploreAskSection](#exploreasksection)
 9. [Settings components](#settings-components): [ProviderStatusRow](#providerstatusrow)
 10. [System components](#system-components)
 11. [Rules that cut across components](#rules-that-cut-across-components)
@@ -30,7 +30,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 ### LightBadge
 
-- **Type, file:** `LightBadge`, `Components/LightBadge.swift`. Also `WindowLightLine` in the same file (the compact badge and a start time, used by Saved and Scout rows).
+- **Type, file:** `LightBadge`, `Components/LightBadge.swift`. Also `WindowLightLine` in the same file (the compact badge and a start time, used by Locations and Ask rows).
 - **One job:** show one Light Index window: its [WindowSymbol](#windowsymbol) beside the number, the band word and the confidence. Without a score the score slot is empty, or a small spinner while that spot's forecast is in flight. There is no "no forecast" variant; the screen's [WeatherStatusBanner](#weatherstatusbanner) says why a score is missing.
 - **Input:** a `LightWindow` (kind: Morning blue hour, Sunrise, Sunset, Evening blue hour, Night; assessment: scored or unscored) and a style. Options: `showsSource` (add an inline [SampleDataLabel](#sampledatalabel) for sample-weather scores; off for rows and pins), `isLoading` (spinner in an unscored slot), `showsName` (regular only: the window's full name beside its symbol, used in the spot page's window rows).
 - **Variants and anatomy:**
@@ -44,7 +44,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **States:** scored (band Poor to Epic, colour from the band); low confidence (chip at 85% opacity); unscored (empty slot); loading (spinner in the slot); sample data (inline label when `showsSource`). An unscored badge never shows a number, a band or a ring.
 - **Tokens:** `type/subheadline`, `type/caption`, `type/headline`, `type/bodyEmphasis`, `text/primary`, `text/secondary`, `space/xs`, `space/sm`, `space/md`, `space/xxs`; chip tokens below.
 - **Accessibility:** one element (children ignored). Label: "Sunset, Light Index 87, Great, High confidence", or just the window's name when unscored.
-- **Used on:** Trip builder stop rows (regular), Spot page lead (large) and window rows (regular with `showsName`), Add Stop rows (compact), pins (symbol and chip, see [ExplorePinView](#explorepinview)), Saved and Scout rows (compact, through `WindowLightLine`). Explore rows and the place card draw the symbol and a [ScoreChip](#scorechip) directly, not a LightBadge.
+- **Used on:** Trip builder stop rows (regular), Spot page lead (large) and window rows (regular with `showsName`), Add Stop rows (compact), pins (symbol and chip, see [ExplorePinView](#explorepinview)), Locations rows (compact, through `WindowLightLine`). Explore rows and the place card draw the symbol and a [ScoreChip](#scorechip) directly, not a LightBadge.
 
 ### ScoreChip
 
@@ -70,7 +70,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Symbols** (`LightText.symbol(_:)`): `sunrise.fill` sunrise (golden morning), `sunset.fill` sunset (golden evening), `sunrise` (outline) morning blue hour, `sunset` (outline) evening blue hour, `moon.stars.fill` night. The arrow says morning (up) or evening (down); filled is golden hour and outline is blue hour on the same side of the day, so the five read apart at 16 pt without colour.
 - **Anatomy:** the symbol, monochrome, `text/secondary` by default (a caller can pass another style).
 - **Accessibility:** the window's word is the tooltip and the VoiceOver label ("Sunset"). Headings on the spot page and window rows there keep the word itself.
-- **Used on:** [LightBadge](#lightbadge), [ExploreRow](#explorerow), [ExplorePinView](#explorepinview), [ExplorePlaceCard](#exploreplacecard), [StopRow](#stoprow) (and the session menu items), [SavedRow](#savedrow), [ScoutResultRow](#scoutresultrow), [AddToTripMenu](#addtotripmenu).
+- **Used on:** [LightBadge](#lightbadge), [ExploreRow](#explorerow), [ExplorePinView](#explorepinview), [ExplorePlaceCard](#exploreplacecard), [StopRow](#stoprow) (and the session menu items), [SavedRow](#savedrow), [ExploreAskRow](#exploreaskrow), [AddToTripMenu](#addtotripmenu).
 
 ### ConfidenceMark
 
@@ -97,7 +97,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 | **banner** | A rounded box: `flask` icon (violet), title "Sample data" (`type/captionStrong`), body "Scores use made-up weather. Turn off in the Debug menu." (`type/caption`, `text/secondary`, wraps). Full width, padding `space/sm`, corner `radius/control` (8), fill `background/control`, 1 pt (`stroke/thin`) `status/warning` border. | as shown |
 
 - **States:** shown only in Sample data mode. The banner lives at the bottom of the sidebar; the inline label is used in headers, footers and reasons. See the "once per screen" rule below.
-- **Used on:** sidebar (banner), Explore header, Saved footer, Scout results header, Spot page hourly strip and reasons, Settings > Weather (sample data has no provider credit).
+- **Used on:** sidebar (banner), Explore header, Locations footer, Spot page hourly strip and reasons, Settings > Weather (sample data has no provider credit).
 
 ### WeatherStatusBanner
 
@@ -120,7 +120,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
   A failure with a last update adds " Scores are from the last update at 06:29." The provider's name is the one that was chosen; the time is the newest forecast still held, in the Mac's clock style.
 - **Rules:** rows keep their last cached score (`ForecastCenter` keeps the last good forecast per spot), or leave the score slot empty. The banner is one per screen.
 - **Accessibility:** one combined element.
-- **Used on:** Explore (under the list header, above the location banner), Saved (top of the list), Scout (top of the results list), Trip builder (above the plan list), Spot page (top of the page).
+- **Used on:** Explore (under the list header, above the location banner), Locations (top of the list), Trip builder (above the plan list), Spot page (top of the page).
 
 ### WeatherAttributionView
 
@@ -138,7 +138,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
   After the credits, when any source is not Sample data: "Light Index modified from forecast data" (`type/caption`, `text/tertiary`).
 - **States:** sample only: the label alone, no modified-data line. Apple Weather chosen but no attribution info and sample off: no Apple row (so a screen with no forecast has an empty footer, and the notice line still appears if the source is not sample). Mixed list (for example OpenWeather and Windy): both credits, one notice.
 - **Accessibility:** the Apple mark carries the service name as its label.
-- **Used on:** only through `WeatherDataSources`: Settings > Weather, section "Data Sources and Attribution" (below the provider sections), and Settings > About (same block under the data-sources paragraph, heading in `type/caption`, `text/secondary`). It lists every provider (Apple Weather, OpenWeather, Windy, plus the Sample data label when sample is on), then one "Light Index modified from forecast data" line. Removed from Explore, Trip builder, Saved, Scout and the Spot page hourly strip. Before any release, revisit: the providers' terms ask for attribution where the data is shown (see docs/DATA-PROVIDERS.md).
+- **Used on:** only through `WeatherDataSources`: Settings > Weather, section "Data Sources and Attribution" (below the provider sections), and Settings > About (same block under the data-sources paragraph, heading in `type/caption`, `text/secondary`). It lists every provider (Apple Weather, OpenWeather, Windy, plus the Sample data label when sample is on), then one "Light Index modified from forecast data" line. Removed from Explore, Trip builder, Locations and the Spot page hourly strip. Before any release, revisit: the providers' terms ask for attribution where the data is shown (see docs/DATA-PROVIDERS.md).
 
 ### ForecastSourceLine
 
@@ -154,7 +154,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **One job:** the quiet source lines for places that show many forecasts. No attribution.
 - **Anatomy:** a column, gap `space/xxs`: one [ForecastSourceLine](#forecastsourceline) (no time) per distinct source, model and fallback among the forecasts loaded for the screen's places, in first-seen order. Sample data gets no line, only its label.
 - **States:** forecasts loaded (lines); none loaded (nothing).
-- **Used on:** Explore list footer (padding `space/md` by `space/sm`, scored rows only), Trip builder list (last row, only when something is scored, separator hidden), Saved bottom bar (right of "3 spots"), Scout results footer (under the scout source sentence).
+- **Used on:** Explore list footer (padding `space/md` by `space/sm`, scored rows only), Trip builder list (last row, only when something is scored, separator hidden), Locations bottom bar (right of "3 spots").
 
 ### WindyLink
 
@@ -176,8 +176,8 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Type, file:** `ProvenanceTag`, `Components/ProvenanceTag.swift`.
 - **One job:** where a spot came from.
 - **Anatomy:** a capsule with a `stroke/hairline` `separator/default` outline and no fill; text `type/caption`, `text/secondary`; padding `space/xs` horizontal, `space/xxs` vertical.
-- **States (text):** Curated, Added by you, Apple Maps, Scout. (Scout results use Curated or Apple Maps only.)
-- **Used on:** Explore place card (always), Explore rows (only "Added by you"), Spot header, Saved rows, Scout rows.
+- **States (text):** Curated, Added by you, Apple Maps. (Ask results use Curated or Apple Maps only.)
+- **Used on:** Explore place card (always), Explore rows (only "Added by you"), Spot header, Locations rows.
 
 ### Warning lines
 
@@ -197,8 +197,8 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Type, file:** `AddToTripMenu`, `Components/AddToTripMenu.swift`.
 - **One job:** add a spot to a trip day, where the choice of day is a light decision.
 - **Anatomy:** a system Menu with the label "Add to Trip" and `plus.circle`. Contents: one submenu per trip; inside, one item per day, "Day 2 · Thu, Oct 8, 2026 · 64" with the sunset symbol as its icon (that day's sunset window at this spot and its score; just the date and the symbol when there is no score); a divider; "New Trip with This Spot" (creates a one-day trip named "Trip to <spot>" starting tomorrow, adds the stop, opens the trip).
-- **Style by context:** button style (prominent on the Spot header, bordered on the place card and Scout rows), or a menu row in context menus.
-- **Used on:** Spot header, Explore place card and context menus, Saved context menu, Scout rows.
+- **Style by context:** button style (prominent on the Spot header, bordered on the place card), or a menu row in context menus.
+- **Used on:** Spot header, Explore place card and context menus, Locations context menu, Ask rows.
 
 ### MapStandIn
 
@@ -214,7 +214,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Anatomy and states:** see [Spot editor sheet](SCREENS.md#spot-editor-sheet). 520 x 750 pt. Title `type/title/section`; map `chart/arcHeight` 168 high, `radius/card`, hairline; pin SF Symbol `mappin` (largest title size) in `accent/primary` with a small shadow, tip at the map centre; fields in a system grouped form; buttons Cancel and Add Spot or Save.
 - **Tokens:** `space/lg`, `space/sm`, `space/xs`, `radius/card`, `stroke/hairline`, `accent/primary`, `status/warning`, `status/danger`, `text/secondary`.
 - **Accessibility:** map labelled "Map with the spot's pin at the centre" with the coordinates as its value.
-- **Used on:** Explore (create), Spot page and Saved (edit).
+- **Used on:** Explore (create), Spot page and Locations (edit).
 
 ### SpotCard
 
@@ -229,10 +229,48 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 ### TripContextMenu
 
-- **Type, file:** `TripContextMenu`, `Shell/SidebarView.swift`.
+- **Type, file:** `TripContextMenu`, `Sidebar/TripContextMenu.swift`.
 - **One job:** act on a trip from the sidebar or a card.
-- **Contents:** Open, Duplicate (creates "<name> copy" and opens it), Share… (a share link to a `.iter` file), divider, Delete Trip (destructive; if it is the selected trip, selects All Trips first). Undoable.
+- **Contents:** Open; **Pin Trip** (`pin`) or **Unpin Trip** (`pin.slash`); divider; **Move to Folder ▸** (No Folder, then every top-level trips folder, each followed by its subfolders as "Folder › Subfolder"; the trip's current folder is checked and disabled); **New Folder with Selection**; **Rename** (edits the row in the sidebar); divider; Duplicate (creates "<name> copy" in the same folder, right after the original, and opens it); Share… (a share link to a `.iter` file); divider; Delete Trip (destructive; if it is the selected trip, selects All Trips first). Undoable.
 - **Used on:** sidebar trip rows, [TripCard](#tripcard).
+
+### FolderContextMenu
+
+- **Type, file:** `FolderContextMenu`, `Sidebar/TripContextMenu.swift`.
+- **One job:** act on a folder row (trips or locations).
+- **Contents:** **New Folder Inside** (top-level folders only; folders nest one level), **Rename**, divider, **Delete Folder** (destructive; the folder's trips or locations and subfolders move up a level, nothing else is deleted). Undoable.
+- **Used on:** sidebar folder rows.
+
+### Sidebar rows
+
+- **Type, file:** `SidebarTripRow`, `TripsFolderRow`, `FolderLabel`, `RenamableLabel`; `Sidebar/SidebarTripsSection.swift`, `Sidebar/SidebarSupport.swift`. Locations folder rows: `Sidebar/SidebarLocationsSection.swift`.
+- **One job:** a trip or a folder in the system sidebar list, with rename and drag and drop. No custom chrome: system sidebar styles and the accent selection.
+- **Pinned trip row:** icon `point.topleft.down.to.point.bottomright.curvepath`, the name (one line), then trailing `pin.fill` (`caption2`, `text/secondary`, tooltip "Pinned: kept ready offline", VoiceOver "Pinned") and the [OfflineStatusBadge](#offlinestatusbadge). An unpinned trip row has neither. A pinned trip shows in the pinned group only, not in its folder.
+- **Folder row (trips):** a `DisclosureGroup` (system disclosure arrow), label `folder` + name. Clicking the label also opens and closes it. Not selectable. Children: subfolders (also disclosure rows), then the folder's unpinned trips. Open and closed state is remembered per folder.
+- **Folder row (locations):** `folder` + name, selectable (opens the folder's Locations screen). A folder with subfolders is a disclosure row and its subfolders sit inside it, each selectable.
+- **Inline rename:** while a row is being renamed (from Rename, or right after New Folder), its name is a plain text field, focused with the text ready to replace. Return or leaving the field saves, Esc cancels, an empty name or an unchanged name changes nothing. The row's disclosure group opens first so the row is visible.
+- **Drag and drop:** rows are draggable. A row being dragged over highlights with a light accent fill (18% `accent/primary`, `radius/control`). Drop targets: a trips folder (files trips at its end, nests a folder), All Trips (unfiles), a trip row (places the dragged trips before it; a pinned row pins them), a locations folder, All Locations.
+- **Used on:** [Shell: sidebar and detail](SCREENS.md#shell-sidebar-and-detail).
+
+### OfflineStatusBadge
+
+- **Type, file:** `OfflineStatusBadge` and `OfflineStatusText`, `Sidebar/OfflineStatusBadge.swift`.
+- **One job:** show whether a pinned trip is ready offline. Draws nothing for a trip that is not pinned.
+- **Styles:** *row* (sidebar): the glyph alone, tooltip and VoiceOver label are the words. *header* (trip header): glyph then the words in `type/subheadline`, `text/secondary`; the tooltip is the base-map note.
+- **States:**
+
+| State | Glyph | Words |
+|---|---|---|
+| Downloading | a small circular progress (determinate once the total is known, indeterminate before) | "Downloading for offline use, 3 of 9" |
+| Ready | `checkmark.circle`, `text/secondary` | "Ready offline" |
+| Stale: trip changed | `exclamationmark.arrow.circlepath`, `status/warning` | "Trip changed since download" |
+| Stale: forecast old | the same | "Forecast is more than 12 hours old" |
+| Stale: incomplete | the same | "Some items didn't download" |
+| Failed | `exclamationmark.triangle`, `status/warning` | "Couldn't download for offline use" |
+
+- **Tooltip in the header:** "Pinned trips keep forecasts, drive times, routes and spot images on this Mac. The base map isn't stored: MapKit has no way to download map tiles for offline use."
+- **Accessibility:** one element labelled with the words.
+- **Used on:** sidebar pinned trip rows, [TripHeader](#tripheader).
 
 ---
 
@@ -261,6 +299,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Type, file:** `TripHeader` (private), `Trips/TripBuilderView.swift`.
 - **One job:** the trip's name, dates and totals.
 - **Anatomy:** name text field (`type/title/spot`, plain, no border; tooltip "Click to rename"); below, `type/subheadline` `text/secondary`: borderless `calendar` + date range button, "·", "4 days · 6 stops", "·", "376 mi · 8 hr, 39 min driving" (hidden under 1 minute; ", (estimated)" suffix when estimated). Padding `space/lg`; gap `space/xs`.
+- **Offline line:** for a pinned trip, an [OfflineStatusBadge](#offlinestatusbadge) in header style under the dates line.
 - **States:** editing (system text-field focus; the snapshot shows the name selected); an empty name reverts on commit.
 - **Used on:** Trip builder.
 
@@ -362,10 +401,11 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 ### ExploreListPanel
 
 - **Type, file:** `ExploreListPanel`, `Explore/ExploreListPanel.swift`.
-- **One job:** the reading surface of Explore: count, the weather banner, search status, the list, the source lines.
+- **One job:** the reading surface of Explore: count, the weather banner, search status, the Ask offer and section, the list, the source lines.
 - **Anatomy:** see [Explore](SCREENS.md#explore). Background `background/content`. Header: "45 places" (`type/subheadline`, `text/secondary`), a small spinner while forecasts load, and **one borderless menu button** labelled `line.3.horizontal.decrease.circle` (filled, with a count, when filters are on). The menu: inline picker **Near You Radius** (100, 200, 300, 500 mi; default 300), inline picker **Sort By** (Best Light, Name, Distance, Popularity; Distance by default when Iter knows where you are), submenus **Category** (10 categories), **Known For** (Sunrise, Sunset, Blue hour, Night sky, Midday, Overcast) and **Source** (Curated, Your Spots, Apple Maps), divider, Clear Filters. There is no light choice and no date: the list shows each spot's next sunrise or sunset. Under the header row: a Sample data label when sample weather is on, then the search status. After a divider: the [WeatherStatusBanner](#weatherstatusbanner), then the [ExploreLocationBanner](#explorelocationbanner), then the list. Section headers: `type/captionStrong`, `text/secondary`, with a count at right; with a location they read "Near You · Within 300 mi", "Popular", "More Places" (collapsed until opened, or while a search narrows the list) and "Apple Maps"; without one, a single "Spots" section under the location banner. Footer: [ForecastSourceLines](#forecastsourcelines) for the scored rows.
+- **Ask:** when the field has text and no Ask is running or shown for it, an Ask offer row sits first in the list (also above the empty state), and a running, failed or finished Ask is the first section: see [ExploreAskSection](#exploreasksection). Rows of that section are left out of the other sections.
 - **Forecast fetching:** rows are requested in list order as they appear; a collapsed "More Places" is requested when it is opened. Each row's score slot shows a small spinner until its own forecast is in.
-- **States:** list; loading (small spinner); searching; search failed; empty ("No Matching Spots" or "No places found", via ContentUnavailableView, with Clear Filters).
+- **States:** list; loading (small spinner); searching; search failed; Ask offered, running, failed or answered; empty ("No Matching Spots" or "No places found", via ContentUnavailableView, with Clear Filters).
 - **Interaction:** click selects a row (the place card opens over the map); double-click or Return opens the spot page; context menu Open, Save or Unsave (not on your own spots), Add to Trip ▸, divider, Open in Maps, Copy Coordinates.
 
 ### ExploreRow
@@ -593,30 +633,41 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 ---
 
-## Saved and Scout components
+## Locations and Ask components
 
 ### SavedRow
 
-- **Type, file:** `SavedRow` (private), `Saved/SavedView.swift`.
+- **Type, file:** `SavedRow`, `Saved/SavedView.swift` (the file keeps its old name; the screen is `LocationsView`).
 - **One job:** a kept spot and its next sunrise or sunset.
 - **Anatomy:** row, gap `space/md`, vertical padding `space/xs`: category symbol (`title3`, `text/secondary`, 32 pt column, hidden from VoiceOver); a column of name (`type/headline`, one line) and, gap `space/sm`, locality (or category if there is none; `type/subheadline`, `text/secondary`) plus a [ProvenanceTag](#provenancetag); at the right a `WindowLightLine`: the [WindowSymbol](#windowsymbol), a compact [ScoreChip](#scorechip) (empty, or a spinner while loading, when unscored) and the window's start time in the spot's own zone (`type/caption`, `text/secondary`, monospaced digits). The window is the spot's next sunrise or sunset by the same rule as [ExploreRow](#explorerow); its tooltip and VoiceOver label say "Tomorrow" when it is tomorrow's.
-- **States:** scored; unscored (empty slot); loading (spinner); tomorrow's window; selected.
+- **States:** scored; unscored (empty slot); loading (spinner); tomorrow's window; selected; dragging (the row can be dragged onto a sidebar location folder).
 - **Accessibility:** one combined element.
+- **Used on:** Locations.
 
-### ScoutResultRow
+### LocationsMap
 
-- **Type, file:** `ScoutResultRow` (private), `Scout/ScoutView.swift`.
-- **One job:** one suggested place, its light, drive and the scout's note.
-- **Anatomy (gap `space/sm`, vertical padding `space/sm`):** name (`type/headline`) over locality (`type/subheadline`, `text/secondary`), a [ProvenanceTag](#provenancetag) at the right (Curated or Apple Maps); a line: a `WindowLightLine` (the [WindowSymbol](#windowsymbol), a compact score chip and the start time of the spot's next sunrise or sunset) and `car` + "12 min drive" (`type/caption`, `text/secondary`); the note block (only when there is a note): `sparkles` + "Scout's note" (`type/captionStrong`, `text/secondary`) and the note (`type/callout`); buttons (small, bordered): **Open**, **Save** or **Saved** (`bookmark` / `bookmark.fill`), **Add to Trip**.
-- **Light-line states:** scored; unscored (empty chip slot); loading (a small spinner alone); no event ahead (nothing drawn). The screen's [WeatherStatusBanner](#weatherstatusbanner) says why scores are missing.
-- **Accessibility:** container; the light line's label names the window, score and start time (and "Tomorrow").
+- **Type, file:** `LocationsMap`, `Locations/LocationsMap.swift`.
+- **One job:** show the listed locations on a map beside the list.
+- **Anatomy:** a MapKit map (standard, flat, points of interest hidden; zoom stepper, compass, scale) clipped to its pane, with one `Marker` per listed spot (the category's symbol; `map/pin` tint when selected, `map/pinInactive` otherwise). Framed to fit the listed spots (padding 0.4, at least 0.2 degrees across) when it first draws and whenever the listed spots change. No location dot.
+- **States:** one or several selected (shared with the list; a click on a marker selects its row, a click on empty map clears the selection); no spots (the screen shows its empty state instead). Snapshots draw a [MapStandIn](#mapstandin) with the same pins.
+- **Used on:** Locations.
 
-### ScoutProgress
+### ExploreAskSection
 
-- **Type, file:** the `running` view in `Scout/ScoutView.swift`.
-- **One job:** real progress for a slow request.
-- **Anatomy:** centred stack, gap `space/md`: large spinner; the stage (`type/headline`); four capsules 24 x 4 pt (`space/xl` by `space/xs`) gap `space/xs`, filled `accent/primary` up to the current stage and `separator/default` after; "Step 2 of 4" (`type/caption`, `text/secondary`); after 10 seconds the elapsed time "0:14" (`type/time`, `text/secondary`) over "Still working. A request can take up to a minute." (`type/caption`, `text/secondary`); a large **Cancel** button.
-- **Stage texts:** "Understanding your request", "Searching near Portland, Oregon" (or "Searching for places"), "Checking the drive to <place>" (or "Checking the drive"), "Choosing the best matches".
+- **Type, file:** `ExploreAskOfferRow`, `ExploreAskSection`, `ExploreAskRow`; `Explore/ExploreAskSection.swift`. Words in `Explore/AskText.swift`.
+- **One job:** put a request to Apple Intelligence from Explore's list and show what comes back, with every state honest.
+- **Offer row (`ExploreAskOfferRow`):** `sparkles` (`accent/primary`, `size/iconSmall` wide), "Ask Iter “text”" (`type/bodyEmphasis`, up to two lines) over "Find real places that fit, with a note on why" (`type/caption`, `text/secondary`). A plain button; VoiceOver "Ask Iter: text".
+- **Section (`ExploreAskSection`):** a list section, first. Header: `sparkles` + "Ask Iter" (`type/captionStrong`), the result count at the trailing edge once there are results, and the request in quotes under it (`type/caption`, two lines at most).
+  - *Running:* a small spinner, the stage (`type/bodyEmphasis`: "Understanding your request", "Searching near <place>" or "Searching for places", "Checking the drive to <place>" or "Checking the drive", "Choosing the best matches"), then "Step 2 of 4 · 0:14" (`type/caption`, `text/secondary`, monospaced digits), and after 10 seconds "Still working. A request can take up to a minute."; a small **Cancel** button at the trailing edge (tooltip "Stop looking"). The elapsed time ticks once a second.
+  - *Results:* the [ExploreAskRow](#exploreaskrow)s, then the source caption (`type/caption`, `text/tertiary`): "Places come from Apple Maps and Iter's curated list. Iter checks every place exists; the notes are written by Apple Intelligence."
+  - *Failed or unavailable:* a notice: symbol and title (`type/bodyEmphasis`), detail (`type/caption`, `text/secondary`), then small buttons: **Search Apple Maps Instead** (prominent), **Try Again** (not for unavailable states) and, when Apple Intelligence is off, **Open System Settings**. Titles: "Nothing matched", "Ask Iter can't help with that request", "That request is too long", "Ask Iter doesn't support that language", "Ask Iter couldn't finish", "Apple Intelligence is turned off", "This Mac can't run Apple Intelligence", "Apple Intelligence is still downloading", "Ask Iter isn't available right now".
+- **States:** offered; running; failed; unavailable; results.
+- **Accessibility:** the header reads as one element; a failure is one container; each Ask row is one element: the row's words, the drive, then "Note from Apple Intelligence: <note>".
+- **Used on:** [ExploreListPanel](#explorelistpanel).
+
+#### ExploreAskRow
+
+- A normal [ExploreRow](#explorerow), then, gap `space/xxs`, `car` + "1 hr, 30 min drive" (`type/caption`, `text/secondary`; only when the scout checked a drive), then the note when there is one: `sparkles` and the text in `type/callout`, `text/secondary`, wrapping, with the tooltip "Note from Apple Intelligence". Bottom padding `space/xs`. The row selects, hovers and opens the spot page like any Explore row.
 
 ---
 
@@ -651,29 +702,29 @@ Iter relies on these system controls. Do not restyle them in the design; use the
 
 | System component | How Iter uses it |
 |---|---|
-| **NavigationSplitView** with a **sidebar** List | `.listStyle(.sidebar)`; two sections ("Trips": All Trips + one row per trip; "Find": Explore, Saved, Scout), selection bound to the window's navigation; sidebar width 200 / 240 / 320 pt; the Sample data banner is a bottom safe-area inset; a "New Trip" toolbar button. Detail column is a NavigationStack per section. |
-| **List** | Explore (inset, sectioned, selection and context menu with primary action), Trip builder (inset, selection, drag and drop, section headers), Saved (inset, multi-selection), Scout results (inset, visible separators), Add Stop popover (plain). Selection in a system list is the system accent fill, with the text falling back to the system's colours; custom surfaces use `selection/fill` with an `accent/primary` stroke. |
+| **NavigationSplitView** with a **sidebar** List | `.listStyle(.sidebar)`; three sections ("Trips": All Trips, pinned trips, trip folders as disclosure groups, unfiled trips; "Locations": All Locations and location folders; "Find": Explore), selection bound to the window's navigation; sidebar width 200 / 240 / 320 pt; the Sample data banner is a bottom safe-area inset; a "New" menu button (New Trip, New Folder, New Location). See [Sidebar rows](#sidebar-rows). Detail column is a NavigationStack per section. |
+| **List** | Explore (inset, sectioned, selection and context menu with primary action), Trip builder (inset, selection, drag and drop, section headers), Locations (inset, multi-selection, drag), Add Stop popover (plain). Selection in a system list is the system accent fill, with the text falling back to the system's colours; custom surfaces use `selection/fill` with an `accent/primary` stroke. |
 | **HSplitView** | Explore (list, map), Trip builder (plan, map): draggable native divider. |
 | **Toolbar** | Unified title bar. Items per screen are listed in SCREENS.md. Window title is the section name; the trip builder replaces the title with the editable name. |
-| **searchable** (toolbar search field) | Explore ("Search"), Saved ("Search saved spots"). |
-| **ContentUnavailableView** | Empty and error states: large grey symbol, bold title, grey description, 0 to 2 action buttons. Used for Trip Not Found, Explore empty, Saved empty and filter-empty, Scout unavailable and failure states, search-empty. |
+| **searchable** (toolbar search field) | Explore ("Search" or "Ask Iter…"), Locations ("Search locations"). |
+| **ContentUnavailableView** | Empty and error states: large grey symbol, bold title, grey description, 0 to 2 action buttons. Used for Trip Not Found, Explore empty, Locations empty, filter-empty and search-empty. |
 | **Map** (MapKit) | Explore: standard style, flat elevation, points of interest hidden, controls zoom stepper, compass, scale, custom annotations, selection. Trip route: polylines and numbered annotations. Spot editor: a small map with pan and zoom, the pin fixed at the centre. Scout: accent-tinted markers with category symbols. |
 | **LookAroundPreview** | Spot page, 224 pt high, `radius/card` clip; only when a scene exists. |
 | **Picker** | Segmented (intent on the Spot page, timeline zoom); menu (session menu, Settings pickers, Category in the editor); inline in menus (Near You Radius and Sort By in the Explore list header menu). |
-| **Menu** | Add to Trip, Explore list header menu (radius, sort, filters), Saved Sort and Filter, Trip Actions, context menus. |
+| **Menu** | Add to Trip, Explore list header menu (radius, sort, filters), Locations Sort and Filter, Trip Actions, context menus. |
 | **ShareLink** | Trip (toolbar and context menu; shares a `.iter` document), Spot (header; shares an Apple Maps link and a coordinate message). |
 | **DatePicker, Stepper, TextField, Toggle** | Forms (grouped style) in the sheets and Settings; the Explore Add Spot control is a button-style Toggle. |
 | **Sheet, popover, confirmationDialog, alert, fileImporter, fileExporter** | As listed in SCREENS.md. |
 | **TabView** | Settings (four tabs). |
-| **Materials** | `regularMaterial` for the place card, Add Spot banner; `bar` for the Saved footer. Flat colours in snapshots. |
-| **ProgressView** | Small circular spinners next to loading text; large in Scout's running state. |
+| **Materials** | `regularMaterial` for the place card, Add Spot banner; `bar` for the Locations footer. Flat colours in snapshots. |
+| **ProgressView** | Small circular spinners next to loading text; none large; Ask's running row uses a small one. |
 | **Buttons** | Prominent (accent fill, `accent/onAccent` text) for the single primary action of a view; bordered for secondary; borderless or link for inline actions; plain for tappable cards and rows. |
 
 ---
 
 ## Rules that cut across components
 
-1. **Every score is paired with its window.** A number is never alone: in compact places (list rows, pins, the card header, trip stops, Saved and Scout rows, the Add to Trip menu) the window's [WindowSymbol](#windowsymbol) sits beside the chip, with the word as tooltip and VoiceOver label; on the spot page the word is used ("Sunset · 87" in the large badge, the name beside the symbol in window rows). Outlook cells inherit the window from context (the outlook title "8-day outlook for Sunrise").
+1. **Every score is paired with its window.** A number is never alone: in compact places (list rows, pins, the card header, trip stops, Locations and Ask rows, the Add to Trip menu) the window's [WindowSymbol](#windowsymbol) sits beside the chip, with the word as tooltip and VoiceOver label; on the spot page the word is used ("Sunset · 87" in the large badge, the name beside the symbol in window rows). Outlook cells inherit the window from context (the outlook title "8-day outlook for Sunrise").
 2. **No weather is one banner, never a number, never a low score.** The only no-data situations (no key, offline, provider error) show one [WeatherStatusBanner](#weatherstatusbanner) at the top of the screen. Rows keep their last cached score or leave the score slot empty (a small spinner while the forecast is in flight). Nothing per row says "No forecast"; there is no dashed ring. Beyond the provider's forecast a window is still scored, by persistence, at Low confidence. Sun and moon times stay exact and visible.
 3. **The band word is always printed beside the ramp colour** in the regular and large badges. Colour alone never carries the band. (The compact badge, list-row chips, the outlook chips and pin dots rely on the number or context; see the inconsistencies reported with this document.) A badge always has its hairline, because Poor and Fair are too pale to reach 3:1 on the window.
 4. **Coral is used with restraint.** `accent/primary` is the one thing that acts or is selected, `route/active` the route, `map/pin` the pins and `map/sun` the sun. Never a score, a status, an error or a large fill behind text. Small text uses `accent/text`; small text on a coral fill uses `accent/emphasis`. It is never "good".
@@ -684,13 +735,13 @@ Iter relies on these system controls. Do not restyle them in the design; use the
 9. **Times are the spot's own and monospaced; units follow the Mac and Settings.**
 10. **System chrome stays system.** The sidebar, toolbar, Settings, sheets and standard controls keep the system's materials and colours and take coral only through the app accent. What the app draws itself uses First Light paper and ink (`text/*`, `background/*`), plus the ramp, accent, route, pin, status, sky and cloud colours.
 11. **Never reorder or change a plan automatically.** Suggestions are offered, and every edit is undoable.
-12. **The scout's words are labelled** ("Scout's note", "Written by Apple Intelligence from the factors listed above."). Iter scores the light, not the model.
+12. **The model's words are labelled** ("Note from Apple Intelligence", "Written by Apple Intelligence from the factors listed above."). Iter scores the light, not the model.
 
 ## Known deviations from the rules (open for the design pass)
 
 Found in the hand-off audit and left for the design work, because each one is a design decision rather than a bug:
 
-1. **Band word in compact places.** Compact badges (map pins, Saved, Scout and Add Stop rows), Explore rows and the outlook cells show the window symbol and the number but not the band word. The VoiceOver label includes the band. Decide whether compact spaces carry the word, a glyph, or nothing.
+1. **Band word in compact places.** Compact badges (map pins, Locations and Add Stop rows), Explore rows and the outlook cells show the window symbol and the number but not the band word. The VoiceOver label includes the band. Decide whether compact spaces carry the word, a glyph, or nothing.
 2. **"Sample data" can appear twice on one screen**, in the header and in the Settings credits (Settings ▸ Weather). The rule says once per screen.
 3. **Rain colour.** There is no rain token. The timeline's rain bars use `sky/blueHour`, and the hourly strip's rain figures use `accent/text`. A `weather/rain` token is needed.
 4. **Accent on the outlook "Best" tag** (`accent/emphasis`) marks the best day. Accent is for interaction and the route, so this edges toward accent meaning "good".

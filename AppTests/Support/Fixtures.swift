@@ -17,7 +17,7 @@ enum Fixtures {
     enum Weather { case sample, notEnabled, failed }
 
     static func model(weather: Weather = .sample, seedTrip: Bool = true, saved: [String] = ["mesa-arch", "tunnel-view"],
-                      location: UserLocationModel = UserLocationModel()) -> AppModel {
+                      location: UserLocationModel = UserLocationModel(), scout: (any Scouting)? = nil) -> AppModel {
         let container = try! IterSchema.makeContainer(inMemory: true)
         let store = IterStore(container: container)
         store.actionName = StoreActionText.name
@@ -33,7 +33,7 @@ enum Fixtures {
         case .failed: live = FailingWeather(error: .failed("offline"))
         }
         let model = AppModel(store: store, weather: live, search: StubSearch(), geocoder: StubGeocoder(),
-                             drives: EstimateDrives(), scout: nil, location: location, sampleWeather: sample, defaults: defaults, now: { now })
+                             drives: EstimateDrives(), scout: scout, location: location, sampleWeather: sample, defaults: defaults, now: { now })
         if seedTrip { _ = store.seedSampleTrip(startDay: LocalDay(year: 2026, month: 10, day: 7)) }
         for id in saved { if let s = CuratedSpots.spot(id: id) { store.setSaved(s, true) } }
         return model
@@ -64,7 +64,7 @@ enum Fixtures {
 
 extension Fixtures {
     /// `view` as the detail column of the real window: a flat stand-in for the sidebar (its ideal width, 240) on the
-    /// left and the view in the remaining width. Screens that split their own width (Explore and Scout results use
+    /// left and the view in the remaining width. Screens that split their own width (Explore uses
     /// a list of 300...520 beside a map) lay out differently in a full-width bare window than beside the sidebar,
     /// most of all in the compact window (list 479 wide bare, 360 in the real shell).
     static func inDetailColumn<V: View>(_ view: V) -> some View {

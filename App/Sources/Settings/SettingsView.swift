@@ -79,18 +79,18 @@ private struct IntelligenceSettingsPane: View {
                     Label {
                         Text("Apple Intelligence is ready", comment: "Settings Apple Intelligence status")
                     } icon: { Image(systemName: "checkmark.circle") }
-                    Text("Scout understands your request with the model on this Mac, then looks up real places in Apple Maps and Iter's curated list.",
-                         comment: "Settings: how Scout works")
+                    Text("Ask Iter, in Explore's search, understands your request with the model on this Mac, then looks up real places in Apple Maps and Iter's curated list.",
+                         comment: "Settings: how Ask Iter works")
                         .font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
                 } else {
-                    let notice = LightText.scoutUnavailable(availability)
+                    let notice = LightText.askUnavailable(availability)
                     Label(notice.title, systemImage: notice.symbol)
                     Text(notice.detail).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
                     if availability == .appleIntelligenceNotEnabled, let url = URL(string: "x-apple.systempreferences:com.apple.Siri-Settings.extension") {
                         Button { openURL(url) } label: { Text("Open System Settings", comment: "Button") }
                     }
                 }
-            } header: { Text("Scout", comment: "Settings section") }
+            } header: { Text("Ask Iter", comment: "Settings section: the Apple Intelligence search in Explore") }
         }
         .formStyle(.grouped)
     }

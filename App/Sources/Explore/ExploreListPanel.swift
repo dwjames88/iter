@@ -158,13 +158,13 @@ struct ExploreListPanel: View {
                     .foregroundStyle(IterColor.warning)
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: 0)
-                Button(String(localized: "Retry", comment: "Button")) { explore.submitSearch() }
+                Button(String(localized: "Retry", comment: "Button")) { explore.searchAppleMaps() }
                     .controlSize(.small)
             }
         case .idle, .finished:
             if !trimmedQuery.isEmpty, !isSearched(trimmedQuery) {
                 Button {
-                    explore.submitSearch()
+                    explore.searchAppleMaps()
                 } label: {
                     Label(LightText.searchApple(trimmedQuery), systemImage: "magnifyingglass")
                         .lineLimit(1)
@@ -183,8 +183,16 @@ struct ExploreListPanel: View {
     // MARK: List
 
     @ViewBuilder private var content: some View {
-        if explore.rows.isEmpty, !explore.searchState.isSearching {
-            emptyState
+        if explore.rows.isEmpty, !explore.searchState.isSearching, !explore.hasAskContent {
+            VStack(spacing: 0) {
+                if explore.offersAsk {
+                    ExploreAskOfferRow(query: trimmedQuery) { explore.ask() }
+                        .padding(.horizontal, IterSpace.md)
+                        .padding(.vertical, IterSpace.sm)
+                    Divider()
+                }
+                emptyState
+            }
         } else {
             list
         }
@@ -251,7 +259,11 @@ struct ExploreListPanel: View {
     private var list: some View {
         ScrollViewReader { proxy in
             List(selection: selection) {
-                ForEach(explore.sections) { section in
+                if explore.offersAsk {
+                    ExploreAskOfferRow(query: trimmedQuery) { explore.ask() }
+                }
+                if explore.hasAskContent { ExploreAskSection(explore: explore) }
+                ForEach(explore.sections.filter { $0.kind != .ask }) { section in
                     if section.kind == .morePlaces {
                         Section(isExpanded: moreExpanded) {
                             rows(in: section)

@@ -10,6 +10,8 @@ struct ScoutToolContext: Sendable {
     var curated: [Spot]
     var registry: ScoutRegistry
     var progress: @Sendable (ScoutProgress) -> Void
+    /// The map's visible region when the request came from Explore; "the map" resolves to its centre.
+    var area: GeoRegion?
 
     static let maximumRows = 6
     static let radiusRange = 5.0...300.0
@@ -19,8 +21,20 @@ struct ScoutToolContext: Sendable {
     static let cityCoreKilometers = 4.0
     static let scenicCategories = ["MKPOICategoryNationalPark", "MKPOICategoryPark", "MKPOICategoryBeach"]
 
-    /// Geocodes a place name once per run.
+    /// Words that mean "where the map is looking".
+    static let mapPhrases: Set<String> = ["the map", "map", "here", "this area", "the map area", "this map", "current map", "map area"]
+
+    static func isMapPhrase(_ name: String) -> Bool {
+        let cleaned = name.trimmingCharacters(in: .whitespacesAndNewlines.union(.punctuationCharacters)).lowercased()
+        return mapPhrases.contains(cleaned)
+    }
+
+    /// Resolves a place name once per run. "the map" (and "here", "this area") is the centre of `area`, never geocoded.
     func centre(for name: String) async throws -> PlaceResult? {
+        if let area, Self.isMapPhrase(name) {
+            return PlaceResult(id: "map-area", name: "the map area", locality: "", coordinate: area.center,
+                               timeZoneIdentifier: nil, pointOfInterestCategory: nil)
+        }
         if let cached = await registry.cachedGeocode(name) { return cached }
         guard let first = try await geocoder.geocode(name).first else { return nil }
         await registry.cacheGeocode(name, first)

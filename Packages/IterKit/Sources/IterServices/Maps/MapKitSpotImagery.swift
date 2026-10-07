@@ -51,6 +51,19 @@ public final class MapKitSpotImagery: SpotImageryProviding {
         }
     }
 
+    /// Puts an offline pack's PNG back into the disk cache (if Caches was purged) and marks Look Around as available.
+    public func restore(_ png: Data, for key: SpotImageKey) {
+        let url = disk.directory.appendingPathComponent(key.fileName)
+        if !FileManager.default.fileExists(atPath: url.path) {
+            try? FileManager.default.createDirectory(at: disk.directory, withIntermediateDirectories: true)
+            try? png.write(to: url, options: .atomic)
+        }
+        if key.source == .lookAround {
+            disk.writeAvailability(true, spotID: key.spotID,
+                                   coordinate: Coordinate(latitude: Double(key.latitudeE5) / 100_000, longitude: Double(key.longitudeE5) / 100_000))
+        }
+    }
+
     // MARK: Resolving
 
     private func resolve(_ request: SpotImageRequest) async -> [SpotImage] {

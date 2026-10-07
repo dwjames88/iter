@@ -5,6 +5,40 @@ import IterCore
 // CloudKit-compatible: every attribute has a default or is optional, no unique constraints,
 // every relationship is optional with an explicit inverse, enums are stored as raw strings.
 
+/// What a folder holds. A folder never mixes kinds, and a subfolder has its parent's kind.
+public enum FolderKind: String, Sendable, CaseIterable {
+    case trips, locations
+}
+
+/// A user folder for trips or locations. Nests at most one level (a parent is always a root folder of the same kind).
+/// Deleting a folder never deletes what is in it; `IterStore.deleteFolder` moves the contents up.
+@Model
+public final class FolderRecord {
+    public var id: UUID = UUID()
+    public var name: String = ""
+    public var kindRaw: String = FolderKind.trips.rawValue
+    public var sortOrder: Double = 0
+    public var createdAt: Date = Date.now
+    public var updatedAt: Date = Date.now
+    public var parent: FolderRecord?
+
+    @Relationship(deleteRule: .nullify, inverse: \FolderRecord.parent)
+    public var children: [FolderRecord]?
+    @Relationship(deleteRule: .nullify, inverse: \TripRecord.folder)
+    public var trips: [TripRecord]?
+    @Relationship(deleteRule: .nullify, inverse: \PlaceRecord.folder)
+    public var places: [PlaceRecord]?
+
+    public init(id: UUID = UUID()) {
+        self.id = id
+    }
+
+    public var kind: FolderKind {
+        get { FolderKind(rawValue: kindRaw) ?? .trips }
+        set { kindRaw = newValue.rawValue }
+    }
+}
+
 @Model
 public final class PlaceRecord {
     public var id: UUID = UUID()
@@ -32,6 +66,10 @@ public final class PlaceRecord {
     public var isSaved: Bool = false
     public var createdAt: Date = Date.now
     public var updatedAt: Date = Date.now
+    /// The location folder this place is filed in; nil = unfiled.
+    public var folder: FolderRecord?
+    /// Order within its folder (ascending).
+    public var sortOrder: Double = 0
 
     @Relationship(deleteRule: .nullify, inverse: \StopRecord.place)
     public var stops: [StopRecord]?
@@ -102,6 +140,13 @@ public final class TripRecord {
     public var notes: String = ""
     public var createdAt: Date = Date.now
     public var updatedAt: Date = Date.now
+    /// The trip folder this trip is filed in; nil = unfiled.
+    public var folder: FolderRecord?
+    /// Order within its folder, or among unfiled trips (ascending).
+    public var sortOrder: Double = 0
+    public var isPinned: Bool = false
+    /// When the trip was pinned; orders the pinned group.
+    public var pinnedAt: Date?
 
     @Relationship(deleteRule: .cascade, inverse: \StopRecord.trip)
     public var stops: [StopRecord]?

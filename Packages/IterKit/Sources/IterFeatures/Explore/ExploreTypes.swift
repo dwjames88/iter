@@ -59,6 +59,10 @@ public struct ExploreRow: Identifiable, Hashable, Sendable {
     /// Straight-line metres from you when there is a location; else from the centre of the visible map while sorting
     /// by distance; else nil.
     public var distanceMeters: Double?
+    /// The scout's one-sentence reason, on rows of the Ask section only.
+    public var note: String?
+    /// Drive time the scout computed, on rows of the Ask section only.
+    public var driveSeconds: TimeInterval?
 
     public var id: String { spot.id }
     public var score: Int? { window?.score }
@@ -71,6 +75,8 @@ public struct ExploreRow: Identifiable, Hashable, Sendable {
 }
 
 public enum ExploreSectionKind: Hashable, Sendable {
+    /// What the ask engine suggested for the request. Always first; rows come only from its grounded suggestions.
+    case ask
     /// Curated and your own spots, when there is no location to group them by.
     case spots
     /// Curated and your own spots within the radius of you.

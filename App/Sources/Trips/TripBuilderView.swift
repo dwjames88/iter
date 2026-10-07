@@ -231,6 +231,7 @@ private struct TripHeader: View {
             }
             .font(IterFont.subheadline)
             .foregroundStyle(IterColor.textSecondary)
+            OfflineStatusBadge(tripID: plan.id, style: .header)
         }
         .padding(IterSpace.lg)
         .frame(maxWidth: .infinity, alignment: .leading)

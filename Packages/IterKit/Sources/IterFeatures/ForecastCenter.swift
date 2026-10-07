@@ -48,6 +48,8 @@ public final class ForecastCenter {
     public private(set) var lastGood: [String: Forecast] = [:]
 
     @ObservationIgnored private var failedKeys: Set<String> = []
+    /// Keys whose state came from an offline pack; the first ordinary `request` still refetches them.
+    @ObservationIgnored private var seededKeys: Set<String> = []
     @ObservationIgnored private var provider: any WeatherProviding
     @ObservationIgnored private var inFlight: [String: Task<Void, Never>] = [:]
 
@@ -91,7 +93,8 @@ public final class ForecastCenter {
     /// Starts a fetch if there is no state yet (or `force`). Returns immediately.
     public func request(_ coordinate: Coordinate, force: Bool = false) {
         let key = coordinate.cacheKey
-        if !force, states[key] != nil || inFlight[key] != nil { return }
+        if !force, (states[key] != nil && !seededKeys.contains(key)) || inFlight[key] != nil { return }
+        seededKeys.remove(key)
         IterPerf.once("forecast.firstRequest")
         if states[key] == nil { states[key] = lastGood[key].map { .loaded($0) } ?? .loading }
         let provider = self.provider
@@ -143,6 +146,28 @@ public final class ForecastCenter {
         IterPerf.count("forecast.finish")
         if inFlight.isEmpty { IterPerf.mark("forecast.idle", "states=\(states.count)") }
     }
+
+    /// Puts a saved forecast (from an offline pack) on screen: kept as the last good one when newer, and shown when
+    /// there is nothing better. A later ordinary request still tries the network and falls back to it.
+    public func seed(_ forecast: Forecast, for coordinate: Coordinate) {
+        let key = coordinate.cacheKey
+        if (lastGood[key]?.fetchedAt ?? .distantPast) < forecast.fetchedAt { lastGood[key] = forecast }
+        guard states[key]?.forecast == nil, let best = lastGood[key] else { revision += 1; return }
+        if inFlight[key] == nil { seededKeys.insert(key) }
+        states[key] = .loaded(best)
+        revision += 1
+    }
+
+    /// Forces a fetch (or joins the one running) and waits. Check `didFail` to tell a fresh forecast from the last-good fallback.
+    public func refresh(_ coordinate: Coordinate) async -> ForecastState {
+        let key = coordinate.cacheKey
+        if inFlight[key] == nil { request(coordinate, force: true) }
+        await inFlight[key]?.value
+        return state(for: coordinate)
+    }
+
+    /// Whether the latest fetch for this place failed (the state then shows the last good forecast, if any).
+    public func didFail(_ coordinate: Coordinate) -> Bool { failedKeys.contains(coordinate.cacheKey) }
 
     public func requestAll(_ coordinates: [Coordinate]) {
         for c in coordinates { request(c) }

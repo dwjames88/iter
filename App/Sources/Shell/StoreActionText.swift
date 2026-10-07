@@ -24,6 +24,15 @@ enum StoreActionText {
         case .createUserSpot: String(localized: "Add Spot", comment: "Undo action name")
         case .updatePlace: String(localized: "Edit Spot", comment: "Undo action name")
         case .deletePlace: String(localized: "Delete Spot", comment: "Undo action name")
+        case .createFolder: String(localized: "New Folder", comment: "Undo action name")
+        case .newFolderWithSelection: String(localized: "New Folder with Selection", comment: "Undo action name")
+        case .renameFolder: String(localized: "Rename Folder", comment: "Undo action name")
+        case .deleteFolder: String(localized: "Delete Folder", comment: "Undo action name")
+        case .moveFolder: String(localized: "Move Folder", comment: "Undo action name")
+        case .moveTrips: String(localized: "Move to Folder", comment: "Undo action name")
+        case .movePlaces: String(localized: "Move to Folder", comment: "Undo action name")
+        case .pinTrip: String(localized: "Pin Trip", comment: "Undo action name")
+        case .unpinTrip: String(localized: "Unpin Trip", comment: "Undo action name")
         }
     }
 }

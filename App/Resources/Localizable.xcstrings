@@ -90,7 +90,7 @@
       "comment" : "Name of a duplicated trip"
     },
     "%@ drive" : {
-      "comment" : "Drive time to a scouted place, e.g. 1 h 30 min drive"
+      "comment" : "Drive time to a suggested place, e.g. 1 h 30 min drive"
     },
     "%@ from %@, %@" : {
       "comment" : "A light window and when it starts, e.g. Sunrise from 7:12 AM, Thu",
@@ -221,6 +221,17 @@
         }
       }
     },
+    "%@ › %@" : {
+      "comment" : "Move to Folder menu: a subfolder under its folder",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ › %2$@"
+          }
+        }
+      }
+    },
     "%@'s model steps every three hours; Iter fills the hours between." : {
       "comment" : "Score footnote: three-hourly model. Argument is the provider name"
     },
@@ -315,19 +326,8 @@
         }
       }
     },
-    "%lld places for “%@”" : {
-      "comment" : "Scout results header, with the request",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld places for “%2$@”"
-          }
-        }
-      }
-    },
     "%lld spots" : {
-      "comment" : "Saved count footer"
+      "comment" : "Locations count footer"
     },
     "%lld-day outlook for %@" : {
       "comment" : "Outlook strip title with the number of days and the chosen intent, e.g. 8-day outlook for Sunset",
@@ -425,6 +425,9 @@
     "Added by you" : {
       "comment" : "Spot provenance"
     },
+    "All Locations" : {
+      "comment" : "Screen title\nSidebar item"
+    },
     "All Spots" : {
       "comment" : "Saved filter"
     },
@@ -438,25 +441,25 @@
       "comment" : "Settings tab"
     },
     "Apple Intelligence can't read this language yet. Try another language, or search in Explore." : {
-      "comment" : "Scout failure: unsupported language"
+      "comment" : "Ask failure: unsupported language"
     },
     "Apple Intelligence declined it. Try describing the kind of scenery and the area you want." : {
-      "comment" : "Scout failure: safety guardrail"
+      "comment" : "Ask failure: safety guardrail"
     },
     "Apple Intelligence is ready" : {
       "comment" : "Settings Apple Intelligence status"
     },
     "Apple Intelligence is still downloading" : {
-      "comment" : "Scout unavailable title"
+      "comment" : "Ask unavailable title"
     },
     "Apple Intelligence is turned off" : {
-      "comment" : "Scout unavailable title"
+      "comment" : "Ask unavailable title"
     },
     "Apple Intelligence isn't available right now." : {
       "comment" : "Explanation failure"
     },
     "Apple Intelligence reported it can't run. Searching places in Explore still works." : {
-      "comment" : "Scout unavailable detail: other reason"
+      "comment" : "Ask unavailable detail: other reason"
     },
     "Apple Maps" : {
       "comment" : "List section: places found by searching Apple Maps\nSaved filter\nSource filter: places found by searching Apple Maps\nSpot provenance"
@@ -473,8 +476,41 @@
     "Architecture" : {
       "comment" : "Spot category"
     },
-    "Ask Scout to find places" : {
-      "comment" : "Tooltip"
+    "Ask Iter" : {
+      "comment" : "List section: places suggested for a request\nSettings section: the Apple Intelligence search in Explore\nSpot provenance: found by Ask Iter (Apple Intelligence) in Explore\nToolbar toggle and VoiceOver label: put the search text to Apple Intelligence"
+    },
+    "Ask Iter can't help with that request" : {
+      "comment" : "Ask failure title"
+    },
+    "Ask Iter couldn't finish" : {
+      "comment" : "Ask failure title"
+    },
+    "Ask Iter doesn't support that language" : {
+      "comment" : "Ask failure title"
+    },
+    "Ask Iter in your own words: the search field describes the scenery, the area and the light" : {
+      "comment" : "Tooltip on the Ask toggle"
+    },
+    "Ask Iter isn't available right now" : {
+      "comment" : "Ask unavailable title"
+    },
+    "Ask Iter needs Apple Intelligence, which this Mac doesn't support. Searching places in Explore works without it." : {
+      "comment" : "Ask unavailable detail: device not eligible"
+    },
+    "Ask Iter will be ready when the download finishes. It can take a while the first time." : {
+      "comment" : "Ask unavailable detail: model not ready"
+    },
+    "Ask Iter “%@”" : {
+      "comment" : "List row that puts the search text to Apple Intelligence"
+    },
+    "Ask Iter, in Explore's search, understands your request with the model on this Mac, then looks up real places in Apple Maps and Iter's curated list." : {
+      "comment" : "Settings: how Ask Iter works"
+    },
+    "Ask Iter: %@" : {
+      "comment" : "VoiceOver label of the Ask row"
+    },
+    "Ask Iter…" : {
+      "comment" : "Explore search field prompt when Ask mode is on\nMenu item: focus the Explore search field in Ask mode"
     },
     "Ask to use your location" : {
       "comment" : "Tooltip"
@@ -553,7 +589,7 @@
       "comment" : "Settings field"
     },
     "Cancel" : {
-      "comment" : "Alert button\nButton\nButton: stop the scout"
+      "comment" : "Alert button\nButton\nButton: stop the running Ask"
     },
     "Category" : {
       "comment" : "Filters submenu\nSpot editor field: single choice"
@@ -589,10 +625,10 @@
       "comment" : "Button"
     },
     "Checking the drive" : {
-      "comment" : "Scout progress stage"
+      "comment" : "Ask progress stage"
     },
     "Checking the drive to %@" : {
-      "comment" : "Scout progress stage, with the destination"
+      "comment" : "Ask progress stage, with the destination"
     },
     "Checking the forecast…" : {
       "comment" : "Shown while the forecast loads"
@@ -604,7 +640,7 @@
       "comment" : "Tooltip"
     },
     "Choosing the best matches" : {
-      "comment" : "Scout progress stage"
+      "comment" : "Ask progress stage"
     },
     "Classic view" : {
       "comment" : "Sky arc legend for the facing direction"
@@ -654,9 +690,6 @@
     "Coast" : {
       "comment" : "Spot category"
     },
-    "Coastal sunset viewpoints near Big Sur" : {
-      "comment" : "Scout example request"
-    },
     "Collapsed" : {
       "comment" : "VoiceOver state\nVoiceOver: the section is closed"
     },
@@ -677,6 +710,9 @@
     },
     "Couldn't Import Trip" : {
       "comment" : "Alert title"
+    },
+    "Couldn't download for offline use" : {
+      "comment" : "Offline status: the download failed"
     },
     "Couldn't find your location." : {
       "comment" : "Explore banner: no fix yet"
@@ -722,9 +758,6 @@
     "Dark sky" : {
       "comment" : "Light factor"
     },
-    "Dark-sky places near Moab for the Milky Way" : {
-      "comment" : "Scout example request"
-    },
     "Data Sources and Attribution" : {
       "comment" : "About: heading for provider credits\nSettings section"
     },
@@ -754,6 +787,9 @@
     "Delete Everything" : {
       "comment" : "Reset alert button"
     },
+    "Delete Folder" : {
+      "comment" : "Context menu\nUndo action name"
+    },
     "Delete Spot" : {
       "comment" : "Button\nUndo action name"
     },
@@ -769,12 +805,6 @@
     "Delete “%@”?" : {
       "comment" : "Delete spot confirmation title"
     },
-    "Describe the place you are looking for" : {
-      "comment" : "VoiceOver label"
-    },
-    "Describe the scenery, the area and the light. Scout finds real places and shows how the light looks at each." : {
-      "comment" : "Scout idle explanation"
-    },
     "Deselect" : {
       "comment" : "Tooltip on the place card's close button"
     },
@@ -786,6 +816,20 @@
     },
     "Distance" : {
       "comment" : "Sort option: nearest first; from your location, or from the middle of the map when there is no location"
+    },
+    "Downloading for offline use, %lld of %lld" : {
+      "comment" : "Offline status of a pinned trip while it downloads",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Downloading for offline use, %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "Drag locations here from All Locations, or choose Move to Folder from a location's menu." : {
+      "comment" : "Locations folder empty explanation"
     },
     "Drag the map to move the pin." : {
       "comment" : "Spot editor map hint"
@@ -874,20 +918,17 @@
     "Find" : {
       "comment" : "Sidebar section"
     },
-    "Find Places" : {
-      "comment" : "Button: run the scout"
-    },
     "Find Spots" : {
       "comment" : "Menu item"
+    },
+    "Find real places that fit, with a note on why" : {
+      "comment" : "Second line of the Ask Iter row"
     },
     "Finding your location…" : {
       "comment" : "Progress in the Explore banner while the location is being found"
     },
     "First quarter" : {
       "comment" : "Moon phase"
-    },
-    "Foggy forest spots within two hours of Portland for sunrise" : {
-      "comment" : "Scout example request"
     },
     "Forecast is about %lld days ahead of this window." : {
       "comment" : "Forecast lead note"
@@ -897,6 +938,9 @@
     },
     "Forecast is for right now." : {
       "comment" : "Forecast lead note"
+    },
+    "Forecast is more than 12 hours old" : {
+      "comment" : "Offline status: the downloaded forecast is old"
     },
     "Forecast source" : {
       "comment" : "Settings section"
@@ -1134,6 +1178,9 @@
     "Loading images of %@" : {
       "comment" : "VoiceOver: the place card's image placeholder while loading"
     },
+    "Locations" : {
+      "comment" : "Menu item\nSidebar section"
+    },
     "Look Around" : {
       "comment" : "Source label on a spot image\nSpot page section title"
     },
@@ -1212,6 +1259,9 @@
     "Move Down" : {
       "comment" : "Context menu\nVoiceOver action"
     },
+    "Move Folder" : {
+      "comment" : "Undo action name"
+    },
     "Move Stop" : {
       "comment" : "Undo action name"
     },
@@ -1221,8 +1271,11 @@
     "Move to Day" : {
       "comment" : "Context menu submenu"
     },
+    "Move to Folder" : {
+      "comment" : "Context menu\nUndo action name"
+    },
     "Name" : {
-      "comment" : "New trip field\nSaved sort order\nSort option\nSpot editor field"
+      "comment" : "Inline rename field\nNew trip field\nSaved sort order\nSort option\nSpot editor field"
     },
     "Name this spot" : {
       "comment" : "Name placeholder"
@@ -1245,6 +1298,21 @@
     "Needs an API key" : {
       "comment" : "Settings weather status"
     },
+    "New" : {
+      "comment" : "Toolbar button"
+    },
+    "New Folder" : {
+      "comment" : "Default name of a new folder\nMenu item\nUndo action name"
+    },
+    "New Folder Inside" : {
+      "comment" : "Context menu"
+    },
+    "New Folder with Selection" : {
+      "comment" : "Context menu\nUndo action name"
+    },
+    "New Location" : {
+      "comment" : "Menu item: drops a pin on the Explore map"
+    },
     "New Spot" : {
 
     },
@@ -1259,6 +1327,9 @@
     },
     "New Trip with This Spot" : {
       "comment" : "Menu item"
+    },
+    "New Trip, Folder or Location" : {
+      "comment" : "Tooltip"
     },
     "New moon" : {
       "comment" : "Moon phase"
@@ -1295,6 +1366,9 @@
     "No %@ window on this day at this place" : {
       "comment" : "Schedule issue: the sun does not produce this window that day"
     },
+    "No Folder" : {
+      "comment" : "Move to Folder menu: unfile"
+    },
     "No Matching Spots" : {
       "comment" : "Empty state title"
     },
@@ -1311,10 +1385,10 @@
       "comment" : "Empty state after a real Apple Maps search"
     },
     "No saved spots match this filter." : {
-      "comment" : "Saved filter empty explanation"
+      "comment" : "Locations filter empty explanation"
     },
     "No spots here" : {
-      "comment" : "Saved filter result empty"
+      "comment" : "Locations filter result empty"
     },
     "No stops yet" : {
       "comment" : "Day header for a day with no stops"
@@ -1337,6 +1411,9 @@
     "Not enabled for this build" : {
       "comment" : "Settings weather status"
     },
+    "Note from Apple Intelligence" : {
+      "comment" : "VoiceOver prefix and tooltip of the on-device model's one-line reason for a suggestion"
+    },
     "Notes" : {
       "comment" : "Spot editor field\nSpot notes heading"
     },
@@ -1344,22 +1421,28 @@
       "comment" : "Empty state description"
     },
     "Nothing matched" : {
-      "comment" : "Scout failure title"
+      "comment" : "Ask failure title"
     },
     "Nothing matched; try a wider area or a simpler description." : {
-      "comment" : "Scout failure: no results"
+      "comment" : "Ask failure: no results"
     },
     "Nothing on Apple Maps matches “%@” around the map." : {
       "comment" : "Shown only after a real search found nothing"
     },
     "Nothing saved yet" : {
-      "comment" : "Saved empty title"
+      "comment" : "Locations empty title"
     },
     "OK" : {
       "comment" : "Alert button"
     },
+    "Off" : {
+      "comment" : "VoiceOver value: Ask mode is off"
+    },
+    "On" : {
+      "comment" : "VoiceOver value: Ask mode is on"
+    },
     "Open" : {
-      "comment" : "Button: open a spot\nContext menu\nContext menu: open the spot page\nMenu item"
+      "comment" : "Context menu\nContext menu: open the spot page\nMenu item"
     },
     "Open Location Services in System Settings" : {
       "comment" : "Tooltip"
@@ -1441,6 +1524,18 @@
     "Pick your spots and days. Iter works out when to leave so you are set up before the light arrives." : {
       "comment" : "Empty trips screen explanation"
     },
+    "Pin Trip" : {
+      "comment" : "Context menu: keeps the trip downloaded for offline use\nUndo action name"
+    },
+    "Pinned" : {
+      "comment" : "VoiceOver: a pinned trip"
+    },
+    "Pinned trips keep forecasts, drive times, routes and spot images on this Mac. The base map isn't stored: MapKit has no way to download map tiles for offline use." : {
+      "comment" : "Tooltip on a pinned trip's offline status"
+    },
+    "Pinned: kept ready offline" : {
+      "comment" : "Tooltip"
+    },
     "Place" : {
       "comment" : "Spot editor field"
     },
@@ -1451,7 +1546,7 @@
       "comment" : "VoiceOver label of the Explore list"
     },
     "Places come from Apple Maps and Iter's curated list. Iter checks every place exists; the notes are written by Apple Intelligence." : {
-      "comment" : "Scout results footer: where places and notes come from"
+      "comment" : "Ask section footer: where places and notes come from"
     },
     "Plan trips around the light" : {
       "comment" : "Empty trips screen headline"
@@ -1492,6 +1587,9 @@
     "Rain judged from the forecast amount (no probability from %@)." : {
       "comment" : "Score footnote: no rain probability. Argument is the provider name"
     },
+    "Ready offline" : {
+      "comment" : "Offline status of a pinned trip"
+    },
     "Refresh Forecasts" : {
       "comment" : "Menu item"
     },
@@ -1501,11 +1599,20 @@
     "Remove Stop" : {
       "comment" : "Undo action name"
     },
+    "Remove from Folder" : {
+      "comment" : "Context menu"
+    },
     "Remove from Saved" : {
       "comment" : "Help\nTooltip"
     },
     "Remove from Trip" : {
       "comment" : "Context menu\nVoiceOver action"
+    },
+    "Rename" : {
+      "comment" : "Context menu"
+    },
+    "Rename Folder" : {
+      "comment" : "Undo action name"
     },
     "Rename Trip" : {
       "comment" : "Undo action name"
@@ -1547,19 +1654,19 @@
       "comment" : "VoiceOver: image of a spot"
     },
     "Save" : {
-      "comment" : "Button\nButton: save a spot\nContext menu\nPlace card: save the spot"
+      "comment" : "Button\nContext menu\nPlace card: save the spot"
     },
     "Save Spot" : {
       "comment" : "Undo action name"
     },
-    "Save a spot from Explore or Scout and it shows up here with its next sunrise or sunset. Spots you add yourself live here too." : {
-      "comment" : "Saved empty explanation"
+    "Save a spot from Explore and it shows up here with its next sunrise or sunset. Spots you add yourself live here too." : {
+      "comment" : "Locations empty explanation"
     },
     "Save this spot" : {
       "comment" : "Help\nTooltip"
     },
     "Saved" : {
-      "comment" : "Accessibility label\nButton state\nButton state: spot is saved\nMenu item\nPlace card: the spot is saved\nSection title\nSidebar item"
+      "comment" : "Accessibility label\nButton state\nPlace card: the spot is saved"
     },
     "Saved in Keychain" : {
       "comment" : "Settings: the key is in the Keychain"
@@ -1579,43 +1686,16 @@
     "Scores use made-up weather. Turn off in the Debug menu." : {
       "comment" : "Banner explanation"
     },
-    "Scout" : {
-      "comment" : "Menu item\nSection title\nSettings section\nSidebar item: Apple Intelligence scout\nSpot provenance: found by the Apple Intelligence scout"
-    },
-    "Scout can't help with that request" : {
-      "comment" : "Scout failure title"
-    },
-    "Scout couldn't finish" : {
-      "comment" : "Scout failure title"
-    },
-    "Scout doesn't support that language" : {
-      "comment" : "Scout failure title"
-    },
-    "Scout isn't available right now" : {
-      "comment" : "Scout unavailable title"
-    },
-    "Scout needs Apple Intelligence, which this Mac doesn't support. Searching places in Explore works without it." : {
-      "comment" : "Scout unavailable detail: device not eligible"
-    },
-    "Scout understands your request with the model on this Mac, then looks up real places in Apple Maps and Iter's curated list." : {
-      "comment" : "Settings: how Scout works"
-    },
-    "Scout will be ready when the download finishes. It can take a while the first time." : {
-      "comment" : "Scout unavailable detail: model not ready"
-    },
-    "Scout's note" : {
-      "comment" : "Label above the on-device model's one-line reason for a suggestion"
-    },
     "Search" : {
       "comment" : "Explore search field prompt"
+    },
+    "Search Apple Maps Instead" : {
+      "comment" : "Button under an Ask that could not run: use the ordinary place search"
     },
     "Search Apple Maps for “%@”" : {
       "comment" : "List row that runs an Apple Maps search"
     },
-    "Search Places in Explore" : {
-      "comment" : "Button: use ordinary place search instead of Scout"
-    },
-    "Search saved spots" : {
+    "Search locations" : {
       "comment" : "Search field prompt"
     },
     "Search spots" : {
@@ -1625,10 +1705,10 @@
       "comment" : "Progress while searching"
     },
     "Searching for places" : {
-      "comment" : "Scout progress stage"
+      "comment" : "Ask progress stage"
     },
     "Searching near %@" : {
-      "comment" : "Scout progress stage, with the place being searched"
+      "comment" : "Ask progress stage, with the place being searched"
     },
     "Seed Sample Trip" : {
       "comment" : "Debug menu item"
@@ -1661,10 +1741,13 @@
       "comment" : "Context menu"
     },
     "Shorten it to a sentence: the kind of place, the area and the light." : {
-      "comment" : "Scout failure: too long"
+      "comment" : "Ask failure: too long"
     },
     "Show" : {
       "comment" : "Menu"
+    },
+    "Show All Locations" : {
+      "comment" : "Button"
     },
     "Show Full Page" : {
       "comment" : "Place card: open the spot's full page"
@@ -1684,11 +1767,14 @@
     "Sign in to Xcode with an Apple Developer Program account." : {
       "comment" : "WeatherKit setup step"
     },
+    "Some items didn't download" : {
+      "comment" : "Offline status: part of the download failed"
+    },
     "Some upper cloud, little effect." : {
       "comment" : "Light reason"
     },
     "Something went wrong while searching. Try again, or search places in Explore." : {
-      "comment" : "Scout failure: generic"
+      "comment" : "Ask failure: generic"
     },
     "Sort By" : {
       "comment" : "Menu\nMenu section title"
@@ -1696,7 +1782,7 @@
     "Sort and Filter" : {
       "comment" : "Toolbar button"
     },
-    "Sort and filter saved spots" : {
+    "Sort and filter locations" : {
       "comment" : "Tooltip"
     },
     "Sort and filters" : {
@@ -1721,7 +1807,7 @@
       "comment" : "VoiceOver hint"
     },
     "Step %lld of %lld" : {
-      "comment" : "Scout progress, e.g. Step 2 of 4",
+      "comment" : "Ask progress, e.g. Step 2 of 4",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1732,7 +1818,7 @@
       }
     },
     "Still working. A request can take up to a minute." : {
-      "comment" : "Scout is taking longer than usual"
+      "comment" : "Ask is taking longer than usual"
     },
     "Stop %lld, %@" : {
       "comment" : "VoiceOver: a trip stop\nVoiceOver: map pin",
@@ -1746,7 +1832,7 @@
       }
     },
     "Stop looking" : {
-      "comment" : "Tooltip"
+      "comment" : "Tooltip on the Cancel button while an Ask runs"
     },
     "Street" : {
       "comment" : "Spot category"
@@ -1814,7 +1900,7 @@
       "comment" : "Settings weather status"
     },
     "That request is too long" : {
-      "comment" : "Scout failure title"
+      "comment" : "Ask failure title"
     },
     "The explanation didn't match the numbers, so it was discarded. Try again." : {
       "comment" : "Explanation failure"
@@ -1856,13 +1942,16 @@
       "comment" : "Explanation failure"
     },
     "This Mac can't run Apple Intelligence" : {
-      "comment" : "Scout unavailable title"
+      "comment" : "Ask unavailable title"
     },
     "This can't be undone." : {
       "comment" : "Reset alert message"
     },
     "This file isn't an Iter trip, or it is damaged. Nothing was imported." : {
       "comment" : "Import error"
+    },
+    "This folder is empty" : {
+      "comment" : "Locations folder empty title"
     },
     "This trip was deleted or its creation was undone." : {
       "comment" : "Empty state explanation"
@@ -1891,6 +1980,9 @@
     "Trip Notes" : {
       "comment" : "Undo action name"
     },
+    "Trip changed since download" : {
+      "comment" : "Offline status: the pinned trip was edited after it downloaded"
+    },
     "Trip name" : {
       "comment" : "Accessibility label\nPlaceholder"
     },
@@ -1900,17 +1992,17 @@
     "Trips" : {
       "comment" : "Menu item\nSidebar section"
     },
-    "Try" : {
-      "comment" : "Heading above scout example requests"
-    },
     "Try Again" : {
-      "comment" : "Button\nButton: look for the location again"
+      "comment" : "Button: look for the location again\nButton: run the Ask again"
     },
     "Turn on Apple Intelligence in System Settings to describe the place you want in your own words." : {
-      "comment" : "Scout unavailable detail: Apple Intelligence not enabled"
+      "comment" : "Ask unavailable detail: Apple Intelligence not enabled"
     },
     "Understanding your request" : {
-      "comment" : "Scout progress stage"
+      "comment" : "Ask progress stage"
+    },
+    "Unpin Trip" : {
+      "comment" : "Context menu\nUndo action name"
     },
     "Unsave" : {
       "comment" : "Context menu\nMenu item"
@@ -1976,9 +2068,6 @@
     "Waterfall" : {
       "comment" : "Spot category"
     },
-    "Waterfalls near Seattle that work on overcast days" : {
-      "comment" : "Scout example request"
-    },
     "Waxing crescent" : {
       "comment" : "Moon phase"
     },
@@ -1999,9 +2088,6 @@
     },
     "Weather isn't answering." : {
       "comment" : "Weather banner: generic failure"
-    },
-    "What are you looking for?" : {
-      "comment" : "Scout request field placeholder"
     },
     "When to go" : {
       "comment" : "Spot page section title"
@@ -2113,8 +2199,14 @@
     "walk-in unknown" : {
       "comment" : "Walk from parking to the shooting spot is not known"
     },
+    "·" : {
+
+    },
     "· %@" : {
 
+    },
+    "“%@”" : {
+      "comment" : "The request an Ask section answers, shown under its header"
     },
     "↑ Height above the horizon" : {
       "comment" : "Sky arc y axis"

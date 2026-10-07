@@ -16,6 +16,11 @@ struct AppCommands: Commands {
             }
             .keyboardShortcut("n")
             .disabled(navigation == nil)
+            Button(String(localized: "New Folder", comment: "Menu item")) {
+                if let navigation { navigation.newFolder(model: model) }
+            }
+            .keyboardShortcut("n", modifiers: [.command, .option])
+            .disabled(navigation == nil)
             Button(String(localized: "Add Spot on Map", comment: "Menu item")) {
                 navigation?.selection = .explore
                 navigation?.addSpotModeRequest += 1
@@ -43,10 +48,13 @@ struct AppCommands: Commands {
                 .keyboardShortcut("1")
             Button(String(localized: "Explore", comment: "Menu item")) { navigation?.show(.explore) }
                 .keyboardShortcut("2")
-            Button(String(localized: "Saved", comment: "Menu item")) { navigation?.show(.saved) }
+            Button(String(localized: "Locations", comment: "Menu item")) { navigation?.show(.locations) }
                 .keyboardShortcut("3")
-            Button(String(localized: "Scout", comment: "Menu item")) { navigation?.show(.scout) }
-                .keyboardShortcut("4")
+            Button(String(localized: "Ask Iter…", comment: "Menu item: focus the Explore search field in Ask mode")) {
+                navigation?.selection = .explore
+                navigation?.askRequest += 1
+            }
+            .keyboardShortcut("4")
         }
         CommandMenu(String(localized: "Light", comment: "Menu title")) {
             Button(String(localized: "Refresh Forecasts", comment: "Menu item")) { model.forecasts.retryFailed() }
