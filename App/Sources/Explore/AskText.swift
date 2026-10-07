@@ -38,7 +38,11 @@ extension LightText {
         case .available, .unavailable:
             String(localized: "Ask Iter isn't available right now", comment: "Ask suggestion, disabled: no specific reason")
         case .deviceNotEligible:
+            #if os(macOS)
             String(localized: "Ask Iter isn't available: this Mac can't run Apple Intelligence", comment: "Ask suggestion, disabled: device not eligible")
+            #else
+            String(localized: "Ask Iter isn't available: this device can't run Apple Intelligence", comment: "Ask suggestion, disabled: device not eligible (iPhone or iPad)")
+            #endif
         case .appleIntelligenceNotEnabled:
             String(localized: "Ask Iter isn't available: Apple Intelligence is off", comment: "Ask suggestion, disabled: Apple Intelligence off")
         case .modelNotReady:
@@ -134,14 +138,20 @@ extension LightText {
         case .available:
             AskNotice(title: "", detail: "", symbol: "sparkles")
         case .deviceNotEligible:
+            #if os(macOS)
             AskNotice(title: String(localized: "This Mac can't run Apple Intelligence", comment: "Ask unavailable title"),
                       detail: String(localized: "Ask Iter needs Apple Intelligence, which this Mac doesn't support. Searching places in Explore works without it.",
                                      comment: "Ask unavailable detail: device not eligible"),
                       symbol: "macbook.slash")
+            #else
+            AskNotice(title: String(localized: "This device can't run Apple Intelligence", comment: "Ask unavailable title (iPhone or iPad)"),
+                      detail: String(localized: "Ask Iter needs Apple Intelligence, which this device doesn't support. Searching places in Explore works without it.",
+                                     comment: "Ask unavailable detail: device not eligible (iPhone or iPad)"),
+                      symbol: "iphone.slash")
+            #endif
         case .appleIntelligenceNotEnabled:
             AskNotice(title: String(localized: "Apple Intelligence is turned off", comment: "Ask unavailable title"),
-                      detail: String(localized: "Turn on Apple Intelligence in System Settings to describe the place you want in your own words.",
-                                     comment: "Ask unavailable detail: Apple Intelligence not enabled"),
+                      detail: askTurnOnDetail,
                       symbol: "sparkles")
         case .modelNotReady:
             AskNotice(title: String(localized: "Apple Intelligence is still downloading", comment: "Ask unavailable title"),
@@ -188,7 +198,15 @@ extension LightText {
     }
 
     static let askSearchInstead = String(localized: "Search Apple Maps Instead", comment: "Button under an Ask that could not run: use the ordinary place search")
+    #if os(macOS)
     static let askOpenSystemSettings = String(localized: "Open System Settings", comment: "Button: opens Apple Intelligence & Siri settings")
+    static let askTurnOnDetail = String(localized: "Turn on Apple Intelligence in System Settings to describe the place you want in your own words.",
+                                        comment: "Ask unavailable detail: Apple Intelligence not enabled")
+    #else
+    static let askOpenSystemSettings = String(localized: "Open Settings", comment: "Button (iPhone or iPad): opens the Settings app")
+    static let askTurnOnDetail = String(localized: "Turn on Apple Intelligence in Settings to describe the place you want in your own words.",
+                                        comment: "Ask unavailable detail (iPhone or iPad): Apple Intelligence not enabled")
+    #endif
     static let askTryAgain = String(localized: "Try Again", comment: "Button: run the Ask again")
 
     static func askDrive(_ seconds: TimeInterval) -> String {

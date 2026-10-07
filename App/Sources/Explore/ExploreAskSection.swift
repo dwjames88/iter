@@ -1,4 +1,7 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 import IterCore
 import IterDesign
 import IterFeatures
@@ -88,7 +91,12 @@ struct ExploreAskSection: View {
     @Environment(AppModel.self) private var model
     @Environment(\.openURL) private var openURL
 
+    #if os(macOS)
     private static let systemSettingsURL = URL(string: "x-apple.systempreferences:com.apple.Siri-Settings.extension")
+    #else
+    // iOS has no public deep link to Apple Intelligence & Siri; the app's own Settings page is the documented URL.
+    private static let systemSettingsURL = URL(string: UIApplication.openSettingsURLString)
+    #endif
 
     private var results: [ExploreRow] {
         explore.sections.first { $0.kind == .ask }?.rows ?? []
