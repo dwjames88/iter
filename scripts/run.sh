@@ -18,10 +18,16 @@ done
 command -v xcodegen >/dev/null || { echo "XcodeGen is needed (brew install xcodegen)" >&2; exit 1; }
 xcodegen generate --quiet
 VERSION_ARGS=($("$ROOT/scripts/version.sh"))   # build number and git hash (scripts/version.sh)
+set +e   # keep going so the build status can be reported (PIPESTATUS below)
 xcodebuild -project Iter.xcodeproj -scheme Iter -configuration Debug -derivedDataPath build/DerivedData \
-  "${VERSION_ARGS[@]}" ${EXTRA[@]+"${EXTRA[@]}"} build -quiet 2>&1 | grep -E "error:|warning: .*Iter/(App|Packages)" || true
+  "${VERSION_ARGS[@]}" ${EXTRA[@]+"${EXTRA[@]}"} build -quiet 2>&1 | { grep -E "error:|warning: .*Iter/(App|Packages)" || true; }
+BUILD_STATUS=${PIPESTATUS[0]}
+set -e
 APP="build/DerivedData/Build/Products/Debug/Iter.app"
-[ -d "$APP" ] || { echo "Build failed." >&2; exit 1; }
+if [ "$BUILD_STATUS" -ne 0 ] || [ ! -x "$APP/Contents/MacOS/Iter" ]; then
+  echo "Build failed (xcodebuild exit $BUILD_STATUS); build/Iter.app was left as it was." >&2
+  exit 1
+fi
 rm -rf build/Iter.app && ditto "$APP" build/Iter.app
 echo "Built $ROOT/build/Iter.app"
 if [ "$OPEN" = 1 ]; then open build/Iter.app; fi
