@@ -31,6 +31,14 @@ settings:
     # verifies each update's Ed25519 signature. scripts/release.sh writes the key the first time it runs.
     ITER_UPDATE_FEED_URL: "https://github.com/dwjames88/iter/releases/latest/download/appcast.json"
     ITER_UPDATE_PUBLIC_KEY: ""
+    # Keep the build machine's paths out of the binary: source paths are recorded relative to /Iter.
+    OTHER_SWIFT_FLAGS: $(inherited) -file-prefix-map $(SRCROOT)=/Iter -debug-prefix-map $(SRCROOT)=/Iter
+  configs:
+    Release:
+      # Strip symbols from the shipped app.
+      DEPLOYMENT_POSTPROCESSING: YES
+      STRIP_INSTALLED_PRODUCT: YES
+      COPY_PHASE_STRIP: YES
 packages:
   IterKit:
     path: Packages/IterKit
