@@ -10,6 +10,8 @@ import IterServices
 @Observable
 public final class ExploreModel {
     public let app: AppModel
+    /// The ask engine (the scout). Its state is what the Ask section draws.
+    public let askModel: ScoutModel
 
     // MARK: Inputs
 
@@ -31,6 +33,8 @@ public final class ExploreModel {
     public var query = "" {
         didSet { if oldValue != query { queryChanged() } }
     }
+    /// Ask mode: the user turned the sparkle toggle on (or pressed ⌘4). Submitting then always asks, whatever the text.
+    public var askMode = false
     public var isAddingSpot = false {
         didSet { if !isAddingSpot { draftCoordinate = nil } }
     }
@@ -74,6 +78,8 @@ public final class ExploreModel {
         self.searchDebounce = searchDebounce
         self.defaults = defaults
         self.cameraPolicy = MapCameraPolicy.load(screen: Self.cameraScreenKey, defaults: defaults)
+        self.askModel = ScoutModel(app: app)
+        askModel.onFinish = { [weak self] in self?.askFinished() }
     }
 
     // MARK: - Location
@@ -104,6 +110,7 @@ public final class ExploreModel {
         var sort: ExploreSort
         var query: String
         var appleIDs: [String]
+        var ask: [ScoutSuggestion]
         /// What distances are measured from: you, else the map centre while sorting by distance.
         var origin: Coordinate?
         var hasLocation: Bool
@@ -123,7 +130,7 @@ public final class ExploreModel {
         let stamp = DerivedStamp(timeBucket: Self.timeBucket(app.now()), forecastRevision: app.forecasts.revision,
                                  storeRevision: app.store.revision, filters: filters, sort: sort,
                                  query: query.trimmingCharacters(in: .whitespacesAndNewlines),
-                                 appleIDs: appleResults.map(\.id), origin: origin, hasLocation: user != nil,
+                                 appleIDs: appleResults.map(\.id), ask: askSuggestions, origin: origin, hasLocation: user != nil,
                                  radiusMiles: app.location.radiusMiles)
         if let cached = derivedCache, cached.stamp == stamp { return cached.value }
         let value = buildDerived(stamp)
@@ -145,7 +152,9 @@ public final class ExploreModel {
         let yours = app.store.savedPlaces().filter { $0.origin == .user }.map(\.spot)
         out += yours.map { ($0, .yours) }
         out += appleResults.map { ($0, .appleMaps) }
-        return out
+        // The Ask section owns its spots: they appear once, there.
+        let asked = Set(askSuggestions.map(\.spot.id))
+        return asked.isEmpty ? out : out.filter { !asked.contains($0.0.id) }
     }
 
     private func buildDerived(_ stamp: DerivedStamp) -> Derived {
@@ -160,6 +169,16 @@ public final class ExploreModel {
         let own = rows.filter { $0.source != .appleMaps }
         let apple = Self.sorted(rows.filter { $0.source == .appleMaps }, by: sort)
         var sections: [ExploreSection] = []
+        let askRows = Self.uniqued(stamp.ask).map { suggestion -> ExploreRow in
+            let spot = suggestion.spot
+            let event = nextEvent(for: spot)
+            return ExploreRow(spot: spot, source: suggestion.provenance == .curated ? .curated : .appleMaps,
+                              window: event?.window, day: event?.day,
+                              isLoading: app.forecasts.isLoading(spot.coordinate),
+                              distanceMeters: stamp.origin.map { $0.distance(to: spot.coordinate) },
+                              note: suggestion.why.isEmpty ? nil : suggestion.why, driveSeconds: suggestion.driveSeconds)
+        }
+        if !askRows.isEmpty { sections.append(ExploreSection(kind: .ask, rows: askRows)) }
         if stamp.hasLocation {
             let radius = Double(stamp.radiusMiles) * Self.metersPerMile
             let near = own.filter { ($0.distanceMeters ?? .infinity) <= radius }
@@ -204,6 +223,12 @@ public final class ExploreModel {
         let event = app.engine.nextEvent(for: spot, forecast: state.forecast, unavailable: state.unavailableReason, now: app.now())
         windowCache[key] = CachedWindow(event: event)
         return event
+    }
+
+    /// Suggestions with one entry per spot, in the scout's order (best first).
+    static func uniqued(_ suggestions: [ScoutSuggestion]) -> [ScoutSuggestion] {
+        var seen = Set<String>()
+        return suggestions.filter { seen.insert($0.spot.id).inserted }
     }
 
     // MARK: Filtering and sorting (static so tests can drive them directly)
@@ -344,7 +369,7 @@ public final class ExploreModel {
     /// listed row. Falls back to every row when filters leave Near you empty. Capped by `MapCameraPolicy.maxAutomaticSpan`.
     public var fitCoordinates: [Coordinate] {
         if hasLocation {
-            let near = derived.sections.filter { $0.kind == .nearYou || $0.kind == .appleMaps }.flatMap(\.rows)
+            let near = derived.sections.filter { $0.kind == .ask || $0.kind == .nearYou || $0.kind == .appleMaps }.flatMap(\.rows)
             if !near.isEmpty { return near.map(\.spot.coordinate) + [app.location.coordinate].compactMap { $0 } }
         }
         return rows.map(\.spot.coordinate)
@@ -415,12 +440,21 @@ public final class ExploreModel {
         }
     }
 
+    /// Ask results arrived: the person asked for them, so the map frames them even when it was moved by hand.
+    private func askFinished() {
+        resultSetChanged()
+        let asked = sections.first { $0.kind == .ask }?.rows.map(\.spot.coordinate) ?? []
+        guard let region = MapCameraPolicy.fit(asked) else { return }
+        cameraPolicy.didApplyFit(region)
+        cameraRequest = CameraRequest(id: nextRequestID(), kind: .fit(region))
+    }
+
     private func nextRequestID() -> Int {
         requestCounter += 1
         return requestCounter
     }
 
-    private func resultSetChanged() {
+    func resultSetChanged() {
         dropSelectionIfHidden()
         contentChanged()
     }
@@ -456,13 +490,20 @@ public final class ExploreModel {
             searchTask = nil
             appleResults = []
             searchState = .idle
+            askModel.reset()
         }
         resultSetChanged()
     }
 
+    /// Return in the search field: an Ask when Ask mode is on or the text reads like a request
+    /// (`SearchIntent.classify`), else the Apple Maps search.
+    public func submitSearch() {
+        if askMode || SearchIntent.classify(query) == .ask { ask() } else { searchAppleMaps() }
+    }
+
     /// Runs the Apple Maps search near the visible region. Debounced and cancellable: a second submit
     /// replaces the first, and clearing the field cancels it.
-    public func submitSearch() {
+    public func searchAppleMaps() {
         let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
         searchTask?.cancel()

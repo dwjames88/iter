@@ -84,4 +84,13 @@ public protocol Scouting: Sendable {
     func availability() -> ScoutAvailability
     /// Runs one request. Cancellable via task cancellation. `progress` is called on arbitrary threads.
     func scout(_ request: String, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion]
+    /// Runs one request with the map's visible region as context: "near the map" means near `area`.
+    /// The default ignores the area and calls the two-argument form, so existing conformers keep working.
+    func scout(_ request: String, near area: GeoRegion?, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion]
+}
+
+extension Scouting {
+    public func scout(_ request: String, near area: GeoRegion?, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
+        try await scout(request, progress: progress)
+    }
 }

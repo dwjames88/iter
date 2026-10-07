@@ -37,6 +37,9 @@ final class FakeScout: Scouting, @unchecked Sendable { // test double; state gua
     private var gated = false
     private(set) var cancelledCount = 0
     private(set) var started = 0
+    /// The area of the most recent request (nil when it came without one) and every request text, in order.
+    private(set) var lastArea: GeoRegion?
+    private(set) var requests: [String] = []
     var stages: [ScoutProgress] = []
 
     init(availability: ScoutAvailability = .available, outcome: Result<[ScoutSuggestion], any Error> = .success([])) {
@@ -53,6 +56,11 @@ final class FakeScout: Scouting, @unchecked Sendable { // test double; state gua
     }
 
     func availability() -> ScoutAvailability { lock.withLock { _availability } }
+
+    func scout(_ request: String, near area: GeoRegion?, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
+        lock.withLock { lastArea = area; requests.append(request) }
+        return try await scout(request, progress: progress)
+    }
 
     func scout(_ request: String, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
         lock.withLock { started += 1 }

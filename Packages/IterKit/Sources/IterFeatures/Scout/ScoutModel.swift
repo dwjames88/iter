@@ -41,7 +41,8 @@ public enum ScoutState: Equatable, Sendable {
     case failed(ScoutFailure)
 }
 
-/// The scout screen's state machine: request text, running with real stages, results, failure, cancellation.
+/// The ask engine behind Explore's search field (and, before that, the Scout screen): request text, running with real
+/// stages, results, failure, cancellation.
 @MainActor
 @Observable
 public final class ScoutModel {
@@ -54,6 +55,8 @@ public final class ScoutModel {
     @ObservationIgnored private let scout: (any Scouting)?
     @ObservationIgnored private var task: Task<Void, Never>?
     @ObservationIgnored private var generation = 0
+    /// Called when a run ends in results or a failure (not on cancel or reset), so Explore can refit its map.
+    @ObservationIgnored public var onFinish: (@MainActor () -> Void)?
 
     public init(app: AppModel, scout: (any Scouting)? = nil, state: ScoutState = .idle, request: String = "") {
         self.app = app
@@ -93,23 +96,24 @@ public final class ScoutModel {
 
     // MARK: Running
 
-    public func run() {
+    /// Runs the request. `area` is the map's visible region (Explore): "near the map" means near it.
+    public func run(area: GeoRegion? = nil) {
         let text = request.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty, !isRunning else { return }
+        submittedRequest = text
         guard let scout else { state = .failed(.unavailable(availability)); return }
         let availability = scout.availability()
         guard availability == .available else { state = .failed(.unavailable(availability)); return }
 
         generation += 1
         let mine = generation
-        submittedRequest = text
         state = .running(stage: .understanding, started: app.now())
         let report: @Sendable (ScoutProgress) -> Void = { [weak self] progress in
             Task { @MainActor in self?.advance(to: progress, generation: mine) }
         }
         task = Task { [weak self] in
             do {
-                let found = try await scout.scout(text, progress: report)
+                let found = try await scout.scout(text, near: area, progress: report)
                 self?.finish(.results(found), generation: mine, found: found)
             } catch is CancellationError {
                 self?.cancelled(generation: mine)
@@ -134,6 +138,7 @@ public final class ScoutModel {
     public func reset() {
         cancel()
         state = .idle
+        submittedRequest = ""
     }
 
     private func advance(to progress: ScoutProgress, generation: Int) {
@@ -146,10 +151,12 @@ public final class ScoutModel {
         task = nil
         if case .results(let list) = outcome, list.isEmpty {
             state = .failed(.noResults)
+            onFinish?()
             return
         }
         state = outcome
         app.forecasts.requestAll(found.map(\.spot.coordinate))
+        onFinish?()
     }
 
     private func cancelled(generation: Int) {
