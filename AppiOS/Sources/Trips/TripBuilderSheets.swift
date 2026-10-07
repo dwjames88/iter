@@ -16,6 +16,7 @@ struct TripRouteMapView: View {
 
     @State private var position: MapCameraPosition
     @State private var selection: UUID?
+    @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
 
     init(builder: TripBuilderModel, selectedDay: Binding<Int?>, onSelectStop: @escaping (UUID) -> Void) {
         self.builder = builder
@@ -50,8 +51,9 @@ struct TripRouteMapView: View {
                 .tag(entry.id)
             }
         }
-        .mapStyle(.standard(elevation: .flat, pointsOfInterest: .excludingAll))
+        .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
         .mapControls { MapCompass() }
+        .overlay(alignment: .bottomTrailing) { MapStyleMenu().padding(IterSpace.sm) }
         .onChange(of: selection) { _, id in
             if let id { onSelectStop(id); selection = nil }
         }

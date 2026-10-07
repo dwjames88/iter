@@ -7,6 +7,7 @@ import IterFeatures
 struct AppCommands: Commands {
     let model: AppModel
     @FocusedValue(\.navigation) private var navigation
+    @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
 
     var body: some Commands {
         CommandGroup(replacing: .newItem) {
@@ -42,6 +43,14 @@ struct AppCommands: Commands {
             }
             .keyboardShortcut("f")
             .disabled(navigation == nil)
+        }
+        CommandGroup(after: .toolbar) {
+            Menu(String(localized: "Map Style", comment: "Menu title")) {
+                Picker(String(localized: "Map Style", comment: "Menu title"), selection: $mapStyleRaw) {
+                    ForEach(MapStyleChoice.allCases) { Text($0.title).tag($0.rawValue) }
+                }
+                .pickerStyle(.inline)
+            }
         }
         CommandMenu(String(localized: "Go", comment: "Menu title")) {
             Button(String(localized: "Trips", comment: "Menu item")) { navigation?.show(.trips) }

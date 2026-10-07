@@ -10,6 +10,7 @@ import IterFeatures
 struct TripRouteMap: View {
     @Environment(\.renderMode) private var renderMode
     @Environment(AppModel.self) private var app
+    @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
     let builder: TripBuilderModel
     @Binding var selection: UUID?
     /// The selected day (0-based), shared with the overview strip and the list; nil: all days.
@@ -96,13 +97,14 @@ struct TripRouteMap: View {
                 .tag(entry.id)
             }
         }
-        .mapStyle(.standard(elevation: .flat, pointsOfInterest: .excludingAll))
+        .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
         .mapControls {
             if app.location.showsSystemIndicator { MapUserLocationButton() }
             MapZoomStepper()
             MapCompass()
             MapScaleView()
         }
+        .overlay(alignment: .bottomTrailing) { MapStyleMenu().padding(IterSpace.sm) }
         .onMapCameraChange(frequency: .onEnd) { context in
             let r = context.region
             // A settle is the user's only when the map wrote a user-positioned `position` (see below); layout and

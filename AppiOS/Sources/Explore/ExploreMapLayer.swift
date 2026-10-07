@@ -21,7 +21,7 @@ struct ExploreMapLayer: View {
     @State private var userInteracted = false
     @State private var appliedRequest = 0
     @State private var mapSize = CGSize.zero
-    @State private var isHybrid = false
+    @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
 
     init(explore: ExploreModel, bottomInset: CGFloat = 0, leadingInset: CGFloat = 0, onPinSelected: @escaping () -> Void = {}) {
         self.explore = explore
@@ -58,10 +58,7 @@ struct ExploreMapLayer: View {
     private var controls: some View {
         GlassEffectContainer(spacing: IterSpace.sm) {
             VStack(spacing: IterSpace.sm) {
-                RoundGlassButton(systemImage: isHybrid ? "map" : "globe.americas.fill",
-                                 label: isHybrid ? String(localized: "Standard map", comment: "Map control") : String(localized: "Satellite map", comment: "Map control")) {
-                    isHybrid.toggle()
-                }
+                MapStyleMenu()
                 RoundGlassButton(systemImage: "location.fill", label: String(localized: "Show my location", comment: "Map control"),
                                  hint: app.location.coordinate == nil ? String(localized: "Asks to use your location", comment: "VoiceOver hint") : nil) {
                     locate()
@@ -89,10 +86,7 @@ struct ExploreMapLayer: View {
         })
     }
 
-    private var style: MapStyle {
-        isHybrid ? .hybrid(elevation: .realistic, pointsOfInterest: .excludingAll)
-                 : .standard(elevation: .realistic, pointsOfInterest: .excludingAll)
-    }
+    private var style: MapStyle { MapStyleChoice(stored: mapStyleRaw).mapStyle(elevation: .realistic) }
 
     private var liveMap: some View {
         Map(position: $position, selection: mapSelection) {

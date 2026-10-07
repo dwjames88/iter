@@ -12,6 +12,7 @@ struct ExploreMapPane: View {
     @Bindable var explore: ExploreModel
     @Environment(\.renderMode) private var renderMode
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
     @Environment(AppModel.self) private var app
     @State private var position: MapCameraPosition
     /// True once the map wrote a user-positioned `position` (pan, zoom, stepper, compass) that has not settled yet.
@@ -83,13 +84,14 @@ struct ExploreMapPane: View {
                     }
                 }
             }
-            .mapStyle(.standard(elevation: .flat, pointsOfInterest: .excludingAll))
+            .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
             .mapControls {
                 if app.location.showsSystemIndicator { MapUserLocationButton() }
                 MapZoomStepper()
                 MapCompass()
                 MapScaleView()
             }
+            .overlay(alignment: .bottomTrailing) { MapStyleMenu().padding(IterSpace.sm) }
             .onMapCameraChange(frequency: .onEnd) { context in
                 IterPerf.once("map.firstSettle")
                 IterPerf.mark("map.settle")

@@ -16,6 +16,7 @@ struct LocationsMap: View {
     /// The camera as last settled, so a selection knows whether the map is already closer in than the selection radius.
     @State private var visible: GeoRegion?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
 
     init(items: [SavedItem], selection: Binding<Set<UUID>>) {
         self.items = items
@@ -58,12 +59,13 @@ struct LocationsMap: View {
                 .annotationTitles(.hidden)
             }
         }
-        .mapStyle(.standard(elevation: .flat, pointsOfInterest: .excludingAll))
+        .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
         .mapControls {
             MapZoomStepper()
             MapCompass()
             MapScaleView()
         }
+        .overlay(alignment: .bottomTrailing) { MapStyleMenu().padding(IterSpace.sm) }
         .onMapCameraChange(frequency: .onEnd) { context in
             let r = context.region
             visible = GeoRegion(center: Coordinate(latitude: r.center.latitude, longitude: r.center.longitude),

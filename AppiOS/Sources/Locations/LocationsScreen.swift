@@ -404,6 +404,7 @@ private struct LocationsMapHeader: View {
     let onOpen: (Spot) -> Void
     @State private var position: MapCameraPosition = .automatic
     @State private var selection: UUID?
+    @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
 
     var body: some View {
         Map(position: $position, selection: $selection) {
@@ -415,8 +416,9 @@ private struct LocationsMapHeader: View {
                 .annotationTitles(.hidden)
             }
         }
-        .mapStyle(.standard(elevation: .flat, pointsOfInterest: .excludingAll))
+        .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
         .mapControls { MapCompass() }
+        .overlay(alignment: .bottomTrailing) { MapStyleMenu().padding(IterSpace.sm) }
         .onAppear { position = Self.framing(items) }
         .onChange(of: items.map(\.id)) { withAnimation { position = Self.framing(items) } }
         .onChange(of: selection) { _, id in
