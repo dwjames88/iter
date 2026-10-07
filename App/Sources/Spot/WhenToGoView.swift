@@ -1,5 +1,9 @@
 import SwiftUI
+#if canImport(AppKit)
 import AppKit
+#else
+import UIKit
+#endif
 import IterCore
 import IterDesign
 import IterFeatures

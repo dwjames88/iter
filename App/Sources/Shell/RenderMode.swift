@@ -36,6 +36,12 @@ extension View {
     /// One toolbar bar across the whole window. On macOS 26 the toolbar is transparent and shows whatever is behind
     /// it, so a paper column and a map next to each other drew two different bars with a seam. Asking for the system
     /// toolbar background draws one continuous bar; panels must not extend their own backgrounds under it.
-    func unifiedToolbarBackground() -> some View { toolbarBackgroundVisibility(.visible, for: .windowToolbar) }
+    func unifiedToolbarBackground() -> some View {
+        #if os(macOS)
+        toolbarBackgroundVisibility(.visible, for: .windowToolbar)
+        #else
+        self
+        #endif
+    }
     func snapshotOpaqueBackground() -> some View { modifier(SnapshotOpaqueBackground()) }
 }

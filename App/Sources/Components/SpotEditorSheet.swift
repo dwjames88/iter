@@ -84,7 +84,7 @@ struct SpotEditorSheet: View {
                 Section {
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), alignment: .leading), count: 3), alignment: .leading, spacing: IterSpace.sm) {
                         ForEach(BestLight.allCases) { (light: BestLight) in
-                            Toggle(LightText.name(light), isOn: bestLightBinding(light)).toggleStyle(.checkbox)
+                            Toggle(LightText.name(light), isOn: bestLightBinding(light)).checkboxToggleStyle()
                         }
                     }
                 } header: {
@@ -157,7 +157,7 @@ struct SpotEditorSheet: View {
                     draft.coordinate = original
                     position = Self.cameraPosition(original)
                 } label: { Text("Reset Pin", comment: "Button") }
-                .buttonStyle(.link)
+                .linkButtonStyle()
             }
         }
     }

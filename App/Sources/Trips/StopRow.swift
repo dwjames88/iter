@@ -157,7 +157,11 @@ struct StopRowView: View {
         Button { editsBuffer = true } label: {
             Text(ScheduleText.buffer(minutes: entry.stop.setUpBufferMinutes))
         }
+        #if os(macOS)
         .buttonStyle(.link)
+        #else
+        .buttonStyle(.borderless)
+        #endif
         .help(Text("Change how long before the window you want to be set up", comment: "Tooltip"))
     }
 

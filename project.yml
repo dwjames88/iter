@@ -1,4 +1,7 @@
 name: Iter
+# The iPhone and iPad app lives in its own spec (targets, scheme, iOS deployment target).
+include:
+  - project-ios.yml
 options:
   bundleIdPrefix: com.dwjames
   deploymentTarget:

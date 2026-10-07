@@ -1,5 +1,9 @@
 import SwiftUI
+#if canImport(AppKit)
 import AppKit
+#else
+import UIKit
+#endif
 import MapKit
 import CoreLocation
 import IterCore
@@ -21,8 +25,12 @@ enum ExploreActions {
 
     @MainActor static func copyCoordinates(_ spot: Spot) {
         let text = String(format: "%.5f, %.5f", spot.coordinate.latitude, spot.coordinate.longitude)
+        #if os(macOS)
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(text, forType: .string)
+        #else
+        UIPasteboard.general.string = text
+        #endif
     }
 }
 

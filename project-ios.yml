@@ -1,0 +1,104 @@
+# The iPhone and iPad app. Included from project.yml (`include: [project-ios.yml]`), so `xcodegen generate` makes one
+# Iter.xcodeproj with both apps. Shared code: the IterKit package, plus the views in App/Sources that compile on both
+# platforms (everything there except the Mac-only files excluded below). iOS-only UI is in AppiOS/Sources.
+# A file added to App/Sources is compiled into both apps; if it needs AppKit, add it to the excludes here
+# (or guard it with #if os(macOS)). scripts/test-ios.sh builds and tests the iOS app on the Simulator.
+options:
+  deploymentTarget:
+    iOS: "26.0"
+targets:
+  Iter iOS:
+    type: application
+    platform: iOS
+    sources:
+      - path: AppiOS/Sources
+      - path: App/Sources
+        excludes:
+          # Mac-only: the window, menus, Settings scene, sidebar and the AppKit-backed Explore, Locations and builder.
+          - Shell/IterApp.swift
+          - Shell/AppCommands.swift
+          - Shell/RootView.swift
+          - Sidebar/SidebarView.swift
+          - Sidebar/SidebarTripsSection.swift
+          - Sidebar/SidebarLocationsSection.swift
+          - Components/ResizableSplit.swift
+          - Explore/ExploreView.swift
+          - Explore/ExploreListPanel.swift
+          - Explore/ExploreMapPane.swift
+          - Explore/ExplorePerfScript.swift
+          - Explore/ExplorePlaceCard.swift   # retired on the Mac (replaced by ExploreLightPanel); excluded until it is gone
+          - Locations/LocationsView.swift
+          - Locations/LocationsMap.swift
+          - Trips/TripBuilderView.swift
+          - Trips/TripPlanList.swift
+          - Trips/TripRouteMap.swift
+      - path: App/Resources/Assets.xcassets
+      - path: App/Resources/Localizable.xcstrings
+    dependencies:
+      - package: IterKit
+        product: IterCore
+      - package: IterKit
+        product: IterAstro
+      - package: IterKit
+        product: IterLight
+      - package: IterKit
+        product: IterData
+      - package: IterKit
+        product: IterServices
+      - package: IterKit
+        product: IterDesign
+      - package: IterKit
+        product: IterFeatures
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dwjames.iter.ios
+        PRODUCT_NAME: Iter
+        INFOPLIST_FILE: AppiOS/Info.plist
+        TARGETED_DEVICE_FAMILY: "1,2"
+        IPHONEOS_DEPLOYMENT_TARGET: "26.0"
+        SDKROOT: iphoneos
+        SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
+        SUPPORTS_MACCATALYST: NO
+        # Personal Team, automatic signing; the Simulator build needs no profile. On a device:
+        # xcodebuild ... -allowProvisioningUpdates (see TESTING-iOS.md).
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_IDENTITY: "Apple Development"
+        ENABLE_HARDENED_RUNTIME: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        # MARKETING_VERSION and CURRENT_PROJECT_VERSION come from project.yml's shared settings (one version for both apps).
+        ENABLE_PREVIEWS: YES
+        # Built with the iOS 27 SDK, the @Generable code references FoundationModels symbols that iOS 26 lacks
+        # (Generable.promptRepresentation), and a strong link stops the app at launch on iOS 26. A weak link lets it start;
+        # Ask checks availability before using the model. See TESTING-iOS.md, "iOS 26".
+        OTHER_LDFLAGS: ["$(inherited)", "-weak_framework", "FoundationModels"]
+  IterAppTests iOS:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: AppiOSTests
+    dependencies:
+      - target: Iter iOS
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dwjames.iter.ios.tests
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1,2"
+        IPHONEOS_DEPLOYMENT_TARGET: "26.0"
+        SDKROOT: iphoneos
+        SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
+        ENABLE_HARDENED_RUNTIME: NO
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/Iter.app/Iter
+        BUNDLE_LOADER: $(TEST_HOST)
+schemes:
+  Iter iOS:
+    build:
+      targets:
+        Iter iOS: all
+        IterAppTests iOS: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - IterAppTests iOS

@@ -61,7 +61,9 @@ struct SpotHeaderView: View {
         } message: {
             Text(LightText.deleteMessage(stops: record?.stops?.count ?? 0))
         }
+        #if os(macOS)
         .onDeleteCommand { if record != nil { requestDelete() } }
+        #endif
     }
 
     // MARK: Actions

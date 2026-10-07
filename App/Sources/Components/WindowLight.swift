@@ -37,7 +37,11 @@ extension IterSize {
 /// cached score under it, or leave the score slot empty; nothing per row says "No forecast".
 struct WeatherStatusBanner: View {
     let status: WeatherStatus
+    #if os(macOS)
     @Environment(\.openSettings) private var openSettings
+    #else
+    @Environment(\.openIterSettings) private var openSettings
+    #endif
 
     var body: some View {
         if let message = WeatherStatusText.message(status) {

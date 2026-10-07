@@ -1,4 +1,6 @@
+#if canImport(AppKit)
 import AppKit
+#endif
 import Foundation
 import SwiftUI
 import OSLog
@@ -118,6 +120,7 @@ enum AppLaunch {
     }
 }
 
+#if os(macOS)
 /// Reaches the hosting window to enforce the content minimum (so no resize can clip a column) and to apply
 /// `-IterWindowSize` once.
 struct MainWindowConfigurator: NSViewRepresentable {
@@ -159,6 +162,7 @@ struct MainWindowConfigurator: NSViewRepresentable {
         }
     }
 }
+#endif
 
 /// The screenshot scout behind `-IterScoutStub` (see `AppLaunch.makeScout`). Not a model: canned notes on real spots.
 private struct StubScout: Scouting {

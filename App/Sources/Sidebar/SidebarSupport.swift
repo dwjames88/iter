@@ -94,7 +94,9 @@ private struct InlineRenameField: View {
             .textFieldStyle(.plain)
             .focused($focused)
             .onSubmit { done(save: true) }
+            #if os(macOS)
             .onExitCommand { done(save: false) }
+            #endif
             .onChange(of: focused) { _, now in if !now { done(save: true) } }
             .onAppear {
                 text = initial
