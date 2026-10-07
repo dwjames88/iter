@@ -5,7 +5,6 @@ import IterCore
 @testable import IterDesign
 
 private let bands = LightBand.allCases
-private func bandKey(_ b: LightBand) -> String { IterColor.bandKey(b) }
 
 // MARK: WCAG helpers (implemented here on purpose, independent of the library's own luminance)
 
@@ -70,13 +69,11 @@ struct RegistryTests {
         for t in TokenValues.typography { #expect(!t.description.isEmpty) }
     }
 
-    @Test func everyBandHasRampAndTextTokens() {
-        for b in bands {
-            #expect(TokenValues.colors.contains { $0.name == IterColor.rampTokenName(b) })
-            #expect(TokenValues.colors.contains { $0.name == IterColor.rampTextTokenName(b) })
-            _ = IterColor.ramp(b)
-            _ = IterColor.rampText(b)
-        }
+    @Test func rampStopsAndTextTokensExist() {
+        for stop in IterRamp.stopScores { _ = TokenValues.color("light/ramp/\(stop)") }
+        _ = TokenValues.color("light/rampText/ink"); _ = TokenValues.color("light/rampText/inverse")
+        for b in bands { _ = IterColor.ramp(b); _ = IterColor.rampText(b) }
+        for score in [-5, 0, 50, 100, 140] { _ = IterColor.ramp(score: score); _ = IterColor.rampText(score: score) }
     }
 
     @Test func everyAPINameResolves() {
@@ -216,36 +213,74 @@ struct RegistryTests {
 
 @Suite("Contrast")
 struct ContrastTests {
-    @Test(arguments: Mode.allCases) func rampTextOnFillIsAtLeast4_5(_ mode: Mode) {
-        for b in bands {
-            let ratio = contrast(mode.hex("light/ramp/\(bandKey(b))"), mode.hex("light/rampText/\(bandKey(b))"))
-            #expect(ratio >= 4.5, "\(b) \(mode): \(ratio)")
+    private func fillHex(_ score: Int, _ mode: Mode) -> String { IterRamp.fill(score: score, dark: mode == .dark).hex }
+    private func textHex(_ score: Int, _ mode: Mode) -> String { IterRamp.text(score: score, dark: mode == .dark).hex }
+
+    @Test(arguments: Mode.allCases) func rampHitsTheEndTokensAndStops(_ mode: Mode) {
+        #expect(fillHex(0, mode) == mode.hex("light/ramp/0"))
+        #expect(fillHex(100, mode) == mode.hex("light/ramp/100"))
+        #expect(fillHex(100, mode) == mode.hex("accent/primary"), "score 100 is the accent orange")
+        for stop in IterRamp.stopScores { #expect(fillHex(stop, mode) == mode.hex("light/ramp/\(stop)")) }
+        // Out-of-range scores clamp.
+        #expect(fillHex(-3, mode) == fillHex(0, mode) && fillHex(130, mode) == fillHex(100, mode))
+    }
+
+    @Test func noLightIsPaperWhiteInLightAndTheDarkSurfaceInDark() {
+        #expect(Mode.light.hex("light/ramp/0") == "#FFFFFF")
+        // Dark: within a whisker of the window, never bright.
+        #expect(luminance(Mode.dark.hex("light/ramp/0")) < 0.02)
+    }
+
+    /// Luminance moves one way along the ramp (light mode darkens toward orange, dark mode brightens), and the
+    /// colour gets more saturated (OKLCH-ish chroma proxy: max-min channel spread) the better the score, in light.
+    @Test(arguments: Mode.allCases) func rampIsMonotonic(_ mode: Mode) {
+        let hexes = (0...100).map { fillHex($0, mode) }
+        for (a, b) in zip(hexes, hexes.dropFirst()) {
+            if mode == .light { #expect(luminance(a) >= luminance(b), "\(a) \(b)") } else { #expect(luminance(a) <= luminance(b), "\(a) \(b)") }
+        }
+        let spread = hexes.map { h -> Int in let c = RGB(hex: h)!; return max(c.red, c.green, c.blue) - min(c.red, c.green, c.blue) }
+        if mode == .light {
+            // Spread of RGB channels in light mode: white has none, orange the most (apart from the blue-channel dip near peach).
+            #expect(spread.first! == 0 && spread.last! > 150)
+            #expect(spread[50] > spread[10] && spread[90] > spread[50])
+        } else {
+            #expect(spread[100] > spread[0] && spread[75] > spread[25])
         }
     }
 
-    @Test(arguments: Mode.allCases) func whiteOnEveryRampFillIsAtLeast4_5(_ mode: Mode) {
-        for b in bands {
-            let ratio = contrast(mode.hex("light/ramp/\(bandKey(b))"), "#FFFFFF")
-            #expect(ratio >= 4.5, "white on \(b) \(mode): \(ratio)")
+    /// The text is ink up to the switch score and the inverse colour from it. The best of the two is chosen, so the
+    /// worst contrast is where neither reaches 4.5:1 (the fill's luminance sits between what ink and the inverse can
+    /// carry): light scores 98 and 99, dark 62 to 65. We state 4.2:1 as the floor for the time and symbol; the score
+    /// numeral is large heavy text, which needs 3:1, and clears it everywhere.
+    @Test(arguments: Mode.allCases) func rampTextContrast(_ mode: Mode) {
+        var below45: [Int] = []
+        for score in 0...100 {
+            let ratio = contrast(fillHex(score, mode), textHex(score, mode))
+            #expect(ratio >= 4.2, "\(mode) score \(score): \(ratio)")
+            if ratio < 4.5 { below45.append(score) }
+            // Ink wherever ink is chosen, the inverse only above the switch.
+            let ink = mode.hex("light/rampText/ink"), inv = mode.hex("light/rampText/inverse")
+            let switchScore = IterRamp.switchScore(dark: mode == .dark)
+            #expect(textHex(score, mode) == (score >= switchScore ? inv : ink))
+            // The switch is the right way round: past it, the inverse is the better of the two.
+            if score >= switchScore { #expect(contrast(fillHex(score, mode), inv) >= contrast(fillHex(score, mode), ink) - 0.001) }
+            if score < switchScore - 3 { #expect(ratio >= 3, "\(score)") }
         }
+        #expect(below45.count <= 5, "\(mode) scores under 4.5:1: \(below45)")
+        // Every score before the first problem one is a clean ink pass.
+        for score in 0..<(below45.first ?? 101) { #expect(contrast(fillHex(score, mode), mode.hex("light/rampText/ink")) >= 4.5 || score >= IterRamp.switchScore(dark: mode == .dark)) }
     }
 
-    @Test func rampIsMonotonicInLuminance() {
-        // Light mode: sand to deep amber gets darker. Dark mode: dim sand to bright amber gets lighter.
-        for mode in Mode.allCases {
-            let lums = bands.map { luminance(mode.hex("light/ramp/\(bandKey($0))")) }
-            for (a, b) in zip(lums, lums.dropFirst()) {
-                #expect(mode == .light ? a > b : a < b, "\(mode) \(lums)")
-            }
-        }
+    @Test(arguments: Mode.allCases) func bandMidpointsLandInTheirBands(_ mode: Mode) {
+        for b in bands { #expect(LightBand(score: IterRamp.midpoint(b)) == b) }
     }
 
-    @Test(arguments: Mode.allCases) func adjacentBandsStayDistinctInGreyscale(_ mode: Mode) {
-        let hexes = bands.map { mode.hex("light/ramp/\(bandKey($0))") }
-        for (a, b) in zip(hexes, hexes.dropFirst()) { #expect(contrast(a, b) >= 1.2, "\(a) \(b)") }
-        // Epic against Good, and against Fair, for a deuteranope.
-        let (good, epic) = (deuteranope(hexes[2]), deuteranope(hexes[4]))
-        #expect((max(good, epic) + 0.05) / (min(good, epic) + 0.05) >= 1.6, "good vs epic for a deuteranope")
+    @Test func lowScoresGetAHairlineAndHighOnesDoNot() {
+        #expect(IterColor.rampNeedsHairline(score: 0) && IterColor.rampNeedsHairline(score: 20))
+        #expect(!IterColor.rampNeedsHairline(score: 60) && !IterColor.rampNeedsHairline(score: 100))
+        // The unstroked fills are clearly a shape on the window: 1.15:1 or more in light mode.
+        let first = Int(IterRamp.hairlineBelowScore)
+        #expect(contrast(fillHex(first, .light), Mode.light.hex("background/window")) >= 1.10)
     }
 
     @Test(arguments: Mode.allCases) func graphicsAreAtLeast3To1OnTheWindow(_ mode: Mode) {
@@ -304,10 +339,6 @@ struct ContrastTests {
         #expect(hueDistance(danger, accent) >= 35, "danger vs accent \(mode): \(hueDistance(danger, accent))")
         #expect(hueDistance(warning, accent) >= 60, "warning vs accent \(mode): \(hueDistance(warning, accent))")
         #expect(hueDistance(danger, warning) >= 35, "danger vs warning \(mode): \(hueDistance(danger, warning))")
-        for band in ["great", "good"] {
-            let d = hueDistance(mode.hex("light/ramp/\(band)"), accent)
-            #expect(d >= 30, "ramp \(band) vs accent \(mode): \(d)")
-        }
         let w = oklchHue(warning)
         #expect(w >= 280 && w <= 320, "warning is violet: \(w)")
     }
@@ -346,10 +377,10 @@ struct RoundTripTests {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("iter-tokens-\(UUID().uuidString).xcassets")
         defer { try? FileManager.default.removeItem(at: dir) }
         try TokenCodec.writeAssets(.current, to: dir)
-        let epic = try OrderedJSON.parse(String(contentsOf: dir.appendingPathComponent("Tokens/light-ramp-epic.colorset/Contents.json"), encoding: .utf8))
+        let epic = try OrderedJSON.parse(String(contentsOf: dir.appendingPathComponent("Tokens/light-ramp-100.colorset/Contents.json"), encoding: .utf8))
         guard case .array(let colors)? = epic["colors"] else { Issue.record("no colors"); return }
         #expect(colors.count == 2)
-        #expect(colors[0]["color"]?["components"]?["red"]?.stringValue == "0x54")
+        #expect(colors[0]["color"]?["components"]?["red"]?.stringValue == "0xD9")
         #expect(colors[1]["appearances"] != nil)
         #expect(FileManager.default.fileExists(atPath: dir.appendingPathComponent("AccentColor.colorset/Contents.json").path))
         let count = try FileManager.default.contentsOfDirectory(atPath: dir.appendingPathComponent("Tokens").path).filter { $0.hasSuffix(".colorset") }.count

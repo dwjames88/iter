@@ -20,6 +20,7 @@ struct ScoreLegend: View {
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.lg) {
             section(String(localized: "Colours and scores", comment: "Score legend heading")) {
+                rampBar
                 ForEach(Self.bands, id: \.band) { row in
                     HStack(spacing: IterSpace.md) {
                         swatch(row.band, range: row.range)
@@ -70,16 +71,36 @@ struct ScoreLegend: View {
         }
     }
 
-    /// A tiny event unit: the band's fill with a white sample score in the unit's numeral.
+    /// A tiny event unit: the ramp fill at the band's midpoint score, with that score in ink in the unit's numeral.
     private func swatch(_ band: LightBand, range: ClosedRange<Int>) -> some View {
         let height = IterEvent.heightCompact
-        return Text((range.lowerBound + range.upperBound) / 2, format: .number)
+        let score = IterRamp.midpoint(band)
+        let shape = RoundedRectangle(cornerRadius: height * IterEvent.cornerRatio, style: .continuous)
+        return Text(score, format: .number)
             .font(IterFont.eventScore(size: IterEvent.scoreCompact))
             .monospacedDigit()
-            .foregroundStyle(IterColor.rampText(band))
+            .foregroundStyle(IterColor.rampText(score: score))
             .frame(width: height * 1.5, height: height)
-            .background(IterColor.ramp(band), in: RoundedRectangle(cornerRadius: height * IterEvent.cornerRatio, style: .continuous))
+            .background(IterColor.ramp(score: score), in: shape)
+            .overlay { if IterColor.rampNeedsHairline(score: score) { shape.strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline) } }
             .accessibilityHidden(true)
+    }
+
+    /// The whole ramp as a thin gradient bar, 0 (no light) to 100, built from the same score colours.
+    private var rampBar: some View {
+        let shape = RoundedRectangle(cornerRadius: IterRadius.badge, style: .continuous)
+        return VStack(alignment: .leading, spacing: IterSpace.xs) {
+            LinearGradient(colors: stride(from: 0, through: 100, by: 5).map { IterColor.ramp(score: $0) }, startPoint: .leading, endPoint: .trailing)
+                .frame(height: IterSpace.sm)
+                .clipShape(shape)
+                .overlay(shape.strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
+            HStack {
+                Text("No light", comment: "Score legend: the low end of the colour bar").font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
+                Spacer()
+                Text("Full light", comment: "Score legend: the high end of the colour bar").font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
+            }
+        }
+        .accessibilityHidden(true)
     }
 
     static func rangeText(_ range: ClosedRange<Int>) -> String {

@@ -59,28 +59,28 @@ public enum IterColor {
     public static let debugGrid = make("debug/grid")
     public static let debugLane = make("debug/lane")
 
-    /// Fill for a Light Index band. Single hue, ordered by lightness.
-    public static func ramp(_ band: LightBand) -> Color { rampColors[band.rawValue] }
+    /// Fill for a Light Index score (0 to 100): a continuous ramp from "no light" (white in light appearance, the dark
+    /// surface in dark) to the First Light accent orange, linear in sRGB between the `light/ramp/*` stops.
+    public static func ramp(score: Int) -> Color { rampColors[IterRamp.clamp(score)] }
 
-    /// Text or icon colour on `ramp(band)` (4.5:1 or better).
-    public static func rampText(_ band: LightBand) -> Color { rampTextColors[band.rawValue] }
+    /// Text, score and symbol colour on `ramp(score:)`: ink up to the switch score, the inverse above it.
+    public static func rampText(score: Int) -> Color { rampTextColors[IterRamp.clamp(score)] }
 
-    /// Registry name of the ramp fill / text token for a band.
-    public static func rampTokenName(_ band: LightBand) -> String { "light/ramp/\(bandKey(band))" }
-    public static func rampTextTokenName(_ band: LightBand) -> String { "light/rampText/\(bandKey(band))" }
+    /// Fill for a band alone, at the band's midpoint score, for callers that do not know the score.
+    public static func ramp(_ band: LightBand) -> Color { ramp(score: IterRamp.midpoint(band)) }
 
-    static func bandKey(_ band: LightBand) -> String {
-        switch band {
-        case .poor: "poor"
-        case .fair: "fair"
-        case .good: "good"
-        case .great: "great"
-        case .epic: "epic"
-        }
+    /// Text on `ramp(band)`.
+    public static func rampText(_ band: LightBand) -> Color { rampText(score: IterRamp.midpoint(band)) }
+
+    /// Whether a fill at this score needs a separator hairline to read as a shape against the ground.
+    public static func rampNeedsHairline(score: Int) -> Bool { Double(score) < IterRamp.hairlineBelowScore }
+
+    private static let rampColors: [Color] = (0...100).map { s in
+        color(for: ColorToken("light/ramp/\(s)", light: IterRamp.fill(score: s, dark: false).hex, dark: IterRamp.fill(score: s, dark: true).hex, ""))
     }
-
-    private static let rampColors: [Color] = LightBand.allCases.map { make(rampTokenName($0)) }
-    private static let rampTextColors: [Color] = LightBand.allCases.map { make(rampTextTokenName($0)) }
+    private static let rampTextColors: [Color] = (0...100).map { s in
+        color(for: ColorToken("light/rampText/\(s)", light: IterRamp.text(score: s, dark: false).hex, dark: IterRamp.text(score: s, dark: true).hex, ""))
+    }
 
     /// The SwiftUI colour for any registry token.
     public static func make(_ name: String) -> Color { color(for: TokenValues.color(name)) }

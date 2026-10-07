@@ -28,8 +28,8 @@ struct ExplorePinView: View {
 
     private var dot: some View {
         Group {
-            if let band = pin.band {
-                Circle().fill(IterColor.ramp(band))
+            if let score = pin.scoreValue {
+                Circle().fill(IterColor.ramp(score: score))
             } else {
                 Circle().fill(IterColor.backgroundControl)
             }

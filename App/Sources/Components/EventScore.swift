@@ -18,10 +18,12 @@ enum TimeStyle: Sendable {
 
 /// The event unit: a light window's score, symbol and time as ONE rounded rectangle in one continuous fill.
 ///
-/// A scored unit is filled with the band's ramp colour (corner radius a quarter of the height, not a capsule). On the
-/// left sits the score as a very large, heavy, monospaced-digit numeral that takes nearly the full height; on the
-/// right a column centred vertically: the window's symbol above, the start time below in a thin weight, about a third
-/// of the numeral's size. Everything is white, which every ramp fill passes at 4.5:1 (see `ContrastTests`). A window
+/// A scored unit is filled with the ramp colour of its score (`IterColor.ramp(score:)`: white, "no light", at 0 up to
+/// the accent orange at 100; corner radius a quarter of the height, not a capsule). On the left sits the score as a
+/// heavy monospaced-digit numeral; on the right a column centred vertically: the window's symbol above, the start
+/// time below in a light weight. The score, symbol and time are ink (`IterColor.rampText(score:)`), switching to the
+/// inverse colour only above the token switch score (see `ContrastTests`). Scores below `event/hairlineBelowScore`
+/// get a hairline, since their fill is too close to the ground. A window
 /// without a score is the same size with no fill and a hairline outline, the symbol over the time in the text
 /// colours (and a mini spinner beside the symbol while the forecast loads). The numeral and the stack take fixed
 /// measured widths per variant and time style (`unitWidth`), so units stack and align. Sizes are fixed points from the
@@ -122,11 +124,11 @@ struct EventScore: View {
                     Text(score.value, format: .number)
                         .font(IterFont.eventScore(size: Self.scoreSize(v)))
                         .monospacedDigit()
-                        .foregroundStyle(IterColor.rampText(score.band))
+                        .foregroundStyle(IterColor.rampText(score: score.value))
                         .lineLimit(1)
                         .minimumScaleFactor(0.6)
                         .frame(width: Self.scoreWidth(v))
-                    stack(color: IterColor.rampText(score.band))
+                    stack(color: IterColor.rampText(score: score.value))
                         .frame(width: Self.stackWidth(v, timeStyle))
                 }
                 .padding(.horizontal, Self.padding(v))
@@ -138,12 +140,14 @@ struct EventScore: View {
         .frame(width: Self.unitWidth(v, timeStyle: timeStyle), height: height)
         .background(unitFill, in: shape)
         .overlay {
-            if score == nil { shape.strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline) }
+            if score.map({ IterColor.rampNeedsHairline(score: $0.value) }) ?? true {
+                shape.strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline)
+            }
         }
         .opacity(score?.confidence == .low ? IterEvent.lowConfidenceOpacity : 1)
     }
 
-    /// The symbol above the start time, centred. A scored unit draws both in one colour (white); an unscored one
+    /// The symbol above the start time, centred. A scored unit draws both in one colour (ink); an unscored one
     /// draws the symbol in its standalone colour and a spinner beside it while loading.
     private func stack(color: Color) -> some View {
         let v = unitVariant
@@ -170,7 +174,7 @@ struct EventScore: View {
 
     /// The one fill: the band's ramp colour; none when unscored (a pin gets a material).
     private var unitFill: AnyShapeStyle {
-        if let score { return AnyShapeStyle(IterColor.ramp(score.band)) }
+        if let score { return AnyShapeStyle(IterColor.ramp(score: score.value)) }
         return variant == .pin ? pinFill : AnyShapeStyle(Color.clear)
     }
 

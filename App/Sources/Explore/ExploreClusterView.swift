@@ -14,8 +14,9 @@ struct ExploreClusterView: View {
 
     var body: some View {
         HStack(spacing: IterSpace.xs) {
-            if let band = cluster.bestBand {
-                Circle().fill(IterColor.ramp(band)).frame(width: IterSpace.sm, height: IterSpace.sm)
+            if let score = cluster.bestScore {
+                Circle().fill(IterColor.ramp(score: score)).frame(width: IterSpace.sm, height: IterSpace.sm)
+                    .overlay(Circle().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
             }
             Text(cluster.count, format: .number)
                 .font(IterFont.captionStrong)
