@@ -31,6 +31,7 @@ struct RootView: View {
     }
 
     var body: some View {
+        @Bindable var onboarding = model.onboarding
         NavigationSplitView(columnVisibility: $columnVisibility) {
             SidebarView()
                 .navigationSplitViewColumnWidth(min: IterSize.sidebarMin, ideal: IterSize.sidebarIdeal, max: IterSize.sidebarMax)
@@ -45,10 +46,14 @@ struct RootView: View {
             if new == .all { autoCollapsed = false }
         }
         .focusedSceneValue(\.navigation, navigation)
+        .sheet(isPresented: $onboarding.isPresented, onDismiss: { model.onboarding.dismissed() }) {
+            OnboardingView()
+        }
         .onAppear {
             IterPerf.once("window.appear")
             model.store.undoManager = undoManager
             restoreSelection()
+            AppLaunch.presentOnboardingIfWanted(model)
         }
         .task { if AppLaunch.settingsTab != nil { openSettings() } }
         .onChange(of: undoManager) { _, new in model.store.undoManager = new }

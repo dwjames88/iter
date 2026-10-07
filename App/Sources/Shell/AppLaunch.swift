@@ -22,6 +22,8 @@ import IterFeatures
 /// `-IterInMemoryStore YES` (see `makeScout`): `unavailable` reports Apple Intelligence as turned off, `results` answers with three real
 /// curated spots near the asked-about map region and canned notes.
 /// `-IterShowLayoutGrid YES` draws the 8 pt layout grid and lane guides over lists and cards (Debug ▸ Show Layout Grid).
+/// `-IterOnboarding show|skip`: `show` opens the first-run guide at launch even if it was seen; `skip` never opens it. Without
+/// the flag the guide opens once on a first launch (not under tests, a smoke run or `-IterInMemoryStore YES`).
 /// `-IterWindowSize WxH` (for example `1280x820`, `960x652`, or `min` for the window minimum) sets the main window's
 /// content size once at launch; absent, the window opens as usual. Sizes below the minimum are raised to it.
 enum AppLaunch {
@@ -30,6 +32,15 @@ enum AppLaunch {
     static var inMemoryStore: Bool { UserDefaults.standard.bool(forKey: "IterInMemoryStore") }
     static var isRunningTests: Bool { ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
         || ProcessInfo.processInfo.environment["XCTestBundlePath"] != nil }
+    /// Opens the first-run guide per `-IterOnboarding` and the rules above. Call once the window has appeared.
+    @MainActor static func presentOnboardingIfWanted(_ model: AppModel) {
+        guard !isRunningTests, !smokeTest else { return }
+        switch UserDefaults.standard.string(forKey: "IterOnboarding")?.lowercased() {
+        case "show": model.onboarding.present(at: .welcome)
+        case "skip": break
+        default: if !inMemoryStore { model.onboarding.presentIfNeeded() }
+        }
+    }
     static var smokeTest: Bool { UserDefaults.standard.bool(forKey: "IterSmokeTest") }
 
     static var sectionName: String? { UserDefaults.standard.string(forKey: "IterSection") }

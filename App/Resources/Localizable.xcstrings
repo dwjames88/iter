@@ -352,7 +352,9 @@
         }
       }
     },
-    "%lld." : {},
+    "%lld." : {
+
+    },
     "%lld° %@" : {
       "comment" : "A compass bearing, e.g. 100° E",
       "localizations" : {
@@ -381,6 +383,9 @@
     "A few days out: expect the score to move a little." : {
       "comment" : "Confidence in words"
     },
+    "A key is already saved in your Keychain." : {
+      "comment" : "Onboarding weather: a key exists"
+    },
     "A new version of Iter is available" : {
       "comment" : "Update window title"
     },
@@ -389,6 +394,9 @@
     },
     "API key" : {
       "comment" : "Settings field"
+    },
+    "API keys page" : {
+      "comment" : "Onboarding weather: link to the keys page"
     },
     "About" : {
       "comment" : "Settings tab"
@@ -456,6 +464,9 @@
     "All sessions have passed" : {
       "comment" : "Trip card when every session is in the past"
     },
+    "Allow Location…" : {
+      "comment" : "Onboarding location: asks the system for permission"
+    },
     "Apple Intelligence" : {
       "comment" : "Settings tab"
     },
@@ -471,8 +482,11 @@
     "Apple Intelligence is still downloading" : {
       "comment" : "Ask unavailable title"
     },
+    "Apple Intelligence is still getting ready" : {
+      "comment" : "Onboarding Ask: model downloading"
+    },
     "Apple Intelligence is turned off" : {
-      "comment" : "Ask unavailable title"
+      "comment" : "Ask unavailable title\nOnboarding Ask: user has it off"
     },
     "Apple Intelligence isn't available right now." : {
       "comment" : "Explanation failure"
@@ -486,7 +500,7 @@
     "Apple Weather" : {
       "comment" : "Weather provider name"
     },
-    "Apple Weather isn't enabled for this build. Choose another source in Settings." : {
+    "Apple Weather isn't available in this build. Set up OpenWeather to see light scores." : {
       "comment" : "Weather banner: WeatherKit not provisioned"
     },
     "Apply" : {
@@ -495,8 +509,11 @@
     "Architecture" : {
       "comment" : "Spot category"
     },
+    "Ask" : {
+      "comment" : "Onboarding summary: row label for the Ask feature"
+    },
     "Ask Iter" : {
-      "comment" : "List section: places suggested for a request\nSearch suggestions group title: ask Apple Intelligence\nSettings section: the Apple Intelligence search in Explore\nSpot provenance: found by Ask Iter (Apple Intelligence) in Explore"
+      "comment" : "List section: places suggested for a request\nOnboarding Ask: title\nSearch suggestions group title: ask Apple Intelligence\nSettings section: the Apple Intelligence search in Explore\nSpot provenance: found by Ask Iter (Apple Intelligence) in Explore"
     },
     "Ask Iter can't help with that request" : {
       "comment" : "Ask failure title"
@@ -542,6 +559,9 @@
         }
       }
     },
+    "Ask finds places from a plain question, such as “quiet lakes for sunrise near Bishop”, and explains a score in words. It uses Apple Intelligence, which runs on this Mac." : {
+      "comment" : "Onboarding Ask: what it does (Mac)"
+    },
     "Ask to use your location" : {
       "comment" : "Tooltip"
     },
@@ -561,6 +581,12 @@
     },
     "At %@ the sun is below the horizon." : {
       "comment" : "Sky arc readout for the sun"
+    },
+    "Available on this Mac" : {
+      "comment" : "Onboarding Ask: works (Mac)"
+    },
+    "Back" : {
+      "comment" : "Onboarding: previous step"
     },
     "Back to All Trips" : {
       "comment" : "Button"
@@ -635,6 +661,9 @@
     "Calls today" : {
       "comment" : "Settings field"
     },
+    "Can't reach OpenWeather. Check your internet connection." : {
+      "comment" : "Onboarding weather: no network"
+    },
     "Cancel" : {
       "comment" : "Alert button\nButton\nButton: stop the running Ask\nUpdate window button"
     },
@@ -696,7 +725,7 @@
       "comment" : "Shown while the forecast loads"
     },
     "Checking…" : {
-      "comment" : "Settings weather status"
+      "comment" : "Onboarding weather: testing the key\nSettings weather status"
     },
     "Choose the day shown on the map" : {
       "comment" : "Tooltip"
@@ -761,6 +790,9 @@
     "Contains data from the Windy database" : {
       "comment" : "Windy attribution required by its API terms"
     },
+    "Continue" : {
+      "comment" : "Onboarding: next step"
+    },
     "Copy Coordinates" : {
       "comment" : "Context menu"
     },
@@ -788,6 +820,9 @@
     "Couldn't remove the key from your Keychain." : {
       "comment" : "Settings: Keychain error"
     },
+    "Couldn't save the key in your Keychain." : {
+      "comment" : "Onboarding weather: Keychain write failed"
+    },
     "Couldn't save the key to your Keychain." : {
       "comment" : "Settings: Keychain error"
     },
@@ -799,6 +834,9 @@
     },
     "Create" : {
       "comment" : "Button: create the trip"
+    },
+    "Create a free account at OpenWeather." : {
+      "comment" : "Onboarding weather step 1"
     },
     "Curated" : {
       "comment" : "Saved filter\nSource filter: Iter's hand-picked spots\nSpot provenance"
@@ -878,6 +916,9 @@
     },
     "Distance" : {
       "comment" : "Sort option: nearest first; from your location, or from the middle of the map when there is no location"
+    },
+    "Do This Later" : {
+      "comment" : "Onboarding weather: skip the setup"
     },
     "Download from GitHub" : {
       "comment" : "Update window button"
@@ -1005,6 +1046,9 @@
     },
     "Find real places that fit, with a note on why" : {
       "comment" : "Second line of the Ask Iter suggestion"
+    },
+    "Find spots, see when the light is best, and plan trips around it." : {
+      "comment" : "Onboarding welcome: how to use Iter"
     },
     "Finding your location…" : {
       "comment" : "Progress in the Explore banner while the location is being found"
@@ -1204,6 +1248,12 @@
     "Iter couldn't read that file. Nothing was imported." : {
       "comment" : "Import error"
     },
+    "Iter scores sunrise, sunset, golden hour and blue hour for the places you want to photograph." : {
+      "comment" : "Onboarding welcome: what Iter does"
+    },
+    "Iter uses your location to show spots near you and to start the map where you are. You can search and plan anywhere without it." : {
+      "comment" : "Onboarding location: why Iter asks"
+    },
     "Iter uses your location to show spots within %lld miles." : {
       "comment" : "Explore banner: why location is asked for; the number is the radius in miles"
     },
@@ -1212,6 +1262,12 @@
     },
     "Key rejected" : {
       "comment" : "Settings weather status"
+    },
+    "Key saved" : {
+      "comment" : "Onboarding summary: a key exists"
+    },
+    "Key saved, not working yet" : {
+      "comment" : "Onboarding summary: a key exists but OpenWeather has not accepted it"
     },
     "Key type" : {
       "comment" : "Settings field"
@@ -1249,6 +1305,9 @@
     "Light Today" : {
       "comment" : "Saved sort order: best light today first"
     },
+    "Light scores need a forecast. Iter uses OpenWeather, which is free for 1,000 calls a day. You bring your own key, and it stays in your Keychain." : {
+      "comment" : "Onboarding weather: intro"
+    },
     "Light through the day" : {
       "comment" : "Spot page section title"
     },
@@ -1281,6 +1340,15 @@
     },
     "Loading images of %@" : {
       "comment" : "VoiceOver: the place card's image placeholder while loading"
+    },
+    "Location" : {
+      "comment" : "Onboarding summary: row label"
+    },
+    "Location is off. You can turn it on in System Settings ▸ Privacy & Security ▸ Location Services." : {
+      "comment" : "Onboarding location: denied (Mac)"
+    },
+    "Location is on." : {
+      "comment" : "Onboarding location: allowed"
     },
     "Locations" : {
       "comment" : "Menu item\nSidebar section"
@@ -1402,6 +1470,9 @@
     "Nearest to %@ first" : {
       "comment" : "Add stop list order, naming the stop the distances are from"
     },
+    "Needs a Mac with Apple silicon and Apple Intelligence turned on in System Settings ▸ Apple Intelligence & Siri. Everything else in Iter works without it." : {
+      "comment" : "Onboarding Ask: requirement (Mac)"
+    },
     "Needs an API key" : {
       "comment" : "Settings weather status"
     },
@@ -1423,7 +1494,9 @@
     "New Location" : {
       "comment" : "Menu item: drops a pin on the Explore map"
     },
-    "New Spot" : {},
+    "New Spot" : {
+
+    },
     "New Trip" : {
       "comment" : "Default trip name\nMenu item\nPrimary button on the empty trips screen\nSheet title\nToolbar button\nUndo action name"
     },
@@ -1438,6 +1511,12 @@
     },
     "New Trip, Folder or Location" : {
       "comment" : "Tooltip"
+    },
+    "New here? Start in Explore: pick a place to see its light, then add it to a trip." : {
+      "comment" : "Onboarding done: where to begin"
+    },
+    "New keys can take up to two hours to start working." : {
+      "comment" : "Onboarding weather: activation delay"
     },
     "New moon" : {
       "comment" : "Moon phase"
@@ -1531,11 +1610,26 @@
     "None" : {
       "comment" : "Settings: no fallback forecast source"
     },
+    "Not Now" : {
+      "comment" : "Onboarding location: decline for now"
+    },
+    "Not available in this build" : {
+      "comment" : "Onboarding Ask: no scout in this build"
+    },
+    "Not available right now" : {
+      "comment" : "Onboarding Ask: unavailable for another reason"
+    },
     "Not checked yet" : {
-      "comment" : "Settings weather status"
+      "comment" : "Onboarding: the saved key has not been tried yet\nSettings weather status"
     },
     "Not enabled for this build" : {
       "comment" : "Settings weather status"
+    },
+    "Not set up yet: use the banner or Settings ▸ Weather" : {
+      "comment" : "Onboarding summary: no weather key"
+    },
+    "Not supported on this Mac" : {
+      "comment" : "Onboarding Ask: hardware too old (Mac)"
     },
     "Note from Apple Intelligence" : {
       "comment" : "VoiceOver prefix and tooltip of the on-device model's one-line reason for a suggestion"
@@ -1561,6 +1655,15 @@
     "OK" : {
       "comment" : "Alert button\nUpdate window button"
     },
+    "Off" : {
+      "comment" : "Onboarding summary: location not allowed"
+    },
+    "On" : {
+      "comment" : "Onboarding summary: location allowed"
+    },
+    "On the Billing plan tab, set the daily limit to 1,000 calls so you are never charged." : {
+      "comment" : "Onboarding weather step 3"
+    },
     "Open" : {
       "comment" : "Context menu\nContext menu: open the spot page\nMenu item"
     },
@@ -1570,6 +1673,9 @@
     "Open Location Settings" : {
       "comment" : "Button: open System Settings > Location Services"
     },
+    "Open OpenWeather" : {
+      "comment" : "Onboarding weather: opens the sign-up page"
+    },
     "Open Settings" : {
       "comment" : "Tooltip"
     },
@@ -1577,7 +1683,7 @@
       "comment" : "Context menu"
     },
     "Open System Settings" : {
-      "comment" : "Button\nButton: opens Apple Intelligence & Siri settings"
+      "comment" : "Button\nButton: opens Apple Intelligence & Siri settings\nOnboarding Ask: opens System Settings (Mac)"
     },
     "Open in Maps" : {
       "comment" : "Button\nContext menu"
@@ -1588,11 +1694,17 @@
     "Open spot page" : {
       "comment" : "Tooltip"
     },
+    "Open the API keys page and copy your key." : {
+      "comment" : "Onboarding weather step 4"
+    },
     "Open the spot page" : {
       "comment" : "Tooltip"
     },
     "Open this day" : {
       "comment" : "Help"
+    },
+    "Open this guide again from Help ▸ Welcome to Iter." : {
+      "comment" : "Onboarding done: how to reopen the guide (Mac)"
     },
     "Open this location in Apple Maps" : {
       "comment" : "Help"
@@ -1605,6 +1717,21 @@
     },
     "OpenWeather" : {
       "comment" : "Weather provider name"
+    },
+    "OpenWeather API key" : {
+      "comment" : "Onboarding weather: key field accessibility label"
+    },
+    "OpenWeather rejected this key." : {
+      "comment" : "Onboarding: key rejected by OpenWeather"
+    },
+    "OpenWeather said: %@" : {
+      "comment" : "Onboarding: OpenWeather's own error text"
+    },
+    "OpenWeather said: this key can't be used." : {
+      "comment" : "Onboarding weather: unexpected error"
+    },
+    "OpenWeather says this key is over its daily limit." : {
+      "comment" : "Onboarding weather: HTTP 429"
     },
     "Opens the trip" : {
       "comment" : "VoiceOver hint"
@@ -1652,7 +1779,12 @@
     "Park, town or region" : {
       "comment" : "Locality placeholder"
     },
-    "Paste your key" : {},
+    "Paste your API key" : {
+      "comment" : "Onboarding weather: key field prompt"
+    },
+    "Paste your key" : {
+
+    },
     "Pick your spots and days. Iter works out when to leave so you are set up before the light arrives." : {
       "comment" : "Empty trips screen explanation"
     },
@@ -1826,6 +1958,9 @@
     "Save" : {
       "comment" : "Button\nContext menu\nPlace panel: save the spot"
     },
+    "Save Key Anyway" : {
+      "comment" : "Onboarding weather: save a key OpenWeather has not accepted yet"
+    },
     "Save Spot" : {
       "comment" : "Undo action name"
     },
@@ -1841,7 +1976,9 @@
     "Saved in Keychain" : {
       "comment" : "Settings: the key is in the Keychain"
     },
-    "Saved in Keychain. Paste to replace" : {},
+    "Saved in Keychain. Paste to replace" : {
+
+    },
     "Scored from a daily summary: beyond %@'s hourly forecast." : {
       "comment" : "Score footnote: daily summary only. Argument is the provider name"
     },
@@ -1887,11 +2024,20 @@
     "Session" : {
       "comment" : "Accessibility label of the session menu"
     },
+    "Set Up Weather…" : {
+      "comment" : "Weather banner: opens the weather setup guide"
+    },
     "Set up" : {
       "comment" : "Label under a stop's set-up time"
     },
     "Set up %lld min before the window" : {
       "comment" : "Set-up buffer editor"
+    },
+    "Set up OpenWeather" : {
+      "comment" : "Tooltip"
+    },
+    "Set up weather" : {
+      "comment" : "Onboarding weather: title"
     },
     "Set-up time before a window: %lld min" : {
       "comment" : "Settings field with its value, e.g. Set-up time before a window: 20 min"
@@ -1941,6 +2087,9 @@
     "Sign in to Xcode with an Apple Developer Program account." : {
       "comment" : "WeatherKit setup step"
     },
+    "Skip" : {
+      "comment" : "Onboarding: close the guide"
+    },
     "Skip This Version" : {
       "comment" : "Update window button"
     },
@@ -1977,6 +2126,9 @@
     "Spots" : {
       "comment" : "List section: curated and your own spots"
     },
+    "Start Using Iter" : {
+      "comment" : "Onboarding done: closes the guide"
+    },
     "Start from" : {
       "comment" : "New trip field"
     },
@@ -1987,7 +2139,7 @@
       "comment" : "VoiceOver hint"
     },
     "Step %lld of %lld" : {
-      "comment" : "Ask progress, e.g. Step 2 of 4",
+      "comment" : "Ask progress, e.g. Step 2 of 4\nOnboarding: progress; the placeholders are the current step and the number of steps",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2019,6 +2171,9 @@
     },
     "Strong wind: tripods and reflections suffer." : {
       "comment" : "Light reason"
+    },
+    "Subscribe to One Call by Call (One Call API 3.0). The first 1,000 calls each day are free." : {
+      "comment" : "Onboarding weather step 2"
     },
     "Sun" : {
       "comment" : "Sky arc legend"
@@ -2067,6 +2222,9 @@
     "System" : {
       "comment" : "Temperature unit follows the system"
     },
+    "Take the Guided Tour" : {
+      "comment" : "Onboarding done: link to the README tour"
+    },
     "Temp" : {
       "comment" : "Hourly row label"
     },
@@ -2078,6 +2236,9 @@
     },
     "Testing key: Windy's data is shuffled, so Iter won't score from it" : {
       "comment" : "Settings weather status"
+    },
+    "That doesn't look like an OpenWeather key. Keys are 32 letters and numbers." : {
+      "comment" : "Onboarding weather: key has the wrong shape"
     },
     "That request is too long" : {
       "comment" : "Ask failure title"
@@ -2318,7 +2479,7 @@
       "comment" : "Moon phase"
     },
     "Weather" : {
-      "comment" : "Settings tab"
+      "comment" : "Onboarding summary: row label\nSettings tab"
     },
     "Weather data © OpenWeather" : {
       "comment" : "OpenWeather attribution required by its licence"
@@ -2331,6 +2492,9 @@
     },
     "Weather isn't answering." : {
       "comment" : "Weather banner: generic failure"
+    },
+    "Welcome to Iter" : {
+      "comment" : "Help menu item: reopens the first-run guide\nOnboarding: welcome title"
     },
     "When to go" : {
       "comment" : "Spot page section title"
@@ -2362,6 +2526,9 @@
     "With none chosen, light is shown for sunset." : {
       "comment" : "Spot editor best light footer"
     },
+    "Working" : {
+      "comment" : "Onboarding: weather source answers"
+    },
     "Working · last update %@" : {
       "comment" : "Settings weather status, e.g. Working · last update 19:40"
     },
@@ -2377,11 +2544,17 @@
     "Yesterday" : {
       "comment" : "Relative day"
     },
+    "You're set" : {
+      "comment" : "Onboarding done: title"
+    },
     "You're up to date" : {
       "comment" : "Update window title: no newer version"
     },
     "Your Spots" : {
       "comment" : "Source filter: spots the user added"
+    },
+    "Your location" : {
+      "comment" : "Onboarding location: title"
     },
     "Your location (simulated)" : {
       "comment" : "Map: the simulated user location\nVoiceOver: the simulated user location on the map"
@@ -2392,7 +2565,9 @@
     "Zoom the timeline, arc and hourly strip to sunrise or sunset" : {
       "comment" : "Help"
     },
-    "^[%lld conflict](inflect: true)" : {},
+    "^[%lld conflict](inflect: true)" : {
+
+    },
     "^[%lld conflict](inflect: true) on this day" : {
       "comment" : "Day summary: how many schedule conflicts the day has"
     },
@@ -2402,7 +2577,9 @@
     "^[%lld place](inflect: true)" : {
       "comment" : "Number of places listed in Explore"
     },
-    "^[%lld stop](inflect: true)" : {},
+    "^[%lld stop](inflect: true)" : {
+
+    },
     "^[%lld stop](inflect: true) will move to Day %lld, the new last day. You can undo this." : {
       "comment" : "Warning when shortening a trip moves stops; the number is how many",
       "localizations" : {
@@ -2453,8 +2630,12 @@
     "walk-in unknown" : {
       "comment" : "Walk from parking to the shooting spot is not known"
     },
-    "·" : {},
-    "· %@" : {},
+    "·" : {
+
+    },
+    "· %@" : {
+
+    },
     "“%@”" : {
       "comment" : "The request an Ask section answers, shown under its header"
     },

@@ -34,6 +34,8 @@ public final class AppModel {
     public private(set) var attributions: [ForecastSource: WeatherAttributionInfo] = [:]
     /// The user's weather choices, keys and per-provider status; owns the provider router.
     public let weather: WeatherSetup
+    /// The first-run guide (see `OnboardingModel`).
+    public let onboarding: OnboardingModel
     /// The clock (injected for tests and snapshots).
     public var now: () -> Date
 
@@ -50,6 +52,7 @@ public final class AppModel {
                 scout: (any Scouting)?,
                 weatherSetup: WeatherSetup? = nil,
                 location: UserLocationModel = UserLocationModel(),
+                onboarding: OnboardingModel? = nil,
                 sampleWeather: any WeatherProviding = CachedWeatherService(wrapping: SampleWeatherService()),
                 ephemeris: any Ephemeris = Astronomy(),
                 defaults: UserDefaults = .standard,
@@ -64,6 +67,7 @@ public final class AppModel {
         self.drives = offlineDrives
         self.scout = scout
         self.location = location
+        self.onboarding = onboarding ?? OnboardingModel(defaults: defaults)
         self.defaults = defaults
         self.now = now
         self.engine = LightEngine(ephemeris: ephemeris)

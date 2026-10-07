@@ -55,6 +55,11 @@ struct AppCommands: Commands {
             Button(String(localized: "Refresh Forecasts", comment: "Menu item")) { model.forecasts.retryFailed() }
                 .keyboardShortcut("r")
         }
+        CommandGroup(replacing: .help) {
+            Button(String(localized: "Welcome to Iter", comment: "Help menu item: reopens the first-run guide")) {
+                model.onboarding.present(at: .welcome)
+            }
+        }
         DebugCommands(model: model, navigation: navigation)
     }
 }

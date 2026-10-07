@@ -37,6 +37,7 @@ extension IterSize {
 /// cached score under it, or leave the score slot empty; nothing per row says "No forecast".
 struct WeatherStatusBanner: View {
     let status: WeatherStatus
+    @Environment(AppModel.self) private var model
     #if os(macOS)
     @Environment(\.openSettings) private var openSettings
     #else
@@ -54,7 +55,13 @@ struct WeatherStatusBanner: View {
                     .foregroundStyle(IterColor.textPrimary)
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: 0)
-                if WeatherStatusText.offersSettings(status) {
+                if WeatherStatusText.offersSetup(status) {
+                    Button(String(localized: "Set Up Weather…", comment: "Weather banner: opens the weather setup guide")) {
+                        model.onboarding.present(at: .weather)
+                    }
+                    .controlSize(.small)
+                    .help(String(localized: "Set up OpenWeather", comment: "Tooltip"))
+                } else if WeatherStatusText.offersSettings(status) {
                     Button(String(localized: "Settings…", comment: "Weather banner: open Settings ▸ Weather")) { openSettings() }
                         .controlSize(.small)
                         .help(String(localized: "Open Settings", comment: "Tooltip"))
@@ -103,6 +110,15 @@ enum WeatherStatusText {
         }
     }
 
+    /// The banner opens the weather setup guide (not Settings) when there is no key, or Apple Weather cannot run.
+    static func offersSetup(_ status: WeatherStatus) -> Bool {
+        switch status {
+        case .needsKey: true
+        case .failed(.weatherServiceNotEnabled, _): true
+        default: false
+        }
+    }
+
     static func offersSettings(_ status: WeatherStatus) -> Bool {
         switch status {
         case .needsKey: true
@@ -118,7 +134,7 @@ enum WeatherStatusText {
     private static func failure(_ reason: ForecastUnavailableReason) -> String {
         switch reason {
         case .weatherServiceNotEnabled:
-            String(localized: "Apple Weather isn't enabled for this build. Choose another source in Settings.",
+            String(localized: "Apple Weather isn't available in this build. Set up OpenWeather to see light scores.",
                    comment: "Weather banner: WeatherKit not provisioned")
         case .keyRejected(let source):
             String(localized: "\(LightText.name(source)) rejected the weather key. Check it in Settings.",
