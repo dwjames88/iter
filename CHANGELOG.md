@@ -5,6 +5,8 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-07
+
 First pre-release, for friends to try.
 
 ### Added
@@ -24,4 +26,5 @@ First pre-release, for friends to try.
 - No sync between Mac and iPhone yet, and the iPhone app is not part of this release.
 - No Apple Weather yet, so scores use OpenWeather's total cloud forecast.
 
-[Unreleased]: https://github.com/dwjames88/iter/commits/main
+[Unreleased]: https://github.com/dwjames88/iter/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/dwjames88/iter/releases/tag/v0.1.0
