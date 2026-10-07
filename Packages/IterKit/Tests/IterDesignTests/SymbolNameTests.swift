@@ -23,6 +23,7 @@ struct SymbolNameTests {
     static let knownDynamicSources = [
         "LightText.symbol(",      // function body scanned
         "LightText.moonSymbol(",  // function body scanned
+        "LightText.roseSymbol(",  // function body scanned (rose event marks)
         "WeatherStatusText.symbol(", // function body scanned
         "notice.symbol",          // ScoutNotice(symbol: "…") literals scanned
         "h.symbolName",           // WeatherKit / SampleWeatherService hourly symbol; `symbol = …` scanned

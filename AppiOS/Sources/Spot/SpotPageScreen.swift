@@ -63,14 +63,12 @@ struct SpotPageScreen: View {
             VStack(alignment: .leading, spacing: IterSpace.xl) {
                 header(page)
                 VStack(alignment: .leading, spacing: IterSpace.xl) {
-                    WhenToGoSection(page: page)
-                    DayWindowsSection(page: page)
+                    LookAroundSection(coordinate: spot.coordinate)
+                    SpotFactsSection(spot: spot, page: page)
                     LightTimelineSection(page: page)
-                    SkyArcSection(page: page)
+                    OutlookSection(page: page)
                     HourlyWeatherSection(page: page)
                     WindySection(coordinate: spot.coordinate)
-                    SpotFactsSection(spot: spot)
-                    LookAroundSection(coordinate: spot.coordinate)
                 }
                 .environment(\.spotDensity, .panel)
                 Color.clear.frame(height: 60)

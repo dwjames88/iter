@@ -170,6 +170,20 @@ import IterFeatures
         }
     }
 
+    /// The panel with tomorrow open in the outlook (`-IterOutlookOpen YES`), scrolled to it.
+    @Test(.enabled(if: Snapshot.enabled)) func panelOutlookOpen() async throws {
+        let model = Fixtures.model(weather: .sample)
+        UserDefaults.standard.set(true, forKey: "IterPanelScrolled")
+        UserDefaults.standard.set(true, forKey: "IterOutlookOpen")
+        defer {
+            UserDefaults.standard.removeObject(forKey: "IterPanelScrolled")
+            UserDefaults.standard.removeObject(forKey: "IterOutlookOpen")
+        }
+        try await withListColumn(width: nil) {
+            try await Snapshot.render(panelScreen(model), screen: "explore", state: "panel-outlook-open", sizes: [Snapshot.regular], settle: .seconds(4))
+        }
+    }
+
     /// Weather offline: the banner under the header, rows without scores, and the selected row's panel.
     @Test(.enabled(if: Snapshot.enabled)) func weatherOffline() async throws {
         let model = Fixtures.model(weather: .failed)

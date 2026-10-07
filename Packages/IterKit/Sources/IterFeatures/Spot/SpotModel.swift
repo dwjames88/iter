@@ -90,6 +90,8 @@ public final class SpotModel {
     public private(set) var chosenTime: Date?
     public private(set) var focus: TimelineFocus = .fullDay
     public private(set) var expanded: Set<LightWindowKind> = []
+    /// The outlook day that is open, showing its windows; at most one, and always the selected day (nil: all closed).
+    public private(set) var expandedDay: LocalDay?
     public private(set) var explanation: ExplanationState = .idle
 
     /// Days in the outlook strip.
@@ -384,9 +386,20 @@ public final class SpotModel {
 
     public func goToToday() { selectDay(today) }
 
+    /// Opens an outlook day in place and selects it; opening another closes the first, and the open day closes again.
+    public func toggleDayExpanded(_ target: LocalDay) {
+        if expandedDay == target {
+            expandedDay = nil
+        } else {
+            selectDay(target)
+            expandedDay = target
+        }
+    }
+
     private func setDay(_ new: LocalDay) {
         guard new != day else { return }
         day = new
+        expandedDay = nil
         scrub = nil
         chosenTime = nil
         expanded = []

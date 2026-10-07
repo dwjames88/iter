@@ -6,143 +6,63 @@ import IterFeatures
 /// The lane widths shared by every window row, measured once.
 @MainActor enum WindowLanes {
     static let unit = EventScore.unitWidth(.regular, timeStyle: .range)
-    static let band = BandConfidence.laneWidth
+    /// How far windows inside an open day are indented: one disclosure lane and its gap.
+    static let nestedIndent = IterGrid.disclosureLane + IterGrid.laneGap
     /// Where the label lane starts: inset, disclosure lane, lane gap. Dividers and reasons indent to it.
     static let labelStart = IterGrid.inset + IterGrid.disclosureLane + IterGrid.laneGap
 }
 
-/// The selected day's windows in chronological order. Each row opens to its reasons (pattern #21): every factor
-/// with its value, a sentence and a signed bar, the forecast age and the confidence in words.
-/// Rows sit on fixed lanes: disclosure, label, event unit (symbol, score and time range), band and confidence (HIERARCHY.md).
-struct DayWindowsSection: View {
+/// One outlook day's windows in chronological order, shown inside the day when it is open (OutlookStrip). On today
+/// only the windows still ahead; a day with none says so in one secondary line. Each row opens to its reasons
+/// (pattern #21): every factor with its value, a sentence and a signed bar, the forecast age and the confidence in
+/// words, and on the full page the Explain block.
+/// Rows sit on fixed lanes: disclosure, label, and the event unit (symbol, score and time range), which is the whole rating; VoiceOver still hears band and confidence (HIERARCHY.md).
+struct DayWindowsList: View {
     let page: SpotModel
-    @Environment(\.spotDensity) private var density
+    let day: LocalDay
 
     var body: some View {
-        if density == .panel { panelBody } else { pageBody }
-    }
-
-    // MARK: Panel
-
-    /// The Explore panel: "Today" (the windows still ahead, with the date) and "Coming up" (tomorrow's), two cards.
-    /// Both keep the spot page's rows; a row from the other day opens that day on the timeline.
-    @ViewBuilder private var panelBody: some View {
-        let ahead = page.upcomingWindows
-        let today = ahead.filter { $0.day == page.today }
-        let later = ahead.filter { $0.day != page.today }
-        VStack(alignment: .leading, spacing: IterSpace.xl) {
-            ModuleCard(title: LightText.todayTitle, symbol: "sun.horizon", flush: true) {
-                Text(TimeText.day(page.today)).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
-            } content: {
-                if today.isEmpty {
-                    let sun = page.dayLight(on: page.today).sun.kind
-                    Text(sun == .polarDay ? LightText.polarDay : sun == .polarNight ? LightText.polarNight : LightText.nothingLeftToday)
-                        .font(IterFont.secondary)
-                        .foregroundStyle(IterColor.textSecondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding(.horizontal, IterGrid.inset)
-                } else {
-                    windowList(today)
-                }
-            }
-            if let first = later.first {
-                ModuleCard(title: LightText.comingUpTitle, symbol: "calendar.badge.clock", flush: true) {
-                    Text(TimeText.day(first.day)).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
-                } content: {
-                    windowList(later)
-                }
-            }
-        }
-    }
-
-    private func windowList(_ rows: [(day: LocalDay, window: LightWindow)]) -> some View {
-        VStack(spacing: 0) {
-            ForEach(Array(rows.enumerated()), id: \.offset) { index, row in
-                if index > 0 { Divider().padding(.leading, WindowLanes.labelStart) }
-                WindowRow(page: page, window: row.window, day: row.day)
-            }
-        }
-        .layoutGrid(lanes: LayoutLane.standardRowLanes(disclosure: true, event: .regular, band: true, time: .range))
-    }
-
-    // MARK: Page
-
-    @ViewBuilder private var pageBody: some View {
-        let light = page.dayLight
-        ModuleCard(title: LightText.windowsTitle, symbol: "sun.horizon", flush: true) {
-            if density == .page { dayControls }
-        } content: {
-            let rows = windowRows(light)
-            if rows.isEmpty {
-                Label(light.sun.kind == .polarDay ? LightText.polarDay : light.sun.kind == .polarNight ? LightText.polarNight : LightText.noWindowsPolar,
-                      systemImage: light.sun.kind == .polarDay ? "sun.max" : "moon.stars")
-                    .font(IterFont.body)
-                    .foregroundStyle(IterColor.textSecondary)
-                    .padding(.horizontal, IterGrid.inset)
-                    .padding(.bottom, IterSpace.sm)
-            } else {
-                VStack(spacing: 0) {
-                    ForEach(Array(rows.enumerated()), id: \.offset) { index, row in
-                        let startsGroup = row.day != page.day && (index == 0 || rows[index - 1].day == page.day)
-                        if startsGroup {
-                            WindowGroupHeader(title: LightText.relativeDay(row.day, today: page.today))
-                        } else if index > 0 {
-                            Divider().padding(.leading, WindowLanes.labelStart)
-                        }
-                        WindowRow(page: page, window: row.window, day: row.day)
-                    }
-                }
-                .layoutGrid(lanes: LayoutLane.standardRowLanes(disclosure: true, event: .regular, band: true, time: .range))
-            }
-        }
-    }
-
-    /// The day this list shows, and the way back to today.
-    private var dayControls: some View {
-        HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
-            let relative = LightText.relativeDay(page.day, today: page.today)
-            Text(relative == TimeText.day(page.day) ? TimeText.day(page.day) : "\(relative) · \(TimeText.day(page.day))")
+        let light = page.dayLight(on: day)
+        let rows = windows(light)
+        if rows.isEmpty {
+            Text(emptyLine(light))
                 .font(IterFont.secondary)
                 .foregroundStyle(IterColor.textSecondary)
-            if page.day != page.today {
-                Button(LightText.backToToday) { page.goToToday() }
-                    .controlSize(.small)
-                    .help(String(localized: "Return to today at this spot", comment: "Help"))
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, WindowLanes.labelStart)
+                .padding(.trailing, IterGrid.inset)
+                .padding(.vertical, IterSpace.sm)
+        } else {
+            VStack(spacing: 0) {
+                ForEach(Array(rows.enumerated()), id: \.offset) { index, window in
+                    // No divider under the day row; between windows it starts at the nested label lane.
+                    if index > 0 { Divider().padding(.leading, WindowLanes.labelStart + WindowLanes.nestedIndent) }
+                    WindowRow(page: page, window: window, day: day)
+                }
             }
+            // Nested one disclosure lane: a window's chevron sits under the day's label, so it reads as part of the day.
+            .padding(.leading, WindowLanes.nestedIndent)
+            .layoutGrid(lanes: LayoutLane.standardRowLanes(disclosure: true, event: .regular, time: .range))
+        }
+    }
+
+    /// Today: the windows that have not ended; any other day: all of them.
+    private func windows(_ light: DayLight) -> [LightWindow] {
+        if day == page.today { return page.upcomingWindows.filter { $0.day == day }.map(\.window) }
+        return light.windows
+    }
+
+    private func emptyLine(_ light: DayLight) -> String {
+        switch light.sun.kind {
+        case .polarDay: LightText.polarDay
+        case .polarNight: LightText.polarNight
+        case .normal: day == page.today ? LightText.nothingLeftToday : LightText.noWindowsPolar
         }
     }
 }
 
-extension DayWindowsSection {
-    /// The selected day's windows; on today, the windows still ahead plus tomorrow's (nothing already over).
-    fileprivate func windowRows(_ light: DayLight) -> [(day: LocalDay, window: LightWindow)] {
-        if page.day == page.today {
-            let ahead = page.upcomingWindows
-            if !ahead.isEmpty { return ahead }
-        }
-        return light.windows.map { (day: light.day, window: $0) }
-    }
-}
-
-/// A sub-group label ("Tomorrow"): the module-title style, on the label lane, 16 above and 4 below.
-struct WindowGroupHeader: View {
-    let title: String
-    var top: CGFloat = IterGrid.inset
-
-    var body: some View {
-        Text(title)
-            .font(IterFont.moduleTitle)
-            .foregroundStyle(IterColor.textSecondary)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading, WindowLanes.labelStart)
-            .padding(.trailing, IterGrid.inset)
-            .padding(.top, top)
-            .padding(.bottom, IterSpace.xs)
-            .accessibilityAddTraits(.isHeader)
-    }
-}
-
-private struct WindowRow: View {
+struct WindowRow: View {
     let page: SpotModel
     let window: LightWindow
     let day: LocalDay
@@ -160,7 +80,7 @@ private struct WindowRow: View {
             Button {
                 if isOtherDay { page.selectDay(day) } else if isExpandable { page.toggleExpanded(window.kind) }
             } label: {
-                HStack(alignment: .firstTextBaseline, spacing: IterGrid.laneGap) {
+                HStack(alignment: .center, spacing: IterGrid.laneGap) {
                     // Disclosure lane: kept on rows that cannot expand, so the label lane starts at one x.
                     Image(systemName: "chevron.right")
                         .font(IterFont.moduleTitle)
@@ -178,10 +98,6 @@ private struct WindowRow: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     EventScore(window: window, zone: page.timeZone, timeStyle: .range, variant: .regular,
                                isLoading: page.isLoadingForecast)
-                    Group {
-                        if let score = window.assessment.lightScore { BandConfidence(score: score) }
-                    }
-                    .frame(width: WindowLanes.band, alignment: .leading)
                 }
                 .padding(.horizontal, IterGrid.inset)
                 .padding(.vertical, IterSpace.sm)

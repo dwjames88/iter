@@ -77,7 +77,7 @@ public enum BestLight: String, Codable, CaseIterable, Hashable, Sendable, Identi
 
 // MARK: - Bands, confidence, reasons
 
-/// Named bands for a 0–100 score. The word is always shown beside the colour.
+/// Named bands for a 0–100 score. The colour carries the band; the word is in the legend and the VoiceOver label.
 public enum LightBand: Int, Codable, CaseIterable, Comparable, Hashable, Sendable {
     case poor, fair, good, great, epic
 
@@ -90,6 +90,14 @@ public enum LightBand: Int, Codable, CaseIterable, Comparable, Hashable, Sendabl
         case 40..<58: self = .fair
         default: self = .poor
         }
+    }
+
+    /// The scores 0 to 100 that fall in this band, found by asking `init(score:)`, so the thresholds stay in one place.
+    /// Total: a band that no score maps to would return the empty-looking range `0...0` rather than trap.
+    public var scoreRange: ClosedRange<Int> {
+        let scores = (0...100).filter { LightBand(score: $0) == self }
+        guard let low = scores.first, let high = scores.last else { return 0...0 }
+        return low...high
     }
 
     public static func < (a: LightBand, b: LightBand) -> Bool { a.rawValue < b.rawValue }

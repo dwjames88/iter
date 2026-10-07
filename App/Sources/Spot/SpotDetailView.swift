@@ -33,14 +33,12 @@ struct SpotPage: View {
         ScrollView {
             VStack(alignment: .leading, spacing: IterSpace.xl) {
                 SpotHeaderView(spot: liveSpot, nextEvent: page.upcomingWindows.first, today: page.today, zone: page.timeZone)
-                WhenToGoSection(page: page)
-                DayWindowsSection(page: page)
+                LookAroundSection(coordinate: liveSpot.coordinate)
+                SpotFactsSection(spot: liveSpot, page: page)
                 LightTimelineSection(page: page)
-                SkyArcSection(page: page)
+                OutlookSection(page: page)
                 HourlyWeatherSection(page: page)
                 WindySection(coordinate: liveSpot.coordinate)
-                SpotFactsSection(spot: liveSpot)
-                LookAroundSection(coordinate: liveSpot.coordinate)
             }
             .padding(.horizontal, IterSpace.xl)
             .padding(.vertical, IterSpace.xl)

@@ -10,6 +10,7 @@ struct SidebarView: View {
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
     @AppStorage("sidebar.expandedFolders") private var expandedRaw = ""
+    @State private var showsLegend = false
 
     var body: some View {
         @Bindable var navigation = navigation
@@ -27,9 +28,14 @@ struct SidebarView: View {
         .listStyle(.sidebar)
         .snapshotOpaqueBackground()
         .safeAreaInset(edge: .bottom) {
-            if model.sampleDataEnabled {
-                SampleDataLabel(style: .banner).padding(IterSpace.sm)
+            VStack(spacing: IterSpace.sm) {
+                if model.sampleDataEnabled { SampleDataLabel(style: .banner) }
+                HStack {
+                    legendButton
+                    Spacer()
+                }
             }
+            .padding(IterSpace.sm)
         }
         .toolbar {
             ToolbarItem {
@@ -38,6 +44,20 @@ struct SidebarView: View {
         }
         // A row about to be renamed must be visible: open the folders it sits in.
         .onChange(of: navigation.renamingID) { _, id in reveal(id, expansion) }
+    }
+
+    /// The "i" at the bottom of the sidebar: what the scores and colours mean, in a popover.
+    private var legendButton: some View {
+        Button { showsLegend.toggle() } label: {
+            Image(systemName: "info.circle").font(.system(size: IterSize.iconSmall))
+        }
+        .buttonStyle(.borderless)
+        .foregroundStyle(IterColor.textSecondary)
+        .help(Text("What the scores mean", comment: "Tooltip"))
+        .accessibilityLabel(Text("What the scores mean", comment: "Button"))
+        .popover(isPresented: $showsLegend, arrowEdge: .trailing) {
+            ScoreLegendPopover(source: model.weather.settings.primary)
+        }
     }
 
     private var addMenu: some View {

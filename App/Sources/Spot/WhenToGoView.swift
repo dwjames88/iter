@@ -8,20 +8,14 @@ import IterCore
 import IterDesign
 import IterFeatures
 
-/// The lead of the page: "when should I be here?" The best window over the days the forecast covers, then the
-/// outlook strip. With no score it shows the sun times, which are always exact; the screen's banner says why.
-struct WhenToGoSection: View {
+/// "When should I be here?" The best window over the days the forecast covers, as the first line of Good to know
+/// (SpotFactsSection draws it inside that card). With no score it shows the sun times, which are always exact; the
+/// screen's banner says why.
+struct BestWindowLead: View {
     let page: SpotModel
     @Environment(\.spotDensity) private var density
 
-    var body: some View {
-        ModuleCard(title: LightText.whenToGo, symbol: "calendar") {
-            VStack(alignment: .leading, spacing: IterGrid.inset) {
-                lead
-                OutlookStrip(page: page)
-            }
-        }
-    }
+    var body: some View { lead }
 
     @ViewBuilder private var lead: some View {
         if let best = page.best {
@@ -46,7 +40,7 @@ struct WhenToGoSection: View {
             EventScore(window: best.window, zone: page.timeZone, timeStyle: .range, variant: .large,
                        isLoading: page.isLoadingForecast)
             VStack(alignment: .leading, spacing: IterSpace.xs) {
-                Text(LightText.bestIn(days: page.outlookStripDays.count, intent: page.intent))
+                Text(LightText.bestIn(days: page.stripDays.count, intent: page.intent))
                     .font(IterFont.secondary)
                     .foregroundStyle(IterColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -108,138 +102,105 @@ struct SunTimesLine: View {
 
 // MARK: - Outlook
 
-/// The days the forecast covers, each with the intent's headline chip (pattern #22): fainter and with a range as
-/// confidence falls, an empty slot where a day has no score, "Best" on the best day.
+/// The outlook as its own module: the days the forecast covers, each openable in place (OutlookStrip).
+struct OutlookSection: View {
+    let page: SpotModel
+
+    var body: some View {
+        ModuleCard(title: LightText.outlookTitle(days: page.stripDays.count, intent: page.intent), symbol: "calendar", flush: true) {
+            OutlookStrip(page: page)
+        }
+    }
+}
+
+/// The days the forecast covers, today first, each with the intent's headline chip (pattern #22): fainter and with a
+/// range as confidence falls, an empty slot where a day has no score, "Best" on the best day. A day is a button on
+/// the lane grid: the disclosure chevron, the day, the chip and the range. It opens in place to that day's windows
+/// ([DayWindowsList]); one day is open at a time, and opening a day selects it, so the timeline, compass and hourly
+/// strip follow. Ten days never fit across a narrow column, so the days stack (the Weather ten-day idiom).
 struct OutlookStrip: View {
     let page: SpotModel
-    @Environment(\.spotDensity) private var density
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         let best = page.best
-        let days = shownDays
-        VStack(alignment: .leading, spacing: IterSpace.sm) {
-            Text(LightText.outlookTitle(days: days.count, intent: page.intent)).font(IterFont.moduleTitle).foregroundStyle(IterColor.textSecondary)
-            if density == .page {
-                HStack(alignment: .top, spacing: 0) {
-                    ForEach(days, id: \.day) { light in
-                        cell(light, isBest: best?.day == light.day).frame(maxWidth: .infinity)
-                    }
+        VStack(alignment: .leading, spacing: 0) {
+            ForEach(Array(page.stripDays.enumerated()), id: \.element.day) { index, light in
+                if index > 0 { Divider().padding(.leading, WindowLanes.labelStart) }
+                dayRow(light, isBest: best?.day == light.day)
+                if page.expandedDay == light.day {
+                    DayWindowsList(page: page, day: light.day)
+                        .transition(.opacity)
                 }
-            } else {
-                dayList(days, best: best)
             }
-            Text(LightText.outlookKey).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
+            Text(LightText.outlookKey)
+                .font(IterFont.secondary)
+                .foregroundStyle(IterColor.textSecondary)
+                .padding(.horizontal, IterGrid.inset)
+                .padding(.top, IterSpace.sm)
         }
+        .animation(reduceMotion ? nil : .snappy(duration: 0.25), value: page.expandedDay)
     }
 
-    // MARK: Compact list
-
-    /// The label lane: the widest "Wed 28" plus the "Best" marker, to the next multiple of the 8 pt unit.
-    private static let labelLane: CGFloat = {
-        let label = NSFont.preferredFont(forTextStyle: .headline)
-        let marker = NSFont.preferredFont(forTextStyle: .subheadline)
-        let width = ceil(("Wed 28" as NSString).size(withAttributes: [.font: label]).width
-                         + IterSpace.xs + ("Best" as NSString).size(withAttributes: [.font: marker]).width)
-        return (width / IterGrid.unit).rounded(.up) * IterGrid.unit
-    }()
-
-    /// The widest range, "100–100", at the secondary text style.
+    /// The widest state word, "No window", at the secondary text style.
     private static let rangeLane: CGFloat = {
-        let font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.preferredFont(forTextStyle: .subheadline).pointSize, weight: .regular)
-        return ceil(("100–100" as NSString).size(withAttributes: [.font: font]).width)
+        let font = NSFont.preferredFont(forTextStyle: .subheadline)
+        return ceil(("No window" as NSString).size(withAttributes: [.font: font]).width)
     }()
 
-    /// A vertical list in a narrow host, the Weather ten-day idiom on the light windows' lane grid: the day, the
-    /// chip, the range at the trailing edge. Ten days never fit across 296 pt, so the days stack.
-    private func dayList(_ days: [DayLight], best: BestWindow?) -> some View {
-        VStack(spacing: 0) {
-            ForEach(Array(days.enumerated()), id: \.element.day) { index, light in
-                if index > 0 { Divider().padding(.leading, IterSpace.sm) }
-                listRow(light, isBest: best?.day == light.day)
-            }
-        }
-    }
-
-    private func listRow(_ light: DayLight, isBest: Bool) -> some View {
-        let window = light.headline(for: page.intent)
+    private func dayRow(_ light: DayLight, isBest: Bool) -> some View {
+        let window = rowWindow(light)
+        let isOpen = page.expandedDay == light.day
         let selected = light.day == page.day
         let label = light.day == page.today ? LightText.relativeDay(light.day, today: page.today)
                                             : String(localized: "\(TimeText.weekday(light.day)) \(TimeText.dayNumber(light.day))",
                                                      comment: "Outlook row: weekday and day of the month, e.g. Thu 8")
         return Button {
-            page.selectDay(light.day)
+            page.toggleDayExpanded(light.day)
         } label: {
             HStack(alignment: .center, spacing: IterGrid.laneGap) {
+                Image(systemName: "chevron.right")
+                    .font(IterFont.moduleTitle)
+                    .foregroundStyle(IterColor.textSecondary)
+                    .rotationEffect(.degrees(isOpen ? 90 : 0))
+                    .frame(width: IterGrid.disclosureLane)
+                    .accessibilityHidden(true)
                 HStack(spacing: IterSpace.xs) {
                     Text(label).font(IterFont.headline).foregroundStyle(IterColor.textPrimary).lineLimit(1)
                     if isBest {
                         Text(LightText.bestMarker).font(IterFont.moduleTitle).foregroundStyle(IterColor.accentText)
                     }
-                    Spacer(minLength: 0)
                 }
-                .frame(width: Self.labelLane, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 chip(window)
-                Spacer(minLength: 0)
-                Text(caption(window).trimmingCharacters(in: .whitespaces))
+                // No score range on the row (the range lives in a window's reasons); only a state word when there is no chip.
+                Text(window == nil ? caption(light) : "")
                     .font(IterFont.secondary)
-                    .monospacedDigit()
                     .foregroundStyle(IterColor.textSecondary)
                     .lineLimit(1)
                     .frame(width: Self.rangeLane, alignment: .trailing)
             }
-            .padding(.horizontal, IterSpace.sm)
+            .padding(.horizontal, IterGrid.inset)
+            .padding(.vertical, IterSpace.sm)
             .frame(minHeight: IterGrid.rowSingle)
-            .background(selected ? IterColor.selection : .clear,
-                        in: RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous))
+            // The open day's own windows carry the selection; a selected, closed day is filled.
+            .background(selected && !isOpen ? IterColor.selection : .clear)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityLabel(light, window: window, isBest: isBest))
+        .accessibilityValue(isOpen ? String(localized: "Expanded", comment: "VoiceOver state") : String(localized: "Collapsed", comment: "VoiceOver state"))
+        .accessibilityHint(String(localized: "Shows this day's light windows", comment: "VoiceOver hint"))
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
+        .help(isOpen ? String(localized: "Hide this day's windows", comment: "Help") : String(localized: "Show this day's windows", comment: "Help"))
     }
 
-    /// The strip's days. A leading day whose window has already passed has no score to show, so the strip starts
-    /// at the next day; days are never added past the forecast's horizon.
-    private var shownDays: [DayLight] { page.outlookStripDays }
-
-    private func cell(_ light: DayLight, isBest: Bool) -> some View {
+    /// The day's headline window; nil when it has passed (today) or the sun gives none.
+    private func rowWindow(_ light: DayLight) -> LightWindow? {
         let window = light.headline(for: page.intent)
-        let selected = light.day == page.day
-        return Button {
-            page.selectDay(light.day)
-        } label: {
-            VStack(spacing: 0) {
-                bestBubble(isBest)
-                VStack(spacing: IterSpace.xs) {
-                    Text(TimeText.weekday(light.day)).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
-                    Text(TimeText.dayNumber(light.day)).font(IterFont.headline).monospacedDigit()
-                    chip(window)
-                    Text(caption(window)).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
-                        .lineLimit(2).multilineTextAlignment(.center)
-                        .frame(minHeight: IterSpace.xl)
-                }
-            }
-            .padding(.bottom, IterSpace.sm)
-            .frame(maxWidth: .infinity)
-            .background(selected ? IterColor.selection : .clear,
-                        in: RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous))
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(accessibilityLabel(light, window: window, isBest: isBest))
-        .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
-    }
-
-    /// "Best" on the best day, in a capsule on the cell's top edge. Every cell keeps the capsule's height, with no
-    /// gap below it, so the weekdays line up.
-    private func bestBubble(_ isBest: Bool) -> some View {
-        Text(isBest ? LightText.bestMarker : " ")
-            .font(IterFont.moduleTitle)
-            .foregroundStyle(IterColor.onAccent)
-            .padding(.horizontal, IterSpace.xs)
-            .background(isBest ? AnyShapeStyle(IterColor.accentEmphasis) : AnyShapeStyle(.clear), in: Capsule())
+        if case .noForecast(.inThePast)? = window?.assessment { return nil }
+        return window
     }
 
     @ViewBuilder private func chip(_ window: LightWindow?) -> some View {
@@ -253,12 +214,9 @@ struct OutlookStrip: View {
         }
     }
 
-    private func caption(_ window: LightWindow?) -> String {
-        guard let window else { return String(localized: "No window", comment: "Outlook cell when the sun gives no such window") }
-        switch window.assessment {
-        case .scored(let score): return LightText.range(score) ?? " "
-        case .noForecast: return " "
-        }
+    private func caption(_ light: DayLight) -> String {
+        light.headline(for: page.intent) == nil ? String(localized: "No window", comment: "Outlook cell when the sun gives no such window")
+                                                : LightText.windowPassed
     }
 
     private func accessibilityLabel(_ light: DayLight, window: LightWindow?, isBest: Bool) -> String {
@@ -266,19 +224,5 @@ struct OutlookStrip: View {
         if let window { parts.append(LightText.accessibilityDescription(window)) }
         if isBest { parts.append(LightText.bestMarker) }
         return parts.joined(separator: ", ")
-    }
-}
-
-extension SpotModel {
-    /// The outlook strip's days. A leading day whose window has already passed has no score to show, so the strip
-    /// starts at the next day; days are never added past the forecast's horizon. The "Best … in the next N days"
-    /// caption counts the same days.
-    var outlookStripDays: [DayLight] {
-        var days = stripDays
-        if let first = days.first, days.count > 1, first.day == today,
-           case .noForecast(.inThePast)? = first.headline(for: intent)?.assessment {
-            days.removeFirst()
-        }
-        return days
     }
 }

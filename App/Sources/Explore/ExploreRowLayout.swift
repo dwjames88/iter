@@ -29,6 +29,6 @@ struct EventLane: View {
 extension LayoutLane {
     /// The lanes of a regular-variant list row with a start time, for `.layoutGrid(lanes:)`.
     @MainActor static func eventRow(disclosure: Bool = false) -> [LayoutLane] {
-        standardRowLanes(disclosure: disclosure, event: .regular, band: false, time: .start)
+        standardRowLanes(disclosure: disclosure, event: .regular, time: .start)
     }
 }

@@ -124,9 +124,6 @@
     "%@ isn't answering." : {
       "comment" : "Weather banner: a provider failed; argument is the provider"
     },
-    "%@ lit" : {
-      "comment" : "Moon illumination"
-    },
     "%@ m elevation" : {
       "comment" : "Spot fact: elevation in metres"
     },
@@ -143,7 +140,7 @@
       "comment" : "Weather banner: key rejected; argument is the provider"
     },
     "%@ · %@" : {
-      "comment" : "Add stop row: place and distance from the anchor stop\nDrive time and distance between two stops\nSession menu item: window name and its time range\nWeather source and its model, e.g. Windy · GFS",
+      "comment" : "Add stop row: place and distance from the anchor stop\nDrive time and distance between two stops\nRose readout: bearing and height of the sun or moon\nRose readout: bearing of the sun or moon below the horizon\nSession menu item: window name and its time range\nWeather source and its model, e.g. Windy · GFS",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -182,6 +179,17 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ · %2$@ h behind you"
+          }
+        }
+      }
+    },
+    "%@ · %@, %@ lit" : {
+      "comment" : "Rose readout for the moon: bearing, height, phase and how much is lit",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · %2$@, %3$@ lit"
           }
         }
       }
@@ -365,6 +373,9 @@
           }
         }
       }
+    },
+    "%lld° up" : {
+      "comment" : "Height of the sun or moon above the horizon, e.g. 12° up"
     },
     "%lld–%lld" : {
       "comment" : "Plausible score range",
@@ -562,28 +573,11 @@
     "Ask finds places from a plain question, such as “quiet lakes for sunrise near Bishop”, and explains a score in words. It uses Apple Intelligence, which runs on this Mac." : {
       "comment" : "Onboarding Ask: what it does (Mac)"
     },
-    "Ask finds places from a plain question, such as “quiet lakes for sunrise near Bishop”, and explains a score in words. It uses Apple Intelligence, which runs on this device." : {
-      "comment" : "Onboarding Ask: what it does (iPhone and iPad)"
-    },
     "Ask to use your location" : {
       "comment" : "Tooltip"
     },
     "Astro" : {
       "comment" : "Spot category"
-    },
-    "At %@ the sun is %lld° above the horizon, toward %@." : {
-      "comment" : "Sky arc readout for the sun",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "At %1$@ the sun is %2$lld° above the horizon, toward %3$@."
-          }
-        }
-      }
-    },
-    "At %@ the sun is below the horizon." : {
-      "comment" : "Sky arc readout for the sun"
     },
     "Available on this Mac" : {
       "comment" : "Onboarding Ask: works (Mac)"
@@ -737,10 +731,10 @@
       "comment" : "Ask progress stage"
     },
     "Classic view" : {
-      "comment" : "Sky arc legend for the facing direction"
+      "comment" : "Sun and moon rose: label on the wedge showing the direction the classic composition faces"
     },
     "Classic view faces %@" : {
-      "comment" : "Sky arc label for the direction the classic composition faces"
+      "comment" : "Sun and moon rose: direction the classic composition faces"
     },
     "Clear Filters" : {
       "comment" : "Button\nMenu item"
@@ -786,9 +780,6 @@
     },
     "Coming up" : {
       "comment" : "Place panel section title: tomorrow's light windows"
-    },
-    "Compass direction →" : {
-      "comment" : "Sky arc x axis"
     },
     "Contains data from the Windy database" : {
       "comment" : "Windy attribution required by its API terms"
@@ -972,6 +963,9 @@
     "Duplicate Trip" : {
       "comment" : "Undo action name"
     },
+    "Edge: horizon · Centre: overhead" : {
+      "comment" : "Sun and moon rose: key under the rose"
+    },
     "Edit" : {
       "comment" : "Button"
     },
@@ -1133,9 +1127,6 @@
     },
     "High confidence" : {
       "comment" : "Light Index confidence"
-    },
-    "Horizon" : {
-      "comment" : "Sky arc horizon line"
     },
     "Hour by hour" : {
       "comment" : "Spot page section title"
@@ -1420,13 +1411,30 @@
       "comment" : "Settings field"
     },
     "Moon" : {
-      "comment" : "Sky arc legend"
+      "comment" : "Sun and moon rose readout: the moon"
+    },
+    "Moon %@, %@, %@ lit" : {
+      "comment" : "VoiceOver: the moon's position and phase",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Moon %1$@, %2$@, %3$@ lit"
+          }
+        }
+      }
     },
     "Moon down or thin: a dark sky." : {
       "comment" : "Light reason"
     },
     "Moonlight" : {
       "comment" : "Light factor"
+    },
+    "Moonrise" : {
+      "comment" : "Moon event"
+    },
+    "Moonset" : {
+      "comment" : "Moon event"
     },
     "More Places" : {
       "comment" : "List section: every other spot beyond the near-you radius"
@@ -1613,6 +1621,9 @@
     "None" : {
       "comment" : "Settings: no fallback forecast source"
     },
+    "North up" : {
+      "comment" : "Sun and moon rose: north is at the top"
+    },
     "Not Now" : {
       "comment" : "Onboarding location: decline for now"
     },
@@ -1654,6 +1665,9 @@
     },
     "Nothing saved yet" : {
       "comment" : "Locations empty title"
+    },
+    "Now" : {
+      "comment" : "Time scrubber: mark for the current time"
     },
     "OK" : {
       "comment" : "Alert button\nUpdate window button"
@@ -1709,9 +1723,6 @@
     "Open this guide again from Help ▸ Welcome to Iter." : {
       "comment" : "Onboarding done: how to reopen the guide (Mac)"
     },
-    "Open this guide again from Settings ▸ Welcome to Iter." : {
-      "comment" : "Onboarding done: how to reopen the guide (iPhone and iPad)"
-    },
     "Open this location in Apple Maps" : {
       "comment" : "Help"
     },
@@ -1750,6 +1761,9 @@
     },
     "Or start from a template" : {
       "comment" : "Heading above the trip templates"
+    },
+    "Orientation" : {
+      "comment" : "Sun and moon rose: label of the North up or View up control"
     },
     "Out of order: this %@ is earlier than the previous stop's %@" : {
       "comment" : "Schedule issue: the stop's window starts before the previous stop's window on the same day",
@@ -2102,6 +2116,9 @@
     "Software Update" : {
       "comment" : "Update window title"
     },
+    "Solar noon" : {
+      "comment" : "Sun event: highest point"
+    },
     "Some items didn't download" : {
       "comment" : "Offline status: part of the download failed"
     },
@@ -2182,13 +2199,16 @@
       "comment" : "Onboarding weather step 2"
     },
     "Sun" : {
-      "comment" : "Sky arc legend"
+      "comment" : "Sun and moon rose readout: the sun"
+    },
+    "Sun %@" : {
+      "comment" : "VoiceOver: the sun's position"
     },
     "Sun and moon" : {
       "comment" : "Spot page section title"
     },
     "Sun and moon for %@" : {
-      "comment" : "VoiceOver: sky arc label"
+      "comment" : "VoiceOver: sun and moon rose label"
     },
     "Sun and moon times are calculated on this Mac. Weather is from the source you choose in Settings ▸ Weather: Apple Weather, OpenWeather or Windy (contains data from the Windy database). Places and drive times are from Apple Maps, alongside Iter's curated spots." : {
       "comment" : "About: data sources"
@@ -2196,11 +2216,61 @@
     "Sun direction" : {
       "comment" : "Light factor"
     },
+    "Sun rises at %@ at %@" : {
+      "comment" : "Rose fact when the view direction is unknown",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sun rises at %1$@ at %2$@"
+          }
+        }
+      }
+    },
+    "Sun rises at %@, inside your view" : {
+      "comment" : "Rose fact: the sunrise is inside the classic view"
+    },
+    "Sun rises at %@, outside your view by %lld°" : {
+      "comment" : "Rose fact: the sunrise misses the classic view by some degrees",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sun rises at %1$@, outside your view by %2$lld°"
+          }
+        }
+      }
+    },
+    "Sun sets at %@ at %@" : {
+      "comment" : "Rose fact when the view direction is unknown",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sun sets at %1$@ at %2$@"
+          }
+        }
+      }
+    },
+    "Sun sets at %@, inside your view" : {
+      "comment" : "Rose fact: the sunset is inside the classic view"
+    },
+    "Sun sets at %@, outside your view by %lld°" : {
+      "comment" : "Rose fact: the sunset misses the classic view by some degrees",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sun sets at %1$@, outside your view by %2$lld°"
+          }
+        }
+      }
+    },
     "Sunrise" : {
-      "comment" : "Best light a spot is known for\nDay header: sunrise\nLight intent\nLight window: golden hour after sunrise\nShort light window name for pins"
+      "comment" : "Best light a spot is known for\nDay header: sunrise\nLight intent\nLight window: golden hour after sunrise\nShort light window name for pins\nSun event"
     },
     "Sunrise %@" : {
-      "comment" : "A day's sunrise only\nSky arc label"
+      "comment" : "A day's sunrise only"
     },
     "Sunrise %@ · Sunset %@" : {
       "comment" : "A day's sunrise and sunset",
@@ -2217,10 +2287,10 @@
       "comment" : "Timeline zoom option"
     },
     "Sunset" : {
-      "comment" : "Best light a spot is known for\nDay header: sunset\nLight intent\nLight window: golden hour before sunset\nShort light window name for pins"
+      "comment" : "Best light a spot is known for\nDay header: sunset\nLight intent\nLight window: golden hour before sunset\nShort light window name for pins\nSun event"
     },
     "Sunset %@" : {
-      "comment" : "A day's sunset only\nSky arc label"
+      "comment" : "A day's sunset only"
     },
     "Sunset ±2 h" : {
       "comment" : "Timeline zoom option"
@@ -2276,17 +2346,14 @@
     "The sun doesn't rise here on this day. The light is the blue hour either side of noon." : {
       "comment" : "Polar night: no sunrise"
     },
+    "The sun doesn't rise on this day" : {
+      "comment" : "Rose fact: polar night"
+    },
     "The sun doesn't set here on this day. No blue hour, but a long golden window while the sun is low." : {
       "comment" : "Midnight sun: no sunset"
     },
-    "The sun is behind you." : {
-      "comment" : "Sun relative to the classic view"
-    },
-    "The sun is in your frame." : {
-      "comment" : "Sun relative to the classic view"
-    },
-    "The sun is off to one side." : {
-      "comment" : "Sun relative to the classic view"
+    "The sun doesn't set on this day" : {
+      "comment" : "Rose fact: midnight sun"
     },
     "The sun is off-axis from the classic view." : {
       "comment" : "Light reason"
@@ -2351,6 +2418,9 @@
     "This update has no download link. Try again later, or download it from GitHub." : {
       "comment" : "Update failure"
     },
+    "Time of day" : {
+      "comment" : "VoiceOver label of the time scrubber"
+    },
     "Time zone" : {
       "comment" : "Spot editor field"
     },
@@ -2392,6 +2462,9 @@
     },
     "Turn on Apple Intelligence in System Settings to describe the place you want in your own words." : {
       "comment" : "Ask unavailable detail: Apple Intelligence not enabled"
+    },
+    "Turn the rose so north, or the classic view, is at the top" : {
+      "comment" : "Help for the rose orientation control"
     },
     "Understanding your request" : {
       "comment" : "Ask progress stage"
@@ -2445,6 +2518,9 @@
           }
         }
       }
+    },
+    "View up" : {
+      "comment" : "Sun and moon rose: the classic view's direction is at the top"
     },
     "Visibility" : {
       "comment" : "Light factor"
@@ -2597,8 +2673,8 @@
         }
       }
     },
-    "below the horizon all day" : {
-      "comment" : "Moon stays below the horizon"
+    "below the horizon" : {
+      "comment" : "Sun or moon is below the horizon"
     },
     "estimated" : {
       "comment" : "Marks a drive time that is a straight-line estimate, not a road route"
@@ -2621,17 +2697,8 @@
     "mph" : {
       "comment" : "Wind speed unit"
     },
-    "rises %@" : {
-      "comment" : "Moonrise"
-    },
-    "sets %@" : {
-      "comment" : "Moonset"
-    },
     "tomorrow" : {
       "comment" : "VoiceOver: the next window is tomorrow"
-    },
-    "up all day" : {
-      "comment" : "Moon stays above the horizon"
     },
     "walk-in unknown" : {
       "comment" : "Walk from parking to the shooting spot is not known"
@@ -2644,9 +2711,6 @@
     },
     "“%@”" : {
       "comment" : "The request an Ask section answers, shown under its header"
-    },
-    "↑ Height above the horizon" : {
-      "comment" : "Sky arc y axis"
     }
   },
   "version" : "1.0"

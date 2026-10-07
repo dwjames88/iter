@@ -6,8 +6,8 @@ import IterFeatures
 
 /// The list column's second state: the selected place's light panel, replacing the list. A header with Back and the
 /// place's position in the list (Up and Down step through the list without leaving), the place, its images, then the
-/// spot page's own sections at panel density: the light timeline (the centrepiece, drawn the full column width), the
-/// day's windows, when to go, sun and moon, hourly weather and facts, and the actions.
+/// spot page's own sections at panel density: Good to know (with the best window), the light timeline (the
+/// centrepiece, drawn the full column width), the outlook with its openable days, hourly weather, and the actions.
 ///
 /// Keyboard: the panel takes focus when it opens. Up and Down step to the previous and next place; Escape goes back
 /// (and leaves Escape to Add Spot mode while that is on).
@@ -23,7 +23,7 @@ struct ExploreLightPanel: View {
     @State private var scrollSettling = false
 
     private var spot: Spot { row.spot }
-    /// The panel shows today at the spot; "Today" and "Coming up" read from there.
+    /// The panel shows today at the spot; the outlook starts there.
     private var day: LocalDay { model.today(in: spot.timeZone) }
     private static let lowerHalfID = "place-panel-lower-half"
 
@@ -262,20 +262,21 @@ private struct PanelSections: View {
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.xl) {
             if let page {
+                SpotFactsSection(spot: spot, page: page)
                 LightTimelineSection(page: page)
-                DayWindowsSection(page: page)
-                WhenToGoSection(page: page)
+                OutlookSection(page: page)
                     .id(lowerHalfID)
-                SkyArcSection(page: page)
                 HourlyWeatherSection(page: page)
+            } else {
+                SpotFactsSection(spot: spot)
             }
-            SpotFactsSection(spot: spot)
         }
         .task(id: PanelKey(spotID: spot.id, day: day)) {
             page = nil
             let made = SpotModel(app: app, spot: spot, initialDay: day)
             page = made
             await made.start()
+            if AppLaunch.outlookOpen { made.toggleDayExpanded(day.adding(days: 1)) }
         }
     }
 }

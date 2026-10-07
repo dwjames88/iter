@@ -12,7 +12,7 @@ Five levels. Nothing else. Sizes are the macOS defaults of the text style (Dynam
 | Title | `type/title/spot` (place names, New York 22 semibold); `type/title/section` (title2 17 semibold) | | The page's name; a page-level section heading on the full spot page only. |
 | Headline | `type/headline` | headline 13 semibold | Row titles (spot name, window name, day), the module's headline sentence. |
 | Body | `type/body`, `type/time` | body 13 regular | Running text and primary times (window ranges). |
-| Secondary | `type/secondary` | subheadline 11 regular, `text/secondary` | All metadata: locality, distance, source line, band word, confidence word, "Tomorrow", axis labels. One quiet style; do not mix caption, footnote and subheadline for metadata. |
+| Secondary | `type/secondary` | subheadline 11 regular, `text/secondary` | All metadata: locality, distance, source line, "Tomorrow", axis labels. One quiet style; do not mix caption, footnote and subheadline for metadata. |
 
 Module titles use `type/moduleTitle` (subheadline 11 semibold, `text/secondary`, a leading SF Symbol in the same colour), the Weather idiom without upper-casing. Primary vs secondary in a row is carried by weight and colour together: headline + `text/primary`, then secondary + `text/secondary`. Never two primaries side by side.
 
@@ -24,8 +24,7 @@ Module titles use `type/moduleTitle` (subheadline 11 semibold, `text/secondary`,
   1. disclosure (chevron) 16, or absent for the whole list (never present on some rows and blank on others unless the list has expandable rows; then the blank lane is kept so text aligns),
   2. label (flexible): window name, day or spot name,
   3. event unit (fixed: head and tail at their widest, measured; symbol, score and time live inside it),
-  4. band + confidence (fixed: widest band word plus the confidence mark, measured).
-  The time is part of the event unit, never a lane of its own.
+  The time is part of the event unit, never a lane of its own, and the unit is the whole rating: there is no band-word or confidence lane (the band and confidence are in the unit's VoiceOver label and tooltip, and the legend behind the sidebar's "i" explains the colours and scores).
   Lane gap 8 (`grid/lane/gap`).
 - **Baselines.** Text in every lane of a row shares the first text baseline (`HStack(alignment: .firstTextBaseline)`); the event unit's number sits on that baseline.
 - **Row heights.** Single-line rows 32 (`grid/row/single`), two-line rows 48 (`grid/row/double`). Rows are a minimum height, so a wrapping name grows the row in 16 pt steps of feel, never by odd padding.
@@ -34,7 +33,7 @@ Module titles use `type/moduleTitle` (subheadline 11 semibold, `text/secondary`,
 
 ## Cards and grouping
 
-- **A module card** holds one subject with one strong fact: When to go (the best day and its score), Light windows (the list), Light through the day, Sun and moon, Hour by hour, Good to know. Fill `background/module`, radius `radius/card` (12), padding 16, no border stroke. Title inside the card, at its top-left.
+- **A module card** holds one subject with one strong fact: When to go (the best day and its score), Light windows (the list), Light through the day (timeline and compass), Hour by hour, Good to know. Fill `background/module`, radius `radius/card` (12), padding 16, no border stroke. Title inside the card, at its top-left.
 - **Plain grouping** (whitespace only, no fill) inside a card, and for page headers and action rows.
 - **Dividers or whitespace, not both.** Rows in a list are separated by a hairline inset to the label lane; groups are separated by 24 of whitespace and no line. No card has both a border and a fill.
 - **No decorative borders.** Strokes stay only where they carry meaning: selection (`accent/primary`), focus, and the hairline that keeps pale ramp fills (Poor, Fair) visible.
@@ -45,4 +44,4 @@ Module titles use `type/moduleTitle` (subheadline 11 semibold, `text/secondary`,
 - `text/primary` for the one thing a row is about; `text/secondary` for everything that qualifies it; `text/tertiary` never carries information.
 - The Light Index ramp appears only inside the event unit (and the pin dot). The symbol inside the chip takes the chip's ramp text colour, so the window and its score read as one fact.
 - Coral marks only what acts or is selected; it never decorates a section, header or border.
-- Standard controls (buttons, pickers, steppers, date pickers, toggles, forms) are system controls in their default styles. The event unit is the one deliberate custom chip. Tabs (a mutually exclusive choice of a few views or scopes, such as the timeline zoom) are the system segmented `Picker`, full width, equal segments: `.pickerStyle(.segmented)`, `.labelsHidden()`, `.frame(maxWidth: .infinity)`, no pills, custom backgrounds or `.fixedSize()`.
+- Standard controls (buttons, pickers, steppers, date pickers, toggles, forms) are system controls in their default styles. The event unit is the one deliberate custom chip. Tabs (a mutually exclusive choice of a few views or scopes, such as the timeline zoom) are the system segmented control, full width, equal segments: `.pickerStyle(.segmented)`, `.labelsHidden()`, `.frame(maxWidth: .infinity)`, no pills, custom backgrounds or `.fixedSize()`. On iOS that is the SwiftUI segmented `Picker`; on the Mac the SwiftUI segmented `Picker` does not stretch (it keeps its intrinsic width), so the full-width equal-segment control is `FullWidthSegmentedPicker` (a system `NSSegmentedControl` with equal segment widths), see [COMPONENTS.md](COMPONENTS.md#fullwidthsegmentedpicker).

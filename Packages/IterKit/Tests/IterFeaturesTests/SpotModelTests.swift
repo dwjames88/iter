@@ -190,6 +190,28 @@ private let tromso = Spot(id: "tromso", name: "Tromsø harbour", locality: "Trom
         #expect(list.allSatisfy { $0.window.span.end > fixedNow })
     }
 
+    @Test func outlookDaysExpandOneAtATimeAndSelectTheDay() async throws {
+        let app = try makeApp()
+        let model = SpotModel(app: app, spot: mesaArch, explainer: FakeExplainer())
+        await model.start()
+        let today = model.today
+        let later = today.adding(days: 2)
+        #expect(model.expandedDay == nil)
+        model.toggleDayExpanded(today)
+        #expect(model.expandedDay == today)
+        #expect(model.day == today)
+        model.toggleDayExpanded(later)
+        #expect(model.expandedDay == later)
+        #expect(model.day == later)
+        model.toggleDayExpanded(later)
+        #expect(model.expandedDay == nil)
+        #expect(model.day == later)
+        model.toggleDayExpanded(later)
+        model.selectDay(today)
+        #expect(model.expandedDay == nil)
+        #expect(model.stripDays.first?.day == today)
+    }
+
     @Test func selectingAWindowIsSharedAndExpandingSelectsIt() async throws {
         let app = try makeApp()
         let model = SpotModel(app: app, spot: mesaArch, explainer: FakeExplainer())

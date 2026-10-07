@@ -6,11 +6,7 @@ import IterFeatures
 extension LightText {
     // MARK: Sections
 
-    static let whenToGo = String(localized: "When to go", comment: "Spot page section title")
-    static let windowsTitle = String(localized: "Light windows", comment: "Spot page section title")
-    static let todayTitle = String(localized: "Today", comment: "Place panel section title: the day's light windows still ahead")
-    static let comingUpTitle = String(localized: "Coming up", comment: "Place panel section title: tomorrow's light windows")
-    static let nothingLeftToday = String(localized: "No light windows are left today.", comment: "Place panel: every window of today is over")
+    static let nothingLeftToday = String(localized: "No light windows are left today.", comment: "Outlook: every window of today is over")
     static let timelineTitle = String(localized: "Light through the day", comment: "Spot page section title")
     static let skyTitle = String(localized: "Sun and moon", comment: "Spot page section title")
     static let hourlyTitle = String(localized: "Hour by hour", comment: "Spot page section title")
@@ -34,7 +30,6 @@ extension LightText {
 
     static let checkingForecast = String(localized: "Checking the forecast…", comment: "Shown while the forecast loads")
     static let showThisDay = String(localized: "Show this day", comment: "Button that selects the best day")
-    static let backToToday = String(localized: "Today", comment: "Button that returns the page to today")
 
     /// "Today", "Tomorrow" or "Wed 7 Oct".
     static func relativeDay(_ day: LocalDay, today: LocalDay) -> String {
@@ -120,6 +115,7 @@ extension LightText {
 
     // MARK: Timeline
 
+    static let zoomLabel = String(localized: "Zoom", comment: "Timeline zoom picker label")
     static let zoomFullDay = String(localized: "Full day", comment: "Timeline zoom option")
     static let zoomSunrise = String(localized: "Sunrise ±2 h", comment: "Timeline zoom option")
     static let zoomSunset = String(localized: "Sunset ±2 h", comment: "Timeline zoom option")
@@ -162,49 +158,106 @@ extension LightText {
         return shortName(window.kind)
     }
 
-    // MARK: Arc
-
-    static let arcAxisX = String(localized: "Compass direction →", comment: "Sky arc x axis")
-    static let arcAxisY = String(localized: "↑ Height above the horizon", comment: "Sky arc y axis")
-    static let horizon = String(localized: "Horizon", comment: "Sky arc horizon line")
-    static let sunLegend = String(localized: "Sun", comment: "Sky arc legend")
-    static let moonLegend = String(localized: "Moon", comment: "Sky arc legend")
+    // MARK: Sun and moon rose
 
     static func degrees(_ bearing: Double) -> String {
         let value = Int(bearing.rounded())
         return String(localized: "\(value)° \(compassPoint(for: bearing))", comment: "A compass bearing, e.g. 100° E")
     }
 
-    static func facingNote(_ bearing: Double) -> String {
-        String(localized: "Classic view faces \(degrees(bearing))", comment: "Sky arc label for the direction the classic composition faces")
+    static let orientationLabel = String(localized: "Orientation", comment: "Sun and moon rose: label of the North up or View up control")
+    static let northUp = String(localized: "North up", comment: "Sun and moon rose: north is at the top")
+    static let viewUp = String(localized: "View up", comment: "Sun and moon rose: the classic view's direction is at the top")
+    static let orientationHelp = String(localized: "Turn the rose so north, or the classic view, is at the top", comment: "Help for the rose orientation control")
+    static let classicView = String(localized: "Classic view", comment: "Sun and moon rose: label on the wedge showing the direction the classic composition faces")
+    static func viewShort(_ bearing: Double) -> String {
+        String(localized: "View \(degrees(bearing))", comment: "Sun and moon rose: short label on the classic view wedge when the full label does not fit")
+    }
+    static let roseKey = String(localized: "Edge: horizon · Centre: overhead", comment: "Sun and moon rose: key under the rose")
+    static let sunWord = String(localized: "Sun", comment: "Sun and moon rose readout: the sun")
+    static let moonWord = String(localized: "Moon", comment: "Sun and moon rose readout: the moon")
+    static let timeOfDay = String(localized: "Time of day", comment: "VoiceOver label of the time scrubber")
+    static let nowMark = String(localized: "Now", comment: "Time scrubber: mark for the current time")
+    static let belowHorizon = String(localized: "below the horizon", comment: "Sun or moon is below the horizon")
+
+    static func altitudeUp(_ altitude: Double) -> String {
+        String(localized: "\(Int(altitude.rounded()))° up", comment: "Height of the sun or moon above the horizon, e.g. 12° up")
     }
 
-    static func sunriseOnArc(_ time: String) -> String {
-        String(localized: "Sunrise \(time)", comment: "Sky arc label")
-    }
-
-    static func sunsetOnArc(_ time: String) -> String {
-        String(localized: "Sunset \(time)", comment: "Sky arc label")
-    }
-
-    /// "At 6:30 PM the sun is 12° above the horizon, toward 255° WSW."
-    static func sunAt(time: String, sun: SkyPosition) -> String {
-        if sun.altitude >= 0 {
-            let alt = Int(sun.altitude.rounded())
-            return String(localized: "At \(time) the sun is \(alt)° above the horizon, toward \(degrees(sun.azimuth)).",
-                          comment: "Sky arc readout for the sun")
+    static func eventName(_ kind: SkyRose.EventKind) -> String {
+        switch kind {
+        case .sunrise: String(localized: "Sunrise", comment: "Sun event")
+        case .solarNoon: String(localized: "Solar noon", comment: "Sun event: highest point")
+        case .sunset: String(localized: "Sunset", comment: "Sun event")
+        case .moonrise: String(localized: "Moonrise", comment: "Moon event")
+        case .moonset: String(localized: "Moonset", comment: "Moon event")
         }
-        return String(localized: "At \(time) the sun is below the horizon.", comment: "Sky arc readout for the sun")
     }
 
-    /// Where the sun sits relative to the classic view.
-    static func frameNote(sun: SkyPosition, facing: Double?) -> String? {
-        guard let facing, sun.altitude >= 0 else { return nil }
-        var diff = abs(sun.azimuth - facing).truncatingRemainder(dividingBy: 360)
-        if diff > 180 { diff = 360 - diff }
-        if diff <= 35 { return String(localized: "The sun is in your frame.", comment: "Sun relative to the classic view") }
-        if diff <= 100 { return String(localized: "The sun is off to one side.", comment: "Sun relative to the classic view") }
-        return String(localized: "The sun is behind you.", comment: "Sun relative to the classic view")
+    /// Symbol for a rose event mark.
+    static func roseSymbol(_ kind: SkyRose.EventKind) -> String {
+        switch kind {
+        case .sunrise: "sunrise.fill"
+        case .solarNoon: "sun.max.fill"
+        case .sunset: "sunset.fill"
+        case .moonrise: "moonrise.fill"
+        case .moonset: "moonset.fill"
+        }
+    }
+
+    /// The one strong fact: "Sun sets at 263° W, inside your view".
+    static func roseFact(_ fact: SkyRose.Fact, in zone: TimeZone) -> String {
+        switch fact {
+        case .inside(let event):
+            return event.kind == .sunrise
+                ? String(localized: "Sun rises at \(degrees(event.position.azimuth)), inside your view", comment: "Rose fact: the sunrise is inside the classic view")
+                : String(localized: "Sun sets at \(degrees(event.position.azimuth)), inside your view", comment: "Rose fact: the sunset is inside the classic view")
+        case .outside(let event, let by):
+            let whole = Int(by.rounded())
+            return event.kind == .sunrise
+                ? String(localized: "Sun rises at \(degrees(event.position.azimuth)), outside your view by \(whole)°", comment: "Rose fact: the sunrise misses the classic view by some degrees")
+                : String(localized: "Sun sets at \(degrees(event.position.azimuth)), outside your view by \(whole)°", comment: "Rose fact: the sunset misses the classic view by some degrees")
+        case .noView(let event):
+            let time = TimeText.time(event.date, in: zone)
+            return event.kind == .sunrise
+                ? String(localized: "Sun rises at \(degrees(event.position.azimuth)) at \(time)", comment: "Rose fact when the view direction is unknown")
+                : String(localized: "Sun sets at \(degrees(event.position.azimuth)) at \(time)", comment: "Rose fact when the view direction is unknown")
+        case .noSunrise:
+            return String(localized: "The sun doesn't rise on this day", comment: "Rose fact: polar night")
+        case .noSunset:
+            return String(localized: "The sun doesn't set on this day", comment: "Rose fact: midnight sun")
+        }
+    }
+
+    /// "241° WSW · 12° up" or "241° WSW · below the horizon": the readout line without its "Sun" or "Moon" word.
+    static func skyDetail(_ position: SkyPosition) -> String {
+        if position.altitude >= 0 {
+            return String(localized: "\(degrees(position.azimuth)) · \(altitudeUp(position.altitude))", comment: "Rose readout: bearing and height of the sun or moon")
+        }
+        return String(localized: "\(degrees(position.azimuth)) · \(belowHorizon)", comment: "Rose readout: bearing of the sun or moon below the horizon")
+    }
+
+    static func moonDetail(_ position: SkyPosition, phase: MoonPhase) -> String {
+        String(localized: "\(skyDetail(position)) · \(moonName(phase.name)), \(percent(phase.illumination)) lit", comment: "Rose readout for the moon: bearing, height, phase and how much is lit")
+    }
+
+    /// The scrubber's spoken value: "18:41, golden hour. Sun 263° W, 1° up. Moon 120° ESE, 35° up, waxing gibbous, 78% lit."
+    static func scrubberValue(time: String, window: LightWindowKind?, sun: SkyPosition, moon: SkyPosition, phase: MoonPhase) -> String {
+        func spoken(_ p: SkyPosition) -> String {
+            p.altitude >= 0 ? "\(degrees(p.azimuth)), \(altitudeUp(p.altitude))" : "\(degrees(p.azimuth)), \(belowHorizon)"
+        }
+        let head = window.map { "\(time), \(name($0).lowercased())" } ?? time
+        let sunPart = String(localized: "Sun \(spoken(sun))", comment: "VoiceOver: the sun's position")
+        let moonPart = String(localized: "Moon \(spoken(moon)), \(moonName(phase.name).lowercased()), \(percent(phase.illumination)) lit", comment: "VoiceOver: the moon's position and phase")
+        return [head, sunPart, moonPart].joined(separator: ". ") + "."
+    }
+
+    static func roseSummary(day: String) -> String {
+        String(localized: "Sun and moon for \(day)", comment: "VoiceOver: sun and moon rose label")
+    }
+
+    static func facingNote(_ bearing: Double) -> String {
+        String(localized: "Classic view faces \(degrees(bearing))", comment: "Sun and moon rose: direction the classic composition faces")
     }
 
     static func moonName(_ name: MoonPhase.Name) -> String {
@@ -231,20 +284,6 @@ extension LightText {
         case .lastQuarter: "moonphase.last.quarter"
         case .waningCrescent: "moonphase.waning.crescent"
         }
-    }
-
-    static func moonLine(phase: MoonPhase, events: MoonEvents, in zone: TimeZone) -> String {
-        let lit = String(localized: "\(percent(phase.illumination)) lit", comment: "Moon illumination")
-        var parts = [moonName(phase.name), lit]
-        if events.alwaysUp {
-            parts.append(String(localized: "up all day", comment: "Moon stays above the horizon"))
-        } else if events.alwaysDown {
-            parts.append(String(localized: "below the horizon all day", comment: "Moon stays below the horizon"))
-        } else {
-            if let rise = events.rise { parts.append(String(localized: "rises \(TimeText.time(rise, in: zone))", comment: "Moonrise")) }
-            if let set = events.set { parts.append(String(localized: "sets \(TimeText.time(set, in: zone))", comment: "Moonset")) }
-        }
-        return parts.joined(separator: " · ")
     }
 
     // MARK: Hourly
@@ -312,4 +351,8 @@ extension LightText {
     static func deleteMessage(stops: Int) -> String {
         String(localized: "It is also removed from \(stops) trip stops. You can undo this with Edit > Undo.", comment: "Delete spot confirmation message")
     }
+
+    // MARK: Outlook days
+
+    static let windowPassed = String(localized: "Passed", comment: "Outlook row for today when the day's headline window is over")
 }

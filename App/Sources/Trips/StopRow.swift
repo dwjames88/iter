@@ -89,13 +89,8 @@ struct StopRowView: View {
             }
             Spacer(minLength: IterSpace.sm)
             if let window = entry.sessionWindow {
-                HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
-                    EventScore(window: window, zone: zone, timeStyle: .start, variant: .regular, isLoading: model.forecasts.isLoading(spot.coordinate))
-                    if case .scored(let score) = window.assessment {
-                        BandConfidence(score: score).frame(width: BandConfidence.laneWidth, alignment: .leading)
-                    }
-                }
-                // The unit and the band word never truncate; the name column gives way (it wraps to two lines).
+                EventScore(window: window, zone: zone, timeStyle: .start, variant: .regular, isLoading: model.forecasts.isLoading(spot.coordinate))
+                    // The unit never truncates; the name column gives way (it wraps to two lines).
                 .fixedSize()
             }
         }

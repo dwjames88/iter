@@ -97,4 +97,13 @@ import IterDesign
                                   sizes: [Snapshot.Size(name: "900x520", width: 900, height: 520)],
                                   settle: .milliseconds(300), chrome: .bare)
     }
+
+    /// The "What the scores mean" popover content (Mac), as it sits in the sidebar popover.
+    @Test(.enabled(if: Snapshot.enabled)) func legend() async throws {
+        let view = ScoreLegendPopover(source: .appleWeather)
+            .background(IterColor.backgroundWindow)
+        try await Snapshot.render(view, screen: "scorelegend", state: "popover",
+                                  sizes: [Snapshot.Size(name: "340x700", width: 340, height: 700)],
+                                  settle: .milliseconds(300), chrome: .bare)
+    }
 }

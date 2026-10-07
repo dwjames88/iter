@@ -252,10 +252,7 @@ private struct StopCard: View {
     }
 
     private func score(_ window: LightWindow) -> some View {
-        HStack(alignment: .center, spacing: IterSpace.sm) {
-            EventScore(window: window, zone: zone, timeStyle: .start, variant: .regular, isLoading: model.forecasts.isLoading(spot.coordinate))
-            if case .scored(let score) = window.assessment { BandConfidence(score: score) }
-        }
+        EventScore(window: window, zone: zone, timeStyle: .start, variant: .regular, isLoading: model.forecasts.isLoading(spot.coordinate))
     }
 
     /// "Leave 4:10 · set up by 5:52" (just the set-up time for a stop with no drive into it).

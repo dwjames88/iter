@@ -2,11 +2,13 @@ import SwiftUI
 import IterCore
 import IterDesign
 
-/// What the status band says about a place's next window: a title ("Sunset in 2 h 14 m"), the score word ("Great · 76"),
+/// What the status band says about a place's next window: a title ("Sunset in 2 h 14 m"), the score ("76"),
 /// and the Light Index band that tints it. No band (no score, low confidence) means a neutral band, never a coloured one.
 struct LightStatus: Equatable {
     var title: String
     var detail: String?
+    /// VoiceOver only: the band word and the score.
+    var spokenDetail: String?
     var band: LightBand?
     var symbol: String
 
@@ -14,6 +16,7 @@ struct LightStatus: Equatable {
         guard let window else {
             title = isLoading ? LightText.checkingForecast : String(localized: "No upcoming window", comment: "Status band: nothing to show")
             detail = nil
+            spokenDetail = nil
             band = nil
             symbol = "sun.horizon"
             return
@@ -29,7 +32,8 @@ struct LightStatus: Equatable {
             title = name
         }
         if let score = window.assessment.lightScore {
-            detail = String(localized: "\(LightText.name(score.band)) · \(score.value)", comment: "Status band: band word and Light Index score, e.g. Great · 76")
+            detail = score.value.formatted()
+            spokenDetail = String(localized: "\(LightText.name(score.band)) · \(score.value)", comment: "Status band: band word and Light Index score, e.g. Great · 76")
             band = score.confidence == .low ? nil : score.band
         } else {
             detail = isLoading ? LightText.checkingForecast : String(localized: "No forecast yet", comment: "Status band: the window has no score")
@@ -62,7 +66,7 @@ struct LightStatusBand: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background((wash ?? IterColor.backgroundModule).opacity(wash == nil ? 1 : (scheme == .dark ? 0.2 : 0.35)))
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel([status.title, status.detail].compactMap { $0 }.joined(separator: ", "))
+        .accessibilityLabel([status.title, status.spokenDetail ?? status.detail].compactMap { $0 }.joined(separator: ", "))
     }
 }
 

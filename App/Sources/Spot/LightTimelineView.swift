@@ -29,6 +29,8 @@ struct TimelineData {
 /// One shared selection and marker time with the arc and the hourly strip (critique C06).
 struct LightTimelineSection: View {
     let page: SpotModel
+    /// Tests inject the rose orientation; the app reads the stored choice.
+    var viewUp: Bool?
     @State private var width: CGFloat = 0
     /// Panel: the legend's items and the "Drag to read" hint, measured, to decide which line carries the hint.
     @State private var legendItemsWidth: CGFloat = 0
@@ -40,11 +42,8 @@ struct LightTimelineSection: View {
     var body: some View {
         let data = Self.data(page, panel: isPanel)
         ModuleCard(title: LightText.timelineTitle, symbol: "chart.line.uptrend.xyaxis") {
-            if !isPanel { zoomPicker }
-        } content: {
                 VStack(alignment: .leading, spacing: IterSpace.sm) {
-                    // The panel has the room: the zoom control runs the full width under the title.
-                    if isPanel { zoomPicker }
+                    zoomPicker
                     readout
                     Canvas { ctx, size in TimelineRenderer.draw(&ctx, size: size, data: data) }
                         .frame(height: Self.height(data))
@@ -56,7 +55,7 @@ struct LightTimelineSection: View {
                             }
                         }
                         .gesture(DragGesture(minimumDistance: IterSpace.xs).onChanged { page.scrub = date(atX: $0.location.x, data: data) }
-                            .onEnded { _ in page.scrub = nil })
+                            .onEnded { _ in page.commitScrub() })
                         .simultaneousGesture(SpatialTapGesture().onEnded { tap in
                             let t = date(atX: tap.location.x, data: data)
                             if let hit = page.dayLight.windows.first(where: { $0.span.contains(t) }) { page.selectWindow(hit.kind) }
@@ -66,27 +65,23 @@ struct LightTimelineSection: View {
                         .accessibilityValue(page.selectedLightWindow.map { LightText.accessibilityDescription($0) } ?? "")
                         .accessibilityAdjustableAction { direction in stepWindow(direction) }
                     if data.hasWeather { legend(data) } else { noWeather }
+                    // The compass shares this module's time: a gap, then the rose block.
+                    SkyRoseContent(page: page, viewUp: viewUp)
+                        .padding(.top, IterSpace.xl - IterSpace.sm)
                 }
         }
     }
 
     // MARK: Pieces
 
-    /// The zoom control: at the module title's trailing edge (page), or full width under it (panel).
+    /// The zoom control, full width under the module title.
 
     @ViewBuilder private var zoomPicker: some View {
         if page.availableFoci.count > 1 {
-            let picker = Picker(selection: Binding(get: { page.focus }, set: { page.setFocus($0) })) {
-                ForEach(page.availableFoci) { focus in Text(label(focus)).tag(focus) }
-            } label: { Text("Zoom", comment: "Timeline zoom picker label") }
-            .pickerStyle(.segmented)
-            .labelsHidden()
-            .help(String(localized: "Zoom the timeline, arc and hourly strip to sunrise or sunset", comment: "Help"))
-            if isPanel {
-                picker.controlSize(.regular)
-            } else {
-                picker.controlSize(.small).fixedSize()
-            }
+            FullWidthSegmentedPicker(label: LightText.zoomLabel,
+                                     options: page.availableFoci.map { ($0, label($0)) },
+                                     selection: Binding(get: { page.focus }, set: { page.setFocus($0) }),
+                                     help: String(localized: "Zoom the timeline, arc and hourly strip to sunrise or sunset", comment: "Help"))
         }
     }
 
@@ -200,9 +195,7 @@ struct LightTimelineSection: View {
     // MARK: Interaction
 
     private func date(atX x: CGFloat, data: TimelineData) -> Date {
-        let (left, right) = TimelineRenderer.plotEdges(width: width, panel: data.panel)
-        let fraction = min(1, max(0, (x - left) / max(1, right - left)))
-        return data.domain.lowerBound.addingTimeInterval(data.span * Double(fraction))
+        TimelineRenderer.date(atX: x, width: width, data: data)
     }
 
     private func stepWindow(_ direction: AccessibilityAdjustmentDirection) {
@@ -233,7 +226,7 @@ struct LightTimelineSection: View {
         let hasWeather = page.forecast != nil && !page.hours.isEmpty
         return TimelineData(zone: page.timeZone, day: page.day, domain: domain, windows: page.dayLight.windows,
                             selected: page.selectedWindow, sky: sky, hours: page.hours, hasLayers: page.hasCloudLayers,
-                            marker: page.markerTime, scrubbing: page.scrub != nil,
+                            marker: page.markerTime, scrubbing: page.hasChosenTime,
                             tiers: page.focus == .fullDay ? 3 : 2,
                             tickEveryHours: page.focus == .fullDay ? 3 : 1, hasWeather: hasWeather, panel: panel)
     }
@@ -261,6 +254,19 @@ enum TimelineRenderer {
     /// whole width (its percent labels sit inside the plot).
     static func plotEdges(width: CGFloat, panel: Bool) -> (left: CGFloat, right: CGFloat) {
         panel ? (0, width) : (SpotLayout.gutter, width - SpotLayout.rightInset)
+    }
+
+    /// The x of a date on the plot, for a canvas `width`. The inverse of `date(atX:width:data:)` inside the plot.
+    static func x(for date: Date, width: CGFloat, data: TimelineData) -> CGFloat {
+        let (left, right) = plotEdges(width: width, panel: data.panel)
+        return left + CGFloat(date.timeIntervalSince(data.domain.lowerBound) / data.span) * (right - left)
+    }
+
+    /// The date under an x on the plot, clamped to the domain.
+    static func date(atX x: CGFloat, width: CGFloat, data: TimelineData) -> Date {
+        let (left, right) = plotEdges(width: width, panel: data.panel)
+        let fraction = min(1, max(0, (x - left) / max(1, right - left)))
+        return data.domain.lowerBound.addingTimeInterval(data.span * Double(fraction))
     }
 
     static func layout(_ d: TimelineData, width: CGFloat) -> Layout {
@@ -302,7 +308,7 @@ enum TimelineRenderer {
         let (left, right) = plotEdges(width: size.width, panel: d.panel)
         let plotW = right - left
         guard plotW > 0 else { return }
-        func x(_ date: Date) -> CGFloat { left + CGFloat(date.timeIntervalSince(d.domain.lowerBound) / d.span) * plotW }
+        func x(_ date: Date) -> CGFloat { Self.x(for: date, width: size.width, data: d) }
 
         // Sky band, coloured by sun altitude.
         let skyRect = CGRect(x: left, y: lay.skyTop, width: plotW, height: lay.skyBottom - lay.skyTop)

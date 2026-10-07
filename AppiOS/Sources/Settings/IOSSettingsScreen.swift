@@ -48,6 +48,9 @@ struct IOSSettingsScreen: View {
                         .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
                 }
                 .foregroundStyle(IterColor.textPrimary)
+                NavigationLink { ScoreLegendPage() } label: {
+                    row(String(localized: "What the scores mean", comment: "Settings row"), symbol: "info.circle", detail: "")
+                }
                 NavigationLink { AboutSettingsPage() } label: {
                     row(String(localized: "About Iter", comment: "Settings row"), symbol: "info.circle", detail: IOSSettingsText.version)
                 }
@@ -468,5 +471,19 @@ private struct ProviderSection: View {
         Stepper(value: Binding(get: { cap }, set: { setup.setCap($0, for: source) }), in: 0...10_000, step: 50) {
             Text("Daily cap: \(cap) calls", comment: "Settings: the daily call allowance of a weather provider, e.g. Daily cap: 800 calls")
         }
+    }
+}
+
+
+/// "What the scores mean": the shared legend as a pushed page.
+struct ScoreLegendPage: View {
+    @Environment(AppModel.self) private var model
+
+    var body: some View {
+        ScrollView {
+            ScoreLegend(source: model.weather.settings.primary).padding(IterSpace.lg)
+        }
+        .navigationTitle(String(localized: "What the scores mean", comment: "Screen title"))
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

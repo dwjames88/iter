@@ -24,15 +24,27 @@ import IterFeatures
         let model = Fixtures.model(weather: .sample)
         let page = SpotModel(app: model, spot: mesaArch, explainer: NeverExplainer())
         await page.start()
+        page.toggleDayExpanded(page.today)
         page.toggleExpanded(page.selectedWindow ?? .goldenEvening)
         try await render(SpotPage(model: page), model: model, state: "window-expanded")
     }
 
-    /// The Light windows module with the layout grid and lane guides on.
+    /// The outlook with tomorrow open: its windows as rows, one with its reasons.
+    @Test(.enabled(if: Snapshot.enabled)) func outlookDayOpen() async throws {
+        let model = Fixtures.model(weather: .sample)
+        let page = SpotModel(app: model, spot: mesaArch, explainer: NeverExplainer())
+        await page.start()
+        page.toggleDayExpanded(page.today.adding(days: 1))
+        page.toggleExpanded(page.selectedWindow ?? .goldenEvening)
+        try await render(SpotPage(model: page), model: model, state: "outlook-open")
+    }
+
+    /// The outlook with today open, with the layout grid and lane guides on.
     @Test(.enabled(if: Snapshot.enabled)) func layoutGrid() async throws {
         let model = Fixtures.model(weather: .sample)
         let page = SpotModel(app: model, spot: mesaArch, explainer: NeverExplainer())
         await page.start()
+        page.toggleDayExpanded(page.today)
         let view = NavigationStack { SpotPage(model: page) }.environment(\.showsLayoutGrid, true)
         try await Snapshot.render(Fixtures.host(view, model: model), screen: "spot", state: "layout-grid",
                                   sizes: [Snapshot.Size(name: "1280x1400", width: 1280, height: 1400)], settle: .seconds(1))
@@ -77,6 +89,7 @@ import IterFeatures
         model.forecasts.replaceProvider(FixtureProvider(shape: .openWeather))
         let page = SpotModel(app: model, spot: mesaArch, explainer: NeverExplainer())
         await page.start()
+        page.toggleDayExpanded(page.today)
         page.toggleExpanded(page.selectedWindow ?? .goldenEvening)
         try await render(SpotPage(model: page), model: model, state: "openweather-fallback")
     }
@@ -87,6 +100,7 @@ import IterFeatures
         model.forecasts.replaceProvider(FixtureProvider(shape: .windy))
         let page = SpotModel(app: model, spot: mesaArch, explainer: NeverExplainer())
         await page.start()
+        page.toggleDayExpanded(page.today)
         page.toggleExpanded(page.selectedWindow ?? .goldenEvening)
         try await render(SpotPage(model: page), model: model, state: "windy-gfs")
     }

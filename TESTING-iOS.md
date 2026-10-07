@@ -7,7 +7,7 @@
 - **iPhone:** a tab bar with Explore, Trips, Locations and Settings, and a separate round search button (a search tab) that holds Apple Maps and Ask suggestions.
 - **Explore:** a full-bleed map with a bottom sheet that sits above the tab bar and has three heights (peek, half, full). The header has a very large title, round buttons and a row of chips. Selecting a pin or a row puts the light panel in the sheet. **Show full page** (or opening a spot from anywhere) pushes the spot page.
 - **Trips:** a list with filter chips, New Trip, import, and swipe and context actions; the builder has days, stops, drive times, a route map, reordering through **Edit**, and Share.
-- **Locations:** your spots and folders. **Settings:** Weather, Apple Intelligence, Location, General, This build, Updates and About.
+- **Locations:** your spots and folders. **Settings:** Weather, Apple Intelligence, Location, General, This build, Updates, What the scores mean (the colour and score legend) and About.
 - **iPad (regular width):** a split view with the sidebar Trips, Locations and Find, like the Mac. Settings opens as a sheet. At compact width (Slide Over, narrow Split View) the iPad uses the phone layout.
 - Everything below the screens is shared with the Mac: all IterKit modules, the asset catalog, the String Catalog and most views in `App/Sources`. See "Platforms" in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 

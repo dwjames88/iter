@@ -25,6 +25,12 @@ import Testing
         #expect(LightBand(score: 57) == .fair)
     }
 
+    @Test func bandScoreRangesMatchTheThresholds() {
+        for score in 0...100 { #expect(LightBand.allCases.filter { $0.scoreRange.contains(score) } == [LightBand(score: score)], "\(score)") }
+        #expect(LightBand.allCases.map(\.scoreRange.lowerBound) == [0, 40, 58, 74, 88])
+        #expect(LightBand.allCases.last?.scoreRange.upperBound == 100)
+    }
+
     @Test func nightNeverAnswersSunset() {
         #expect(!LightIntent.sunset.windows.contains(.night))
         #expect(LightIntent.allCases.filter { $0.windows.contains(.night) } == [.night])

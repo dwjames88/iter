@@ -249,13 +249,13 @@ private struct DetailSections: View {
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.xl) {
             if let page {
+                SpotFactsSection(spot: spot, page: page)
                 LightTimelineSection(page: page)
-                DayWindowsSection(page: page)
-                WhenToGoSection(page: page)
-                SkyArcSection(page: page)
+                OutlookSection(page: page)
                 HourlyWeatherSection(page: page)
+            } else {
+                SpotFactsSection(spot: spot)
             }
-            SpotFactsSection(spot: spot)
         }
         .task(id: DetailKey(spotID: spot.id, day: day)) {
             page = nil

@@ -87,6 +87,8 @@ enum AppLaunch {
     static var askText: String? { UserDefaults.standard.string(forKey: "IterAsk") }
     /// `-IterPanelScrolled YES`: the place panel opens already scrolled to its lower half (When to go at the top). For screenshots.
     static var panelScrolled: Bool { UserDefaults.standard.bool(forKey: "IterPanelScrolled") }
+    /// Open today in the outlook when the panel's model is built (`-IterOutlookOpen YES`). Debug and snapshot aid.
+    static var outlookOpen: Bool { UserDefaults.standard.bool(forKey: "IterOutlookOpen") }
     /// `-IterSeedTrip YES|conflict`: seeds the sample trip (see `IterApp`); `conflict` also reverses day 2.
     enum TripSeed { case sample, conflict }
     static var seedTrip: TripSeed? {

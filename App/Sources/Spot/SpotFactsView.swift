@@ -5,14 +5,18 @@ import IterCore
 import IterDesign
 import IterFeatures
 
-/// A fixed row of facts (walk-in, elevation, facing, best at, time zone), then the blurb and notes.
+/// "Good to know": the best window over the forecast's days first (the answer to "when should I be here?", or the sun
+/// times when nothing is scored), then a fixed row of facts (walk-in, elevation, facing, best at, time zone), the
+/// blurb and the notes. `page` is nil until the spot's model is built; the facts show meanwhile.
 struct SpotFactsSection: View {
     @Environment(AppModel.self) private var model
     let spot: Spot
+    var page: SpotModel?
 
     var body: some View {
         ModuleCard(title: LightText.factsTitle, symbol: "info.circle") {
             VStack(alignment: .leading, spacing: IterGrid.inset) {
+                    if let page { BestWindowLead(page: page) }
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: IterSize.listMin / 2), alignment: .leading)], alignment: .leading, spacing: IterSpace.sm) {
                         fact("figure.walk", LightText.walkIn(spot.walkInMinutes), known: spot.walkInMinutes != nil)
                         if let elevation = spot.elevationMeters {
