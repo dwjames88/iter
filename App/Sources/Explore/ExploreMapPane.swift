@@ -11,6 +11,7 @@ import IterFeatures
 struct ExploreMapPane: View {
     @Bindable var explore: ExploreModel
     @Environment(\.renderMode) private var renderMode
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppModel.self) private var app
     @State private var position: MapCameraPosition
     /// True once the map wrote a user-positioned `position` (pan, zoom, stepper, compass) that has not settled yet.
@@ -116,7 +117,7 @@ struct ExploreMapPane: View {
             }
         }
         .onChange(of: explore.cameraRequest) { _, request in
-            if let request { apply(request, animated: true) }
+            if let request { apply(request, animated: !reduceMotion) }
         }
         .onAppear {
             IterPerf.once("map.created")

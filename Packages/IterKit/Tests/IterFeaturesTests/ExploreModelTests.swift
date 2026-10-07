@@ -301,19 +301,34 @@ private func place(_ id: String, _ name: String, lat: Double = 38.7, lon: Double
         #expect(explore.spot(from: p).timeZoneIdentifier == CuratedSpots.all.min { $0.coordinate.distance(to: p.coordinate) < $1.coordinate.distance(to: p.coordinate) }?.timeZoneIdentifier)
     }
 
-    @Test func selectionFromTheListPansOnlyWhenOutOfView() async throws {
+    @Test func selectionZoomsToTwentyFiveMilesFromAWideMapAndOnlyPansWhenCloser() async throws {
         let explore = try await makeExplore()
         let mesa = try #require(CuratedSpots.spot(id: "mesa-arch"))
+        let far = try #require(CuratedSpots.spot(id: "tunnel-view"))
+        // A 2 degree map is about 138 mi on its shorter side: selecting zooms to the 50 mi span, centred on the spot.
         explore.cameraDidChange(to: GeoRegion(center: mesa.coordinate, latitudeDelta: 2, longitudeDelta: 2))
         explore.select("mesa-arch", from: .list)
         #expect(explore.selectedID == "mesa-arch")
-        #expect(explore.cameraRequest == nil)
-        let far = try #require(CuratedSpots.spot(id: "tunnel-view"))
+        guard case .pan(let zoomed)? = explore.cameraRequest?.kind else { Issue.record("expected a camera request"); return }
+        #expect(zoomed.center == mesa.coordinate)
+        #expect(zoomed.latitudeDelta < 2)
+        // Closer than 50 mi: only a pan, the span is kept.
+        let close = GeoRegion(center: mesa.coordinate, latitudeDelta: 0.5, longitudeDelta: 0.5)
+        explore.cameraDidChange(to: close)
         explore.select("tunnel-view", from: .list)
         guard case .pan(let target)? = explore.cameraRequest?.kind else { Issue.record("expected a pan"); return }
-        // The pan keeps the zoom and brings the pin into view.
-        #expect(target.latitudeDelta == 2 && target.longitudeDelta == 2)
-        #expect(target.contains(far.coordinate))
+        #expect(target.latitudeDelta == 0.5 && target.longitudeDelta == 0.5)
+        #expect(target.center == far.coordinate)
+    }
+
+    @Test func goingBackToTheListAsksForNoCamera() async throws {
+        let explore = try await makeExplore()
+        let mesa = try #require(CuratedSpots.spot(id: "mesa-arch"))
+        explore.cameraDidChange(to: GeoRegion(center: mesa.coordinate, latitudeDelta: 2, longitudeDelta: 2))
+        explore.select("mesa-arch", from: .map)
+        let request = try #require(explore.cameraRequest)
+        explore.closePanel()
+        #expect(explore.cameraRequest == request)
     }
 
     @Test func selectionFromTheMapScrollsTheListAndDoesNotPan() async throws {
@@ -1125,7 +1140,7 @@ private let fixedNowForRollover = fixedNow.addingTimeInterval(600)
         let region = GeoRegion(center: Coordinate(latitude: mesa.coordinate.latitude + 0.4, longitude: mesa.coordinate.longitude),
                                latitudeDelta: 2, longitudeDelta: 2)
         explore.cameraDidChange(to: region)
-        explore.select("mesa-arch", from: .list)
+        explore.reveal(mesa.coordinate)
         #expect(explore.cameraRequest == nil)
     }
 }

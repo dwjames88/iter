@@ -13,6 +13,9 @@ struct LocationsMap: View {
     @Environment(AppModel.self) private var model
     @State private var position: MapCameraPosition
     @State private var paneSize = CGSize.zero
+    /// The camera as last settled, so a selection knows whether the map is already closer in than the selection radius.
+    @State private var visible: GeoRegion?
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     init(items: [SavedItem], selection: Binding<Set<UUID>>) {
         self.items = items
@@ -60,6 +63,20 @@ struct LocationsMap: View {
             MapZoomStepper()
             MapCompass()
             MapScaleView()
+        }
+        .onMapCameraChange(frequency: .onEnd) { context in
+            let r = context.region
+            visible = GeoRegion(center: Coordinate(latitude: r.center.latitude, longitude: r.center.longitude),
+                                latitudeDelta: r.span.latitudeDelta, longitudeDelta: r.span.longitudeDelta)
+        }
+        // Selecting one spot (a row or a pin) frames the selection radius around it, or only pans when already closer.
+        .onChange(of: selection) { _, new in
+            guard new.count == 1, let item = items.first(where: { $0.id == new.first }) else { return }
+            let target = MapCameraPolicy.selectionRegion(current: visible, spot: item.spot.coordinate)
+            let region = MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: target.center.latitude, longitude: target.center.longitude),
+                span: MKCoordinateSpan(latitudeDelta: min(target.latitudeDelta, 120), longitudeDelta: min(target.longitudeDelta, 300)))
+            if reduceMotion { position = .region(region) } else { withAnimation(.smooth) { position = .region(region) } }
         }
     }
 

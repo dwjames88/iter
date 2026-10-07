@@ -434,7 +434,7 @@ public final class ExploreModel {
     // MARK: - Selection and camera
 
     /// Selects a row (or clears with nil). The list follows a map selection by scrolling; the map follows a
-    /// list selection by panning only if the pin is out of view (pattern #5). A map selection opens the panel (a
+    /// list selection by zooming to a 25-mile radius around the spot (only panning when already closer in). A map selection opens the panel (a
     /// different pin while it is open switches it); clearing returns to the list. A list click opens the panel
     /// through `openPanel()`, which the view calls once it knows the click was not the first of a double-click.
     public func select(_ id: String?, from source: SelectionSource = .program) {
@@ -451,7 +451,7 @@ public final class ExploreModel {
             moreOpenedByUser = true
         }
         if source == .map { scrollRequest = (nextRequestID(), id) }
-        reveal(row.spot.coordinate)
+        zoomToSelection(row.spot.coordinate)
     }
 
     // MARK: Panel
@@ -495,6 +495,16 @@ public final class ExploreModel {
 
     /// Nothing covers the map, so a revealed pin is kept just inside the edge on every side.
     static let revealMargins = MapCameraPolicy.Margins()
+
+    /// Frames a newly selected spot: a `MapCameraPolicy.selectionRadiusMiles` radius around it, or a pan to centre it
+    /// when the map is already closer in. A programmatic request, never a user move. Leaving the panel asks for nothing.
+    public func zoomToSelection(_ coordinate: Coordinate) {
+        // Before the map has settled anywhere, the starting camera already includes the selection (see `startPlan`).
+        guard let current = visibleRegion else { return }
+        let target = MapCameraPolicy.selectionRegion(current: current, spot: coordinate)
+        cameraPolicy.didApplySelection(target)
+        cameraRequest = CameraRequest(id: nextRequestID(), kind: .pan(target))
+    }
 
     /// Pans the map so the coordinate is comfortably in view; does nothing when it already
     /// is, and never changes the zoom.

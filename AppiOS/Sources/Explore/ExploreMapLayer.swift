@@ -16,6 +16,7 @@ struct ExploreMapLayer: View {
     var onPinSelected: () -> Void = {}
 
     @Environment(AppModel.self) private var app
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var position: MapCameraPosition
     @State private var userInteracted = false
     @State private var appliedRequest = 0
@@ -128,7 +129,7 @@ struct ExploreMapLayer: View {
             if new.positionedByUser { userInteracted = true }
         }
         .onChange(of: explore.cameraRequest) { _, request in
-            if let request { apply(request, animated: true) }
+            if let request { apply(request, animated: !reduceMotion) }
         }
         .onAppear {
             if let request = explore.cameraRequest { apply(request, animated: false) }

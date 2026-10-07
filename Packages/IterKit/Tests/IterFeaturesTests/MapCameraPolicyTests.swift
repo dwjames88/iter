@@ -199,4 +199,63 @@ private func c(_ lat: Double, _ lon: Double) -> Coordinate { Coordinate(latitude
         defaults.set(Data(stale.utf8), forKey: MapCameraPolicy.storageKey("explore"))
         #expect(MapCameraPolicy.load(screen: "explore", defaults: defaults).savedRegion == nil)
     }
+
+    // MARK: Selection
+
+    private let fiftyMiles = 80_467.2
+
+    @Test func theSelectionRadiusIsOneConstant() {
+        #expect(MapCameraPolicy.selectionRadiusMiles == 25)
+        #expect(abs(MapCameraPolicy.selectionSpanMeters - fiftyMiles) < 1e-6)
+    }
+
+    @Test func selectingFromAWideMapShowsTheFullRadiusOnTheShorterSide() throws {
+        let spot = c(38.6, -109.6)
+        // A landscape map, 4 by 6 degrees.
+        let wide = GeoRegion(center: c(37, -111), latitudeDelta: 4, longitudeDelta: 6)
+        let region = MapCameraPolicy.selectionRegion(current: wide, spot: spot)
+        #expect(region.center == spot)
+        let shorter = MapCameraPolicy.shorterSideMeters(region)
+        #expect(abs(shorter - fiftyMiles) / fiftyMiles < 0.01)
+        // The longer side keeps the map's proportions, so it only shows more.
+        #expect(region.longitudeDelta > region.latitudeDelta)
+        // A portrait map: the longitude side is the shorter one.
+        let tall = GeoRegion(center: c(37, -111), latitudeDelta: 6, longitudeDelta: 3)
+        let portrait = MapCameraPolicy.selectionRegion(current: tall, spot: spot)
+        #expect(abs(MapCameraPolicy.shorterSideMeters(portrait) - fiftyMiles) / fiftyMiles < 0.01)
+        #expect(portrait.latitudeDelta > portrait.longitudeDelta * 0.5)
+        // With no known camera the region is the radius all round.
+        let unknown = MapCameraPolicy.selectionRegion(current: nil, spot: spot)
+        #expect(abs(MapCameraPolicy.shorterSideMeters(unknown) - fiftyMiles) / fiftyMiles < 0.01)
+    }
+
+    @Test func selectingFromCloserInOnlyPans() {
+        let spot = c(38.6, -109.6)
+        // 10 mi square: 0.145 degrees of latitude.
+        let tenMiles = 10 * MapCameraPolicy.metersPerMile / 111_320
+        let close = GeoRegion(center: c(38.5, -109.5), latitudeDelta: tenMiles, longitudeDelta: tenMiles * 1.4)
+        let region = MapCameraPolicy.selectionRegion(current: close, spot: spot)
+        #expect(region.center == spot)
+        #expect(region.latitudeDelta == close.latitudeDelta && region.longitudeDelta == close.longitudeDelta)
+    }
+
+    @Test func aSelectionRequestIsProgrammaticAndNeverAUserMove() {
+        var policy = MapCameraPolicy()
+        let wide = GeoRegion(center: c(37, -111), latitudeDelta: 4, longitudeDelta: 6)
+        policy.didApplyFit(wide)
+        policy.cameraSettled(wide)
+        let region = MapCameraPolicy.selectionRegion(current: wide, spot: c(38.6, -109.6))
+        policy.didApplySelection(region)
+        #expect(policy.programmaticSettlePending)
+        #expect(policy.cameraSettled(region) == .saved)
+        #expect(!policy.userMovedSinceFit)
+        // The user's own move afterwards is still theirs.
+        policy.cameraSettled(GeoRegion(center: c(30, -100), latitudeDelta: 1, longitudeDelta: 1), byUser: true)
+        #expect(policy.userMovedSinceFit)
+        #expect(policy.regionAfterContentChange([c(38, -109)]) == nil)
+        // After a user move a selection request still settles without clearing it as theirs.
+        policy.didApplySelection(region)
+        policy.cameraSettled(region)
+        #expect(policy.userMovedSinceFit)
+    }
 }

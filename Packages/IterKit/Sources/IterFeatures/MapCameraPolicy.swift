@@ -10,6 +10,8 @@ import IterCore
 ///   earliest point on a tie. Points outside the cluster stay on the map; the user can zoom out to see them.
 /// - Once the user moves or zooms the map after a fit, content changes do not refit (`regionAfterContentChange` is nil)
 ///   until a fit is applied again.
+/// - Selecting a spot zooms to a `selectionRadiusMiles` radius around it, or only pans when the map is already closer
+///   than that (`selectionRegion`). Like every request of our own, it is programmatic, never a user move.
 /// - The last settled camera is saved per screen, so the next visit starts where the user left off.
 /// - Antimeridian wrap is not handled (spots spanning ±180° would be fitted by their raw longitudes).
 public struct MapCameraPolicy: Codable, Equatable, Sendable {
@@ -26,6 +28,14 @@ public struct MapCameraPolicy: Codable, Equatable, Sendable {
     public static let zoomTolerance = 0.25
     /// How close to an edge a point may sit before `pan` moves the camera, as a fraction of the span.
     public static let defaultPanMargin = 0.15
+
+    /// The radius shown around a spot when it is selected, in statute miles. The one value every screen uses.
+    public static let selectionRadiusMiles = 25.0
+    /// Metres in a statute mile.
+    public static let metersPerMile = 1609.344
+    /// The span a selection shows on the map's shorter side: twice the radius (80,467.2 m, 50 mi).
+    public static let selectionSpanMeters = selectionRadiusMiles * 2 * metersPerMile
+    private static let metersPerDegreeLatitude = 111_320.0
 
     /// The region of the last automatic fit (or pan that kept it current).
     public private(set) var lastFitRegion: GeoRegion?
@@ -125,6 +135,35 @@ public struct MapCameraPolicy: Codable, Equatable, Sendable {
         return GeoRegion(center: center, latitudeDelta: current.latitudeDelta, longitudeDelta: current.longitudeDelta)
     }
 
+    /// The visible region's shorter side in metres (longitude shrinks with latitude).
+    static func shorterSideMeters(_ region: GeoRegion) -> Double {
+        let height = region.latitudeDelta * metersPerDegreeLatitude
+        let width = region.longitudeDelta * metersPerDegreeLatitude * cos(region.center.latitude * .pi / 180)
+        return min(height, width)
+    }
+
+    /// The camera for selecting a spot, given the map as it is (`current`, nil when unknown).
+    /// - Wider than `selectionSpanMeters` on the shorter side (or unknown): centred on the spot, the shorter side
+    ///   exactly that span so the whole radius is visible, the other side in the map's own proportions.
+    /// - Already closer: centred on the spot at the current span (a pan only).
+    public static func selectionRegion(current: GeoRegion?, spot: Coordinate) -> GeoRegion {
+        let center = Coordinate(latitude: min(85, max(-85, spot.latitude)), longitude: spot.longitude)
+        if let current, shorterSideMeters(current) < selectionSpanMeters {
+            return GeoRegion(center: center, latitudeDelta: current.latitudeDelta, longitudeDelta: current.longitudeDelta)
+        }
+        let cosLat = max(0.01, cos(center.latitude * .pi / 180))
+        let spanLatitude = selectionSpanMeters / metersPerDegreeLatitude
+        let spanLongitude = spanLatitude / cosLat
+        guard let current else { return GeoRegion(center: center, latitudeDelta: spanLatitude, longitudeDelta: spanLongitude) }
+        let height = current.latitudeDelta * metersPerDegreeLatitude
+        let width = current.longitudeDelta * metersPerDegreeLatitude * cos(current.center.latitude * .pi / 180)
+        let aspect = height > 0 ? max(1, width / height) : 1       // width over height, as shown
+        let inverse = width > 0 ? max(1, height / width) : 1       // height over width, as shown
+        return height <= width
+            ? GeoRegion(center: center, latitudeDelta: spanLatitude, longitudeDelta: spanLongitude * aspect)
+            : GeoRegion(center: center, latitudeDelta: spanLatitude * inverse, longitudeDelta: spanLongitude)
+    }
+
     public struct Margins: Equatable, Sendable {
         public var top: Double, leading: Double, bottom: Double, trailing: Double
         public init(top: Double = MapCameraPolicy.defaultPanMargin, leading: Double = MapCameraPolicy.defaultPanMargin,
@@ -154,6 +193,10 @@ public struct MapCameraPolicy: Codable, Equatable, Sendable {
         if !userMovedSinceFit { lastFitRegion = region }
         beginRequest(region)
     }
+
+    /// Records that a selection camera (`selectionRegion`) was sent to the map. It is programmatic, so its settle is
+    /// not a user move; while the user has not taken over it counts as the fit.
+    public mutating func didApplySelection(_ region: GeoRegion) { didApplyPan(region) }
 
     private mutating func beginRequest(_ region: GeoRegion) {
         intendedRegion = region
