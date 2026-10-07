@@ -18,6 +18,8 @@ public final class AppModel {
     public let search: any PlaceSearching
     public let geocoder: any Geocoding
     public let drives: any DriveTimeProviding
+    /// Keeps pinned trips ready offline (forecasts, drive legs, images).
+    public let offline: PinnedTripDownloader
     public let scout: (any Scouting)?
     /// The user's location for "Near you" (inert unless the app passes a live one).
     public let location: UserLocationModel
@@ -51,13 +53,15 @@ public final class AppModel {
                 sampleWeather: any WeatherProviding = CachedWeatherService(wrapping: SampleWeatherService()),
                 ephemeris: any Ephemeris = Astronomy(),
                 defaults: UserDefaults = .standard,
+                offlinePackDirectory: URL? = nil,
                 now: @escaping () -> Date = { Date() }) {
         self.store = store
         self.liveWeather = weather
         self.sampleWeather = sampleWeather
         self.search = search
         self.geocoder = geocoder
-        self.drives = drives
+        let offlineDrives = (drives as? OfflineDriveTimes) ?? OfflineDriveTimes(wrapping: drives)
+        self.drives = offlineDrives
         self.scout = scout
         self.location = location
         self.defaults = defaults
@@ -68,6 +72,8 @@ public final class AppModel {
         self.sampleDataEnabled = sample
         self.forecasts = ForecastCenter(provider: sample ? sampleWeather : weather)
         // Without a setup (tests) the weather settings are hermetic: in-memory keys, no environment, `weather` is the Apple provider.
+        self.offline = PinnedTripDownloader(store: store, forecasts: forecasts, scheduler: scheduler, drives: offlineDrives,
+                                            packs: offlinePackDirectory.map { OfflinePackStore(root: $0) }, now: now)
         self.weather = weatherSetup ?? WeatherSetup(keyStore: InMemoryAPIKeyStore(), cacheDirectory: nil, defaults: defaults,
                                                     environment: { [:] }, launchArgument: { _ in nil }, apple: weather)
         self.weather.onChange = { [weak self] in
@@ -80,7 +86,10 @@ public final class AppModel {
     public var ephemeris: any Ephemeris { engine.ephemeris }
 
     /// The real app: the weather router (Apple Weather, OpenWeather, Windy as the user chose), MapKit, on-disk store.
-    public static func live(store: IterStore, scout: (any Scouting)?) -> AppModel {
+    /// `offlinePacks` is where pinned trips' offline packs live; pass a throwaway folder with an in-memory store, or
+    /// the launch-time clean-up would remove the real packs (their trips are not in that store).
+    public static func live(store: IterStore, scout: (any Scouting)?,
+                            offlinePacks: URL? = OfflinePackStore.defaultRoot()) -> AppModel {
         let cache = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appending(path: "Iter/ForecastCache", directoryHint: .isDirectory)
         let setup = WeatherSetup(keyStore: KeychainAPIKeyStore(), cacheDirectory: cache)
@@ -91,7 +100,8 @@ public final class AppModel {
                  drives: MapKitDriveTimes(),
                  scout: scout,
                  weatherSetup: setup,
-                 location: .live())
+                 location: .live(),
+                 offlinePackDirectory: offlinePacks)
     }
 
     public func setSampleData(_ enabled: Bool) {
