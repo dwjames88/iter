@@ -76,6 +76,14 @@ public struct DriveLeg: Codable, Hashable, Sendable {
 public protocol DriveTimeProviding: Sendable {
     /// A driving route from `a` to `b`. Throws if no route can be found; callers fall back to `DriveLeg.estimate`.
     func drive(from a: Coordinate, to b: Coordinate) async throws -> DriveLeg
+
+    /// A real route for this pair that is already known (cached or seeded), answered without a request or a suspension.
+    /// Never an estimate. Providers without a cache keep the default, nil.
+    func cachedLeg(from a: Coordinate, to b: Coordinate) -> DriveLeg?
+}
+
+extension DriveTimeProviding {
+    public func cachedLeg(from a: Coordinate, to b: Coordinate) -> DriveLeg? { nil }
 }
 
 // MARK: - Schedule

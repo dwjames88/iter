@@ -21,6 +21,9 @@ struct TripRouteMap: View {
     @State private var userInteracted = false
     @State private var paneSize = CGSize.zero
     @State private var appliedRequest = 0
+    /// The road paths as `CLLocationCoordinate2D`, kept while a drive's path is unchanged so a selection or day change
+    /// does not rebuild every polyline's coordinates.
+    @State private var paths = PathCache()
 
     init(builder: TripBuilderModel, selection: Binding<UUID?>, selectedDay: Binding<Int?>) {
         self.builder = builder
@@ -34,8 +37,6 @@ struct TripRouteMap: View {
         }
     }
 
-    private var entries: [TripStopEntry] { builder.days.flatMap(\.stops) }
-
     /// Whether a day is drawn at full strength: every day when none is selected, else only the selected one.
     private func isActive(day: Int) -> Bool { selectedDay == nil || selectedDay == day }
 
@@ -43,9 +44,9 @@ struct TripRouteMap: View {
         let _ = IterPerf.count("trip.mapBody")
         Group {
             if renderMode == .snapshot {
-                MapStandIn(pins: entries.map { entry in
-                    MapStandIn.Pin(id: entry.id.uuidString, coordinate: entry.stop.spot.coordinate, label: "\(entry.number)",
-                                   selected: entry.id == selection || isActive(day: entry.stop.dayIndex))
+                MapStandIn(pins: builder.mapContent.pins.map { pin in
+                    MapStandIn.Pin(id: pin.id.uuidString, coordinate: pin.coordinate, label: "\(pin.number)",
+                                   selected: pin.id == selection || isActive(day: pin.day))
                 }, route: routeCoordinates())
             } else if paneSize.width > 0, paneSize.height > 0 {
                 // Created only once the pane has a real size: a map framed before layout settles on MapKit's own
@@ -59,7 +60,7 @@ struct TripRouteMap: View {
         // MapKit's Map extends itself under the toolbar; clip it to the safe area so the bar is one plain strip.
         .clipped()
         .overlay(alignment: .top) {
-            TripDaySwitcher(days: builder.layout.groups.map { ($0.index, $0.date) }, selectedDay: $selectedDay)
+            TripDaySwitcher(days: builder.mapContent.days.map { ($0.index, $0.date) }, selectedDay: $selectedDay)
                 .padding(IterSpace.md)
         }
         .accessibilityLabel(Text("Route map", comment: "Accessibility label"))
@@ -80,22 +81,22 @@ struct TripRouteMap: View {
 
     private var liveMap: some View {
         Map(position: $position, selection: $selection) {
-            ForEach(builder.days) { day in
-                ForEach(legs(into: day.index), id: \.0) { _, coordinates in
-                    if isActive(day: day.index) {
-                        MapPolyline(coordinates: coordinates).stroke(IterColor.backgroundWindow, lineWidth: IterStroke.routeCasing)
-                        MapPolyline(coordinates: coordinates).stroke(IterColor.route, lineWidth: IterStroke.route)
-                    } else {
-                        MapPolyline(coordinates: coordinates).stroke(IterColor.routeInactive, lineWidth: IterStroke.routeInactive)
-                    }
+            let content = builder.mapContent
+            ForEach(content.legs) { leg in
+                let coordinates = paths.coordinates(for: leg)
+                if isActive(day: leg.day) {
+                    MapPolyline(coordinates: coordinates).stroke(IterColor.backgroundWindow, lineWidth: IterStroke.routeCasing)
+                    MapPolyline(coordinates: coordinates).stroke(IterColor.route, lineWidth: IterStroke.route)
+                } else {
+                    MapPolyline(coordinates: coordinates).stroke(IterColor.routeInactive, lineWidth: IterStroke.routeInactive)
                 }
             }
             UserLocationMapContent(location: app.location)
-            ForEach(entries) { entry in
-                Annotation(entry.stop.spot.name, coordinate: Self.coordinate(entry.stop.spot.coordinate), anchor: .center) {
-                    pin(entry)
+            ForEach(content.pins) { pin in
+                Annotation(pin.name, coordinate: Self.coordinate(pin.coordinate), anchor: .center) {
+                    self.pin(pin)
                 }
-                .tag(entry.id)
+                .tag(pin.id)
             }
         }
         .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
@@ -122,11 +123,11 @@ struct TripRouteMap: View {
         }
     }
 
-    private func pin(_ entry: TripStopEntry) -> some View {
-        let selected = entry.id == selection
-        let inDay = isActive(day: entry.stop.dayIndex)
+    private func pin(_ pin: TripMapPin) -> some View {
+        let selected = pin.id == selection
+        let inDay = isActive(day: pin.day)
         let size = selected ? IterSize.mapPinSelected : IterSize.mapPin
-        return Text(entry.number, format: .number)
+        return Text(pin.number, format: .number)
             .font(IterFont.captionStrong)
             .monospacedDigit()
             .foregroundStyle(inDay ? IterColor.onAccent : IterColor.backgroundWindow)
@@ -134,7 +135,7 @@ struct TripRouteMap: View {
             .background(inDay ? IterColor.accentEmphasis : IterColor.mapPinInactive, in: Circle())
             .overlay(Circle().strokeBorder(IterColor.backgroundWindow, lineWidth: selected ? IterStroke.thick : IterStroke.thin))
             .opacity(inDay || selected ? 1 : Self.dimmedOpacity)
-            .accessibilityLabel(Text("Stop \(entry.number), \(entry.stop.spot.name)", comment: "VoiceOver: map pin"))
+            .accessibilityLabel(Text("Stop \(pin.number), \(pin.name)", comment: "VoiceOver: map pin"))
     }
 
     /// Pins of days that are not selected.
@@ -142,23 +143,11 @@ struct TripRouteMap: View {
 
     // MARK: Geometry
 
-    /// The drives that end on `day`, each as the road path (or a straight line when the path is unknown).
-    private func legs(into day: Int) -> [(UUID, [CLLocationCoordinate2D])] {
-        builder.days.first { $0.index == day }?.stops.compactMap { entry in
-            guard let leg = entry.schedule?.legFromPrevious else { return nil }
-            let path = leg.path.count >= 2 ? leg.path : [leg.from, leg.to]
-            return (entry.id, path.map(Self.coordinate))
-        } ?? []
-    }
-
     /// The road paths of every day at full strength, for the snapshot stand-in.
     private func routeCoordinates() -> [Coordinate] {
-        builder.days.filter { isActive(day: $0.index) }.flatMap { day in
-            day.stops.flatMap { entry -> [Coordinate] in
-                guard let leg = entry.schedule?.legFromPrevious else { return [entry.stop.spot.coordinate] }
-                return (leg.path.count >= 2 ? leg.path : [leg.from, leg.to])
-            }
-        }
+        let content = builder.mapContent
+        let legs = Dictionary(content.legs.map { ($0.id, $0.path) }, uniquingKeysWith: { first, _ in first })
+        return content.pins.filter { isActive(day: $0.day) }.flatMap { pin in legs[pin.id] ?? [pin.coordinate] }
     }
 
     private static func mkRegion(_ target: GeoRegion) -> MKCoordinateRegion {
@@ -195,6 +184,22 @@ struct TripRouteMap: View {
         } else {
             position = .region(region)
         }
+    }
+}
+
+// MARK: - Path cache
+
+/// Converts a drive's road path to map coordinates once, and again only when the path itself changes. Plain storage the
+/// map's body reads and fills; nothing observes it.
+@MainActor
+private final class PathCache {
+    private var entries: [UUID: (path: [Coordinate], coordinates: [CLLocationCoordinate2D])] = [:]
+
+    func coordinates(for leg: TripMapLeg) -> [CLLocationCoordinate2D] {
+        if let entry = entries[leg.id], entry.path == leg.path { return entry.coordinates }
+        let coordinates = leg.path.map { CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
+        entries[leg.id] = (leg.path, coordinates)
+        return coordinates
     }
 }
 

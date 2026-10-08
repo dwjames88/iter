@@ -30,7 +30,7 @@ import IterData
         #expect(model.days[1].stops[0].isOvernightFromPrevious)
     }
 
-    @Test func fallsBackToEstimatesWhenMapsFails() async {
+    @Test func fallsBackToEstimatesWhenThereIsNoRoute() async {
         let h = TripHarness()
         let trip = h.makeTrip()
         let model = h.model(for: trip, drives: FakeDrives(fail: true))

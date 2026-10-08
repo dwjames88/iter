@@ -163,3 +163,18 @@ private func leg(_ a: TripStopPlan, _ b: TripStopPlan, minutes: Double) -> (LegK
         #expect(try JSONDecoder().decode(LegKey.self, from: data) == k)
     }
 }
+
+@Suite struct SchedulerWindows {
+    @Test func suppliedWindowsGiveTheSameResultsAsComputingThem() {
+        let a = stop("a", day: 0, .goldenEvening)
+        let b = stop("b", day: 0, .goldenMorning)
+        let c = stop("c", day: 1, .goldenMorning, lat: 41, lon: -111)
+        let t = trip([a, b, c])
+        let windows = scheduler.sessionWindows(for: t)
+        #expect(windows.count == 3)
+        let legs = Dictionary(uniqueKeysWithValues: [leg(a, b, minutes: 30), leg(b, c, minutes: 90)])
+        #expect(scheduler.schedule(t, legs: legs, windows: windows) == scheduler.schedule(t, legs: legs))
+        #expect(scheduler.suggestOrdering(t, legs: legs, windows: windows) == scheduler.suggestOrdering(t, legs: legs))
+        #expect(scheduler.legPairsNeeded(for: t, windows: windows) == scheduler.legPairsNeeded(for: t))
+    }
+}

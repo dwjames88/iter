@@ -25,6 +25,23 @@ public struct TripScheduler: Sendable {
         self.engine = engine
     }
 
+    // MARK: Session windows
+
+    /// The span of each stop's chosen session on its own day at its own spot (absent when the sun does not produce it).
+    /// Every scheduling pass needs these; a caller that already has the day's light (the builder) passes them in rather
+    /// than having each pass redo the astronomy.
+    public typealias SessionWindows = [UUID: TimeSpan]
+
+    public func sessionWindows(for trip: TripPlan) -> SessionWindows {
+        var out: SessionWindows = [:]
+        for stop in trip.stops {
+            if let span = engine.windows(for: stop.spot, on: trip.day(stop.dayIndex)).first(where: { $0.kind == stop.session })?.span {
+                out[stop.id] = span
+            }
+        }
+        return out
+    }
+
     // MARK: Schedule
 
     /// Stops in trip order (day-major, array order within a day). For each stop:
@@ -34,8 +51,8 @@ public struct TripScheduler: Sendable {
     /// - The previous stop is free when its window ends (you shoot through it). Leaving earlier gives `.driveDoesNotFit`.
     ///   This is checked across days too, so an overnight drive is verified rather than assumed.
     /// - `.outOfOrder` when, on the same day, this window starts before the previous stop's window.
-    public func schedule(_ trip: TripPlan, legs: [LegKey: DriveLeg]) -> TripSchedule {
-        schedule(stops: Self.ordered(trip.stops), in: trip, legs: legs)
+    public func schedule(_ trip: TripPlan, legs: [LegKey: DriveLeg], windows: SessionWindows? = nil) -> TripSchedule {
+        schedule(stops: Self.ordered(trip.stops), in: trip, legs: legs, windows: windows ?? sessionWindows(for: trip))
     }
 
     private static func ordered(_ stops: [TripStopPlan]) -> [TripStopPlan] {
@@ -44,11 +61,11 @@ public struct TripScheduler: Sendable {
         }.map(\.element)
     }
 
-    private func schedule(stops: [TripStopPlan], in trip: TripPlan, legs: [LegKey: DriveLeg]) -> TripSchedule {
+    private func schedule(stops: [TripStopPlan], in trip: TripPlan, legs: [LegKey: DriveLeg], windows: SessionWindows) -> TripSchedule {
         var result: [StopSchedule] = []
         var previous: (stop: TripStopPlan, window: TimeSpan?)?
         for stop in stops {
-            let window = engine.windows(for: stop.spot, on: trip.day(stop.dayIndex)).first { $0.kind == stop.session }?.span
+            let window = windows[stop.id]
             var issues: [ScheduleIssue] = []
             var setUpBy: Date?, arriveBy: Date?, leaveBy: Date?
             var leg: DriveLeg?
@@ -92,13 +109,14 @@ public struct TripScheduler: Sendable {
     /// Light-first order for each day, as a suggestion only. For each day the stops are sorted by session window start
     /// (stable; stops with no window go last). A suggestion is returned only when the order differs and the whole trip
     /// then has strictly fewer issues (`.driveEstimated` is not counted). Missing legs use estimates.
-    public func suggestOrdering(_ trip: TripPlan, legs: [LegKey: DriveLeg]) -> [OrderingSuggestion] {
+    public func suggestOrdering(_ trip: TripPlan, legs: [LegKey: DriveLeg], windows: SessionWindows? = nil) -> [OrderingSuggestion] {
+        let windows = windows ?? sessionWindows(for: trip)
         let current = Self.ordered(trip.stops)
-        let before = schedule(stops: current, in: trip, legs: legs).issueCount
+        let before = schedule(stops: current, in: trip, legs: legs, windows: windows).issueCount
         var out: [OrderingSuggestion] = []
         for dayIndex in 0..<trip.dayCount {
-            guard let candidate = lightFirst(trip: trip, current: current, dayIndex: dayIndex) else { continue }
-            let after = schedule(stops: candidate.stops, in: trip, legs: legs).issueCount
+            guard let candidate = lightFirst(current: current, dayIndex: dayIndex, windows: windows) else { continue }
+            let after = schedule(stops: candidate.stops, in: trip, legs: legs, windows: windows).issueCount
             if after < before {
                 out.append(OrderingSuggestion(dayIndex: dayIndex, order: candidate.dayOrder.map(\.id), issuesBefore: before, issuesAfter: after))
             }
@@ -108,11 +126,12 @@ public struct TripScheduler: Sendable {
 
     /// Every consecutive pair of stops in the current order and in each day's light-first order, so the app knows which
     /// drives to fetch. Deduplicated, in first-seen order.
-    public func legPairsNeeded(for trip: TripPlan) -> [LegKey] {
+    public func legPairsNeeded(for trip: TripPlan, windows: SessionWindows? = nil) -> [LegKey] {
+        let windows = windows ?? sessionWindows(for: trip)
         let current = Self.ordered(trip.stops)
         var sequences = [current]
         for dayIndex in 0..<trip.dayCount {
-            if let candidate = lightFirst(trip: trip, current: current, dayIndex: dayIndex) { sequences.append(candidate.stops) }
+            if let candidate = lightFirst(current: current, dayIndex: dayIndex, windows: windows) { sequences.append(candidate.stops) }
         }
         var seen = Set<LegKey>()
         var out: [LegKey] = []
@@ -126,11 +145,11 @@ public struct TripScheduler: Sendable {
     }
 
     /// The trip's stops with one day re-sorted by window start, or nil when that day's order would not change.
-    private func lightFirst(trip: TripPlan, current: [TripStopPlan], dayIndex: Int) -> (stops: [TripStopPlan], dayOrder: [TripStopPlan])? {
+    private func lightFirst(current: [TripStopPlan], dayIndex: Int, windows: SessionWindows) -> (stops: [TripStopPlan], dayOrder: [TripStopPlan])? {
         let day = current.filter { $0.dayIndex == dayIndex }
         guard day.count >= 2 else { return nil }
         let starts: [UUID: Date] = Dictionary(uniqueKeysWithValues: day.map { stop in
-            (stop.id, engine.windows(for: stop.spot, on: trip.day(dayIndex)).first { $0.kind == stop.session }?.span.start ?? .distantFuture)
+            (stop.id, windows[stop.id]?.start ?? .distantFuture)
         })
         let sorted = day.enumerated().sorted { a, b in
             let sa = starts[a.element.id]!, sb = starts[b.element.id]!

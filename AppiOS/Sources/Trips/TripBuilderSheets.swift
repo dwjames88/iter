@@ -29,26 +29,26 @@ struct TripRouteMapView: View {
         }
     }
 
-    private var entries: [TripStopEntry] { builder.days.flatMap(\.stops) }
     private func isActive(_ day: Int) -> Bool { selectedDay == nil || selectedDay == day }
 
     var body: some View {
         Map(position: $position, selection: $selection) {
-            ForEach(builder.days) { day in
-                ForEach(legs(into: day.index), id: \.0) { _, path in
-                    if isActive(day.index) {
-                        MapPolyline(coordinates: path).stroke(IterColor.backgroundWindow, lineWidth: IterStroke.routeCasing)
-                        MapPolyline(coordinates: path).stroke(IterColor.route, lineWidth: IterStroke.route)
-                    } else {
-                        MapPolyline(coordinates: path).stroke(IterColor.routeInactive, lineWidth: IterStroke.routeInactive)
-                    }
+            // Read from the model's draw list, which only changes with the geometry (not with a forecast or a time).
+            let content = builder.mapContent
+            ForEach(content.legs) { leg in
+                let path = leg.path.map(Self.coordinate)
+                if isActive(leg.day) {
+                    MapPolyline(coordinates: path).stroke(IterColor.backgroundWindow, lineWidth: IterStroke.routeCasing)
+                    MapPolyline(coordinates: path).stroke(IterColor.route, lineWidth: IterStroke.route)
+                } else {
+                    MapPolyline(coordinates: path).stroke(IterColor.routeInactive, lineWidth: IterStroke.routeInactive)
                 }
             }
-            ForEach(entries) { entry in
-                Annotation(entry.stop.spot.name, coordinate: Self.coordinate(entry.stop.spot.coordinate), anchor: .center) {
-                    pin(entry)
+            ForEach(content.pins) { pin in
+                Annotation(pin.name, coordinate: Self.coordinate(pin.coordinate), anchor: .center) {
+                    self.pin(pin)
                 }
-                .tag(entry.id)
+                .tag(pin.id)
             }
         }
         .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
@@ -67,9 +67,9 @@ struct TripRouteMapView: View {
         withAnimation(.smooth) { position = .region(Self.region(region)) }
     }
 
-    private func pin(_ entry: TripStopEntry) -> some View {
-        let active = isActive(entry.stop.dayIndex)
-        return Text(entry.number, format: .number)
+    private func pin(_ pin: TripMapPin) -> some View {
+        let active = isActive(pin.day)
+        return Text(pin.number, format: .number)
             .font(IterFont.captionStrong)
             .monospacedDigit()
             .foregroundStyle(active ? IterColor.onAccent : IterColor.backgroundWindow)
@@ -77,15 +77,7 @@ struct TripRouteMapView: View {
             .background(active ? IterColor.accentEmphasis : IterColor.mapPinInactive, in: Circle())
             .overlay(Circle().strokeBorder(IterColor.backgroundWindow, lineWidth: IterStroke.thin))
             .opacity(active ? 1 : 0.55)
-            .accessibilityLabel(Text("Stop \(entry.number), \(entry.stop.spot.name)", comment: "VoiceOver: map pin"))
-    }
-
-    private func legs(into day: Int) -> [(UUID, [CLLocationCoordinate2D])] {
-        builder.days.first { $0.index == day }?.stops.compactMap { entry in
-            guard let leg = entry.schedule?.legFromPrevious else { return nil }
-            let path = leg.path.count >= 2 ? leg.path : [leg.from, leg.to]
-            return (entry.id, path.map(Self.coordinate))
-        } ?? []
+            .accessibilityLabel(Text("Stop \(pin.number), \(pin.name)", comment: "VoiceOver: map pin"))
     }
 
     private static func region(_ r: GeoRegion) -> MKCoordinateRegion {

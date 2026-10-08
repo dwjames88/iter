@@ -26,8 +26,16 @@ public final class OfflineDriveTimes: DriveTimeProviding {
         seeded.withLock { $0[Key(from: a.cacheKey, to: b.cacheKey)] }
     }
 
+    /// Seeded legs first, then whatever the wrapped provider already has cached.
+    public func cachedLeg(from a: Coordinate, to b: Coordinate) -> DriveLeg? {
+        seededLeg(from: a, to: b) ?? wrapped.cachedLeg(from: a, to: b)
+    }
+
     public func drive(from a: Coordinate, to b: Coordinate) async throws -> DriveLeg {
-        if let leg = seededLeg(from: a, to: b) { return leg }
+        if let leg = seededLeg(from: a, to: b) {
+            IterPerf.count("drives.seededHit")
+            return leg
+        }
         return try await wrapped.drive(from: a, to: b)
     }
 }

@@ -3,6 +3,7 @@ import IterCore
 import IterAstro
 import IterLight
 import IterData
+import IterServices
 @testable import IterFeatures
 
 /// Records every drive asked for; can be told to fail.
@@ -10,24 +11,25 @@ actor FakeDrives: DriveTimeProviding {
     private(set) var calls: [LegRequest] = []
     private let fail: Bool
     private let minutes: Double
+    private let failure: any Error
 
     struct LegRequest: Hashable, Sendable {
         var from: Coordinate
         var to: Coordinate
     }
 
-    init(fail: Bool = false, minutes: Double = 60) {
+    /// `failure` is what a failing fetch throws: `MapServiceError.noRoute` is final, anything else may pass.
+    init(fail: Bool = false, minutes: Double = 60, failure: any Error = MapServiceError.noRoute) {
         self.fail = fail
         self.minutes = minutes
+        self.failure = failure
     }
 
     func drive(from a: Coordinate, to b: Coordinate) async throws -> DriveLeg {
         calls.append(LegRequest(from: a, to: b))
-        if fail { throw MapFailure.noRoute }
+        if fail { throw failure }
         return DriveLeg(from: a, to: b, seconds: minutes * 60, meters: 80_000, isEstimate: false, path: [a, b])
     }
-
-    enum MapFailure: Error { case noRoute }
 }
 
 struct NoWeather: WeatherProviding {
@@ -53,10 +55,12 @@ struct TripHarness {
 
     func spot(_ id: String) -> Spot { CuratedSpots.spot(id: id)! }
 
-    func model(for trip: TripRecord, drives: FakeDrives = FakeDrives(), dismissals: SuggestionDismissals = SuggestionDismissals(),
-                defaults: UserDefaults = UserDefaults(suiteName: "TripHarness-\(UUID().uuidString)")!) -> TripBuilderModel {
+    func model(for trip: TripRecord, drives: any DriveTimeProviding = FakeDrives(), dismissals: SuggestionDismissals = SuggestionDismissals(),
+                defaults: UserDefaults = UserDefaults(suiteName: "TripHarness-\(UUID().uuidString)")!,
+                legCoalescing: Duration = .milliseconds(60),
+                now: @escaping @MainActor () -> Date = { LocalDay(year: 2026, month: 10, day: 6).at(hour: 10, in: TripHarness.denver) }) -> TripBuilderModel {
         TripBuilderModel(tripID: trip.id, store: store, scheduler: scheduler, drives: drives, forecasts: forecasts,
-                         dismissals: dismissals, defaults: defaults, now: { LocalDay(year: 2026, month: 10, day: 6).at(hour: 10, in: Self.denver) })
+                         dismissals: dismissals, defaults: defaults, legCoalescing: legCoalescing, now: now)
     }
 
     /// Two days: day 0 Mesa Arch (sunrise) then Delicate Arch (sunset); day 1 Horseshoe Bend (sunset).

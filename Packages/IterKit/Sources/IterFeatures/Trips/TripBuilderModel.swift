@@ -3,6 +3,7 @@ import Observation
 import IterCore
 import IterLight
 import IterData
+import IterServices
 
 /// One stop as the builder shows it: the plan, its schedule, and the windows of its day at its spot.
 public struct TripStopEntry: Identifiable, Sendable {
@@ -39,6 +40,55 @@ public struct TripDay: Identifiable, Sendable {
     public var timeZone: TimeZone { timeZoneIdentifier.flatMap(TimeZone.init(identifier:)) ?? .current }
 }
 
+/// One drive as the route map draws it: the road path (or a straight line when the path is unknown) into a stop.
+public struct TripMapLeg: Equatable, Sendable, Identifiable {
+    /// The stop the drive arrives at.
+    public var id: UUID
+    /// The day of that stop.
+    public var day: Int
+    public var path: [Coordinate]
+}
+
+/// One numbered pin on the route map.
+public struct TripMapPin: Equatable, Sendable, Identifiable {
+    public var id: UUID
+    public var name: String
+    public var coordinate: Coordinate
+    /// 1-based position in the whole trip.
+    public var number: Int
+    public var day: Int
+}
+
+/// One entry of the map's day switcher.
+public struct TripMapDay: Equatable, Sendable, Identifiable {
+    public var index: Int
+    public var date: LocalDay
+    public var id: Int { index }
+}
+
+/// Everything the route map draws, as plain values. The model replaces it only when it really differs, so a forecast, a
+/// schedule time or any other change that leaves the geometry alone does not invalidate the map.
+public struct TripMapContent: Equatable, Sendable {
+    public var days: [TripMapDay] = []
+    public var legs: [TripMapLeg] = []
+    public var pins: [TripMapPin] = []
+
+    public init() {}
+
+    init(days tripDays: [TripDay]) {
+        for day in tripDays {
+            days.append(TripMapDay(index: day.index, date: day.day))
+            for entry in day.stops {
+                pins.append(TripMapPin(id: entry.id, name: entry.stop.spot.name, coordinate: entry.stop.spot.coordinate,
+                                       number: entry.number, day: day.index))
+                if let leg = entry.schedule?.legFromPrevious {
+                    legs.append(TripMapLeg(id: entry.id, day: day.index, path: leg.path.count >= 2 ? leg.path : [leg.from, leg.to]))
+                }
+            }
+        }
+    }
+}
+
 /// The trip builder's brain: the plan as a value, its drive legs (MapKit with an honest estimate on failure),
 /// the backward schedule, and the light-first suggestions. Platform-neutral; the app draws it.
 ///
@@ -60,6 +110,10 @@ public final class TripBuilderModel {
     public private(set) var layout = TripDayLayout(groups: [])
     /// True while drives are being fetched.
     public private(set) var isLoadingLegs = false
+    /// What the route map draws (pins, drive paths, day switcher); equal across changes that do not touch the geometry.
+    public private(set) var mapContent = TripMapContent()
+    /// What an automatic camera fit frames: the focus day's stops, or every stop when no day is focused (or it has none).
+    public private(set) var fitCoordinates: [Coordinate] = []
 
     @ObservationIgnored private let store: IterStore
     @ObservationIgnored private let scheduler: TripScheduler
@@ -68,11 +122,28 @@ public final class TripBuilderModel {
     @ObservationIgnored private let dismissals: SuggestionDismissals
     @ObservationIgnored private let now: @MainActor () -> Date
     @ObservationIgnored private var legTask: Task<Void, Never>?
+    /// The pending coalesced recompute after drive legs arrived, and whether there is anything for it to apply.
+    @ObservationIgnored private var legFlushTask: Task<Void, Never>?
+    @ObservationIgnored private var legsDirty = false
+    /// Legs that arrive within this window of each other cause one recompute, not one each.
+    @ObservationIgnored private let legCoalescing: Duration
+    /// Pairs whose last fetch failed for a reason that may pass (throttled, offline), with when to try again. They stay
+    /// out of `legs` (the schedule shows its own estimate meanwhile) so the next refresh after that time asks again.
+    @ObservationIgnored private var retryAfter: [LegKey: Date] = [:]
+    /// Day light for each stop at the last refresh, and the session spans the scheduler works from.
+    @ObservationIgnored private var lights: [UUID: DayLight] = [:]
+    @ObservationIgnored private var sessionWindows: TripScheduler.SessionWindows = [:]
+    @ObservationIgnored private var lightClock = Date.distantPast
+    @ObservationIgnored private var lightCache: [LightKey: LightCacheEntry] = [:]
     @ObservationIgnored private var loadingKeys: Set<LegKey> = []
     @ObservationIgnored private var allSuggestions: [OrderingSuggestion] = []
     @ObservationIgnored private var seenStoreRevision = -1
     @ObservationIgnored private var seenForecastRevision = -1
     @ObservationIgnored private let defaults: UserDefaults
+    /// How many times the derived state was rebuilt, and how many `dayLight` computations that took (tests and the perf
+    /// script read these; nothing else does).
+    @ObservationIgnored public private(set) var recomputeCount = 0
+    @ObservationIgnored public private(set) var dayLightCount = 0
 
     // MARK: - Map camera
 
@@ -87,14 +158,14 @@ public final class TripBuilderModel {
 
     public static func cameraScreenKey(for tripID: UUID) -> String { "trip-\(tripID.uuidString)" }
 
-    /// What an automatic fit frames: the focus day's stops, or every stop when no day is focused (or it has none).
-    public var fitCoordinates: [Coordinate] {
+    private func updateFitCoordinates() {
         let all = days.flatMap(\.stops)
+        var fit = all.map { $0.stop.spot.coordinate }
         if let focusDay {
             let day = all.filter { $0.stop.dayIndex == focusDay }
-            if !day.isEmpty { return day.map { $0.stop.spot.coordinate } }
+            if !day.isEmpty { fit = day.map { $0.stop.spot.coordinate } }
         }
-        return all.map { $0.stop.spot.coordinate }
+        if fit != fitCoordinates { fitCoordinates = fit }
     }
 
     /// Where the map should start (saved camera, else a fit), so the view is created already framed. Records nothing.
@@ -111,6 +182,7 @@ public final class TripBuilderModel {
     public func setFocusDay(_ day: Int?) {
         guard day != focusDay else { return }
         focusDay = day
+        updateFitCoordinates()
         contentChanged()
     }
 
@@ -156,7 +228,8 @@ public final class TripBuilderModel {
 
     public init(tripID: UUID, store: IterStore, scheduler: TripScheduler, drives: any DriveTimeProviding,
                 forecasts: ForecastCenter, dismissals: SuggestionDismissals = .shared,
-                defaults: UserDefaults = .standard, now: @escaping @MainActor () -> Date = { Date() }) {
+                defaults: UserDefaults = .standard, legCoalescing: Duration = .milliseconds(60),
+                now: @escaping @MainActor () -> Date = { Date() }) {
         self.tripID = tripID
         self.store = store
         self.scheduler = scheduler
@@ -165,12 +238,16 @@ public final class TripBuilderModel {
         self.dismissals = dismissals
         self.now = now
         self.defaults = defaults
+        self.legCoalescing = legCoalescing
         self.cameraPolicy = MapCameraPolicy.load(screen: Self.cameraScreenKey(for: tripID), defaults: defaults)
         IterPerf.count("trip.modelInit")
         refresh()
     }
 
-    isolated deinit { legTask?.cancel() }
+    isolated deinit {
+        legTask?.cancel()
+        legFlushTask?.cancel()
+    }
 
     // MARK: - Refresh
 
@@ -185,6 +262,9 @@ public final class TripBuilderModel {
         guard let record = store.trip(id: tripID) else {
             legTask?.cancel()
             legTask = nil
+            legFlushTask?.cancel()
+            legFlushTask = nil
+            legsDirty = false
             loadingKeys = []
             isLoadingLegs = false
             plan = nil
@@ -192,14 +272,22 @@ public final class TripBuilderModel {
             days = []
             suggestions = []
             layout = TripDayLayout(groups: [])
+            mapContent = TripMapContent()
+            fitCoordinates = []
+            lights = [:]
+            sessionWindows = [:]
+            lightCache = [:]
             return
         }
         let plan = record.plan
-        self.plan = plan
+        if self.plan != plan { self.plan = plan }
         forecasts.requestAll(plan.stops.map(\.spot.coordinate))
+        refreshLight(plan)
+        let pairs = scheduler.legPairsNeeded(for: plan, windows: sessionWindows)
         dropStaleLegs(plan)
+        fillKnownLegs(pairs, plan)
         recompute()
-        loadMissingLegs(plan)
+        loadMissingLegs(pairs, plan)
     }
 
     /// Waits for the current background drive fetch (tests).
@@ -209,14 +297,29 @@ public final class TripBuilderModel {
 
     private func dropStaleLegs(_ plan: TripPlan) {
         let coordinates = Dictionary(plan.stops.map { ($0.id, $0.spot.coordinate) }, uniquingKeysWith: { first, _ in first })
-        legs = legs.filter { key, leg in
+        let kept = legs.filter { key, leg in
             guard let a = coordinates[key.from], let b = coordinates[key.to] else { return false }
             return leg.from == a && leg.to == b
         }
+        if kept.count != legs.count { legs = kept }
+        retryAfter = retryAfter.filter { coordinates[$0.key.from] != nil && coordinates[$0.key.to] != nil }
     }
 
-    private func loadMissingLegs(_ plan: TripPlan) {
-        let missing = scheduler.legPairsNeeded(for: plan).filter { legs[$0] == nil }
+    /// Takes the pairs the provider already knows (its cache, an offline pack) before the first recompute, so a trip
+    /// that was planned before shows its drives at once instead of one asynchronous hop per leg.
+    private func fillKnownLegs(_ pairs: [LegKey], _ plan: TripPlan) {
+        let coordinates = Dictionary(plan.stops.map { ($0.id, $0.spot.coordinate) }, uniquingKeysWith: { first, _ in first })
+        var filled = legs
+        for key in pairs where filled[key] == nil {
+            guard let a = coordinates[key.from], let b = coordinates[key.to], let leg = drives.cachedLeg(from: a, to: b) else { continue }
+            filled[key] = leg
+        }
+        if filled.count != legs.count { legs = filled }
+    }
+
+    private func loadMissingLegs(_ pairs: [LegKey], _ plan: TripPlan) {
+        let clock = now()
+        let missing = pairs.filter { legs[$0] == nil && (retryAfter[$0].map { $0 <= clock } ?? true) }
         if missing.isEmpty {
             legTask?.cancel()
             legTask = nil
@@ -235,25 +338,107 @@ public final class TripBuilderModel {
             for key in missing {
                 if Task.isCancelled { return }
                 guard let a = coordinates[key.from], let b = coordinates[key.to] else { continue }
-                let leg: DriveLeg
+                var fetched: DriveLeg?
+                var transient = false
                 do {
-                    leg = try await drives.drive(from: a, to: b)
+                    fetched = try await drives.drive(from: a, to: b)
                 } catch is CancellationError {
                     return
+                } catch let error as MapServiceError where error == .noRoute || error == .invalidRequest {
+                    // Final: no road route exists for this pair, so the straight-line estimate stands.
+                    fetched = DriveLeg.estimate(from: a, to: b)
                 } catch {
-                    leg = DriveLeg.estimate(from: a, to: b)
+                    // Throttled or offline: may pass. Keep no estimate in `legs`; ask again on a later refresh.
+                    transient = true
                 }
                 if Task.isCancelled { return }
                 guard let self else { return }
-                self.legs[key] = leg
                 self.loadingKeys.remove(key)
-                self.recompute()
+                if let fetched {
+                    self.legArrived(key, fetched)
+                } else if transient {
+                    self.retryAfter[key] = self.now().addingTimeInterval(Self.retryDelay)
+                }
             }
             guard !Task.isCancelled, let self else { return }
+            self.flushLegs()
             self.isLoadingLegs = false
             self.legTask = nil
             self.loadingKeys = []
         }
+    }
+
+    /// How long a pair that failed for a passing reason waits before the next refresh asks again.
+    static let retryDelay: TimeInterval = 30
+
+    private func legArrived(_ key: LegKey, _ leg: DriveLeg) {
+        legs[key] = leg
+        legsDirty = true
+        guard legFlushTask == nil else { return }
+        let delay = legCoalescing
+        legFlushTask = Task { [weak self] in
+            try? await Task.sleep(for: delay)
+            guard !Task.isCancelled else { return }
+            self?.flushLegs()
+        }
+    }
+
+    private func flushLegs() {
+        legFlushTask?.cancel()
+        legFlushTask = nil
+        if legsDirty { recompute() }
+    }
+
+    // MARK: - Light
+
+    private struct LightKey: Hashable {
+        var spot: Spot
+        var day: LocalDay
+    }
+
+    private struct LightCacheEntry {
+        var state: ForecastState
+        var clock: Date
+        var light: DayLight
+    }
+
+    /// A day of light is reused while the forecast it was scored with is the same one and the clock is within a minute.
+    private static let lightFreshness: TimeInterval = 60
+
+    private static func sameForecast(_ a: ForecastState, _ b: ForecastState) -> Bool {
+        switch (a, b) {
+        case (.loaded(let x), .loaded(let y)): x.fetchedAt == y.fetchedAt && x.source == y.source && x.coordinate == y.coordinate
+        default: a == b
+        }
+    }
+
+    /// The day of light for every stop at its own spot on its own day, reusing what the last refresh computed when the
+    /// spot, day and forecast are unchanged. None of it depends on drive legs, so a leg arriving never comes here.
+    private func refreshLight(_ plan: TripPlan) {
+        let clock = now()
+        var used: [LightKey: LightCacheEntry] = [:]
+        var out: [UUID: DayLight] = [:]
+        for stop in plan.stops {
+            let day = plan.day(stop.dayIndex)
+            let key = LightKey(spot: stop.spot, day: day)
+            let state = forecasts.state(for: stop.spot.coordinate)
+            if let entry = used[key] ?? lightCache[key], Self.sameForecast(entry.state, state),
+               abs(clock.timeIntervalSince(entry.clock)) < Self.lightFreshness {
+                used[key] = entry
+                out[stop.id] = entry.light
+                continue
+            }
+            dayLightCount += 1
+            let light = scheduler.engine.dayLight(for: stop.spot, on: day, forecast: state.forecast,
+                                                  unavailable: state.unavailableReason, now: clock)
+            used[key] = LightCacheEntry(state: state, clock: clock, light: light)
+            out[stop.id] = light
+        }
+        lightCache = used
+        lights = out
+        lightClock = clock
+        sessionWindows = Dictionary(plan.stops.compactMap { stop in out[stop.id]?.window(stop.session).map { (stop.id, $0.span) } },
+                                    uniquingKeysWith: { first, _ in first })
     }
 
     // MARK: - Derived state
@@ -261,21 +446,25 @@ public final class TripBuilderModel {
     private func recompute() {
         guard let plan else { return }
         IterPerf.count("trip.recompute")
-        let schedule = scheduler.schedule(plan, legs: legs)
-        self.schedule = schedule
-        allSuggestions = scheduler.suggestOrdering(plan, legs: legs)
+        recomputeCount += 1
+        legsDirty = false
+        legFlushTask?.cancel()
+        legFlushTask = nil
+        let schedule = scheduler.schedule(plan, legs: legs, windows: sessionWindows)
+        if self.schedule != schedule { self.schedule = schedule }
+        allSuggestions = scheduler.suggestOrdering(plan, legs: legs, windows: sessionWindows)
         suggestions = allSuggestions.filter { !dismissals.isDismissed(trip: tripID, day: $0.dayIndex, order: $0.order) }
         days = buildDays(plan: plan, schedule: schedule)
         layout = TripDayLayout.make(days: days, suggestions: suggestions)
+        let content = TripMapContent(days: days)
+        if content != mapContent { mapContent = content }
+        updateFitCoordinates()
     }
 
     private func buildDays(plan: TripPlan, schedule: TripSchedule) -> [TripDay] {
         var number = 0
         var previous: TripStopPlan?
         var out: [TripDay] = []
-        let engine = scheduler.engine
-        let clock = now()
-        var lightCache: [UUID: DayLight] = [:]
         for index in 0..<plan.dayCount {
             let date = plan.day(index)
             var entries: [TripStopEntry] = []
@@ -283,10 +472,7 @@ public final class TripBuilderModel {
             var estimated = false
             for stop in plan.stops(onDay: index) {
                 number += 1
-                let state = forecasts.state(for: stop.spot.coordinate)
-                let light = engine.dayLight(for: stop.spot, on: date, forecast: state.forecast,
-                                            unavailable: state.unavailableReason, now: clock)
-                lightCache[stop.id] = light
+                guard let light = lights[stop.id] else { continue }
                 let entrySchedule = schedule.schedule(for: stop.id)
                 if let leg = entrySchedule?.legFromPrevious {
                     driving += leg.seconds
@@ -296,7 +482,7 @@ public final class TripBuilderModel {
                                              windows: light.windows, sessionWindow: light.window(stop.session)))
                 previous = stop
             }
-            let first = entries.first.flatMap { lightCache[$0.id] }
+            let first = entries.first.flatMap { lights[$0.id] }
             out.append(TripDay(index: index, day: date, stops: entries, drivingSeconds: driving, hasEstimatedDrive: estimated,
                                sunrise: first?.sun.sunrise, sunset: first?.sun.sunset, timeZoneIdentifier: first?.timeZoneIdentifier))
         }
