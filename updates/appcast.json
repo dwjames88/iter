@@ -1,6 +1,20 @@
 {
   "items" : [
     {
+      "build" : 137,
+      "channel" : "release",
+      "edSignature" : "hLTNBOteBjeWFij52Pyg6j4VKeJRYVqU+694Sdbcq3ebDefEOcZ85vU/wWOcIIBgWu3hA2MlBvv+XKmUh09uBQ==",
+      "length" : 5653404,
+      "minimumSystemVersion" : "26.0",
+      "notarized" : false,
+      "notes" : "### Fixed\n- **Search results on the map**: after you have moved the map, searching Apple Maps for a place now brings the result into view instead of leaving it off screen.\n- **Drive times after a dropped connection**: if MapKit was throttled or you were offline when a trip loaded, the drive stays an estimate only until the next refresh, then is looked up again; before, the straight-line guess stuck until you reopened the trip.\n- **Forecasts after a clock change**: OpenWeather daily forecasts no longer come out an hour off for days after a daylight-saving change within the next 8 days.\n- **A clear message for an empty forecast**: when OpenWeather answers with no forecast data, Settings says \"The response had no forecast data\" rather than an internal error name.\n- **Stale forecasts**: a forecast saved on disk long ago is no longer shown as fresh for up to 2 hours.\n- **Places stuck loading**: a place whose forecast fetch was cancelled by the provider can be asked for again instead of staying on its spinner. Pressing retry during a fetch joins it.\n- **Image strip after stepping back**: going to another place and straight back no longer leaves the image strip empty.\n- **Moving your library on first launch**: if Iter was quit or crashed partway through moving its data out of the old sandbox container, the next launch finishes the move, offline packs and forecast cache included, and no half-written file is left behind.\n- **Impossible dates**: a date that does not exist, such as 30 February, is rejected instead of becoming 2 March.\n\n### Changed\n- **A faster trip planner and map**: switching days, selecting and moving stops do less work, the route map redraws only when the route changes, and drive times that are already known appear at once.\n- **Fewer redraws in Explore**: hovering the map or list no longer rebuilds rows, and a batch of forecasts arriving updates the screen once instead of once per place.\n- **Pinned-trip downloads no longer stall the window** while images are saved.\n- **Sharing a trip builds the file only when you share it**, not each time the trip redraws.\n",
+      "notesURL" : "https://github.com/dwjames88/iter/releases/tag/v0.2.0",
+      "publishedAt" : "2026-10-08T01:19:55Z",
+      "sha256" : "c5881acb1165b0783d6e26d478cfb4cd9cb840856ddb2ca801865f838a00deb1",
+      "url" : "https://github.com/dwjames88/iter/releases/download/v0.2.0/Iter-0.2.0.zip",
+      "version" : "0.2.0"
+    },
+    {
       "build" : 95,
       "channel" : "release",
       "edSignature" : "Cn95XLEe1tYmvRnU0xojQqap4JV7vZOxPmxQKk3GHkCfE1jxDAxzDKPyxDaQ378wauXadFVvsQ34TfmTytksAA==",
