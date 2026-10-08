@@ -29,7 +29,7 @@ struct TripDayList: View {
             }
             .listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)
-            .background(IterColor.backgroundWindow)
+            .screenBackground()
             .onChange(of: scrollTarget) {
                 if let target = scrollTarget { withAnimation { proxy.scrollTo(target.id, anchor: .top) } }
             }

@@ -10,7 +10,6 @@ import IterFeatures
 struct ExplorePlaceDetail: View {
     @Bindable var explore: ExploreModel
     let row: ExploreRow
-    var drag: SheetDrag?
 
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
@@ -20,7 +19,7 @@ struct ExplorePlaceDetail: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            header.sheetDrag(drag)
+            header
             ScrollViewReader { proxy in
             ScrollView {
                 VStack(alignment: .leading, spacing: IterSpace.xl) {

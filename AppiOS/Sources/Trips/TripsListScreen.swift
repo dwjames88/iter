@@ -65,7 +65,7 @@ struct TripsListScreen: View {
                 .scrollContentBackground(.hidden)
             }
         }
-        .background(IterColor.backgroundWindow, ignoresSafeAreaEdges: .all)
+        .screenBackground()
         .navigationTitle(String(localized: "Trips", comment: "Screen title"))
         .navigationBarTitleDisplayMode(.large)
         .toolbar {

@@ -21,6 +21,8 @@ struct LocationsScreen: View {
     @State private var folderName = ""
     @State private var confirmDeleteFolder = false
     @AppStorage("IterLocationsMapShown") private var mapShown = true
+    @Environment(\.isInFloatingSheet) private var isInFloatingSheet
+    @Environment(PhoneBackdrop.self) private var backdrop: PhoneBackdrop?
 
     /// What the single folder-name alert is doing.
     private enum FolderPrompt: Identifiable {
@@ -52,6 +54,8 @@ struct LocationsScreen: View {
                         .font(IterFont.callout)
                         .foregroundStyle(IterColor.textSecondary)
                     Spacer()
+                    // In the phone's sheet the spots are on the map behind it.
+                    if !isInFloatingSheet {
                     Button { withAnimation { mapShown.toggle() } } label: {
                         Text(mapShown ? "Hide map" : "Show map", comment: "Button: collapse or expand the Locations map")
                             .font(IterFont.callout)
@@ -59,11 +63,12 @@ struct LocationsScreen: View {
                     }
                     .buttonStyle(.plain)
                     .foregroundStyle(IterColor.accentText)
+                    }
                 }
                 .listRowInsets(EdgeInsets(top: 0, leading: IterSpace.lg, bottom: 0, trailing: IterSpace.lg))
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
-                if mapShown {
+                if mapShown, !isInFloatingSheet {
                     LocationsMapHeader(items: shown, onOpen: open)
                         .frame(height: 190)
                         .clipShape(RoundedRectangle(cornerRadius: IterRadius.panel, style: .continuous))
@@ -78,9 +83,10 @@ struct LocationsScreen: View {
             }
         }
         .listStyle(.plain)
+        .onChange(of: shown.map(\.id), initial: true) { backdrop?.locations = shown }
         .listSectionSpacing(.compact)
         .scrollContentBackground(.hidden)
-        .background(IterColor.backgroundWindow)
+        .screenBackground()
         .safeAreaInset(edge: .top, spacing: 0) { WeatherStatusBanner(status: model.weatherStatus) }
         .overlay { if all.isEmpty { empty } }
         .navigationTitle(title)
@@ -398,10 +404,12 @@ private struct FolderChips: View {
 // MARK: - Map
 
 /// The small map above the list: a pin per spot (the event unit as Explore draws it), framed to fit them.
-private struct LocationsMapHeader: View {
+struct LocationsMapHeader: View {
     @Environment(AppModel.self) private var model
     let items: [SavedItem]
     let onOpen: (Spot) -> Void
+    /// Full screen behind the phone's sheet: the sheet's height as the bottom inset, and the map controls top trailing.
+    var backdropInset: CGFloat?
     @State private var position: MapCameraPosition = .automatic
     @State private var selection: UUID?
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
@@ -418,7 +426,17 @@ private struct LocationsMapHeader: View {
         }
         .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
         .mapControls { MapCompass() }
-        .overlay(alignment: .bottomTrailing) { MapStyleMenu().padding(IterSpace.sm) }
+        .safeAreaPadding(.bottom, backdropInset ?? 0)
+        .overlay(alignment: backdropInset == nil ? .bottomTrailing : .topTrailing) {
+            if backdropInset == nil {
+                MapStyleMenu().padding(IterSpace.sm)
+            } else {
+                MapStyleMenu(isGlass: false)
+                    .glassEffect(.regular.interactive(), in: .capsule)
+                    .padding(.trailing, IterSpace.lg)
+                    .padding(.top, IterSpace.sm)
+            }
+        }
         .onAppear { position = Self.framing(items) }
         .onChange(of: items.map(\.id)) { withAnimation { position = Self.framing(items) } }
         .onChange(of: selection) { _, id in

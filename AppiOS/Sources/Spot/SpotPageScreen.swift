@@ -23,7 +23,7 @@ struct SpotPageScreen: View {
                 Color.clear
             }
         }
-        .background(IterColor.backgroundWindow)
+        .screenBackground()
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { toolbar }
         .task {

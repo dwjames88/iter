@@ -9,8 +9,6 @@ import IterFeatures
 /// position survives.
 struct ExploreBrowser: View {
     @Bindable var explore: ExploreModel
-    /// Set on the phone: the header drags the sheet.
-    var drag: SheetDrag?
     /// A row was opened (the panel is showing).
     var onOpenPlace: () -> Void = {}
 
@@ -24,7 +22,7 @@ struct ExploreBrowser: View {
                 .allowsHitTesting(!explore.showsPanel)
                 .accessibilityHidden(explore.showsPanel)
             if explore.showsPanel, let row = explore.selectedRow {
-                ExplorePlaceDetail(explore: explore, row: row, drag: drag)
+                ExplorePlaceDetail(explore: explore, row: row)
                     .transition(reduceMotion ? .identity : .opacity)
             }
         }
@@ -40,7 +38,6 @@ struct ExploreBrowser: View {
                 ExploreMoreMenu(explore: explore)
                 shareButton
             }
-            .sheetDrag(drag)
             FullWidthSegmentedPicker(label: String(localized: "Sort", comment: "VoiceOver label of the Explore sort control"),
                                      options: sortOptions, selection: $explore.sort)
                 .padding(.horizontal, IterSpace.lg)

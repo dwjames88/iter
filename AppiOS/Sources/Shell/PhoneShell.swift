@@ -2,17 +2,60 @@ import SwiftUI
 import IterCore
 import IterFeatures
 
-/// iPhone (and compact-width iPad): the iOS 26 floating tab bar with Explore, Trips, Locations, Settings and the separate
-/// search button. Each tab keeps its own stack; the stacks are views onto `AppNavigation`, so a shared view's
+/// iPhone (and compact-width iPad), laid out as Find My: the map fills the screen and one system sheet floats over it,
+/// holding the tab bar (Explore, Trips, Locations, Settings and search) at its foot. A sheet over a tab bar would cover
+/// it; with the tabs inside the sheet, the sheet is the app. At its smaller heights it is Liquid Glass and the map
+/// stays interactive behind it.
+/// Each tab keeps its own stack; the stacks are views onto `AppNavigation`, so a shared view's
 /// `navigation.show(.trip(id))` or `navigation.open(route)` lands on the right tab.
 struct PhoneShell: View {
+    @Environment(AppModel.self) private var model
+    @Environment(ExploreModel.self) private var explore
     @Environment(AppNavigation.self) private var navigation
     @Environment(ShellState.self) private var shell
+    @State private var detent = PhoneSheet.launchDetent
+    @State private var sheetHeight: CGFloat = 0
+    @State private var backdrop = PhoneBackdrop()
 
     var body: some View {
+        map
+            .sheet(isPresented: sheetPresented) {
+                tabs
+                    .environment(\.isInFloatingSheet, true)
+                    .environment(backdrop)
+                    .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { sheetHeight = $0 }
+                    .presentationDetents([PhoneSheet.peek, .medium, .large], selection: $detent)
+                    .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+                    .presentationDragIndicator(.visible)
+                    .interactiveDismissDisabled()
+            }
+            .onAppear { explore.requestInitialCamera() }
+            .onChange(of: explore.showsPanel) { _, shows in
+                if shows, detent == PhoneSheet.peek { detent = .medium }
+            }
+    }
+
+    /// The one map behind the sheet; like Find My's, it shows the current tab's content.
+    @ViewBuilder private var map: some View {
+        let inset = min(sheetHeight, PhoneSheet.mapInsetLimit)
+        if shell.phoneTab == .locations {
+            LocationsMapHeader(items: backdrop.locations, onOpen: { navigation.open(SpotRoute(spot: $0)) }, backdropInset: inset)
+                .ignoresSafeArea(edges: .bottom)
+        } else {
+            ExploreMapLayer(explore: explore, bottomInset: inset,
+                            onPinSelected: { if detent == PhoneSheet.peek { detent = .medium } })
+        }
+    }
+
+    /// Always up, except while the first-run guide (a sheet from the scene root) is showing.
+    private var sheetPresented: Binding<Bool> {
+        Binding(get: { !model.onboarding.isPresented }, set: { _ in })
+    }
+
+    private var tabs: some View {
         @Bindable var shell = shell
         @Bindable var navigation = navigation
-        TabView(selection: tabBinding) {
+        return TabView(selection: tabBinding) {
             Tab(String(localized: "Explore", comment: "Tab"), systemImage: "map", value: ShellState.PhoneTab.explore) {
                 NavigationStack(path: $navigation.explorePath) {
                     PhoneExploreScreen().iosSpotDestination()
@@ -79,6 +122,20 @@ struct PhoneShell: View {
             let wanted: SidebarItem = folder.map(SidebarItem.locationFolder) ?? .locations
             if navigation.selection != wanted { navigation.selection = wanted }
         })
+    }
+}
+
+/// The phone sheet's heights: a peek (the title and the tab bar), half and full, as in Find My.
+enum PhoneSheet {
+    static let peek = PresentationDetent.height(200)
+    /// The map's bottom inset stops growing at half height, so framing does not jump when the sheet goes full.
+    static var mapInsetLimit: CGFloat { 460 }
+    static var launchDetent: PresentationDetent {
+        switch AppLaunch.sheetDetent {
+        case .peek: peek
+        case .full: .large
+        case .half, nil: .medium
+        }
     }
 }
 

@@ -31,7 +31,7 @@ struct TripBuilderScreen: View {
                 Color.clear
             }
         }
-        .background(IterColor.backgroundWindow, ignoresSafeAreaEdges: .all)
+        .screenBackground()
         .onAppear {
             if let builder {
                 builder.viewAppeared()
@@ -279,7 +279,7 @@ private struct TripSummaryBar: View {
         .padding(.trailing, collapsible ? IterSpace.xs : IterSpace.lg)
         .padding(.vertical, IterSpace.xs)
         .frame(minHeight: IterSize.hitTarget + IterSpace.sm)
-        .background(IterColor.backgroundWindow)
+        .screenBackground(ignoresSafeAreaEdges: [])
     }
 
     private var summary: String {
