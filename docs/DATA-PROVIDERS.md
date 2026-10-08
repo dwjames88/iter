@@ -49,6 +49,8 @@ Request: `GET https://api.openweathermap.org/data/3.0/onecall` with `lat`, `lon`
 
 **Condition symbols.** The `weather[0].id` code is mapped to Iter's condition names and SF Symbols (`WeatherConditionMapping`). An icon ending in `n` is night.
 
+**Why some days score 5.** A score is a baseline of 60 plus signed points per factor, clamped to 5...100, and a golden-hour window with heavy low cloud falls below 5 on its own: 80% low cloud costs about 50 points, rain chance and short visibility cost another 10 to 35, and thick mid and high cloud about 10. The clamp then shows 5, and "Why this score" lists the raw factors (low cloud first, then precipitation, visibility), so their points can add up to more than the 55 lost. This is the intended floor, not a missing-data default. Missing data never lowers a score: a missing factor is dropped and noted ("no cloud layers", "no visibility", "daily summary only") with lower confidence, and days beyond the hourly range are filled from the daily summary. The sample data cycles through six sky regimes (clear, high cloud evening, overcast, rain, morning fog, partly cloudy), and overcast, rain and fog-at-sunrise days carry 78 to 100% low cloud, so they score 5 beside 66 to 87 for the others. OpenWeather has no cloud layers, so a real overcast day scores from total cloud: about 40 at 100% cloud before rain and visibility, and 5 only with heavy rain on top.
+
 ### Limits, licence and attribution (checked 5 October 2026)
 
 * **Plan:** "One Call by Call". 1,000 calls a day are free. Calls over that cost 0.0015 USD each. Price page: <https://openweathermap.org/price>.
