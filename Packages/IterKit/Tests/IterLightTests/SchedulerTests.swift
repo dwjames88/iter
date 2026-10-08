@@ -178,3 +178,51 @@ private func leg(_ a: TripStopPlan, _ b: TripStopPlan, minutes: Double) -> (LegK
         #expect(scheduler.legPairsNeeded(for: t, windows: windows) == scheduler.legPairsNeeded(for: t))
     }
 }
+
+@Suite struct SchedulerEdges {
+    @Test func emptyTripsAndEmptyDaysNeedNothing() {
+        let empty = trip([], days: 3)
+        #expect(scheduler.schedule(empty, legs: [:]).stops.isEmpty)
+        #expect(scheduler.suggestOrdering(empty, legs: [:]).isEmpty)
+        #expect(scheduler.legPairsNeeded(for: empty).isEmpty)
+        // An empty middle day: the drive is from the last stop before it, over the empty day, to the next one.
+        let a = stop("a", day: 0, .goldenEvening)
+        let c = stop("c", day: 2, .goldenMorning)
+        let t = trip([a, c], days: 3)
+        #expect(scheduler.legPairsNeeded(for: t) == [LegKey(a.id, c.id)])
+        #expect(scheduler.schedule(t, legs: [:]).schedule(for: c.id)?.legFromPrevious != nil)
+    }
+
+    @Test func singleStopDaysHaveNothingToReorder() {
+        let t = trip([stop("a", day: 0, .goldenEvening), stop("b", day: 1, .goldenMorning)])
+        #expect(scheduler.suggestOrdering(t, legs: [:]).isEmpty)
+        #expect(scheduler.legPairsNeeded(for: t).count == 1)
+    }
+
+    @Test func aStopAfterAPolarNightStopHasNoDriveToFit() {
+        // Polar night on day 0 only: its session has no window, so the next day's stop has nothing to be free after.
+        var eph = FixedEphemeris()
+        eph.sun = { d in
+            d == testDay ? SunEvents(day: d, kind: .polarNight, solarNoon: FixedEphemeris.at(d, 12)) : FixedEphemeris.standardDay(d)
+        }
+        let sch = TripScheduler(engine: LightEngine(ephemeris: eph))
+        let a = stop("a", day: 0, .goldenMorning)
+        let b = stop("b", day: 1, .goldenMorning)
+        let s = sch.schedule(trip([a, b]), legs: [leg(a, b, minutes: 600)].reduce(into: [:]) { $0[$1.0] = $1.1 })
+        #expect(s.schedule(for: a.id)?.issues == [.windowMissing])
+        #expect(s.schedule(for: b.id)?.issues.isEmpty == true)
+        #expect(s.schedule(for: b.id)?.leaveBy != nil)
+    }
+
+    @Test func stopsWithoutAWindowSortLastInALightFirstOrder() {
+        var eph = FixedEphemeris()
+        eph.sun = { d in
+            d == testDay ? SunEvents(day: d, kind: .polarNight, solarNoon: FixedEphemeris.at(d, 12)) : FixedEphemeris.standardDay(d)
+        }
+        let sch = TripScheduler(engine: LightEngine(ephemeris: eph))
+        let dark = stop("dark", day: 0, .goldenMorning)
+        let evening = stop("evening", day: 0, .goldenEvening)
+        // Both have no window on a polar-night day, so their order is kept (stable) and nothing is suggested.
+        #expect(sch.suggestOrdering(trip([dark, evening], days: 1), legs: [:]).isEmpty)
+    }
+}
