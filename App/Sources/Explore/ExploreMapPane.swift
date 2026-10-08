@@ -147,6 +147,7 @@ struct ExploreMapPane: View {
 
     private func pinBody(_ pin: ExplorePin) -> some View {
         ExplorePinView(pin: pin)
+            .equatable()
             .allowsHitTesting(!explore.isAddingSpot)
             .onHover { inside in
                 if inside { explore.hoveredID = pin.id } else if explore.hoveredID == pin.id { explore.hoveredID = nil }

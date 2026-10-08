@@ -294,7 +294,8 @@ struct ExploreListPanel: View {
     /// One row per spot. A click selects it (the list's selection, so its pin is highlighted) and opens its panel.
     @ViewBuilder private func rows(in section: ExploreSection) -> some View {
         ForEach(section.rows) { row in
-            ExploreRowView(row: row, isHovered: explore.hoveredID == row.id, showsDistance: explore.hasLocation)
+            ExploreRowView(row: row, showsDistance: explore.hasLocation)
+                .equatable()
                 .id(row.id)
                 .tag(row.id)
                 .onAppear { explore.requestForecast(for: row.id) }
@@ -325,7 +326,8 @@ struct ExploreListPanel: View {
         }
     }
 
-    private var list: some View {
+    @ViewBuilder private var list: some View {
+        let _ = IterPerf.count("list.body")
         ScrollViewReader { proxy in
             List(selection: selection) {
                 if !explore.searchSuggestions.isEmpty {

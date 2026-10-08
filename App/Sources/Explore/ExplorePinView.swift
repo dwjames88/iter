@@ -6,10 +6,13 @@ import IterFeatures
 /// One map pin. Three weights give the map hierarchy (critique C28): the selected spot, a few chips, the rest dots.
 /// Chips and the selected pin are the event unit (`EventScore` `.pin`): symbol, score and time are one capsule, with no
 /// outline. Selection is scale, elevation and shadow (the Apple Maps idiom), never a coral border.
-struct ExplorePinView: View {
+struct ExplorePinView: View, Equatable {
     let pin: ExplorePin
 
     @Environment(\.renderMode) private var renderMode
+
+    /// A pin that did not change is not redrawn (the map pane draws it with `.equatable()`).
+    nonisolated static func == (a: ExplorePinView, b: ExplorePinView) -> Bool { a.pin == b.pin }
 
     var body: some View {
         let _ = IterPerf.count("pin.body")

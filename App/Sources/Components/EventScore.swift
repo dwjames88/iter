@@ -4,12 +4,13 @@ import AppKit
 import UIKit
 #endif
 import SwiftUI
+import Synchronization
 import IterCore
 import IterDesign
 import IterFeatures
 
 /// How the time inside an event unit reads.
-enum TimeStyle: Sendable {
+enum TimeStyle: Hashable, Sendable {
     /// "18:09"
     case start
     /// "18:09–18:43"
@@ -265,8 +266,24 @@ struct EventScore: View {
 
     /// The numeral lane: two heavy digits ("88", the widest). A 100 shrinks to fit rather than widening every unit.
     static func scoreWidth(_ v: Variant) -> CGFloat {
-        ceil(measure("88", font: NSFont.monospacedDigitSystemFont(ofSize: scoreSize(v), weight: nsWeight(IterFont.eventScoreWeight()))))
+        let key = WidthKey(kind: .score, variant: v, style: .start, locale: "")
+        if let hit = widths.withLock({ $0[key] }) { return hit }
+        let width = ceil(measure("88", font: NSFont.monospacedDigitSystemFont(ofSize: scoreSize(v), weight: nsWeight(IterFont.eventScoreWeight()))))
+        widths.withLock { $0[key] = width }
+        return width
     }
+
+    /// Measured widths, remembered: every pin and row asks for the same few numbers on every body pass, and measuring
+    /// text (and formatting 24 times) is the dearest thing a pin does. The time lane depends on the locale and its clock
+    /// format, so those are part of the key; the fonts are fixed by the variant.
+    private struct WidthKey: Hashable {
+        enum Kind { case score, time }
+        var kind: Kind
+        var variant: Variant
+        var style: TimeStyle
+        var locale: String
+    }
+    private static let widths = Mutex<[WidthKey: CGFloat]>([:])
 
     /// The stack lane: the wider of the symbol (point size times 1.25: SF Symbols are wider than tall) and the widest time.
     static func stackWidth(_ v: Variant, _ style: TimeStyle) -> CGFloat {
@@ -277,6 +294,8 @@ struct EventScore: View {
     /// every hour, in the variant's time font. A `.range` is one line, "05:45–06:20", in the time slot.
     static func timeLaneWidth(_ style: TimeStyle, variant: Variant) -> CGFloat {
         let v = variant == .pin ? .compact : variant
+        let key = WidthKey(kind: .time, variant: v, style: style, locale: "\(Locale.current.identifier)|\(Locale.current.hourCycle)")
+        if let hit = widths.withLock({ $0[key] }) { return hit }
         let font = NSFont.monospacedDigitSystemFont(ofSize: timeSize(v), weight: nsWeight(IterFont.eventTimeWeight(large: v == .large)))
         let utc = TimeZone(identifier: "UTC")!
         let midnight = LocalDay(year: 2026, month: 1, day: 1).at(hour: 0, in: utc)
@@ -287,7 +306,9 @@ struct EventScore: View {
                 : TimeText.timeRange(TimeSpan(start: start, end: start.addingTimeInterval(59 * 60)), in: utc)
             return measure(text, font: font)
         }.max() ?? 0
-        return ceil(widest) + 1
+        let width = ceil(widest) + 1
+        widths.withLock { $0[key] = width }
+        return width
     }
 
     fileprivate static func measure(_ string: String, font: NSFont) -> CGFloat {

@@ -113,7 +113,7 @@ struct ExploreAskSection: View {
                 failed(failure)
             case .results:
                 ForEach(results) { row in
-                    ExploreAskRow(row: row, isHovered: explore.hoveredID == row.id, showsDistance: explore.hasLocation)
+                    ExploreAskRow(row: row, showsDistance: explore.hasLocation)
                         .id(row.id)
                         .tag(row.id)
                         .onAppear { explore.requestForecast(for: row.id) }
@@ -225,12 +225,11 @@ struct ExploreAskSection: View {
 /// the scout checked one).
 struct ExploreAskRow: View {
     let row: ExploreRow
-    var isHovered = false
     var showsDistance = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.xxs) {
-            ExploreRowView(row: row, isHovered: isHovered, showsDistance: showsDistance)
+            ExploreRowView(row: row, showsDistance: showsDistance)
             if let seconds = row.driveSeconds {
                 Label(LightText.askDrive(seconds), systemImage: "car")
                     .font(IterFont.caption)

@@ -6,13 +6,17 @@ import IterFeatures
 
 /// One list row: the spot (name, then one quiet locality line), then its next sunrise or sunset as one event unit in
 /// fixed lanes (see `EventLane`). A click selects the row; it is not a button that expands.
-struct ExploreRowView: View {
+///
+/// Equatable, and drawn with `.equatable()`: a row whose spot, score and distance did not change is not rebuilt when
+/// another row's score lands. It takes no hover state: the pointer over a row emphasises its pin on the map, and a
+/// list that read `hoveredID` would be re-evaluated on every move between rows.
+struct ExploreRowView: View, Equatable {
     let row: ExploreRow
-    var isHovered = false
     /// Shown after the locality ("Big Sur, CA · 42 mi") when there is a location to measure from.
     var showsDistance = false
 
     var body: some View {
+        let _ = IterPerf.count("row.body")
         summary
             .padding(.vertical, IterSpace.sm)
             .frame(minHeight: IterGrid.rowDouble, alignment: .leading)
