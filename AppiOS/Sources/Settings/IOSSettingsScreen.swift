@@ -7,7 +7,7 @@ import IterServices
 import IterFeatures
 
 /// Settings on iOS: a grouped form. Weather, Apple Intelligence and About are pushed pages; Location, Updates and General
-/// sit inline. `-IterSettingsTab weather|intelligence|about` pushes that page at launch.
+/// sit inline. `-IterSettingsTab weather|intelligence|about|licence` pushes that page at launch.
 struct IOSSettingsScreen: View {
     @Environment(AppModel.self) private var model
     @Environment(\.openURL) private var openURL
@@ -40,6 +40,13 @@ struct IOSSettingsScreen: View {
             } footer: {
                 Text("Updates arrive through TestFlight. There is nothing to check from inside Iter.", comment: "Settings footer: how updates work")
             }
+            if AppLaunch.showLicensing {
+                Section {
+                    NavigationLink { LicenceSettingsPane().navigationTitle(String(localized: "Licence", comment: "Screen title")).navigationBarTitleDisplayMode(.inline) } label: {
+                        row(String(localized: "Licence", comment: "Settings row"), symbol: "key", detail: "")
+                    }
+                }
+            }
             Section {
                 Button {
                     Task { await shell.showWelcome(model.onboarding) }
@@ -63,6 +70,7 @@ struct IOSSettingsScreen: View {
             case .weather: WeatherSettingsPage()
             case .intelligence: IntelligenceSettingsPage()
             case .about: AboutSettingsPage()
+            case .licence: LicenceSettingsPane().navigationTitle(String(localized: "Licence", comment: "Screen title")).navigationBarTitleDisplayMode(.inline)
             case .general, .updates: EmptyView()
             }
         }

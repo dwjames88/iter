@@ -49,6 +49,8 @@ targets:
         product: IterDesign
       - package: IterKit
         product: IterFeatures
+      - package: IterKit
+        product: IterLicensing
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.dwjames.iter.ios
@@ -67,6 +69,7 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         # MARKETING_VERSION and CURRENT_PROJECT_VERSION come from project.yml's shared settings (one version for both apps).
+        # ITER_LICENSING_ENFORCED (Info.plist IterLicensingEnforced, default NO) also comes from project.yml's shared settings.
         ENABLE_PREVIEWS: YES
         # Built with the iOS 27 SDK, the @Generable code references FoundationModels symbols that iOS 26 lacks
         # (Generable.promptRepresentation), and a strong link stops the app at launch on iOS 26. A weak link lets it start;

@@ -5,9 +5,9 @@ import IterDesign
 import IterServices
 import IterFeatures
 
-enum SettingsTab: Hashable { case general, weather, intelligence, updates, about }
+enum SettingsTab: Hashable { case general, weather, intelligence, updates, licence, about }
 
-/// The Settings window: General, Weather, Apple Intelligence, Updates, About.
+/// The Settings window: General, Weather, Apple Intelligence, Updates, About; Licence too, when launched with `-IterShowLicensing YES`.
 struct SettingsView: View {
     @State private var tab: SettingsTab
 
@@ -31,6 +31,11 @@ struct SettingsView: View {
                 .tabItem { Label(String(localized: "Updates", comment: "Settings tab"), systemImage: "arrow.down.circle") }
                 .tag(SettingsTab.updates)
             #endif
+            if AppLaunch.showLicensing {
+                LicenceSettingsPane()
+                    .tabItem { Label(String(localized: "Licence", comment: "Settings tab"), systemImage: "key") }
+                    .tag(SettingsTab.licence)
+            }
             AboutSettingsPane()
                 .tabItem { Label(String(localized: "About", comment: "Settings tab"), systemImage: "info.circle") }
                 .tag(SettingsTab.about)

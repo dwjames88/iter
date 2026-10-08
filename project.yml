@@ -31,6 +31,9 @@ settings:
     # verifies each update's Ed25519 signature. scripts/release.sh writes the key the first time it runs.
     ITER_UPDATE_FEED_URL: "https://github.com/dwjames88/iter/releases/latest/download/appcast.json"
     ITER_UPDATE_PUBLIC_KEY: "LndqHR3Ss6ptV4nD6v+N3wOc+TigG1VTuE2T+AZY48c="
+    # Licensing (IterLicensing, docs/LICENSING.md). NO in 0.x: nothing is gated and Settings ▸ Licence is hidden unless
+    # launched with -IterShowLicensing YES. Fed into Info.plist as IterLicensingEnforced.
+    ITER_LICENSING_ENFORCED: "NO"
     # Keep the build machine's paths out of the binary: source paths are recorded relative to /Iter.
     OTHER_SWIFT_FLAGS: $(inherited) -file-prefix-map $(SRCROOT)=/Iter -debug-prefix-map $(SRCROOT)=/Iter
   configs:
@@ -66,6 +69,8 @@ targets:
         product: IterDesign
       - package: IterKit
         product: IterFeatures
+      - package: IterKit
+        product: IterLicensing
       - package: IterUpdater
         product: IterUpdater
     settings:

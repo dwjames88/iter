@@ -77,6 +77,7 @@ Start with [TESTING.md](TESTING.md) for the Mac app. It covers what is in this b
 |---|---|
 | `docs/ARCHITECTURE.md`, `docs/ROADMAP.md` | How it is built; what milestone 1 contains and what comes next |
 | `docs/DATA-PROVIDERS.md` | Weather sources (Apple Weather, OpenWeather, Windy): what each gives the Light Index, limits, licences, attribution, caching |
+| `docs/LICENSING.md` | Licence keys (Lemon Squeezy): the flow, what is stored and sent, offline rules, the build switch, crediting early buyers, the store setup checklist |
 | `docs/reference/` | The approved improvement plan and the prototype's flow briefs |
 | `Design/` | Design tokens (`tokens.json`, DTCG), `TOKENS.md`, `SCREENS.md`, `COMPONENTS.md`, `snapshots/` |
 | `Brand/` | The Step logo (Geist 600) and the First Light palette (`palettes/` also keeps the Alpine study as history) |

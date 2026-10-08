@@ -5,6 +5,9 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 
 ## [Unreleased]
 
+### Added
+- **Licensing groundwork**: Iter can now check a licence key with Lemon Squeezy, keep it in the Keychain and work for 14 days offline. It is hidden and switched off, so nothing changes for anyone: Iter is still free, and nothing asks for a key.
+
 ## [0.2.0] - 2026-10-07
 
 ### Fixed

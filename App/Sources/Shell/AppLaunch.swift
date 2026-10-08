@@ -14,9 +14,10 @@ import IterFeatures
 /// view models once and logs what it found (used by the background smoke test; no UI interaction needed).
 /// `-IterSection explore|locations|trips|trip` (`trip` = the first pinned trip, else the most recent; `saved` is the old name of Locations, `scout` of Explore) opens the main window on that sidebar section, overriding the restored
 /// selection; `-IterAppearance light|dark` forces the app's appearance. Both exist for screenshot testing.
-/// `-IterSettingsTab general|weather|intelligence|about` opens the Settings window on that tab at launch, and
+/// `-IterSettingsTab general|weather|intelligence|about|licence` opens the Settings window on that tab at launch, and
 /// `-IterSpot <curated spot id>` (for example `mesa-arch`) opens Explore with that spot's page pushed. Also for screenshots.
 /// `-IterSeedTrip conflict` and `-IterTripDay <n>` are described on their properties.
+/// `-IterShowLicensing YES` shows Settings ▸ Licence (and makes `-IterSettingsTab licence` work). Without it nothing about licensing is visible.
 /// `-IterAsk <text>` makes Explore run an Ask with that text at launch (the field holds the text, the Ask section answers it).
 /// `-IterScoutStub unavailable|results` replaces the Apple Intelligence scout with a stub, for screenshots only and honoured only with
 /// `-IterInMemoryStore YES` (see `makeScout`): `unavailable` reports Apple Intelligence as turned off, `results` answers with three real
@@ -66,9 +67,12 @@ enum AppLaunch {
         case "weather": .weather
         case "intelligence": .intelligence
         case "about": .about
+        case "licence" where showLicensing: .licence
         default: nil
         }
     }
+    /// `-IterShowLicensing YES`: Settings shows the Licence tab (Mac) or row (iPhone, iPad). Off by default: this build is free.
+    static var showLicensing: Bool { UserDefaults.standard.bool(forKey: "IterShowLicensing") }
     static var spot: Spot? { UserDefaults.standard.string(forKey: "IterSpot").flatMap { CuratedSpots.spot(id: $0) } }
     /// `-IterSelectRow <spot id>` (for example `mesa-arch`): Explore selects that row, scrolls it into view once when it
     /// is first built, and so opens its place panel. For screenshots.

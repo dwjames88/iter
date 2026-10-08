@@ -22,6 +22,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>IterGitCommit</key>
 	<string>$(ITER_GIT_COMMIT)</string>
+	<key>IterLicensingEnforced</key>
+	<string>$(ITER_LICENSING_ENFORCED)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchScreen</key>
