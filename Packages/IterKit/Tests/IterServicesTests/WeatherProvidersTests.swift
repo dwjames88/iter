@@ -93,7 +93,7 @@ final class Mutex2: @unchecked Sendable {
 
     @Test func networkFailureDetailHasNeitherKeyNorURL() async {
         let url = URL(string: "https://api.openweathermap.org/data/3.0/onecall?appid=\(secretKey)")!
-        let rig = Rig(transport: FakeTransport { _ in throw URLError(.cannotParseResponse, userInfo: [NSURLErrorFailingURLErrorKey: url, NSURLErrorFailingURLStringErrorKey: url.absoluteString]) })
+        let rig = Rig(transport: FakeTransport { _ in throw URLError(.cannotParseResponse, userInfo: [NSURLErrorFailingURLErrorKey: url, "NSErrorFailingURLStringKey": url.absoluteString]) })
         do {
             _ = try await rig.openWeather().forecast(for: moabSpot)
             Issue.record("expected a throw")

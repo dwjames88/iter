@@ -75,11 +75,11 @@ enum OpenWeatherMapping {
 
     static func map(_ data: Data, coordinate: Coordinate, fetchedAt: Date) throws -> Forecast {
         let r = try JSONDecoder().decode(Response.self, from: data)
-        let offset = r.timezone_offset ?? 0
+        let clock = LocalClock(zoneName: r.timezone, offset: r.timezone_offset, reference: r.hourly?.first?.dt ?? r.daily?.first?.dt)
         var hours = (r.hourly ?? []).compactMap(hour)
         hours.sort { $0.date < $1.date }
-        let days = (r.daily ?? []).compactMap { day($0, offset: offset) }
-        hours += summaryHours(after: hours.last?.date, daily: r.daily ?? [], offset: offset)
+        let days = (r.daily ?? []).compactMap { day($0, clock: clock) }
+        hours += summaryHours(after: hours.last?.date, daily: r.daily ?? [], clock: clock)
         guard !hours.isEmpty else { throw MappingError.noForecastData }
         return Forecast(coordinate: coordinate, hours: hours, days: days, fetchedAt: fetchedAt, source: .openWeather)
     }
@@ -105,12 +105,12 @@ enum OpenWeatherMapping {
             condition: w == nil ? "cloudy" : r.condition)
     }
 
-    static func day(_ d: Day, offset: Double) -> DailyConditions? {
+    static func day(_ d: Day, clock: LocalClock) -> DailyConditions? {
         guard let dt = d.dt, let hi = d.temp?.max, let lo = d.temp?.min else { return nil }
         let w = d.weather?.first
         let r = WeatherConditionMapping.openWeather(id: w?.id ?? 804, isNight: false)
         return DailyConditions(
-            date: Date(timeIntervalSince1970: localMidnight(dt: dt, offset: offset)),
+            date: Date(timeIntervalSince1970: clock.midnight(of: dt)),
             highC: hi, lowC: lo, precipitationChance: clamp01(d.pop ?? 0),
             symbolName: w == nil ? "cloud" : r.symbol, condition: w == nil ? "cloudy" : r.condition,
             providerSunrise: d.sunrise.map { Date(timeIntervalSince1970: $0) },
@@ -121,18 +121,19 @@ enum OpenWeatherMapping {
     /// Hours after the last hourly entry, filled from the daily summaries (`.dailySummary`): cloud, probability,
     /// humidity and wind from the day; no visibility; temperature interpolated through the local day
     /// (night at 00:00, morn 06:00, day 12:00, eve 18:00, night 24:00); rain and snow amounts spread evenly over 24 h.
-    static func summaryHours(after last: Date?, daily: [Day], offset: Double) -> [HourlyConditions] {
+    static func summaryHours(after last: Date?, daily: [Day], clock: LocalClock) -> [HourlyConditions] {
         guard let last else { return [] }
         var out: [HourlyConditions] = []
         let firstNew = last.timeIntervalSince1970 + 3600
         for d in daily.sorted(by: { ($0.dt ?? 0) < ($1.dt ?? 0) }) {
             guard let dt = d.dt, let clouds = d.clouds else { continue }
-            let start = localMidnight(dt: dt, offset: offset)
+            let start = clock.midnight(of: dt)
+            let end = clock.nextMidnight(after: start)
             var t = max(start, firstNew)
             // Align to the hourly grid of the provider's own hours.
             let phase = last.timeIntervalSince1970.truncatingRemainder(dividingBy: 3600)
             t = (ceil((t - phase) / 3600) * 3600) + phase
-            while t < start + 86400 {
+            while t < end {
                 let localHour = (t - start) / 3600
                 let w = d.weather?.first
                 let night = nightAt(t, sunrise: d.sunrise, sunset: d.sunset, localHour: localHour)
@@ -176,9 +177,37 @@ enum OpenWeatherMapping {
         return lastKnown.1
     }
 
-    /// Start of the place's local day containing `dt`.
-    static func localMidnight(dt: Double, offset: Double) -> Double {
-        floor((dt + offset) / 86400) * 86400 - offset
+    /// The place's local days. The named zone wins when it agrees with `timezone_offset` at the first timestamp, so a
+    /// day after a clock change still starts at its real local midnight (the response's single offset is only right
+    /// up to the change); otherwise the fixed offset is used (0 when neither is given).
+    struct LocalClock {
+        private let calendar: Calendar?
+        private let offset: Double
+
+        init(zoneName: String?, offset: Double?, reference: Double?) {
+            let zone = zoneName.flatMap(TimeZone.init(identifier:))
+            if let zone, offset == nil || reference == nil
+                || Double(zone.secondsFromGMT(for: Date(timeIntervalSince1970: reference ?? 0))) == offset {
+                var calendar = Calendar(identifier: .gregorian)
+                calendar.timeZone = zone
+                self.calendar = calendar
+            } else {
+                self.calendar = nil
+            }
+            self.offset = offset ?? 0
+        }
+
+        /// Start of the local day containing `dt`.
+        func midnight(of dt: Double) -> Double {
+            if let calendar { return calendar.startOfDay(for: Date(timeIntervalSince1970: dt)).timeIntervalSince1970 }
+            return floor((dt + offset) / 86400) * 86400 - offset
+        }
+
+        /// Start of the local day after the one starting at `start` (23 or 25 hours on a clock change).
+        func nextMidnight(after start: Double) -> Double {
+            if let calendar { return calendar.startOfDay(for: Date(timeIntervalSince1970: start + 36 * 3600)).timeIntervalSince1970 }
+            return start + 86400
+        }
     }
 
     private static func clamp01(_ v: Double) -> Double { min(1, max(0, v)) }

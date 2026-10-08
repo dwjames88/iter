@@ -35,6 +35,8 @@ public struct OpenWeatherService: WeatherProviding {
                 return try OpenWeatherMapping.map(data, coordinate: coordinate, fetchedAt: now())
             } catch is CancellationError {
                 throw CancellationError()
+            } catch is OpenWeatherMapping.MappingError {
+                throw WeatherError.provider(.openWeather, "The response had no forecast data")
             } catch {
                 throw ProviderHTTP.map(error, source: .openWeather, key: key)
             }
