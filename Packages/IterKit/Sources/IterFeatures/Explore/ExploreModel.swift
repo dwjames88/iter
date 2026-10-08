@@ -84,6 +84,11 @@ public final class ExploreModel {
     @ObservationIgnored private var derivedCache: (stamp: DerivedStamp, value: Derived)?
     @ObservationIgnored private var mapCache: (key: MapKey, value: MapSnapshot)?
     @ObservationIgnored private let defaults: UserDefaults
+    /// How many times the rows, and the map's items, were rebuilt (not read from their caches). For tests and the
+    /// perf counters.
+    @ObservationIgnored public private(set) var derivedBuilds = 0
+    @ObservationIgnored public private(set) var mapBuilds = 0
+    @ObservationIgnored public private(set) var scoreBatches = 0
     @ObservationIgnored public private(set) var cameraPolicy: MapCameraPolicy
 
     public init(app: AppModel, searchDebounce: Duration = .milliseconds(250), defaults: UserDefaults = .standard) {
@@ -181,6 +186,7 @@ public final class ExploreModel {
     private func derived(for stamp: DerivedStamp) -> Derived {
         if let cached = derivedCache, cached.stamp == stamp { return cached.value }
         IterPerf.count("explore.buildDerived")
+        derivedBuilds += 1
         let value = IterPerf.interval("explore.buildDerived") { buildDerived(stamp) }
         let shown = value.sections.filter { isMorePlacesOpen || $0.kind != .morePlaces }.flatMap(\.rows)
         if !shown.isEmpty, shown.allSatisfy({ $0.score != nil }) { IterPerf.once("explore.allScored", "rows=\(shown.count)") }
@@ -302,6 +308,7 @@ public final class ExploreModel {
         let fresh = results.filter { $0.0.timeBucket == current }
         guard !fresh.isEmpty else { return }
         IterPerf.count("explore.scoreBatch")
+        scoreBatches += 1
         scoreCache = scoreCache.filter { $0.key.timeBucket == current }
         for (key, cached) in fresh {
             scoreCache[key] = cached
@@ -640,6 +647,7 @@ public final class ExploreModel {
         let key = MapKey(stamp: stamp, region: visibleRegion, selectedID: selectedID, hoveredID: hoveredID, viewport: mapViewport)
         if let cached = mapCache, cached.key == key { return cached.value }
         IterPerf.count("explore.pins")
+        mapBuilds += 1
         let value = IterPerf.interval("explore.mapItems") { buildMapSnapshot(derived(for: stamp)) }
         mapCache = (key, value)
         return value
@@ -786,6 +794,20 @@ public final class ExploreModel {
         appleResults = places.map(spot(from:))
         searchState = .finished(query: query, count: places.count)
         resultSetChanged()
+        showSearchResults()
+    }
+
+    /// The person searched, so a result off the map is brought into view, as Ask does: a fit of the results alone (the
+    /// densest cluster when they spread wider than an automatic fit may show), a programmatic request even after the
+    /// map was moved by hand. `resultSetChanged` refits the whole list only while the user has not moved the map, and
+    /// that fit weighs every Near You spot, so a result far from them was left off screen. Nothing moves when every
+    /// result is already visible.
+    private func showSearchResults() {
+        let found = appleResults.map(\.coordinate)
+        guard !found.isEmpty, let region = MapCameraPolicy.fit(found) else { return }
+        if let visible = visibleRegion, found.allSatisfy(visible.contains) { return }
+        cameraPolicy.didApplyFit(region)
+        cameraRequest = CameraRequest(id: nextRequestID(), kind: .fit(region))
     }
 
     /// A search result as a spot: real coordinates, no "best at" (so the user's intent or sunset is scored).
