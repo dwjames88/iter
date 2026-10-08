@@ -39,7 +39,8 @@ public enum WeatherStatus: Equatable, Sendable {
 @Observable
 public final class ForecastCenter {
     public private(set) var states: [String: ForecastState] = [:]
-    /// Bumped whenever any state changes or the provider is swapped, so views can recompute light.
+    /// Bumped whenever what is on screen changes or the provider is swapped, so views can recompute light. A batch of
+    /// fetches that finish close together bumps it once, and a result identical to what is shown does not bump it.
     public private(set) var revision = 0
 
     /// Why weather is missing, or `.ok`. Updated after every completed fetch.
@@ -52,9 +53,16 @@ public final class ForecastCenter {
     @ObservationIgnored private var seededKeys: Set<String> = []
     @ObservationIgnored private var provider: any WeatherProviding
     @ObservationIgnored private var inFlight: [String: Task<Void, Never>] = [:]
+    /// Finished fetches not yet applied. Applied together when the last fetch of a batch lands, or after `coalescing`.
+    @ObservationIgnored private var pending: [(key: String, result: FetchResult)] = []
+    @ObservationIgnored private var flushTask: Task<Void, Never>?
+    @ObservationIgnored private let coalescing: Duration
 
-    public init(provider: any WeatherProviding) {
+    /// - Parameter coalescing: how long results of a batch that is still running wait to be shown together. The last
+    ///   fetch to finish shows everything at once, so a lone request is never delayed.
+    public init(provider: any WeatherProviding, coalescing: Duration = .milliseconds(40)) {
         self.provider = provider
+        self.coalescing = coalescing
     }
 
     public var source: ForecastSource { provider.source }
@@ -62,8 +70,7 @@ public final class ForecastCenter {
     /// Swap the provider (Sample Data mode) and drop everything fetched with the old one.
     public func replaceProvider(_ provider: any WeatherProviding) {
         self.provider = provider
-        inFlight.values.forEach { $0.cancel() }
-        inFlight = [:]
+        dropInFlight()
         states = [:]
         lastGood = [:]
         failedKeys = []
@@ -73,27 +80,39 @@ public final class ForecastCenter {
 
     /// Drops every state and in-flight fetch but keeps the provider (its settings or keys changed), so screens refetch.
     public func invalidateAll() {
-        inFlight.values.forEach { $0.cancel() }
-        inFlight = [:]
+        dropInFlight()
         states = [:]
         failedKeys = []
         status = .ok
         revision += 1
     }
 
+    private func dropInFlight() {
+        inFlight.values.forEach { $0.cancel() }
+        inFlight = [:]
+        pending = []
+        flushTask?.cancel()
+        flushTask = nil
+    }
+
     public func state(for coordinate: Coordinate) -> ForecastState {
         states[coordinate.cacheKey] ?? .loading
     }
+
+    /// Whether a fetch for the place is running right now.
+    func isFetching(_ coordinate: Coordinate) -> Bool { inFlight[coordinate.cacheKey] != nil }
 
     public func isLoading(_ coordinate: Coordinate) -> Bool {
         if case .loading = state(for: coordinate) { return true }
         return false
     }
 
-    /// Starts a fetch if there is no state yet (or `force`). Returns immediately.
+    /// Starts a fetch if there is no state yet (or `force`). Returns immediately. A fetch already running for the
+    /// place is joined, forced or not: a second one would race the first and orphan its task.
     public func request(_ coordinate: Coordinate, force: Bool = false) {
         let key = coordinate.cacheKey
-        if !force, (states[key] != nil && !seededKeys.contains(key)) || inFlight[key] != nil { return }
+        if inFlight[key] != nil { return }
+        if !force, states[key] != nil && !seededKeys.contains(key) { return }
         seededKeys.remove(key)
         IterPerf.once("forecast.firstRequest")
         if states[key] == nil { states[key] = lastGood[key].map { .loaded($0) } ?? .loading }
@@ -105,6 +124,9 @@ public final class ForecastCenter {
             } catch let error as WeatherError {
                 result = .failure(error.unavailableReason)
             } catch is CancellationError {
+                // Cancelled by `invalidateAll` or `replaceProvider`, which already cleared this fetch. A provider that
+                // threw it on its own would otherwise leave the place waiting on a finished task for good.
+                if !Task.isCancelled, let self { self.abandon(key: key) }
                 return
             } catch {
                 result = .failure(.serviceFailed(detail: String(describing: error)))
@@ -119,15 +141,62 @@ public final class ForecastCenter {
         case failure(ForecastUnavailableReason)
     }
 
+    /// A fetch ended without a result and without being cancelled by the centre: forget it so the place can be asked again.
+    private func abandon(key: String) {
+        inFlight[key] = nil
+        if case .loading? = states[key] { states[key] = nil }
+        if inFlight.isEmpty { flush() }
+    }
+
     private func finish(key: String, _ result: FetchResult) {
+        inFlight[key] = nil
+        pending.append((key, result))
+        IterPerf.count("forecast.finish")
+        if inFlight.isEmpty {
+            flush()
+        } else if flushTask == nil {
+            let wait = coalescing
+            flushTask = Task { [weak self] in
+                try? await Task.sleep(for: wait)
+                guard !Task.isCancelled else { return }
+                self?.flush()
+            }
+        }
+    }
+
+    /// Applies every finished fetch in the order they ended, then bumps `revision` once if anything on screen changed.
+    private func flush() {
+        flushTask?.cancel()
+        flushTask = nil
+        guard !pending.isEmpty else { return }
+        let batch = pending
+        pending = []
+        var changed = false
+        for (key, result) in batch { changed = apply(key: key, result) || changed }
+        if changed {
+            revision += 1
+            IterPerf.count("forecast.bump")
+        }
+        if inFlight.isEmpty { IterPerf.mark("forecast.idle", "states=\(states.count) applied=\(batch.count) changed=\(changed)") }
+    }
+
+    /// Whether the result changed what is shown (a state, or the status banner).
+    private func apply(key: String, _ result: FetchResult) -> Bool {
+        var changed = false
+        func show(_ state: ForecastState) {
+            if states[key] != state { states[key] = state; changed = true }
+        }
+        func setStatus(_ new: WeatherStatus) {
+            if status != new { status = new; changed = true }
+        }
         switch result {
         case .success(let forecast):
-            lastGood[key] = forecast
+            if lastGood[key] != forecast { lastGood[key] = forecast }
             failedKeys.remove(key)
-            states[key] = .loaded(forecast)
-            status = .ok
+            show(.loaded(forecast))
+            setStatus(.ok)
         case .failure(let reason):
-            states[key] = lastGood[key].map { .loaded($0) } ?? .unavailable(reason)
+            show(lastGood[key].map { .loaded($0) } ?? .unavailable(reason))
             switch reason {
             case .inThePast, .beyondHorizon, .notLoaded:
                 break
@@ -135,16 +204,13 @@ public final class ForecastCenter {
                 failedKeys.insert(key)
                 let last = lastGood.values.map(\.fetchedAt).max()
                 switch reason {
-                case .missingAPIKey(let source): status = .needsKey(source)
-                case .offline(let source): status = .offline(source, lastUpdate: last)
-                default: status = .failed(reason, lastUpdate: last)
+                case .missingAPIKey(let source): setStatus(.needsKey(source))
+                case .offline(let source): setStatus(.offline(source, lastUpdate: last))
+                default: setStatus(.failed(reason, lastUpdate: last))
                 }
             }
         }
-        inFlight[key] = nil
-        revision += 1
-        IterPerf.count("forecast.finish")
-        if inFlight.isEmpty { IterPerf.mark("forecast.idle", "states=\(states.count)") }
+        return changed
     }
 
     /// Puts a saved forecast (from an offline pack) on screen: kept as the last good one when newer, and shown when
@@ -152,7 +218,8 @@ public final class ForecastCenter {
     public func seed(_ forecast: Forecast, for coordinate: Coordinate) {
         let key = coordinate.cacheKey
         if (lastGood[key]?.fetchedAt ?? .distantPast) < forecast.fetchedAt { lastGood[key] = forecast }
-        guard states[key]?.forecast == nil, let best = lastGood[key] else { revision += 1; return }
+        // Something already on screen for the place stays; only a place with nothing to show changes, so only then bump.
+        guard states[key]?.forecast == nil, let best = lastGood[key] else { return }
         if inFlight[key] == nil { seededKeys.insert(key) }
         states[key] = .loaded(best)
         revision += 1
@@ -163,6 +230,7 @@ public final class ForecastCenter {
         let key = coordinate.cacheKey
         if inFlight[key] == nil { request(coordinate, force: true) }
         await inFlight[key]?.value
+        flush()
         return state(for: coordinate)
     }
 
@@ -177,6 +245,7 @@ public final class ForecastCenter {
     public func load(_ coordinate: Coordinate) async -> ForecastState {
         request(coordinate)
         await inFlight[coordinate.cacheKey]?.value
+        flush()
         return state(for: coordinate)
     }
 
