@@ -64,6 +64,7 @@ struct TripRouteMap: View {
         }
         .accessibilityLabel(Text("Route map", comment: "Accessibility label"))
         .onAppear {
+            IterPerf.once("trip.map.appear")
             builder.setFocusDay(selectedDay)
             builder.requestInitialCamera()
             if let request = builder.cameraRequest { apply(request, animated: false) }
@@ -106,6 +107,7 @@ struct TripRouteMap: View {
         }
         .overlay(alignment: .bottomTrailing) { MapStyleMenu().padding(IterSpace.sm) }
         .onMapCameraChange(frequency: .onEnd) { context in
+            IterPerf.once("trip.map.firstSettle")
             let r = context.region
             // A settle is the user's only when the map wrote a user-positioned `position` (see below); layout and
             // aspect settles MapKit makes on its own never are.

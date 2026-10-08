@@ -13,6 +13,7 @@ enum ExplorePerfScript {
     static var quitWhenDone: Bool { UserDefaults.standard.bool(forKey: "IterPerfQuit") }
 
     static func run(_ explore: ExploreModel) async {
+        IterPerf.startLagMonitor()
         IterPerf.mark("script.start")
         let start = Date()
         while Date().timeIntervalSince(start) < 30 {
@@ -20,7 +21,7 @@ enum ExplorePerfScript {
             if explore.visibleRegion != nil, !shown.isEmpty, shown.allSatisfy({ $0.score != nil }) { break }
             await pause(0.1)
         }
-        IterPerf.report("loaded")
+        IterPerf.report("loaded", resetLag: true)
         await pause(2)
 
         if let base = explore.visibleRegion {
@@ -31,12 +32,12 @@ enum ExplorePerfScript {
             for (i, region) in moves.enumerated() {
                 IterPerf.mark("script.camera", "step=\(i)")
                 let state = IterPerf.signposter.beginInterval("script.camera")
-                explore.perfRequestCamera(region)
+                await IterPerf.step("explore.camera \(i)") { explore.perfRequestCamera(region) }
                 await pause(1.5)
                 IterPerf.signposter.endInterval("script.camera", state)
             }
         }
-        IterPerf.report("afterCamera")
+        IterPerf.report("afterCamera", resetLag: true)
 
         let ids = explore.rows.filter { r in explore.visibleRegion?.contains(r.spot.coordinate) ?? true }.prefix(10).map(\.id)
         for id in ids {
@@ -44,18 +45,18 @@ enum ExplorePerfScript {
             await pause(0.15)
         }
         explore.hoveredID = nil
-        IterPerf.report("afterHover")
+        IterPerf.report("afterHover", resetLag: true)
 
         for id in ids.prefix(5) {
             IterPerf.mark("script.select", id)
             let state = IterPerf.signposter.beginInterval("script.select")
-            explore.select(id, from: .map)
+            await IterPerf.step("explore.select") { explore.select(id, from: .map) }
             await pause(1.5)
             IterPerf.signposter.endInterval("script.select", state)
         }
         explore.select(nil, from: .map)
         await pause(1)
-        IterPerf.report("afterSelect")
+        IterPerf.report("afterSelect", resetLag: true)
         IterPerf.mark("script.end")
         if quitWhenDone { NSApp.terminate(nil) }
     }

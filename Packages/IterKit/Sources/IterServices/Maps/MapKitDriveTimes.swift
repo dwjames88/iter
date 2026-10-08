@@ -50,8 +50,14 @@ public actor MapKitDriveTimes: DriveTimeProviding {
 
     public func drive(from a: Coordinate, to b: Coordinate) async throws -> DriveLeg {
         let key = Key(from: a.cacheKey, to: b.cacheKey)
-        if let hit = cachedLeg(from: a, to: b) { return hit }
-        if let running = inflight[key] { return try await running.value }
+        if let hit = cachedLeg(from: a, to: b) {
+            IterPerf.count("drives.cacheHit")
+            return hit
+        }
+        if let running = inflight[key] {
+            IterPerf.count("drives.join")
+            return try await running.value
+        }
 
         // Unstructured: shared by all waiters, so one caller cancelling does not cancel the fetch for the others.
         let task = Task { try await self.fetchSerialised(from: a, to: b) }
@@ -75,6 +81,7 @@ public actor MapKitDriveTimes: DriveTimeProviding {
         var attempt = 0
         while true {
             await acquire()
+            IterPerf.count("drives.request")
             do {
                 let leg = try await fetch(a, b)
                 release()

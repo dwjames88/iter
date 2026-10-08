@@ -71,6 +71,11 @@ private struct TripBuilderContent: View {
             if made.layout.groups.indices.contains(day) { made.setFocusDay(day) } else { selectedDay = nil }
         }
         builder = made
+        if TripPerfScript.enabled {
+            Task { @MainActor in
+                await TripPerfScript.run(made, chooseDay: { chooseDay($0, in: made) }, select: { selection = $0 })
+            }
+        }
     }
 
     // MARK: Day selection
