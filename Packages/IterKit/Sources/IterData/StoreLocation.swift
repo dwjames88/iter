@@ -22,6 +22,9 @@ public enum StoreLocation {
         public var didMigrate: Bool { !storeItems.isEmpty || !supportItems.isEmpty }
     }
 
+    /// Present in the new folder while the old `Iter/` folder's contents are still being merged in.
+    static let supportPendingName = ".migration-pending"
+
     /// The marker written into UserDefaults once preferences were copied.
     public static let preferencesMigratedKey = "IterMigratedFromSandbox"
 
@@ -55,11 +58,26 @@ public enum StoreLocation {
         let source = containerSupport(bundleIdentifier: bundleIdentifier, home: home)
         let destinationStore = directStoreURL(home: home)
         let destinationDirectory = destinationStore.deletingLastPathComponent()
-        guard !fm.fileExists(atPath: destinationStore.path),
-              fm.fileExists(atPath: source.appending(path: "default.store").path) else { return MigrationResult() }
+        let pendingMarker = destinationDirectory.appending(path: Self.supportPendingName)
+        let oldSubtree = source.appending(path: "Iter", directoryHint: .isDirectory)
+
+        // A crash after the store landed but before the folders were merged leaves the marker behind: finish the
+        // merge (it never overwrites, so it is safe to repeat) and nothing else.
+        if fm.fileExists(atPath: destinationStore.path) {
+            guard fm.fileExists(atPath: pendingMarker.path) else { return MigrationResult() }
+            var resumed = MigrationResult()
+            if fm.fileExists(atPath: oldSubtree.path) {
+                try merge(from: oldSubtree, into: destinationDirectory, relativeTo: "", fileManager: fm, copied: &resumed.supportItems)
+            }
+            try? fm.removeItem(at: pendingMarker)
+            return resumed
+        }
+        guard fm.fileExists(atPath: source.appending(path: "default.store").path) else { return MigrationResult() }
 
         var result = MigrationResult()
         try fm.createDirectory(at: destinationDirectory, withIntermediateDirectories: true)
+        // Written before the store is renamed into place, removed once the folders are merged (see above).
+        try Data().write(to: pendingMarker)
 
         // 1. Copy to temporary names. Order matters only for the rename step below.
         let pairs: [(from: String, to: String)] = [
@@ -85,14 +103,16 @@ public enum StoreLocation {
             }
         } catch {
             discardStaged()
+            // Nothing landed, so no marker is needed: the store's absence already means "try again".
+            if !fm.fileExists(atPath: destinationStore.path) { try? fm.removeItem(at: pendingMarker) }
             throw error
         }
 
         // 3. The rest of the old Application Support/Iter folder (OfflinePacks, ForecastCache), merged.
-        let oldSubtree = source.appending(path: "Iter", directoryHint: .isDirectory)
         if fm.fileExists(atPath: oldSubtree.path) {
             try merge(from: oldSubtree, into: destinationDirectory, relativeTo: "", fileManager: fm, copied: &result.supportItems)
         }
+        try? fm.removeItem(at: pendingMarker)
         return result
     }
 
@@ -107,7 +127,10 @@ public enum StoreLocation {
             let relative = prefix.isEmpty ? name : prefix + "/" + name
             let isDirectory = (try? child.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) ?? false
             if !fm.fileExists(atPath: target.path) {
-                try fm.copyItem(at: child, to: target)
+                // Via a temporary name, so a crash never leaves a truncated file or half a folder at the final name.
+                let temp = into.appending(path: name + ".migrating-\(UUID().uuidString)")
+                do { try fm.copyItem(at: child, to: temp) } catch { try? fm.removeItem(at: temp); throw error }
+                try fm.moveItem(at: temp, to: target)
                 copied.append(relative)
             } else if isDirectory {
                 var isTargetDirectory: ObjCBool = false

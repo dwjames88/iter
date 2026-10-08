@@ -237,8 +237,7 @@ public final class IterStore {
 
     /// Saved curated and Apple Maps spots plus every user spot, one list, most recently changed first.
     public func savedPlaces() -> [PlaceRecord] {
-        let all = (try? context.fetch(FetchDescriptor<PlaceRecord>())) ?? []
-        return all.filter { $0.isSaved || $0.origin == .user }
+        savedAndUserPlaces()
             .sorted { ($0.updatedAt, $0.id.uuidString) > ($1.updatedAt, $1.id.uuidString) }
     }
 
@@ -614,15 +613,23 @@ extension IterStore {
 
     /// Pinned trips in the order they were pinned.
     public func pinnedTrips() -> [TripRecord] {
-        let all = (try? context.fetch(FetchDescriptor<TripRecord>())) ?? []
-        return all.filter(\.isPinned).sorted {
+        let pinned = (try? context.fetch(FetchDescriptor<TripRecord>(predicate: #Predicate { $0.isPinned }))) ?? []
+        return pinned.sorted {
             ($0.pinnedAt ?? .distantFuture, $0.id.uuidString) < ($1.pinnedAt ?? .distantFuture, $1.id.uuidString)
         }
     }
 
+    /// Saved places and every user spot, unordered. Filtered in the store so a library of thousands of cached
+    /// Apple Maps places (used by stops but not saved) is never materialised.
+    private func savedAndUserPlaces() -> [PlaceRecord] {
+        let user = SpotOrigin.user.rawValue
+        let descriptor = FetchDescriptor<PlaceRecord>(predicate: #Predicate { $0.isSaved || $0.originRaw == user })
+        return (try? context.fetch(descriptor)) ?? []
+    }
+
     /// Saved and user places filed in `folder` or, for a root folder, in its subfolders; the folder's own first.
     public func savedPlaces(in folder: FolderRecord) -> [PlaceRecord] {
-        let saved = ((try? context.fetch(FetchDescriptor<PlaceRecord>())) ?? []).filter { $0.isSaved || $0.origin == .user }
+        let saved = savedAndUserPlaces()
         func direct(_ target: FolderRecord) -> [PlaceRecord] {
             saved.filter { $0.folder?.id == target.id }.sorted(by: Self.placeOrder)
         }
