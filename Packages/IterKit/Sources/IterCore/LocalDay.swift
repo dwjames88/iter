@@ -19,11 +19,21 @@ public struct LocalDay: Codable, Hashable, Comparable, Sendable, CustomStringCon
         self.init(year: c.year!, month: c.month!, day: c.day!)
     }
 
-    /// Parses "YYYY-MM-DD".
+    /// Parses "YYYY-MM-DD". A date that does not exist ("2026-02-30") is nil, not rolled into March.
     public init?(iso: String) {
         let parts = iso.split(separator: "-").compactMap { Int($0) }
-        guard parts.count == 3, (1...12).contains(parts[1]), (1...31).contains(parts[2]) else { return nil }
+        guard parts.count == 3, (1...12).contains(parts[1]), (1...LocalDay.daysInMonth(year: parts[0], month: parts[1])).contains(parts[2])
+        else { return nil }
         self.init(year: parts[0], month: parts[1], day: parts[2])
+    }
+
+    /// Days in a Gregorian month (`month` 1...12).
+    static func daysInMonth(year: Int, month: Int) -> Int {
+        switch month {
+        case 2: (year % 4 == 0 && year % 100 != 0) || year % 400 == 0 ? 29 : 28
+        case 4, 6, 9, 11: 30
+        default: 31
+        }
     }
 
     public var iso: String { String(format: "%04d-%02d-%02d", year, month, day) }
