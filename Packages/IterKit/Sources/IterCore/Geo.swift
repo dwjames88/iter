@@ -31,9 +31,14 @@ public struct Coordinate: Codable, Hashable, Sendable {
         return (θ + 360).truncatingRemainder(dividingBy: 360)
     }
 
-    /// A key stable to about 100 m, for caches.
+    /// A key stable to about 100 m, for caches. A value that rounds to zero is always "0.000", never "-0.000",
+    /// so the two sides of the equator or the prime meridian share one cell.
     public var cacheKey: String {
-        String(format: "%.3f,%.3f", latitude, longitude)
+        func part(_ v: Double) -> String {
+            let s = String(format: "%.3f", v)
+            return s == "-0.000" ? "0.000" : s
+        }
+        return part(latitude) + "," + part(longitude)
     }
 }
 
