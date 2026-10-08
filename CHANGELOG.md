@@ -5,6 +5,23 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 
 ## [Unreleased]
 
+### Fixed
+- **Search results on the map**: after you have moved the map, searching Apple Maps for a place now brings the result into view instead of leaving it off screen.
+- **Drive times after a dropped connection**: if MapKit was throttled or you were offline when a trip loaded, the drive stays an estimate only until the next refresh, then is looked up again; before, the straight-line guess stuck until you reopened the trip.
+- **Forecasts after a clock change**: OpenWeather daily forecasts no longer come out an hour off for days after a daylight-saving change within the next 8 days.
+- **A clear message for an empty forecast**: when OpenWeather answers with no forecast data, Settings says "The response had no forecast data" rather than an internal error name.
+- **Stale forecasts**: a forecast saved on disk long ago is no longer shown as fresh for up to 2 hours.
+- **Places stuck loading**: a place whose forecast fetch was cancelled by the provider can be asked for again instead of staying on its spinner. Pressing retry during a fetch joins it.
+- **Image strip after stepping back**: going to another place and straight back no longer leaves the image strip empty.
+- **Moving your library on first launch**: if Iter was quit or crashed partway through moving its data out of the old sandbox container, the next launch finishes the move, offline packs and forecast cache included, and no half-written file is left behind.
+- **Impossible dates**: a date that does not exist, such as 30 February, is rejected instead of becoming 2 March.
+
+### Changed
+- **A faster trip planner and map**: switching days, selecting and moving stops do less work, the route map redraws only when the route changes, and drive times that are already known appear at once.
+- **Fewer redraws in Explore**: hovering the map or list no longer rebuilds rows, and a batch of forecasts arriving updates the screen once instead of once per place.
+- **Pinned-trip downloads no longer stall the window** while images are saved.
+- **Sharing a trip builds the file only when you share it**, not each time the trip redraws.
+
 ## [0.1.0] - 2026-10-07
 
 First pre-release, for friends to try.
