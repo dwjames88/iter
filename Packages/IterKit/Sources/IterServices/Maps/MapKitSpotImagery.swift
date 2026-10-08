@@ -15,7 +15,7 @@ public final class MapKitSpotImagery: SpotImageryProviding {
 
     private let disk: SpotImageDiskCache
     private let memory: SpotImageMemoryCache
-    private let jobs = Jobs()
+    private let jobs = SpotImageJobs()
 
     public init(directory: URL? = nil, memory: SpotImageMemoryCache = .init()) {
         self.disk = SpotImageDiskCache(directory: directory ?? SpotImageDiskCache.defaultDirectory())
@@ -28,14 +28,21 @@ public final class MapKitSpotImagery: SpotImageryProviding {
 
     public func images(for request: SpotImageRequest) async -> [SpotImage] {
         if let cached = memory.images(for: request) { return cached }
-        let task = await jobs.task(for: request) { [self] in
+        let waiter = await jobs.join(request) { [self] in
             let result = await resolve(request)
-            // An empty result usually means offline; do not remember it, so the next ask retries.
-            if !result.isEmpty { memory.store(result, for: request) }
+            // An empty result usually means offline; do not remember it, so the next ask retries. A cancelled job
+            // (nobody is waiting any more) may have stopped half way, so what it has is not the answer either.
+            if !result.isEmpty, !Task.isCancelled { memory.store(result, for: request) }
             return result
         }
-        let result = await task.value
-        await jobs.finish(request)
+        // Stepping quickly through places leaves each one's view behind; when the last view asking for a job goes, the
+        // job stops before its next MapKit step instead of snapshotting a place nobody is looking at.
+        let result = await withTaskCancellationHandler {
+            await waiter.task.value
+        } onCancel: {
+            Task { [jobs] in await jobs.abandon(request, waiter: waiter.id) }
+        }
+        await jobs.release(request, waiter: waiter.id)
         return result
     }
 
@@ -71,6 +78,7 @@ public final class MapKitSpotImagery: SpotImageryProviding {
         let size = Self.pixelSize(request)
 
         if await hasLookAround(spotID: request.spotID, coordinate: request.coordinate) {
+            if Task.isCancelled { return out }
             let key = request.key(.lookAround)
             if let image = disk.read(key) {
                 out.append(SpotImage(key: key, image: image))
@@ -81,6 +89,7 @@ public final class MapKitSpotImagery: SpotImageryProviding {
             }
         }
 
+        if Task.isCancelled { return out }
         let key = request.key(.satellite)
         if let image = disk.read(key) {
             out.append(SpotImage(key: key, image: image))
@@ -196,16 +205,52 @@ private typealias PlatformImage = NSImage
 private typealias PlatformImage = UIImage
 #endif
 
-/// In-flight work, keyed by request, so two views asking at once run one MapKit job.
-private actor Jobs {
-    private var tasks: [SpotImageRequest: Task<[SpotImage], Never>] = [:]
-
-    func task(for request: SpotImageRequest, start: @escaping @Sendable () async -> [SpotImage]) -> Task<[SpotImage], Never> {
-        if let existing = tasks[request] { return existing }
-        let task = Task { await start() }
-        tasks[request] = task
-        return task
+/// In-flight work, keyed by request, so two views asking at once run one MapKit job. Each asker is a waiter; the job is
+/// cancelled when every waiter has been cancelled.
+actor SpotImageJobs {
+    struct Waiter: Sendable {
+        let id: Int
+        let task: Task<[SpotImage], Never>
     }
 
-    func finish(_ request: SpotImageRequest) { tasks[request] = nil }
+    private struct Entry {
+        var task: Task<[SpotImage], Never>
+        /// Waiter id to whether that waiter has been cancelled.
+        var waiters: [Int: Bool]
+    }
+
+    private var entries: [SpotImageRequest: Entry] = [:]
+    private var nextID = 0
+
+    /// Joins the job for `request`, starting it when none is running.
+    func join(_ request: SpotImageRequest, start: @escaping @Sendable () async -> [SpotImage]) -> Waiter {
+        nextID += 1
+        let id = nextID
+        if var entry = entries[request] {
+            entry.waiters[id] = false
+            entries[request] = entry
+            return Waiter(id: id, task: entry.task)
+        }
+        let task = Task { await start() }
+        entries[request] = Entry(task: task, waiters: [id: false])
+        return Waiter(id: id, task: task)
+    }
+
+    /// A waiter was cancelled. The job stops when no live waiter is left.
+    func abandon(_ request: SpotImageRequest, waiter: Int) {
+        guard var entry = entries[request], entry.waiters[waiter] != nil else { return }
+        entry.waiters[waiter] = true
+        entries[request] = entry
+        if entry.waiters.values.allSatisfy({ $0 }) { entry.task.cancel() }
+    }
+
+    /// A waiter has its answer (or was cancelled and the job ended). The last one out clears the entry.
+    func release(_ request: SpotImageRequest, waiter: Int) {
+        guard var entry = entries[request] else { return }
+        entry.waiters[waiter] = nil
+        if entry.waiters.isEmpty { entries[request] = nil } else { entries[request] = entry }
+    }
+
+    /// Jobs still registered (tests).
+    var count: Int { entries.count }
 }

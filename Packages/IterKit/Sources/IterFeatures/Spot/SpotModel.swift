@@ -158,13 +158,29 @@ public final class SpotModel {
         applyDefaults()
     }
 
-    // MARK: Derived light (cached per forecast revision)
+    // MARK: Derived light (cached per forecast state of this spot)
 
+    /// What the derived light depends on. The forecast is this spot's own (its fetch time), not the centre's global
+    /// revision: another spot's forecast arriving must not throw away the sun and moon paths, the rose and the days.
     private struct CacheKey: Hashable {
-        var revision: Int
+        var forecast: ForecastTag
         var today: LocalDay
         var spot: Spot
         var sample: Bool
+    }
+
+    private enum ForecastTag: Hashable {
+        case loading
+        case loaded(source: ForecastSource, fetchedAt: Date)
+        case unavailable(ForecastUnavailableReason)
+    }
+
+    private var forecastTag: ForecastTag {
+        switch forecastState {
+        case .loading: .loading
+        case .loaded(let f): .loaded(source: f.source, fetchedAt: f.fetchedAt)
+        case .unavailable(let reason): .unavailable(reason)
+        }
     }
 
     @ObservationIgnored private var cacheKey: CacheKey?
@@ -174,7 +190,7 @@ public final class SpotModel {
     @ObservationIgnored private var roseCache: [LocalDay: SkyRose] = [:]
 
     private func validateCache() {
-        let key = CacheKey(revision: app.forecasts.revision, today: today, spot: spot, sample: app.sampleDataEnabled)
+        let key = CacheKey(forecast: forecastTag, today: today, spot: spot, sample: app.sampleDataEnabled)
         if key != cacheKey {
             cacheKey = key
             dayCache = [:]

@@ -156,7 +156,9 @@ struct SpotImageDiskCache: Sendable {
     func read(_ key: SpotImageKey) -> CGImage? {
         let url = directory.appendingPathComponent(key.fileName)
         guard let source = CGImageSourceCreateWithURL(url as CFURL, nil) else { return nil }
-        return CGImageSourceCreateImageAtIndex(source, 0, nil)
+        // Decode now, on the caller's thread: ImageIO would otherwise decode the PNG lazily, at the first draw, which is
+        // the main thread when the strip appears.
+        return CGImageSourceCreateImageAtIndex(source, 0, [kCGImageSourceShouldCacheImmediately: true] as CFDictionary)
     }
 
     @discardableResult
