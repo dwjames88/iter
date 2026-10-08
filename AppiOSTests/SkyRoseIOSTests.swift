@@ -76,6 +76,101 @@ private func at(_ hour: Int, _ minute: Int = 0) -> Date { testDay.at(hour: hour,
     }
 }
 
+// MARK: - Event labels sit beside their dots and clear of the paths
+
+@MainActor @Suite struct SkyRoseEventLabelTests {
+    struct Scenario: CustomTestStringConvertible {
+        var facing: Double?
+        var hour: Int
+        var minute: Int
+        var testDescription: String { "facing \(facing.map { String($0) } ?? "none") at \(hour):\(minute)" }
+    }
+
+    nonisolated static let scenarios = [Scenario(facing: 100, hour: 8, minute: 0), Scenario(facing: 263, hour: 18, minute: 45),
+                                    Scenario(facing: 190, hour: 18, minute: 45), Scenario(facing: nil, hour: 12, minute: 30)]
+
+    @Test(arguments: scenarios, [CGSize(width: 361, height: 361), CGSize(width: 288, height: 288)])
+    func labelsAvoidPathsAndEachOther(scenario: Scenario, size: CGSize) async {
+        let page = await makePage(facing: scenario.facing, model: makeModel())
+        page.setTime(at(scenario.hour, scenario.minute))
+        let data = SkyRoseContent.drawData(page, background: .white)
+        var placed: [(SkyRose.Event, CGRect)] = []
+        let renderer = ImageRenderer(content: Canvas { ctx, canvasSize in
+            RoseRenderer.draw(&ctx, size: canvasSize, data: data, rotation: 0) { e, r, _ in placed.append((e, r)) }
+        }.frame(width: size.width, height: size.height))
+        _ = renderer.uiImage
+        let points = RoseRenderer.pathPoints(data.rose, proj: RoseRenderer.projection(size: size, rotation: 0))
+        #expect(!placed.isEmpty)
+        for (event, rect) in placed {
+            // The sun's rim labels can have no clean spot (both arcs hug the rim there); the moon's never go on a path.
+            if event.body == .moon { #expect(RoseRenderer.pathHits(rect, in: points) == 0, "\(event.kind) label sits on a path") }
+        }
+        for (i, a) in placed.enumerated() {
+            for b in placed[(i + 1)...] { #expect(!a.1.intersects(b.1), "\(a.0.kind) and \(b.0.kind) labels overlap") }
+        }
+    }
+
+    /// Mesa Arch at sunset in view: every label is on a clean spot or uses the short form, and stays near its dot.
+    @Test(arguments: [CGSize(width: 361, height: 361), CGSize(width: 330, height: 330), CGSize(width: 288, height: 288)])
+    func sunsetInViewLabelsAreCleanOrShortAndNearTheirMarks(size: CGSize) async {
+        let page = await makePage(facing: 263, model: makeModel())
+        page.setTime(at(18, 45))
+        let data = SkyRoseContent.drawData(page, background: .white)
+        var placed: [(event: SkyRose.Event, rect: CGRect, short: Bool)] = []
+        let renderer = ImageRenderer(content: Canvas { ctx, canvasSize in
+            RoseRenderer.draw(&ctx, size: canvasSize, data: data, rotation: 0) { placed.append(($0, $1, $2)) }
+        }.frame(width: size.width, height: size.height))
+        _ = renderer.uiImage
+        let proj = RoseRenderer.projection(size: size, rotation: 0)
+        let points = RoseRenderer.pathPoints(data.rose, proj: proj)
+        let dot = SpotLayout.roseEventDot
+        #expect(placed.count >= 3)
+        for l in placed {
+            let mark = l.event.kind == .solarNoon ? proj.point(azimuth: l.event.position.azimuth, altitude: l.event.position.altitude)
+                                                  : proj.point(azimuth: l.event.position.azimuth, altitude: 0)
+            let near = CGPoint(x: min(max(mark.x, l.rect.minX), l.rect.maxX), y: min(max(mark.y, l.rect.minY), l.rect.maxY))
+            let edge = hypot(near.x - mark.x, near.y - mark.y) - dot / 2
+            let clean = RoseRenderer.pathHits(l.rect, in: points) == 0
+            #expect(edge <= RoseRenderer.eventLabelFarReach + IterSpace.xxs, "\(l.event.kind) label is \(edge) pt from its dot")
+            if !clean {
+                #expect(l.short || l.event.kind == .solarNoon, "\(l.event.kind) label crosses a path in its full form")
+                #expect(edge <= RoseRenderer.eventLabelReach + IterSpace.xxs, "\(l.event.kind) dirty label is \(edge) pt from its dot")
+            }
+        }
+    }
+
+    private let center = CGPoint(x: 180, y: 180)
+    private let labelSize = CGSize(width: 50, height: 28)
+
+    /// A path through the inward side pushes the label to the opposite side, still within reach of the dot.
+    @Test func pathOnTheDefaultSideForcesTheOtherSide() {
+        let mark = CGPoint(x: 180, y: 60)   // top of the rose; inward is down
+        let dot = SpotLayout.roseEventDot
+        let free = RoseRenderer.eventLabelRect(mark: mark, size: labelSize, center: center, radius: 150, dot: dot, obstacles: [], pathPoints: [])
+        #expect(free != nil && free!.rect.minY > mark.y)
+        let wall = (0...40).map { CGPoint(x: 150 + CGFloat($0) * 1.5, y: 80) }   // across the inward candidates
+        let pick = RoseRenderer.eventLabelRect(mark: mark, size: labelSize, center: center, radius: 150, dot: dot, obstacles: [], pathPoints: wall)
+        #expect(pick != nil)
+        guard let pick else { return }
+        #expect(pick.clean)
+        #expect(RoseRenderer.pathHits(pick.rect, in: wall) == 0)
+        let near = CGPoint(x: min(max(mark.x, pick.rect.minX), pick.rect.maxX), y: min(max(mark.y, pick.rect.minY), pick.rect.maxY))
+        #expect(hypot(near.x - mark.x, near.y - mark.y) - dot / 2 <= RoseRenderer.eventLabelReach + IterSpace.xxs)
+    }
+
+    /// With no clean spot, the label falls back to the one under the fewest path points; obstacles are never overlapped.
+    @Test func fallsBackToFewestHitsAndRespectsObstacles() {
+        let mark = CGPoint(x: 180, y: 60)
+        let dot = SpotLayout.roseEventDot
+        let everywhere = stride(from: CGFloat(0), through: 360, by: 2).flatMap { x in
+            stride(from: CGFloat(0), through: 360, by: 2).map { CGPoint(x: x, y: $0) } }
+        let obstacle = CGRect(x: 150, y: 70, width: 60, height: 40)
+        let pick = RoseRenderer.eventLabelRect(mark: mark, size: labelSize, center: center, radius: 150, dot: dot, obstacles: [obstacle], pathPoints: everywhere)
+        #expect(pick != nil && pick!.clean == false)
+        if let pick { #expect(!pick.rect.intersects(obstacle)) }
+    }
+}
+
 // MARK: - Shared time between the rose, the scrubber and the timeline
 
 @MainActor @Suite struct SkyRoseIOSTests {

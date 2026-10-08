@@ -165,6 +165,9 @@ extension LightText {
         return String(localized: "\(value)° \(compassPoint(for: bearing))", comment: "A compass bearing, e.g. 100° E")
     }
 
+    /// A bearing without its compass word, e.g. 100°, for labels too tight for "100° E".
+    static func degreesShort(_ bearing: Double) -> String { "\(Int(bearing.rounded()))°" }
+
     static let orientationLabel = String(localized: "Orientation", comment: "Sun and moon rose: label of the North up or View up control")
     static let northUp = String(localized: "North up", comment: "Sun and moon rose: north is at the top")
     static let viewUp = String(localized: "View up", comment: "Sun and moon rose: the classic view's direction is at the top")

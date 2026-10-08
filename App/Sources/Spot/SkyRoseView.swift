@@ -297,7 +297,93 @@ enum RoseRenderer {
         return best.map { ($0.lines, $0.rect) }
     }
 
-    static func draw(_ ctx: inout GraphicsContext, size: CGSize, data d: RoseDrawData, rotation: Double) {
+    /// Points every few pt along the sun and moon arcs, in canvas space, that labels should keep clear of.
+    static func pathPoints(_ rose: SkyRose, proj: RoseProjection) -> [CGPoint] {
+        var out: [CGPoint] = []
+        for arcs in [rose.sunArcs, rose.moonArcs] {
+            for arc in arcs where arc.count > 1 {
+                let pts = arc.map { proj.point(azimuth: $0.position.azimuth, altitude: $0.position.altitude) }
+                for (a, b) in zip(pts, pts.dropFirst()) {
+                    let steps = max(1, Int(hypot(b.x - a.x, b.y - a.y) / IterStroke.regular))
+                    for i in 0...steps {
+                        let t = CGFloat(i) / CGFloat(steps)
+                        out.append(CGPoint(x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t))
+                    }
+                }
+            }
+        }
+        return out
+    }
+
+    /// How many path points fall under a rect (grown by a few pt: stroke width and halo).
+    static func pathHits(_ rect: CGRect, in points: [CGPoint]) -> Int {
+        let r = rect.insetBy(dx: -IterSpace.xxs, dy: -IterSpace.xxs)
+        return points.reduce(0) { $0 + (r.contains($1) ? 1 : 0) }
+    }
+
+    /// The farthest a label's edge may sit from its dot's edge.
+    static let eventLabelReach: CGFloat = 20
+    /// Past `eventLabelReach` (with a leader line) only a path-free spot is taken.
+    static let eventLabelFarReach: CGFloat = 36
+
+    /// Where an event label goes, next to its mark. Candidates in order: the inward side (4 to 20 pt off, up to 36 if only that is path-free), the opposite
+    /// side, each slid along the rim, then the turned directions. Overlapping an obstacle or leaving the disc is never
+    /// allowed; a candidate under a sun or moon path loses to any clean one, and among the dirty ones fewest hits win.
+    /// `cleanOnly` drops every candidate under a path; `farReach` caps the edge-to-dot distance. With `force`, a mark with
+    /// no free spot still gets its first candidate.
+    static func eventLabelRect(mark: CGPoint, size: CGSize, center c: CGPoint, radius R: CGFloat, dot: CGFloat,
+                               obstacles: [CGRect], pathPoints: [CGPoint], cleanOnly: Bool = false, farReach: CGFloat = eventLabelFarReach,
+                               force: Bool = false) -> (rect: CGRect, gap: CGFloat, clean: Bool)? {
+        var inward = CGVector(dx: c.x - mark.x, dy: c.y - mark.y)
+        let len = hypot(inward.dx, inward.dy)
+        inward = len < 1 ? CGVector(dx: 0, dy: 1) : CGVector(dx: inward.dx / len, dy: inward.dy / len)
+        func turned(_ a: Double) -> CGVector {
+            CGVector(dx: inward.dx * CGFloat(cos(a)) - inward.dy * CGFloat(sin(a)), dy: inward.dx * CGFloat(sin(a)) + inward.dy * CGFloat(cos(a)))
+        }
+        func extent(_ v: CGVector) -> CGFloat { abs(v.dx) * size.width / 2 + abs(v.dy) * size.height / 2 }
+        // (direction, slide along the tangent, tier): tiers 0/1 are the two sides, 2 slid along the rim, 3 turned.
+        // The outward side (labels over the rim, in the label band) is kept inside the square canvas instead.
+        var tries: [(dir: CGVector, slide: CGFloat, tier: Int, outer: Bool)] = [(inward, 0, 0, false), (turned(.pi), 0, 1, true)]
+        let tangent = CGVector(dx: -inward.dy, dy: inward.dx)
+        let reach = abs(tangent.dx) * size.width / 2 + abs(tangent.dy) * size.height / 2 + dot
+        for outer in [false, true] {
+            for slide in stride(from: CGFloat(6), through: reach, by: 6) {
+                for sign in [1, -1] as [CGFloat] { tries.append((outer ? turned(.pi) : inward, slide * sign, 2, outer)) }
+            }
+        }
+        for a in [0.5, -0.5, 1.0, -1.0, 1.57, -1.57, 2.1, -2.1, 2.6, -2.6] as [Double] { tries.append((turned(a), 0, 3, false)) }
+
+        let reachOut = R + SpotLayout.roseLabelBand - IterStroke.thick
+        let canvas = CGRect(x: c.x - reachOut, y: c.y - reachOut, width: reachOut * 2, height: reachOut * 2)
+        func within(_ r: CGRect, _ limit: CGFloat) -> Bool {
+            corners(r).allSatisfy { hypot($0.x - c.x, $0.y - c.y) <= limit }
+        }
+        var best: (rect: CGRect, score: Int, gap: CGFloat, clean: Bool)?
+        var first: (rect: CGRect, gap: CGFloat)?
+        for (order, t) in tries.enumerated() {
+            for gap in [4, 8, 12, 20, 28, 36] as [CGFloat] {
+                let dist = extent(t.dir) + dot / 2 + gap
+                let center = CGPoint(x: mark.x + t.dir.dx * dist + tangent.dx * t.slide, y: mark.y + t.dir.dy * dist + tangent.dy * t.slide)
+                let rect = CGRect(x: center.x - size.width / 2, y: center.y - size.height / 2, width: size.width, height: size.height)
+                if first == nil { first = (rect, gap) }
+                guard t.outer ? canvas.contains(rect) : within(rect, R - IterSpace.xs) else { continue }
+                if obstacles.contains(where: { $0.intersects(rect.insetBy(dx: -IterStroke.thick, dy: -IterStroke.thin)) }) { continue }
+                let near = CGPoint(x: min(max(mark.x, rect.minX), rect.maxX), y: min(max(mark.y, rect.minY), rect.maxY))
+                let edge = hypot(near.x - mark.x, near.y - mark.y) - dot / 2
+                guard edge <= farReach + IterSpace.xxs else { continue }
+                let hits = pathHits(rect, in: pathPoints)
+                if cleanOnly, hits > 0 { continue }
+                if edge > eventLabelReach + IterSpace.xxs, hits > 0 { continue }
+                let score = (hits > 0 ? 100_000 + hits * 100 : 0) + t.tier * 1_000 + order * 10 + Int(edge)
+                if best == nil || score < best!.score { best = (rect, score, edge, hits == 0) }
+            }
+        }
+        if let best { return (best.rect, best.gap, best.clean) }
+        return force ? first.map { ($0.rect, $0.gap, false) } : nil
+    }
+
+    static func draw(_ ctx: inout GraphicsContext, size: CGSize, data d: RoseDrawData, rotation: Double,
+                     onEventLabel: ((SkyRose.Event, CGRect, _ short: Bool) -> Void)? = nil) {
         let proj = projection(size: size, rotation: rotation)
         let c = proj.center
         let R = proj.radius
@@ -307,26 +393,8 @@ enum RoseRenderer {
         func rim(_ az: Double, _ r: CGFloat) -> CGPoint { proj.point(azimuth: az, radius: r) }
         func alt(_ az: Double, _ a: Double) -> CGPoint { proj.point(azimuth: az, altitude: a) }
         func disc(_ r: CGFloat, around p: CGPoint) -> CGRect { CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2) }
-        func insideDisc(_ rect: CGRect, margin: CGFloat) -> Bool { corners(rect).allSatisfy { hypot($0.x - c.x, $0.y - c.y) <= R - margin } }
 
-        // Path points (every few points along the arcs) that labels should keep clear of.
-        var pathPoints: [CGPoint] = []
-        for arcs in [rose.sunArcs, rose.moonArcs] {
-            for arc in arcs where arc.count > 1 {
-                let pts = arc.map { alt($0.position.azimuth, $0.position.altitude) }
-                for (a, b) in zip(pts, pts.dropFirst()) {
-                    let steps = max(1, Int(hypot(b.x - a.x, b.y - a.y) / IterStroke.regular))
-                    for i in 0...steps {
-                        let t = CGFloat(i) / CGFloat(steps)
-                        pathPoints.append(CGPoint(x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t))
-                    }
-                }
-            }
-        }
-        func pathHits(_ rect: CGRect) -> Int {
-            let r = rect.insetBy(dx: -IterStroke.thick, dy: -IterStroke.thick)
-            return pathPoints.reduce(0) { $0 + (r.contains($1) ? 1 : 0) }
-        }
+        let paths = pathPoints(rose, proj: proj)
 
         // a. Disc and rim.
         let rimPath = Path(ellipseIn: disc(R, around: c))
@@ -363,24 +431,6 @@ enum RoseRenderer {
         let ringTexts = ringLabelRects(ctx, proj: proj)
         var wedgeText: (lines: [Line], rect: CGRect)?
         if let facing = d.facing { wedgeText = wedgeLabel(ctx, proj: proj, size: size, facing: facing, ringTexts: ringTexts) }
-        for label in ringTexts {
-            if let w = wedgeText, !label.cardinal, label.rect.intersects(w.rect.insetBy(dx: -IterSpace.xxs, dy: -IterSpace.xxs)) { continue }
-            drawText(&ctx, label.line, at: CGPoint(x: label.rect.midX, y: label.rect.midY), anchor: .center, halo: bg)
-        }
-
-        // e. Classic view wedge.
-        if let facing = d.facing {
-            let half = SkyRose.viewHalfWidth
-            var wedge = Path()
-            wedge.move(to: c)
-            for step in stride(from: -half, through: half, by: 1) { wedge.addLine(to: rim(facing + step, R)) }
-            wedge.closeSubpath()
-            ctx.fill(wedge, with: .color(IterColor.textPrimary.color.opacity(SpotLayout.roseWedgeOpacity)))
-            var edges = Path()
-            edges.move(to: rim(facing - half, R)); edges.addLine(to: c); edges.addLine(to: rim(facing + half, R))
-            ctx.stroke(edges, with: .color(IterColor.textSecondary.color), lineWidth: IterStroke.hairline)
-        }
-
         // Obstacles for labels: the observer, the markers and the event dots.
         let dot = SpotLayout.roseEventDot
         let marker = IterSize.arcMarker
@@ -388,12 +438,15 @@ enum RoseRenderer {
             e.kind == .solarNoon ? alt(e.position.azimuth, e.position.altitude) : alt(e.position.azimuth, 0)
         }
         obstacles.append(disc(SpotLayout.roseObserverDot, around: c))
+        // Only the cardinals are fixed; an event label next to a degree or intercardinal label takes its place.
+        for label in ringTexts where label.cardinal { obstacles.append(label.rect.insetBy(dx: -IterSpace.xxs, dy: -IterSpace.xxs)) }
+        if let wedgeText { obstacles.append(wedgeText.rect.insetBy(dx: -IterSpace.xxs, dy: -IterSpace.xxs)) }
         for e in rose.events { obstacles.append(disc(dot / 2 + IterStroke.thin, around: markPoint(e))) }
         for p in [d.markerSun, d.markerMoon] where p.altitude >= 0 {
             obstacles.append(disc(marker / 2 + IterStroke.regular, around: alt(p.azimuth, p.altitude)))
         }
 
-        // Event labels: sun first, then moon; each takes the candidate with the least path under it.
+        // Event labels: sun first, then moon; each sits beside its dot, clear of the paths where it can.
         let iconSide = IterSpace.md
         struct EventLabel {
             var event: SkyRose.Event
@@ -414,40 +467,36 @@ enum RoseRenderer {
             let timeString = TimeText.time(e.date, in: d.zone)
             let time = Line(ink: IterColor.textPrimary) { Text(timeString).font(IterFont.timeSmall).foregroundStyle($0) }
             let detailText = e.kind == .solarNoon ? LightText.altitudeUp(e.position.altitude) : LightText.degrees(e.position.azimuth)
-            let detail = Line(ink: IterColor.textSecondary) { Text(detailText).font(IterFont.timeSmall).foregroundStyle($0) }
-            let ts = measure(ctx, time), ds = measure(ctx, detail)
+            let detailFull = Line(ink: IterColor.textSecondary) { Text(detailText).font(IterFont.timeSmall).foregroundStyle($0) }
+            // The short form drops the compass word ("241°"); the Sun and Moon fact lines keep it.
+            let shortText = LightText.degreesShort(e.position.azimuth)
+            let detailShort = Line(ink: IterColor.textSecondary) { Text(shortText).font(IterFont.timeSmall).foregroundStyle($0) }
+            let ts = measure(ctx, time)
             let line1 = iconSide + IterSpace.xxs + ts.width
             let h1 = max(ts.height, iconSide)
-            let size = CGSize(width: max(line1, ds.width), height: h1 + ds.height)
+            func labelSize(_ detail: Line) -> CGSize {
+                let ds = measure(ctx, detail)
+                return CGSize(width: max(line1, ds.width), height: h1 + ds.height)
+            }
             let mark = markPoint(e)
-            var inward = CGVector(dx: c.x - mark.x, dy: c.y - mark.y)
-            let len = hypot(inward.dx, inward.dy)
-            inward = len < 1 ? CGVector(dx: 0, dy: 1) : CGVector(dx: inward.dx / len, dy: inward.dy / len)
-            var dirs = [inward]
-            for turn in [0.5, -0.5, 1.0, -1.0, 1.57, -1.57, 2.1, -2.1, 2.6, -2.6, .pi] as [Double] {
-                dirs.append(CGVector(dx: inward.dx * CGFloat(cos(turn)) - inward.dy * CGFloat(sin(turn)),
-                                     dy: inward.dx * CGFloat(sin(turn)) + inward.dy * CGFloat(cos(turn))))
+            func place(_ detail: Line, cleanOnly: Bool, farReach: CGFloat = eventLabelFarReach, force: Bool = false) -> (rect: CGRect, gap: CGFloat, clean: Bool)? {
+                eventLabelRect(mark: mark, size: labelSize(detail), center: c, radius: R, dot: dot, obstacles: obstacles,
+                               pathPoints: paths, cleanOnly: cleanOnly, farReach: farReach, force: force)
             }
-            func extent(_ v: CGVector) -> CGFloat { abs(v.dx) * size.width / 2 + abs(v.dy) * size.height / 2 }
-            // Candidates stay close to the mark: the label's edge is 4 to 20 pt from the dot. Free of other labels is
-            // required; a path under the label only costs a little (the halo keeps the text readable).
-            var best: (rect: CGRect, score: Int, gap: CGFloat)?
-            var nearest: (rect: CGRect, gap: CGFloat)?
-            for (dirIndex, dir) in dirs.enumerated() {
-                for gap in [4, 8, 12, 20] as [CGFloat] {
-                    let dist = extent(dir) + dot / 2 + gap
-                    let center = CGPoint(x: mark.x + dir.dx * dist, y: mark.y + dir.dy * dist)
-                    let rect = CGRect(x: center.x - size.width / 2, y: center.y - size.height / 2, width: size.width, height: size.height)
-                    if nearest == nil { nearest = (rect, gap) }
-                    guard insideDisc(rect, margin: IterSpace.xs) else { continue }
-                    if obstacles.contains(where: { $0.intersects(rect.insetBy(dx: -IterStroke.thick, dy: -IterStroke.thin)) }) { continue }
-                    let score = (pathHits(rect) > 0 ? 12 : 0) + Int(gap) + dirIndex * 2
-                    if best == nil || score < best!.score { best = (rect, score, gap) }
-                }
+            // A clean spot for the full label; else for the short one; else the short one with the fewest path hits within
+            // the near reach. Sun labels always get a spot; a moon label with none is left out.
+            let canShorten = e.kind != .solarNoon
+            var detail = detailFull
+            var short = false
+            var found = place(detailFull, cleanOnly: true)
+            if found == nil, canShorten, let p = place(detailShort, cleanOnly: true) { found = p; detail = detailShort; short = true }
+            if found == nil {
+                if canShorten { detail = detailShort; short = true }
+                found = place(detail, cleanOnly: false, farReach: eventLabelReach, force: e.body == .sun)
             }
-            let pick: (rect: CGRect, gap: CGFloat)? = best.map { ($0.rect, $0.gap) } ?? (e.body == .sun ? nearest : nil)
-            guard let pick else { continue }
+            guard let pick = found else { continue }
             obstacles.append(pick.rect.insetBy(dx: -IterSpace.xs, dy: -IterSpace.xxs))
+            onEventLabel?(e, pick.rect, short)
             placedLabels.append(EventLabel(event: e, icon: icon, time: time, detail: detail, line1Width: line1, line1Height: h1,
                                            rect: pick.rect, mark: mark, leader: pick.gap > 10))
         }
@@ -456,6 +505,25 @@ enum RoseRenderer {
         // Sun labels first, then the moon's.
         placeEvents(rose.events.filter { $0.body == .sun })
         placeEvents(rose.events.filter { $0.body == .moon })
+
+        for label in ringTexts {
+            if !label.cardinal, placedLabels.contains(where: { $0.rect.intersects(label.rect.insetBy(dx: -IterSpace.xxs, dy: -IterSpace.xxs)) }) { continue }
+            if let w = wedgeText, !label.cardinal, label.rect.intersects(w.rect.insetBy(dx: -IterSpace.xxs, dy: -IterSpace.xxs)) { continue }
+            drawText(&ctx, label.line, at: CGPoint(x: label.rect.midX, y: label.rect.midY), anchor: .center, halo: bg)
+        }
+
+        // e. Classic view wedge.
+        if let facing = d.facing {
+            let half = SkyRose.viewHalfWidth
+            var wedge = Path()
+            wedge.move(to: c)
+            for step in stride(from: -half, through: half, by: 1) { wedge.addLine(to: rim(facing + step, R)) }
+            wedge.closeSubpath()
+            ctx.fill(wedge, with: .color(IterColor.textPrimary.color.opacity(SpotLayout.roseWedgeOpacity)))
+            var edges = Path()
+            edges.move(to: rim(facing - half, R)); edges.addLine(to: c); edges.addLine(to: rim(facing + half, R))
+            ctx.stroke(edges, with: .color(IterColor.textSecondary.color), lineWidth: IterStroke.hairline)
+        }
 
         // f. Paths: the moon under the sun, continuous.
         func stroke(_ arcs: [[SkyRose.Sample]], color: Color) {
