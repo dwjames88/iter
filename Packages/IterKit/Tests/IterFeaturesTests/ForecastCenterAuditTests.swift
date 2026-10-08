@@ -2,6 +2,7 @@ import Foundation
 import Synchronization
 import Testing
 import IterCore
+import IterServices
 @testable import IterFeatures
 
 /// A provider whose fetches wait at a gate until the test lets them go, and which counts its calls.
@@ -193,5 +194,29 @@ private func spots(_ n: Int) -> [Coordinate] { (0..<n).map { Coordinate(latitude
         center.retryFailed()
         await waitUntil { center.state(for: c).forecast != nil }
         #expect(center.status == .ok && !center.didFail(c))
+    }
+}
+
+/// Records which thread the wire call (and so everything after it, the JSON decoding and mapping) runs on.
+private final class ThreadNoting: HTTPTransport {
+    let onMain = Mutex<[Bool]>([])
+    func data(for request: URLRequest) async throws -> (Data, HTTPURLResponse) {
+        onMain.withLock { $0.append(Thread.isMainThread) }
+        let body = #"{"timezone_offset":0,"hourly":[{"dt":1790000000,"clouds":20}]}"#
+        return (Data(body.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+    }
+}
+
+@MainActor
+@Suite struct ForecastDecodingThreadTests {
+    @Test func fetchingAndDecodingNeverRunOnTheMainActor() async {
+        let transport = ThreadNoting()
+        let keys = APIKeyResolver(store: InMemoryAPIKeyStore([.openWeather: "k"]), environment: { [:] }, launchArgument: { _ in nil })
+        let service = OpenWeatherService(keys: keys, transport: transport, cache: ProviderCache(directory: nil, validity: .throughNextClockHour),
+                                         budget: CallBudget(defaults: UserDefaults(suiteName: "iter.tests.\(UUID().uuidString)")!))
+        let center = ForecastCenter(provider: service)
+        let state = await center.load(spots(1)[0])
+        #expect(state.forecast?.hours.count == 1)
+        #expect(transport.onMain.withLock { $0 } == [false])
     }
 }
