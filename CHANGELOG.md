@@ -8,6 +8,13 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 ### Added
 - **Licensing groundwork**: Iter can now check a licence key with Lemon Squeezy, keep it in the Keychain and work for 14 days offline. It is hidden and switched off, so nothing changes for anyone: Iter is still free, and nothing asks for a key.
 
+### Changed
+- **Search always looks the text up first**: Return in Explore's search field now always searches your places and Apple Maps, so a long place name such as "Great Smoky Mountains National Park" finds the park instead of going to Ask Iter. When the text reads like a request ("foggy forest near Portland for sunrise", a question, or a phrase starting with "find" or "show me"), an **Ask Iter** suggestion sits above the results; choose it to ask.
+
+### Fixed
+- **Updates with a damaged feed entry**: one malformed entry in the update feed no longer blocks every update. Iter skips it, notes it in the log, and still offers the other releases.
+- **Drive times after a dropped connection, without a refresh**: while a trip is open, a drive that MapKit throttled or that failed offline is looked up again on its own after 30 seconds, then 1, 2 and 4 minutes, and every 5 minutes after that. "No route" is still final.
+
 ## [0.2.0] - 2026-10-07
 
 ### Fixed
