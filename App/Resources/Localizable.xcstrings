@@ -378,7 +378,7 @@
       "comment" : "Height of the sun or moon above the horizon, e.g. 12° up"
     },
     "%lld–%lld" : {
-      "comment" : "Plausible score range",
+      "comment" : "Plausible score range\nScore range, e.g. 74–87",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -417,6 +417,12 @@
     },
     "Access, gear, crowds, permits" : {
       "comment" : "Notes placeholder"
+    },
+    "Activate" : {
+      "comment" : "Button: uses the licence key on this device"
+    },
+    "Activated" : {
+      "comment" : "Licence row: the date this device was activated"
     },
     "Add %@" : {
       "comment" : "VoiceOver: add a spot to the trip"
@@ -701,7 +707,7 @@
       "comment" : "Button"
     },
     "Check Now" : {
-      "comment" : "Settings button"
+      "comment" : "Button: asks the licence server whether the key is still good\nSettings button"
     },
     "Check for Updates…" : {
       "comment" : "Menu item"
@@ -778,8 +784,11 @@
     "Collapsed" : {
       "comment" : "VoiceOver state\nVoiceOver: the section is closed"
     },
-    "Coming up" : {
-      "comment" : "Place panel section title: tomorrow's light windows"
+    "Colours and scores" : {
+      "comment" : "Score legend heading"
+    },
+    "Contacting the licence server…" : {
+      "comment" : "Licence: shown while a request is running"
     },
     "Contains data from the Windy database" : {
       "comment" : "Windy attribution required by its API terms"
@@ -874,6 +883,9 @@
     },
     "Days" : {
       "comment" : "Change dates field\nNew trip field"
+    },
+    "Deactivate This Mac…" : {
+      "comment" : "Button: frees this Mac's licence activation"
     },
     "Debug" : {
       "comment" : "Menu title"
@@ -1053,6 +1065,9 @@
     "First quarter" : {
       "comment" : "Moon phase"
     },
+    "Flat, blocked or wet. Not worth the trip." : {
+      "comment" : "Score legend: Poor"
+    },
     "Forecast is about %lld days ahead of this window." : {
       "comment" : "Forecast lead note"
     },
@@ -1083,6 +1098,9 @@
     "Full day" : {
       "comment" : "Timeline zoom option"
     },
+    "Full light" : {
+      "comment" : "Score legend: the high end of the colour bar"
+    },
     "Full moon" : {
       "comment" : "Moon phase"
     },
@@ -1101,6 +1119,9 @@
     "Good" : {
       "comment" : "Light Index band"
     },
+    "Good light for most pictures." : {
+      "comment" : "Score legend: Good"
+    },
     "Good to know" : {
       "comment" : "Spot page section title"
     },
@@ -1118,6 +1139,9 @@
     },
     "Helps" : {
       "comment" : "Factor effect"
+    },
+    "Hide this day's windows" : {
+      "comment" : "Help"
     },
     "High" : {
       "comment" : "Short confidence label"
@@ -1146,8 +1170,14 @@
     "How long before a light window starts that a new stop wants you set up. Each stop can change it." : {
       "comment" : "Settings footer"
     },
+    "How sure" : {
+      "comment" : "Score legend heading"
+    },
     "Hurts" : {
       "comment" : "Factor effect"
+    },
+    "Hybrid" : {
+      "comment" : "Map style: satellite imagery with labels"
     },
     "If it fails, try" : {
       "comment" : "Settings: the fallback forecast source"
@@ -1242,6 +1272,9 @@
     "Iter couldn't read that file. Nothing was imported." : {
       "comment" : "Import error"
     },
+    "Iter is free while it's in preview. A licence key is for the signed release." : {
+      "comment" : "Licence footer"
+    },
     "Iter scores sunrise, sunset, golden hour and blue hour for the places you want to photograph." : {
       "comment" : "Onboarding welcome: what Iter does"
     },
@@ -1253,6 +1286,9 @@
     },
     "Iter's daily limit for %@ is reached." : {
       "comment" : "Weather banner: the daily call cap; argument is the provider"
+    },
+    "Key" : {
+      "comment" : "Licence row: the masked licence key"
     },
     "Key rejected" : {
       "comment" : "Settings weather status"
@@ -1290,8 +1326,20 @@
     "Legal attribution" : {
       "comment" : "Link to Apple Weather legal attribution"
     },
+    "Licence" : {
+      "comment" : "Settings tab"
+    },
+    "Licence key" : {
+      "comment" : "Licence field"
+    },
+    "Licensed to" : {
+      "comment" : "Licence row: the buyer's email"
+    },
     "Light" : {
       "comment" : "Menu title"
+    },
+    "Light Index modified from %@ forecast data." : {
+      "comment" : "Score legend: the forecast source"
     },
     "Light Index modified from forecast data" : {
       "comment" : "Value-added data notice under weather"
@@ -1312,7 +1360,7 @@
       "comment" : "Light reason"
     },
     "Light windows" : {
-      "comment" : "Spot page section title"
+      "comment" : "Score legend heading"
     },
     "Likely %@" : {
       "comment" : "Score range for days further out"
@@ -1382,6 +1430,9 @@
     },
     "Map (snapshot stand-in)" : {
       "comment" : "Label on the static map used in snapshot renders"
+    },
+    "Map Style" : {
+      "comment" : "Map control\nMenu title"
     },
     "Map day" : {
       "comment" : "Accessibility label of the map's day switcher"
@@ -1591,8 +1642,11 @@
     "No images of %@" : {
       "comment" : "VoiceOver: the place card's image placeholder when there are none"
     },
+    "No light" : {
+      "comment" : "Score legend: the low end of the colour bar"
+    },
     "No light windows are left today." : {
-      "comment" : "Place panel: every window of today is over"
+      "comment" : "Outlook: every window of today is over"
     },
     "No places found" : {
       "comment" : "Empty state after a real Apple Maps search"
@@ -1799,6 +1853,9 @@
     "Park, town or region" : {
       "comment" : "Locality placeholder"
     },
+    "Passed" : {
+      "comment" : "Outlook row for today when the day's headline window is over"
+    },
     "Paste your API key" : {
       "comment" : "Onboarding weather: key field prompt"
     },
@@ -1897,6 +1954,9 @@
     "Rain judged from the forecast amount (no probability from %@)." : {
       "comment" : "Score footnote: no rain probability. Argument is the provider name"
     },
+    "Rare, dramatic light. Be there." : {
+      "comment" : "Score legend: Epic"
+    },
     "Ready offline" : {
       "comment" : "Offline status of a pinned trip"
     },
@@ -1954,9 +2014,6 @@
     "Retry" : {
       "comment" : "Button"
     },
-    "Return to today at this spot" : {
-      "comment" : "Help"
-    },
     "Route map" : {
       "comment" : "Accessibility label"
     },
@@ -1970,7 +2027,7 @@
       "comment" : "Banner title when sample weather is on\nLabel on scores made from sample weather\nWeather source name: made-up data for demos"
     },
     "Satellite" : {
-      "comment" : "Source label on a spot image"
+      "comment" : "Map style\nSource label on a spot image"
     },
     "Satellite view of %@" : {
       "comment" : "VoiceOver: image of a spot"
@@ -2004,6 +2061,9 @@
     },
     "Scored from a daily summary: beyond OpenWeather's 48 hours." : {
       "comment" : "Score footnote: daily summary only"
+    },
+    "Scores further out are less certain. A score is high confidence within about 36 hours of the forecast, medium to about 72 hours, and low beyond that. It is also low for days built from a daily summary and for days past the end of the forecast, where the last forecast day's weather is carried forward. Missing forecast fields or three-hourly data lower it a step. A low-confidence score is drawn slightly faded." : {
+      "comment" : "Score legend: how confidence works"
     },
     "Scores use made-up weather, not a real forecast. Turn this off in the Debug menu." : {
       "comment" : "Settings: sample data explanation"
@@ -2101,6 +2161,12 @@
     "Show this day" : {
       "comment" : "Button that selects the best day\nTooltip"
     },
+    "Show this day's windows" : {
+      "comment" : "Help"
+    },
+    "Shows this day's light windows" : {
+      "comment" : "VoiceOver hint"
+    },
     "Shows why this window scores as it does" : {
       "comment" : "VoiceOver hint"
     },
@@ -2149,6 +2215,9 @@
     "Spots" : {
       "comment" : "List section: curated and your own spots"
     },
+    "Standard" : {
+      "comment" : "Map style"
+    },
     "Start Using Iter" : {
       "comment" : "Onboarding done: closes the guide"
     },
@@ -2160,6 +2229,9 @@
     },
     "Starts a new trip from this template" : {
       "comment" : "VoiceOver hint"
+    },
+    "Status" : {
+      "comment" : "Licence row"
     },
     "Step %lld of %lld" : {
       "comment" : "Ask progress, e.g. Step 2 of 4\nOnboarding: progress; the placeholders are the current step and the number of steps",
@@ -2191,6 +2263,9 @@
     },
     "Street" : {
       "comment" : "Spot category"
+    },
+    "Strong colour and clean skies. Worth planning around." : {
+      "comment" : "Score legend: Great"
     },
     "Strong wind: tripods and reflections suffer." : {
       "comment" : "Light reason"
@@ -2382,6 +2457,9 @@
     "This Mac can't run Apple Intelligence" : {
       "comment" : "Ask unavailable title"
     },
+    "This Mac's name" : {
+      "comment" : "Licence field: the name this Mac is activated under"
+    },
     "This build is signed but not yet notarised by Apple. Iter installs it directly, so macOS won't ask again." : {
       "comment" : "Update window: note about an update that Apple has not notarised"
     },
@@ -2406,6 +2484,9 @@
     "This folder is empty" : {
       "comment" : "Locations folder empty title"
     },
+    "This frees one of your activations so you can use the key on another device. Iter keeps working here; you can activate this one again later." : {
+      "comment" : "Licence: confirmation for deactivating this device"
+    },
     "This only takes a moment." : {
       "comment" : "Update window: checking for updates"
     },
@@ -2428,7 +2509,7 @@
       "comment" : "Settings section: WeatherKit setup steps"
     },
     "Today" : {
-      "comment" : "Button that returns the page to today\nPlace panel section title: the day's light windows still ahead\nRelative day"
+      "comment" : "Relative day"
     },
     "Tomorrow" : {
       "comment" : "Place panel: the next window is tomorrow\nRelative day"
@@ -2519,6 +2600,12 @@
         }
       }
     },
+    "View" : {
+      "comment" : "Sun and moon rose: first line of the two-line classic view label outside the rim"
+    },
+    "View %@" : {
+      "comment" : "Sun and moon rose: short label on the classic view wedge when the full label does not fit"
+    },
     "View up" : {
       "comment" : "Sun and moon rose: the classic view's direction is at the top"
     },
@@ -2578,8 +2665,11 @@
     "Welcome to Iter" : {
       "comment" : "Help menu item: reopens the first-run guide\nOnboarding: welcome title"
     },
-    "When to go" : {
-      "comment" : "Spot page section title"
+    "What the scores mean" : {
+      "comment" : "Button\nPopover title\nTooltip"
+    },
+    "Where's my key?" : {
+      "comment" : "Licence: link to the site's activation page"
     },
     "Which light to shoot here: each window with its time and score for this day" : {
       "comment" : "Tooltip"
@@ -2607,6 +2697,9 @@
     },
     "With none chosen, light is shown for sunset." : {
       "comment" : "Spot editor best light footer"
+    },
+    "Workable, but nothing special." : {
+      "comment" : "Score legend: Fair"
     },
     "Working" : {
       "comment" : "Onboarding: weather source answers"
