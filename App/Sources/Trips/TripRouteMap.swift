@@ -15,6 +15,9 @@ struct TripRouteMap: View {
     @Binding var selection: UUID?
     /// The selected day (0-based), shared with the overview strip and the list; nil: all days.
     @Binding var selectedDay: Int?
+    /// What covers the map: the toolbar above it and the panel floating over its leading edge.
+    var insets = EdgeInsets()
+    @Namespace private var mapScope
 
     @State private var position: MapCameraPosition
     /// True once the map wrote a user-positioned `position` (pan, zoom, stepper, compass) that has not settled yet.
@@ -25,8 +28,9 @@ struct TripRouteMap: View {
     /// does not rebuild every polyline's coordinates.
     @State private var paths = PathCache()
 
-    init(builder: TripBuilderModel, selection: Binding<UUID?>, selectedDay: Binding<Int?>) {
+    init(builder: TripBuilderModel, selection: Binding<UUID?>, selectedDay: Binding<Int?>, insets: EdgeInsets = EdgeInsets()) {
         self.builder = builder
+        self.insets = insets
         _selection = selection
         _selectedDay = selectedDay
         // Start framed, so MapKit never shows (and reports) its automatic world camera.
@@ -57,11 +61,11 @@ struct TripRouteMap: View {
             }
         }
         .onGeometryChange(for: CGSize.self) { $0.size } action: { paneSize = $0 }
-        // MapKit's Map extends itself under the toolbar; clip it to the safe area so the bar is one plain strip.
-        .clipped()
         .overlay(alignment: .top) {
             TripDaySwitcher(days: builder.mapContent.days.map { ($0.index, $0.date) }, selectedDay: $selectedDay)
                 .padding(IterSpace.md)
+                .padding(.top, insets.top)
+                .padding(.leading, insets.leading)
         }
         .accessibilityLabel(Text("Route map", comment: "Accessibility label"))
         .onAppear {
@@ -79,8 +83,12 @@ struct TripRouteMap: View {
 
     // MARK: Map
 
+    private func locate() {
+        withAnimation(.smooth) { position = .userLocation(fallback: position) }
+    }
+
     private var liveMap: some View {
-        Map(position: $position, selection: $selection) {
+        Map(position: $position, selection: $selection, scope: mapScope) {
             let content = builder.mapContent
             ForEach(content.legs) { leg in
                 let coordinates = paths.coordinates(for: leg)
@@ -100,13 +108,13 @@ struct TripRouteMap: View {
             }
         }
         .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
-        .mapControls {
-            if app.location.showsSystemIndicator { MapUserLocationButton() }
-            MapZoomStepper()
-            MapCompass()
-            MapScaleView()
+        .mapControls { MapScaleView() }
+        .safeAreaPadding(insets)
+        .overlay(alignment: .topTrailing) {
+            MapControlStack(scope: mapScope, locate: app.location.showsSystemIndicator ? { locate() } : nil)
+                .padding(.top, insets.top)
         }
-        .overlay(alignment: .bottomTrailing) { MapStyleMenu().padding(IterSpace.sm) }
+        .mapScope(mapScope)
         .onMapCameraChange(frequency: .onEnd) { context in
             IterPerf.once("trip.map.firstSettle")
             let r = context.region
@@ -238,8 +246,7 @@ struct TripDaySwitcher: View {
             .font(IterFont.subheadline)
             .padding(.horizontal, IterSpace.md)
             .padding(.vertical, IterSpace.xs)
-            .background(.regularMaterial, in: Capsule())
-            .overlay(Capsule().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
+            .glassEffect(.regular, in: .capsule)
             .accessibilityElement(children: .contain)
             .accessibilityLabel(Text("Map day", comment: "Accessibility label of the map's day switcher"))
         }

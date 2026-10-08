@@ -68,7 +68,6 @@ struct ExploreListPanel: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .frame(maxHeight: .infinity)
-        .background(IterColor.backgroundContent, ignoresSafeAreaEdges: [])
     }
 
     // MARK: Opening the panel
@@ -263,7 +262,6 @@ struct ExploreListPanel: View {
             .padding(.top, IterSpace.sm)
             .padding(.bottom, IterSpace.sm)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(IterColor.backgroundContent)
         } else {
             headerLabel(section)
                 .font(IterFont.moduleTitle)
@@ -271,7 +269,6 @@ struct ExploreListPanel: View {
                 .padding(.top, IterSpace.sm)
                 .padding(.bottom, IterSpace.sm)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(IterColor.backgroundContent)
                 .accessibilityElement(children: .combine)
         }
     }
@@ -340,7 +337,7 @@ struct ExploreListPanel: View {
             }
             .listStyle(.inset)
             .layoutGrid(lanes: LayoutLane.eventRow())
-            .paperListBackground()
+            .scrollContentBackground(.hidden)
             .contextMenu(forSelectionType: String.self) { ids in
                 if let id = ids.first, let row = explore.row(id: id) {
                     ExploreSpotMenu(spot: row.spot, day: row.day ?? model.today(in: row.spot.timeZone))

@@ -23,7 +23,7 @@ struct SpotHeaderView: View {
         VStack(alignment: .leading, spacing: IterGrid.inset) {
             VStack(alignment: .leading, spacing: IterSpace.xs) {
                 Text(spot.name)
-                    .font(IterFont.titleSpot)
+                    .font(.largeTitle.bold())
                     .foregroundStyle(IterColor.textPrimary)
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityAddTraits(.isHeader)
@@ -48,9 +48,10 @@ struct SpotHeaderView: View {
                         .foregroundStyle(IterColor.textSecondary)
                 }
             }
+            // Maps' action tiles: a fixed width while they fit, else an equal share of the row.
             ViewThatFits(in: .horizontal) {
-                actions(labels: .titleAndIcon)
-                actions(labels: .iconOnly)
+                actions(tileWidth: Self.tileWidth)
+                actions(tileWidth: nil)
             }
         }
         .sheet(item: $editing) { record in
@@ -68,11 +69,15 @@ struct SpotHeaderView: View {
 
     // MARK: Actions
 
-    private func actions<S: LabelStyle>(labels: S) -> some View {
+    private static let tileWidth: CGFloat = 112
+
+    private func actions(tileWidth: CGFloat?) -> some View {
         HStack(spacing: IterSpace.sm) {
             AddToTripMenu(spot: spot)
                 .menuStyle(.button)
-                .buttonStyle(.borderedProminent)
+                .menuIndicator(.hidden)
+                .buttonStyle(PlaceActionStyle(isProminent: true))
+                .frame(width: tileWidth)
                 .help(String(localized: "Add this spot to a trip day", comment: "Help"))
             if spot.origin != .user {
                 let saved = model.store.revision >= 0 && model.store.isSaved(spotID: spot.id)
@@ -82,28 +87,31 @@ struct SpotHeaderView: View {
                     Label(saved ? LightText.saved : LightText.save, systemImage: saved ? "bookmark.fill" : "bookmark")
                 }
                 .keyboardShortcut("d")
+                .frame(width: tileWidth)
                 .help(saved ? String(localized: "Remove from Saved", comment: "Help") : String(localized: "Save this spot", comment: "Help"))
             }
             Button(action: openInMaps) {
                 Label(LightText.openInMaps, systemImage: "map")
             }
+            .frame(width: tileWidth)
             .help(String(localized: "Open this location in Apple Maps", comment: "Help"))
             ShareLink(item: Self.shareURL(for: spot), subject: Text(spot.name), message: Text(Self.shareMessage(for: spot))) {
                 Label(LightText.share, systemImage: "square.and.arrow.up")
             }
+            .frame(width: tileWidth)
             .help(String(localized: "Share this location", comment: "Help"))
             if record != nil {
-                Divider().frame(height: IterSize.iconLarge)
                 Button { editing = record } label: { Label(LightText.edit, systemImage: "pencil") }
                     .keyboardShortcut("e")
+                    .frame(width: tileWidth)
                     .help(String(localized: "Edit this spot", comment: "Help"))
                 Button(role: .destructive) { requestDelete() } label: { Label(LightText.delete, systemImage: "trash") }
+                    .frame(width: tileWidth)
                     .help(String(localized: "Delete this spot", comment: "Help"))
             }
-            Spacer(minLength: 0)
+            if tileWidth != nil { Spacer(minLength: 0) }
         }
-        .buttonStyle(.bordered)
-        .labelStyle(labels)
+        .buttonStyle(PlaceActionStyle())
     }
 
     /// The editable record, for the user's own spots.

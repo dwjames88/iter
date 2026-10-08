@@ -7,10 +7,23 @@ struct RoundGlassLabel: View {
     var body: some View {
         Image(systemName: systemImage)
             .font(.system(size: 17, weight: .semibold))
-            .foregroundStyle(IterColor.textPrimary)
+            .foregroundStyle(.primary)
             .frame(width: 44, height: 44)
             .glassEffect(.regular.interactive(), in: .circle)
             .contentShape(Circle())
+    }
+}
+
+/// A 44 pt icon for a button in a group of map controls that share one glass capsule (as Maps groups map style and
+/// location).
+struct MapControlLabel: View {
+    let systemImage: String
+    var body: some View {
+        Image(systemName: systemImage)
+            .font(.system(size: 17, weight: .semibold))
+            .foregroundStyle(.primary)
+            .frame(width: 44, height: 44)
+            .contentShape(.rect)
     }
 }
 
@@ -134,7 +147,7 @@ struct PillIconLabel: View {
     var body: some View {
         Image(systemName: systemImage)
             .font(.system(size: 18, weight: .medium))
-            .foregroundStyle(IterColor.textPrimary)
+            .foregroundStyle(.primary)
             .frame(width: 44, height: 44)
             .contentShape(Rectangle())
     }
@@ -150,7 +163,7 @@ struct PrimaryPillLabelStyle: LabelStyle {
         .foregroundStyle(IterColor.onAccent)
         .padding(.horizontal, IterSpace.lg)
         .frame(height: 52)
-        .background(IterColor.accent, in: Capsule())
+        .glassEffect(.regular.tint(IterColor.accent).interactive(), in: .capsule)
     }
 }
 

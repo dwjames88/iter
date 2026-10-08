@@ -108,7 +108,7 @@ private struct TripBuilderContent: View {
     // MARK: Content
 
     @ViewBuilder private func builderBody(_ plan: TripPlan, _ builder: TripBuilderModel) -> some View {
-        ResizableSplit(storageKey: "trip", idealWidth: IterSize.listMax) {
+        FloatingPanelLayout(panelWidth: IterSize.listMax) {
             VStack(spacing: 0) {
                 TripHeader(plan: plan, builder: builder) { changesDates = true }
                 Divider()
@@ -119,11 +119,10 @@ private struct TripBuilderContent: View {
                 }
                 TripPlanList(builder: builder, selection: $selection, selectedDay: $selectedDay, scrollRequest: scrollRequest)
             }
-        } trailing: {
-            TripRouteMap(builder: builder, selection: $selection, selectedDay: Binding(get: { selectedDay }, set: { chooseDay($0, in: builder) }))
+        } map: { insets in
+            TripRouteMap(builder: builder, selection: $selection, selectedDay: Binding(get: { selectedDay }, set: { chooseDay($0, in: builder) }),
+                         insets: insets)
         }
-        .background(IterColor.backgroundWindow, ignoresSafeAreaEdges: [])
-        .unifiedToolbarBackground()
         .navigationTitle(plan.name)
         .toolbar(removing: .title)
         .toolbar { toolbar(plan, builder) }
@@ -212,7 +211,7 @@ private struct TripHeader: View {
         VStack(alignment: .leading, spacing: IterSpace.xs) {
             TextField(String(localized: "Trip name", comment: "Placeholder"), text: $name)
                 .textFieldStyle(.plain)
-                .font(IterFont.titleSpot)
+                .font(.largeTitle.bold())
                 .focused($focused)
                 .onSubmit(commit)
                 .onChange(of: focused) { if !focused { commit() } }

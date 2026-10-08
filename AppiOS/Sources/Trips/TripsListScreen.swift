@@ -253,7 +253,7 @@ struct TripsListScreen: View {
                 .frame(minHeight: IterSize.hitTarget)
             }
             .padding(.horizontal, IterSpace.lg)
-            .background(.regularMaterial, in: Capsule())
+            .glassEffect(.regular, in: .capsule)
             .padding(.horizontal, IterSpace.lg)
             .padding(.bottom, IterSpace.lg)
             .transition(.move(edge: .bottom).combined(with: .opacity))

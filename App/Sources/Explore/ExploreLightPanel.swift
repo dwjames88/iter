@@ -1,4 +1,6 @@
 import SwiftUI
+import MapKit
+import CoreLocation
 import IterCore
 import IterData
 import IterDesign
@@ -34,17 +36,17 @@ struct ExploreLightPanel: View {
     var body: some View {
         VStack(spacing: 0) {
             header
-            Divider()
             WeatherStatusBanner(status: explore.weatherStatus)
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(alignment: .leading, spacing: IterSpace.xl) {
                         VStack(alignment: .leading, spacing: IterSpace.lg) {
                             placeHeader
-                                .padding(.horizontal, IterGrid.inset)
-                            // Edge to edge of the column.
+                            actionRow
                             SpotImages(spot: spot)
+                                .clipShape(.rect(cornerRadius: PlaceActionStyle.cornerRadius + 2))
                         }
+                        .padding(.horizontal, IterGrid.inset)
                         .padding(.top, IterGrid.inset - IterSpace.xl)
                         PanelSections(app: model, spot: spot, day: day, lowerHalfID: Self.lowerHalfID)
                             .id(PanelKey(spotID: spot.id, day: day))
@@ -76,7 +78,6 @@ struct ExploreLightPanel: View {
             }
         }
         .frame(maxHeight: .infinity)
-        .background(IterColor.backgroundContent, ignoresSafeAreaEdges: [])
         .layoutGrid()
         .environment(\.spotDensity, .panel)
         .focusable()
@@ -95,66 +96,62 @@ struct ExploreLightPanel: View {
         .accessibilityLabel(Text("Place panel for \(spot.name)", comment: "VoiceOver"))
     }
 
-    // MARK: Header (the column header: Back, position, previous and next)
+    // MARK: Header (as a Maps place card: Share leading; previous, next and Close trailing, round glass buttons)
 
     private var header: some View {
         HStack(spacing: IterSpace.sm) {
-            Button {
-                explore.closePanel()
-            } label: {
-                Label {
-                    Text("Places", comment: "Place panel: back to the list of places")
-                } icon: {
-                    Image(systemName: "chevron.left")
-                }
-                .font(IterFont.subheadline)
-                .foregroundStyle(IterColor.accent)
+            ShareLink(item: SpotHeaderView.shareURL(for: spot), subject: Text(spot.name),
+                      message: Text(SpotHeaderView.shareMessage(for: spot))) {
+                Label(LightText.share, systemImage: "square.and.arrow.up")
             }
-            .buttonStyle(.borderless)
-            .help(String(localized: "Back to places (Esc)", comment: "Tooltip on the place panel's back button"))
-            .accessibilityLabel(Text("Back to places", comment: "VoiceOver"))
+            .help(String(localized: "Share this location", comment: "Help"))
             Spacer(minLength: 0)
             if let position = explore.panelPosition {
                 Text("\(position.index) of \(position.count)", comment: "Place panel header: the place's position in the list, e.g. 3 of 16")
-                    .font(IterFont.subheadline)
+                    .font(IterFont.secondary)
                     .monospacedDigit()
-                    .foregroundStyle(IterColor.textSecondary)
+                    .foregroundStyle(.secondary)
                     .accessibilityLabel(Text("Place \(position.index) of \(position.count)", comment: "VoiceOver"))
             }
-            HStack(spacing: IterSpace.xs) {
-                Button { explore.selectPrevious() } label: { Image(systemName: "chevron.up") }
+            GlassEffectContainer(spacing: IterSpace.xs) {
+                HStack(spacing: IterSpace.xs) {
+                    Button { explore.selectPrevious() } label: {
+                        Label(String(localized: "Previous place", comment: "VoiceOver"), systemImage: "chevron.up")
+                    }
                     .disabled(!explore.canSelectPrevious)
                     .help(String(localized: "Previous place (Up Arrow)", comment: "Tooltip"))
-                    .accessibilityLabel(Text("Previous place", comment: "VoiceOver"))
-                Button { explore.selectNext() } label: { Image(systemName: "chevron.down") }
+                    Button { explore.selectNext() } label: {
+                        Label(String(localized: "Next place", comment: "VoiceOver"), systemImage: "chevron.down")
+                    }
                     .disabled(!explore.canSelectNext)
                     .help(String(localized: "Next place (Down Arrow)", comment: "Tooltip"))
-                    .accessibilityLabel(Text("Next place", comment: "VoiceOver"))
+                    Button { explore.closePanel() } label: {
+                        Label(String(localized: "Back to places", comment: "VoiceOver"), systemImage: "xmark")
+                    }
+                    .help(String(localized: "Back to places (Esc)", comment: "Tooltip on the place panel's close button"))
+                }
             }
-            .buttonStyle(.borderless)
-            .foregroundStyle(IterColor.textSecondary)
         }
-        .padding(.horizontal, IterGrid.inset)
-        .padding(.vertical, IterSpace.sm)
+        .labelStyle(.iconOnly)
+        .buttonStyle(.glass)
+        .buttonBorderShape(.circle)
+        .controlSize(.large)
+        .padding(.horizontal, IterSpace.md)
+        .padding(.top, IterSpace.md)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     // MARK: Place
 
-    /// Name and where it is on the leading side; the next event as the large unit on the name's baseline.
+    /// Name, where it is, and the next event: centred, as a Maps place card's header.
     private var placeHeader: some View {
-        VStack(alignment: .leading, spacing: IterSpace.xs) {
-            HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
-                Text(spot.name)
-                    .font(IterFont.titleSpot)
-                    .foregroundStyle(IterColor.textPrimary)
-                    .lineLimit(2)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .accessibilityAddTraits(.isHeader)
-                Spacer(minLength: IterSpace.sm)
-                lightSummary
-            }
-            // Beneath both the name and the unit, so the locality has the column's full width.
+        VStack(spacing: IterSpace.xs) {
+            Text(spot.name)
+                .font(.title.bold())
+                .foregroundStyle(.primary)
+                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityAddTraits(.isHeader)
             HStack(spacing: IterSpace.xs) {
                 let hasDistance = explore.hasLocation && row.distanceMeters != nil
                 if !spot.locality.isEmpty {
@@ -170,8 +167,12 @@ struct ExploreLightPanel: View {
                     .layoutPriority(1)
             }
             .font(IterFont.secondary)
-            .foregroundStyle(IterColor.textSecondary)
+            .foregroundStyle(.secondary)
+            lightSummary
+                .padding(.top, IterSpace.sm)
         }
+        .multilineTextAlignment(.center)
+        .frame(maxWidth: .infinity)
     }
 
     private var dot: some View {
@@ -198,18 +199,32 @@ struct ExploreLightPanel: View {
 
     // MARK: Actions
 
+    /// The card's action row, as in Maps: Add to Trip is the main action; Save and Open in Maps beside it.
+    private var actionRow: some View {
+        HStack(spacing: IterSpace.sm) {
+            AddToTripMenu(spot: spot)
+                .menuStyle(.button)
+                .menuIndicator(.hidden)
+                .buttonStyle(PlaceActionStyle(isProminent: true))
+            if spot.origin != .user {
+                saveButton.buttonStyle(PlaceActionStyle())
+            }
+            Button(action: openInMaps) {
+                Label(LightText.openInMaps, systemImage: "map")
+            }
+            .buttonStyle(PlaceActionStyle())
+            .help(String(localized: "Open this location in Apple Maps", comment: "Help"))
+        }
+    }
+
+    private func openInMaps() {
+        let item = MKMapItem(location: CLLocation(latitude: spot.coordinate.latitude, longitude: spot.coordinate.longitude), address: nil)
+        item.name = spot.name
+        item.openInMaps(launchOptions: nil)
+    }
+
     private var actions: some View {
         VStack(alignment: .leading, spacing: IterSpace.lg) {
-            HStack(spacing: IterSpace.sm) {
-                if spot.origin != .user {
-                    saveButton
-                }
-                AddToTripMenu(spot: spot)
-                    .menuStyle(.button)
-                    .fixedSize()
-                Spacer(minLength: 0)
-            }
-            .controlSize(.regular)
             VStack(alignment: .leading, spacing: IterSpace.sm) {
                 if let forecast = model.forecasts.state(for: spot.coordinate).forecast {
                     ForecastSourceLine(info: ForecastSourceInfo(forecast))

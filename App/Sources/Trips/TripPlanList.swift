@@ -107,7 +107,6 @@ struct TripPlanList: View {
             }
             .listStyle(.inset)
             .scrollContentBackground(.hidden)
-            .background(IterColor.backgroundWindow, ignoresSafeAreaEdges: [])
             .onDeleteCommand(perform: removeSelected)
             .animation(.default, value: dropSpot)
             .onChange(of: scrollRequest) {

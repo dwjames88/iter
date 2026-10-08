@@ -10,6 +10,9 @@ import IterFeatures
 /// the place itself opens in the list column), and Add Spot mode.
 struct ExploreMapPane: View {
     @Bindable var explore: ExploreModel
+    /// What covers the map: the toolbar above it and the panel floating over its leading edge.
+    var insets = EdgeInsets()
+    @Namespace private var mapScope
     @Environment(\.renderMode) private var renderMode
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
@@ -20,8 +23,9 @@ struct ExploreMapPane: View {
     @State private var appliedRequest = 0
     @State private var paneSize = CGSize.zero
 
-    init(explore: ExploreModel) {
+    init(explore: ExploreModel, insets: EdgeInsets = EdgeInsets()) {
         self.explore = explore
+        self.insets = insets
         // Start framed, so MapKit never shows (and reports) its automatic world camera.
         if let r = explore.initialCameraRegion {
             _position = State(initialValue: .region(Self.mkRegion(r)))
@@ -43,12 +47,12 @@ struct ExploreMapPane: View {
                 Color.clear
             }
         }
-        // MapKit's Map extends itself under the toolbar; clip it to the safe area so the bar is one plain strip.
-        .clipped()
         .overlay(alignment: .top) {
             if explore.isAddingSpot {
                 AddSpotBanner { explore.isAddingSpot = false }
                     .padding(IterSpace.md)
+                    .padding(.top, insets.top)
+                    .padding(.leading, insets.leading)
             }
         }
         .onGeometryChange(for: CGSize.self) { $0.size } action: {
@@ -66,7 +70,7 @@ struct ExploreMapPane: View {
 
     private var liveMap: some View {
         MapReader { proxy in
-            Map(position: $position, selection: mapSelection) {
+            Map(position: $position, selection: mapSelection, scope: mapScope) {
                 // The model hands over the items ordered and clustered (MapKit has no z-index: later annotations draw
                 // on top, so the selected pin is last); nothing is sorted or computed here.
                 ForEach(explore.mapItems) { item in
@@ -85,13 +89,13 @@ struct ExploreMapPane: View {
                 }
             }
             .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
-            .mapControls {
-                if app.location.showsSystemIndicator { MapUserLocationButton() }
-                MapZoomStepper()
-                MapCompass()
-                MapScaleView()
+            .mapControls { MapScaleView() }
+            .safeAreaPadding(insets)
+            .overlay(alignment: .topTrailing) {
+                MapControlStack(scope: mapScope, locate: app.location.showsSystemIndicator ? { locate() } : nil)
+                    .padding(.top, insets.top)
             }
-            .overlay(alignment: .bottomTrailing) { MapStyleMenu().padding(IterSpace.sm) }
+            .mapScope(mapScope)
             .onMapCameraChange(frequency: .onEnd) { context in
                 IterPerf.once("map.firstSettle")
                 IterPerf.mark("map.settle")
@@ -125,6 +129,10 @@ struct ExploreMapPane: View {
             IterPerf.once("map.created")
             if let request = explore.cameraRequest { apply(request, animated: false) }
         }
+    }
+
+    private func locate() {
+        withAnimation(reduceMotion ? nil : .smooth) { position = .userLocation(fallback: position) }
     }
 
     private func pinAnnotation(_ pin: ExplorePin) -> some MapContent {
@@ -233,7 +241,6 @@ struct SimulatedUserLocationDot: View {
 /// The hint shown while Add Spot mode is on.
 struct AddSpotBanner: View {
     var onCancel: () -> Void
-    @Environment(\.renderMode) private var renderMode
 
     var body: some View {
         HStack(spacing: IterSpace.sm) {
@@ -246,9 +253,7 @@ struct AddSpotBanner: View {
         }
         .padding(.horizontal, IterSpace.md)
         .padding(.vertical, IterSpace.sm)
-        .background(renderMode == .snapshot ? AnyShapeStyle(IterColor.backgroundContent) : AnyShapeStyle(.regularMaterial),
-                    in: Capsule())
-        .overlay(Capsule().strokeBorder(IterColor.accent, lineWidth: IterStroke.thin))
+        .glassEffect(.regular, in: .capsule)
         .accessibilityElement(children: .combine)
     }
 }

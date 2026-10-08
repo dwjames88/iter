@@ -36,10 +36,10 @@ struct LocationsView: View {
             if all.isEmpty {
                 empty
             } else {
-                ResizableSplit(storageKey: "locations", idealWidth: IterSize.listIdeal) {
+                FloatingPanelLayout {
                     list(shown)
-                } trailing: {
-                    LocationsMap(items: shown, selection: $selection)
+                } map: { insets in
+                    LocationsMap(items: shown, selection: $selection, insets: insets)
                 }
                 .searchable(text: $query, placement: .toolbar, prompt: Text("Search locations", comment: "Search field prompt"))
                 .toolbar { ToolbarItem { sortMenu } }
@@ -47,7 +47,6 @@ struct LocationsView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationTitle(title)
-        .unifiedToolbarBackground()
         .sheet(item: $editing) { record in
             SpotEditorSheet(mode: .edit(record))
         }
@@ -121,7 +120,7 @@ struct LocationsView: View {
         .dragContainer(for: LibraryDragItem.self) { ids in ids.map { LibraryDragItem.place($0) } }
         .listStyle(.inset)
         .layoutGrid(lanes: LayoutLane.eventRow(disclosure: true))
-        .paperListBackground()
+        .scrollContentBackground(.hidden)
         .contextMenu(forSelectionType: UUID.self) { ids in
             menu(for: ids)
         } primaryAction: { ids in
@@ -150,7 +149,6 @@ struct LocationsView: View {
                 }
                 .padding(.horizontal, IterSpace.lg)
                 .padding(.vertical, IterSpace.sm)
-                .background(.bar)
             }
         }
     }

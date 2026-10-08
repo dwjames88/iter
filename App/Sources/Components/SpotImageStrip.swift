@@ -22,7 +22,6 @@ struct SpotImageStrip: View {
     let category: SpotCategory
 
     @State private var page: SpotImage.ID?
-    @State private var isHovering = false
 
     private var currentIndex: Int {
         images.firstIndex { $0.id == page } ?? 0
@@ -61,26 +60,25 @@ struct SpotImageStrip: View {
             if images.count > 1 { dots }
         }
         .overlay { if images.count > 1 { arrows } }
-        .onHover { isHovering = $0 }
     }
 
     private var dots: some View {
         HStack(spacing: IterSpace.xs + IterSpace.xxs) {
             ForEach(Array(images.enumerated()), id: \.element.id) { index, _ in
                 Circle()
-                    .fill(index == currentIndex ? IterColor.textPrimary : IterColor.textTertiary)
+                    .fill(index == currentIndex ? AnyShapeStyle(.primary) : AnyShapeStyle(.tertiary))
                     .frame(width: IterSpace.xs + IterSpace.xxs, height: IterSpace.xs + IterSpace.xxs)
             }
         }
         .padding(.horizontal, IterSpace.sm)
         .padding(.vertical, IterSpace.xs + IterSpace.xxs)
-        .background(.regularMaterial, in: Capsule())
+        .glassEffect(.regular, in: .capsule)
         .padding(IterSpace.sm)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("Image \(currentIndex + 1) of \(images.count)", comment: "VoiceOver: position in the place card's image strip"))
     }
 
-    /// Previous and next, on hover: a mouse has no swipe.
+    /// Previous and next, always shown: a mouse has no swipe.
     private var arrows: some View {
         HStack {
             if currentIndex > 0 { arrow("chevron.left", label: String(localized: "Previous image", comment: "VoiceOver and tooltip")) { move(to: currentIndex - 1) } }
@@ -88,17 +86,15 @@ struct SpotImageStrip: View {
             if currentIndex < images.count - 1 { arrow("chevron.right", label: String(localized: "Next image", comment: "VoiceOver and tooltip")) { move(to: currentIndex + 1) } }
         }
         .padding(.horizontal, IterSpace.sm)
-        .opacity(isHovering ? 1 : 0)
-        .animation(.smooth, value: isHovering)
     }
 
     private func arrow(_ symbol: String, label: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: symbol)
                 .font(IterFont.subheadline)
-                .foregroundStyle(IterColor.textPrimary)
+                .foregroundStyle(.primary)
                 .frame(width: IterSize.hitTarget, height: IterSize.hitTarget)
-                .background(.regularMaterial, in: Circle())
+                .glassEffect(.regular.interactive(), in: .circle)
         }
         .buttonStyle(.plain)
         .help(label)
@@ -148,10 +144,10 @@ private struct SpotImagePage: View {
             .overlay(alignment: .topLeading) {
                 label
                     .font(IterFont.captionStrong)
-                    .foregroundStyle(IterColor.textPrimary)
+                    .foregroundStyle(.primary)
                     .padding(.horizontal, IterSpace.sm)
                     .padding(.vertical, IterSpace.xs)
-                    .background(.regularMaterial, in: Capsule())
+                    .glassEffect(.regular, in: .capsule)
                     .padding(IterGrid.inset)
                     .accessibilityHidden(true)
             }

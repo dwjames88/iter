@@ -56,15 +56,15 @@ struct ExploreMapLayer: View {
     // MARK: Controls
 
     private var controls: some View {
-        GlassEffectContainer(spacing: IterSpace.sm) {
-            VStack(spacing: IterSpace.sm) {
-                MapStyleMenu()
-                RoundGlassButton(systemImage: "location.fill", label: String(localized: "Show my location", comment: "Map control"),
-                                 hint: app.location.coordinate == nil ? String(localized: "Asks to use your location", comment: "VoiceOver hint") : nil) {
-                    locate()
-                }
-            }
+        // Map style and your location share one glass capsule, as in Maps.
+        VStack(spacing: 0) {
+            MapStyleMenu(isGlass: false)
+            Button { locate() } label: { MapControlLabel(systemImage: "location") }
+                .buttonStyle(.plain)
+                .accessibilityLabel(Text("Show my location", comment: "Map control"))
+                .accessibilityHint(app.location.coordinate == nil ? Text("Asks to use your location", comment: "VoiceOver hint") : Text(verbatim: ""))
         }
+        .glassEffect(.regular.interactive(), in: .capsule)
         .padding(.trailing, IterSpace.lg)
         .padding(.top, IterSpace.sm)
     }

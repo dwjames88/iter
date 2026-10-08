@@ -22,10 +22,14 @@ extension MapStyleChoice {
     }
 }
 
-/// The compact map style control: a system menu button with Standard, Satellite and Hybrid (checkmark on the current
+/// The map style control (the top of `MapControlStack` on the Mac): a system menu button with Standard, Satellite and Hybrid (checkmark on the current
 /// one), writing the shared `iter.map.style` setting that every map reads.
 struct MapStyleMenu: View {
     @AppStorage(MapStyleChoice.storageKey) private var raw = MapStyleChoice.default.rawValue
+    #if os(iOS)
+    /// False inside a control group that draws one glass capsule for all its buttons (Explore's map controls).
+    var isGlass = true
+    #endif
 
     var body: some View {
         Menu {
@@ -37,18 +41,22 @@ struct MapStyleMenu: View {
             .pickerStyle(.inline)
         } label: {
             #if os(iOS)
-            RoundGlassLabel(systemImage: "map")
+            if isGlass {
+                RoundGlassLabel(systemImage: "map")
+            } else {
+                MapControlLabel(systemImage: "map")
+            }
             #else
             Image(systemName: "map")
-                .frame(width: 24, height: 24)
+                .frame(width: MapControlStack.size, height: MapControlStack.size)
+                .contentShape(.rect)
             #endif
         }
         #if os(macOS)
-        .menuStyle(.borderlessButton)
+        .menuStyle(.button)
+        .buttonStyle(.plain)
         .menuIndicator(.hidden)
-        .fixedSize()
-        .padding(4)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .help(String(localized: "Choose the map style", comment: "Tooltip"))
         #endif
         .accessibilityLabel(Text("Map Style", comment: "Map control"))
     }

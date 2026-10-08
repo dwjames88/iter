@@ -9,7 +9,6 @@ import IterFeatures
 struct ExplorePinView: View, Equatable {
     let pin: ExplorePin
 
-    @Environment(\.renderMode) private var renderMode
 
     /// A pin that did not change is not redrawn (the map pane draws it with `.equatable()`).
     nonisolated static func == (a: ExplorePinView, b: ExplorePinView) -> Bool { a.pin == b.pin }
@@ -60,14 +59,10 @@ struct ExplorePinView: View, Equatable {
                 .lineLimit(1)
                 .padding(.vertical, IterSpace.xs)
                 .padding(.horizontal, IterSpace.sm)
-                .background(fill, in: Capsule())
+                .background(IterColor.backgroundContent, in: Capsule())
                 .shadow(radius: IterEvent.pinShadowRadiusSelected, y: 1)
                 .scaleEffect(IterEvent.pinScaleSelected, anchor: .bottom)
         }
     }
 
-    private var fill: AnyShapeStyle {
-        // An offscreen render has no backdrop for materials.
-        renderMode == .snapshot ? AnyShapeStyle(IterColor.backgroundContent) : AnyShapeStyle(.regularMaterial)
-    }
 }

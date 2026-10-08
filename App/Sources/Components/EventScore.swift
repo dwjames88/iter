@@ -57,7 +57,6 @@ struct EventScore: View {
     /// VoiceOver's description of the window, before the time.
     private let spokenBase: String
 
-    @Environment(\.renderMode) private var renderMode
 
     init(window: LightWindow, zone: TimeZone, timeStyle: TimeStyle = .start, variant: Variant = .regular,
          isLoading: Bool = false, isTomorrow: Bool = false, isSelected: Bool = false) {
@@ -173,10 +172,10 @@ struct EventScore: View {
         }
     }
 
-    /// The one fill: the band's ramp colour; none when unscored (a pin gets a material).
+    /// The one fill: the band's ramp colour; none when unscored (a pin gets the solid content colour).
     private var unitFill: AnyShapeStyle {
         if let score { return AnyShapeStyle(IterColor.ramp(score: score.value)) }
-        return variant == .pin ? pinFill : AnyShapeStyle(Color.clear)
+        return variant == .pin ? AnyShapeStyle(IterColor.backgroundContent) : AnyShapeStyle(Color.clear)
     }
 
     private var timeString: String {
@@ -200,10 +199,6 @@ struct EventScore: View {
         .animation(.spring, value: isSelected)
     }
 
-    private var pinFill: AnyShapeStyle {
-        // An offscreen render has no backdrop for materials.
-        renderMode == .snapshot ? AnyShapeStyle(IterColor.backgroundContent) : AnyShapeStyle(.regularMaterial)
-    }
 
     // MARK: Words
 

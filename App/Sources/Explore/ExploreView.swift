@@ -4,13 +4,9 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// Explore (plan 6.2-B on the Mac): a fixed, resizable list column beside a full-height map.
-///
-/// Why a split view and not a floating panel: the list is the screen's main reading surface (45 rows, each
-/// with its light), so it deserves a column of its own that never hides pins or fights the map's controls.
-/// `HSplitView` gives the native draggable divider, remembers nothing it should not, and keeps the map's visible
-/// region honest: whatever the camera reports is what the user sees, so "pan the selection into view" needs no
-/// panel-inset arithmetic. Nothing floats over the map but its own controls: a selected place opens in the list column.
+/// Explore on the Mac, laid out like Apple Maps: the map fills the window and the list floats over its leading edge on
+/// a Liquid Glass panel (`FloatingPanelLayout`). The map's leading safe area clears the panel, so framing and "pan the
+/// selection into view" stay in the visible part. A selected place opens in the panel, as a place card does in Maps.
 struct ExploreView: View {
     @Environment(AppModel.self) private var model
     @State private var explore: ExploreModel?
@@ -67,10 +63,10 @@ private struct ExploreContent: View {
     @Environment(\.openURL) private var openURL
 
     var body: some View {
-        ResizableSplit(storageKey: "explore", idealWidth: IterSize.listIdeal) {
+        FloatingPanelLayout {
             ExploreListPanel(explore: explore)
-        } trailing: {
-            ExploreMapPane(explore: explore)
+        } map: { insets in
+            ExploreMapPane(explore: explore, insets: insets)
         }
         .navigationTitle(Text("Explore", comment: "Window title"))
         .searchable(text: $explore.query, placement: .toolbar,

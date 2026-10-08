@@ -9,6 +9,9 @@ import IterFeatures
 struct LocationsMap: View {
     let items: [SavedItem]
     @Binding var selection: Set<UUID>
+    /// What covers the map: the toolbar above it and the panel floating over its leading edge.
+    var insets = EdgeInsets()
+    @Namespace private var mapScope
     @Environment(\.renderMode) private var renderMode
     @Environment(AppModel.self) private var model
     @State private var position: MapCameraPosition
@@ -18,9 +21,10 @@ struct LocationsMap: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
 
-    init(items: [SavedItem], selection: Binding<Set<UUID>>) {
+    init(items: [SavedItem], selection: Binding<Set<UUID>>, insets: EdgeInsets = EdgeInsets()) {
         self.items = items
         _selection = selection
+        self.insets = insets
         // Start framed, so MapKit never shows its automatic world camera first.
         _position = State(initialValue: Self.framing(items))
     }
@@ -40,14 +44,12 @@ struct LocationsMap: View {
                 Color.clear
             }
         }
-        // MapKit's Map extends itself under the toolbar; keep it inside the safe area so the bar stays one plain strip.
-        .clipped()
         .onGeometryChange(for: CGSize.self) { $0.size } action: { paneSize = $0 }
         .onChange(of: items.map(\.id)) { withAnimation { position = Self.framing(items) } }
     }
 
     private var liveMap: some View {
-        Map(position: $position, selection: mapSelection) {
+        Map(position: $position, selection: mapSelection, scope: mapScope) {
             ForEach(drawOrder) { item in
                 let selected = selection.contains(item.id)
                 Annotation(item.spot.name,
@@ -60,12 +62,12 @@ struct LocationsMap: View {
             }
         }
         .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
-        .mapControls {
-            MapZoomStepper()
-            MapCompass()
-            MapScaleView()
+        .mapControls { MapScaleView() }
+        .safeAreaPadding(insets)
+        .overlay(alignment: .topTrailing) {
+            MapControlStack(scope: mapScope).padding(.top, insets.top)
         }
-        .overlay(alignment: .bottomTrailing) { MapStyleMenu().padding(IterSpace.sm) }
+        .mapScope(mapScope)
         .onMapCameraChange(frequency: .onEnd) { context in
             let r = context.region
             visible = GeoRegion(center: Coordinate(latitude: r.center.latitude, longitude: r.center.longitude),
@@ -108,7 +110,6 @@ private struct LocationsPinView: View {
     let event: SavedEvent?
     let isSelected: Bool
 
-    @Environment(\.renderMode) private var renderMode
 
     var body: some View {
         Group {
@@ -122,7 +123,7 @@ private struct LocationsPinView: View {
                     .lineLimit(1)
                     .padding(.vertical, IterSpace.xs)
                     .padding(.horizontal, IterSpace.sm)
-                    .background(fill, in: Capsule())
+                    .background(IterColor.backgroundContent, in: Capsule())
                     .shadow(radius: IterEvent.pinShadowRadiusSelected, y: 1)
                     .scaleEffect(IterEvent.pinScaleSelected, anchor: .bottom)
             } else {
@@ -137,7 +138,4 @@ private struct LocationsPinView: View {
         .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
     }
 
-    private var fill: AnyShapeStyle {
-        renderMode == .snapshot ? AnyShapeStyle(IterColor.backgroundContent) : AnyShapeStyle(.regularMaterial)
-    }
 }

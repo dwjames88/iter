@@ -13,6 +13,7 @@ struct PhoneExploreScreen: View {
 
     private static let peekHeight: CGFloat = 150
     private static let topGap: CGFloat = 8
+    private static let sheetShape = UnevenRoundedRectangle(topLeadingRadius: 28, topTrailingRadius: 28, style: .continuous)
 
     var body: some View {
         if AppLaunch.previewSearch { ExploreSearchScreen() } else { explorer }
@@ -65,15 +66,16 @@ struct PhoneExploreScreen: View {
         }
         .frame(maxWidth: .infinity)
         .frame(height: height, alignment: .top)
-        .background(IterColor.backgroundContent,
-                    in: UnevenRoundedRectangle(topLeadingRadius: 28, topTrailingRadius: 28, style: .continuous))
-        .clipShape(UnevenRoundedRectangle(topLeadingRadius: 28, topTrailingRadius: 28, style: .continuous))
-        .shadow(color: .black.opacity(0.25), radius: 16, y: -2)
+        // Liquid Glass while the map shows above it, like a system sheet at a partial height; opaque at full height,
+        // where it covers the map and the list needs a solid ground. A system sheet can't be used: it covers the tab bar.
+        .background(IterColor.backgroundContent.opacity(detent == .full ? 1 : 0), in: Self.sheetShape)
+        .clipShape(Self.sheetShape)
+        .glassEffect(detent == .full ? .identity : .regular, in: Self.sheetShape)
     }
 
     private var grabber: some View {
         Button { move(to: detent.next) } label: {
-            Capsule().fill(IterColor.textTertiary.color.opacity(0.6)).frame(width: 36, height: 5)
+            Capsule().fill(.tertiary).frame(width: 36, height: 5)
                 .frame(maxWidth: .infinity).frame(height: 24)
                 .contentShape(Rectangle())
         }

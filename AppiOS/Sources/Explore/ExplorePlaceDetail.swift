@@ -25,6 +25,7 @@ struct ExplorePlaceDetail: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: IterSpace.xl) {
                     VStack(alignment: .leading, spacing: IterSpace.lg) {
+                        actionRow.padding(.horizontal, IterSpace.lg)
                         TimelineView(.periodic(from: .now, by: 30)) { context in
                             let _ = context.date
                             LightStatusBand(status: LightStatus(window: row.window, isLoading: row.isLoading, now: model.now()),
@@ -54,7 +55,6 @@ struct ExplorePlaceDetail: View {
                 proxy.scrollTo("lower", anchor: .center)
             }
             }
-            .safeAreaInset(edge: .bottom, spacing: 0) { bottomBar.background(IterColor.backgroundContent) }
         }
         .environment(\.spotDensity, .panel)
         .accessibilityElement(children: .contain)
@@ -110,12 +110,10 @@ struct ExplorePlaceDetail: View {
     private func stepButton(_ symbol: String, _ label: String, enabled: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: symbol).font(.system(size: 15, weight: .semibold))
-                .frame(width: 44, height: 36)
-                .background(IterColor.backgroundModule, in: Capsule())
-                .contentShape(Capsule())
+                .frame(width: 20, height: 22)
         }
-        .buttonStyle(.plain)
-        .foregroundStyle(enabled ? IterColor.textPrimary : IterColor.textDisabled)
+        .buttonStyle(.glass)
+        .buttonBorderShape(.circle)
         .disabled(!enabled)
         .accessibilityLabel(label)
     }
@@ -186,17 +184,25 @@ struct ExplorePlaceDetail: View {
         }
     }
 
-    // MARK: Bottom bar
+    // MARK: Actions
 
-    private var bottomBar: some View {
-        HStack(spacing: IterSpace.md) {
-            SpotActionPill(spot: spot, day: row.day ?? day)
-            Spacer(minLength: 0)
-            AddToTripMenu(spot: spot).labelStyle(PrimaryPillLabelStyle())
+    /// The place card's action row, as in Maps: Add to Trip is the main action; Save, Open in Maps and Share beside it.
+    private var actionRow: some View {
+        HStack(spacing: IterSpace.sm) {
+            AddToTripMenu(spot: spot)
+                .buttonStyle(PlaceActionStyle(isProminent: true))
+            if spot.origin != .user {
+                let saved = model.store.revision >= 0 && model.store.isSaved(spotID: spot.id)
+                Button { model.store.setSaved(spot, !saved) } label: {
+                    Label(saved ? LightText.saved : LightText.save, systemImage: saved ? "bookmark.fill" : "bookmark")
+                }
+            }
+            Button { ExploreActions.openInMaps(spot) } label: { Label(LightText.openInMaps, systemImage: "map") }
+            ShareLink(item: SpotHeaderView.shareURL(for: spot), subject: Text(spot.name), message: Text(SpotHeaderView.shareMessage(for: spot))) {
+                Label(LightText.share, systemImage: "square.and.arrow.up")
+            }
         }
-        .padding(.horizontal, IterSpace.lg)
-        .padding(.bottom, IterSpace.sm)
-        .padding(.top, IterSpace.sm)
+        .buttonStyle(PlaceActionStyle())
     }
 }
 
