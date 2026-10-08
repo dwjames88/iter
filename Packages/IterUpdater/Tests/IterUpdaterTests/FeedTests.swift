@@ -68,6 +68,48 @@ struct UpdateFeedTests {
         #expect(throws: UpdateError.self) { try UpdateFeed.decode(Data(#"{"items":[{"version":"x"}]}"#.utf8)) }
     }
 
+    private func mixedFeed(bad: String) -> Data {
+        let good = String(sampleFeedJSON.dropFirst(sampleFeedJSON.range(of: "\"items\": [")!.upperBound.utf16Offset(in: sampleFeedJSON)))
+            .replacingOccurrences(of: "\n  ]\n}", with: "")
+        return Data("{\"schemaVersion\":1,\"items\":[\(bad),\(good)]}".utf8)
+    }
+
+    @Test(arguments: [
+        #"{"version":"9.9.9","build":1,"url":"https://x.test/a.zip","length":1,"sha256":"00","publishedAt":"2026-10-06T12:00:00Z"}"#,
+        #"{"version":"x.y","build":1,"url":"https://x.test/a.zip","length":1,"sha256":"00","edSignature":"AA==","publishedAt":"2026-10-06T12:00:00Z"}"#,
+        #"{"version":"9.9.9","build":1,"url":"https://x.test/a.zip","length":"12","sha256":"00","edSignature":"AA==","publishedAt":"2026-10-06T12:00:00Z"}"#,
+    ])
+    func malformedItemIsSkippedAndValidOneOffered(bad: String) throws {
+        let feed = try UpdateFeed.decode(mixedFeed(bad: bad))
+        #expect(feed.items.count == 1)
+        #expect(feed.skippedItems.map(\.index) == [0])
+        #expect(feed.bestUpdate(newerThan: current("0.1.0"), channel: "release", system: os26)?.version == SemanticVersion("0.2.0"))
+        #expect(throws: UpdateError.self) { try UpdateFeed.decodeStrict(mixedFeed(bad: bad)) }
+    }
+
+    @Test func allItemsMalformedThrows() {
+        #expect(throws: UpdateError.self) { try UpdateFeed.decode(Data(#"{"items":[{"version":"x"},{}]}"#.utf8)) }
+    }
+
+    @Test func emptyItemsIsValidAndOffersNothing() throws {
+        let feed = try UpdateFeed.decode(Data(#"{"schemaVersion":1,"items":[]}"#.utf8))
+        #expect(feed.items.isEmpty && feed.skippedItems.isEmpty)
+    }
+
+    @Test func missingOrWrongItemsThrows() {
+        #expect(throws: UpdateError.self) { try UpdateFeed.decode(Data(#"{"schemaVersion":1}"#.utf8)) }
+        #expect(throws: UpdateError.self) { try UpdateFeed.decode(Data(#"{"items":{"a":1}}"#.utf8)) }
+        #expect(throws: UpdateError.self) { try UpdateFeed.decode(Data("[]".utf8)) }
+    }
+
+    @Test func repositoryAppcastDecodesWithTwoItems() throws {
+        var url = URL(fileURLWithPath: #filePath)
+        for _ in 0..<5 { url.deleteLastPathComponent() }
+        let feed = try UpdateFeed.decode(Data(contentsOf: url.appending(path: "updates/appcast.json")))
+        #expect(feed.items.count == 2)
+        #expect(feed.skippedItems.isEmpty)
+    }
+
     @Test func roundTrip() throws {
         let feed = UpdateFeed(items: [item("0.3.0", build: 5), item("0.2.0")])
         let data = try feed.encoded()

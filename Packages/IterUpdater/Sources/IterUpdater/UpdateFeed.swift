@@ -1,4 +1,5 @@
 import Foundation
+import os
 
 public struct UpdateItem: Codable, Hashable, Sendable, Identifiable {
     public var version: SemanticVersion
@@ -74,6 +75,16 @@ public struct UpdateFeed: Codable, Hashable, Sendable {
 
     public var schemaVersion: Int
     public var items: [UpdateItem]
+    /// Items `decode` dropped because they did not decode (never encoded, never part of equality of intent).
+    public internal(set) var skippedItems: [SkippedItem] = []
+
+    /// One item that failed to decode, with its position in the feed's `items` array and why.
+    public struct SkippedItem: Hashable, Sendable {
+        public var index: Int
+        public var reason: String
+    }
+
+    private static let log = Logger(subsystem: "com.dwjames.iter", category: "updates")
 
     public init(items: [UpdateItem]) {
         self.schemaVersion = Self.schemaVersion
@@ -88,8 +99,26 @@ public struct UpdateFeed: Codable, Hashable, Sendable {
         items = try c.decode([UpdateItem].self, forKey: .items)
     }
 
-    /// A newer schemaVersion still decodes: unknown keys are ignored, and the fields we need are stable.
-    public static func decode(_ data: Data) throws -> UpdateFeed {
+    /// Wraps one array element so a bad item records its error instead of failing the whole array.
+    private struct Attempt: Decodable {
+        let result: Result<UpdateItem, any Error>
+        init(from decoder: any Decoder) {
+            result = Result { try UpdateItem(from: decoder) }
+        }
+    }
+
+    private struct LenientEnvelope: Decodable {
+        let schemaVersion: Int
+        let items: [Attempt]
+        private enum CodingKeys: String, CodingKey { case schemaVersion, items }
+        init(from decoder: any Decoder) throws {
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            schemaVersion = try c.decodeIfPresent(Int.self, forKey: .schemaVersion) ?? UpdateFeed.schemaVersion
+            items = try c.decode([Attempt].self, forKey: .items)
+        }
+    }
+
+    private static func makeDecoder() -> JSONDecoder {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .custom { decoder in
             let string = try decoder.singleValueContainer().decode(String.self)
@@ -97,8 +126,48 @@ public struct UpdateFeed: Codable, Hashable, Sendable {
             if let date = try? Date.ISO8601FormatStyle(includingFractionalSeconds: true).parse(string) { return date }
             throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "Invalid date \"\(string)\""))
         }
+        return decoder
+    }
+
+    /// Lenient: an item that fails to decode (missing trust field, bad version, wrong type) is skipped and
+    /// logged, and the remaining valid items are used. Throws `feedInvalid` only when the feed itself is
+    /// unparsable (not JSON, `items` missing or not an array) or it has items but none is valid. An empty
+    /// `items` array is a valid feed with nothing to offer. A newer schemaVersion still decodes: unknown keys
+    /// are ignored, and the fields we need are stable. Signature, hash and length checks happen later, on the
+    /// chosen item only.
+    public static func decode(_ data: Data) throws -> UpdateFeed {
+        let envelope: LenientEnvelope
         do {
-            return try decoder.decode(UpdateFeed.self, from: data)
+            envelope = try makeDecoder().decode(LenientEnvelope.self, from: data)
+        } catch {
+            throw UpdateError.feedInvalid(String(describing: error))
+        }
+        var items: [UpdateItem] = []
+        var skipped: [SkippedItem] = []
+        for (index, attempt) in envelope.items.enumerated() {
+            switch attempt.result {
+            case .success(let item): items.append(item)
+            case .failure(let error):
+                let reason = String(describing: error)
+                skipped.append(SkippedItem(index: index, reason: reason))
+                log.error("Skipping update feed item \(index, privacy: .public): \(reason, privacy: .public)")
+            }
+        }
+        if items.isEmpty, !skipped.isEmpty {
+            throw UpdateError.feedInvalid(
+                "No valid items in the feed (\(skipped.count) skipped). First: item \(skipped[0].index): \(skipped[0].reason)")
+        }
+        var feed = UpdateFeed(items: items)
+        feed.schemaVersion = envelope.schemaVersion
+        feed.skippedItems = skipped
+        return feed
+    }
+
+    /// Strict: any malformed item fails the whole feed. Used by the release tool so it never rewrites the
+    /// published feed with an item silently dropped.
+    public static func decodeStrict(_ data: Data) throws -> UpdateFeed {
+        do {
+            return try makeDecoder().decode(UpdateFeed.self, from: data)
         } catch {
             throw UpdateError.feedInvalid(String(describing: error))
         }

@@ -63,7 +63,7 @@ Why this URL:
 
 The copy in the repo, `updates/appcast.json`, is the history of every release and an audit trail. It is also a fallback: point a copy of Iter at it with `defaults write com.dwjames.iter IterUpdateFeedURL <url>` (for example the raw GitHub URL, or a local server). `defaults delete com.dwjames.iter IterUpdateFeedURL` goes back to the normal feed. Both URLs need the repository to be **public**.
 
-Format (`schemaVersion` 1). Items are newest first; unknown keys are ignored, so the format can grow.
+Format (`schemaVersion` 1). Items are newest first; unknown keys are ignored, so the format can grow. An item the app cannot read (a missing or mistyped `version`, `build`, `url`, `length`, `sha256`, `edSignature` or `publishedAt`) is skipped and logged, and the rest of the feed still counts; the check fails only when the file is not a feed or none of its items can be read. `iter-release feed` is strict and refuses to rewrite a feed with an unreadable item.
 
 ```json
 {

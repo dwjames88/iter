@@ -125,4 +125,4 @@ Before the pass: 645 tests (165 + 69 + 299 + 22 + 67 + 6 + 17 across the package
 * **Transient drive errors** are retried on the next refresh after 30 seconds, not on a timer.
 * **`ForecastCenter` coalescing window** (40 ms) is a judgement call; it is an init parameter.
 * **Engine edges that are design choices:** no golden evening at Tromsø around 16 to 18 May (the sun dips but does not set); no evening blue hour at Anchorage in early June when civil dusk is after midnight; `nextEvent` is nil at Longyearbyen in midwinter.
-* **Documented rules that read oddly:** one bad item in the update feed (missing signature, hash or length) fails the whole feed; a denied Keychain read shows "needs key" rather than its own error.
+* **Documented rules that read oddly:** a denied Keychain read shows "needs key" rather than its own error.

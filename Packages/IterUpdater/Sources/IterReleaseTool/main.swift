@@ -105,7 +105,7 @@ func run(_ command: String, _ rest: [String]) throws {
 
         var previous: UpdateFeed?
         if let path = args.options["--previous"], FileManager.default.fileExists(atPath: path) {
-            previous = try UpdateFeed.decode(Data(contentsOf: URL(fileURLWithPath: path)))
+            previous = try UpdateFeed.decodeStrict(Data(contentsOf: URL(fileURLWithPath: path)))
         }
         let item = try FeedBuilder.item(
             archive: archive, version: version, build: build, channel: args.options["--channel"] ?? "release",
