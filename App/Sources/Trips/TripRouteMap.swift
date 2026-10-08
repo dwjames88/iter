@@ -221,32 +221,35 @@ struct TripDaySwitcher: View {
 
     var body: some View {
         if days.count > 1 {
-            HStack(spacing: IterSpace.xs) {
-                Button { step(-1) } label: { Image(systemName: "chevron.left") }
-                    .help(Text("Previous day", comment: "Tooltip"))
-                    .accessibilityLabel(Text("Previous day", comment: "Accessibility label"))
-                Menu {
-                    Button(String(localized: "All Days", comment: "Map day switcher: show every day")) { selectedDay = nil }
-                    Divider()
-                    ForEach(days, id: \.index) { day in
-                        Button(TimeText.daySwitcher(index: day.index, day: day.date)) { selectedDay = day.index }
+            // System glass buttons; the container lets the three pieces read as one control.
+            GlassEffectContainer(spacing: IterSpace.xs) {
+                HStack(spacing: IterSpace.xs) {
+                    Button { step(-1) } label: { Label(String(localized: "Previous day", comment: "Accessibility label"), systemImage: "chevron.left") }
+                        .labelStyle(.iconOnly)
+                        .buttonBorderShape(.circle)
+                        .help(Text("Previous day", comment: "Tooltip"))
+                    Menu {
+                        Button(String(localized: "All Days", comment: "Map day switcher: show every day")) { selectedDay = nil }
+                        Divider()
+                        ForEach(days, id: \.index) { day in
+                            Button(TimeText.daySwitcher(index: day.index, day: day.date)) { selectedDay = day.index }
+                        }
+                    } label: {
+                        Text(title).monospacedDigit().frame(minWidth: 150)
                     }
-                } label: {
-                    Text(title).monospacedDigit().frame(minWidth: 150)
+                    .menuStyle(.button)
+                    .menuIndicator(.hidden)
+                    .buttonBorderShape(.capsule)
+                    .fixedSize()
+                    .help(Text("Choose the day shown on the map", comment: "Tooltip"))
+                    Button { step(1) } label: { Label(String(localized: "Next day", comment: "Accessibility label"), systemImage: "chevron.right") }
+                        .labelStyle(.iconOnly)
+                        .buttonBorderShape(.circle)
+                        .help(Text("Next day", comment: "Tooltip"))
                 }
-                .menuStyle(.borderlessButton)
-                .menuIndicator(.hidden)
-                .fixedSize()
-                .help(Text("Choose the day shown on the map", comment: "Tooltip"))
-                Button { step(1) } label: { Image(systemName: "chevron.right") }
-                    .help(Text("Next day", comment: "Tooltip"))
-                    .accessibilityLabel(Text("Next day", comment: "Accessibility label"))
+                .buttonStyle(.glass)
+                .controlSize(.large)
             }
-            .buttonStyle(.borderless)
-            .font(IterFont.subheadline)
-            .padding(.horizontal, IterSpace.md)
-            .padding(.vertical, IterSpace.xs)
-            .glassEffect(.regular, in: .capsule)
             .accessibilityElement(children: .contain)
             .accessibilityLabel(Text("Map day", comment: "Accessibility label of the map's day switcher"))
         }

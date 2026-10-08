@@ -42,33 +42,30 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
     }
 }
 
-/// The panel's material, matched to Maps' card by measurement: in light appearance Maps frosts the map heavily (as its
-/// sidebar does), so the card is the window's sidebar material under the glass; in dark appearance it lifts the map a
-/// little and keeps its hue, which plain glass does.
+/// The panel's material: the same Liquid Glass the system draws for a window's sidebar. AppKit's sidebar is an
+/// `NSGlassEffectView` in its sidebar variant (read from the live view: `_variant` 17), which frosts the content behind it
+/// more than the default variant; Maps' card measures the same as its sidebar. The glass is clipped to the panel's
+/// concentric shape, as the system clips the sidebar.
 private struct PanelMaterial: ViewModifier {
     let shape: ConcentricRectangle
-    @Environment(\.colorScheme) private var scheme
 
     func body(content: Content) -> some View {
-        content
-            .background {
-                if scheme == .light { SidebarMaterial().clipShape(shape) }
-            }
-            .glassEffect(.regular, in: shape)
+        content.background { SidebarGlass().clipShape(shape) }
     }
 }
 
-/// The sidebar material, blended with the window's own content (the map), not the desktop.
-private struct SidebarMaterial: NSViewRepresentable {
-    func makeNSView(context: Context) -> NSVisualEffectView {
-        let view = NSVisualEffectView()
-        view.material = .sidebar
-        view.blendingMode = .withinWindow
-        view.state = .active
+private struct SidebarGlass: NSViewRepresentable {
+    /// `NSGlassEffectView`'s private variant for a window sidebar (macOS 26 and 27).
+    private static let sidebarVariant = 17
+
+    func makeNSView(context: Context) -> NSGlassEffectView {
+        let view = NSGlassEffectView()
+        let setter = NSSelectorFromString("set_variant:")
+        if view.responds(to: setter) { view.setValue(Self.sidebarVariant, forKey: "_variant") }
         return view
     }
 
-    func updateNSView(_ nsView: NSVisualEffectView, context: Context) {}
+    func updateNSView(_ nsView: NSGlassEffectView, context: Context) {}
 }
 
 /// A floating panel's header, as Maps titles its cards: a bold title with a quiet line under it, and round glass

@@ -37,13 +37,16 @@ private struct PlaceAction: ViewModifier {
 #if os(macOS)
 /// The system's prominent glass (glass tinted with the accent, white content) for a menu button on the Mac.
 private struct ProminentGlassMenuButtonStyle: ButtonStyle {
+    /// Concentric with the card it sits in, as the system's glass buttons are.
+    static let shape = ConcentricRectangle(corners: .concentric(minimum: 10), isUniform: true)
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .foregroundStyle(.white)
             .padding(.vertical, IterSpace.sm)
             .frame(maxWidth: .infinity)
-            .contentShape(.rect(cornerRadius: IterSpace.md))
-            .glassEffect(.regular.tint(IterColor.accent).interactive(), in: .rect(cornerRadius: IterSpace.md))
+            .contentShape(Self.shape)
+            .glassEffect(.regular.tint(IterColor.accent).interactive(), in: Self.shape)
             .opacity(configuration.isPressed ? 0.8 : 1)
     }
 }

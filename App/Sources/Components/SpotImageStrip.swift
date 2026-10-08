@@ -90,13 +90,12 @@ struct SpotImageStrip: View {
 
     private func arrow(_ symbol: String, label: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            Image(systemName: symbol)
-                .font(IterFont.subheadline)
-                .foregroundStyle(.primary)
-                .frame(width: IterSize.hitTarget, height: IterSize.hitTarget)
-                .glassEffect(.regular.interactive(), in: .circle)
+            Label(label, systemImage: symbol)
         }
-        .buttonStyle(.plain)
+        .labelStyle(.iconOnly)
+        .buttonStyle(.glass)
+        .buttonBorderShape(.circle)
+        .controlSize(.large)
         .help(label)
         .accessibilityLabel(label)
     }
