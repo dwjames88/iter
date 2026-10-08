@@ -16,10 +16,40 @@ struct ExplorePlaceDetail: View {
 
     private var spot: Spot { row.spot }
     private var day: LocalDay { model.today(in: spot.timeZone) }
+    /// Pushed on the phone's Explore stack: the title, previous, next and Close are the navigation bar's.
+    var usesNavigationBar = false
 
     var body: some View {
+        if usesNavigationBar {
+            detail
+                .navigationTitle(spot.name)
+                .navigationSubtitle(overline)
+                .navigationBarTitleDisplayMode(.large)
+                .navigationBarBackButtonHidden()
+                .toolbar {
+                    ToolbarItemGroup(placement: .topBarTrailing) {
+                        Button { explore.selectPrevious() } label: {
+                            Label(String(localized: "Previous place", comment: "VoiceOver"), systemImage: "chevron.up")
+                        }
+                        .disabled(!explore.canSelectPrevious)
+                        Button { explore.selectNext() } label: {
+                            Label(String(localized: "Next place", comment: "VoiceOver"), systemImage: "chevron.down")
+                        }
+                        .disabled(!explore.canSelectNext)
+                    }
+                    ToolbarSpacer(.fixed, placement: .topBarTrailing)
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(role: .close) { explore.closePanel() }
+                    }
+                }
+        } else {
+            detail
+        }
+    }
+
+    private var detail: some View {
         VStack(spacing: 0) {
-            header
+            if !usesNavigationBar { header }
             ScrollViewReader { proxy in
             ScrollView {
                 VStack(alignment: .leading, spacing: IterSpace.xl) {
@@ -86,9 +116,13 @@ struct ExplorePlaceDetail: View {
                         .accessibilityAddTraits(.isHeader)
                 }
                 Spacer(minLength: IterSpace.sm)
-                RoundGlassButton(systemImage: "xmark", label: String(localized: "Back to places", comment: "VoiceOver: close the place panel")) {
-                    explore.closePanel()
+                Button { explore.closePanel() } label: {
+                    Label(String(localized: "Back to places", comment: "VoiceOver: close the place panel"), systemImage: "xmark")
                 }
+                .labelStyle(.iconOnly)
+                .buttonStyle(.glass)
+                .buttonBorderShape(.circle)
+                .controlSize(.large)
             }
             if let position = explore.panelPosition {
                 HStack(spacing: IterSpace.sm) {

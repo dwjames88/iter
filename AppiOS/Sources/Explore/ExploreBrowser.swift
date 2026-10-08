@@ -11,6 +11,9 @@ struct ExploreBrowser: View {
     @Bindable var explore: ExploreModel
     /// A row was opened (the panel is showing).
     var onOpenPlace: () -> Void = {}
+    /// On the phone the browser is a navigation root: its title and buttons are the navigation bar's, and an opened
+    /// place is pushed (`PhoneExploreScreen`), as in Find My. On the iPad it draws its own header and shows the place in place.
+    var usesNavigationBar = false
 
     @Environment(AppModel.self) private var model
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -18,10 +21,10 @@ struct ExploreBrowser: View {
     var body: some View {
         ZStack {
             listState
-                .opacity(explore.showsPanel ? 0 : 1)
-                .allowsHitTesting(!explore.showsPanel)
-                .accessibilityHidden(explore.showsPanel)
-            if explore.showsPanel, let row = explore.selectedRow {
+                .opacity(showsPanelInPlace ? 0 : 1)
+                .allowsHitTesting(!showsPanelInPlace)
+                .accessibilityHidden(showsPanelInPlace)
+            if !usesNavigationBar, explore.showsPanel, let row = explore.selectedRow {
                 ExplorePlaceDetail(explore: explore, row: row)
                     .transition(reduceMotion ? .identity : .opacity)
             }
@@ -30,32 +33,39 @@ struct ExploreBrowser: View {
         .task(id: explore.rows.map(\.id)) { explore.requestForecasts() }
     }
 
+    private var showsPanelInPlace: Bool { !usesNavigationBar && explore.showsPanel }
+
     // MARK: List state
 
     private var listState: some View {
         VStack(spacing: IterSpace.sm) {
-            SheetTitleHeader(title: String(localized: "Explore", comment: "Explore sheet title"), subtitle: subtitle) {
-                ExploreMoreMenu(explore: explore)
-                shareButton
+            if !usesNavigationBar {
+                SheetTitleHeader(title: String(localized: "Explore", comment: "Explore sheet title"), subtitle: subtitle) {
+                    ExploreMoreMenu(explore: explore)
+                    ExploreShareLink(explore: explore)
+                }
             }
             FullWidthSegmentedPicker(label: String(localized: "Sort", comment: "VoiceOver label of the Explore sort control"),
                                      options: sortOptions, selection: $explore.sort)
                 .padding(.horizontal, IterSpace.lg)
             ChipRow(chips: chips)
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
+            List {
+                Group {
                     WeatherStatusBanner(status: explore.weatherStatus)
                     ExploreLocationBanner(explore: explore)
                     searchStatus
                     if explore.hasSampleScores { SampleDataLabel(style: .inline).padding(.horizontal, IterSpace.lg).padding(.top, IterSpace.sm) }
-                    content
-                    ForecastSourceLines(app: model, coordinates: explore.rows.filter { $0.score != nil }.map(\.spot.coordinate))
-                        .padding(.horizontal, IterSpace.lg)
-                        .padding(.vertical, IterSpace.lg)
-                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding(.bottom, IterSpace.lg)
+                .plainListRow()
+                content
+                ForecastSourceLines(app: model, coordinates: explore.rows.filter { $0.score != nil }.map(\.spot.coordinate))
+                    .padding(.horizontal, IterSpace.lg)
+                    .padding(.vertical, IterSpace.lg)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .plainListRow()
             }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
             .scrollBounceBehavior(.basedOnSize)
             .accessibilityLabel(Text("Places", comment: "VoiceOver label of the Explore list"))
         }
@@ -65,32 +75,6 @@ struct ExploreBrowser: View {
         let n = explore.rows.count
         if explore.isLoadingForecasts { return String(localized: "Loading forecasts…", comment: "Explore sheet subtitle") }
         return n == 1 ? String(localized: "1 place", comment: "Explore sheet subtitle") : String(localized: "\(n) places", comment: "Explore sheet subtitle: number of places listed")
-    }
-
-    // MARK: Share
-
-    @ViewBuilder private var shareButton: some View {
-        if let url = shareURL {
-            ShareLink(item: url, subject: Text("Explore", comment: "Share subject"),
-                      message: Text("Light spots in this area", comment: "Share message")) {
-                RoundGlassLabel(systemImage: "square.and.arrow.up")
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(Text("Share this area", comment: "VoiceOver"))
-        } else {
-            RoundGlassLabel(systemImage: "square.and.arrow.up").opacity(0.4)
-                .accessibilityLabel(Text("Share this area", comment: "VoiceOver")).accessibilityAddTraits(.isButton)
-                .accessibilityHint(Text("Available once the map has loaded", comment: "VoiceOver hint"))
-        }
-    }
-
-    /// The visible map area as an Apple Maps link.
-    private var shareURL: URL? {
-        guard let r = explore.visibleRegion else { return nil }
-        var c = URLComponents(string: "https://maps.apple.com/")!
-        c.queryItems = [URLQueryItem(name: "ll", value: String(format: "%.5f,%.5f", r.center.latitude, r.center.longitude)),
-                        URLQueryItem(name: "spn", value: String(format: "%.4f,%.4f", r.latitudeDelta, r.longitudeDelta))]
-        return c.url
     }
 
     // MARK: Sort and filter chips (sort is the segmented control; chips are multi-select filters)
@@ -157,16 +141,16 @@ struct ExploreBrowser: View {
                 }
                 emptyState
             }
+            .plainListRow()
         } else {
-            VStack(alignment: .leading, spacing: 0) {
-                if !explore.searchSuggestions.isEmpty {
-                    ExploreSuggestionsView(suggestions: explore.searchSuggestions) { explore.run($0) }
-                        .padding(.horizontal, IterSpace.lg)
-                }
-                ExploreAskBlock(explore: explore, onOpen: open)
-                ForEach(explore.sections.filter { $0.kind != .ask }) { section in
-                    sectionView(section)
-                }
+            if !explore.searchSuggestions.isEmpty {
+                ExploreSuggestionsView(suggestions: explore.searchSuggestions) { explore.run($0) }
+                    .padding(.horizontal, IterSpace.lg)
+                    .plainListRow()
+            }
+            ExploreAskBlock(explore: explore, onOpen: open).plainListRow()
+            ForEach(explore.sections.filter { $0.kind != .ask }) { section in
+                sectionView(section)
             }
         }
     }
@@ -204,7 +188,6 @@ struct ExploreBrowser: View {
     @ViewBuilder private func sectionView(_ section: ExploreSection) -> some View {
         let isMore = section.kind == .morePlaces
         let showsRows = !isMore || explore.isMorePlacesOpen
-        VStack(alignment: .leading, spacing: 0) {
             Button {
                 if isMore { withAnimation(reduceMotion ? nil : .snappy(duration: 0.2)) { explore.setMorePlacesOpen(!explore.isMorePlacesOpen) } }
             } label: {
@@ -224,13 +207,13 @@ struct ExploreBrowser: View {
             .disabled(!isMore)
             .accessibilityAddTraits(.isHeader)
             .accessibilityValue(isMore ? (showsRows ? Text("Expanded", comment: "VoiceOver") : Text("Collapsed", comment: "VoiceOver")) : Text(verbatim: ""))
+            .padding(.top, IterSpace.sm)
+            .plainListRow()
             if showsRows {
                 ForEach(section.rows) { row in
                     ExploreRowButton(explore: explore, row: row) { open(row) }
                 }
             }
-        }
-        .padding(.top, IterSpace.sm)
     }
 }
 
@@ -244,12 +227,12 @@ struct ExploreRowButton: View {
     var body: some View {
         Button(action: action) {
             ExploreRowView(row: row, showsDistance: explore.hasLocation)
-                .padding(.horizontal, IterSpace.lg)
                 .frame(minHeight: 56)
-                .background(explore.selectedID == row.id ? IterColor.backgroundModule : Color.clear)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .listRowInsets(EdgeInsets(top: 0, leading: IterSpace.lg, bottom: 0, trailing: IterSpace.lg))
+        .listRowBackground(explore.selectedID == row.id ? Color.primary.opacity(0.08) : Color.clear)
         .onAppear { explore.requestForecast(for: row.id) }
         .contextMenu { ExploreSpotMenu(spot: row.spot, day: row.day ?? model.today(in: row.spot.timeZone)) }
     }
@@ -300,5 +283,41 @@ struct ExploreAskBlock: View {
                 ExploreAskSection(explore: explore).padding(.horizontal, IterSpace.lg).padding(.vertical, IterSpace.sm)
             }
         }
+    }
+}
+
+/// Shares the visible map area as an Apple Maps link; unavailable until the map has loaded.
+struct ExploreShareLink: View {
+    @Bindable var explore: ExploreModel
+
+    var body: some View {
+        if let url {
+            ShareLink(item: url, subject: Text("Explore", comment: "Share subject"),
+                      message: Text("Light spots in this area", comment: "Share message")) {
+                Label(String(localized: "Share this area", comment: "VoiceOver"), systemImage: "square.and.arrow.up")
+            }
+        } else {
+            Button {} label: {
+                Label(String(localized: "Share this area", comment: "VoiceOver"), systemImage: "square.and.arrow.up")
+            }
+            .disabled(true)
+            .accessibilityHint(Text("Available once the map has loaded", comment: "VoiceOver hint"))
+        }
+    }
+
+    /// The visible map area as an Apple Maps link.
+    private var url: URL? {
+        guard let r = explore.visibleRegion else { return nil }
+        var c = URLComponents(string: "https://maps.apple.com/")!
+        c.queryItems = [URLQueryItem(name: "ll", value: String(format: "%.5f,%.5f", r.center.latitude, r.center.longitude)),
+                        URLQueryItem(name: "spn", value: String(format: "%.4f,%.4f", r.latitudeDelta, r.longitudeDelta))]
+        return c.url
+    }
+}
+
+extension View {
+    /// A list row that is content, not a selectable item: no inset, background or separator of its own.
+    func plainListRow() -> some View {
+        listRowInsets(EdgeInsets()).listRowBackground(Color.clear).listRowSeparator(.hidden)
     }
 }

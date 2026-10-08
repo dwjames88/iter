@@ -27,21 +27,6 @@ struct MapControlLabel: View {
     }
 }
 
-/// A round glass button with a VoiceOver label.
-struct RoundGlassButton: View {
-    let systemImage: String
-    let label: String
-    var hint: String?
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) { RoundGlassLabel(systemImage: systemImage) }
-            .buttonStyle(.plain)
-            .accessibilityLabel(label)
-            .accessibilityHint(hint ?? "")
-    }
-}
-
 /// The sheet header: a very large bold title (and an optional quiet line under it), round glass actions trailing.
 struct SheetTitleHeader<Trailing: View>: View {
     let title: String
@@ -65,9 +50,11 @@ struct SheetTitleHeader<Trailing: View>: View {
                 }
             }
             Spacer(minLength: IterSpace.sm)
-            GlassEffectContainer(spacing: IterSpace.sm) {
-                HStack(spacing: IterSpace.sm) { trailing }
-            }
+            HStack(spacing: IterSpace.sm) { trailing }
+                .labelStyle(.iconOnly)
+                .buttonStyle(.glass)
+                .buttonBorderShape(.circle)
+                .controlSize(.large)
         }
         .padding(.horizontal, IterSpace.lg)
         .contentShape(Rectangle())
@@ -83,7 +70,7 @@ struct ChipItem: Identifiable {
     let action: () -> Void
 }
 
-/// A horizontally scrolling row of capsules, 16 pt gutters, clipped at the edges.
+/// A horizontally scrolling row of filter toggles: system button-style toggles in capsules, the accent when on.
 struct ChipRow: View {
     let chips: [ChipItem]
 
@@ -91,21 +78,19 @@ struct ChipRow: View {
         ScrollView(.horizontal) {
             HStack(spacing: IterSpace.sm) {
                 ForEach(chips) { chip in
-                    Button(action: chip.action) {
-                        HStack(spacing: IterSpace.xs) {
-                            if let symbol = chip.symbol { Image(systemName: symbol).font(.footnote) }
-                            Text(chip.title).font(.subheadline.weight(.medium))
+                    Toggle(isOn: Binding(get: { chip.isSelected }, set: { _ in chip.action() })) {
+                        if let symbol = chip.symbol {
+                            Label(chip.title, systemImage: symbol)
+                        } else {
+                            Text(chip.title)
                         }
-                        .padding(.horizontal, IterSpace.md)
-                        .frame(minHeight: 36)
-                        .foregroundStyle(chip.isSelected ? IterColor.onAccent : IterColor.textPrimary.color)
-                        .background(chip.isSelected ? IterColor.accent : IterColor.backgroundModule, in: Capsule())
-                        .contentShape(Capsule())
                     }
-                    .buttonStyle(.plain)
-                    .accessibilityAddTraits(chip.isSelected ? .isSelected : [])
+                    .toggleStyle(.button)
                 }
             }
+            .buttonStyle(.bordered)
+            .buttonBorderShape(.capsule)
+            .tint(IterColor.accent)
             .padding(.horizontal, IterSpace.lg)
         }
         .scrollIndicators(.hidden)

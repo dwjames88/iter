@@ -38,7 +38,8 @@ struct ExploreMoreMenu: View {
             Button(String(localized: "Clear filters", comment: "Menu item")) { explore.filters = .none }
                 .disabled(!explore.filters.isActive)
         } label: {
-            RoundGlassLabel(systemImage: explore.filters.isActive ? "ellipsis.circle.fill" : "ellipsis")
+            Label(String(localized: "Sort and filters", comment: "Explore header menu"),
+                  systemImage: explore.filters.isActive ? "line.3.horizontal.decrease.circle.fill" : "ellipsis")
         }
         .accessibilityLabel(Text("Sort and filters", comment: "Explore header menu"))
         .accessibilityValue(explore.filters.activeCount > 0
