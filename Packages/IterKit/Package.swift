@@ -19,6 +19,7 @@ let package = Package(
         .library(name: "IterServices", targets: ["IterServices"]),
         .library(name: "IterDesign", targets: ["IterDesign"]),
         .library(name: "IterFeatures", targets: ["IterFeatures"]),
+        .library(name: "IterLicensing", targets: ["IterLicensing"]),
         .executable(name: "iter-tokens", targets: ["IterTokensTool"]),
     ],
     targets: [
@@ -36,6 +37,8 @@ let package = Package(
         .target(name: "IterDesign", dependencies: ["IterCore"], swiftSettings: strict),
         // Observable view models shared by every platform's UI.
         .target(name: "IterFeatures", dependencies: ["IterCore", "IterAstro", "IterLight", "IterData", "IterServices"], swiftSettings: strict),
+        // Lemon Squeezy licence keys: API client, Keychain store, offline grace, feature gate. Foundation, Security, CryptoKit only.
+        .target(name: "IterLicensing", swiftSettings: strict),
         // Exports/imports Design/tokens.json (DTCG) and the asset-catalog colour sets.
         .executableTarget(name: "IterTokensTool", dependencies: ["IterDesign"], swiftSettings: strict),
 
@@ -46,5 +49,6 @@ let package = Package(
         .testTarget(name: "IterServicesTests", dependencies: ["IterServices"], resources: [.copy("Fixtures")]),
         .testTarget(name: "IterDesignTests", dependencies: ["IterDesign"]),
         .testTarget(name: "IterFeaturesTests", dependencies: ["IterFeatures"]),
+        .testTarget(name: "IterLicensingTests", dependencies: ["IterLicensing"]),
     ]
 )
