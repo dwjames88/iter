@@ -70,7 +70,7 @@ struct WeatherStatusBanner: View {
             .padding(.horizontal, IterSpace.md)
             .padding(.vertical, IterSpace.sm)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(IterColor.backgroundControl)
+            .background(ControlFill())
             .overlay(alignment: .bottom) { Divider() }
             .accessibilityElement(children: .combine)
         }

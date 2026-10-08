@@ -14,6 +14,7 @@ struct PadExploreScreen: View {
         ZStack(alignment: .topLeading) {
             ExploreMapLayer(explore: explore, leadingInset: Self.columnWidth + IterSpace.lg)
             ExploreBrowser(explore: explore)
+                .environment(\.isOnGlass, true)
                 .padding(.top, IterSpace.lg)
                 .frame(width: Self.columnWidth)
                 .frame(maxHeight: .infinity)

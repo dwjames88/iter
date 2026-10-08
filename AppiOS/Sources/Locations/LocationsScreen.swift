@@ -370,35 +370,19 @@ private struct FolderChips: View {
                 }
                 Button(action: onNew) {
                     Label(String(localized: "New Folder", comment: "Chip"), systemImage: "plus")
-                        .font(IterFont.callout)
-                        .foregroundStyle(IterColor.textSecondary)
-                        .padding(.horizontal, IterSpace.lg)
-                        .frame(minHeight: 44)
-                        .overlay(Capsule().strokeBorder(IterColor.separator, style: StrokeStyle(lineWidth: 1, dash: [4, 3])))
                 }
-                .buttonStyle(.plain)
+                .tint(.secondary)
             }
+            .filterChipStyle()
             .padding(.horizontal, IterSpace.lg)
             .padding(.vertical, IterSpace.xs)
         }
     }
 
     private func chip(_ title: String, symbol: String?, selected: Bool, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack(spacing: IterSpace.xs) {
-                if let symbol { Image(systemName: symbol).accessibilityHidden(true) }
-                Text(title).lineLimit(1)
-            }
-            .font(IterFont.callout)
-            .foregroundStyle(selected ? IterColor.textPrimary : IterColor.textSecondary)
-            .padding(.horizontal, IterSpace.lg)
-            .frame(minHeight: 44)
-            .background(selected ? AnyShapeStyle(IterColor.backgroundModule) : AnyShapeStyle(Color.clear), in: Capsule())
-            .overlay(Capsule().strokeBorder(selected ? IterColor.textSecondary.opacity(0.5) : IterColor.separator, lineWidth: 1))
-        }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(selected ? .isSelected : [])
+        FilterChip(title: title, symbol: symbol, isOn: selected, action: action)
     }
+
 }
 
 // MARK: - Map

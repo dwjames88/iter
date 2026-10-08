@@ -259,7 +259,7 @@ struct SuggestionBanner: View {
         }
         .controlSize(.small)
         .padding(IterSpace.sm)
-        .background(IterColor.backgroundControl, in: RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous))
+        .background(ControlFill(), in: RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous)
             .strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
         .accessibilityElement(children: .contain)

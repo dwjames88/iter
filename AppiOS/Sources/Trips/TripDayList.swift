@@ -52,12 +52,12 @@ struct TripDayList: View {
             }
             if group.hasConflict {
                 DayConflictRow(count: group.conflictCount)
-                    .listRowBackground(IterColor.backgroundModule)
+                    .listRowBackground(Rectangle().fill(ModuleFill()))
             }
             ForEach(group.stops) { entry in
                 StopCard(entry: entry, builder: builder, plan: plan, drive: drives[entry.id]?.0, isDriveIn: drives[entry.id]?.1 ?? false)
                     .id("stop-\(entry.id)")
-                    .listRowBackground(IterColor.backgroundModule)
+                    .listRowBackground(Rectangle().fill(ModuleFill()))
                     .listRowInsets(EdgeInsets(top: IterSpace.sm, leading: IterSpace.lg, bottom: IterSpace.sm, trailing: IterSpace.lg))
             }
             .onMove { move(group, from: $0, to: $1) }
@@ -75,7 +75,7 @@ struct TripDayList: View {
             .buttonStyle(.plain)
             .moveDisabled(true)
             .deleteDisabled(true)
-            .listRowBackground(IterColor.backgroundModule)
+            .listRowBackground(Rectangle().fill(ModuleFill()))
         } header: {
             DayHeader(group: group, plan: plan, isSelected: selectedDay == group.index) {
                 selectedDay = group.index
@@ -187,7 +187,7 @@ private struct SuggestionCard: View {
         }
         .padding(IterSpace.md)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(IterColor.backgroundModule, in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
+        .background(ModuleFill(), in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous).strokeBorder(IterColor.accent.opacity(0.5), lineWidth: IterStroke.hairline))
         .accessibilityElement(children: .contain)
     }
@@ -326,7 +326,7 @@ private struct StopCard: View {
                         .font(IterFont.subheadline)
                         .foregroundStyle(IterColor.textPrimary)
                         .frame(width: IterSize.hitTarget, height: IterSize.hitTarget - IterSpace.sm)
-                        .background(IterColor.backgroundControl, in: Capsule())
+                        .background(ModuleFill(), in: Capsule())
                 }
                 .accessibilityLabel(Text("Move to day", comment: "Edit mode: menu to move a stop to another day"))
             }
@@ -341,7 +341,7 @@ private struct StopCard: View {
             .lineLimit(1)
             .padding(.horizontal, IterSpace.sm)
             .frame(minHeight: IterSize.hitTarget - IterSpace.sm)
-            .background(IterColor.backgroundControl, in: Capsule())
+            .background(ModuleFill(), in: Capsule())
     }
 }
 

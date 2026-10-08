@@ -131,28 +131,16 @@ struct TripsListScreen: View {
                     chip(folder.name, symbol: "folder", value: .folder(folder.id))
                 }
             }
+            .filterChipStyle()
             .padding(.horizontal, IterSpace.lg)
             .padding(.vertical, IterSpace.sm)
         }
     }
 
     private func chip(_ title: String, symbol: String?, value: TripsFilter) -> some View {
-        let selected = filter == value
-        return Button {
+        FilterChip(title: title, symbol: symbol, isOn: filter == value) {
             withAnimation(.snappy) { filter = value }
-        } label: {
-            HStack(spacing: IterSpace.xs) {
-                if let symbol { Image(systemName: symbol).font(IterFont.caption) }
-                Text(title).font(IterFont.subheadline)
-            }
-            .foregroundStyle(selected ? IterColor.onAccent : IterColor.textPrimary.color)
-            .padding(.horizontal, IterSpace.md)
-            .frame(minHeight: IterSize.hitTarget - IterSpace.sm)
-            .background(selected ? IterColor.accent : IterColor.backgroundModule, in: Capsule())
-            .contentShape(Capsule())
         }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
     private func groupHeader(_ group: TripGroup, _ title: String) -> some View {
@@ -338,7 +326,7 @@ private struct TripCardRow: View {
         }
         .padding(IterSpace.lg)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(IterColor.backgroundModule, in: RoundedRectangle(cornerRadius: IterRadius.panel, style: .continuous))
+        .background(ModuleFill(), in: RoundedRectangle(cornerRadius: IterRadius.panel, style: .continuous))
         .contentShape(RoundedRectangle(cornerRadius: IterRadius.panel, style: .continuous))
     }
 
@@ -486,7 +474,7 @@ private struct EmptyTripsState: View {
                                 Image(systemName: "chevron.right").font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
                             }
                             .padding(IterSpace.lg)
-                            .background(IterColor.backgroundModule, in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
+                            .background(ModuleFill(), in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
                         }
                         .buttonStyle(.plain)
                     }

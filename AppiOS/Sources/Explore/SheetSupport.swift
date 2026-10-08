@@ -35,4 +35,8 @@ private struct ScreenBackground: ViewModifier {
 final class PhoneBackdrop {
     /// The Locations tab's spots, as listed (search and filter applied).
     var locations: [SavedItem] = []
+    /// The trip open on the Trips tab, its selected day (nil: every day), and how a tapped stop reaches its list.
+    var trip: TripBuilderModel?
+    var tripDay: Int?
+    var onSelectStop: (UUID) -> Void = { _ in }
 }

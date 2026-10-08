@@ -52,6 +52,8 @@ private struct TripBuilderContent: View {
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
     @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(\.isInFloatingSheet) private var isInFloatingSheet
+    @Environment(PhoneBackdrop.self) private var backdrop: PhoneBackdrop?
 
     @State private var selectedDay: Int?
     @State private var scrollRequest: DayScrollTarget?
@@ -86,9 +88,14 @@ private struct TripBuilderContent: View {
                     }
                 }
             } else {
-                planColumn(showsMap: true)
+                // In the phone's sheet the route is on the map behind it, as Find My's map follows its tabs.
+                planColumn(showsMap: !isInFloatingSheet)
             }
         }
+        .onAppear { publishToBackdrop() }
+        .onDisappear { if backdrop?.trip === builder { backdrop?.trip = nil } }
+        .onChange(of: selectedDay) { backdrop?.tripDay = selectedDay }
+        .onChange(of: backdrop?.tripDay) { _, day in if isInFloatingSheet, day != selectedDay { selectedDay = day } }
         .navigationTitle(plan.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { toolbar }
@@ -141,6 +148,13 @@ private struct TripBuilderContent: View {
         selectedDay = day
         builder.setFocusDay(day)
         if let day { scrollRequest = DayScrollTarget(id: "header-\(day)", token: (scrollRequest?.token ?? 0) + 1) }
+    }
+
+    private func publishToBackdrop() {
+        guard isInFloatingSheet, let backdrop else { return }
+        backdrop.trip = builder
+        backdrop.tripDay = selectedDay
+        backdrop.onSelectStop = { scrollToStop($0) }
     }
 
     private func scrollToStop(_ id: UUID) {

@@ -28,7 +28,7 @@ struct SampleDataLabel: View {
             }
             .padding(IterSpace.sm)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(IterColor.backgroundControl, in: RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous))
+            .background(ControlFill(), in: RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous))
             .overlay(RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous)
                 .strokeBorder(IterColor.warning, lineWidth: IterStroke.thin))
         }

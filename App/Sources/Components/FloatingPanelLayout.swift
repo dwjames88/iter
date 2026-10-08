@@ -27,6 +27,7 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
             map(EdgeInsets(top: topInset, leading: width + 2 * Self.margin, bottom: 0, trailing: 0))
                 .ignoresSafeArea(edges: .top)
             panel
+                .environment(\.isOnGlass, true)
                 .frame(width: width)
                 .frame(maxHeight: .infinity)
                 .clipShape(.rect(cornerRadius: Self.cornerRadius))

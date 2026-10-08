@@ -13,13 +13,16 @@ struct TripRouteMapView: View {
     let builder: TripBuilderModel
     @Binding var selectedDay: Int?
     let onSelectStop: (UUID) -> Void
+    /// Full screen behind the phone's sheet: the sheet's height as the bottom inset, and the map controls top trailing.
+    var backdropInset: CGFloat?
 
     @State private var position: MapCameraPosition
     @State private var selection: UUID?
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
 
-    init(builder: TripBuilderModel, selectedDay: Binding<Int?>, onSelectStop: @escaping (UUID) -> Void) {
+    init(builder: TripBuilderModel, selectedDay: Binding<Int?>, onSelectStop: @escaping (UUID) -> Void, backdropInset: CGFloat? = nil) {
         self.builder = builder
+        self.backdropInset = backdropInset
         _selectedDay = selectedDay
         self.onSelectStop = onSelectStop
         if let region = MapCameraPolicy.fit(builder.fitCoordinates) {
@@ -53,7 +56,17 @@ struct TripRouteMapView: View {
         }
         .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
         .mapControls { MapCompass() }
-        .overlay(alignment: .bottomTrailing) { MapStyleMenu().padding(IterSpace.sm) }
+        .safeAreaPadding(.bottom, backdropInset ?? 0)
+        .overlay(alignment: backdropInset == nil ? .bottomTrailing : .topTrailing) {
+            if backdropInset == nil {
+                MapStyleMenu().padding(IterSpace.sm)
+            } else {
+                MapStyleMenu(isGlass: false)
+                    .glassEffect(.regular.interactive(), in: .capsule)
+                    .padding(.trailing, IterSpace.lg)
+                    .padding(.top, IterSpace.sm)
+            }
+        }
         .onChange(of: selection) { _, id in
             if let id { onSelectStop(id); selection = nil }
         }

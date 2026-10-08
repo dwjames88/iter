@@ -132,10 +132,7 @@ struct ExploreLightPanel: View {
                 }
             }
         }
-        .labelStyle(.iconOnly)
-        .buttonStyle(.glass)
-        .buttonBorderShape(.circle)
-        .controlSize(.large)
+        .buttonStyle(GlassCircleButtonStyle())
         .padding(.horizontal, IterSpace.md)
         .padding(.top, IterSpace.md)
         .frame(maxWidth: .infinity, alignment: .leading)

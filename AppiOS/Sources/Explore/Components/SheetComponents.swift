@@ -70,7 +70,7 @@ struct ChipItem: Identifiable {
     let action: () -> Void
 }
 
-/// A horizontally scrolling row of filter toggles: system button-style toggles in capsules, the accent when on.
+/// A horizontally scrolling row of filter toggles.
 struct ChipRow: View {
     let chips: [ChipItem]
 
@@ -78,22 +78,36 @@ struct ChipRow: View {
         ScrollView(.horizontal) {
             HStack(spacing: IterSpace.sm) {
                 ForEach(chips) { chip in
-                    Toggle(isOn: Binding(get: { chip.isSelected }, set: { _ in chip.action() })) {
-                        if let symbol = chip.symbol {
-                            Label(chip.title, systemImage: symbol)
-                        } else {
-                            Text(chip.title)
-                        }
-                    }
-                    .toggleStyle(.button)
+                    FilterChip(title: chip.title, symbol: chip.symbol, isOn: chip.isSelected, action: chip.action)
                 }
             }
-            .buttonStyle(.bordered)
-            .buttonBorderShape(.capsule)
-            .tint(IterColor.accent)
+            .filterChipStyle()
             .padding(.horizontal, IterSpace.lg)
         }
         .scrollIndicators(.hidden)
+    }
+}
+
+/// One filter: a system button-style toggle. Put a row of them under `.filterChipStyle()`.
+struct FilterChip: View {
+    let title: String
+    var symbol: String?
+    let isOn: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Toggle(isOn: Binding(get: { isOn }, set: { _ in action() })) {
+            if let symbol { Label(title, systemImage: symbol) } else { Text(title) }
+        }
+        .toggleStyle(.button)
+        .lineLimit(1)
+    }
+}
+
+extension View {
+    /// Filter chips as the system draws them: bordered capsules, the accent when on.
+    func filterChipStyle() -> some View {
+        buttonStyle(.bordered).buttonBorderShape(.capsule).tint(IterColor.accent)
     }
 }
 
@@ -109,7 +123,7 @@ struct FactChip: View {
             .foregroundStyle(IterColor.textPrimary)
             .padding(.horizontal, IterSpace.md)
             .frame(minHeight: 32)
-            .background(IterColor.backgroundModule, in: Capsule())
+            .background(ModuleFill(), in: Capsule())
             .lineLimit(1)
     }
 }

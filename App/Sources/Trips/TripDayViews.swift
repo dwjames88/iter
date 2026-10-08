@@ -66,7 +66,7 @@ struct DayContainerBackground: View {
                                    bottomTrailingRadius: position.roundsBottom ? radius : 0,
                                    topTrailingRadius: position.roundsTop ? radius : 0,
                                    style: .continuous)
-                .fill(isHeader ? IterColor.backgroundControl : IterColor.backgroundContent)
+                .fill(isHeader ? AnyShapeStyle(ControlFill()) : AnyShapeStyle(ContentFill()))
             ContainerOutline(position: position, radius: radius, lineWidth: lineWidth)
                 .stroke(selected ? IterColor.accent : IterColor.separator, lineWidth: lineWidth)
             if isHeader {
@@ -244,7 +244,7 @@ private struct OverviewCellView: View {
         }
         .lineLimit(1)
         .padding(IterSpace.sm)
-        .background(isSelected ? IterColor.accent.opacity(0.14) : IterColor.backgroundContent.opacity(1), in: shape)
+        .background(isSelected ? AnyShapeStyle(IterColor.accent.opacity(0.14)) : AnyShapeStyle(ContentFill()), in: shape)
         .overlay(shape.strokeBorder(isSelected ? IterColor.accent : IterColor.separator,
                                     lineWidth: isSelected ? IterStroke.regular : IterStroke.hairline))
         .contentShape(shape)

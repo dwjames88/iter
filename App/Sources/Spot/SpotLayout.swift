@@ -104,7 +104,7 @@ struct ModuleCard<Accessory: View, Content: View>: View {
         .padding(.top, IterGrid.inset)
         .padding(.bottom, flush ? IterSpace.sm : IterGrid.inset)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(IterColor.backgroundModule, in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
+        .background(ModuleFill(), in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
         .accessibilityElement(children: .contain)
     }
 
@@ -118,7 +118,7 @@ struct ModuleCard<Accessory: View, Content: View>: View {
                 content
                     .padding(.vertical, IterSpace.sm)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(IterColor.backgroundModule, in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
+                    .background(ModuleFill(), in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
                     .padding(.horizontal, IterGrid.inset)
             } else {
                 content

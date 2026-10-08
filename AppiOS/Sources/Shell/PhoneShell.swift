@@ -22,6 +22,7 @@ struct PhoneShell: View {
             .sheet(isPresented: sheetPresented) {
                 tabs
                     .environment(\.isInFloatingSheet, true)
+                    .environment(\.isOnGlass, true)
                     .environment(backdrop)
                     .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { sheetHeight = $0 }
                     .presentationDetents([PhoneSheet.peek, .medium, .large], selection: $detent)
@@ -38,7 +39,13 @@ struct PhoneShell: View {
     /// The one map behind the sheet; like Find My's, it shows the current tab's content.
     @ViewBuilder private var map: some View {
         let inset = min(sheetHeight, PhoneSheet.mapInsetLimit)
-        if shell.phoneTab == .locations {
+        if shell.phoneTab == .trips, let trip = backdrop.trip {
+            @Bindable var backdrop = backdrop
+            TripRouteMapView(builder: trip, selectedDay: $backdrop.tripDay, onSelectStop: { backdrop.onSelectStop($0) },
+                             backdropInset: inset)
+                .id(ObjectIdentifier(trip))
+                .ignoresSafeArea(edges: .bottom)
+        } else if shell.phoneTab == .locations {
             LocationsMapHeader(items: backdrop.locations, onOpen: { navigation.open(SpotRoute(spot: $0)) }, backdropInset: inset)
                 .ignoresSafeArea(edges: .bottom)
         } else {
