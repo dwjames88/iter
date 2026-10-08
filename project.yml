@@ -22,7 +22,7 @@ settings:
     ENABLE_HARDENED_RUNTIME: YES
     # Versioning (docs/DISTRIBUTION.md). MARKETING_VERSION is the one place the version lives: semantic, 0.x.y until
     # the first signed release, which is 1.0.0. scripts/bump.sh and scripts/release.sh change it.
-    MARKETING_VERSION: "0.1.0"
+    MARKETING_VERSION: "0.2.0"
     # The build number is the commit count on main, passed in by the scripts (scripts/version.sh). 0 = built
     # outside the scripts (for example from Xcode), so it never outranks a released build.
     CURRENT_PROJECT_VERSION: "0"

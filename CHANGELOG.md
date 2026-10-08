@@ -5,6 +5,8 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-07
+
 ### Fixed
 - **Search results on the map**: after you have moved the map, searching Apple Maps for a place now brings the result into view instead of leaving it off screen.
 - **Drive times after a dropped connection**: if MapKit was throttled or you were offline when a trip loaded, the drive stays an estimate only until the next refresh, then is looked up again; before, the straight-line guess stuck until you reopened the trip.
@@ -53,5 +55,6 @@ First pre-release, for friends to try.
 - No sync between Mac and iPhone yet, and the iPhone app is not part of this release.
 - No Apple Weather yet, so scores use OpenWeather's total cloud forecast.
 
-[Unreleased]: https://github.com/dwjames88/iter/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/dwjames88/iter/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/dwjames88/iter/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/dwjames88/iter/releases/tag/v0.1.0
