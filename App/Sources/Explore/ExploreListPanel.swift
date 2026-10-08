@@ -91,7 +91,7 @@ struct ExploreListPanel: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: IterSpace.sm) {
             HStack(spacing: IterSpace.xs) {
-                Text("^[\(explore.rows.count) place](inflect: true)", comment: "Number of places listed in Explore")
+                Text(InflectedCount.string("place", count: explore.rows.count) { AttributedString(localized: "^[\(explore.rows.count) place](inflect: true)", comment: "Number of places listed in Explore") })
                     .font(IterFont.subheadline)
                 Spacer(minLength: 0)
                 if explore.isLoadingForecasts {

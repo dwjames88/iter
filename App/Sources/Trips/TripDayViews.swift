@@ -250,7 +250,9 @@ private struct OverviewCellView: View {
         .contentShape(shape)
     }
 
-    private var stopsText: String { String(AttributedString(localized: "^[\(cell.stopCount) stop](inflect: true)").characters) }
+    private var stopsText: String {
+        InflectedCount.string("stop", count: cell.stopCount) { AttributedString(localized: "^[\(cell.stopCount) stop](inflect: true)") }
+    }
 
     /// The day's best window as the event unit (symbol, score and start time in one capsule).
     @ViewBuilder private var bestWindow: some View {
@@ -259,20 +261,31 @@ private struct OverviewCellView: View {
         }
     }
 
+    /// The VoiceOver label, built once per cell value (a cell is rebuilt only when its day changes).
+    private static var spoken: [Int: (cell: TripOverviewCell, locale: String, text: String)] = [:]
+
     static func accessibilityText(_ cell: TripOverviewCell) -> Text {
+        let locale = Locale.current.identifier
+        if let hit = spoken[cell.index], hit.cell == cell, hit.locale == locale { return Text(hit.text) }
+        let text = spokenText(cell)
+        spoken[cell.index] = (cell, locale, text)
+        return Text(text)
+    }
+
+    private static func spokenText(_ cell: TripOverviewCell) -> String {
         var parts = [String(localized: "\(TimeText.dayName(index: cell.index)), \(TimeText.longDay(cell.date))", comment: "VoiceOver: an overview cell's day")]
         if cell.stopCount == 0 {
             parts.append(String(localized: "No stops", comment: "VoiceOver: a day with no stops"))
         } else {
-            parts.append(String(AttributedString(localized: "^[\(cell.stopCount) stop](inflect: true)").characters))
+            parts.append(InflectedCount.string("stop", count: cell.stopCount) { AttributedString(localized: "^[\(cell.stopCount) stop](inflect: true)") })
             if let best = cell.bestWindow {
                 parts.append(String(localized: "Best light: \(LightText.accessibilityDescription(best.window)) at \(TimeText.time(best.window.span.start, in: best.zone))",
                                     comment: "VoiceOver: the day's best window and its start time"))
             }
         }
         if cell.hasConflict {
-            parts.append(String(AttributedString(localized: "^[\(cell.conflictCount) conflict](inflect: true)").characters))
+            parts.append(InflectedCount.string("conflict", count: cell.conflictCount) { AttributedString(localized: "^[\(cell.conflictCount) conflict](inflect: true)") })
         }
-        return Text(parts.joined(separator: ", "))
+        return parts.joined(separator: ", ")
     }
 }

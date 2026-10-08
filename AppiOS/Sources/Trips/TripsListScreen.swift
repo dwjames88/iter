@@ -332,7 +332,7 @@ private struct TripCardRow: View {
                 .lineLimit(2)
                 .multilineTextAlignment(.leading)
             status(plan, summary)
-            Text("^[\(summary.stopCount) stop](inflect: true)", comment: "Number of stops on a trip card")
+            Text(InflectedCount.string("stop", count: summary.stopCount) { AttributedString(localized: "^[\(summary.stopCount) stop](inflect: true)", comment: "Number of stops on a trip card") })
                 .font(IterFont.subheadline)
                 .foregroundStyle(IterColor.textSecondary)
         }
@@ -539,7 +539,7 @@ struct NewTripScreenSheet: View {
                     Picker(String(localized: "Days", comment: "New trip field"),
                            selection: Binding(get: { draft.effectiveDayCount }, set: { draft.dayCount = $0 })) {
                         ForEach(1...TripsHomeModel.maximumDayCount, id: \.self) { days in
-                            Text("^[\(days) day](inflect: true)", comment: "Number of days in a trip, e.g. 3 days").tag(days)
+                            Text(InflectedCount.string("day", count: days) { AttributedString(localized: "^[\(days) day](inflect: true)", comment: "Number of days in a trip, e.g. 3 days") }).tag(days)
                         }
                     }
                     .disabled(draft.template != nil)

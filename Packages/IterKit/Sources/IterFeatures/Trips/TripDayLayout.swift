@@ -111,7 +111,7 @@ public struct TripDayGroup: Identifiable, Sendable {
 }
 
 /// One day's cell in the overview strip.
-public struct TripOverviewCell: Identifiable, Sendable {
+public struct TripOverviewCell: Identifiable, Sendable, Equatable {
     public var index: Int
     public var date: LocalDay
     public var stopCount: Int

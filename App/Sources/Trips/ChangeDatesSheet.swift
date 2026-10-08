@@ -34,7 +34,7 @@ struct ChangeDatesSheet: View {
                     .environment(\.timeZone, Self.utc)
                 Picker(String(localized: "Days", comment: "Change dates field"), selection: $dayCount) {
                     ForEach(1...TripsHomeModel.maximumDayCount, id: \.self) { days in
-                        Text("^[\(days) day](inflect: true)", comment: "Number of days in a trip, e.g. 3 days").tag(days)
+                        Text(InflectedCount.string("day", count: days) { AttributedString(localized: "^[\(days) day](inflect: true)", comment: "Number of days in a trip, e.g. 3 days") }).tag(days)
                     }
                 }
                 LabeledContent(String(localized: "Ends", comment: "Change dates field")) {

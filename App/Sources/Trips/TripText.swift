@@ -96,7 +96,7 @@ extension LightText {
     /// "3 stops · 2 h 10 min driving"
     static func dayTotals(stops: Int, drivingSeconds: TimeInterval) -> String {
         guard stops > 0 else { return String(localized: "No stops yet", comment: "Day header for a day with no stops") }
-        let count = String(AttributedString(localized: "^[\(stops) stop](inflect: true)").characters)
+        let count = InflectedCount.string("stop", count: stops) { AttributedString(localized: "^[\(stops) stop](inflect: true)") }
         if drivingSeconds < 60 { return count }
         return String(localized: "\(count) · \(TimeText.duration(drivingSeconds)) driving", comment: "Day total: stops and driving time")
     }

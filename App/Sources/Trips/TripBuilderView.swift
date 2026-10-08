@@ -200,6 +200,10 @@ private struct TripHeader: View {
     @FocusState private var focused: Bool
 
     var body: some View {
+        // Formatted once per pass; the three layouts below share them.
+        let dates = TimeText.dateRange(from: plan.startDay, to: plan.day(plan.dayCount - 1))
+        let size = TimeText.dayAndStops(days: plan.dayCount, stops: plan.stops.count)
+        let driving: String? = builder.totalDriveSeconds >= 60 ? totalDriving : nil
         VStack(alignment: .leading, spacing: IterSpace.xs) {
             TextField(String(localized: "Trip name", comment: "Placeholder"), text: $name)
                 .textFieldStyle(.plain)
@@ -213,28 +217,28 @@ private struct TripHeader: View {
                 .accessibilityLabel(Text("Trip name", comment: "Accessibility label"))
             ViewThatFits(in: .horizontal) {
                 HStack(spacing: IterSpace.sm) {
-                    datesButton
+                    datesButton(dates)
                     Text(verbatim: "·").accessibilityHidden(true)
-                    sizeText
-                    if builder.totalDriveSeconds >= 60 {
+                    Text(size)
+                    if let driving {
                         Text(verbatim: "·").accessibilityHidden(true)
-                        drivingText
+                        Text(driving).monospacedDigit()
                     }
                 }
                 .fixedSize(horizontal: true, vertical: false)
                 // Narrow column: dates and size share a line, the driving total sits under them.
                 VStack(alignment: .leading, spacing: IterSpace.xxs) {
                     HStack(spacing: IterSpace.sm) {
-                        datesButton
+                        datesButton(dates)
                         Text(verbatim: "·").accessibilityHidden(true)
-                        sizeText
+                        Text(size)
                     }
-                    if builder.totalDriveSeconds >= 60 { drivingText }
+                    if let driving { Text(driving).monospacedDigit() }
                 }
                 VStack(alignment: .leading, spacing: IterSpace.xxs) {
-                    datesButton
-                    sizeText
-                    if builder.totalDriveSeconds >= 60 { drivingText }
+                    datesButton(dates)
+                    Text(size)
+                    if let driving { Text(driving).monospacedDigit() }
                 }
             }
             .font(IterFont.subheadline)
@@ -245,17 +249,13 @@ private struct TripHeader: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private var datesButton: some View {
+    private func datesButton(_ title: String) -> some View {
         Button(action: changeDates) {
-            Label(TimeText.dateRange(from: plan.startDay, to: plan.day(plan.dayCount - 1)), systemImage: "calendar")
+            Label(title, systemImage: "calendar")
         }
         .buttonStyle(.borderless)
         .help(Text("Change Dates…", comment: "Tooltip"))
     }
-
-    private var sizeText: some View { Text(TimeText.dayAndStops(days: plan.dayCount, stops: plan.stops.count)) }
-
-    private var drivingText: some View { Text(totalDriving).monospacedDigit() }
 
     private var totalDriving: String {
         let base = String(localized: "\(TimeText.distance(builder.totalDriveMeters)) · \(TimeText.duration(builder.totalDriveSeconds)) driving",
