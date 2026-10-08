@@ -14,6 +14,7 @@ struct MapControlStack: View {
     static var gap: CGFloat { 6 }
 
     var body: some View {
+        GlassEffectContainer(spacing: Self.gap) {
         VStack(spacing: Self.gap) {
             VStack(spacing: 0) {
                 MapStyleMenu()
@@ -34,6 +35,7 @@ struct MapControlStack: View {
             MapZoomStepper(scope: scope)
             MapCompass(scope: scope)
                 .mapControlVisibility(.visible)
+        }
         }
         .padding(IterSpace.sm)
     }

@@ -44,7 +44,7 @@ struct ExploreLightPanel: View {
                             placeHeader
                             actionRow
                             SpotImages(spot: spot)
-                                .clipShape(.rect(cornerRadius: PlaceActionStyle.cornerRadius + 2))
+                                .clipShape(ConcentricRectangle(corners: .concentric(minimum: 12), isUniform: true))
                         }
                         .padding(.horizontal, IterGrid.inset)
                         .padding(.top, IterGrid.inset - IterSpace.xl)
@@ -132,7 +132,9 @@ struct ExploreLightPanel: View {
                 }
             }
         }
-        .buttonStyle(GlassCircleButtonStyle())
+        .labelStyle(.iconOnly)
+        .buttonStyle(.glass)
+        .buttonBorderShape(.circle)
         .padding(.horizontal, IterSpace.md)
         .padding(.top, IterSpace.md)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -202,14 +204,14 @@ struct ExploreLightPanel: View {
             AddToTripMenu(spot: spot)
                 .menuStyle(.button)
                 .menuIndicator(.hidden)
-                .buttonStyle(PlaceActionStyle(isProminent: true))
+                .placeAction(isProminent: true)
             if spot.origin != .user {
-                saveButton.buttonStyle(PlaceActionStyle())
+                saveButton.placeAction()
             }
             Button(action: openInMaps) {
                 Label(LightText.openInMaps, systemImage: "map")
             }
-            .buttonStyle(PlaceActionStyle())
+            .placeAction()
             .help(String(localized: "Open this location in Apple Maps", comment: "Help"))
         }
     }

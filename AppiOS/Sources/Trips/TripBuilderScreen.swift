@@ -261,9 +261,7 @@ private struct TripSummaryBar: View {
         HStack(spacing: IterSpace.sm) {
             VStack(alignment: .leading, spacing: IterSpace.xxs) {
                 Text(TimeText.dateRange(from: plan.startDay, to: plan.day(plan.dayCount - 1)))
-                    .font(IterFont.captionStrong)
-                    .textCase(.uppercase)
-                    .tracking(0.6)
+                    .font(.subheadline)
                     .foregroundStyle(IterColor.textSecondary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)

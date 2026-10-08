@@ -55,7 +55,6 @@ struct IterApp: App {
     var body: some Scene {
         WindowGroup(id: "main") {
             RootView()
-                .tint(IterColor.accent)
                 .environment(model)
                 .environment(\.showsLayoutGrid, showLayoutGrid)
                 .modelContainer(model.store.container)
@@ -71,7 +70,6 @@ struct IterApp: App {
 
         Settings {
             SettingsView()
-                .tint(IterColor.accent)
                 .environment(model)
         }
     }

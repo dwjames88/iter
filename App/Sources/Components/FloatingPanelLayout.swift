@@ -18,9 +18,9 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
         return max(IterSize.listColumnMin, min(panelWidth, totalWidth - 2 * Self.margin - IterSize.detailMin))
     }
 
-    /// Apple Maps' card: 8 pt from the window's edges, corners concentric with the window's.
+    /// Apple Maps' card: 8 pt from the window's edges, its corners concentric with the window's.
     static var margin: CGFloat { IterSpace.sm }
-    static var cornerRadius: CGFloat { 16 }
+    static var shape: ConcentricRectangle { ConcentricRectangle(corners: .concentric(minimum: 12), isUniform: true) }
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -30,8 +30,8 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
                 .environment(\.isOnGlass, true)
                 .frame(width: width)
                 .frame(maxHeight: .infinity)
-                .clipShape(.rect(cornerRadius: Self.cornerRadius))
-                .modifier(PanelMaterial(radius: Self.cornerRadius))
+                .clipShape(Self.shape)
+                .modifier(PanelMaterial(shape: Self.shape))
                 .padding(Self.margin)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -46,15 +46,15 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
 /// sidebar does), so the card is the window's sidebar material under the glass; in dark appearance it lifts the map a
 /// little and keeps its hue, which plain glass does.
 private struct PanelMaterial: ViewModifier {
-    let radius: CGFloat
+    let shape: ConcentricRectangle
     @Environment(\.colorScheme) private var scheme
 
     func body(content: Content) -> some View {
         content
             .background {
-                if scheme == .light { SidebarMaterial().clipShape(.rect(cornerRadius: radius)) }
+                if scheme == .light { SidebarMaterial().clipShape(shape) }
             }
-            .glassEffect(.regular, in: .rect(cornerRadius: radius))
+            .glassEffect(.regular, in: shape)
     }
 }
 

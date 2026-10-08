@@ -76,7 +76,7 @@ struct SpotHeaderView: View {
             AddToTripMenu(spot: spot)
                 .menuStyle(.button)
                 .menuIndicator(.hidden)
-                .buttonStyle(PlaceActionStyle(isProminent: true))
+                .placeAction(isProminent: true)
                 .frame(width: tileWidth)
                 .help(String(localized: "Add this spot to a trip day", comment: "Help"))
             if spot.origin != .user {
@@ -111,7 +111,7 @@ struct SpotHeaderView: View {
             }
             if tileWidth != nil { Spacer(minLength: 0) }
         }
-        .buttonStyle(PlaceActionStyle())
+        .placeAction()
     }
 
     /// The editable record, for the user's own spots.

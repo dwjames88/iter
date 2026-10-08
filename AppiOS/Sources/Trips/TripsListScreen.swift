@@ -145,7 +145,7 @@ struct TripsListScreen: View {
 
     private func groupHeader(_ group: TripGroup, _ title: String) -> some View {
         Label {
-            Text(title).font(IterFont.captionStrong).textCase(.uppercase).tracking(0.6)
+            Text(title).font(.subheadline.weight(.semibold))
         } icon: {
             if let symbol = group.symbol { Image(systemName: symbol).font(IterFont.caption) }
         }
@@ -335,9 +335,7 @@ private struct TripCardRow: View {
             ? "\(Self.short(summary.startDay)) – \(Self.short(summary.endDay))"
             : Self.short(summary.startDay)
         return Text("\(range) · ^[\(summary.dayCount) day](inflect: true)", comment: "Trip card overline: dates and length")
-            .font(IterFont.captionStrong)
-            .textCase(.uppercase)
-            .tracking(0.6)
+            .font(.subheadline)
             .foregroundStyle(IterColor.textSecondary)
             .lineLimit(1)
             .minimumScaleFactor(0.8)

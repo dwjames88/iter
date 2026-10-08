@@ -57,7 +57,6 @@ struct IterIOSApp: App {
     var body: some Scene {
         WindowGroup {
             IOSRootView()
-                .tint(IterColor.accent)
                 .environment(model)
                 .environment(\.showsLayoutGrid, showLayoutGrid)
                 .modelContainer(model.store.container)

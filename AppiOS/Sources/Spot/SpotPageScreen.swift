@@ -84,9 +84,7 @@ struct SpotPageScreen: View {
         return VStack(alignment: .leading, spacing: IterSpace.lg) {
             VStack(alignment: .leading, spacing: IterSpace.xs) {
                 Text([LightText.name(spot.category), spot.locality].filter { !$0.isEmpty }.joined(separator: " · "))
-                    .font(.caption.weight(.semibold))
-                    .textCase(.uppercase)
-                    .tracking(0.8)
+                    .font(.subheadline)
                     .foregroundStyle(IterColor.textSecondary)
                     .lineLimit(2)
                 Text(spot.name)

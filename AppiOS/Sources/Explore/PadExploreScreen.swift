@@ -8,6 +8,8 @@ struct PadExploreScreen: View {
     @Environment(ExploreModel.self) private var explore
 
     private static let columnWidth: CGFloat = 380
+    /// Concentric with the window's corners, as the system's own floating panels are.
+    private static let shape = ConcentricRectangle(corners: .concentric(minimum: 16), isUniform: true)
 
     var body: some View {
         @Bindable var explore = explore
@@ -18,8 +20,8 @@ struct PadExploreScreen: View {
                 .padding(.top, IterSpace.lg)
                 .frame(width: Self.columnWidth)
                 .frame(maxHeight: .infinity)
-                .clipShape(.rect(cornerRadius: 28))
-                .glassEffect(.regular, in: .rect(cornerRadius: 28))
+                .clipShape(Self.shape)
+                .glassEffect(.regular, in: Self.shape)
                 .padding(IterSpace.lg)
         }
         .navigationTitle(String(localized: "Find", comment: "iPad Find screen title"))

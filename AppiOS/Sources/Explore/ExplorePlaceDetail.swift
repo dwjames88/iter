@@ -71,8 +71,7 @@ struct ExplorePlaceDetail: View {
                     SpotImages(spot: spot)
                     DetailSections(app: model, spot: spot, day: day)
                         .id(DetailKey(spotID: spot.id, day: day))
-                    twoUp.padding(.horizontal, IterSpace.lg).id("lower")
-                    footer.padding(.horizontal, IterSpace.lg)
+                    footer.padding(.horizontal, IterSpace.lg).id("lower")
                     Color.clear.frame(height: IterSpace.lg)
                 }
             }
@@ -101,9 +100,7 @@ struct ExplorePlaceDetail: View {
             HStack(alignment: .top, spacing: IterSpace.sm) {
                 VStack(alignment: .leading, spacing: IterSpace.xs) {
                     Text(overline)
-                        .font(.caption.weight(.semibold))
-                        .textCase(.uppercase)
-                        .tracking(0.8)
+                        .font(.subheadline)
                         .foregroundStyle(IterColor.textSecondary)
                         .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
@@ -175,27 +172,7 @@ struct ExplorePlaceDetail: View {
         .scrollBounceBehavior(.basedOnSize)
     }
 
-    // MARK: Two-up and footer
-
-    private var isSaved: Bool {
-        _ = model.store.revision
-        return model.store.isSaved(spotID: spot.id)
-    }
-
-    private var twoUp: some View {
-        HStack(spacing: IterSpace.md) {
-            if spot.origin != .user {
-                Button { model.store.setSaved(spot, !isSaved) } label: {
-                    Label(isSaved ? LightText.saved : LightText.save, systemImage: isSaved ? "bookmark.fill" : "bookmark")
-                }
-                .buttonStyle(.plain)
-                .labelStyle(TwoUpCardLabelStyle(hint: isSaved ? String(localized: "Tap to remove", comment: "Card hint") : String(localized: "Tap to keep it", comment: "Card hint")))
-            }
-            AddToTripMenu(spot: spot)
-                .buttonStyle(.plain)
-                .labelStyle(TwoUpCardLabelStyle(hint: String(localized: "Pick a trip day", comment: "Card hint")))
-        }
-    }
+    // MARK: Footer
 
     private var footer: some View {
         VStack(alignment: .leading, spacing: IterSpace.sm) {
@@ -219,60 +196,34 @@ struct ExplorePlaceDetail: View {
 
     // MARK: Actions
 
-    /// The place card's action row, as in Maps: Add to Trip is the main action; Save, Open in Maps and Share beside it.
+    /// The place card's action row, as in Maps: Add to Trip is the main action; Save, Share and More beside it.
     private var actionRow: some View {
         HStack(spacing: IterSpace.sm) {
             AddToTripMenu(spot: spot)
-                .buttonStyle(PlaceActionStyle(isProminent: true))
+                .placeAction(isProminent: true)
             if spot.origin != .user {
                 let saved = model.store.revision >= 0 && model.store.isSaved(spotID: spot.id)
                 Button { model.store.setSaved(spot, !saved) } label: {
                     Label(saved ? LightText.saved : LightText.save, systemImage: saved ? "bookmark.fill" : "bookmark")
                 }
+                .placeAction()
             }
-            Button { ExploreActions.openInMaps(spot) } label: { Label(LightText.openInMaps, systemImage: "map") }
             ShareLink(item: SpotHeaderView.shareURL(for: spot), subject: Text(spot.name), message: Text(SpotHeaderView.shareMessage(for: spot))) {
                 Label(LightText.share, systemImage: "square.and.arrow.up")
             }
-        }
-        .buttonStyle(PlaceActionStyle())
-    }
-}
-
-/// Share, Open in Maps, More: the floating glass pill shared by the panel and the spot page.
-struct SpotActionPill: View {
-    @Environment(AppModel.self) private var model
-    @Environment(AppNavigation.self) private var navigation
-    let spot: Spot
-    var day: LocalDay?
-
-    var body: some View {
-        ActionPill {
-            ShareLink(item: SpotHeaderView.shareURL(for: spot), subject: Text(spot.name), message: Text(SpotHeaderView.shareMessage(for: spot))) {
-                PillIconLabel(systemImage: "square.and.arrow.up")
-            }
-            .accessibilityLabel(LightText.share)
-            Button { ExploreActions.openInMaps(spot) } label: { PillIconLabel(systemImage: "map") }
-                .accessibilityLabel(LightText.openInMaps)
+            .placeAction()
             Menu {
-                if spot.origin != .user {
-                    let saved = model.store.revision >= 0 && model.store.isSaved(spotID: spot.id)
-                    Button { model.store.setSaved(spot, !saved) } label: {
-                        Label(saved ? LightText.saved : LightText.save, systemImage: saved ? "bookmark.fill" : "bookmark")
-                    }
-                }
+                Button { ExploreActions.openInMaps(spot) } label: { Label(LightText.openInMaps, systemImage: "map") }
                 Button { ExploreActions.copyCoordinates(spot) } label: {
-                    Label(String(localized: "Copy coordinates", comment: "Menu item"), systemImage: "doc.on.doc")
+                    Label(String(localized: "Copy Coordinates", comment: "Menu item"), systemImage: "doc.on.doc")
                 }
-                if let day {
-                    Button { ExploreActions.open(spot, day: day, navigation: navigation) } label: {
-                        Label(String(localized: "Show full page", comment: "Menu item"), systemImage: "arrow.right.circle")
-                    }
+                Button { ExploreActions.open(spot, day: row.day ?? day, navigation: navigation) } label: {
+                    Label(String(localized: "Show Full Page", comment: "Menu item"), systemImage: "arrow.right.circle")
                 }
             } label: {
-                PillIconLabel(systemImage: "ellipsis")
+                Label(String(localized: "More", comment: "Place card action: more actions"), systemImage: "ellipsis")
             }
-            .accessibilityLabel(Text("More", comment: "VoiceOver: more actions"))
+            .placeAction()
         }
     }
 }

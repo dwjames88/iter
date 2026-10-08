@@ -57,6 +57,7 @@ struct ExploreMapLayer: View {
 
     private var controls: some View {
         // Map style and your location share one glass capsule, as in Maps.
+        GlassEffectContainer {
         VStack(spacing: 0) {
             MapStyleMenu(isGlass: false)
             Button { locate() } label: { MapControlLabel(systemImage: "location") }
@@ -65,6 +66,7 @@ struct ExploreMapLayer: View {
                 .accessibilityHint(app.location.coordinate == nil ? Text("Asks to use your location", comment: "VoiceOver hint") : Text(verbatim: ""))
         }
         .glassEffect(.regular.interactive(), in: .capsule)
+        }
         .padding(.trailing, IterSpace.lg)
         .padding(.top, IterSpace.sm)
     }
