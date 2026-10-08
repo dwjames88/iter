@@ -8,9 +8,9 @@ import IterFeatures
 import IterServices
 
 /// The search field's suggestions at the top of the list: an "Apple Maps" group and, only when the text reads
-/// like a request, an "Ask Iter" group (`SearchSuggestions`). Return runs the Apple Maps row, which
-/// alone carries the return glyph; every row is a button. An Ask the device
-/// cannot run stays, quiet and disabled, with the reason.
+/// like a request, an Ask row with no header of its own (its sparkle and "Ask Iter: …" title are the label;
+/// `SearchSuggestions`). Return runs the Apple Maps row, which alone carries the return glyph; every row is a
+/// button. An Ask the device cannot run stays, quiet and disabled, with the reason.
 struct ExploreSuggestionsView: View {
     let suggestions: [SearchSuggestion]
     let action: (SearchSuggestion) -> Void
@@ -19,10 +19,12 @@ struct ExploreSuggestionsView: View {
         VStack(alignment: .leading, spacing: IterSpace.sm) {
             ForEach(suggestions) { suggestion in
                 VStack(alignment: .leading, spacing: IterSpace.xs) {
-                    Text(LightText.suggestionGroup(suggestion))
-                        .font(IterFont.moduleTitle)
-                        .foregroundStyle(IterColor.textSecondary)
-                        .accessibilityAddTraits(.isHeader)
+                    if case .appleMaps = suggestion.kind {
+                        Text(LightText.suggestionGroup(suggestion))
+                            .font(IterFont.moduleTitle)
+                            .foregroundStyle(IterColor.textSecondary)
+                            .accessibilityAddTraits(.isHeader)
+                    }
                     ExploreSuggestionRow(suggestion: suggestion, runsOnReturn: suggestion.isTop) { action(suggestion) }
                 }
             }
