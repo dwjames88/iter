@@ -1,5 +1,6 @@
 import Testing
 import Foundation
+import Synchronization
 import IterCore
 @testable import IterServices
 
@@ -111,5 +112,148 @@ private func map(_ json: String) throws -> Forecast {
     @Test func theFixtureErrorBodyIs401() async {
         let rig = Rig(transport: FakeTransport { _ in (401, WeatherFixture.data("openweather-error-401.json")) })
         do { _ = try await rig.openWeather().forecast(for: moabSpot) } catch { #expect(error as? WeatherError == .keyRejected(.openWeather)) }
+    }
+}
+
+@Suite("Windy audit") struct WindyAuditTests {
+    private func body(_ ts: [Double], _ series: [String: [Any]], units: [String: String] = [:]) -> Data {
+        var o: [String: Any] = ["ts": ts, "units": units]
+        for (k, v) in series { o[k] = v }
+        return WeatherFixture.encode(o)
+    }
+    private func map(_ data: Data, model: WindyModel = .gfs) throws -> Forecast {
+        try WindyMapping.map(data, coordinate: moabSpot, model: model, fetchedAt: fetched).forecast
+    }
+    private let base = 1_595_246_400_000.0     // 2020-07-20 12:00 UTC
+
+    @Test func stepsOffTheHourStillGiveWholeUTCHours() throws {
+        // Steps at 12:30, 15:30, 18:30: hours run 13:00 to 18:00, each at a whole hour, interpolated between the steps.
+        let ts = [base + 1_800_000, base + 12_600_000, base + 23_400_000]
+        let f = try map(body(ts, ["lclouds-surface": [0, 30, 60], "mclouds-surface": [0, 0, 0], "hclouds-surface": [0, 0, 0]],
+                             units: ["lclouds-surface": "%", "mclouds-surface": "%", "hclouds-surface": "%"]))
+        #expect(f.hours.map(\.date.timeIntervalSince1970) == (13...18).map { 1_595_203_200.0 + Double($0) * 3600 })
+        #expect(abs(f.hours[0].cloudLow! - 0.05) < 1e-9)            // 30 minutes into a 3 h step, a sixth of 30 %
+        #expect(f.hours.allSatisfy { $0.resolution == .interpolated })
+    }
+
+    @Test func windUnitsComeFromTheUnitsObject() throws {
+        let ts = [base, base + 3_600_000]
+        let layers: [String: [Any]] = ["lclouds-surface": [10, 10], "mclouds-surface": [10, 10], "hclouds-surface": [10, 10]]
+        let pct = ["lclouds-surface": "%", "mclouds-surface": "%", "hclouds-surface": "%"]
+        func wind(_ unit: String, u: Double, v: Double) throws -> Double {
+            var s = layers
+            s["wind_u-surface"] = [u, u]; s["wind_v-surface"] = [v, v]
+            return try map(body(ts, s, units: pct.merging(["wind_u-surface": unit, "wind_v-surface": unit]) { $1 })).hours[0].windSpeedKph
+        }
+        #expect(abs(try wind("m*s-1", u: 3, v: 4) - 18) < 1e-9)
+        #expect(abs(try wind("kt", u: 3, v: 4) - 5 * 1.852) < 1e-9)
+        #expect(abs(try wind("km/h", u: 3, v: 4) - 5) < 1e-9)
+        // No wind series at all, or an unknown unit: reads 0 (the contract keeps wind non-optional), gust stays nil.
+        #expect(try map(body(ts, layers, units: pct)).hours[0].windSpeedKph == 0)
+        #expect(try wind("parsecs", u: 3, v: 4) == 0)
+        #expect(try map(body(ts, layers, units: pct)).hours[0].windGustKph == nil)
+    }
+
+    @Test func temperatureUnitsAndMissingSeries() throws {
+        let ts = [base, base + 3_600_000]
+        var s: [String: [Any]] = ["lclouds-surface": [10, 10], "mclouds-surface": [10, 10], "hclouds-surface": [10, 10], "temp-surface": [293.15, 293.15]]
+        let pct = ["lclouds-surface": "%", "mclouds-surface": "%", "hclouds-surface": "%"]
+        #expect(abs(try map(body(ts, s, units: pct.merging(["temp-surface": "K"]) { $1 })).hours[0].temperatureC - 20) < 1e-9)
+        s["temp-surface"] = [68, 68]
+        #expect(abs(try map(body(ts, s, units: pct.merging(["temp-surface": "°F"]) { $1 })).hours[0].temperatureC - 20) < 1e-9)
+        s["temp-surface"] = nil
+        let none = try map(body(ts, s, units: pct)).hours[0]
+        #expect(none.temperatureC == 0 && none.humidity == 0 && none.visibilityMeters == nil && none.precipitationMm == nil)
+    }
+
+    @Test func aSeriesOfTheWrongLengthIsIgnoredNotMisaligned() throws {
+        let ts = [base, base + 3_600_000, base + 7_200_000]
+        let f = try map(body(ts, ["lclouds-surface": [10, 10, 10], "mclouds-surface": [10, 10, 10], "hclouds-surface": [10, 10, 10], "temp-surface": [280, 281]],
+                             units: ["lclouds-surface": "%", "mclouds-surface": "%", "hclouds-surface": "%", "temp-surface": "K"]))
+        #expect(f.hours.count == 3 && f.hours.allSatisfy { $0.temperatureC == 0 })
+    }
+
+    @Test func unorderedOrDuplicateStepsAreMalformed() {
+        for ts in [[base, base], [base + 3_600_000, base]] {
+            #expect(throws: WindyMapping.MappingError.malformed) {
+                try WindyMapping.map(body(ts, ["lclouds-surface": [1, 1]]), coordinate: moabSpot, model: .gfs, fetchedAt: fetched)
+            }
+        }
+    }
+
+    @Test func aTestingKeyCallsOnceThenRefusesAndCachesNothing() async {
+        let rig = Rig(transport: FakeTransport { _ in (200, WeatherFixture.data("windy-gfs-documented-schema.json")) })
+        let s = rig.windy(keyType: .testing)
+        for _ in 0..<2 {
+            await #expect(throws: WeatherError.testingKey(.windy)) { try await s.forecast(for: moabSpot) }
+        }
+        #expect(rig.transport.callCount == 2)      // refused after the call, so nothing was cached to serve the second
+        let ok = try? await rig.windy(keyType: .professional).forecast(for: moabSpot)
+        #expect(ok?.source == .windy)
+    }
+}
+
+@Suite("API keys audit") struct APIKeyAuditTests {
+    /// A store whose Keychain is locked or denied: reads find nothing, writes throw.
+    private struct DeniedStore: APIKeyStore {
+        func key(for source: ForecastSource) -> String? { nil }
+        func setKey(_ key: String, for source: ForecastSource) throws { throw KeychainError(status: errSecInteractionNotAllowed) }
+        func removeKey(for source: ForecastSource) throws { throw KeychainError(status: errSecAuthFailed) }
+    }
+
+    @Test func pastedWhitespaceAndNewlinesAreTrimmedFromEverySource() {
+        let store = InMemoryAPIKeyStore([.openWeather: "  stored\n"])
+        func resolver(env: String? = nil, arg: String? = nil) -> APIKeyResolver {
+            APIKeyResolver(store: store, environment: { env.map { ["ITER_OPENWEATHER_KEY": $0] } ?? [:] }, launchArgument: { _ in arg })
+        }
+        #expect(resolver(env: "\tenv \r\n").resolve(.openWeather)?.value == "env")
+        #expect(resolver(arg: " arg\n").resolve(.openWeather)?.value == "arg")
+        #expect(resolver().resolve(.openWeather)?.value == "stored")
+    }
+
+    @Test func aBlankHigherSourceFallsThroughToTheNext() {
+        let store = InMemoryAPIKeyStore([.windy: "kc"])
+        let r = APIKeyResolver(store: store, environment: { ["ITER_WINDY_KEY": " \n"] }, launchArgument: { _ in "" })
+        let key = r.resolve(.windy)
+        #expect(key?.value == "kc" && key?.origin == .keychain)
+        #expect(r.resolve(.appleWeather) == nil && r.resolve(.sample) == nil)
+    }
+
+    @Test func aDeniedKeychainReadsAsNoKeyAndTheServiceAsksForOne() async {
+        let r = APIKeyResolver(store: DeniedStore(), environment: { [:] }, launchArgument: { _ in nil })
+        #expect(r.resolve(.openWeather) == nil)
+        let rig = Rig()
+        do { _ = try await rig.openWeather(keys: r).forecast(for: moabSpot) } catch { #expect(error as? WeatherError == .missingKey(.openWeather)) }
+        #expect(rig.transport.callCount == 0)
+    }
+
+    @Test func keychainFailuresCarryAStatusAndNeverAKey() {
+        let e = KeychainError(status: errSecInteractionNotAllowed)
+        #expect(!"\(e)".contains(secretKey) && e.status == errSecInteractionNotAllowed)
+        let resolved = ResolvedAPIKey(value: secretKey, origin: .environment)
+        #expect(!"\(resolved)".contains(secretKey) && !String(reflecting: resolved).contains(secretKey))
+    }
+}
+
+@Suite("Router audit") struct RouterAuditTests {
+    @Test func aCancelledProviderStopsTheRouterWithoutTryingTheFallback() async {
+        struct Cancelling: WeatherProviding {
+            let source = ForecastSource.openWeather
+            func forecast(for coordinate: Coordinate) async throws -> Forecast { throw CancellationError() }
+            func attribution() async -> WeatherAttributionInfo? { nil }
+        }
+        let fallback = StubProvider(.windy, .success(fetched))
+        let router = WeatherRouter(providers: [Cancelling(), fallback])
+        await #expect(throws: CancellationError.self) { try await router.forecast(for: moabSpot) }
+        #expect(fallback.callCount == 0)
+    }
+
+    @Test func theObserverHearsEveryAttemptInOrder() async throws {
+        let log = Mutex<[String]>([])
+        let router = WeatherRouter(providers: [StubProvider(.openWeather, .failure(.offline(.openWeather))), StubProvider(.windy, .success(fetched))]) { source, result in
+            log.withLock { $0.append("\(source.rawValue):\((try? result.get()) != nil)") }
+        }
+        let f = try await router.forecast(for: moabSpot)
+        #expect(log.withLock { $0 } == ["openWeather:false", "windy:true"] && f.fallbackFrom == [.openWeather])
     }
 }
