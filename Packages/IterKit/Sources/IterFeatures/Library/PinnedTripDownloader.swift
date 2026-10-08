@@ -204,11 +204,13 @@ public final class PinnedTripDownloader {
             let encode = packs != nil
             await limited(requests, limit: 2, work: { request -> ImageOutcome in
                 let found = await imagery.images(for: request)
-                let entries = found.map { image -> (info: OfflinePack.Image, data: Data?) in
+                var entries: [(info: OfflinePack.Image, data: Data?)] = []
+                for image in found {
                     let info = OfflinePack.Image(fileName: image.key.fileName, spotID: request.spotID, source: image.source,
                                                  coordinate: request.coordinate, pointWidth: request.pointSize.width,
                                                  pointHeight: request.pointSize.height, scale: Double(request.scale))
-                    return (info, encode ? Self.png(image.image) : nil)
+                    // PNG encoding is CPU work (tens of milliseconds per card image): off the main actor.
+                    entries.append((info, encode ? await Self.png(image.image) : nil))
                 }
                 return ImageOutcome(request: request, images: entries)
             }, result: { outcome in
@@ -249,7 +251,7 @@ public final class PinnedTripDownloader {
         let pack = OfflinePack(tripID: tripID, savedAt: now(), tripUpdatedAt: tripUpdatedAt, spots: spots,
                                forecasts: mergedForecasts, legs: orderedLegs, images: orderedImages, failures: failures)
         do {
-            try packs?.write(pack, images: imageData)
+            if let packs { try await Self.write(pack, images: imageData, to: packs) }
         } catch {
             log.error("offline: could not write pack for \(plan.name, privacy: .public): \(String(describing: error), privacy: .public)")
             return finishRun(tripID, token, status: .failed("Could not save the offline copy."))
@@ -291,7 +293,12 @@ public final class PinnedTripDownloader {
         }
     }
 
-    private nonisolated static func png(_ image: CGImage) -> Data? {
+    /// Disk writes (many PNGs, then the JSON) off the main actor.
+    @concurrent private static func write(_ pack: OfflinePack, images: [String: Data], to store: OfflinePackStore) async throws {
+        try store.write(pack, images: images)
+    }
+
+    @concurrent private static func png(_ image: CGImage) async -> Data? {
         let data = NSMutableData()
         guard let destination = CGImageDestinationCreateWithData(data, UTType.png.identifier as CFString, 1, nil) else { return nil }
         CGImageDestinationAddImage(destination, image, nil)
