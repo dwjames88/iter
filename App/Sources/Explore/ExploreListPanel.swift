@@ -88,25 +88,24 @@ struct ExploreListPanel: View {
     // MARK: Header
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: IterSpace.sm) {
-            HStack(spacing: IterSpace.xs) {
-                Text(InflectedCount.string("place", count: explore.rows.count) { AttributedString(localized: "^[\(explore.rows.count) place](inflect: true)", comment: "Number of places listed in Explore") })
-                    .font(IterFont.subheadline)
-                Spacer(minLength: 0)
+        VStack(alignment: .leading, spacing: 0) {
+            FloatingPanelHeader(title: String(localized: "Explore", comment: "Window title"),
+                                subtitle: Text(InflectedCount.string("place", count: explore.rows.count) { AttributedString(localized: "^[\(explore.rows.count) place](inflect: true)", comment: "Number of places listed in Explore") })) {
                 if explore.isLoadingForecasts {
                     ProgressView().controlSize(.small)
                         .help(String(localized: "Loading forecasts", comment: "Tooltip on the progress indicator"))
                 }
                 optionsMenu
             }
+            VStack(alignment: .leading, spacing: IterSpace.sm) {
+                if explore.hasSampleScores { SampleDataLabel(style: .inline) }
+                searchStatus
+            }
             .font(IterFont.subheadline)
             .foregroundStyle(IterColor.textSecondary)
-
-            if explore.hasSampleScores { SampleDataLabel(style: .inline) }
-            searchStatus
+            .padding(.horizontal, IterSpace.lg)
+            .padding(.bottom, IterSpace.sm)
         }
-        .padding(.horizontal, IterSpace.md)
-        .padding(.vertical, IterSpace.sm)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
@@ -158,8 +157,7 @@ struct ExploreListPanel: View {
             .accessibilityValue(count > 0 ? Text("\(count) filters active", comment: "VoiceOver: number of active filters") : Text("No filters active", comment: "VoiceOver"))
         }
         .menuStyle(.button)
-        .buttonStyle(.borderless)
-        .menuIndicator(.hidden)
+        .buttonBorderShape(explore.filters.activeCount > 0 ? .capsule : .circle)
         .fixedSize()
         .help(String(localized: "Sort the list and filter by category, what a spot is known for, and source", comment: "Tooltip"))
     }

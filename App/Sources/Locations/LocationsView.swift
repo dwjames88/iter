@@ -41,12 +41,12 @@ struct LocationsView: View {
                 } map: { insets in
                     LocationsMap(items: shown, selection: $selection, insets: insets)
                 }
-                .searchable(text: $query, placement: .toolbar, prompt: Text("Search locations", comment: "Search field prompt"))
-                .toolbar { ToolbarItem { sortMenu } }
+                .searchable(text: $query, placement: .sidebar, prompt: Text("Search locations", comment: "Search field prompt"))
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationTitle(title)
+        .toolbar(removing: .title)
         .sheet(item: $editing) { record in
             SpotEditorSheet(mode: .edit(record))
         }
@@ -110,6 +110,15 @@ struct LocationsView: View {
     // MARK: List
 
     private func list(_ shown: [SavedItem]) -> some View {
+        VStack(spacing: 0) {
+            FloatingPanelHeader(title: title, subtitle: Text("\(shown.count) spots", comment: "Locations count under the title")) {
+                sortMenu
+            }
+            listBody(shown)
+        }
+    }
+
+    private func listBody(_ shown: [SavedItem]) -> some View {
         List(selection: $selection) {
             ForEach(shown) { item in
                 SavedRow(item: item)
@@ -141,9 +150,6 @@ struct LocationsView: View {
             VStack(spacing: 0) {
                 Divider()
                 HStack {
-                    Text("\(shown.count) spots", comment: "Locations count footer")
-                        .font(IterFont.caption)
-                        .foregroundStyle(IterColor.textSecondary)
                     Spacer()
                     ForecastSourceLines(app: model, coordinates: shown.map(\.spot.coordinate))
                 }

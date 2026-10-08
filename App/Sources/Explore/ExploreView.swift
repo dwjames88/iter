@@ -69,7 +69,8 @@ private struct ExploreContent: View {
             ExploreMapPane(explore: explore, insets: insets)
         }
         .navigationTitle(Text("Explore", comment: "Window title"))
-        .searchable(text: $explore.query, placement: .toolbar,
+        .toolbar(removing: .title)
+        .searchable(text: $explore.query, placement: .sidebar,
                     prompt: Text("Search places or ask Iter", comment: "Explore search field prompt: one field for place names and requests"))
         .searchFocused($searchFocused)
         .onSubmit(of: .search) { explore.submitSearch() }
