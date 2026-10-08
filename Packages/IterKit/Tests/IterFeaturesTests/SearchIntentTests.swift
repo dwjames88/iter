@@ -3,7 +3,9 @@ import Testing
 
 @Suite struct SearchIntentTests {
     @Test(arguments: ["Portland", "Mesa Arch", "Yosemite Valley", "Cannon Beach Oregon", "Moab", "Horseshoe Bend",
-                      "Mount Rainier National Park", "Valley of the Gods", "San Francisco, CA", "Zürich"])
+                      "Mount Rainier National Park", "Valley of the Gods", "San Francisco, CA", "Zürich",
+                      "Great Smoky Mountains National Park", "Nearby Lake", "Fortress Rock", "Withrow", "Spotsylvania",
+                      "Grand Teton National Park Wyoming"])
     func placeNamesStayPlaces(_ query: String) {
         #expect(SearchIntent.classify(query) == .place)
     }
@@ -14,10 +16,31 @@ import Testing
         #expect(SearchIntent.classify(query) == .ask)
     }
 
-    @Test func fiveWordsIsAnAskFourIsNot() {
-        #expect(SearchIntent.classify("one two three four") == .place)
-        #expect(SearchIntent.classify("one two three four five") == .ask)
-        #expect(SearchIntent.classify("  one   two three\tfour\nfive ") == .ask)
+    @Test func wordCountAloneNeverAsks() {
+        #expect(SearchIntent.classify("one two three four five") == .place)
+        #expect(SearchIntent.classify("  Great   Smoky Mountains\tNational\nPark ") == .place)
+        #expect(SearchIntent.classify("a b c d e f g h i j") == .place)
+    }
+
+    @Test(arguments: ["Hoh Rain Forest", "Pacific Coast", "Misty Fjords", "Golden Hour Point", "Blue Hour Bay", "Milky Way Lake",
+                      "Sunrise Point", "Sunset Cliffs", "Foggy Bottom", "Fog Lake", "Near Island", "Lakes with views", "Parks for kids",
+                      "Within Reach", "Hours Creek", "Drive Thru Tree"])
+    func keywordsAnywhereAsk(_ query: String) {
+        #expect(SearchIntent.classify(query) == .ask)
+    }
+
+    @Test(arguments: ["Find", "Show waterfalls", "take a drive", "Help", "give ideas", "Suggest", "Plan a trip", "Shoot Moab",
+                      "Photograph arches", "See Moab", "Watch the sunrise", "Catch the light", "Explore Utah", "Visit Zion",
+                      "Hike Angels Landing", "Go west", "Get lost", "Want arches", "Need fog", "Chase storms"])
+    func verbOpenersAsk(_ query: String) {
+        #expect(SearchIntent.classify(query) == .ask)
+    }
+
+    @Test func verbsOnlyCountAsTheFirstWord() {
+        #expect(SearchIntent.classify("Moab Go Karts") == .place)
+        #expect(SearchIntent.classify("Seeley Lake") == .place)
+        #expect(SearchIntent.classify("Gettysburg") == .place)
+        #expect(SearchIntent.classify("Planet Hollywood") == .place)
     }
 
     @Test func aQuestionMarkAlwaysAsks() {
@@ -50,6 +73,12 @@ import Testing
 
     @Test func markersNeedAWordBoundary() {
         #expect(SearchIntent.classify("Nearly Me") == .place)
+        #expect(SearchIntent.classify("Nearby Lake") == .place)
+        #expect(SearchIntent.classify("Fortress Rock") == .place)
+        #expect(SearchIntent.classify("Withrow Moraine") == .place)
+        #expect(SearchIntent.classify("Forestville") == .place)
+        #expect(SearchIntent.classify("Coastal Trail") == .place)
+        #expect(SearchIntent.classify("Driveway Rock") == .place)
         #expect(SearchIntent.classify("Forsunrise") == .place)
     }
 

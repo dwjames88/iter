@@ -20,17 +20,24 @@ extension ExploreModel {
     /// The Ask section has something to draw: stages, a failure, or results.
     public var hasAskContent: Bool { askModel.state != .idle }
 
-    /// What the field offers for its text, ranked; empty while the field is empty or the chosen action is already
-    /// running or shown for that text (an Apple Maps search under way or done, an ask running or shown).
+    /// What the field offers for its text: the Apple Maps row until its search is running or shown for that text, and
+    /// (for request-like text only) the Ask row until an ask for that text is running or shown. Empty while the field
+    /// is empty.
     public var searchSuggestions: [SearchSuggestion] {
         let text = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return [] }
-        if askModel.isRunning || (askModel.state != .idle && askModel.submittedRequest == text) { return [] }
+        let askBusy = askModel.isRunning || (askModel.state != .idle && askModel.submittedRequest == text)
+        var mapsBusy = false
         switch searchState {
-        case .searching(let q), .failed(let q), .finished(let q, _): if q == text { return [] }
+        case .searching(let q), .failed(let q), .finished(let q, _): mapsBusy = q == text
         case .idle: break
         }
-        return SearchSuggestions.make(query: text, askAvailability: askAvailability)
+        return SearchSuggestions.make(query: text, askAvailability: askAvailability).filter { suggestion in
+            switch suggestion.kind {
+            case .appleMaps: !mapsBusy
+            case .ask: !askBusy
+            }
+        }
     }
 
     /// Runs one suggestion. An unavailable Ask does nothing.

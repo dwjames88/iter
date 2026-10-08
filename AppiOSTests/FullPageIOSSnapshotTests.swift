@@ -11,7 +11,8 @@ import IterFeatures
 @testable import Iter
 
 private struct FPSearch: PlaceSearching {
-    func search(_ query: String, near region: GeoRegion?) async throws -> [PlaceResult] { [] }
+    var results: [PlaceResult] = []
+    func search(_ query: String, near region: GeoRegion?) async throws -> [PlaceResult] { results }
     func pointsOfInterest(near center: Coordinate, radiusMeters: Double, categories: [String]) async throws -> [PlaceResult] { [] }
 }
 
@@ -27,17 +28,22 @@ private struct FPDrives: DriveTimeProviding {
     func drive(from a: Coordinate, to b: Coordinate) async throws -> DriveLeg { DriveLeg.estimate(from: a, to: b) }
 }
 
+private struct FPScout: Scouting {
+    func availability() -> ScoutAvailability { .available }
+    func scout(_ request: String, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] { [] }
+}
+
 private let fpNow = LocalDay(year: 2026, month: 10, day: 6).at(hour: 10, in: TimeZone(identifier: "America/Denver")!)
 private let fullPageEnabled = ProcessInfo.processInfo.environment["ITER_SNAPSHOTS"] == "1"
 
-@MainActor private func makeSampleModel() -> AppModel {
+@MainActor private func makeSampleModel(search: FPSearch = FPSearch(), scout: (any Scouting)? = nil) -> AppModel {
     let store = IterStore(container: try! IterSchema.makeContainer(inMemory: true))
     let defaults = UserDefaults(suiteName: "IterFullPageIOS-\(UUID().uuidString)")!
     defaults.set(true, forKey: AppModel.sampleDataKey)
     let clock: @Sendable () -> Date = { fpNow }
     let sample = CachedWeatherService(wrapping: SampleWeatherService(now: clock))
-    return AppModel(store: store, weather: sample, search: FPSearch(), geocoder: FPGeocoder(), drives: FPDrives(),
-                    scout: nil, location: UserLocationModel(), sampleWeather: sample, defaults: defaults, now: { fpNow })
+    return AppModel(store: store, weather: sample, search: search, geocoder: FPGeocoder(), drives: FPDrives(),
+                    scout: scout, location: UserLocationModel(), sampleWeather: sample, defaults: defaults, now: { fpNow })
 }
 
 /// Whole iPhone pages (402 pt wide, 3x), offscreen, light and dark. Only with `ITER_SNAPSHOTS=1`; files go to `ITER_SNAPSHOT_DIR`.
@@ -62,12 +68,13 @@ private let fullPageEnabled = ProcessInfo.processInfo.environment["ITER_SNAPSHOT
     }
 
     /// `height` nil: fit the window to the tallest scroll content.
-    private func render<V: View>(_ name: String, height: CGFloat?, settle: Duration = .seconds(2), @ViewBuilder _ content: () -> V) async throws {
+    private func render<V: View>(_ name: String, height: CGFloat?, settle: Duration = .seconds(2), model suppliedModel: AppModel? = nil, explore: ExploreModel? = nil, @ViewBuilder _ content: () -> V) async throws {
         try FileManager.default.createDirectory(at: Self.outputDirectory, withIntermediateDirectories: true)
-        let model = makeSampleModel()
+        let model = suppliedModel ?? makeSampleModel()
         for (scheme, style) in [("light", UIUserInterfaceStyle.light), ("dark", .dark)] {
             let root = content()
                 .environment(model)
+                .environment(explore ?? ExploreModel(app: model))
                 .environment(AppNavigation())
                 .environment(ShellState())
                 .modelContainer(model.store.container)
@@ -151,5 +158,25 @@ private let fullPageEnabled = ProcessInfo.processInfo.environment["ITER_SNAPSHOT
 
     @Test(.enabled(if: fullPageEnabled)) func settings() async throws {
         try await render("settings", height: nil) { NavigationStack { IOSSettingsScreen() } }
+    }
+
+    /// A request-like query after the Apple Maps search finished: the Ask Iter row sits above the local results.
+    @Test(.enabled(if: fullPageEnabled)) func searchRequestSuggestions() async throws {
+        let places = [
+            PlaceResult(id: "fp1", name: "Forest Park", locality: "Portland, OR", coordinate: Coordinate(latitude: 45.57, longitude: -122.76),
+                        timeZoneIdentifier: "America/Los_Angeles", pointOfInterestCategory: nil),
+            PlaceResult(id: "fp2", name: "Hoyt Arboretum", locality: "Portland, OR", coordinate: Coordinate(latitude: 45.51, longitude: -122.71),
+                        timeZoneIdentifier: "America/Los_Angeles", pointOfInterestCategory: nil),
+            PlaceResult(id: "fp3", name: "Latourell Falls", locality: "Corbett, OR", coordinate: Coordinate(latitude: 45.54, longitude: -122.22),
+                        timeZoneIdentifier: "America/Los_Angeles", pointOfInterestCategory: nil),
+        ]
+        let model = makeSampleModel(search: FPSearch(results: places), scout: FPScout())
+        let explore = ExploreModel(app: model, searchDebounce: .zero)
+        explore.query = "foggy forest near Portland for sunrise"
+        explore.submitSearch()
+        await explore.searchTask?.value
+        try await render("search-request-suggestions", height: 874, settle: .seconds(3), model: model, explore: explore) {
+            NavigationStack { ExploreSearchScreen() }
+        }
     }
 }

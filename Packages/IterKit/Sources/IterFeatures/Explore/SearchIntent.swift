@@ -1,34 +1,47 @@
 import Foundation
 
-/// What the text in Explore's search field is: a place name to look up on Apple Maps, or a request to put to the
-/// ask engine (the scout). Pure and deterministic; the rule is deliberately simple and explainable:
+/// Whether the text in Explore's search field reads like a request for the ask engine (the scout), or like a place
+/// name. Return always runs the local search (curated places and Apple Maps); this only decides whether an "Ask Iter"
+/// suggestion is offered beside it. Pure and deterministic; word count plays no part.
 ///
 /// `.ask` when the text
-/// - has five or more words, or contains a question mark; or
-/// - starts with a request word or phrase ("find", "show me", "where", "what", "which", "suggest", "recommend",
-///   "looking for", "i want", "i'd like", "somewhere", "anywhere", "take me", "help me", "give me", "best place(s)",
-///   "good place(s)", "places", "spots"); or
-/// - contains a constraint marker (" within ", " hours of ", " hour of ", " minutes of ", " miles of ", " km of ",
-///   " drive from ", " near me", " for sunrise", " for sunset", " for golden hour", " for blue hour", " for night",
-///   " for the milky way").
+/// - contains a question mark; or
+/// - starts with a request phrase ("show me", "where", "what", "which", "looking for", "i want", "i'd like",
+///   "somewhere", "anywhere", "best place(s)", "good place(s)", "places", "spots", ...); or
+/// - starts with a request verb ("find", "show", "take", "help", "give", "suggest", "recommend", "plan", "shoot",
+///   "photograph", "see", "watch", "catch", "explore", "visit", "hike", "go", "get", "want", "need", "chase", ...); or
+/// - contains, as whole words anywhere, one of "near", "within", "for", "with", "sunrise", "sunset", "fog", "foggy",
+///   "misty", "forest", "coast", "hours", "drive", "golden hour", "blue hour", "milky way", or a constraint marker
+///   (" hour of ", " minutes of ", " miles of ", " km of ", " drive from ", " near me", ...).
 ///
-/// Anything else is `.place` ("Portland", "Mesa Arch", "Cannon Beach Oregon"). Case, diacritics, punctuation and
-/// curly apostrophes do not matter. `SearchSuggestions` uses it to rank the Apple Maps and Ask suggestions.
+/// Matching is on whole words, so "Nearby Lake", "Fortress Rock", "Withrow", "Finder Point", "Whatcom Falls" and
+/// "Spotsylvania" are places. Anything else is `.place` ("Portland", "Mesa Arch", "Great Smoky Mountains National
+/// Park"). Some place names do carry a keyword ("Hoh Rain Forest"); that only adds the Ask row, and the local search
+/// still runs first. Case, diacritics, punctuation and curly apostrophes do not matter.
 public enum SearchIntent: Equatable, Sendable {
     case place
     case ask
 
-    public static let wordLimit = 5
-
     static let requestOpeners = [
-        "find", "show me", "where", "what", "which", "suggest", "recommend", "looking for", "i want", "i'd like",
-        "somewhere", "anywhere", "take me", "help me", "give me", "best place", "best places", "good place",
-        "good places", "places", "spots",
+        "show me", "where", "what", "which", "looking for", "i want", "i'd like", "somewhere", "anywhere", "take me",
+        "help me", "give me", "best place", "best places", "good place", "good places", "places", "spots",
     ]
 
+    /// Imperative and request verbs; only the first word of the text is checked.
+    static let verbOpeners: Set<String> = [
+        "find", "show", "take", "help", "give", "suggest", "recommend", "plan", "shoot", "photograph", "see", "watch",
+        "catch", "explore", "visit", "hike", "go", "get", "want", "need", "chase",
+    ]
+
+    /// Single words that mark a request wherever they stand.
+    static let keywords: Set<String> = [
+        "near", "within", "for", "with", "sunrise", "sunset", "fog", "foggy", "misty", "forest", "coast", "hours",
+        "drive",
+    ]
+
+    /// Phrases that mark a request wherever they stand (matched on whole words).
     static let constraintMarkers = [
-        " within ", " hours of ", " hour of ", " minutes of ", " miles of ", " km of ", " drive from ", " near me",
-        " for sunrise", " for sunset", " for golden hour", " for blue hour", " for night", " for the milky way",
+        "hour of", "minutes of", "miles of", "km of", "drive from", "near me", "golden hour", "blue hour", "milky way",
     ]
 
     public static func classify(_ query: String) -> SearchIntent {
@@ -42,15 +55,13 @@ public enum SearchIntent: Equatable, Sendable {
         let separators = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "'")).inverted
         let words = folded.components(separatedBy: separators).filter { !$0.isEmpty }.map { $0.lowercased() }
         guard !words.isEmpty else { return .place }
-        if words.count >= wordLimit { return .ask }
+        if verbOpeners.contains(words[0]) { return .ask }
+        if words.contains(where: keywords.contains) { return .ask }
 
         let text = words.joined(separator: " ")
         for opener in requestOpeners where text == opener || text.hasPrefix(opener + " ") { return .ask }
         let padded = " " + text + " "
-        for marker in constraintMarkers {
-            // A marker ending in a space must be followed by a word; one without must end at a word boundary.
-            if marker.hasSuffix(" ") ? padded.contains(marker) : padded.contains(marker + " ") { return .ask }
-        }
+        for marker in constraintMarkers where padded.contains(" " + marker + " ") { return .ask }
         return .place
     }
 }

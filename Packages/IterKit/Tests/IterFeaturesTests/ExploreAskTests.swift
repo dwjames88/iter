@@ -50,26 +50,57 @@ private let moabRegion = GeoRegion(center: Coordinate(latitude: 38.6, longitude:
 @Suite(.serialized) struct ExploreAskTests {
     // MARK: Routing
 
-    @Test func requestsReadingLikeAsksRouteToTheScout() async throws {
-        let fake = FakeScout(outcome: .success([scoutSuggestion("mesa-arch")]))
-        let explore = try makeAsk(scout: fake)
-        explore.query = "  foggy forest within two hours of Portland for sunrise "
-        explore.submitSearch()
-        await settle()
-        #expect(fake.requests == ["foggy forest within two hours of Portland for sunrise"])
-        #expect(explore.searchState == .idle)
-    }
-
-    @Test func placeNamesStillSearchAppleMaps() async throws {
+    @Test func returnRunsAppleMapsEvenForRequestText() async throws {
         let fake = FakeScout(outcome: .success([scoutSuggestion("mesa-arch")]))
         let explore = try makeAsk(scout: fake, search: AskSearch(results: [applePlace("a1", "Moab Brewery")]))
-        explore.query = "Moab"
+        explore.query = "  foggy forest within two hours of Portland for sunrise "
         explore.submitSearch()
         await settle()
         #expect(fake.started == 0)
         #expect(explore.askState == .idle)
-        #expect(explore.searchState == .finished(query: "Moab", count: 1))
+        #expect(explore.searchState == .finished(query: "foggy forest within two hours of Portland for sunrise", count: 1))
         #expect(explore.appleResults.map(\.id) == ["a1"])
+    }
+
+    @Test func theAskRowStaysAfterTheSearchFinishedForRequestText() async throws {
+        let fake = FakeScout(outcome: .success([scoutSuggestion("mesa-arch")]))
+        let explore = try makeAsk(scout: fake, search: AskSearch(results: [applePlace("a1", "Moab Brewery")]))
+        explore.query = "foggy forest near Portland for sunrise"
+        #expect(explore.searchSuggestions.map(\.id) == ["appleMaps", "ask"])
+        explore.submitSearch()
+        #expect(explore.searchSuggestions.map(\.id) == ["ask"])      // running: Apple Maps row gone
+        await settle()
+        let rest = explore.searchSuggestions
+        #expect(rest.map(\.id) == ["ask"])                           // shown: Ask row remains
+        #expect(rest.allSatisfy { !$0.isTop })
+        explore.run(try #require(rest.first))
+        await settle()
+        #expect(fake.requests == ["foggy forest near Portland for sunrise"])
+        #expect(explore.searchSuggestions.isEmpty)                  // ask shown too
+    }
+
+    @Test func placeTextNeverOffersAnAskRow() async throws {
+        let explore = try makeAsk(scout: FakeScout(), search: AskSearch(results: [applePlace("a1", "Moab Brewery")]))
+        explore.query = "Great Smoky Mountains National Park"
+        #expect(explore.searchSuggestions.map(\.id) == ["appleMaps"])
+        explore.submitSearch()
+        await settle()
+        #expect(explore.searchSuggestions.isEmpty)
+    }
+
+    @Test func anUnavailableAskRowIsDisabledAndIgnoredByRun() async throws {
+        let fake = FakeScout(availability: .appleIntelligenceNotEnabled)
+        let explore = try makeAsk(scout: fake)
+        explore.query = "find waterfalls near me"
+        let list = explore.searchSuggestions
+        #expect(list.map(\.id) == ["appleMaps", "ask"])
+        let ask = list[1]
+        #expect(!ask.isAvailable)
+        #expect(ask.unavailableReason == .appleIntelligenceNotEnabled)
+        explore.run(ask)
+        await settle()
+        #expect(explore.askState == .idle)
+        #expect(fake.started == 0)
     }
 
     @Test func theAreaPassedToTheScoutIsTheVisibleRegion() async throws {
@@ -77,7 +108,7 @@ private let moabRegion = GeoRegion(center: Coordinate(latitude: 38.6, longitude:
         let explore = try makeAsk(scout: fake)
         explore.cameraDidChange(to: moabRegion)
         explore.query = "where can I shoot sunset?"
-        explore.submitSearch()
+        explore.ask()
         await settle()
         #expect(fake.lastArea == moabRegion)
     }
@@ -100,7 +131,7 @@ private let moabRegion = GeoRegion(center: Coordinate(latitude: 38.6, longitude:
         let fake = FakeScout(outcome: .success(found))
         let explore = try makeAsk(scout: fake)
         explore.query = "find waterfalls near me"
-        explore.submitSearch()
+        explore.ask()
         await settle()
 
         let first = try #require(explore.sections.first)
@@ -275,16 +306,16 @@ private let moabRegion = GeoRegion(center: Coordinate(latitude: 38.6, longitude:
         let fake = FakeScout(outcome: .success([scoutSuggestion("mesa-arch")]))
         let explore = try makeAsk(scout: fake)
         #expect(explore.searchSuggestions.isEmpty)           // empty field
-        explore.query = "Moab"
+        explore.query = "find Moab"
         #expect(explore.searchSuggestions.count == 2)        // text, nothing run
         fake.holdUntilReleased()
         explore.ask()
         await settle()
-        #expect(explore.searchSuggestions.isEmpty)           // running
+        #expect(explore.searchSuggestions.map(\.id) == ["appleMaps"])   // ask running
         fake.release()
         await settle()
-        #expect(explore.searchSuggestions.isEmpty)           // shown for that text
-        explore.query = "Moab Utah"
+        #expect(explore.searchSuggestions.map(\.id) == ["appleMaps"])   // ask shown for that text
+        explore.query = "find Moab Utah"
         #expect(explore.searchSuggestions.count == 2)        // the text moved on
     }
 

@@ -40,21 +40,21 @@ public struct SearchSuggestion: Equatable, Sendable, Identifiable {
     }
 }
 
-/// What Explore's one search field offers for its text: an Apple Maps lookup and an Ask, ranked by what the text
-/// reads like (`SearchIntent.classify`). Pure.
+/// What Explore's one search field offers for its text. Pure.
 ///
 /// - Empty (or blank) text: nothing.
-/// - Place-like text ("Mesa Arch"): Apple Maps first, then Ask.
-/// - Request-like text ("foggy forest within two hours of Portland"): Ask first, then Apple Maps.
-/// - An Ask that cannot run stays in the list, flagged unavailable, but never first: Return must always do something.
+/// - Always an Apple Maps row first (`isTop`): Return runs the local search for any text.
+/// - An Ask row after it only when the text reads like a request (`SearchIntent.classify`); place-like text
+///   ("Mesa Arch", "Great Smoky Mountains National Park") gets none. An Ask that cannot run stays in the list,
+///   flagged unavailable. The Ask is never the top row.
 public enum SearchSuggestions {
     public static func make(query: String, askAvailability: ScoutAvailability) -> [SearchSuggestion] {
         let text = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return [] }
-        let maps = SearchSuggestion.Kind.appleMaps(query: text)
-        let ask = SearchSuggestion.Kind.ask(query: text, availability: askAvailability)
-        let askFirst = SearchIntent.classify(text) == .ask && askAvailability == .available
-        let kinds = askFirst ? [ask, maps] : [maps, ask]
-        return kinds.enumerated().map { SearchSuggestion(kind: $1, isTop: $0 == 0) }
+        var list = [SearchSuggestion(kind: .appleMaps(query: text), isTop: true)]
+        if SearchIntent.classify(text) == .ask {
+            list.append(SearchSuggestion(kind: .ask(query: text, availability: askAvailability), isTop: false))
+        }
+        return list
     }
 }

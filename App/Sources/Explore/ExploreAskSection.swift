@@ -7,8 +7,9 @@ import IterDesign
 import IterFeatures
 import IterServices
 
-/// The search field's suggestions at the top of the list: an "Apple Maps" group and an "Ask Iter" group, ranked by
-/// what the text reads like (`SearchSuggestions`). Return runs the first row; every row is a button. An Ask the device
+/// The search field's suggestions at the top of the list: an "Apple Maps" group and, only when the text reads
+/// like a request, an "Ask Iter" group (`SearchSuggestions`). Return runs the Apple Maps row, which
+/// alone carries the return glyph; every row is a button. An Ask the device
 /// cannot run stays, quiet and disabled, with the reason.
 struct ExploreSuggestionsView: View {
     let suggestions: [SearchSuggestion]
@@ -22,7 +23,7 @@ struct ExploreSuggestionsView: View {
                         .font(IterFont.moduleTitle)
                         .foregroundStyle(IterColor.textSecondary)
                         .accessibilityAddTraits(.isHeader)
-                    ExploreSuggestionRow(suggestion: suggestion, runsOnReturn: suggestion.id == suggestions.first?.id) { action(suggestion) }
+                    ExploreSuggestionRow(suggestion: suggestion, runsOnReturn: suggestion.isTop) { action(suggestion) }
                 }
             }
         }

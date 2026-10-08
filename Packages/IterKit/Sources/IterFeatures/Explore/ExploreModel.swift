@@ -750,12 +750,11 @@ public final class ExploreModel {
         resultSetChanged()
     }
 
-    /// Return in the search field: runs the top suggestion (`SearchSuggestions`): an Ask when the text reads like a
-    /// request and Apple Intelligence can run it, else the Apple Maps search.
+    /// Return in the search field: always the local search (the curated filter and Apple Maps). A request-like text
+    /// also offers an Ask row (`searchSuggestions`), which the person chooses.
     public func submitSearch() {
         closePanel()
-        let top = SearchSuggestions.make(query: query, askAvailability: askAvailability).first
-        if let top { run(top) }
+        searchAppleMaps()
     }
 
     /// Runs the Apple Maps search near the visible region. Debounced and cancellable: a second submit
