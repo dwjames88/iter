@@ -167,10 +167,11 @@ private struct TripBuilderContent: View {
         }
         ToolbarItem(placement: .topBarTrailing) { EditButton() }
         ToolbarItem(placement: .topBarTrailing) {
-            if let record = model.store.trip(id: plan.id) {
-                ShareLink(item: model.store.document(for: record), preview: SharePreview(plan.name)) {
-                    Label(String(localized: "Share", comment: "Toolbar button"), systemImage: "square.and.arrow.up")
-                }
+            // The document is built when the share is performed, not on every pass of this body.
+            ShareLink(item: LazyTripDocument(tripName: plan.name, build: { [store = model.store, tripID = plan.id] in
+                store.trip(id: tripID).map { store.document(for: $0) }
+            }), preview: SharePreview(plan.name)) {
+                Label(String(localized: "Share", comment: "Toolbar button"), systemImage: "square.and.arrow.up")
             }
         }
         ToolbarItem(placement: .topBarTrailing) { actionsMenu }
