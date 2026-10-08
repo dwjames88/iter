@@ -126,7 +126,7 @@ private struct TripBuilderContent: View {
         .onChange(of: model.forecasts.revision) { builder.refreshIfChanged() }
         .onChange(of: selection) { stopSelected(selection, in: builder) }
         .sheet(isPresented: $changesDates) { ChangeDatesSheet(builder: builder) }
-        .fileExporter(isPresented: $exports, item: exportItem, contentTypes: [.iterTrip],
+        .fileExporter(isPresented: $exports, item: exports ? exportItem : nil, contentTypes: [.iterTrip],
                       defaultFilename: TripDocument.suggestedFileName(forTripNamed: plan.name)) { result in
             if case .failure = result {
                 exportMessage = String(localized: "The trip couldn't be saved to that location.", comment: "Export error")
@@ -140,8 +140,10 @@ private struct TripBuilderContent: View {
         }
     }
 
+    /// Fetched only when something needs it (a menu action, an export), never while the body is built.
     private var record: TripRecord? { model.store.trip(id: tripID) }
 
+    /// The `.iter` document, built on demand: `fileExporter` asks for it only while `exports` is true.
     private var exportItem: TripDocument? { record.map { model.store.document(for: $0) } }
 
     @ToolbarContentBuilder private func toolbar(_ plan: TripPlan, _ builder: TripBuilderModel) -> some ToolbarContent {
@@ -153,12 +155,13 @@ private struct TripBuilderContent: View {
             }
         }
         ToolbarItem {
-            if let record {
-                ShareLink(item: model.store.document(for: record), preview: SharePreview(plan.name)) {
-                    Label(String(localized: "Share", comment: "Toolbar button"), systemImage: "square.and.arrow.up")
-                }
-                .help(Text("Share this trip as an Iter file", comment: "Tooltip"))
+            // The document is built when the share is performed, not on every pass of this body.
+            ShareLink(item: LazyTripDocument(tripName: plan.name, build: { [store = model.store, tripID] in
+                store.trip(id: tripID).map { store.document(for: $0) }
+            }), preview: SharePreview(plan.name)) {
+                Label(String(localized: "Share", comment: "Toolbar button"), systemImage: "square.and.arrow.up")
             }
+            .help(Text("Share this trip as an Iter file", comment: "Tooltip"))
         }
         ToolbarItem {
             Menu {
@@ -167,7 +170,7 @@ private struct TripBuilderContent: View {
                 Button(String(localized: "Export…", comment: "Menu item")) { exports = true }
                     .keyboardShortcut("e", modifiers: [.command, .shift])
                 Button(String(localized: "Duplicate", comment: "Menu item")) {
-                    if let record {
+                    if let record = self.record {
                         let copy = model.store.duplicateTrip(record, name: String(localized: "\(plan.name) copy", comment: "Name of a duplicated trip"))
                         navigation.show(.trip(copy.id))
                     }
@@ -182,6 +185,26 @@ private struct TripBuilderContent: View {
             }
             .help(Text("Change dates, export, duplicate or delete this trip", comment: "Tooltip"))
         }
+    }
+}
+
+// MARK: - Lazy share
+
+/// Shares a trip as the same `.iter` file as `TripDocument` (same type and file name), but builds the document only when
+/// the share is performed, on the main actor, so the toolbar can hold it without exporting the trip on every body pass.
+struct LazyTripDocument: Transferable {
+    let tripName: String
+    let build: @MainActor @Sendable () -> TripDocument?
+
+    struct Unavailable: Error {}
+
+    static var transferRepresentation: some TransferRepresentation {
+        DataRepresentation(exportedContentType: .iterTrip) { item in
+            let document = await MainActor.run { item.build() }
+            guard let document else { throw Unavailable() }
+            return try document.encoded()
+        }
+        .suggestedFileName { TripDocument.suggestedFileName(forTripNamed: $0.tripName) }
     }
 }
 
