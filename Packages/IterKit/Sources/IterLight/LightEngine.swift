@@ -30,16 +30,26 @@ public struct LightEngine: Sendable {
         return geometry(sun: sun, spot: spot, day: day)
     }
 
-    private func geometry(sun: SunEvents, spot: Spot, day: LocalDay) -> [(kind: LightWindowKind, span: TimeSpan)] {
+    /// `includeNight: false` skips the night window and with it the next day's sun, for callers that never read it.
+    /// `nextSun` is the next day's sun when the caller already has it; otherwise it is solved on demand, at most once.
+    private func geometry(sun: SunEvents, spot: Spot, day: LocalDay, includeNight: Bool = true,
+                          nextSun: SunEvents? = nil) -> [(kind: LightWindowKind, span: TimeSpan)] {
         var out: [(kind: LightWindowKind, span: TimeSpan)] = []
+        var known = nextSun
+        func tomorrow() -> SunEvents {
+            if let known { return known }
+            let solved = ephemeris.sunEvents(on: day.adding(days: 1), at: spot.coordinate, in: spot.timeZone)
+            known = solved
+            return solved
+        }
         func add(_ kind: LightWindowKind, _ start: Date?, _ end: Date?) {
             guard let start, let end, end > start else { return }
             out.append((kind, TimeSpan(start: start, end: end)))
         }
         func addNight() {
-            if let dusk = sun.astronomicalDusk {
+            if includeNight, let dusk = sun.astronomicalDusk {
                 let cap = dusk.addingTimeInterval(3 * 3600)
-                let nextDawn = ephemeris.sunEvents(on: day.adding(days: 1), at: spot.coordinate, in: spot.timeZone).astronomicalDawn
+                let nextDawn = tomorrow().astronomicalDawn
                 add(.night, dusk, min(cap, nextDawn ?? cap))
             }
         }
@@ -51,7 +61,7 @@ public struct LightEngine: Sendable {
             return out
         case .polarDay:
             if let start = sun.goldenEveningStart {
-                let nextRise = ephemeris.sunEvents(on: day.adding(days: 1), at: spot.coordinate, in: spot.timeZone).goldenMorningEnd
+                let nextRise = tomorrow().goldenMorningEnd
                 let cap = start.addingTimeInterval(8 * 3600)
                 add(.goldenEvening, start, min(cap, nextRise ?? cap))
             }
@@ -74,10 +84,17 @@ public struct LightEngine: Sendable {
     // MARK: Days
 
     public func dayLight(for spot: Spot, on day: LocalDay, forecast: Forecast?, unavailable: ForecastUnavailableReason?, now: Date) -> DayLight {
+        let sun = ephemeris.sunEvents(on: day, at: spot.coordinate, in: spot.timeZone)
+        return dayLight(for: spot, on: day, sun: sun, nextSun: nil, forecast: forecast, unavailable: unavailable, now: now)
+    }
+
+    /// One day from its already solved sun. `nextSun` is the following day's sun when the caller has it (it ends the
+    /// night window and the midnight-sun golden evening), so consecutive days solve each day's sun once.
+    private func dayLight(for spot: Spot, on day: LocalDay, sun: SunEvents, nextSun: SunEvents?, forecast: Forecast?,
+                          unavailable: ForecastUnavailableReason?, now: Date) -> DayLight {
         let zone = spot.timeZone
-        let sun = ephemeris.sunEvents(on: day, at: spot.coordinate, in: zone)
         let moon = ephemeris.moonEvents(on: day, at: spot.coordinate, in: zone)
-        let geo = geometry(sun: sun, spot: spot, day: day)
+        let geo = geometry(sun: sun, spot: spot, day: day, nextSun: nextSun)
         let windows = geo.map { g in
             LightWindow(kind: g.kind, span: g.span,
                         assessment: assess(kind: g.kind, span: g.span, spot: spot, forecast: forecast, unavailable: unavailable, now: now))
@@ -87,9 +104,26 @@ public struct LightEngine: Sendable {
                         moonPhase: ephemeris.moonPhase(at: phaseAt), windows: windows)
     }
 
+    /// `count` consecutive days from `day`. Each day's sun is solved once and handed to the day before it.
+    private func dayLights(for spot: Spot, from day: LocalDay, count: Int, forecast: Forecast?,
+                           unavailable: ForecastUnavailableReason?, now: Date) -> [DayLight] {
+        guard count > 0 else { return [] }
+        let zone = spot.timeZone
+        var out: [DayLight] = []
+        out.reserveCapacity(count)
+        var sun = ephemeris.sunEvents(on: day, at: spot.coordinate, in: zone)
+        for i in 0..<count {
+            let d = day.adding(days: i)
+            // The last day's next sun is solved only if its geometry asks for it.
+            let next = i + 1 < count ? ephemeris.sunEvents(on: d.adding(days: 1), at: spot.coordinate, in: zone) : nil
+            out.append(dayLight(for: spot, on: d, sun: sun, nextSun: next, forecast: forecast, unavailable: unavailable, now: now))
+            if let next { sun = next }
+        }
+        return out
+    }
+
     public func outlook(for spot: Spot, from day: LocalDay, days: Int, forecast: Forecast?, unavailable: ForecastUnavailableReason?, now: Date) -> [DayLight] {
-        guard days > 0 else { return [] }
-        return (0..<days).map { dayLight(for: spot, on: day.adding(days: $0), forecast: forecast, unavailable: unavailable, now: now) }
+        dayLights(for: spot, from: day, count: days, forecast: forecast, unavailable: unavailable, now: now)
     }
 
     /// The best scored window for `intent` over the next `days` days. Only scored windows count (a "no forecast"
@@ -123,7 +157,8 @@ public struct LightEngine: Sendable {
         var fallback: (day: LocalDay, kind: LightWindowKind, span: TimeSpan)?
         for offset in 0..<4 {
             let day = today.adding(days: offset)
-            let geo = geometry(sun: ephemeris.sunEvents(on: day, at: spot.coordinate, in: zone), spot: spot, day: day)
+            // No night window is read here, so the next day's sun is not solved for it.
+            let geo = geometry(sun: ephemeris.sunEvents(on: day, at: spot.coordinate, in: zone), spot: spot, day: day, includeNight: false)
             if let g = geo.first(where: { ($0.kind == .goldenMorning || $0.kind == .goldenEvening) && $0.span.end > now }) {
                 return (day, LightWindow(kind: g.kind, span: g.span,
                                          assessment: assess(kind: g.kind, span: g.span, spot: spot, forecast: forecast, unavailable: unavailable, now: now)))
@@ -140,11 +175,10 @@ public struct LightEngine: Sendable {
     /// Today's windows that have not ended (spot's zone), then all of tomorrow's, chronologically.
     public func upcomingWindows(for spot: Spot, forecast: Forecast?, unavailable: ForecastUnavailableReason?, now: Date) -> [(day: LocalDay, window: LightWindow)] {
         let today = LocalDay(now, in: spot.timeZone)
+        let both = dayLights(for: spot, from: today, count: 2, forecast: forecast, unavailable: unavailable, now: now)
         var out: [(day: LocalDay, window: LightWindow)] = []
-        let first = dayLight(for: spot, on: today, forecast: forecast, unavailable: unavailable, now: now)
-        out += first.windows.filter { $0.span.end > now }.map { (first.day, $0) }
-        let second = dayLight(for: spot, on: today.adding(days: 1), forecast: forecast, unavailable: unavailable, now: now)
-        out += second.windows.map { (second.day, $0) }
+        out += both[0].windows.filter { $0.span.end > now }.map { (both[0].day, $0) }
+        out += both[1].windows.map { (both[1].day, $0) }
         return out
     }
 
