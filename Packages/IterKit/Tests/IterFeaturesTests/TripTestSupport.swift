@@ -58,9 +58,10 @@ struct TripHarness {
     func model(for trip: TripRecord, drives: any DriveTimeProviding = FakeDrives(), dismissals: SuggestionDismissals = SuggestionDismissals(),
                 defaults: UserDefaults = UserDefaults(suiteName: "TripHarness-\(UUID().uuidString)")!,
                 legCoalescing: Duration = .milliseconds(60),
-                now: @escaping @MainActor () -> Date = { LocalDay(year: 2026, month: 10, day: 6).at(hour: 10, in: TripHarness.denver) }) -> TripBuilderModel {
+                now: @escaping @MainActor () -> Date = { LocalDay(year: 2026, month: 10, day: 6).at(hour: 10, in: TripHarness.denver) },
+                sleep: @escaping @Sendable (Duration) async throws -> Void = { try await Task.sleep(for: $0) }) -> TripBuilderModel {
         TripBuilderModel(tripID: trip.id, store: store, scheduler: scheduler, drives: drives, forecasts: forecasts,
-                         dismissals: dismissals, defaults: defaults, legCoalescing: legCoalescing, now: now)
+                         dismissals: dismissals, defaults: defaults, legCoalescing: legCoalescing, now: now, sleep: sleep)
     }
 
     /// Two days: day 0 Mesa Arch (sunrise) then Delicate Arch (sunset); day 1 Horseshoe Bend (sunset).

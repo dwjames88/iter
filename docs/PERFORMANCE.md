@@ -122,7 +122,7 @@ Before the pass: 645 tests (165 + 69 + 299 + 22 + 67 + 6 + 17 across the package
 * **Light panel open in Explore** settles in about 230 ms, almost all SwiftUI building the panel's view tree. Cutting it needs the panel restructured; not done.
 * **Store edits** (move, nudge) take undo snapshots and a synchronous SwiftData save on the main actor, about 15 to 22 ms per move. Deferring the save would change durability, so it is left as is.
 * **Offline pack load at launch** reads pack JSON and images on the main actor; this only costs anything with pinned trips.
-* **Transient drive errors** are retried on the next refresh after 30 seconds, not on a timer.
+* **Transient drive errors** (throttled, offline) are retried by a backoff timer while the trip builder is on screen: 30 s after the first failing pass, then 60, 120, 240 and 300 s (`DriveRetryBackoff`), one backoff per builder. A pass that fetches everything it asked for, or any change to the trip's legs, resets it; leaving the screen cancels the timer and returning resumes it. A manual refresh before the wait is over does not ask again.
 * **`ForecastCenter` coalescing window** (40 ms) is a judgement call; it is an init parameter.
 * **Engine edges that are design choices:** no golden evening at Tromsø around 16 to 18 May (the sun dips but does not set); no evening blue hour at Anchorage in early June when civil dusk is after midnight; `nextEvent` is nil at Longyearbyen in midwinter.
 * **Documented rules that read oddly:** a denied Keychain read shows "needs key" rather than its own error.

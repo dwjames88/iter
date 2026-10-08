@@ -89,11 +89,33 @@ public struct TripMapContent: Equatable, Sendable {
     }
 }
 
+/// How long to wait before asking MapKit again after drive fetches keep failing for a passing reason (throttled, offline):
+/// 30 s after the first failing pass, then 60, 120, 240, and 300 s (5 min) from then on.
+public struct DriveRetryBackoff: Equatable, Sendable {
+    public var base: TimeInterval
+    public var cap: TimeInterval
+
+    public init(base: TimeInterval = 30, cap: TimeInterval = 300) {
+        self.base = base
+        self.cap = cap
+    }
+
+    public static let standard = DriveRetryBackoff()
+
+    /// The wait after `attempt` consecutive failing passes (0 for the first).
+    public func delay(forAttempt attempt: Int) -> TimeInterval {
+        min(cap, base * pow(2, Double(max(0, min(attempt, 20)))))
+    }
+}
+
 /// The trip builder's brain: the plan as a value, its drive legs (MapKit with an honest estimate on failure),
 /// the backward schedule, and the light-first suggestions. Platform-neutral; the app draws it.
 ///
 /// Call `refresh()` whenever `store.revision` or `forecasts.revision` changes. It recomputes everything that is
 /// cheap straight away and fetches missing drives in the background, cancelling work that has gone stale.
+///
+/// Drives that fail for a passing reason (throttled, offline) are retried by a backoff timer, but only while the builder
+/// is on screen: the view calls `viewAppeared()` and `viewDisappeared()`. See `DriveRetryBackoff` for the schedule.
 @MainActor
 @Observable
 public final class TripBuilderModel {
@@ -129,7 +151,19 @@ public final class TripBuilderModel {
     @ObservationIgnored private let legCoalescing: Duration
     /// Pairs whose last fetch failed for a reason that may pass (throttled, offline), with when to try again. They stay
     /// out of `legs` (the schedule shows its own estimate meanwhile) so the next refresh after that time asks again.
+    /// The deadline is the end of the backoff wait that followed the failing pass, so a manual `refresh()` before it does
+    /// not ask MapKit again; the retry timer clears these entries when it fires.
     @ObservationIgnored private var retryAfter: [LegKey: Date] = [:]
+    /// The backoff is one per builder: how many passes in a row ended with a passing failure. Any pass that fetches
+    /// everything it asked for, or a change to the trip's pairs, resets it.
+    @ObservationIgnored private let backoff: DriveRetryBackoff
+    @ObservationIgnored private var retryAttempt = 0
+    @ObservationIgnored private var retryTask: Task<Void, Never>?
+    @ObservationIgnored private let sleep: @Sendable (Duration) async throws -> Void
+    /// True between `viewAppeared()` and `viewDisappeared()`; the retry timer runs only then.
+    @ObservationIgnored private var isVisible = false
+    /// The pairs (with their coordinates) the plan needed at the last refresh; the timer retries these.
+    @ObservationIgnored private var neededPairs: [LegKey: [Coordinate]] = [:]
     /// Day light for each stop at the last refresh, and the session spans the scheduler works from.
     @ObservationIgnored private var lights: [UUID: DayLight] = [:]
     @ObservationIgnored private var sessionWindows: TripScheduler.SessionWindows = [:]
@@ -229,7 +263,11 @@ public final class TripBuilderModel {
     public init(tripID: UUID, store: IterStore, scheduler: TripScheduler, drives: any DriveTimeProviding,
                 forecasts: ForecastCenter, dismissals: SuggestionDismissals = .shared,
                 defaults: UserDefaults = .standard, legCoalescing: Duration = .milliseconds(60),
-                now: @escaping @MainActor () -> Date = { Date() }) {
+                now: @escaping @MainActor () -> Date = { Date() },
+                backoff: DriveRetryBackoff = .standard,
+                sleep: @escaping @Sendable (Duration) async throws -> Void = { try await Task.sleep(for: $0) }) {
+        self.backoff = backoff
+        self.sleep = sleep
         self.tripID = tripID
         self.store = store
         self.scheduler = scheduler
@@ -247,6 +285,56 @@ public final class TripBuilderModel {
     isolated deinit {
         legTask?.cancel()
         legFlushTask?.cancel()
+        retryTask?.cancel()
+    }
+
+    // MARK: - Visibility
+
+    /// The builder is on screen: resume retrying drives that failed for a passing reason. Pending drives whose wait is
+    /// over are asked again at once; otherwise the timer is set for what is left of the wait.
+    public func viewAppeared() {
+        isVisible = true
+        guard retryTask == nil, let earliest = pendingDeadlines().min() else { return }
+        let remaining = earliest.timeIntervalSince(now())
+        if remaining <= 0 { retryTimerFired() } else { scheduleRetry(after: remaining) }
+    }
+
+    /// The builder left the screen: stop the retry timer. The waits are kept, so `viewAppeared()` picks them up.
+    public func viewDisappeared() {
+        isVisible = false
+        retryTask?.cancel()
+        retryTask = nil
+    }
+
+    /// Deadlines of the needed drives that are still missing and waiting to be retried.
+    private func pendingDeadlines() -> [Date] {
+        neededPairs.keys.compactMap { legs[$0] == nil ? retryAfter[$0] : nil }
+    }
+
+    private func scheduleRetry(after delay: TimeInterval) {
+        retryTask?.cancel()
+        retryTask = nil
+        guard isVisible else { return }
+        let sleep = self.sleep
+        retryTask = Task { [weak self] in
+            do { try await sleep(.seconds(delay)) } catch { return }
+            guard !Task.isCancelled else { return }
+            self?.retryTimerFired()
+        }
+    }
+
+    private func resetRetry() {
+        retryTask?.cancel()
+        retryTask = nil
+        retryAttempt = 0
+    }
+
+    /// The wait is over: the timer is the authority, so the pending drives are asked again whatever the clock says.
+    private func retryTimerFired() {
+        retryTask = nil
+        guard isVisible, let plan else { return }
+        for key in neededPairs.keys { retryAfter[key] = nil }
+        loadMissingLegs(Array(neededPairs.keys), plan)
     }
 
     // MARK: - Refresh
@@ -267,6 +355,9 @@ public final class TripBuilderModel {
             legsDirty = false
             loadingKeys = []
             isLoadingLegs = false
+            resetRetry()
+            retryAfter = [:]
+            neededPairs = [:]
             plan = nil
             schedule = TripSchedule(stops: [])
             days = []
@@ -284,6 +375,16 @@ public final class TripBuilderModel {
         forecasts.requestAll(plan.stops.map(\.spot.coordinate))
         refreshLight(plan)
         let pairs = scheduler.legPairsNeeded(for: plan, windows: sessionWindows)
+        let coordinates = Dictionary(plan.stops.map { ($0.id, $0.spot.coordinate) }, uniquingKeysWith: { first, _ in first })
+        let needed = Dictionary(pairs.compactMap { key in
+            coordinates[key.from].flatMap { a in coordinates[key.to].map { (key, [a, $0]) } }
+        }, uniquingKeysWith: { first, _ in first })
+        if needed != neededPairs {
+            // The trip changed under the retry: forget the waits and the backoff, so the new pairs are asked for now.
+            resetRetry()
+            retryAfter = [:]
+            neededPairs = needed
+        }
         dropStaleLegs(plan)
         fillKnownLegs(pairs, plan)
         recompute()
@@ -325,6 +426,7 @@ public final class TripBuilderModel {
             legTask = nil
             loadingKeys = []
             isLoadingLegs = false
+            if pendingDeadlines().isEmpty { resetRetry() }
             return
         }
         // Nothing new to fetch: let the running task finish.
@@ -334,7 +436,9 @@ public final class TripBuilderModel {
         isLoadingLegs = true
         let coordinates = Dictionary(plan.stops.map { ($0.id, $0.spot.coordinate) }, uniquingKeysWith: { first, _ in first })
         let drives = self.drives
+        let delay = backoff.delay(forAttempt: retryAttempt)
         legTask = Task { [weak self] in
+            var failedTransiently = false
             for key in missing {
                 if Task.isCancelled { return }
                 guard let a = coordinates[key.from], let b = coordinates[key.to] else { continue }
@@ -357,7 +461,8 @@ public final class TripBuilderModel {
                 if let fetched {
                     self.legArrived(key, fetched)
                 } else if transient {
-                    self.retryAfter[key] = self.now().addingTimeInterval(Self.retryDelay)
+                    failedTransiently = true
+                    self.retryAfter[key] = self.now().addingTimeInterval(delay)
                 }
             }
             guard !Task.isCancelled, let self else { return }
@@ -365,11 +470,17 @@ public final class TripBuilderModel {
             self.isLoadingLegs = false
             self.legTask = nil
             self.loadingKeys = []
+            if failedTransiently {
+                self.retryAttempt += 1
+                self.scheduleRetry(after: delay)
+            } else if self.pendingDeadlines().isEmpty {
+                self.resetRetry()
+            }
         }
     }
 
-    /// How long a pair that failed for a passing reason waits before the next refresh asks again.
-    static let retryDelay: TimeInterval = 30
+    /// How long a pair that failed for a passing reason waits the first time (see `DriveRetryBackoff` for the rest).
+    static let retryDelay: TimeInterval = DriveRetryBackoff.standard.delay(forAttempt: 0)
 
     private func legArrived(_ key: LegKey, _ leg: DriveLeg) {
         legs[key] = leg

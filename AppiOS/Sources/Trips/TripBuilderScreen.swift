@@ -33,10 +33,16 @@ struct TripBuilderScreen: View {
         }
         .background(IterColor.backgroundWindow, ignoresSafeAreaEdges: .all)
         .onAppear {
-            guard builder == nil else { return }
-            builder = TripBuilderModel(tripID: tripID, store: model.store, scheduler: model.scheduler, drives: model.drives,
-                                       forecasts: model.forecasts, now: { model.now() })
+            if let builder {
+                builder.viewAppeared()
+                return
+            }
+            let made = TripBuilderModel(tripID: tripID, store: model.store, scheduler: model.scheduler, drives: model.drives,
+                                        forecasts: model.forecasts, now: { model.now() })
+            builder = made
+            made.viewAppeared()
         }
+        .onDisappear { builder?.viewDisappeared() }
     }
 }
 

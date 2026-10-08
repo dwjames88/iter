@@ -60,17 +60,22 @@ private struct TripBuilderContent: View {
             }
         }
         .onAppear(perform: makeBuilderIfNeeded)
+        .onDisappear { builder?.viewDisappeared() }
         .tripFlows()
     }
 
     private func makeBuilderIfNeeded() {
-        guard builder == nil else { return }
+        guard builder == nil else {
+            builder?.viewAppeared()
+            return
+        }
         let made = TripBuilderModel(tripID: tripID, store: model.store, scheduler: model.scheduler, drives: model.drives,
                                     forecasts: model.forecasts, now: { model.now() })
         if let day = selectedDay {
             if made.layout.groups.indices.contains(day) { made.setFocusDay(day) } else { selectedDay = nil }
         }
         builder = made
+        made.viewAppeared()
         if TripPerfScript.enabled {
             Task { @MainActor in
                 await TripPerfScript.run(made, chooseDay: { chooseDay($0, in: made) }, select: { selection = $0 })
