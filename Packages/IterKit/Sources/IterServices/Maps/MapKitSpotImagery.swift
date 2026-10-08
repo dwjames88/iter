@@ -226,7 +226,8 @@ actor SpotImageJobs {
     func join(_ request: SpotImageRequest, start: @escaping @Sendable () async -> [SpotImage]) -> Waiter {
         nextID += 1
         let id = nextID
-        if var entry = entries[request] {
+        // A job whose waiters all left is winding down and will hand back a partial result: start a fresh one.
+        if var entry = entries[request], !entry.task.isCancelled {
             entry.waiters[id] = false
             entries[request] = entry
             return Waiter(id: id, task: entry.task)

@@ -59,4 +59,23 @@ import Synchronization
         await jobs.abandon(request, waiter: w.id)
         #expect(await jobs.count == 0)
     }
+
+    @Test func joiningAfterEveryWaiterLeftStartsAFreshJob() async {
+        let jobs = SpotImageJobs()
+        let probe = Probe()
+        let old = await jobs.join(request) { await probe.run() }
+        while !probe.started { try? await Task.sleep(for: .milliseconds(2)) }
+        await jobs.abandon(request, waiter: old.id)
+        // Back again before the old job has wound down.
+        let fresh = await jobs.join(request) { [] }
+        #expect(fresh.task != old.task)
+        #expect(!fresh.task.isCancelled)
+        _ = await old.task.value
+        await jobs.release(request, waiter: old.id)
+        await jobs.abandon(request, waiter: old.id)
+        #expect(await jobs.count == 1)
+        _ = await fresh.task.value
+        await jobs.release(request, waiter: fresh.id)
+        #expect(await jobs.count == 0)
+    }
 }
