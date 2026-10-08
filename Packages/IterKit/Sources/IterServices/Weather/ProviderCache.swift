@@ -120,7 +120,8 @@ public actor ProviderCache {
         guard let directory,
               let data = try? Data(contentsOf: directory.appendingPathComponent(fileName(spot: spot, bucket: bucket))),
               let forecast = try? JSONDecoder().decode(Forecast.self, from: data) else { return nil }
-        return Entry(forecast: forecast, bucket: bucket)
+        // The hour comes from the forecast itself, not the file name: a stale file under this hour's name is stale.
+        return Entry(forecast: forecast, bucket: Self.bucket(of: forecast.fetchedAt))
     }
 
     private func prune() {
