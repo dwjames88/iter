@@ -124,7 +124,7 @@ struct LocationsScreen: View {
 
     private func deleteFolder(_ target: FolderRecord) {
         folderToDelete = nil
-        if navigation.selection == .locationFolder(target.id) { navigation.selection = target.parent.map { .locationFolder($0.id) } ?? .locations }
+        if navigation.selection == .locationFolder(target.id) { navigation.selection = .locations }
         store.deleteFolder(target)
     }
 

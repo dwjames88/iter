@@ -241,17 +241,6 @@
         }
       }
     },
-    "%@ › %@" : {
-      "comment" : "Move to Folder menu: a subfolder under its folder",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ › %2$@"
-          }
-        }
-      }
-    },
     "%@'s model steps every three hours; Iter fills the hours between." : {
       "comment" : "Score footnote: three-hourly model. Argument is the provider name"
     },

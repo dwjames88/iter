@@ -6,7 +6,7 @@ import IterFeatures
 
 /// Locations: the spots you saved and the ones you added, in one list beside their map, with their folders as rows at
 /// the top (open one, drop locations on it, or use a location's Move to Folder menu). In a folder it shows that folder's
-/// spots (and its subfolders'). The sidebar only lists what is pinned. Replaces Saved (plan P3.9, critique C65).
+/// spots. The sidebar only lists what is pinned. Replaces Saved (plan P3.9, critique C65).
 struct LocationsView: View {
     /// The location folder to show; nil = All Locations.
     let folderID: UUID?
@@ -82,7 +82,7 @@ struct LocationsView: View {
         }
     }
 
-    /// The folders listed at the top: all of them on All Locations, a folder's subfolders inside it.
+    /// The folders listed at the top: all of them on All Locations, none inside a folder.
     private var folders: [FolderRecord] { locationFolders(in: folder, store: model.store) }
 
     /// File > New Folder while this screen is up.
@@ -134,10 +134,10 @@ struct LocationsView: View {
         VStack(spacing: 0) {
             FloatingPanelHeader(title: title, subtitle: Text("\(shown.count) spots", comment: "Locations count under the title")) {
                 if let folder {
-                    Button { navigation.show(folder.parent.map { .locationFolder($0.id) } ?? .locations) } label: {
+                    Button { navigation.show(.locations) } label: {
                         Label(String(localized: "Back", comment: "Toolbar button: up one level in Locations"), systemImage: "chevron.backward")
                     }
-                    .help(Text("Back to \(folder.parent?.name ?? String(localized: "All Locations", comment: "Screen title"))", comment: "Tooltip"))
+                    .help(Text("Back to \(String(localized: "All Locations", comment: "Screen title"))", comment: "Tooltip"))
                 }
                 newFolderButton
                 sortMenu

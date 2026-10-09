@@ -71,12 +71,10 @@ extension View {
 
 // MARK: - Folders
 
-/// The folders to list on a Locations screen: every root folder on All Locations, a root folder's subfolders inside it,
-/// none inside a subfolder.
+/// The folders to list on a Locations screen: every folder on All Locations, none inside a folder (folders do not nest).
 @MainActor
 func locationFolders(in folder: FolderRecord?, store: IterStore) -> [FolderRecord] {
-    guard let folder else { return store.folders(kind: .locations) }
-    return store.subfolders(of: folder)
+    folder == nil ? store.folders(kind: .locations) : []
 }
 
 /// A folder row for a system List: folder glyph, name, a pin mark when pinned, how many locations it holds. Opens the

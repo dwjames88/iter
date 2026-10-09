@@ -6,14 +6,14 @@ import IterFeatures
 
 /// What the name prompt on the All Trips page is asking for.
 enum TripNamePrompt: Identifiable, Equatable {
-    /// A new folder, optionally inside `parent`, optionally taking `trip` in at once.
-    case newFolder(parent: UUID?, trip: UUID?)
+    /// A new folder, optionally taking `trip` in at once.
+    case newFolder(trip: UUID?)
     case renameFolder(UUID)
     case renameTrip(UUID)
 
     var id: String {
         switch self {
-        case .newFolder(let parent, let trip): "new-\(parent?.uuidString ?? "root")-\(trip?.uuidString ?? "none")"
+        case .newFolder(let trip): "new-\(trip?.uuidString ?? "none")"
         case .renameFolder(let id): "folder-\(id)"
         case .renameTrip(let id): "trip-\(id)"
         }
@@ -69,11 +69,9 @@ private struct TripNamePromptModifier: ViewModifier {
 
     private func initialText(_ prompt: TripNamePrompt) -> String {
         switch prompt {
-        case .newFolder(let parent, _):
-            let siblings = parent.flatMap { model.store.folder(id: $0) }.map { model.store.subfolders(of: $0) }
-                ?? model.store.folders(kind: .trips)
+        case .newFolder:
             return LibraryNaming.uniqueName(String(localized: "New Folder", comment: "Default name of a new folder"),
-                                            among: siblings.map(\.name))
+                                            among: model.store.folders(kind: .trips).map(\.name))
         case .renameFolder(let id): return model.store.folder(id: id)?.name ?? ""
         case .renameTrip(let id): return model.store.trip(id: id)?.name ?? ""
         }
@@ -82,10 +80,9 @@ private struct TripNamePromptModifier: ViewModifier {
     private func commit() {
         guard let prompt, let name = LibraryNaming.cleanedName(text) else { return }
         switch prompt {
-        case .newFolder(let parent, let tripID):
-            let parentFolder = parent.flatMap { model.store.folder(id: $0) }
+        case .newFolder(let tripID):
             let trips = tripID.flatMap { model.store.trip(id: $0) }.map { [$0] } ?? []
-            _ = model.store.createFolder(name: name, kind: .trips, parent: parentFolder, trips: trips)
+            _ = model.store.createFolder(name: name, kind: .trips, trips: trips)
         case .renameFolder(let id):
             if let folder = model.store.folder(id: id) { model.store.renameFolder(folder, to: name) }
         case .renameTrip(let id):
@@ -103,7 +100,7 @@ extension View {
 
 // MARK: - Menus
 
-/// Move to Folder for the All Trips page: No Folder, every folder (subfolders under their parent), then New Folder.
+/// Move to Folder for the All Trips page: No Folder, every folder, then New Folder.
 struct TripMoveMenu: View {
     @Environment(AppModel.self) private var model
     let trip: TripRecord
@@ -112,18 +109,14 @@ struct TripMoveMenu: View {
     var body: some View {
         Menu {
             entry(String(localized: "No Folder", comment: "Move to Folder menu: unfile"), folder: nil, marked: trip.folder == nil)
-            let roots = model.store.folders(kind: .trips)
-            if !roots.isEmpty { Divider() }
-            ForEach(roots, id: \.id) { root in
-                entry(root.name, folder: root, marked: trip.folder?.id == root.id)
-                ForEach(model.store.subfolders(of: root), id: \.id) { sub in
-                    entry(String(localized: "\(root.name) › \(sub.name)", comment: "Move to Folder menu: a subfolder under its folder"),
-                          folder: sub, marked: trip.folder?.id == sub.id)
-                }
+            let folders = model.store.folders(kind: .trips)
+            if !folders.isEmpty { Divider() }
+            ForEach(folders, id: \.id) { folder in
+                entry(folder.name, folder: folder, marked: trip.folder?.id == folder.id)
             }
             Divider()
             Button(String(localized: "New Folder…", comment: "Move to Folder menu")) {
-                prompt = .newFolder(parent: nil, trip: trip.id)
+                prompt = .newFolder(trip: trip.id)
             }
         } label: {
             Label(String(localized: "Move to Folder", comment: "Context menu"), systemImage: "folder")
@@ -198,7 +191,7 @@ struct TripFolderMenu: View {
                     : Label(String(localized: "Pin to Sidebar", comment: "Folder menu"), systemImage: "pin")
             }
         }
-        Button { prompt = .newFolder(parent: nil, trip: nil) } label: {
+        Button { prompt = .newFolder(trip: nil) } label: {
             Label(String(localized: "New Folder…", comment: "Folder menu"), systemImage: "folder.badge.plus")
         }
         Divider()

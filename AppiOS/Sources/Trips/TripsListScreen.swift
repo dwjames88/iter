@@ -5,7 +5,7 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// Which trips the page shows: everything in sections, only the pinned ones, or one folder (and its subfolders).
+/// Which trips the page shows: everything in sections, only the pinned ones, or one folder.
 private enum TripsFilter: Hashable {
     case all, pinned
     case folder(UUID)
@@ -48,7 +48,7 @@ struct TripsListScreen: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
-                    Button { prompt = .newFolder(parent: nil, trip: nil) } label: {
+                    Button { prompt = .newFolder(trip: nil) } label: {
                         Label(String(localized: "New Folder…", comment: "Menu item"), systemImage: "folder.badge.plus")
                     }
                     Button { importing = true } label: {

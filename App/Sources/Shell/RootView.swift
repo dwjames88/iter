@@ -139,7 +139,7 @@ struct RootView: View {
                 navigation.selection = .trip(first.id)
             }
             if let name = AppLaunch.locationFolderName,
-               let folder = model.store.folders(kind: .locations).flatMap({ [$0] + model.store.subfolders(of: $0) })
+               let folder = model.store.folders(kind: .locations)
                    .first(where: { $0.name == name }) {
                 navigation.selection = .locationFolder(folder.id)
             }

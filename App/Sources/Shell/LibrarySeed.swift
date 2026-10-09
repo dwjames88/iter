@@ -11,11 +11,11 @@ enum LibrarySeed {
         let store = model.store
         let tomorrow = model.today(in: .current).adding(days: 1)
 
-        // Trips: the sample trip, pinned (it downloads like any pinned trip); a folder with a subfolder (pinned); one unfiled trip.
+        // Trips: the sample trip, pinned (it downloads like any pinned trip); a pinned folder; one unfiled trip.
         let sample = store.seedSampleTrip(startDay: tomorrow)
         model.offline.pin(sample)
         let utah = store.createFolder(name: "Utah 2027", kind: .trips)
-        let scouting = store.createFolder(name: "Scouting", kind: .trips, parent: utah)
+        let scouting = store.createFolder(name: "Scouting", kind: .trips)
         if let canyon = TripTemplates.template(id: "canyon-country") {
             let trip = store.createTrip(from: canyon, startDay: tomorrow.adding(days: 30))
             store.renameTrip(trip, to: "Canyon Country in Spring")

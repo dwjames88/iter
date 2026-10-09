@@ -17,12 +17,12 @@ extension AppNavigation {
     /// Makes a folder named "New Folder" (numbered if taken), optionally holding a selection, and asks the screen that
     /// shows it to rename it (`renamingID`).
     @discardableResult
-    func newFolder(model: AppModel, kind: FolderKind? = nil, parent: FolderRecord? = nil,
+    func newFolder(model: AppModel, kind: FolderKind? = nil,
                    trips: [TripRecord] = [], places: [PlaceRecord] = []) -> FolderRecord {
         let kind = kind ?? newFolderKind
-        let siblings = parent.map { model.store.subfolders(of: $0) } ?? model.store.folders(kind: kind)
+        let siblings = model.store.folders(kind: kind)
         let name = LibraryNaming.uniqueName(String(localized: "New Folder", comment: "Default name of a new folder"), among: siblings.map(\.name))
-        let folder = model.store.createFolder(name: name, kind: kind, parent: parent, trips: trips, places: places)
+        let folder = model.store.createFolder(name: name, kind: kind, trips: trips, places: places)
         renamingID = folder.id
         return folder
     }
@@ -38,31 +38,24 @@ struct LibraryDrops {
 
     private func trips(_ items: [LibraryDragItem]) -> [TripRecord] { items.compactMap(\.tripID).compactMap { store.trip(id: $0) } }
     private func places(_ items: [LibraryDragItem]) -> [PlaceRecord] { items.compactMap(\.placeID).compactMap { store.place(id: $0) } }
-    private func folders(_ items: [LibraryDragItem], kind: FolderKind) -> [FolderRecord] {
-        items.compactMap(\.folderID).compactMap { store.folder(id: $0) }.filter { $0.kind == kind }
-    }
-
-    /// A trips folder: trips are filed at its end, a folder moves inside it (root folders without subfolders only).
+    /// A trips folder: trips are filed at its end. Folders do not nest, so a dropped folder does nothing.
     func onTripsFolder(_ items: [LibraryDragItem], _ folder: FolderRecord) -> Bool {
-        let moving = trips(items), nested = folders(items, kind: .trips)
+        let moving = trips(items)
         if !moving.isEmpty { store.moveTrips(moving, to: folder, index: nil) }
-        for dragged in nested where dragged.id != folder.id { store.moveFolder(dragged, to: folder, index: nil) }
-        return !moving.isEmpty || !nested.isEmpty
+        return !moving.isEmpty
     }
 
-    /// "All Trips": trips are unfiled, folders go back to the top level.
+    /// "All Trips": trips are unfiled.
     func onAllTrips(_ items: [LibraryDragItem]) -> Bool {
-        let moving = trips(items), nested = folders(items, kind: .trips)
+        let moving = trips(items)
         if !moving.isEmpty { store.moveTrips(moving, to: nil, index: nil) }
-        for dragged in nested { store.moveFolder(dragged, to: nil, index: nil) }
-        return !moving.isEmpty || !nested.isEmpty
+        return !moving.isEmpty
     }
 
-    /// A locations folder: places are filed in it, a folder moves inside it.
+    /// A locations folder: places are filed in it.
     func onLocationsFolder(_ items: [LibraryDragItem], _ folder: FolderRecord) -> Bool {
-        let moving = places(items), nested = folders(items, kind: .locations)
+        let moving = places(items)
         if !moving.isEmpty { store.movePlaces(moving, to: folder, index: nil) }
-        for dragged in nested where dragged.id != folder.id { store.moveFolder(dragged, to: folder, index: nil) }
-        return !moving.isEmpty || !nested.isEmpty
+        return !moving.isEmpty
     }
 }

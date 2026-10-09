@@ -67,7 +67,7 @@ private struct FailingGeocoder: Geocoding {
         let trips = model.store.trips()
         if let first = trips.first { model.store.setPinned(first, true) }
         let utah = model.store.createFolder(name: "Utah 2027", kind: .trips)
-        model.store.createFolder(name: "Scouting", kind: .trips, parent: utah)
+        model.store.createFolder(name: "Scouting", kind: .trips)
         let canyon = model.store.createTrip(name: "Canyon Country", startDay: LocalDay(year: 2027, month: 4, day: 3), dayCount: 4)
         model.store.moveTrips([canyon], to: utah, index: nil)
         model.store.createTrip(name: "Weekend Away", startDay: LocalDay(year: 2026, month: 11, day: 14), dayCount: 2)
