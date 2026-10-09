@@ -56,12 +56,38 @@ struct LocationsView: View {
         .locationFolderNamePrompt($folderPrompt)
         .onChange(of: navigation.newFolderRequest) { takeNewFolderRequest() }
         .onAppear { takeNewFolderRequest() }
+        .task { if folderID == nil, DebugScripts.dragScript == "spot-to-folder" { await runSpotToFolderScript() } }
         .confirmationDialog(LightText.deleteTitle(pendingDelete?.name ?? ""), isPresented: Binding(get: { pendingDelete != nil }, set: { if !$0 { pendingDelete = nil } }),
                             titleVisibility: .visible, presenting: pendingDelete) { record in
             Button(role: .destructive) { delete(record) } label: { Text(LightText.deleteSpot) }
         } message: { record in
             Text(LightText.deleteMessage(stops: record.stops?.count ?? 0))
         }
+    }
+
+    // MARK: Scripted drag (`-IterDragScript spot-to-folder`)
+
+    /// Runs the drop handler a spot dragged onto a folder row calls (`LibraryDrops.onLocationsFolder`) with the hover
+    /// highlight shown first, and logs the folders' contents before and after. The gesture itself is not driven.
+    private func runSpotToFolderScript() async {
+        await DebugScripts.pause(5)
+        let store = model.store
+        guard let target = store.folders(kind: .locations).first,
+              let place = store.savedPlaces().first(where: { $0.folder == nil }) else { DebugScripts.say("drag: no folder or loose spot"); return }
+        func state() -> String {
+            store.folders(kind: .locations).map { "\($0.name)=\(store.savedPlaces(in: $0).map(\.name))" }.joined(separator: " ")
+        }
+        DebugScripts.say("drag before: \(state()); dragging \(place.name) onto \(target.name)")
+        await DebugScripts.capture("drag-spot-0-before")
+        ScriptedDropHover.shared.folderID = target.id
+        await DebugScripts.capture("drag-spot-1-hover")
+        let accepted = LibraryDrops(model: model).onLocationsFolder([.place(place.id)], target)
+        ScriptedDropHover.shared.folderID = nil
+        DebugScripts.say("drag drop accepted=\(accepted) after: \(state())")
+        await DebugScripts.capture("drag-spot-2-after")
+        navigation.show(.locationFolder(target.id))
+        await DebugScripts.capture("drag-spot-3-folder")
+        DebugScripts.finish()
     }
 
     // MARK: Data
