@@ -4,6 +4,8 @@
 
 ## What changed (2026-10-07)
 
+- **Trip planner card (Mac).** Open a trip: the card is centred over the map (about 560 pt at 1280 wide, up to 800 pt in a large window), the route is framed in the strip on its left, and Share and More are round glass buttons in its top-right corner with the title beside them. The first cell of the day strip is All Days; the chosen day has an accent outline, accent day name and an accent wash on its header. Click a stop: its day highlights, the map does not zoom (it pans only if the pin is out of view). Click a pin: its row scrolls into view. Drag a stop onto another row: an accent line with a round end shows where it lands. `-IterTripDay 2` opens on day 2.
+
 Quick Mac checks, with the sample weather on (**Debug ▸ Use Sample Weather**) and Mesa Arch open as a spot page or panel.
 
 - **Compass rose.** At the foot of **Light through the day** there is a compass rose (no separate sun and moon module). Drag the time scrubber under it: the sun and moon marks move, and the timeline's marker follows (they share one scrubber). Event labels sit next to their marks. With a classic view the wedge is labelled just outside the rim ("View 263° W"), always shown, never inside the wedge.

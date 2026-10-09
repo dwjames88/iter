@@ -117,6 +117,35 @@ Light windows across clock changes (Los Angeles, London, Sydney, Auckland), pola
 
 Before the pass: 645 tests (165 + 69 + 299 + 22 + 67 + 6 + 17 across the package targets). After: 808 tests (212 + 110 + 347 + 22 + 75 + 23 + 19), plus 86 in IterUpdater and 68 in the iOS app tests.
 
+## Pass 2: trip builder
+
+Same method as above (Release, re-stamped copy, in-memory store, sample weather, 1280x820, median of 3 interleaved runs, MapKit directions live). "Before" is the tree at the start of the pass, "after" is the branch. `TripPerfScript` gained a drag-reorder step (a drop before the first stop, and back), run through the same call the list's drop handler makes.
+
+| Interaction | Before, sync / settle | After, sync / settle |
+|---|---|---|
+| Switch day (n=10 per run) | 0.1 / 44 ms | 0.1 / 26 ms |
+| Select a stop (n=6) | 0.1 / 75 ms | 0.1 / 36 ms |
+| Deselect | 0.0 / 45 ms | 0.1 / 25 ms |
+| Nudge a stop down, up | 10 / 82, 8 / 71 ms | 11 / 57, 13 / 63 ms |
+| Drag-reorder (drop), restore | not scripted | 15 / 78, 8 / 51 ms |
+| Move to another day, back | 12 / 63, 11 / 64 ms | 8 / 50, 8 / 43 ms |
+
+Main-thread lag while each phase ran (the sum of every probe that ran late, "blocked"): days 309 to 98 ms, selects 354 to 73 ms, nudges 71 to 73 ms, moves 90 to 46 ms. The worst single stall in each phase was 59 to 85 ms before and 32 to 57 ms after. Counters over the whole script: map body evaluations 124 to 65 (with two more interactions in the after script), camera settles 32 to 22, map camera requests that were answered with a second animated move after the first (`trip.camera.reapply`): 9 in the day phase and 4 in the select phase alone before, 0 after the first good settle. Idle: every counter stays flat for the 10 seconds in both.
+
+Time Profiler, main thread, whole interaction part of the script: 8.3 s before, 7.9 s after, with two more interactions in the after run. About half of both is MapKit's own frame work on the main thread (`md::`, 4.1 s to 3.9 s) and a quarter Core Animation commits; SwiftUI view-graph updates fell from 1.8 s to 1.6 s. The map renders on the main thread while the camera animates, so a day switch costs about 400 ms of main-thread time however well the app code behaves; what changed is that it is paid once per switch and not once or twice.
+
+### What was slow or glitchy, and why
+
+1. **The camera moved twice per fit.** The map reports the camera it shows; MapKit frames a requested region inside the safe area (the card, the toolbar), so the settled region never matched the request closely enough and `MapCameraPolicy` answered with a re-request, a second animated move after nearly every day switch. After the first good settle the trip builder now keeps a missed settle as it is. A re-request before it (MapKit's default camera ahead of layout) is kept.
+2. **Selecting a stop refitted the map.** A click made its day the focus day, which fitted the camera to that day and animated the map away from where the user left it, then panned to the pin as well. A selection now moves the highlight and the focus day only (`setFocusDay(_, refit: false)`) and pans only if the pin is out of view; `contentChanged()` acts only when the coordinates it would frame differ from the last ones framed.
+3. **One body for everything.** `selection` and `selectedDay` were `@State` in the screen's root view, so choosing a stop re-evaluated the header, the day strip, the list (building every row's value) and the map (every polyline and pin). They now live in `TripViewState`, an `@Observable` read property by property by the list, the map and the strip, and the corner buttons, header and card are not touched by a selection.
+4. **Rows and pins were not diffable.** Plan rows and map pins are now `Equatable` views drawn with `.equatable()`: a row is rebuilt only when its own value (or whether its day is the selected one) changes. The layout, days and suggestions are published only when they differ, so a recompute that changes nothing invalidates nothing (`layoutPublishCount`).
+5. **Drag state invalidated the list.** `dropSpot` was `@State` on the list with `.animation(.default, value: dropSpot)`, so every row crossed during a drag re-evaluated the whole list inside an animation. It is now a `TripDropCoordinator` read only by the drop-line overlays; the indicator is an accent line with a round end across the top of the row the stop lands before, and the animation is gone.
+6. **Route overlay weight.** A drive's road path has a vertex every few metres; every day switch restyles the polylines. The drawn copy is thinned with Douglas-Peucker to about 25 m (`PathSimplifier`); the full path stays in the drive leg.
+7. **Not changed.** Store edits (nudge, move, drop) still save synchronously on the main actor, 8 to 15 ms (see "What is left"): moving the save off the interaction path would make an edit that the app reports as done not yet durable, and the settle after an edit is dominated by SwiftUI and MapKit work, not the save. Drag-reorder across days stays on `draggable` and `dropDestination`: `onMove` cannot move a row between day containers.
+
+Pinned by tests (`TripBuilderPerfTests`): a selection issues no camera request, repeated `contentChanged()` for the same framing is free, an identical recompute publishes no layout, a missed settle after the first good one is not asked again, and the drawn route is thinned but keeps its ends.
+
 ## What is left
 
 * **Light panel open in Explore** settles in about 230 ms, almost all SwiftUI building the panel's view tree. Cutting it needs the panel restructured; not done.

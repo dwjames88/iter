@@ -9,6 +9,8 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 - **Licensing groundwork**: Iter can now check a licence key with Lemon Squeezy, keep it in the Keychain and work for 14 days offline. It is hidden and switched off, so nothing changes for anyone: Iter is still free, and nothing asks for a key.
 
 ### Changed
+- **Trip planner card**: the day planner is a wider card (560 to 800 pt, growing with the window) in the middle of the map, which frames the route in the strip beside it. Share and More are round glass buttons in the card's corner and the title sits beside them, not under them. The day strip starts with All Days and marks the chosen day in the accent; each day shows Sunrise at and Sunset at on sky-coloured badges; stops carry the same numbered accent disc as their map pin; Add Stop is a standard button.
+- **Trip planner speed**: picking a stop or day, dragging a stop and nudging are quicker and no longer make the map zoom twice. Choosing a stop pans the map only if its pin is out of view and never refits it.
 - **Search always looks the text up first**: Return in Explore's search field now always searches your places and Apple Maps, so a long place name such as "Great Smoky Mountains National Park" finds the park instead of going to Ask Iter. When the text reads like a request ("foggy forest near Portland for sunrise", a question, or a phrase starting with "find" or "show me"), an **Ask Iter** suggestion sits above the results; choose it to ask.
 
 ### Fixed
