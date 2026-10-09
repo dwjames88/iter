@@ -64,9 +64,9 @@ public struct NewTripDraft: Hashable, Sendable {
 public final class TripsHomeModel {
     public static let maximumDayCount = 30
 
-    @ObservationIgnored private let store: IterStore
-    @ObservationIgnored private let engine: LightEngine
-    @ObservationIgnored private let now: @MainActor () -> Date
+    @ObservationIgnored let store: IterStore
+    @ObservationIgnored let engine: LightEngine
+    @ObservationIgnored let now: @MainActor () -> Date
 
     public init(store: IterStore, engine: LightEngine, now: @escaping @MainActor () -> Date = { Date() }) {
         self.store = store

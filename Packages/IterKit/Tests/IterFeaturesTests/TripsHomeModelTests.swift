@@ -76,3 +76,48 @@ import IterData
         #expect(h.store.trips().count == before, "a failed import changes nothing")
     }
 }
+
+@MainActor
+@Suite struct TripsOverviewTests {
+    private func summary(_ id: UUID = UUID(), start: LocalDay, days: Int) -> TripSummary {
+        TripSummary(id: id, name: "T", startDay: start, dayCount: days, stopCount: 0, next: nil)
+    }
+
+    @Test func heroIsTheEarliestTripThatHasNotEnded() {
+        let today = LocalDay(year: 2026, month: 10, day: 9)
+        let past = summary(start: LocalDay(year: 2026, month: 9, day: 1), days: 3)
+        let underway = summary(start: LocalDay(year: 2026, month: 10, day: 8), days: 3)
+        let later = summary(start: LocalDay(year: 2026, month: 11, day: 1), days: 3)
+        #expect(TripsHomeModel.heroID(among: [past, later, underway], today: today) == underway.id)
+        #expect(TripsHomeModel.heroID(among: [past, later], today: today) == later.id)
+    }
+
+    @Test func heroFallsBackToTheMostRecentlyFinished() {
+        let today = LocalDay(year: 2026, month: 10, day: 9)
+        let old = summary(start: LocalDay(year: 2026, month: 3, day: 1), days: 2)
+        let recent = summary(start: LocalDay(year: 2026, month: 9, day: 1), days: 2)
+        #expect(TripsHomeModel.heroID(among: [old, recent], today: today) == recent.id)
+        #expect(TripsHomeModel.heroID(among: [], today: today) == nil)
+    }
+
+    @Test func groupsPinnedFoldersAndOthersWithoutRepeatingTheHero() {
+        let h = TripHarness()
+        let a = h.store.createTrip(name: "A", startDay: TripHarness.start, dayCount: 2)
+        let b = h.store.createTrip(name: "B", startDay: TripHarness.start.adding(days: 10), dayCount: 2)
+        let c = h.store.createTrip(name: "C", startDay: TripHarness.start.adding(days: 20), dayCount: 2)
+        let folder = h.store.createFolder(name: "Utah", kind: .trips)
+        let empty = h.store.createFolder(name: "Idea Box", kind: .trips)
+        h.store.moveTrips([b], to: folder, index: nil)
+        h.store.setPinned(c, true)
+        let home = TripsHomeModel(store: h.store, engine: h.scheduler.engine,
+                                  now: { TripHarness.start.adding(days: -1).at(hour: 9, in: TripHarness.denver) })
+        let overview = home.overview(today: TripHarness.start.adding(days: -1), pinnedTitle: "Pinned", otherTitle: "Other Trips",
+                                     subfolderTitle: { "\($0) › \($1)" })
+        #expect(overview.tripCount == 3)
+        #expect(overview.hero?.id == a.id)
+        #expect(overview.sections.map(\.title) == ["Pinned", "Utah", "Idea Box"])
+        #expect(overview.sections[1].entries.map(\.id) == [b.id])
+        #expect(overview.sections[2].folderID == empty.id)
+        #expect(overview.sections[2].entries.isEmpty)
+    }
+}
