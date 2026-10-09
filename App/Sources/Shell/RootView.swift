@@ -13,6 +13,7 @@ struct RootView: View {
     @SceneStorage("sidebarSelection") private var storedSelection: Data?
 
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
+    @FocusState private var searchFocused: Bool
     @State private var autoCollapsed = false
     @State private var windowWidth: CGFloat = 0
     /// Below this the sidebar, list and detail cannot all fit at their minimums.
@@ -38,6 +39,12 @@ struct RootView: View {
         } detail: {
             DetailView()
         }
+        // One search field at the top of the sidebar, as in Maps; the screen showing takes what is typed.
+        .searchable(text: $navigation.searchText, placement: .sidebar, prompt: searchPrompt)
+        .searchFocused($searchFocused)
+        .onSubmit(of: .search) { submitSearch() }
+        .onChange(of: navigation.focusSearchRequest) { searchFocused = true }
+        .onChange(of: isFilteringLocations) { navigation.searchText = "" }
         .environment(navigation)
         .frame(minWidth: IterSize.mainWindowMinWidth, minHeight: IterSize.windowMinHeight)
         .background(MainWindowConfigurator(minSize: CGSize(width: IterSize.mainWindowMinWidth, height: IterSize.windowMinHeight), contentWidth: $windowWidth))
@@ -70,6 +77,25 @@ struct RootView: View {
         }
         // A selected trip or folder that is deleted (or whose creation is undone) falls back to its section's landing.
         .onChange(of: model.store.revision) { fixStaleSelection() }
+    }
+
+    /// Locations filters with the field; everywhere else it searches places.
+    private var isFilteringLocations: Bool {
+        switch navigation.selection {
+        case .locations, .locationFolder: true
+        default: false
+        }
+    }
+
+    private var searchPrompt: Text {
+        isFilteringLocations ? Text("Search locations", comment: "Search field prompt")
+                             : Text("Search places or ask Iter", comment: "Explore search field prompt: one field for place names and requests")
+    }
+
+    private func submitSearch() {
+        guard !isFilteringLocations else { return }
+        if navigation.selection != .explore { navigation.show(.explore) }
+        navigation.searchSubmitRequest += 1
     }
 
     @State private var showsImportError = false

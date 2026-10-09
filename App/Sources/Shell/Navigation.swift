@@ -31,6 +31,11 @@ final class AppNavigation {
 
     /// Explore's search field focus request (Edit > Find).
     var focusSearchRequest = 0
+    /// The window's one search field, at the top of the sidebar as in Maps: Explore searches places and asks Iter with
+    /// it; Locations filters with it.
+    var searchText = ""
+    /// Return in the search field: Explore runs the search (switching to Explore from anywhere but Locations).
+    var searchSubmitRequest = 0
     /// Explore: add-spot mode (click the map to drop a pin).
     var addSpotModeRequest = 0
     /// Trips: a "New Trip" request from the menu or toolbar.

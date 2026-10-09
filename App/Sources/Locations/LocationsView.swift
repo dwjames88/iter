@@ -12,7 +12,8 @@ struct LocationsView: View {
 
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
-    @State private var query = ""
+    /// The window's search field (in the sidebar) filters the list.
+    private var query: String { navigation.searchText }
     @State private var sort: SavedSort = .name
     @State private var filter: SavedFilter = .all
     @State private var selection: Set<UUID> = []
@@ -41,7 +42,6 @@ struct LocationsView: View {
                 } map: { insets in
                     LocationsMap(items: shown, selection: $selection, insets: insets)
                 }
-                .searchable(text: $query, placement: .sidebar, prompt: Text("Search locations", comment: "Search field prompt"))
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

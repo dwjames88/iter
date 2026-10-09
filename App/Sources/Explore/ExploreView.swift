@@ -51,7 +51,7 @@ struct ExploreView: View {
 
 /// Requests from menus that were already handled by a previous Explore view, per window.
 @MainActor private enum HandledRequests {
-    static var focus: [ObjectIdentifier: Int] = [:]
+    static var submit: [ObjectIdentifier: Int] = [:]
     static var addSpot: [ObjectIdentifier: Int] = [:]
 }
 
@@ -59,7 +59,6 @@ private struct ExploreContent: View {
     @Bindable var explore: ExploreModel
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
-    @FocusState private var searchFocused: Bool
     @Environment(\.openURL) private var openURL
 
     var body: some View {
@@ -70,10 +69,10 @@ private struct ExploreContent: View {
         }
         .navigationTitle(Text("Explore", comment: "Window title"))
         .toolbar(removing: .title)
-        .searchable(text: $explore.query, placement: .sidebar,
-                    prompt: Text("Search places or ask Iter", comment: "Explore search field prompt: one field for place names and requests"))
-        .searchFocused($searchFocused)
-        .onSubmit(of: .search) { explore.submitSearch() }
+        // The search field is the window's, in the sidebar (RootView); its text and Return reach Explore here.
+        .onChange(of: navigation.searchText) { _, text in if explore.query != text { explore.query = text } }
+        .onChange(of: explore.query) { _, query in if navigation.searchText != query { navigation.searchText = query } }
+        .onChange(of: navigation.searchSubmitRequest) { handleRequests() }
         .toolbar { toolbar }
         .sheet(isPresented: draftPresented) {
             if let coordinate = explore.draftCoordinate {
@@ -84,12 +83,12 @@ private struct ExploreContent: View {
         .onAppear {
             explore.start()
             explore.requestInitialCamera()
+            if navigation.searchText.isEmpty { navigation.searchText = explore.query } else { explore.query = navigation.searchText }
             handleRequests()
         }
         // A fix that arrives later, or a new radius, regroups the list; the camera follows unless the user moved it.
         .onChange(of: model.location.coordinate) { explore.locationChanged() }
         .onChange(of: model.location.radiusMiles) { explore.contentChanged() }
-        .onChange(of: navigation.focusSearchRequest) { handleRequests() }
         .onChange(of: navigation.addSpotModeRequest) { handleRequests() }
     }
 
@@ -99,9 +98,9 @@ private struct ExploreContent: View {
 
     private func handleRequests() {
         let key = ObjectIdentifier(navigation)
-        if navigation.focusSearchRequest != HandledRequests.focus[key, default: 0] {
-            HandledRequests.focus[key] = navigation.focusSearchRequest
-            searchFocused = true
+        if navigation.searchSubmitRequest != HandledRequests.submit[key, default: 0] {
+            HandledRequests.submit[key] = navigation.searchSubmitRequest
+            explore.submitSearch()
         }
         if navigation.addSpotModeRequest != HandledRequests.addSpot[key, default: 0] {
             HandledRequests.addSpot[key] = navigation.addSpotModeRequest

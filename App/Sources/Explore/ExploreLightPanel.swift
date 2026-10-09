@@ -43,6 +43,7 @@ struct ExploreLightPanel: View {
                         VStack(alignment: .leading, spacing: IterSpace.lg) {
                             placeHeader
                             actionRow
+                            lightSummary
                             SpotImages(spot: spot)
                                 .clipShape(RoundedRectangle(cornerRadius: PlaceActionMetrics.cornerRadius, style: .continuous))
                         }
@@ -149,9 +150,9 @@ struct ExploreLightPanel: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    /// Maps' card header buttons: 29 pt glass circles, 11 pt from the card's edges.
+    /// The card header buttons: 32 pt glass circles (Maps' 29 pt with more room around the glyph), 11.5 pt from the edges.
     fileprivate enum HeaderMetrics {
-        static let size: CGFloat = 29
+        static let size: CGFloat = 32
         static let inset: CGFloat = 11.5
     }
 
@@ -194,8 +195,6 @@ struct ExploreLightPanel: View {
             }
             .font(IterFont.secondary)
             .foregroundStyle(.secondary)
-            lightSummary
-                .padding(.top, IterSpace.sm)
         }
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)
@@ -205,21 +204,13 @@ struct ExploreLightPanel: View {
         Text(verbatim: "·").accessibilityHidden(true)
     }
 
-    /// The next window as the large event unit, "Tomorrow" beside it on the same baseline.
+    /// The next window as a Maps-style feature row under the actions.
     @ViewBuilder private var lightSummary: some View {
         if let window = row.window {
-            HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
-                if LightText.isTomorrow(row) {
-                    Text("Tomorrow", comment: "Place panel: the next window is tomorrow")
-                        .font(IterFont.secondary)
-                        .foregroundStyle(IterColor.textSecondary)
-                }
-                EventScore(window: window, zone: spot.timeZone, timeStyle: .start, variant: .large,
-                           isLoading: row.isLoading, isTomorrow: LightText.isTomorrow(row))
-            }
-            .fixedSize()
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel(LightText.rowLight(row) ?? "")
+            LightWindowRow(window: window, zone: spot.timeZone,
+                           day: LightText.isTomorrow(row) ? String(localized: "Tomorrow", comment: "Place panel: the next window is tomorrow")
+                                                          : String(localized: "Today", comment: "Place panel: the next window is today"),
+                           isLoading: row.isLoading)
         }
     }
 

@@ -63,25 +63,31 @@ private struct MacTileStyle: ButtonStyle {
 /// Measured from Maps' place card action row (Plan, Call, Website).
 enum PlaceActionMetrics {
     #if os(macOS)
-    static let height: CGFloat = 39
-    static let cornerRadius: CGFloat = 15
-    static let glyph: CGFloat = 13
+    static let height: CGFloat = 50
+    static let cornerRadius: CGFloat = 16
+    static let glyph: CGFloat = 14
     static let title = Font.system(size: 11, weight: .semibold)
+    static let labelSpacing: CGFloat = 4
+    static let verticalPadding: CGFloat = 8
     #else
     static let height: CGFloat = 52
     static let cornerRadius: CGFloat = 14
     static let glyph: CGFloat = 17
     static let title = Font.caption.weight(.semibold)
+    static let labelSpacing: CGFloat = 4
+    static let verticalPadding: CGFloat = 8
     #endif
 }
 
 private struct PlaceActionLabelStyle: LabelStyle {
     func makeBody(configuration: Configuration) -> some View {
-        VStack(spacing: 2) {
+        VStack(spacing: PlaceActionMetrics.labelSpacing) {
             configuration.icon.font(.system(size: PlaceActionMetrics.glyph, weight: .semibold))
                 .imageScale(.medium)
             configuration.title.font(PlaceActionMetrics.title).lineLimit(1).minimumScaleFactor(0.85)
         }
+        .padding(.vertical, PlaceActionMetrics.verticalPadding)
+        .padding(.horizontal, IterSpace.sm)
         .frame(maxWidth: .infinity, minHeight: PlaceActionMetrics.height)
     }
 }
