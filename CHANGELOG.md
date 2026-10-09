@@ -15,6 +15,9 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 - **Updates with a damaged feed entry**: one malformed entry in the update feed no longer blocks every update. Iter skips it, notes it in the log, and still offers the other releases.
 - **Drive times after a dropped connection, without a refresh**: while a trip is open, a drive that MapKit throttled or that failed offline is looked up again on its own after 30 seconds, then 1, 2 and 4 minutes, and every 5 minutes after that. "No route" is still final.
 
+### Docs
+- **Glass rules**: `Design/GLASS-RULES.md` collects the Liquid Glass, geometry and component rules from the recent Mac and iOS redesign commits and the HIG in one page for anyone touching UI.
+
 ## [0.2.0] - 2026-10-07
 
 ### Fixed
