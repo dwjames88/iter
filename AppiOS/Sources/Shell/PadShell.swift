@@ -31,23 +31,13 @@ struct PadShell: View {
     }
 }
 
-/// The sidebar, as the Mac's: Trips (All Trips, pinned trips with their offline badge, folders and subfolders as disclosure
-/// groups, then unfiled trips), Locations (All Locations, folders and subfolders), Find (Explore).
+/// The sidebar, as the Mac's: Trips and Locations (each: its "All" page, then what is pinned) and Find (Explore).
+/// Folders are managed inside All Trips and All Locations, not here.
 struct PadSidebar: View {
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
     @Environment(ShellState.self) private var shell
-    @AppStorage("IterExpandedFolders") private var expandedRaw = ""
-    @State private var renaming: Renaming?
-    @State private var renameText = ""
     @State private var showsNewTrip = false
-
-    private enum Renaming: Identifiable {
-        case trip(UUID), folder(UUID)
-        var id: UUID { switch self { case .trip(let id), .folder(let id): id } }
-    }
-
-    private var expansion: FolderExpansion { FolderExpansion(raw: $expandedRaw) }
 
     var body: some View {
         @Bindable var navigation = navigation
@@ -56,13 +46,17 @@ struct PadSidebar: View {
         List(selection: $navigation.selection) {
             Section(String(localized: "Trips", comment: "Sidebar section")) {
                 Label(String(localized: "All Trips", comment: "Sidebar row"), systemImage: "map").tag(SidebarItem.trips)
-                ForEach(store.pinnedTrips(), id: \.id) { trip in tripRow(trip) }
-                ForEach(store.folders(kind: .trips), id: \.id) { folder in TripsFolderRow(folder: folder, expansion: expansion) }
-                ForEach(store.trips(in: nil).filter { !$0.isPinned }, id: \.id) { trip in tripRow(trip) }
+                ForEach(store.pinnedTrips(), id: \.id) { trip in PadTripRow(trip: trip) }
+                ForEach(store.pinnedFolders(kind: .trips), id: \.id) { folder in
+                    PadFolderRow(folder: folder, item: .tripFolder(folder.id))
+                }
             }
             Section(String(localized: "Locations", comment: "Sidebar section")) {
                 Label(String(localized: "All Locations", comment: "Sidebar row"), systemImage: "mappin.and.ellipse").tag(SidebarItem.locations)
-                ForEach(store.folders(kind: .locations), id: \.id) { folder in LocationsFolderRow(folder: folder, expansion: expansion) }
+                ForEach(store.pinnedPlaces(), id: \.id) { place in PadPlaceRow(place: place) }
+                ForEach(store.pinnedFolders(kind: .locations), id: \.id) { folder in
+                    PadFolderRow(folder: folder, item: .locationFolder(folder.id))
+                }
             }
             Section(String(localized: "Find", comment: "Sidebar section")) {
                 Label(String(localized: "Explore", comment: "Sidebar row"), systemImage: "binoculars").tag(SidebarItem.explore)
@@ -71,12 +65,7 @@ struct PadSidebar: View {
         .navigationTitle(String(localized: "Iter", comment: "Sidebar title"))
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Menu {
-                    Button { showsNewTrip = true } label: { Label(String(localized: "New Trip", comment: "Menu item"), systemImage: "plus") }
-                    Button { navigation.newFolder(model: model) } label: {
-                        Label(String(localized: "New Folder", comment: "Menu item"), systemImage: "folder.badge.plus")
-                    }
-                } label: { Label(String(localized: "New", comment: "Toolbar menu"), systemImage: "plus") }
+                Button { showsNewTrip = true } label: { Label(String(localized: "New Trip", comment: "Toolbar button"), systemImage: "plus") }
             }
             ToolbarItem(placement: .bottomBar) {
                 Button { shell.showSettings() } label: {
@@ -87,38 +76,10 @@ struct PadSidebar: View {
         .sheet(isPresented: $showsNewTrip) {
             NewTripSheet(initialStart: model.today(in: .current).adding(days: 1))
         }
-        // `TripContextMenu`, `FolderContextMenu` and New Folder ask for an in-place rename through `renamingID`; on iOS that is an alert.
-        .onChange(of: navigation.renamingID) { _, id in
-            guard let id else { return }
-            navigation.renamingID = nil
-            if let trip = store.trip(id: id) {
-                renameText = trip.name
-                renaming = .trip(id)
-            } else if let folder = store.folder(id: id) {
-                renameText = folder.name
-                renaming = .folder(id)
-            }
-        }
-        .alert(String(localized: "Rename", comment: "Alert title"), isPresented: Binding(get: { renaming != nil }, set: { if !$0 { renaming = nil } })) {
-            TextField(String(localized: "Name", comment: "Rename field"), text: $renameText)
-            Button(String(localized: "Cancel", comment: "Button"), role: .cancel) {}
-            Button(String(localized: "Save", comment: "Button")) { commitRename() }
-        }
     }
-
-    private func commitRename() {
-        guard let name = LibraryNaming.cleanedName(renameText) else { return }
-        switch renaming {
-        case .trip(let id): if let trip = model.store.trip(id: id) { model.store.renameTrip(trip, to: name) }
-        case .folder(let id): if let folder = model.store.folder(id: id) { model.store.renameFolder(folder, to: name) }
-        case nil: break
-        }
-    }
-
-    private func tripRow(_ trip: TripRecord) -> some View { PadTripRow(trip: trip) }
 }
 
-/// One trip: name, a pin mark when pinned, and its offline status.
+/// A pinned trip: name and offline status. Open and Unpin from its menu or a swipe.
 private struct PadTripRow: View {
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
@@ -129,100 +90,83 @@ private struct PadTripRow: View {
             HStack(spacing: IterSpace.xs) {
                 Text(trip.name).lineLimit(1)
                 Spacer(minLength: 0)
-                if trip.isPinned {
-                    Image(systemName: "pin.fill").font(.caption2).foregroundStyle(IterColor.textSecondary)
-                        .accessibilityLabel(Text("Pinned", comment: "VoiceOver: a pinned trip"))
-                }
                 OfflineStatusBadge(tripID: trip.id)
             }
         } icon: {
             Image(systemName: "point.topleft.down.to.point.bottomright.curvepath")
         }
         .tag(SidebarItem.trip(trip.id))
-        .contextMenu { TripContextMenu(trip: trip) }
-        .swipeActions(edge: .leading) {
-            if trip.isPinned {
-                Button { model.offline.unpin(trip) } label: { Label(String(localized: "Unpin", comment: "Swipe action"), systemImage: "pin.slash") }
-                    .tint(IterColor.textSecondary)
-            } else {
-                Button { model.offline.pin(trip) } label: { Label(String(localized: "Pin", comment: "Swipe action"), systemImage: "pin") }
-                    .tint(IterColor.accent)
+        .contextMenu {
+            Button { navigation.show(.trip(trip.id)) } label: {
+                Label(String(localized: "Open", comment: "Context menu"), systemImage: "arrow.right.circle")
             }
+            Button { model.offline.unpin(trip) } label: {
+                Label(String(localized: "Unpin Trip", comment: "Context menu"), systemImage: "pin.slash")
+            }
+            Divider()
+            Button(String(localized: "Delete Trip", comment: "Context menu"), role: .destructive) { delete() }
         }
         .swipeActions(edge: .trailing) {
-            Button(role: .destructive) {
-                if navigation.selection == .trip(trip.id) { navigation.selection = .trips }
-                model.store.deleteTrip(trip)
-            } label: { Label(String(localized: "Delete", comment: "Swipe action"), systemImage: "trash") }
-            Button { navigation.renamingID = trip.id } label: { Label(String(localized: "Rename", comment: "Swipe action"), systemImage: "pencil") }
+            Button(role: .destructive) { delete() } label: { Label(String(localized: "Delete", comment: "Swipe action"), systemImage: "trash") }
+            Button { model.offline.unpin(trip) } label: { Label(String(localized: "Unpin", comment: "Swipe action"), systemImage: "pin.slash") }
                 .tint(IterColor.textSecondary)
         }
     }
-}
 
-/// A trips folder: subfolders, then trips. The row opens and closes; it is not a destination.
-private struct TripsFolderRow: View {
-    @Environment(AppModel.self) private var model
-    let folder: FolderRecord
-    let expansion: FolderExpansion
-
-    var body: some View {
-        let store = model.store
-        DisclosureGroup(isExpanded: expansion.binding(for: folder.id)) {
-            ForEach(store.subfolders(of: folder), id: \.id) { sub in TripsFolderRow(folder: sub, expansion: expansion) }
-            ForEach(store.trips(in: folder).filter { !$0.isPinned }, id: \.id) { trip in PadTripRow(trip: trip) }
-        } label: {
-            Label(folder.name, systemImage: "folder")
-                .contextMenu { FolderContextMenu(folder: folder) }
-                .swipeActions(edge: .trailing) { folderSwipes(folder) }
-        }
+    private func delete() {
+        if navigation.selection == .trip(trip.id) { navigation.selection = .trips }
+        model.store.deleteTrip(trip)
     }
 }
 
-/// A locations folder; with subfolders it is a disclosure group and still a destination.
-private struct LocationsFolderRow: View {
-    @Environment(AppModel.self) private var model
-    let folder: FolderRecord
-    let expansion: FolderExpansion
-
-    var body: some View {
-        let subfolders = model.store.subfolders(of: folder)
-        if subfolders.isEmpty {
-            row(folder).tag(SidebarItem.locationFolder(folder.id))
-        } else {
-            DisclosureGroup(isExpanded: expansion.binding(for: folder.id)) {
-                ForEach(subfolders, id: \.id) { sub in row(sub).tag(SidebarItem.locationFolder(sub.id)) }
-            } label: {
-                row(folder)
-            }
-            .tag(SidebarItem.locationFolder(folder.id))
-        }
-    }
-
-    private func row(_ folder: FolderRecord) -> some View {
-        Label(folder.name, systemImage: "folder")
-            .contextMenu { FolderContextMenu(folder: folder) }
-            .swipeActions(edge: .trailing) { folderSwipes(folder) }
-    }
-}
-
-/// Delete and Rename swipes for a folder row (the delete is undoable through the store).
-@ViewBuilder @MainActor private func folderSwipes(_ folder: FolderRecord) -> some View {
-    FolderSwipeButtons(folder: folder)
-}
-
-private struct FolderSwipeButtons: View {
+/// A pinned folder (trips or locations).
+private struct PadFolderRow: View {
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
     let folder: FolderRecord
+    let item: SidebarItem
 
     var body: some View {
-        Button(role: .destructive) {
-            if navigation.selection == .locationFolder(folder.id) { navigation.selection = .locations }
-            model.store.deleteFolder(folder)
-        } label: { Label(String(localized: "Delete", comment: "Swipe action"), systemImage: "trash") }
-        Button { navigation.renamingID = folder.id } label: { Label(String(localized: "Rename", comment: "Swipe action"), systemImage: "pencil") }
-            .tint(IterColor.textSecondary)
+        Label(folder.name, systemImage: "folder")
+            .lineLimit(1)
+            .tag(item)
+            .contextMenu {
+                Button { navigation.show(item) } label: {
+                    Label(String(localized: "Open", comment: "Context menu"), systemImage: "arrow.right.circle")
+                }
+                Button { model.store.setPinned(folder, false) } label: {
+                    Label(String(localized: "Unpin from Sidebar", comment: "Context menu"), systemImage: "pin.slash")
+                }
+            }
+            .swipeActions(edge: .trailing) {
+                Button { model.store.setPinned(folder, false) } label: { Label(String(localized: "Unpin", comment: "Swipe action"), systemImage: "pin.slash") }
+                    .tint(IterColor.textSecondary)
+            }
+    }
+}
+
+/// A pinned location: opens its spot page.
+private struct PadPlaceRow: View {
+    @Environment(AppModel.self) private var model
+    @Environment(AppNavigation.self) private var navigation
+    let place: PlaceRecord
+
+    var body: some View {
+        Label(place.name, systemImage: "mappin")
+            .lineLimit(1)
+            .tag(SidebarItem.location(place.id))
+            .contextMenu {
+                Button { navigation.show(.location(place.id)) } label: {
+                    Label(String(localized: "Open", comment: "Context menu"), systemImage: "arrow.right.circle")
+                }
+                Button { model.store.setPinned(place, false) } label: {
+                    Label(String(localized: "Unpin from Sidebar", comment: "Context menu"), systemImage: "pin.slash")
+                }
+            }
+            .swipeActions(edge: .trailing) {
+                Button { model.store.setPinned(place, false) } label: { Label(String(localized: "Unpin", comment: "Swipe action"), systemImage: "pin.slash") }
+                    .tint(IterColor.textSecondary)
+            }
     }
 }
 
@@ -233,7 +177,7 @@ struct PadDetail: View {
     var body: some View {
         @Bindable var navigation = navigation
         switch navigation.selection {
-        case .trips, nil:
+        case .trips, .tripFolder, nil:
             NavigationStack(path: $navigation.tripPath) { TripsListScreen().iosSpotDestination() }
         case .trip(let id):
             NavigationStack(path: $navigation.tripPath) { TripBuilderScreen(tripID: id).iosSpotDestination() }.id(id)
@@ -243,6 +187,22 @@ struct PadDetail: View {
             NavigationStack(path: $navigation.locationsPath) { LocationsScreen(folderID: nil).iosSpotDestination() }.id("all-locations")
         case .locationFolder(let id):
             NavigationStack(path: $navigation.locationsPath) { LocationsScreen(folderID: id).iosSpotDestination() }.id(id)
+        case .location(let id):
+            NavigationStack(path: $navigation.locationsPath) { PinnedLocationScreen(placeID: id).iosSpotDestination() }.id(id)
+        }
+    }
+}
+
+/// A location pinned to the sidebar: its spot page.
+private struct PinnedLocationScreen: View {
+    @Environment(AppModel.self) private var model
+    let placeID: UUID
+
+    var body: some View {
+        if let place = model.store.place(id: placeID) {
+            SpotPageScreen(route: SpotRoute(spot: place.spot))
+        } else {
+            ContentUnavailableView(String(localized: "Location not found", comment: "Empty title"), systemImage: "mappin.slash")
         }
     }
 }
