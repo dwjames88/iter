@@ -27,6 +27,9 @@ struct TripRouteMap: View {
     @State private var userInteracted = false
     @State private var paneSize = CGSize.zero
     @State private var appliedRequest = 0
+    /// The framing last applied and how often a settle far from it has been corrected.
+    @State private var framed: GeoRegion?
+    @State private var corrections = 0
     /// The road paths as `CLLocationCoordinate2D`, kept while a drive's path is unchanged so a selection or day change
     /// does not rebuild every polyline's coordinates.
     @State private var paths = PathCache()
@@ -128,6 +131,16 @@ struct TripRouteMap: View {
             // aspect settles MapKit makes on its own never are.
             let byUser = userInteracted
             userInteracted = false
+            // The globe bounds let MapKit settle on a world camera when it lays out before the card does. A pane's shape
+            // never moves the camera that far from what was asked (about 3x at most), so that settle is put right.
+            if !byUser, corrections < Self.maxCorrections, let framed,
+               max(r.span.latitudeDelta, r.span.longitudeDelta) > Self.worldFactor * max(framed.latitudeDelta, framed.longitudeDelta) {
+                corrections += 1
+                IterPerf.count("trip.camera.worldCorrected")
+                // Assigning the region the binding already holds does nothing, so it is nudged.
+                position = .region(Self.distinct(fitted(Self.mkRegion(framed)), from: position))
+                return
+            }
             builder.cameraDidChange(to: GeoRegion(center: Coordinate(latitude: r.center.latitude, longitude: r.center.longitude),
                                                   latitudeDelta: r.span.latitudeDelta, longitudeDelta: r.span.longitudeDelta),
                                     byUser: byUser)
@@ -139,6 +152,20 @@ struct TripRouteMap: View {
 
     // MARK: Geometry
 
+    /// The region to hand the map so the whole of `region` shows in the part of the map the card leaves free. The globe's
+    /// camera is sized by the region's height alone, so a route wider than the free strip's shape would be cropped at its
+    /// sides: the height is raised until the width fits too.
+    private func fitted(_ region: MKCoordinateRegion) -> MKCoordinateRegion {
+        let width = paneSize.width - insets.leading - insets.trailing
+        let height = paneSize.height - insets.top - insets.bottom
+        guard width > 0, height > 0 else { return region }
+        let cosine = max(cos(region.center.latitude * .pi / 180), 0.05)
+        let needed = region.span.longitudeDelta * cosine * height / width
+        guard needed > region.span.latitudeDelta else { return region }
+        return MKCoordinateRegion(center: region.center,
+                                  span: MKCoordinateSpan(latitudeDelta: min(needed, 120), longitudeDelta: region.span.longitudeDelta))
+    }
+
     /// The road paths of every day at full strength, for the snapshot stand-in.
     private func routeCoordinates() -> [Coordinate] {
         let content = builder.mapContent
@@ -146,6 +173,9 @@ struct TripRouteMap: View {
         return content.pins.filter { isActive(day: $0.day) }.flatMap { pin in legs[pin.id] ?? [pin.coordinate] }
     }
 
+    /// A settle wider than this many times the framing asked for is MapKit's default camera, not the pane's shape.
+    private static let worldFactor = 8.0
+    private static let maxCorrections = 3
     private static func mkRegion(_ target: GeoRegion) -> MKCoordinateRegion {
         MKCoordinateRegion(center: coordinate(target.center),
                            span: MKCoordinateSpan(latitudeDelta: min(target.latitudeDelta, 120),
@@ -180,8 +210,12 @@ struct TripRouteMap: View {
         switch request.kind {
         case .fit(let r), .pan(let r): target = r
         }
+        framed = target
+        corrections = 0
         // Assigning the region the binding already holds does nothing, so a re-application of it is nudged.
-        let region = Self.distinct(Self.mkRegion(target), from: position)
+        var framing = Self.mkRegion(target)
+        if case .fit = request.kind { framing = fitted(framing) }
+        let region = Self.distinct(framing, from: position)
         if animated {
             withAnimation(.smooth) { position = .region(region) }
         } else {
