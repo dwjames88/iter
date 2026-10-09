@@ -4,20 +4,22 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// The Locations section: All Locations, then location folders. Folders are destinations; subfolders sit inside a
-/// disclosure group.
+/// The Locations section: All Locations, then the locations and location folders pinned to the sidebar. Folders are
+/// managed in All Locations.
 struct SidebarLocationsSection: View {
     @Environment(AppModel.self) private var model
-    let expansion: FolderExpansion
 
     var body: some View {
         let _ = model.store.revision
+        let store = model.store
         Section {
             Label(String(localized: "All Locations", comment: "Sidebar item"), systemImage: "mappin.and.ellipse")
-                .libraryDrop { LibraryDrops(model: model).onAllLocations($0) }
                 .tag(SidebarItem.locations)
-            ForEach(model.store.folders(kind: .locations), id: \.id) { folder in
-                LocationsFolderRow(folder: folder, expansion: expansion)
+            ForEach(store.pinnedPlaces(), id: \.id) { place in
+                SidebarPlaceRow(place: place)
+            }
+            ForEach(store.pinnedFolders(kind: .locations), id: \.id) { folder in
+                SidebarFolderRow(folder: folder, item: .locationFolder(folder.id))
             }
         } header: {
             Text("Locations", comment: "Sidebar section")
@@ -25,31 +27,23 @@ struct SidebarLocationsSection: View {
     }
 }
 
-private struct LocationsFolderRow: View {
+/// A pinned location: opens its spot page. Open and Unpin from its menu.
+private struct SidebarPlaceRow: View {
     @Environment(AppModel.self) private var model
-    let folder: FolderRecord
-    let expansion: FolderExpansion
+    @Environment(AppNavigation.self) private var navigation
+    let place: PlaceRecord
 
     var body: some View {
-        let subfolders = model.store.subfolders(of: folder)
-        if subfolders.isEmpty {
-            row(folder).tag(SidebarItem.locationFolder(folder.id))
-        } else {
-            DisclosureGroup(isExpanded: expansion.binding(for: folder.id)) {
-                ForEach(subfolders, id: \.id) { sub in
-                    row(sub).tag(SidebarItem.locationFolder(sub.id))
+        Label(place.name, systemImage: "mappin")
+            .lineLimit(1)
+            .contextMenu {
+                Button { navigation.show(.location(place.id)) } label: {
+                    Label(String(localized: "Open", comment: "Context menu"), systemImage: "arrow.right.circle")
                 }
-            } label: {
-                row(folder)
+                Button { model.store.setPinned(place, false) } label: {
+                    Label(String(localized: "Unpin from Sidebar", comment: "Context menu"), systemImage: "pin.slash")
+                }
             }
-            .tag(SidebarItem.locationFolder(folder.id))
-        }
-    }
-
-    private func row(_ folder: FolderRecord) -> some View {
-        FolderLabel(folder: folder)
-            .draggable(LibraryDragItem.folder(folder.id))
-            .libraryDrop { LibraryDrops(model: model).onLocationsFolder($0, folder) }
-            .contextMenu { FolderContextMenu(folder: folder) }
+            .tag(SidebarItem.location(place.id))
     }
 }

@@ -59,8 +59,6 @@ enum AppLaunch {
     static var seedLibrary: Bool { inMemoryStore && UserDefaults.standard.bool(forKey: "IterSeedLibrary") }
     /// `-IterLocationFolder <name>`: selects the location folder with that name at launch.
     static var locationFolderName: String? { UserDefaults.standard.string(forKey: "IterLocationFolder") }
-    /// `-IterExpandFolders YES`: every sidebar folder shows expanded.
-    static var expandFolders: Bool { UserDefaults.standard.bool(forKey: "IterExpandFolders") }
     static var settingsTab: SettingsTab? {
         switch UserDefaults.standard.string(forKey: "IterSettingsTab") {
         case "general": .general

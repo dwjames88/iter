@@ -124,7 +124,9 @@ struct RootView: View {
     private func fixStaleSelection() {
         switch navigation.selection {
         case .trip(let id) where model.store.trip(id: id) == nil: navigation.selection = .trips
+        case .tripFolder(let id) where model.store.folder(id: id) == nil: navigation.selection = .trips
         case .locationFolder(let id) where model.store.folder(id: id) == nil: navigation.selection = .locations
+        case .location(let id) where model.store.place(id: id) == nil: navigation.selection = .locations
         default: break
         }
     }
@@ -159,7 +161,7 @@ struct DetailView: View {
     var body: some View {
         @Bindable var navigation = navigation
         switch navigation.selection {
-        case .trips, nil:
+        case .trips, .tripFolder, nil:
             NavigationStack(path: $navigation.tripPath) {
                 TripsHomeView().spotDestination()
             }
@@ -180,6 +182,11 @@ struct DetailView: View {
             NavigationStack(path: $navigation.locationsPath) {
                 LocationsView(folderID: id).id(id).spotDestination()
             }
+        case .location(let id):
+            NavigationStack(path: $navigation.locationsPath) {
+                PinnedLocationView(placeID: id).spotDestination()
+            }
+            .id(id)
         }
     }
 }
@@ -195,4 +202,18 @@ extension View {
 
 extension FocusedValues {
     @Entry var navigation: AppNavigation?
+}
+
+/// A location pinned to the sidebar: its spot page.
+private struct PinnedLocationView: View {
+    @Environment(AppModel.self) private var model
+    let placeID: UUID
+
+    var body: some View {
+        if let place = model.store.place(id: placeID) {
+            SpotDetailView(spot: place.spot, initialDay: nil)
+        } else {
+            ContentUnavailableView(String(localized: "Location not found", comment: "Empty title"), systemImage: "mappin.slash")
+        }
+    }
 }
