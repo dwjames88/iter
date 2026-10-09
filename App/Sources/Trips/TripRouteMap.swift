@@ -63,7 +63,13 @@ struct TripRouteMap: View {
                 Color.clear
             }
         }
-        .onGeometryChange(for: CGSize.self) { $0.size } action: { paneSize = $0 }
+        .onGeometryChange(for: CGSize.self) { $0.size } action: { size in
+            let first = paneSize == .zero
+            paneSize = size
+            // The globe's camera drifts when the pane is laid out again (the card settling), so the framing the model last
+            // asked for is applied once more as the map gets its real size.
+            if !first, !userInteracted, let request = builder.cameraRequest { apply(request, animated: false, force: true) }
+        }
         .accessibilityLabel(Text("Route map", comment: "Accessibility label"))
         .onAppear {
             IterPerf.once("trip.map.appear")
@@ -160,8 +166,8 @@ struct TripRouteMap: View {
     }
 
     /// Applies the model's camera command. The model keeps automatic fits within `MapCameraPolicy.maxAutomaticSpan`.
-    private func apply(_ request: CameraRequest, animated: Bool) {
-        guard request.id != appliedRequest else { return }
+    private func apply(_ request: CameraRequest, animated: Bool, force: Bool = false) {
+        guard force || request.id != appliedRequest else { return }
         appliedRequest = request.id
         // One owner for the camera, and it never fights the user: a request that arrives while a pan, zoom or compass
         // gesture is still settling is dropped (the next explicit day choice or selection frames again).
