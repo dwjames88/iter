@@ -19,6 +19,22 @@ struct StopNumberBadge: View {
     }
 }
 
+/// The stop's node on the timeline rail: the same solid accent disc and number as its pin on the map, so a row and its pin
+/// read as one thing.
+struct StopNumberNode: View {
+    let number: Int
+
+    var body: some View {
+        Text(number, format: .number)
+            .font(IterFont.captionStrong)
+            .monospacedDigit()
+            .foregroundStyle(IterColor.onAccent)
+            .frame(width: IterSize.badgeHeight, height: IterSize.badgeHeight)
+            .background(IterColor.accentEmphasis, in: Circle())
+            .accessibilityHidden(true)
+    }
+}
+
 /// One stop on a day's timeline: the set-up time in the gutter, the numbered node on the rail, then the stop itself
 /// (name, light, session, walk-in and set-up, note). Leave times belong to the drive row above it.
 struct StopRowView: View {
@@ -26,7 +42,8 @@ struct StopRowView: View {
     @Environment(AppNavigation.self) private var navigation
     let entry: TripStopEntry
     let builder: TripBuilderModel
-    @Binding var selection: UUID?
+    /// Removes this stop (the list clears the selection with it).
+    var onRemove: (UUID) -> Void
     /// The rail above and below the node: the drive into this stop and the drive out of it.
     var railAbove: RailTone?
     var railBelow: RailTone?
@@ -43,8 +60,7 @@ struct StopRowView: View {
             TimeGutter(time: entry.schedule?.setUpBy, zone: zone, label: String(localized: "Set up", comment: "Label under a stop's set-up time"))
                 .padding(.top, Self.verticalPadding)
             TimelineRail(above: railAbove, below: railBelow, nodeTop: Self.verticalPadding, nodeSize: IterSize.badgeHeight) {
-                StopNumberBadge(number: entry.number)
-                    .background(IterColor.backgroundContent, in: Circle())
+                StopNumberNode(number: entry.number)
             }
             VStack(alignment: .leading, spacing: IterSpace.xs) {
                 titleLine
@@ -58,7 +74,7 @@ struct StopRowView: View {
             .padding(.vertical, Self.verticalPadding)
         }
         .contentShape(Rectangle())
-        .contextMenu { StopContextMenu(entry: entry, builder: builder, selection: $selection) }
+        .contextMenu { StopContextMenu(entry: entry, builder: builder, onRemove: remove) }
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Text("Stop \(entry.number), \(spot.name)", comment: "VoiceOver: a trip stop"))
         .accessibilityAction(named: Text("Move Up", comment: "VoiceOver action")) { builder.nudgeStop(entry.id, by: -1) }
@@ -66,10 +82,7 @@ struct StopRowView: View {
         .accessibilityAction(named: Text("Remove from Trip", comment: "VoiceOver action")) { remove() }
     }
 
-    private func remove() {
-        if selection == entry.id { selection = nil }
-        builder.removeStop(entry.id)
-    }
+    private func remove() { onRemove(entry.id) }
 
     // MARK: Lines
 
@@ -229,7 +242,7 @@ struct StopContextMenu: View {
     @Environment(AppNavigation.self) private var navigation
     let entry: TripStopEntry
     let builder: TripBuilderModel
-    @Binding var selection: UUID?
+    let onRemove: () -> Void
 
     var body: some View {
         Button(String(localized: "Open Spot Page", comment: "Context menu")) {
@@ -253,8 +266,7 @@ struct StopContextMenu: View {
         }
         Divider()
         Button(String(localized: "Remove from Trip", comment: "Context menu"), role: .destructive) {
-            if selection == entry.id { selection = nil }
-            builder.removeStop(entry.id)
+            onRemove()
         }
     }
 

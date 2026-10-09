@@ -12,11 +12,12 @@ struct TripRouteMap: View {
     @Environment(AppModel.self) private var app
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
     let builder: TripBuilderModel
-    @Binding var selection: UUID?
-    /// The selected day (0-based), shared with the overview strip and the list; nil: all days.
-    @Binding var selectedDay: Int?
-    /// What covers the map: the toolbar above it and the panel floating over its leading edge.
+    /// The selected stop and day, shared with the day strip and the list.
+    let state: TripViewState
+    /// What covers the map: the toolbar above it (and the panel, when it floats over the leading edge).
     var insets = EdgeInsets()
+    /// The map's own day choice (none today: the card's day strip is the switcher).
+    var chooseDay: (Int?) -> Void = { _ in }
     @Namespace private var mapScope
 
     @State private var position: MapCameraPosition
@@ -28,11 +29,11 @@ struct TripRouteMap: View {
     /// does not rebuild every polyline's coordinates.
     @State private var paths = PathCache()
 
-    init(builder: TripBuilderModel, selection: Binding<UUID?>, selectedDay: Binding<Int?>, insets: EdgeInsets = EdgeInsets()) {
+    init(builder: TripBuilderModel, state: TripViewState, insets: EdgeInsets = EdgeInsets(), chooseDay: @escaping (Int?) -> Void = { _ in }) {
         self.builder = builder
+        self.state = state
         self.insets = insets
-        _selection = selection
-        _selectedDay = selectedDay
+        self.chooseDay = chooseDay
         // Start framed, so MapKit never shows (and reports) its automatic world camera.
         if let r = builder.initialCameraRegion {
             _position = State(initialValue: .region(Self.mkRegion(r)))
@@ -42,7 +43,7 @@ struct TripRouteMap: View {
     }
 
     /// Whether a day is drawn at full strength: every day when none is selected, else only the selected one.
-    private func isActive(day: Int) -> Bool { selectedDay == nil || selectedDay == day }
+    private func isActive(day: Int) -> Bool { state.selectedDay == nil || state.selectedDay == day }
 
     var body: some View {
         let _ = IterPerf.count("trip.mapBody")
@@ -50,7 +51,7 @@ struct TripRouteMap: View {
             if renderMode == .snapshot {
                 MapStandIn(pins: builder.mapContent.pins.map { pin in
                     MapStandIn.Pin(id: pin.id.uuidString, coordinate: pin.coordinate, label: "\(pin.number)",
-                                   selected: pin.id == selection || isActive(day: pin.day))
+                                   selected: pin.id == state.selection || isActive(day: pin.day))
                 }, route: routeCoordinates())
             } else if paneSize.width > 0, paneSize.height > 0 {
                 // Created only once the pane has a real size: a map framed before layout settles on MapKit's own
@@ -61,20 +62,13 @@ struct TripRouteMap: View {
             }
         }
         .onGeometryChange(for: CGSize.self) { $0.size } action: { paneSize = $0 }
-        .overlay(alignment: .top) {
-            TripDaySwitcher(days: builder.mapContent.days.map { ($0.index, $0.date) }, selectedDay: $selectedDay)
-                .padding(IterSpace.md)
-                .padding(.top, insets.top)
-                .padding(.leading, insets.leading)
-        }
         .accessibilityLabel(Text("Route map", comment: "Accessibility label"))
         .onAppear {
             IterPerf.once("trip.map.appear")
-            builder.setFocusDay(selectedDay)
+            builder.setFocusDay(state.selectedDay)
             builder.requestInitialCamera()
             if let request = builder.cameraRequest { apply(request, animated: false) }
         }
-        .onChange(of: selectedDay) { builder.setFocusDay(selectedDay) }
         .onChange(of: builder.fitCoordinates) { builder.contentChanged() }
         .onChange(of: builder.cameraRequest) { _, request in
             if let request { apply(request, animated: true) }
@@ -88,8 +82,9 @@ struct TripRouteMap: View {
     }
 
     private var liveMap: some View {
-        Map(position: $position, selection: $selection, scope: mapScope) {
+        Map(position: $position, selection: Binding(get: { state.selection }, set: { state.select($0, from: .map) }), scope: mapScope) {
             let content = builder.mapContent
+            let selection = state.selection
             ForEach(content.legs) { leg in
                 let coordinates = paths.coordinates(for: leg)
                 if isActive(day: leg.day) {
@@ -102,7 +97,8 @@ struct TripRouteMap: View {
             UserLocationMapContent(location: app.location)
             ForEach(content.pins) { pin in
                 Annotation(pin.name, coordinate: Self.coordinate(pin.coordinate), anchor: .center) {
-                    self.pin(pin)
+                    TripPinView(number: pin.number, name: pin.name, selected: pin.id == selection, inDay: isActive(day: pin.day))
+                        .equatable()
                 }
                 .tag(pin.id)
             }
@@ -130,24 +126,6 @@ struct TripRouteMap: View {
             if new.positionedByUser { userInteracted = true }
         }
     }
-
-    private func pin(_ pin: TripMapPin) -> some View {
-        let selected = pin.id == selection
-        let inDay = isActive(day: pin.day)
-        let size = selected ? IterSize.mapPinSelected : IterSize.mapPin
-        return Text(pin.number, format: .number)
-            .font(IterFont.captionStrong)
-            .monospacedDigit()
-            .foregroundStyle(inDay ? IterColor.onAccent : IterColor.backgroundWindow)
-            .frame(width: size, height: size)
-            .background(inDay ? IterColor.accentEmphasis : IterColor.mapPinInactive, in: Circle())
-            .overlay(Circle().strokeBorder(IterColor.backgroundWindow, lineWidth: selected ? IterStroke.thick : IterStroke.thin))
-            .opacity(inDay || selected ? 1 : Self.dimmedOpacity)
-            .accessibilityLabel(Text("Stop \(pin.number), \(pin.name)", comment: "VoiceOver: map pin"))
-    }
-
-    /// Pins of days that are not selected.
-    private static let dimmedOpacity = 0.55
 
     // MARK: Geometry
 
@@ -181,6 +159,13 @@ struct TripRouteMap: View {
     private func apply(_ request: CameraRequest, animated: Bool) {
         guard request.id != appliedRequest else { return }
         appliedRequest = request.id
+        // One owner for the camera, and it never fights the user: a request that arrives while a pan, zoom or compass
+        // gesture is still settling is dropped (the next explicit day choice or selection frames again).
+        if userInteracted, animated {
+            IterPerf.count("trip.cameraRequestDropped")
+            return
+        }
+        IterPerf.count("trip.cameraRequestApplied")
         let target: GeoRegion
         switch request.kind {
         case .fit(let r), .pan(let r): target = r
@@ -192,6 +177,33 @@ struct TripRouteMap: View {
         } else {
             position = .region(region)
         }
+    }
+}
+
+// MARK: - Pin
+
+/// A numbered pin. Equatable on what it draws, so a selection or a day change rebuilds only the pins whose look changes.
+private struct TripPinView: View, Equatable {
+    let number: Int
+    let name: String
+    let selected: Bool
+    let inDay: Bool
+
+    /// Pins of days that are not selected.
+    private static let dimmedOpacity = 0.55
+
+    var body: some View {
+        let _ = IterPerf.count("trip.pinBody")
+        let size = selected ? IterSize.mapPinSelected : IterSize.mapPin
+        Text(number, format: .number)
+            .font(IterFont.captionStrong)
+            .monospacedDigit()
+            .foregroundStyle(inDay ? IterColor.onAccent : IterColor.backgroundWindow)
+            .frame(width: size, height: size)
+            .background(inDay ? IterColor.accentEmphasis : IterColor.mapPinInactive, in: Circle())
+            .overlay(Circle().strokeBorder(IterColor.backgroundWindow, lineWidth: selected ? IterStroke.thick : IterStroke.thin))
+            .opacity(inDay || selected ? 1 : Self.dimmedOpacity)
+            .accessibilityLabel(Text("Stop \(number), \(name)", comment: "VoiceOver: map pin"))
     }
 }
 

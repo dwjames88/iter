@@ -13,7 +13,7 @@ enum RailTone {
 
     var color: Color {
         switch self {
-        case .route: IterColor.route
+        case .route: IterColor.route.opacity(0.55)
         case .warning: IterColor.warning
         case .neutral: IterColor.separator
         }
