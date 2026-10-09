@@ -6,6 +6,7 @@
 
 Quick Mac checks, with the sample weather on (**Debug ▸ Use Sample Weather**) and Mesa Arch open as a spot page or panel.
 
+- **All Trips.** With seeded trips: a hero on top (cover picture, "Up Next", Open), then Pinned, folder (with a "..." menu: rename, new folder, delete) and Other Trips sections of cards. Right-click a card: Open, Pin, Move to Folder, Rename, Duplicate, Share, Delete. Drag a card onto another folder's section to move it. The toolbar ellipsis has New Folder. With no trips you see the illustration, Plan a Trip and three template cards. Check light and dark.
 - **Compass rose.** At the foot of **Light through the day** there is a compass rose (no separate sun and moon module). Drag the time scrubber under it: the sun and moon marks move, and the timeline's marker follows (they share one scrubber). Event labels sit next to their marks. With a classic view the wedge is labelled just outside the rim ("View 263° W"), always shown, never inside the wedge.
 - **Window symbols.** Sunrise `sunrise.fill`, sunset `sunset.fill`, morning blue hour `sun.haze.fill`, evening blue hour `moon.haze.fill`, night `moon.stars.fill`, the same in the list, panel, spot page, trip stops, menus and the compass.
 - **Event unit.** One rounded rectangle in the band's colour: a heavy score on the left, the symbol stacked over a lighter time on the right. No outline, no word beside it.

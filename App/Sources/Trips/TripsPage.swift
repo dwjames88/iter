@@ -87,8 +87,10 @@ struct TripsSectionView: View {
                     Label(String(localized: "Folder Options", comment: "Folder header menu"), systemImage: "ellipsis")
                         .labelStyle(.iconOnly)
                 }
+                #if os(macOS)
                 .menuStyle(.button)
                 .buttonStyle(.borderless)
+                #endif
                 .menuIndicator(.hidden)
                 .fixedSize()
             }

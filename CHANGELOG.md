@@ -6,6 +6,7 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 ## [Unreleased]
 
 ### Added
+- **All Trips redesign**: the page is a centred column with your next trip as a hero (its first spot's picture, dates, size, the next light and an Open button), then soft cards for Pinned trips, each folder and the rest. Make folders from the page's ellipsis menu, move trips with their context menu or by dragging a card onto a folder, and start from a friendlier empty state with template picture cards. iPad shows the grid, iPhone one column.
 - **Licensing groundwork**: Iter can now check a licence key with Lemon Squeezy, keep it in the Keychain and work for 14 days offline. It is hidden and switched off, so nothing changes for anyone: Iter is still free, and nothing asks for a key.
 
 ### Changed
