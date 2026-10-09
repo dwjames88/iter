@@ -20,7 +20,8 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
 
     /// Apple Maps' card: 8 pt from the window's edges, its corners concentric with the window's.
     static var margin: CGFloat { IterSpace.sm }
-    static var shape: ConcentricRectangle { ConcentricRectangle(corners: .concentric(minimum: 12), isUniform: true) }
+    /// Maps' card corner: concentric with the 29 pt corner buttons 11.5 pt in (14.5 + 11.5 = 26 pt).
+    static var shape: RoundedRectangle { RoundedRectangle(cornerRadius: 26, style: .continuous) }
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -47,7 +48,7 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
 /// more than the default variant; Maps' card measures the same as its sidebar. The glass is clipped to the panel's
 /// concentric shape, as the system clips the sidebar.
 private struct PanelMaterial: ViewModifier {
-    let shape: ConcentricRectangle
+    let shape: RoundedRectangle
 
     func body(content: Content) -> some View {
         content.background { SidebarGlass().clipShape(shape) }

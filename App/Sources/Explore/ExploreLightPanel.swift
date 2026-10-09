@@ -44,7 +44,7 @@ struct ExploreLightPanel: View {
                             placeHeader
                             actionRow
                             SpotImages(spot: spot)
-                                .clipShape(ConcentricRectangle(corners: .concentric(minimum: 12), isUniform: true))
+                                .clipShape(RoundedRectangle(cornerRadius: PlaceActionMetrics.cornerRadius, style: .continuous))
                         }
                         .padding(.horizontal, IterGrid.inset)
                         .padding(.top, IterGrid.inset - IterSpace.xl)
@@ -104,6 +104,7 @@ struct ExploreLightPanel: View {
                       message: Text(SpotHeaderView.shareMessage(for: spot))) {
                 Label(LightText.share, systemImage: "square.and.arrow.up")
             }
+            .buttonStyle(HeaderCircleStyle())
             .help(String(localized: "Share this location", comment: "Help"))
             Spacer(minLength: 0)
             if let position = explore.panelPosition {
@@ -113,32 +114,57 @@ struct ExploreLightPanel: View {
                     .foregroundStyle(.secondary)
                     .accessibilityLabel(Text("Place \(position.index) of \(position.count)", comment: "VoiceOver"))
             }
-            GlassEffectContainer(spacing: IterSpace.xs) {
-                HStack(spacing: IterSpace.xs) {
-                    Button { explore.selectPrevious() } label: {
-                        Label(String(localized: "Previous place", comment: "VoiceOver"), systemImage: "chevron.up")
-                    }
-                    .disabled(!explore.canSelectPrevious)
-                    .help(String(localized: "Previous place (Up Arrow)", comment: "Tooltip"))
-                    Button { explore.selectNext() } label: {
-                        Label(String(localized: "Next place", comment: "VoiceOver"), systemImage: "chevron.down")
-                    }
-                    .disabled(!explore.canSelectNext)
-                    .help(String(localized: "Next place (Down Arrow)", comment: "Tooltip"))
-                    Button { explore.closePanel() } label: {
-                        Label(String(localized: "Back to places", comment: "VoiceOver"), systemImage: "xmark")
-                    }
-                    .help(String(localized: "Back to places (Esc)", comment: "Tooltip on the place panel's close button"))
+            // Previous and next are one control, as a toolbar groups related items in one glass capsule.
+            HStack(spacing: 0) {
+                Button { explore.selectPrevious() } label: {
+                    Label(String(localized: "Previous place", comment: "VoiceOver"), systemImage: "chevron.up")
+                        .frame(width: HeaderMetrics.size, height: HeaderMetrics.size)
+                        .contentShape(.rect)
                 }
+                .disabled(!explore.canSelectPrevious)
+                .help(String(localized: "Previous place (Up Arrow)", comment: "Tooltip"))
+                Button { explore.selectNext() } label: {
+                    Label(String(localized: "Next place", comment: "VoiceOver"), systemImage: "chevron.down")
+                        .frame(width: HeaderMetrics.size, height: HeaderMetrics.size)
+                        .contentShape(.rect)
+                }
+                .disabled(!explore.canSelectNext)
+                .help(String(localized: "Next place (Down Arrow)", comment: "Tooltip"))
             }
+            .buttonStyle(.plain)
+            .padding(.horizontal, IterSpace.xxs)
+            .glassEffect(.regular.interactive(), in: .capsule)
+            Button { explore.closePanel() } label: {
+                Label(String(localized: "Back to places", comment: "VoiceOver"), systemImage: "xmark")
+            }
+            .buttonStyle(HeaderCircleStyle())
+            .help(String(localized: "Back to places (Esc)", comment: "Tooltip on the place panel's close button"))
         }
         .labelStyle(.iconOnly)
-        .buttonStyle(.glass)
-        .buttonBorderShape(.circle)
-        .controlSize(.extraLarge)
-        .padding(.horizontal, IterSpace.md)
-        .padding(.top, IterSpace.md)
+        .font(.system(size: 13, weight: .semibold))
+        .foregroundStyle(.primary)
+        // Concentric with the card's corner: the buttons sit as far from the edges as Maps' do.
+        .padding(.horizontal, HeaderMetrics.inset)
+        .padding(.top, HeaderMetrics.inset)
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// Maps' card header buttons: 29 pt glass circles, 11 pt from the card's edges.
+    fileprivate enum HeaderMetrics {
+        static let size: CGFloat = 29
+        static let inset: CGFloat = 11.5
+    }
+
+    /// Maps' round card buttons (Share, Close): a 29 pt interactive glass circle with a primary glyph. The system glass
+    /// style has no 29 pt size on the Mac (large is 23 pt, extra large 34 pt).
+    private struct HeaderCircleStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .frame(width: HeaderMetrics.size, height: HeaderMetrics.size)
+                .contentShape(.circle)
+                .glassEffect(.regular.interactive(), in: .circle)
+                .opacity(configuration.isPressed ? 0.7 : 1)
+        }
     }
 
     // MARK: Place
