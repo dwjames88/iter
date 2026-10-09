@@ -130,6 +130,9 @@ struct FloatingPanelHeader<Accessory: View>: View {
                 .buttonStyle(GlassCircleButtonStyle())
                 .menuStyle(.button)
                 .menuIndicator(.hidden)
+                // The header's top is the window's title bar band, where AppKit would take a click for a window drag.
+                .titlebarClickable()
+                .fixedSize()
                 .padding(GlassCircleButtonStyle.inset)
         }
     }

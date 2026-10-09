@@ -310,7 +310,7 @@ private struct TripHeader: View {
         .padding(.bottom, IterSpace.md)
         .frame(maxWidth: .infinity, alignment: .leading)
         .overlay(alignment: .topTrailing) {
-            TripCardCornerButtons(actions: tripActions).padding(GlassCircleButtonStyle.inset)
+            TripCardCornerButtons(actions: tripActions).titlebarClickable().fixedSize().padding(GlassCircleButtonStyle.inset)
         }
     }
 
