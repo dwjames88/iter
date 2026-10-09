@@ -7,10 +7,12 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 
 ### Added
 - **All Trips redesign**: the page is a centred column with your next trip as a hero (its first spot's picture, dates, size, the next light and an Open button), then soft cards for Pinned trips, each folder and the rest. Make folders from the page's ellipsis menu, move trips with their context menu or by dragging a card onto a folder, and start from a friendlier empty state with template picture cards. iPad shows the grid, iPhone one column.
+- **Trips on iPhone**: the trip cards swipe again: swipe right to pin or unpin, swipe left to delete, with an Undo banner that brings a deleted trip back.
 - **Licensing groundwork**: Iter can now check a licence key with Lemon Squeezy, keep it in the Keychain and work for 14 days offline. It is hidden and switched off, so nothing changes for anyone: Iter is still free, and nothing asks for a key.
 
 ### Changed
 - **Folders are one level deep**: folders no longer nest. Any subfolder from an earlier version moves to the top level, right after the folder it was in, keeping its name, pin, trips and locations. Deleting a folder moves its trips out to All Trips and its locations out to All Locations.
+- **All Trips hero**: the Open button is the accent action over the picture (system prominent glass), with a little extra shading under the text, and drops under the next-session line on a narrow phone.
 - **Trip map shows the globe and daylight**: the trip route map zooms out to the world like Explore and Locations and draws the day/night line.
 - **Folders live inside All Locations**: the sidebar now lists All Trips and All Locations, then only what you pin (trips, trip folders, locations, location folders). In All Locations, folders are rows at the top with a count: open one, make a New Folder, Rename, Delete, Pin to Sidebar, drag locations onto a folder or use Move to Folder. Right-click a location to pin it. Same on iPad and iPhone.
 - **Place card buttons work**: on the Mac, Back, Share and Close in the place card's header did nothing (a click in the window's title bar band became a window drag). Back is now at the leading corner (to the list, as Escape), Share and Close at the trailing corner; the position counter and previous and next buttons are gone. Add to Trip confirms what it did and can make a new trip without leaving Explore, Save flips to Saved, and the image strip switches between Look Around (live, when Apple has it) and satellite.

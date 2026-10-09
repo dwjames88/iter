@@ -94,6 +94,7 @@ private struct UnfileDropGroup<Content: View>: View {
 
 /// No trips yet: a small illustration, one sentence, the one primary action, and the templates as picture cards.
 struct TripsEmptyState: View {
+    @Environment(\.horizontalSizeClass) private var sizeClass
     let plan: (_ templateID: String?) -> Void
 
     var body: some View {
@@ -138,7 +139,7 @@ struct TripsEmptyState: View {
             }
         }
         .frame(maxWidth: TripsMetrics.columnMax)
-        .padding(.horizontal, TripsMetrics.margin)
+        .padding(.horizontal, sizeClass == .compact ? IterSpace.lg : TripsMetrics.margin)
         .padding(.vertical, IterSpace.xxl)
         .frame(maxWidth: .infinity)
     }

@@ -59,6 +59,8 @@ struct TripNextLine: View {
             }
             .font(IterFont.secondary)
             .foregroundStyle(text)
+            .lineLimit(2)
+            .fixedSize(horizontal: false, vertical: true)
         } else {
             Label {
                 Text("All sessions have passed", comment: "Trip card when every session is in the past")
@@ -253,6 +255,8 @@ struct TripHeroView: View {
         ZStack(alignment: .bottomLeading) {
             TripCover(spot: entry.coverSpot)
             Color.black.opacity(0.35)
+            // Extra weight under the text and the Open control, so the event unit and the button read on any picture.
+            LinearGradient(colors: [.clear, .black.opacity(0.3)], startPoint: .center, endPoint: .bottom)
             content
         }
         .frame(height: TripsMetrics.heroHeight)
@@ -263,6 +267,16 @@ struct TripHeroView: View {
         .draggable(LibraryDragItem.trip(summary.id))
         .contextMenu { TripEntryMenu(trip: entry.record, prompt: $prompt) }
         .accessibilityElement(children: .contain)
+    }
+
+    private var openButton: some View {
+        Button { navigation.show(.trip(summary.id)) } label: {
+            Text("Open", comment: "Hero button: opens the featured trip")
+                .frame(minWidth: IterSpace.xxl * 2)
+        }
+        .buttonStyle(.glassProminent)
+        .tint(IterColor.accent)
+        .controlSize(.large)
     }
 
     private var content: some View {
@@ -280,16 +294,17 @@ struct TripHeroView: View {
             Text(TimeText.dayAndStops(days: summary.dayCount, stops: summary.stopCount))
                 .font(IterFont.callout)
                 .foregroundStyle(.white.opacity(0.9))
-            HStack(alignment: .center, spacing: IterSpace.lg) {
-                TripNextLine(entry: entry, onImage: true)
-                Spacer(minLength: IterSpace.md)
-                Button { navigation.show(.trip(summary.id)) } label: {
-                    Text("Open", comment: "Hero button: opens the featured trip")
-                        .frame(minWidth: IterSpace.xxl * 2)
+            // Side by side when there is room; on a narrow phone the Open button drops under the next-session line.
+            ViewThatFits(in: .horizontal) {
+                HStack(alignment: .center, spacing: IterSpace.lg) {
+                    TripNextLine(entry: entry, onImage: true)
+                    Spacer(minLength: IterSpace.md)
+                    openButton
                 }
-                .buttonStyle(.glassProminent)
-                .tint(IterColor.accent)
-                .controlSize(.large)
+                VStack(alignment: .leading, spacing: IterSpace.md) {
+                    TripNextLine(entry: entry, onImage: true)
+                    openButton.frame(maxWidth: .infinity, alignment: .trailing)
+                }
             }
             .padding(.top, IterSpace.xs)
         }
