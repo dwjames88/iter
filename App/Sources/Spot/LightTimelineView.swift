@@ -134,7 +134,7 @@ struct LightTimelineSection: View {
     }
 
     private func legend(_ data: TimelineData) -> some View {
-        let items = HStack(spacing: isPanel ? IterSpace.sm : IterSpace.lg) {
+        let swatches = Group {
             if data.hasLayers {
                 swatch(IterColor.cloudHigh, LightText.cloudHighLegend)
                 swatch(IterColor.cloudMid, LightText.cloudMidLegend)
@@ -144,8 +144,13 @@ struct LightTimelineSection: View {
             }
             swatch(IterColor.skyBlue, data.hours.contains { $0.precipitationChance != nil } ? LightText.rainLegend : LightText.rainAmountLegend)
         }
+        // One line where it fits; otherwise two rows, so a narrow column (the iPad's) is never pushed wider than itself.
+        let items = ViewThatFits(in: .horizontal) {
+            HStack(spacing: isPanel ? IterSpace.sm : IterSpace.lg) { swatches }.fixedSize()
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 96), spacing: IterSpace.sm, alignment: .leading)],
+                      alignment: .leading, spacing: IterSpace.xs) { swatches }
+        }
         .lineLimit(1)
-        .fixedSize()
         return Group {
             if isPanel {
                 // The hint sits at the trailing end when the legend leaves room for it; otherwise on the readout line.

@@ -66,13 +66,15 @@ struct SpotImageStrip: View {
         HStack(spacing: IterSpace.xs + IterSpace.xxs) {
             ForEach(Array(images.enumerated()), id: \.element.id) { index, _ in
                 Circle()
-                    .fill(index == currentIndex ? AnyShapeStyle(.primary) : AnyShapeStyle(.tertiary))
+                    .fill(index == currentIndex ? AnyShapeStyle(.white) : AnyShapeStyle(.white.opacity(0.5)))
                     .frame(width: IterSpace.xs + IterSpace.xxs, height: IterSpace.xs + IterSpace.xxs)
             }
         }
         .padding(.horizontal, IterSpace.sm)
         .padding(.vertical, IterSpace.xs + IterSpace.xxs)
-        .glassEffect(.regular, in: .capsule)
+        // Clear glass over media, with the HIG's 35 % dimming layer behind it for bright photos.
+        .background(.black.opacity(0.35), in: .capsule)
+        .glassEffect(.clear, in: .capsule)
         .padding(IterSpace.sm)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("Image \(currentIndex + 1) of \(images.count)", comment: "VoiceOver: position in the place card's image strip"))
@@ -93,9 +95,9 @@ struct SpotImageStrip: View {
             Label(label, systemImage: symbol)
         }
         .labelStyle(.iconOnly)
-        .buttonStyle(.glass)
+        .buttonStyle(.glass(.clear))
         .buttonBorderShape(.circle)
-        .controlSize(.large)
+        .controlSize(.extraLarge)
         .help(label)
         .accessibilityLabel(label)
     }
@@ -143,10 +145,11 @@ private struct SpotImagePage: View {
             .overlay(alignment: .topLeading) {
                 label
                     .font(IterFont.captionStrong)
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(.white)
                     .padding(.horizontal, IterSpace.sm)
                     .padding(.vertical, IterSpace.xs)
-                    .glassEffect(.regular, in: .capsule)
+                    .background(.black.opacity(0.35), in: .capsule)
+                    .glassEffect(.clear, in: .capsule)
                     .padding(IterGrid.inset)
                     .accessibilityHidden(true)
             }

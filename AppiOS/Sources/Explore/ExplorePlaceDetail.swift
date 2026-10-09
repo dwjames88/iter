@@ -128,8 +128,12 @@ struct ExplorePlaceDetail: View {
                         .foregroundStyle(IterColor.textSecondary)
                         .accessibilityLabel(Text("Place \(position.index) of \(position.count)", comment: "VoiceOver"))
                     Spacer()
-                    stepButton("chevron.up", String(localized: "Previous place", comment: "VoiceOver"), enabled: explore.canSelectPrevious) { explore.selectPrevious() }
-                    stepButton("chevron.down", String(localized: "Next place", comment: "VoiceOver"), enabled: explore.canSelectNext) { explore.selectNext() }
+                    GlassEffectContainer(spacing: IterSpace.sm) {
+                        HStack(spacing: IterSpace.sm) {
+                            stepButton("chevron.up", String(localized: "Previous place", comment: "VoiceOver"), enabled: explore.canSelectPrevious) { explore.selectPrevious() }
+                            stepButton("chevron.down", String(localized: "Next place", comment: "VoiceOver"), enabled: explore.canSelectNext) { explore.selectNext() }
+                        }
+                    }
                 }
             }
         }
@@ -139,11 +143,12 @@ struct ExplorePlaceDetail: View {
 
     private func stepButton(_ symbol: String, _ label: String, enabled: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            Image(systemName: symbol).font(.system(size: 15, weight: .semibold))
-                .frame(width: 20, height: 22)
+            Label(label, systemImage: symbol)
         }
+        .labelStyle(.iconOnly)
         .buttonStyle(.glass)
         .buttonBorderShape(.circle)
+        .controlSize(.large)
         .disabled(!enabled)
         .accessibilityLabel(label)
     }

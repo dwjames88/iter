@@ -96,7 +96,7 @@ struct FloatingPanelHeader<Accessory: View>: View {
         .labelStyle(.iconOnly)
         .buttonStyle(.glass)
         .buttonBorderShape(.circle)
-        .controlSize(.large)
+        .controlSize(.extraLarge)
         .menuIndicator(.hidden)
         .padding(.horizontal, IterSpace.lg)
         .padding(.top, IterSpace.lg)

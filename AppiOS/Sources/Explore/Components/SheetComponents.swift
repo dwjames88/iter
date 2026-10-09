@@ -105,9 +105,10 @@ struct FilterChip: View {
 }
 
 extension View {
-    /// Filter chips as the system draws them: bordered capsules, the accent when on.
+    /// Filter chips as the system draws them: bordered capsules at 44 pt, monochrome (the list beside them is full of the
+    /// accent), filled when on.
     func filterChipStyle() -> some View {
-        buttonStyle(.bordered).buttonBorderShape(.capsule).tint(IterColor.accent)
+        buttonStyle(.bordered).buttonBorderShape(.capsule).controlSize(.large).tint(.primary)
     }
 }
 
