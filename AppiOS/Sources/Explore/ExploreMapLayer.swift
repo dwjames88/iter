@@ -30,7 +30,12 @@ struct ExploreMapLayer: View {
         self.bottomInset = bottomInset
         self.leadingInset = leadingInset
         self.onPinSelected = onPinSelected
-        if let r = explore.initialCameraRegion {
+        // `-IterMapCamera` (screenshots): start there and ignore the model's fit requests.
+        if let launch = AppLaunch.mapCamera {
+            _position = State(initialValue: .camera(MapCamera(
+                centerCoordinate: CLLocationCoordinate2D(latitude: launch.coordinate.latitude, longitude: launch.coordinate.longitude),
+                distance: launch.distanceMetres)))
+        } else if let r = explore.initialCameraRegion {
             _position = State(initialValue: .region(Self.mkRegion(r)))
         } else {
             _position = State(initialValue: .automatic)
@@ -158,7 +163,7 @@ struct ExploreMapLayer: View {
     }
 
     private func apply(_ request: CameraRequest, animated: Bool) {
-        guard request.id != appliedRequest else { return }
+        guard request.id != appliedRequest, AppLaunch.mapCamera == nil else { return }
         appliedRequest = request.id
         let target: GeoRegion
         switch request.kind { case .fit(let r), .pan(let r): target = r }

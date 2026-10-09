@@ -10,10 +10,16 @@ import Testing
         return d
     }
 
-    @Test func standardIsTheDefault() {
-        #expect(MapStyleChoice.current(in: defaults()) == .standard)
-        #expect(MapStyleChoice(stored: nil) == .standard)
-        #expect(MapStyleChoice(stored: "nonsense") == .standard)
+    @Test func hybridIsTheDefault() {
+        #expect(MapStyleChoice.current(in: defaults()) == .hybrid)
+        #expect(MapStyleChoice(stored: nil) == .hybrid)
+        #expect(MapStyleChoice(stored: "nonsense") == .hybrid)
+    }
+
+    @Test func aSavedStandardChoiceBeatsTheDefault() {
+        let d = defaults()
+        MapStyleChoice.standard.save(in: d)
+        #expect(MapStyleChoice.current(in: d) == .standard)
     }
 
     @Test func theChoiceRoundTripsThroughTheOneKey() {

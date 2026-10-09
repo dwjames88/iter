@@ -69,7 +69,8 @@ final class DaylightClock {
     nonisolated static let refreshInterval: Duration = .seconds(300)
 
     /// Camera distance beyond which MapKit draws satellite and hybrid as a globe, and lights its night side itself (city
-    /// lights, from the system clock; no public setting). Standard stays a flat map at any distance and gets no lighting.
+    /// lights, from the system clock; no public setting). Standard stays a flat map at any distance (probed, no public API
+    /// changes that), so it keeps the overlay.
     nonisolated static let globeDistance: Double = 10_000_000
 
     private(set) var shading = DaylightShading()
