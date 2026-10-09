@@ -67,6 +67,12 @@ struct DayContainerBackground: View {
                                    topTrailingRadius: position.roundsTop ? radius : 0,
                                    style: .continuous)
                 .fill(isHeader ? AnyShapeStyle(ControlFill()) : AnyShapeStyle(ContentFill()))
+            if isHeader && selected {
+                // The selected day's header takes the accent as a wash, so the day you are in is the one you see first.
+                UnevenRoundedRectangle(topLeadingRadius: radius, bottomLeadingRadius: 0, bottomTrailingRadius: 0,
+                                       topTrailingRadius: radius, style: .continuous)
+                    .fill(IterColor.accent.opacity(0.10))
+            }
             ContainerOutline(position: position, radius: radius, lineWidth: lineWidth)
                 .stroke(selected ? IterColor.accent : IterColor.separator, lineWidth: lineWidth)
             if isHeader {
@@ -80,54 +86,58 @@ struct DayContainerBackground: View {
 
 // MARK: - Day header
 
-/// The first row of a day's container: which day, the light bookends, and the day's load.
+/// The first row of a day's container: which day, how loaded it is, and its light (sunrise and sunset on the sky colours
+/// of the light-window badges, as the place card names a window: "Sunset at 18:14").
 struct DayHeaderRow: View {
     let group: TripDayGroup
+    var isSelected = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: IterSpace.xs) {
+        VStack(alignment: .leading, spacing: IterSpace.sm) {
             HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
                 Text(TimeText.dayName(index: group.index))
                     .font(IterFont.titleSection)
-                    .foregroundStyle(IterColor.textPrimary)
+                    .foregroundStyle(isSelected ? AnyShapeStyle(IterColor.accentText) : AnyShapeStyle(IterColor.textPrimary))
                 Text(TimeText.longDay(group.date))
                     .font(IterFont.subheadline)
                     .foregroundStyle(IterColor.textSecondary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.85)
+                Spacer(minLength: IterSpace.sm)
+                Text(LightText.dayTotals(stops: group.stopCount, drivingSeconds: group.drivingSeconds))
+                    .font(IterFont.caption)
+                    .foregroundStyle(IterColor.textSecondary)
+                    .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
-            .fixedSize(horizontal: false, vertical: true)
-            bookends
-            Text(LightText.dayTotals(stops: group.stopCount, drivingSeconds: group.drivingSeconds))
-                .font(IterFont.caption)
-                .foregroundStyle(IterColor.textSecondary)
-                .monospacedDigit()
-                .fixedSize(horizontal: false, vertical: true)
+            light
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.vertical, IterSpace.sm)
+        .padding(.vertical, IterSpace.md)
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isHeader)
     }
 
-    /// Sunrise and sunset with their symbols, in the zone of the day's first stop.
-    @ViewBuilder private var bookends: some View {
+    /// Sunrise and sunset in the zone of the day's first stop, each on the sky colours of its light.
+    @ViewBuilder private var light: some View {
         if group.sunrise != nil || group.sunset != nil {
-            HStack(spacing: IterSpace.md) {
-                if let sunrise = group.sunrise { bookend(symbol: "sunrise.fill", label: String(localized: "Sunrise", comment: "Day header: sunrise"), time: sunrise) }
-                if let sunset = group.sunset { bookend(symbol: "sunset.fill", label: String(localized: "Sunset", comment: "Day header: sunset"), time: sunset) }
+            HStack(spacing: IterSpace.lg) {
+                if let sunrise = group.sunrise { bookend(.goldenMorning, label: String(localized: "Sunrise", comment: "Day header: sunrise"), time: sunrise) }
+                if let sunset = group.sunset { bookend(.goldenEvening, label: String(localized: "Sunset", comment: "Day header: sunset"), time: sunset) }
             }
-            .font(IterFont.caption)
-            .foregroundStyle(IterColor.textSecondary)
             .lineLimit(1)
         }
     }
 
-    private func bookend(symbol: String, label: String, time: Date) -> some View {
-        HStack(spacing: IterSpace.xs) {
-            Image(systemName: symbol).accessibilityHidden(true)
-            Text(TimeText.time(time, in: group.timeZone)).monospacedDigit()
+    private func bookend(_ kind: LightWindowKind, label: String, time: Date) -> some View {
+        HStack(spacing: IterSpace.sm) {
+            LightWindowBadge(kind: kind, size: 24)
+            Text("\(label) at \(TimeText.time(time, in: group.timeZone))", comment: "Day header: sunrise or sunset and its time, e.g. Sunset at 18:14")
+                .font(IterFont.secondary)
+                .monospacedDigit()
+                .foregroundStyle(IterColor.textPrimary)
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("\(label) \(TimeText.time(time, in: group.timeZone))", comment: "VoiceOver: a day's sunrise or sunset and its time"))
@@ -183,6 +193,8 @@ struct OvernightBoundaryRow: View {
 struct TripOverviewStrip: View {
     let cells: [TripOverviewCell]
     let selectedDay: Int?
+    /// Adds an All Days cell first (the Mac card, where the map has no switcher of its own).
+    var selectAll: (() -> Void)?
     let select: (Int) -> Void
 
     private static let minCellWidth: CGFloat = 104
@@ -190,8 +202,10 @@ struct TripOverviewStrip: View {
     var body: some View {
         ViewThatFits(in: .horizontal) {
             HStack(spacing: IterSpace.xs) { cellViews(flexible: true) }
+                .fixedSize(horizontal: false, vertical: true)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: IterSpace.xs) { cellViews(flexible: false) }
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
         .padding(.horizontal, IterSpace.lg)
@@ -200,7 +214,16 @@ struct TripOverviewStrip: View {
         .accessibilityLabel(Text("Trip days", comment: "Accessibility label of the trip overview strip"))
     }
 
-    private func cellViews(flexible: Bool) -> some View {
+    @ViewBuilder private func cellViews(flexible: Bool) -> some View {
+        if let selectAll {
+            Button(action: selectAll) {
+                AllDaysCellView(cells: cells, isSelected: selectedDay == nil)
+                    .frame(minWidth: Self.minCellWidth, maxWidth: flexible ? .infinity : Self.minCellWidth, alignment: .leading)
+            }
+            .buttonStyle(.plain)
+            .help(Text("Show every day on the map", comment: "Tooltip"))
+            .accessibilityAddTraits(selectedDay == nil ? .isSelected : [])
+        }
         ForEach(cells) { cell in
             Button { select(cell.index) } label: {
                 OverviewCellView(cell: cell, isSelected: cell.index == selectedDay)
@@ -214,6 +237,37 @@ struct TripOverviewStrip: View {
     }
 }
 
+/// The strip's first cell: every day at once, which is what the map shows when no day is chosen.
+private struct AllDaysCellView: View {
+    let cells: [TripOverviewCell]
+    let isSelected: Bool
+
+    private var shape: RoundedRectangle { RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous) }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: IterSpace.xxs) {
+            HStack(spacing: IterSpace.xs) {
+                Image(systemName: "map").font(IterFont.captionStrong)
+                Text("All Days", comment: "Overview strip: every day").font(IterFont.captionStrong)
+            }
+            .foregroundStyle(isSelected ? AnyShapeStyle(IterColor.accentText) : AnyShapeStyle(IterColor.textPrimary))
+            Text(InflectedCount.string("day", count: cells.count) { AttributedString(localized: "^[\(cells.count) day](inflect: true)") })
+                .font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
+            Text(InflectedCount.string("stop", count: stops) { AttributedString(localized: "^[\(stops) stop](inflect: true)") })
+                .font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
+        }
+        .lineLimit(1)
+        .padding(IterSpace.sm)
+        .frame(maxHeight: .infinity, alignment: .topLeading)
+        .background(isSelected ? AnyShapeStyle(IterColor.accent.opacity(0.14)) : AnyShapeStyle(ContentFill()), in: shape)
+        .overlay(shape.strokeBorder(isSelected ? IterColor.accent : IterColor.separator,
+                                    lineWidth: isSelected ? IterStroke.thick : IterStroke.hairline))
+        .contentShape(shape)
+    }
+
+    private var stops: Int { cells.reduce(0) { $0 + $1.stopCount } }
+}
+
 private struct OverviewCellView: View {
     let cell: TripOverviewCell
     let isSelected: Bool
@@ -223,7 +277,8 @@ private struct OverviewCellView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.xxs) {
             HStack(spacing: IterSpace.xs) {
-                Text(TimeText.dayName(index: cell.index)).font(IterFont.captionStrong).foregroundStyle(IterColor.textPrimary)
+                Text(TimeText.dayName(index: cell.index)).font(IterFont.captionStrong)
+                    .foregroundStyle(isSelected ? AnyShapeStyle(IterColor.accentText) : AnyShapeStyle(IterColor.textPrimary))
                 Spacer(minLength: 0)
                 if cell.hasConflict {
                     Image(systemName: "exclamationmark.triangle.fill")
@@ -246,7 +301,7 @@ private struct OverviewCellView: View {
         .padding(IterSpace.sm)
         .background(isSelected ? AnyShapeStyle(IterColor.accent.opacity(0.14)) : AnyShapeStyle(ContentFill()), in: shape)
         .overlay(shape.strokeBorder(isSelected ? IterColor.accent : IterColor.separator,
-                                    lineWidth: isSelected ? IterStroke.regular : IterStroke.hairline))
+                                    lineWidth: isSelected ? IterStroke.thick : IterStroke.hairline))
         .contentShape(shape)
     }
 
@@ -287,5 +342,21 @@ private struct OverviewCellView: View {
             parts.append(InflectedCount.string("conflict", count: cell.conflictCount) { AttributedString(localized: "^[\(cell.conflictCount) conflict](inflect: true)") })
         }
         return parts.joined(separator: ", ")
+    }
+}
+
+// MARK: - The strip on the Mac card
+
+/// The day strip as the Mac card shows it: reads the selected day itself, so choosing a day or a stop redraws the strip and
+/// not the card around it.
+struct TripDayStrip: View {
+    let builder: TripBuilderModel
+    let state: TripViewState
+    let choose: (Int?) -> Void
+
+    var body: some View {
+        VStack(spacing: 0) {
+            TripOverviewStrip(cells: builder.layout.overviewCells, selectedDay: state.selectedDay, selectAll: { choose(nil) }) { choose($0) }
+        }
     }
 }

@@ -6,7 +6,15 @@ import IterDesign
 /// leading edge on one Liquid Glass panel. The map gets `insets` (the toolbar above, the panel on the leading edge) for
 /// its safe area, so framing, selection and the map's own controls stay in the part of the map that shows.
 struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
+    /// Where the card sits. `.leading` (Explore, Locations) hugs the sidebar edge at `panelWidth`; `.centered` (the trip
+    /// builder) sits in the middle of the map and grows with the window between `min` and `max`, a fraction of it wide.
+    enum Placement: Equatable {
+        case leading
+        case centered(min: CGFloat, max: CGFloat, fraction: CGFloat)
+    }
+
     var panelWidth: CGFloat = IterSize.listIdeal
+    var placement: Placement = .leading
     @ViewBuilder var panel: Panel
     @ViewBuilder var map: (_ insets: EdgeInsets) -> MapContent
     @State private var topInset: CGFloat = 0
@@ -14,8 +22,25 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
 
     /// The panel narrows (to the list column minimum) before the visible map drops below the detail minimum.
     private var width: CGFloat {
-        guard totalWidth > 0 else { return panelWidth }
-        return max(IterSize.listColumnMin, min(panelWidth, totalWidth - 2 * Self.margin - IterSize.detailMin))
+        switch placement {
+        case .leading:
+            guard totalWidth > 0 else { return panelWidth }
+            return max(IterSize.listColumnMin, min(panelWidth, totalWidth - 2 * Self.margin - IterSize.detailMin))
+        case .centered(let low, let high, let fraction):
+            guard totalWidth > 0 else { return low }
+            // Never wider than the window leaves room for, so the map still shows a strip each side where it can.
+            return max(IterSize.listColumnMin, min(max(low, min(high, totalWidth * fraction)), totalWidth - 2 * Self.margin))
+        }
+    }
+
+    /// The map's safe area: the toolbar above, and the card when it sits on the leading edge. A centred card covers the
+    /// middle of the map, which no edge inset can describe; the map frames its content in the strip on the card's leading
+    /// side (the card's trailing side and the map controls are left alone), so a fitted route is never behind the card.
+    private var mapInsets: EdgeInsets {
+        switch placement {
+        case .leading: EdgeInsets(top: topInset, leading: width + 2 * Self.margin, bottom: 0, trailing: 0)
+        case .centered: EdgeInsets(top: topInset, leading: 0, bottom: 0, trailing: width + (totalWidth - width) / 2 + Self.margin)
+        }
     }
 
     /// Apple Maps' card: 8 pt from the window's edges, its corners concentric with the window's.
@@ -24,8 +49,8 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
     static var shape: RoundedRectangle { RoundedRectangle(cornerRadius: 27.5, style: .continuous) }
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            map(EdgeInsets(top: topInset, leading: width + 2 * Self.margin, bottom: 0, trailing: 0))
+        ZStack(alignment: placement == .leading ? .topLeading : .top) {
+            map(mapInsets)
                 .ignoresSafeArea(edges: .top)
             panel
                 .environment(\.isOnGlass, true)

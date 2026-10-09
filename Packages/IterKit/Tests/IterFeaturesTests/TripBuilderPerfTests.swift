@@ -282,4 +282,56 @@ actor GatedDrives: DriveTimeProviding {
         model.refreshIfChanged()
         #expect(model.fitCoordinates == fit)
     }
+
+    @Test func selectingAStopMovesTheHighlightNotTheCamera() async {
+        let (_, model, _) = sampleModel()
+        await model.waitForLegs()
+        model.requestInitialCamera()
+        model.setFocusDay(0)
+        let requests = model.cameraRequestCount
+        model.setFocusDay(2, refit: false)
+        #expect(model.focusDay == 2)
+        #expect(model.cameraRequestCount == requests, "a selection never refits")
+        model.contentChanged()
+        #expect(model.cameraRequestCount == requests, "and the map's own follow-up call does not either")
+        model.setFocusDay(1)
+        #expect(model.cameraRequestCount == requests + 1, "choosing a day in the strip still frames it once")
+        model.contentChanged()
+        model.contentChanged()
+        #expect(model.cameraRequestCount == requests + 1, "repeated calls for the same framing are free")
+    }
+
+    @Test func aRecomputeThatChangesNothingPublishesNothing() async {
+        let (_, model, _) = sampleModel()
+        await model.waitForLegs()
+        model.refresh()   // the forecast request the first refresh made settles its state
+        let published = model.layoutPublishCount
+        model.refresh()
+        model.refresh()
+        #expect(model.layoutPublishCount == published, "the plan list is not invalidated by an identical layout")
+    }
+
+    @Test func theDrawnRouteIsThinnedButKeepsItsEnds() {
+        let path = (0...2000).map { Coordinate(latitude: 37 + Double($0) * 0.00001, longitude: -111 + sin(Double($0) / 300) * 0.01) }
+        let thin = PathSimplifier.simplify(path, tolerance: PathSimplifier.routeTolerance)
+        #expect(thin.count < path.count / 10)
+        #expect(thin.first == path.first && thin.last == path.last)
+        let straight = PathSimplifier.simplify([path[0], path[1], path[2]], tolerance: 0)
+        #expect(straight.count == 3, "no tolerance keeps every point")
+    }
+
+    @Test func aMissedSettleAfterTheFirstGoodOneIsNotAskedAgain() async throws {
+        let (_, model, _) = sampleModel()
+        await model.waitForLegs()
+        model.requestInitialCamera()
+        guard case .fit(let first)? = model.cameraRequest?.kind else { Issue.record("expected a fit"); return }
+        model.cameraDidChange(to: first)
+        let requests = model.cameraRequestCount
+        model.setFocusDay(1)
+        #expect(model.cameraRequestCount == requests + 1)
+        // MapKit shows the day in a pane shaped unlike the request: the centre is off by more than the policy allows.
+        let skewed = GeoRegion(center: Coordinate(latitude: 10, longitude: 10), latitudeDelta: 0.5, longitudeDelta: 0.1)
+        model.cameraDidChange(to: skewed)
+        #expect(model.cameraRequestCount == requests + 1, "no second request after a miss")
+    }
 }

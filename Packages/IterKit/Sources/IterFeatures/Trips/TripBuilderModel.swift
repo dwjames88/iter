@@ -6,7 +6,7 @@ import IterData
 import IterServices
 
 /// One stop as the builder shows it: the plan, its schedule, and the windows of its day at its spot.
-public struct TripStopEntry: Identifiable, Sendable {
+public struct TripStopEntry: Identifiable, Sendable, Equatable {
     public var stop: TripStopPlan
     /// 1-based position in the whole trip (the number on the map pin).
     public var number: Int
@@ -23,7 +23,7 @@ public struct TripStopEntry: Identifiable, Sendable {
 }
 
 /// One day of the trip with its stops and totals.
-public struct TripDay: Identifiable, Sendable {
+public struct TripDay: Identifiable, Sendable, Equatable {
     public var index: Int
     public var day: LocalDay
     public var stops: [TripStopEntry]
@@ -82,7 +82,8 @@ public struct TripMapContent: Equatable, Sendable {
                 pins.append(TripMapPin(id: entry.id, name: entry.stop.spot.name, coordinate: entry.stop.spot.coordinate,
                                        number: entry.number, day: day.index))
                 if let leg = entry.schedule?.legFromPrevious {
-                    legs.append(TripMapLeg(id: entry.id, day: day.index, path: leg.path.count >= 2 ? leg.path : [leg.from, leg.to]))
+                    let path = leg.path.count >= 2 ? PathSimplifier.simplify(leg.path, tolerance: PathSimplifier.routeTolerance) : [leg.from, leg.to]
+                    legs.append(TripMapLeg(id: entry.id, day: day.index, path: path))
                 }
             }
         }
@@ -178,6 +179,10 @@ public final class TripBuilderModel {
     /// script read these; nothing else does).
     @ObservationIgnored public private(set) var recomputeCount = 0
     @ObservationIgnored public private(set) var dayLightCount = 0
+    /// How many times `layout` (what the plan list draws) really changed; a recompute that leaves it equal does not count.
+    @ObservationIgnored public private(set) var layoutPublishCount = 0
+    /// How many camera requests the model issued (tests).
+    @ObservationIgnored public private(set) var cameraRequestCount = 0
 
     // MARK: - Map camera
 
@@ -188,7 +193,11 @@ public final class TripBuilderModel {
     /// The day the picker has chosen; the automatic fit frames its stops (nil: the whole route).
     public private(set) var focusDay: Int?
     @ObservationIgnored private var visibleRegion: GeoRegion?
+    /// The coordinates the camera last framed (or was told not to); `contentChanged` acts only when they differ.
+    @ObservationIgnored private var framedCoordinates: [Coordinate] = []
     @ObservationIgnored private var requestCounter = 0
+    /// True once the map has settled where we asked at least once; a later miss is the pane's shape, not MapKit's default camera.
+    @ObservationIgnored private var hasSettledOurCamera = false
 
     public static func cameraScreenKey(for tripID: UUID) -> String { "trip-\(tripID.uuidString)" }
 
@@ -209,23 +218,38 @@ public final class TripBuilderModel {
     public func requestInitialCamera() {
         guard let region = cameraPolicy.initialRegion(for: fitCoordinates) else { return }
         if cameraPolicy.savedRegion == nil { cameraPolicy.didApplyFit(region) } else { cameraPolicy.didRestoreSavedCamera() }
-        cameraRequest = CameraRequest(id: nextRequestID(), kind: .fit(region))
+        framedCoordinates = fitCoordinates
+        issue(.fit(region))
     }
 
     /// The picker chose another day (nil: the whole route): refit unless the user has moved the map since the last fit.
-    public func setFocusDay(_ day: Int?) {
+    /// `refit: false` is for a selection that only moves the highlight (a stop was selected in the list or on the map):
+    /// the day changes, the camera does not, and the stop is revealed with `reveal` instead.
+    public func setFocusDay(_ day: Int?, refit: Bool = true) {
         guard day != focusDay else { return }
         focusDay = day
         updateFitCoordinates()
-        contentChanged()
+        if refit { contentChanged() } else { framedCoordinates = fitCoordinates }
     }
 
     /// Stops were added, removed or moved: refit unless the user has moved the map since the last fit.
+    /// Called again for the same coordinates it already framed (or chose not to frame), it does nothing.
     public func contentChanged() {
+        guard fitCoordinates != framedCoordinates else { return }
+        framedCoordinates = fitCoordinates
         guard let target = MapCameraPolicy.fit(fitCoordinates) else { return }
         if target == cameraPolicy.lastFitRegion, !cameraPolicy.userMovedSinceFit { return }
         guard let region = cameraPolicy.regionAfterContentChange(fitCoordinates) else { return }
-        cameraRequest = CameraRequest(id: nextRequestID(), kind: .fit(region))
+        issue(.fit(region))
+    }
+
+    private func issue(_ kind: CameraRequest.Kind) {
+        cameraRequestCount += 1
+        switch kind {
+        case .fit: IterPerf.count("trip.camera.fit")
+        case .pan: IterPerf.count("trip.camera.pan")
+        }
+        cameraRequest = CameraRequest(id: nextRequestID(), kind: kind)
     }
 
     /// Pans the map so the coordinate is comfortably in view; does nothing when it already is, never changes the zoom.
@@ -234,7 +258,7 @@ public final class TripBuilderModel {
         let target = MapCameraPolicy.pan(current, toInclude: coordinate)
         guard target != current else { return }
         cameraPolicy.didApplyPan(target)
-        cameraRequest = CameraRequest(id: nextRequestID(), kind: .pan(target))
+        issue(.pan(target))
     }
 
     /// The map settled at `region` (called by the view when the camera stops moving).
@@ -246,10 +270,19 @@ public final class TripBuilderModel {
         visibleRegion = region
         switch cameraPolicy.cameraSettled(region, byUser: byUser) {
         case .saved:
+            hasSettledOurCamera = true
             cameraPolicy.save(screen: Self.cameraScreenKey(for: tripID), defaults: defaults)
         case .reapply(let target):
-            // MapKit settled somewhere we did not ask for: ask again (the view applies the new request).
-            cameraRequest = CameraRequest(id: nextRequestID(), kind: .fit(target))
+            // MapKit settled somewhere we did not ask for. Before the map has settled where we asked even once, that is
+            // its default camera ahead of layout: ask again. After that it is the pane's shape (a card covering part of
+            // the map changes which region "fits"), and asking again only animates the camera a second time after
+            // every day switch, so the settle stands.
+            if hasSettledOurCamera {
+                IterPerf.count("trip.camera.missIgnored")
+            } else {
+                IterPerf.count("trip.camera.reapply")
+                issue(.fit(target))
+            }
         case .ignored:
             break
         }
@@ -564,9 +597,15 @@ public final class TripBuilderModel {
         let schedule = scheduler.schedule(plan, legs: legs, windows: sessionWindows)
         if self.schedule != schedule { self.schedule = schedule }
         allSuggestions = scheduler.suggestOrdering(plan, legs: legs, windows: sessionWindows)
-        suggestions = allSuggestions.filter { !dismissals.isDismissed(trip: tripID, day: $0.dayIndex, order: $0.order) }
-        days = buildDays(plan: plan, schedule: schedule)
-        layout = TripDayLayout.make(days: days, suggestions: suggestions)
+        let visible = allSuggestions.filter { !dismissals.isDismissed(trip: tripID, day: $0.dayIndex, order: $0.order) }
+        if visible != suggestions { suggestions = visible }
+        let newDays = buildDays(plan: plan, schedule: schedule)
+        if newDays != days { days = newDays }
+        let newLayout = TripDayLayout.make(days: newDays, suggestions: suggestions)
+        if newLayout != layout {
+            layout = newLayout
+            layoutPublishCount += 1
+        }
         let content = TripMapContent(days: days)
         if content != mapContent { mapContent = content }
         updateFitCoordinates()

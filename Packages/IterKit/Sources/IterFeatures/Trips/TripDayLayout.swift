@@ -19,7 +19,7 @@ extension TripStopEntry {
 
 /// A drive on the day timeline: into a day's first stop from the day before (`driveIn`), or between two stops of one day.
 /// It always belongs to the day of the stop it arrives at.
-public struct TripDriveItem: Identifiable, Sendable {
+public struct TripDriveItem: Identifiable, Sendable, Equatable {
     /// The stop the drive arrives at.
     public var toStopID: UUID
     /// The stop the drive leaves from (possibly on an earlier day).
@@ -40,7 +40,7 @@ public struct TripDriveItem: Identifiable, Sendable {
 }
 
 /// One row of a day's timeline, top to bottom.
-public enum TripTimelineItem: Identifiable, Sendable {
+public enum TripTimelineItem: Identifiable, Sendable, Equatable {
     /// The drive from the previous day's last stop into this day's first stop.
     case driveIn(TripDriveItem)
     case stop(TripStopEntry)
@@ -85,7 +85,7 @@ public struct OvernightBoundary: Sendable, Equatable, Identifiable {
 }
 
 /// One day of the trip as the builder lists it.
-public struct TripDayGroup: Identifiable, Sendable {
+public struct TripDayGroup: Identifiable, Sendable, Equatable {
     public var index: Int
     public var date: LocalDay
     /// The day's light bookends, at its first stop's place (nil with no stops).
@@ -124,7 +124,7 @@ public struct TripOverviewCell: Identifiable, Sendable, Equatable {
 
 /// The day-first shape of a trip: day groups with their timelines, the overnight boundaries and the overview cells.
 /// A pure value built from the builder's days and suggestions; it holds no state of its own.
-public struct TripDayLayout: Sendable {
+public struct TripDayLayout: Sendable, Equatable {
     public var groups: [TripDayGroup]
 
     public init(groups: [TripDayGroup]) { self.groups = groups }
