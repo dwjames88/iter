@@ -11,6 +11,8 @@ struct TripRouteMap: View {
     @Environment(\.renderMode) private var renderMode
     @Environment(AppModel.self) private var app
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
+    @State private var daylight = DaylightClock()
+    @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
     let builder: TripBuilderModel
     /// The selected stop and day, shared with the day strip and the list.
     let state: TripViewState
@@ -82,7 +84,8 @@ struct TripRouteMap: View {
     }
 
     private var liveMap: some View {
-        Map(position: $position, selection: Binding(get: { state.selection }, set: { state.select($0, from: .map) }), scope: mapScope) {
+        Map(position: $position, bounds: .globe, selection: Binding(get: { state.selection }, set: { state.select($0, from: .map) }), scope: mapScope) {
+            if daylight.isShown(isOn: showsDaylight, style: MapStyleChoice(stored: mapStyleRaw)) { DaylightOverlay(daylight.shading) }
             let content = builder.mapContent
             let selection = state.selection
             ForEach(content.legs) { leg in
@@ -104,6 +107,7 @@ struct TripRouteMap: View {
             }
         }
         .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
+        .daylightClock(daylight)
         .mapControls { MapScaleView() }
         .safeAreaPadding(insets)
         .overlay(alignment: .topTrailing) {
