@@ -4,6 +4,8 @@
 
 ## What changed (2026-10-07)
 
+- **Mac place card header and buttons.** Open a place in Explore. Back (top left) returns to the list with the row still highlighted; Share (top right) opens the system share sheet with a maps.apple.com link; Close dismisses the card and clears the selection. No position counter or up/down buttons. Add to Trip: pick a trip day, the button reads Added and a line says where, with Show Trip; New Trip... makes a trip and stays in Explore. Save becomes Saved. Open in Maps opens Apple Maps. The image strip's Look Around / Satellite control switches the picture (Look Around is live where Apple has coverage, e.g. Bixby Bridge).
+
 Quick Mac checks, with the sample weather on (**Debug ▸ Use Sample Weather**) and Mesa Arch open as a spot page or panel.
 
 - **Compass rose.** At the foot of **Light through the day** there is a compass rose (no separate sun and moon module). Drag the time scrubber under it: the sun and moon marks move, and the timeline's marker follows (they share one scrubber). Event labels sit next to their marks. With a classic view the wedge is labelled just outside the rim ("View 263° W"), always shown, never inside the wedge.

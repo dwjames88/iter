@@ -9,6 +9,7 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 - **Licensing groundwork**: Iter can now check a licence key with Lemon Squeezy, keep it in the Keychain and work for 14 days offline. It is hidden and switched off, so nothing changes for anyone: Iter is still free, and nothing asks for a key.
 
 ### Changed
+- **Place card buttons work**: on the Mac, Back, Share and Close in the place card's header did nothing (a click in the window's title bar band became a window drag). Back is now at the leading corner (to the list, as Escape), Share and Close at the trailing corner; the position counter and previous and next buttons are gone. Add to Trip confirms what it did and can make a new trip without leaving Explore, Save flips to Saved, and the image strip switches between Look Around (live, when Apple has it) and satellite.
 - **Search always looks the text up first**: Return in Explore's search field now always searches your places and Apple Maps, so a long place name such as "Great Smoky Mountains National Park" finds the park instead of going to Ask Iter. When the text reads like a request ("foggy forest near Portland for sunrise", a question, or a phrase starting with "find" or "show me"), an **Ask Iter** suggestion sits above the results; choose it to ask.
 
 ### Fixed

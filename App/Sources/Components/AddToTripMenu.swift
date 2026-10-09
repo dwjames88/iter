@@ -11,6 +11,13 @@ struct AddToTripMenu: View {
     @Environment(AppNavigation.self) private var navigation
     let spot: Spot
     var label: String = String(localized: "Add to Trip", comment: "Button")
+    /// Called with what was added, for the card's confirmation. Without it (context menus) a new trip opens.
+    var onAdded: ((PlaceCardActions.Added) -> Void)?
+
+    private var actions: PlaceCardActions {
+        PlaceCardActions(store: model.store, tomorrow: { [model] in model.today(in: $0.timeZone).adding(days: 1) },
+                         openInMaps: ExploreActions.openInMaps)
+    }
 
     var body: some View {
         Menu {
@@ -19,7 +26,8 @@ struct AddToTripMenu: View {
                 Menu(trip.name) {
                     ForEach(0..<trip.dayCount, id: \.self) { day in
                         Button {
-                            _ = model.store.addStop(spot, to: trip, day: day)
+                            let added = actions.add(spot, to: trip, day: day)
+                            onAdded?(added)
                         } label: {
                             dayLabel(trip: trip, day: day)
                         }
@@ -27,12 +35,9 @@ struct AddToTripMenu: View {
                 }
             }
             if !trips.isEmpty { Divider() }
-            Button(String(localized: "New Trip with This Spot", comment: "Menu item")) {
-                let start = model.today(in: spot.timeZone).adding(days: 1)
-                let trip = model.store.createTrip(name: String(localized: "Trip to \(spot.name)", comment: "Default name of a new trip"),
-                                                  startDay: start, dayCount: 1)
-                _ = model.store.addStop(spot, to: trip, day: 0)
-                navigation.show(.trip(trip.id))
+            Button(String(localized: "New Trip…", comment: "Menu item: make a trip with this spot on it")) {
+                let added = actions.addToNewTrip(spot, name: String(localized: "Trip to \(spot.name)", comment: "Default name of a new trip"))
+                if let onAdded { onAdded(added) } else { navigation.show(.trip(added.tripID)) }
             }
         } label: {
             Label(label, systemImage: "plus.circle")

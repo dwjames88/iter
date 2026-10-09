@@ -1,4 +1,5 @@
 import SwiftUI
+import MapKit
 import IterCore
 import IterData
 import IterDesign
@@ -9,8 +10,11 @@ extension EnvironmentValues {
     @Entry var spotImagery: any SpotImageryProviding = MapKitSpotImagery.shared
 }
 
-/// The images of a spot, shown at the top of the map's place card: the images page horizontally (Look Around, then
-/// satellite), each with a quiet source label; a calm placeholder stands in while loading or when there are none.
+/// The images of a spot, shown at the top of the map's place card: one image at a time, Look Around and satellite, with a
+/// system segmented control over the image to switch between them (a mouse has no swipe). With one image the control is a
+/// quiet source label. Look Around is live: once MapKit has the scene, the snapshot is replaced by an interactive
+/// `LookAroundPreview` that you can look around in; when there is no scene the image is not offered at all. A calm
+/// placeholder stands in while loading or when there are none.
 ///
 /// This view only draws the list it is given, so a new source is one more `SpotImage` in the list. User photos will
 /// slot in here: add `case userPhoto` to `SpotImageSource`, have the provider return the spot's own photos first,
@@ -20,94 +24,77 @@ struct SpotImageStrip: View {
     let isLoading: Bool
     let spotName: String
     let category: SpotCategory
+    /// Where Look Around looks, for the live preview. Nil draws the snapshots only (tests, snapshots).
+    var coordinate: Coordinate?
 
-    @State private var page: SpotImage.ID?
+    @State private var selected: SpotImage.ID?
 
-    private var currentIndex: Int {
-        images.firstIndex { $0.id == page } ?? 0
+    private var current: SpotImage? {
+        images.first { $0.id == selected } ?? images.first
     }
 
     var body: some View {
         Group {
-            if images.isEmpty {
-                placeholder
+            if let current {
+                ZStack {
+                    SpotImagePage(item: current, spotName: spotName, coordinate: coordinate)
+                        .id(current.id)
+                        .transition(.opacity)
+                }
+                .overlay(alignment: .topLeading) { sourceControl(current) }
             } else {
-                pager
+                placeholder
             }
         }
+        .animation(.smooth(duration: 0.25), value: current?.id)
         .frame(height: IterSize.imageStripHeight)
         .frame(maxWidth: .infinity)
         .clipped()
     }
 
-    // MARK: Images
+    // MARK: Source
 
-    private var pager: some View {
-        ScrollView(.horizontal) {
-            LazyHStack(spacing: 0) {
+    /// The system segmented control with more than one source; the plain label with one.
+    @ViewBuilder private func sourceControl(_ current: SpotImage) -> some View {
+        if images.count > 1 {
+            Picker(selection: Binding(get: { current.id }, set: { selected = $0 })) {
                 ForEach(images) { item in
-                    SpotImagePage(item: item, spotName: spotName)
-                        .containerRelativeFrame(.horizontal)
-                        .id(item.id)
+                    Text(SpotImageStrip.title(for: item.source)).tag(item.id)
                 }
+            } label: {
+                Text("Image", comment: "VoiceOver: the place card's image source control")
             }
-            .scrollTargetLayout()
+            .pickerStyle(.segmented)
+            .labelsHidden()
+            .controlSize(.small)
+            .fixedSize()
+            // Over a photo: clear glass with the HIG's 35 % dimming layer, and light labels.
+            .environment(\.colorScheme, .dark)
+            .padding(IterSpace.xxs)
+            .background(.black.opacity(0.35), in: .capsule)
+            .glassEffect(.clear, in: .capsule)
+            .padding(IterGrid.inset)
+        } else {
+            Text(SpotImageStrip.title(for: current.source))
+                .font(IterFont.captionStrong)
+                .foregroundStyle(.white)
+                .padding(.horizontal, IterSpace.sm)
+                .padding(.vertical, IterSpace.xs)
+                .background(.black.opacity(0.35), in: .capsule)
+                .glassEffect(.clear, in: .capsule)
+                .padding(IterGrid.inset)
+                .accessibilityHidden(true)
         }
-        .scrollIndicators(.hidden)
-        .scrollTargetBehavior(.paging)
-        .scrollPosition(id: $page)
-        .overlay(alignment: .bottom) {
-            if images.count > 1 { dots }
-        }
-        .overlay { if images.count > 1 { arrows } }
     }
 
-    private var dots: some View {
-        HStack(spacing: IterSpace.xs + IterSpace.xxs) {
-            ForEach(Array(images.enumerated()), id: \.element.id) { index, _ in
-                Circle()
-                    .fill(index == currentIndex ? AnyShapeStyle(.white) : AnyShapeStyle(.white.opacity(0.5)))
-                    .frame(width: IterSpace.xs + IterSpace.xxs, height: IterSpace.xs + IterSpace.xxs)
-            }
+    static func title(for source: SpotImageSource) -> LocalizedStringKey {
+        switch source {
+        case .lookAround: "Look Around"
+        case .satellite: "Satellite"
         }
-        .padding(.horizontal, IterSpace.sm)
-        .padding(.vertical, IterSpace.xs + IterSpace.xxs)
-        // Clear glass over media, with the HIG's 35 % dimming layer behind it for bright photos.
-        .background(.black.opacity(0.35), in: .capsule)
-        .glassEffect(.clear, in: .capsule)
-        .padding(IterSpace.sm)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("Image \(currentIndex + 1) of \(images.count)", comment: "VoiceOver: position in the place card's image strip"))
     }
 
-    /// Previous and next, always shown: a mouse has no swipe.
-    private var arrows: some View {
-        HStack {
-            if currentIndex > 0 { arrow("chevron.left", label: String(localized: "Previous image", comment: "VoiceOver and tooltip")) { move(to: currentIndex - 1) } }
-            Spacer(minLength: 0)
-            if currentIndex < images.count - 1 { arrow("chevron.right", label: String(localized: "Next image", comment: "VoiceOver and tooltip")) { move(to: currentIndex + 1) } }
-        }
-        .padding(.horizontal, IterSpace.sm)
-    }
-
-    private func arrow(_ symbol: String, label: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Label(label, systemImage: symbol)
-        }
-        .labelStyle(.iconOnly)
-        .buttonStyle(.glass(.clear))
-        .buttonBorderShape(.circle)
-        .controlSize(.extraLarge)
-        .help(label)
-        .accessibilityLabel(label)
-    }
-
-    private func move(to index: Int) {
-        guard images.indices.contains(index) else { return }
-        withAnimation(.smooth) { page = images[index].id }
-    }
-
-    // MARK: Placeholder
+// MARK: Placeholder
 
     private var placeholder: some View {
         ZStack {
@@ -128,10 +115,13 @@ struct SpotImageStrip: View {
     }
 }
 
-/// One image of the strip with its source label.
+/// One image of the strip. Look Around becomes live when its scene is available.
 private struct SpotImagePage: View {
     let item: SpotImage
     let spotName: String
+    let coordinate: Coordinate?
+    @State private var scene: MKLookAroundScene?
+
     var body: some View {
         // Sized by its container, not by the image, so a narrow column does not make the page wider than the strip.
         Color.clear
@@ -140,29 +130,21 @@ private struct SpotImagePage: View {
                     .resizable()
                     .scaledToFill()
             }
+            .overlay {
+                if let scene {
+                    LookAroundPreview(initialScene: scene, allowsNavigation: true, showsRoadLabels: true, pointsOfInterest: .all)
+                }
+            }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .clipped()
-            .overlay(alignment: .topLeading) {
-                label
-                    .font(IterFont.captionStrong)
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, IterSpace.sm)
-                    .padding(.vertical, IterSpace.xs)
-                    .background(.black.opacity(0.35), in: .capsule)
-                    .glassEffect(.clear, in: .capsule)
-                    .padding(IterGrid.inset)
-                    .accessibilityHidden(true)
+            .task(id: item.id) {
+                guard item.source == .lookAround, let coordinate else { return }
+                let request = MKLookAroundSceneRequest(coordinate: CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude))
+                scene = try? await request.scene
             }
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(accessibilityLabel)
             .accessibilityAddTraits(.isImage)
-    }
-
-    private var label: Text {
-        switch item.source {
-        case .lookAround: Text("Look Around", comment: "Source label on a spot image")
-        case .satellite: Text("Satellite", comment: "Source label on a spot image")
-        }
     }
 
     private var accessibilityLabel: Text {
@@ -192,7 +174,8 @@ struct SpotImages: View {
     var body: some View {
         SpotImageStrip(images: loaded ?? imagery.cachedImages(for: request) ?? [],
                        isLoading: loaded == nil && imagery.cachedImages(for: request) == nil && renderMode == .live,
-                       spotName: spot.name, category: spot.category)
+                       spotName: spot.name, category: spot.category,
+                       coordinate: renderMode == .live ? spot.coordinate : nil)
             .task(id: request) {
                 if let cached = imagery.cachedImages(for: request) { loaded = cached; return }
                 guard renderMode == .live else { return }

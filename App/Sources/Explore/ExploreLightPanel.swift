@@ -6,12 +6,12 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// The list column's second state: the selected place's light panel, replacing the list. A header with Back and the
-/// place's position in the list (Up and Down step through the list without leaving), the place, its images, then the
+/// The list column's second state: the selected place's light panel, replacing the list. A header with Back, Share and
+/// Close, the place, its images, then the
 /// spot page's own sections at panel density: Good to know (with the best window), the light timeline (the
 /// centrepiece, drawn the full column width), the outlook with its openable days, hourly weather, and the actions.
 ///
-/// Keyboard: the panel takes focus when it opens. Up and Down step to the previous and next place; Escape goes back
+/// Keyboard: the panel takes focus when it opens. Escape goes back
 /// (and leaves Escape to Add Spot mode while that is on).
 struct ExploreLightPanel: View {
     @Bindable var explore: ExploreModel
@@ -23,6 +23,8 @@ struct ExploreLightPanel: View {
     @Environment(AppNavigation.self) private var navigation
     @FocusState private var isFocused: Bool
     @State private var scrollSettling = false
+    /// What Add to Trip last did, shown under the actions for a few seconds.
+    @State private var added: PlaceCardActions.Added?
 
     private var spot: Spot { row.spot }
     /// The panel shows today at the spot; the outlook starts there.
@@ -84,8 +86,6 @@ struct ExploreLightPanel: View {
         .focusable()
         .focused($isFocused)
         .focusEffectDisabled()
-        .onKeyPress(.upArrow) { explore.selectPrevious(); return .handled }
-        .onKeyPress(.downArrow) { explore.selectNext(); return .handled }
         .onKeyPress(.escape) {
             // Add Spot mode owns Escape (its banner's Cancel), as sheets do.
             guard !explore.isAddingSpot else { return .ignored }
@@ -97,65 +97,11 @@ struct ExploreLightPanel: View {
         .accessibilityLabel(Text("Place panel for \(spot.name)", comment: "VoiceOver"))
     }
 
-    // MARK: Header (as a Maps place card: Share leading; previous, next and Close trailing, round glass buttons)
+    // MARK: Header (as a Maps place card: Back leading; Share and Close trailing, round glass buttons)
 
     private var header: some View {
-        HStack(spacing: IterSpace.sm) {
-            ShareLink(item: SpotHeaderView.shareURL(for: spot), subject: Text(spot.name),
-                      message: Text(SpotHeaderView.shareMessage(for: spot))) {
-                Label(LightText.share, systemImage: "square.and.arrow.up")
-            }
-            .buttonStyle(GlassCircleButtonStyle())
-            .help(String(localized: "Share this location", comment: "Help"))
-            Spacer(minLength: 0)
-            if let position = explore.panelPosition {
-                Text("\(position.index) of \(position.count)", comment: "Place panel header: the place's position in the list, e.g. 3 of 16")
-                    .font(IterFont.secondary)
-                    .monospacedDigit()
-                    .foregroundStyle(.secondary)
-                    .accessibilityLabel(Text("Place \(position.index) of \(position.count)", comment: "VoiceOver"))
-            }
-            // Previous and next are one control, as a toolbar groups related items in one glass capsule.
-            HStack(spacing: 0) {
-                Button { explore.selectPrevious() } label: {
-                    Label(String(localized: "Previous place", comment: "VoiceOver"), systemImage: "chevron.up")
-                        .frame(width: HeaderMetrics.size, height: HeaderMetrics.size)
-                        .contentShape(.rect)
-                }
-                .disabled(!explore.canSelectPrevious)
-                .help(String(localized: "Previous place (Up Arrow)", comment: "Tooltip"))
-                Button { explore.selectNext() } label: {
-                    Label(String(localized: "Next place", comment: "VoiceOver"), systemImage: "chevron.down")
-                        .frame(width: HeaderMetrics.size, height: HeaderMetrics.size)
-                        .contentShape(.rect)
-                }
-                .disabled(!explore.canSelectNext)
-                .help(String(localized: "Next place (Down Arrow)", comment: "Tooltip"))
-            }
-            .buttonStyle(.plain)
-            .padding(.horizontal, IterSpace.xxs)
-            .glassEffect(.regular.interactive(), in: .capsule)
-            Button { explore.closePanel() } label: {
-                Label(String(localized: "Back to places", comment: "VoiceOver"), systemImage: "xmark")
-            }
-            .buttonStyle(GlassCircleButtonStyle())
-            .help(String(localized: "Back to places (Esc)", comment: "Tooltip on the place panel's close button"))
-        }
-        .labelStyle(.iconOnly)
-        .font(.system(size: 13, weight: .semibold))
-        .foregroundStyle(.primary)
-        // Concentric with the card's corner: the buttons sit as far from the edges as Maps' do.
-        .padding(.horizontal, HeaderMetrics.inset)
-        .padding(.top, HeaderMetrics.inset)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        PlaceCardHeader(spot: spot, onBack: { explore.closePanel() }, onClose: { explore.select(nil) })
     }
-
-    /// The card header buttons: the shared glass circles in the card's corners.
-    fileprivate enum HeaderMetrics {
-        static let size = GlassCircleButtonStyle.size
-        static let inset = GlassCircleButtonStyle.inset
-    }
-
 
     // MARK: Place
 
@@ -207,26 +153,53 @@ struct ExploreLightPanel: View {
 
     /// The card's action row, as in Maps: Add to Trip is the main action; Save and Open in Maps beside it.
     private var actionRow: some View {
-        HStack(spacing: IterSpace.sm) {
-            AddToTripMenu(spot: spot)
-                .menuStyle(.button)
-                .menuIndicator(.hidden)
-                .placeAction(isProminent: true)
-            if spot.origin != .user {
-                saveButton.placeAction()
+        VStack(spacing: IterSpace.sm) {
+            HStack(spacing: IterSpace.sm) {
+                AddToTripMenu(spot: spot, label: added == nil ? String(localized: "Add to Trip", comment: "Button")
+                                                              : String(localized: "Added", comment: "Place card: Add to Trip just worked"),
+                              onAdded: didAdd)
+                    .menuStyle(.button)
+                    .menuIndicator(.hidden)
+                    .placeAction(isProminent: true)
+                if spot.origin != .user {
+                    saveButton.placeAction()
+                }
+                Button { cardActions.openInMaps(spot) } label: {
+                    Label(LightText.openInMaps, systemImage: "map")
+                }
+                .placeAction()
+                .help(String(localized: "Open this location in Apple Maps", comment: "Help"))
             }
-            Button(action: openInMaps) {
-                Label(LightText.openInMaps, systemImage: "map")
+            if let added {
+                HStack(spacing: IterSpace.xs) {
+                    Image(systemName: "checkmark.circle.fill").foregroundStyle(IterColor.accentText)
+                    Text(added.message).lineLimit(1)
+                    Button(String(localized: "Show Trip", comment: "Place card: open the trip the spot was just added to")) {
+                        navigation.show(.trip(added.tripID))
+                    }
+                    .linkButtonStyle()
+                    .foregroundStyle(IterColor.accentText)
+                }
+                .font(IterFont.secondary)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity)
+                .transition(.opacity)
+                .accessibilityElement(children: .combine)
             }
-            .placeAction()
-            .help(String(localized: "Open this location in Apple Maps", comment: "Help"))
+        }
+        .animation(.snappy(duration: 0.2), value: added)
+        .task(id: added) {
+            guard added != nil else { return }
+            try? await Task.sleep(for: .seconds(4))
+            added = nil
         }
     }
 
-    private func openInMaps() {
-        let item = MKMapItem(location: CLLocation(latitude: spot.coordinate.latitude, longitude: spot.coordinate.longitude), address: nil)
-        item.name = spot.name
-        item.openInMaps(launchOptions: nil)
+    private func didAdd(_ result: PlaceCardActions.Added) { added = result }
+
+    private var cardActions: PlaceCardActions {
+        PlaceCardActions(store: model.store, tomorrow: { [model] in model.today(in: $0.timeZone).adding(days: 1) },
+                         openInMaps: ExploreActions.openInMaps)
     }
 
     private var actions: some View {
@@ -251,7 +224,7 @@ struct ExploreLightPanel: View {
     private var saveButton: some View {
         let saved = isSaved
         return Button {
-            model.store.setSaved(spot, !saved)
+            cardActions.toggleSaved(spot)
         } label: {
             if saved {
                 Label(String(localized: "Saved", comment: "Place panel: the spot is saved"), systemImage: "bookmark.fill")
