@@ -217,8 +217,7 @@ struct TripOverviewStrip: View {
     @ViewBuilder private func cellViews(flexible: Bool) -> some View {
         if let selectAll {
             Button(action: selectAll) {
-                AllDaysCellView(cells: cells, isSelected: selectedDay == nil)
-                    .frame(minWidth: Self.minCellWidth, maxWidth: flexible ? .infinity : Self.minCellWidth, alignment: .leading)
+                AllDaysCellView(cells: cells, isSelected: selectedDay == nil, minWidth: Self.minCellWidth, flexible: flexible)
             }
             .buttonStyle(.plain)
             .help(Text("Show every day on the map", comment: "Tooltip"))
@@ -226,8 +225,7 @@ struct TripOverviewStrip: View {
         }
         ForEach(cells) { cell in
             Button { select(cell.index) } label: {
-                OverviewCellView(cell: cell, isSelected: cell.index == selectedDay)
-                    .frame(minWidth: Self.minCellWidth, maxWidth: flexible ? .infinity : Self.minCellWidth, alignment: .leading)
+                OverviewCellView(cell: cell, isSelected: cell.index == selectedDay, minWidth: Self.minCellWidth, flexible: flexible)
             }
             .buttonStyle(.plain)
             .help(Text("Show this day", comment: "Tooltip"))
@@ -241,6 +239,8 @@ struct TripOverviewStrip: View {
 private struct AllDaysCellView: View {
     let cells: [TripOverviewCell]
     let isSelected: Bool
+    let minWidth: CGFloat
+    let flexible: Bool
 
     private var shape: RoundedRectangle { RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous) }
 
@@ -258,7 +258,8 @@ private struct AllDaysCellView: View {
         }
         .lineLimit(1)
         .padding(IterSpace.sm)
-        .frame(maxHeight: .infinity, alignment: .topLeading)
+        // The size is the cell's own, inside its background, so every cell is as wide and as tall as its neighbours.
+        .frame(minWidth: minWidth, maxWidth: flexible ? .infinity : minWidth, maxHeight: .infinity, alignment: .topLeading)
         .background(isSelected ? AnyShapeStyle(IterColor.accent.opacity(0.14)) : AnyShapeStyle(ContentFill()), in: shape)
         .overlay(shape.strokeBorder(isSelected ? IterColor.accent : IterColor.separator,
                                     lineWidth: isSelected ? IterStroke.thick : IterStroke.hairline))
@@ -271,6 +272,8 @@ private struct AllDaysCellView: View {
 private struct OverviewCellView: View {
     let cell: TripOverviewCell
     let isSelected: Bool
+    let minWidth: CGFloat
+    let flexible: Bool
 
     private var shape: RoundedRectangle { RoundedRectangle(cornerRadius: IterRadius.control, style: .continuous) }
 
@@ -299,6 +302,7 @@ private struct OverviewCellView: View {
         }
         .lineLimit(1)
         .padding(IterSpace.sm)
+        .frame(minWidth: minWidth, maxWidth: flexible ? .infinity : minWidth, maxHeight: .infinity, alignment: .topLeading)
         .background(isSelected ? AnyShapeStyle(IterColor.accent.opacity(0.14)) : AnyShapeStyle(ContentFill()), in: shape)
         .overlay(shape.strokeBorder(isSelected ? IterColor.accent : IterColor.separator,
                                     lineWidth: isSelected ? IterStroke.thick : IterStroke.hairline))
