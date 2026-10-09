@@ -28,6 +28,8 @@ struct SymbolNameTests {
         "notice.symbol",          // ScoutNotice(symbol: "…") literals scanned
         "h.symbolName",           // WeatherKit / SampleWeatherService hourly symbol; `symbol = …` scanned
         "symbol",                 // SpotFactsView.fact(_ symbol:), call-site literals scanned
+        "systemImage",            // MapControlButton(systemImage:), call-site literals scanned
+        "String",                 // a `systemImage: String` property declaration, not a use
     ]
 
     struct Use { let name: String; let file: String; let line: Int }
