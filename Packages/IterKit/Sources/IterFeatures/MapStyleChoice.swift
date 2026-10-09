@@ -7,11 +7,13 @@ public enum MapStyleChoice: String, CaseIterable, Identifiable, Sendable {
 
     /// The one `UserDefaults` / `@AppStorage` key every map and the View menu read.
     public static let storageKey = "iter.map.style"
-    public static let `default` = MapStyleChoice.standard
+    /// Hybrid, because MapKit draws the 3D globe only for imagery styles: Standard stays a flat Mercator map at any camera
+    /// distance (see "Map styles and the globe" in docs/ARCHITECTURE.md). A choice the user saved always wins.
+    public static let `default` = MapStyleChoice.hybrid
 
     public var id: String { rawValue }
 
-    /// The choice stored as `raw`; anything missing or unknown is Standard.
+    /// The choice stored as `raw`; anything missing or unknown is the default.
     public init(stored raw: String?) {
         self = raw.flatMap(MapStyleChoice.init(rawValue:)) ?? .default
     }
