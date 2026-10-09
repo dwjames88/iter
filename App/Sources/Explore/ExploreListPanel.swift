@@ -42,6 +42,7 @@ struct ExploreListPanel: View {
                 .opacity(explore.showsPanel ? 0 : 1)
                 .allowsHitTesting(!explore.showsPanel)
                 .accessibilityHidden(explore.showsPanel)
+                .titlebarOverlaysActive(!explore.showsPanel)
             if explore.showsPanel, let row = explore.selectedRow {
                 ExploreLightPanel(explore: explore, row: row)
                     .transition(reduceMotion ? .identity : .move(edge: .trailing).combined(with: .opacity))
