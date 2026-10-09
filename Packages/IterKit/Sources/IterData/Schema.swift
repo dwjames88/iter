@@ -1,26 +1,27 @@
 import Foundation
 import SwiftData
 
-/// Version 2 of the store: the live models plus folders (and per-trip pin, per-trip and per-place ordering).
-/// Version 1 is frozen in `SchemaV1.swift`.
-public enum IterSchemaV2: VersionedSchema {
-    public static var versionIdentifier: Schema.Version { Schema.Version(2, 0, 0) }
+/// Version 3 of the store: the live models, where folders and places can also be pinned to the sidebar.
+/// Versions 1 and 2 are frozen in `SchemaV1.swift` and `SchemaV2.swift`.
+public enum IterSchemaV3: VersionedSchema {
+    public static var versionIdentifier: Schema.Version { Schema.Version(3, 0, 0) }
     public static var models: [any PersistentModel.Type] {
         [PlaceRecord.self, TripRecord.self, StopRecord.self, FolderRecord.self]
     }
 }
 
-/// V1 to V2 only adds optional relationships and attributes with defaults, so the migration is lightweight.
+/// Every step only adds optional relationships and attributes with defaults, so each migration is lightweight.
 public enum IterMigrationPlan: SchemaMigrationPlan {
-    public static var schemas: [any VersionedSchema.Type] { [IterSchemaV1.self, IterSchemaV2.self] }
+    public static var schemas: [any VersionedSchema.Type] { [IterSchemaV1.self, IterSchemaV2.self, IterSchemaV3.self] }
     public static var stages: [MigrationStage] {
-        [.lightweight(fromVersion: IterSchemaV1.self, toVersion: IterSchemaV2.self)]
+        [.lightweight(fromVersion: IterSchemaV1.self, toVersion: IterSchemaV2.self),
+         .lightweight(fromVersion: IterSchemaV2.self, toVersion: IterSchemaV3.self)]
     }
 }
 
 public enum IterSchema {
     /// The current schema.
-    public static var current: Schema { Schema(versionedSchema: IterSchemaV2.self) }
+    public static var current: Schema { Schema(versionedSchema: IterSchemaV3.self) }
 
     /// The app's container. On disk it uses SwiftData's default store location (Application Support);
     /// iCloud sync is off (`cloudKitDatabase: .none`) until the app is ready for it.
