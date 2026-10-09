@@ -43,7 +43,7 @@ struct TripsHomeView: View {
                 }
                 ToolbarItem {
                     Menu {
-                        Button { prompt = .newFolder(parent: nil, trip: nil) } label: {
+                        Button { prompt = .newFolder(trip: nil) } label: {
                             Label(String(localized: "New Folder…", comment: "Toolbar menu"), systemImage: "folder.badge.plus")
                         }
                         Button { navigation.importRequest += 1 } label: {
@@ -60,7 +60,7 @@ struct TripsHomeView: View {
         .tripNamePrompt($prompt)
         .tripFlows()
         .onAppear {
-            if AppLaunch.newFolderPrompt { prompt = .newFolder(parent: nil, trip: nil) }
+            if AppLaunch.newFolderPrompt { prompt = .newFolder(trip: nil) }
             consumeRequests()
         }
         .onChange(of: navigation.newFolderRequest) { consumeRequests() }
@@ -76,7 +76,7 @@ struct TripsHomeView: View {
     private func consumeRequests() {
         if navigation.newFolderRequest == .trips {
             navigation.newFolderRequest = nil
-            prompt = .newFolder(parent: nil, trip: nil)
+            prompt = .newFolder(trip: nil)
         }
         if let id = navigation.renamingID {
             if model.store.trip(id: id) != nil {

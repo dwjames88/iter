@@ -57,7 +57,7 @@ enum AppLaunch {
         default: nil
         }
     }
-    /// `-IterSeedLibrary YES`: a pinned trip, trip folders (one with a subfolder), location folders and saved spots, for
+    /// `-IterSeedLibrary YES`: a pinned trip, trip folders, location folders and saved spots, for
     /// screenshots of the sidebar and Locations (see `LibrarySeed`). Honoured only with `-IterInMemoryStore YES`.
     static var seedLibrary: Bool { inMemoryStore && UserDefaults.standard.bool(forKey: "IterSeedLibrary") }
     /// `-IterTripFolder <name>`: opens the All Trips page on the trip folder with that name. For screenshots.

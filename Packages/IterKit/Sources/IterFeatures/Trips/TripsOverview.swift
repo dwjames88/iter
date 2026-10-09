@@ -54,10 +54,9 @@ extension TripsHomeModel {
             trips.compactMap { byID[$0.id] }.filter { $0.id != heroID }
         }
 
-        let folders = store.folders(kind: .trips).map { root in
-            // Nothing makes subfolders any more; trips left in one show with their parent folder.
-            let filed = store.trips(in: root) + store.subfolders(of: root).flatMap { store.trips(in: $0) }
-            return TripFolderTile(id: root.id, name: root.name, isPinned: root.isPinned, entries: filed.compactMap { byID[$0.id] })
+        let folders = store.folders(kind: .trips).map { folder in
+            TripFolderTile(id: folder.id, name: folder.name, isPinned: folder.isPinned,
+                           entries: store.trips(in: folder).compactMap { byID[$0.id] })
         }
         return TripsOverview(hero: heroID.flatMap { byID[$0] },
                              pinned: visible(store.pinnedTrips()),
