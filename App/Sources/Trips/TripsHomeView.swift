@@ -15,21 +15,24 @@ struct TripsHomeView: View {
 
     var body: some View {
         let today = model.today(in: .current)
-        let overview = home.overview(today: today,
-                                     pinnedTitle: String(localized: "Pinned", comment: "Trips section"),
-                                     otherTitle: String(localized: "Other Trips", comment: "Trips section for trips in no folder"),
-                                     subfolderTitle: { String(localized: "\($0) › \($1)", comment: "A subfolder's title under its folder") })
+        let overview = home.overview(today: today, featuring: openFolderID == nil)
+        let openFolder = openFolderID.flatMap { model.store.folder(id: $0) }
         Group {
             if overview.isEmpty {
                 ScrollView { TripsEmptyState { presentNewTrip(template: $0) } }
             } else {
-                ScrollView { TripsPageContent(overview: overview, today: today, prompt: $prompt) }
+                ScrollView {
+                    VStack(spacing: 0) {
+                        if let openFolder { folderHeader(openFolder) }
+                        TripsPageContent(overview: overview, today: today, mode: openFolderID.map { .folder($0) } ?? .all, prompt: $prompt)
+                    }
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(IterColor.backgroundWindow, ignoresSafeAreaEdges: [])
         .unifiedToolbarBackground()
-        .navigationTitle(Text("All Trips", comment: "Screen title"))
+        .navigationTitle(openFolder.map { Text($0.name) } ?? Text("All Trips", comment: "Screen title"))
         .toolbar {
             if !overview.isEmpty {
                 ToolbarItem {
@@ -53,11 +56,69 @@ struct TripsHomeView: View {
                 }
             }
         }
+        .environment(\.openTripFolder) { navigation.selection = .tripFolder($0) }
         .tripNamePrompt($prompt)
         .tripFlows()
         .onAppear {
             if AppLaunch.newFolderPrompt { prompt = .newFolder(parent: nil, trip: nil) }
+            consumeRequests()
         }
+        .onChange(of: navigation.newFolderRequest) { consumeRequests() }
+        .onChange(of: navigation.renamingID) { consumeRequests() }
+    }
+
+    /// The trip folder this page shows (chosen in the sidebar), nil = every trip.
+    private var openFolderID: UUID? {
+        if case .tripFolder(let id) = navigation.selection { id } else { nil }
+    }
+
+    /// File ▸ New Folder and the sidebar's Rename arrive through the navigation state; this page answers them.
+    private func consumeRequests() {
+        if navigation.newFolderRequest == .trips {
+            navigation.newFolderRequest = nil
+            prompt = .newFolder(parent: nil, trip: nil)
+        }
+        if let id = navigation.renamingID {
+            if model.store.trip(id: id) != nil {
+                navigation.renamingID = nil
+                prompt = .renameTrip(id)
+            } else if model.store.folder(id: id)?.kind == .trips {
+                navigation.renamingID = nil
+                prompt = .renameFolder(id)
+            }
+        }
+    }
+
+    /// Back to All Trips, the folder's name, and its menu.
+    private func folderHeader(_ folder: FolderRecord) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: IterSpace.md) {
+            Button { navigation.selection = .trips } label: {
+                Label(String(localized: "All Trips", comment: "Back button on a trip folder's page"), systemImage: "chevron.backward")
+            }
+            .buttonStyle(.borderless)
+            Spacer(minLength: IterSpace.md)
+        }
+        .overlay {
+            HStack(spacing: IterSpace.sm) {
+                Image(systemName: "folder.fill").font(IterFont.headline)
+                Text(folder.name).font(.system(.largeTitle, design: .serif, weight: .semibold))
+                Menu {
+                    TripFolderMenu(folderID: folder.id, prompt: $prompt)
+                } label: {
+                    Label(String(localized: "Folder Options", comment: "Folder header menu"), systemImage: "ellipsis")
+                        .labelStyle(.iconOnly)
+                }
+                .menuStyle(.button)
+                .buttonStyle(.borderless)
+                .menuIndicator(.hidden)
+                .fixedSize()
+            }
+            .accessibilityAddTraits(.isHeader)
+        }
+        .frame(maxWidth: TripsMetrics.columnMax)
+        .padding(.horizontal, TripsMetrics.margin)
+        .padding(.top, IterSpace.xl)
+        .frame(maxWidth: .infinity)
     }
 
     private var home: TripsHomeModel {

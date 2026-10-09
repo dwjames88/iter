@@ -28,7 +28,8 @@ struct TripsListScreen: View {
         let _ = model.store.revision
         let _ = model.forecasts.revision
         let today = model.today(in: .current)
-        let overview = filteredOverview(today: today)
+        let overview = TripsHomeModel(store: model.store, engine: model.engine, now: { model.now() })
+            .overview(today: today, featuring: filter == .all)
         Group {
             if model.store.trips().isEmpty {
                 ScrollView { TripsEmptyState { newTrip = NewTripRequest(templateID: $0) } }
@@ -36,11 +37,7 @@ struct TripsListScreen: View {
                 ScrollView {
                     VStack(spacing: 0) {
                         chipRow
-                        if overview.sections.isEmpty && overview.hero == nil {
-                            noMatches
-                        } else {
-                            TripsPageContent(overview: overview, today: today, prompt: $prompt)
-                        }
+                        TripsPageContent(overview: overview, today: today, mode: mode, prompt: $prompt)
                     }
                 }
             }
@@ -67,6 +64,7 @@ struct TripsListScreen: View {
                 }
             }
         }
+        .environment(\.openTripFolder) { id in withAnimation(.snappy) { filter = .folder(id) } }
         .tripNamePrompt($prompt)
         .sheet(item: $newTrip) { request in
             NewTripScreenSheet(initialTemplate: request.templateID)
@@ -94,25 +92,12 @@ struct TripsListScreen: View {
 
     // MARK: Data
 
-    /// The whole page, or the pinned or folder slice of it (no hero then, so nothing is left out).
-    private func filteredOverview(today: LocalDay) -> TripsOverview {
-        let home = TripsHomeModel(store: model.store, engine: model.engine, now: { model.now() })
-        var overview = home.overview(today: today, featuring: filter == .all,
-                                     pinnedTitle: String(localized: "Pinned", comment: "Trips list section"),
-                                     otherTitle: String(localized: "Other Trips", comment: "Trips list section for trips in no folder"),
-                                     subfolderTitle: { String(localized: "\($0) › \($1)", comment: "A subfolder's title under its folder") })
+    private var mode: TripsPageMode {
         switch filter {
-        case .all: break
-        case .pinned:
-            overview.sections = overview.sections.filter { $0.kind == .pinned }
-            for index in overview.sections.indices { overview.sections[index].title = nil }
-        case .folder(let id):
-            let wanted = model.store.folder(id: id)
-            let ids = Set(([id] + (wanted.map { model.store.subfolders(of: $0).map(\.id) } ?? [])))
-            overview.sections = overview.sections.filter { $0.folderID.map(ids.contains) ?? false }
-            if overview.sections.count == 1 { overview.sections[0].title = nil }
+        case .all: .all
+        case .pinned: .pinned
+        case .folder(let id): .folder(id)
         }
-        return overview
     }
 
     // MARK: Chips
@@ -137,14 +122,6 @@ struct TripsListScreen: View {
     private func chip(_ title: String, symbol: String?, value: TripsFilter) -> some View {
         FilterChip(title: title, symbol: symbol, isOn: filter == value) {
             withAnimation(.snappy) { filter = value }
-        }
-    }
-
-    private var noMatches: some View {
-        ContentUnavailableView {
-            Label(String(localized: "No trips here", comment: "Empty filter title"), systemImage: "folder")
-        } description: {
-            Text("Move a trip into this folder from its menu.", comment: "Empty filter explanation")
         }
     }
 

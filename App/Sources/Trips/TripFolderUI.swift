@@ -179,9 +179,10 @@ struct TripEntryMenu: View {
     }
 }
 
-/// The menu on a folder's header: rename, add a folder (inside a root folder), delete (its trips move up).
+/// The menu on a folder's header: rename, pin to the sidebar, add a folder, delete (its trips move up).
 struct TripFolderMenu: View {
     @Environment(AppModel.self) private var model
+    @Environment(AppNavigation.self) private var navigation
     let folderID: UUID
     @Binding var prompt: TripNamePrompt?
 
@@ -190,9 +191,11 @@ struct TripFolderMenu: View {
         Button { prompt = .renameFolder(folderID) } label: {
             Label(String(localized: "Rename Folder…", comment: "Folder menu"), systemImage: "pencil")
         }
-        if folder?.parent == nil {
-            Button { prompt = .newFolder(parent: folderID, trip: nil) } label: {
-                Label(String(localized: "New Folder Inside…", comment: "Folder menu"), systemImage: "folder.badge.plus")
+        if let folder {
+            Button { model.store.setPinned(folder, !folder.isPinned) } label: {
+                folder.isPinned
+                    ? Label(String(localized: "Unpin from Sidebar", comment: "Folder menu"), systemImage: "pin.slash")
+                    : Label(String(localized: "Pin to Sidebar", comment: "Folder menu"), systemImage: "pin")
             }
         }
         Button { prompt = .newFolder(parent: nil, trip: nil) } label: {
@@ -200,6 +203,7 @@ struct TripFolderMenu: View {
         }
         Divider()
         Button(role: .destructive) {
+            if navigation.selection == .tripFolder(folderID) { navigation.selection = .trips }
             if let folder { model.store.deleteFolder(folder) }
         } label: {
             Label(String(localized: "Delete Folder", comment: "Folder menu: its trips move up, none are deleted"), systemImage: "trash")

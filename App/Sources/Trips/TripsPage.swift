@@ -4,20 +4,53 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// The body of All Trips on the Mac and iPad/iPhone: a centred column with the hero, then groups of trip cards. Scrolling
-/// belongs to the host.
+/// Which slice of the trips the page shows.
+enum TripsPageMode: Equatable {
+    case all
+    case pinned
+    case folder(UUID)
+}
+
+/// The body of All Trips on the Mac and iPad/iPhone: a centred column with the hero, then Pinned trips, folder tiles and
+/// the other trips as full-width grids. Scrolling belongs to the host.
 struct TripsPageContent: View {
     let overview: TripsOverview
     let today: LocalDay
+    var mode: TripsPageMode = .all
     @Binding var prompt: TripNamePrompt?
 
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.xxl) {
-            if let hero = overview.hero {
-                TripHeroView(entry: hero, today: today, prompt: $prompt)
-            }
-            ForEach(overview.sections) { section in
-                TripsSectionView(section: section, prompt: $prompt)
+            switch mode {
+            case .all:
+                if let hero = overview.hero { TripHeroView(entry: hero, today: today, prompt: $prompt) }
+                if !overview.pinned.isEmpty {
+                    group(String(localized: "Pinned", comment: "Trips group")) { tripCards(overview.pinned) }
+                }
+                if !overview.folders.isEmpty {
+                    group(String(localized: "Folders", comment: "Trips group")) {
+                        ForEach(overview.folders) { TripFolderTileView(tile: $0, prompt: $prompt) }
+                    }
+                }
+                if !overview.others.isEmpty {
+                    let hasOthers = overview.hero != nil || !overview.pinned.isEmpty || !overview.folders.isEmpty
+                    UnfileDropGroup {
+                        group(hasOthers ? String(localized: "Trips", comment: "Trips group") : nil) { tripCards(overview.others) }
+                    }
+                }
+            case .pinned:
+                group(nil) { tripCards(overview.pinned) }
+            case .folder(let id):
+                let entries = overview.folders.first { $0.id == id }?.entries ?? []
+                if entries.isEmpty {
+                    Text("Drag trips here, or use a trip's Move to Folder menu.", comment: "Empty trip folder")
+                        .font(IterFont.callout)
+                        .foregroundStyle(IterColor.textSecondary)
+                        .frame(maxWidth: .infinity, minHeight: IterSize.hitTarget + IterSpace.xxl)
+                        .background(ContentFill(), in: RoundedRectangle(cornerRadius: TripsMetrics.corner, style: .continuous))
+                } else {
+                    group(nil) { tripCards(entries) }
+                }
             }
         }
         .frame(maxWidth: TripsMetrics.columnMax)
@@ -25,95 +58,39 @@ struct TripsPageContent: View {
         .padding(.vertical, IterSpace.xl)
         .frame(maxWidth: .infinity)
     }
+
+    @ViewBuilder private func tripCards(_ entries: [TripEntry]) -> some View {
+        ForEach(entries) { TripCardView(entry: $0, prompt: $prompt) }
+    }
+
+    private func group<Content: View>(_ title: String?, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: IterSpace.md) {
+            if let title {
+                Text(title)
+                    .font(IterFont.titleSection)
+                    .foregroundStyle(IterColor.textPrimary)
+                    .accessibilityAddTraits(.isHeader)
+            }
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: TripsMetrics.gridMinimum), spacing: IterSpace.lg, alignment: .top)],
+                      alignment: .leading, spacing: IterSpace.lg) {
+                content()
+            }
+        }
+    }
 }
 
-/// One group: header (with the folder menu), then the grid. A folder, or Other Trips, takes trips dropped on it.
-struct TripsSectionView: View {
+/// A trip dropped anywhere on the unfiled group leaves its folder.
+private struct UnfileDropGroup<Content: View>: View {
     @Environment(AppModel.self) private var model
-    let section: TripsSection
-    @Binding var prompt: TripNamePrompt?
-    @State private var isTargeted = false
-
-    private var acceptsDrops: Bool { section.kind != .pinned }
+    @ViewBuilder var content: Content
 
     var body: some View {
-        VStack(alignment: .leading, spacing: IterSpace.md) {
-            if let title = section.title { header(title) }
-            if section.entries.isEmpty {
-                emptyFolder
-            } else {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: TripsMetrics.gridMinimum), spacing: IterSpace.lg, alignment: .top)],
-                          alignment: .leading, spacing: IterSpace.lg) {
-                    ForEach(section.entries) { entry in
-                        TripCardView(entry: entry, prompt: $prompt)
-                    }
-                }
-            }
-        }
-        .padding(IterSpace.sm)
-        .padding(-IterSpace.sm)
-        .background {
-            if isTargeted {
-                RoundedRectangle(cornerRadius: TripsMetrics.corner, style: .continuous)
-                    .fill(IterColor.selection)
-                    .padding(-IterSpace.md)
-            }
-        }
-        .animation(.smooth(duration: 0.15), value: isTargeted)
-        .dropDestination(for: LibraryDragItem.self) { items, _ in
-            guard acceptsDrops else { return false }
-            let trips = items.compactMap(\.tripID).compactMap { model.store.trip(id: $0) }
+        content.dropDestination(for: LibraryDragItem.self) { items, _ in
+            let trips = items.compactMap(\.tripID).compactMap { model.store.trip(id: $0) }.filter { $0.folder != nil }
             guard !trips.isEmpty else { return false }
-            let folder = section.folderID.flatMap { model.store.folder(id: $0) }
-            model.store.moveTrips(trips, to: folder, index: nil)
+            model.store.moveTrips(trips, to: nil, index: nil)
             return true
-        } isTargeted: { isTargeted = acceptsDrops && $0 }
-    }
-
-    private func header(_ title: String) -> some View {
-        HStack(spacing: IterSpace.sm) {
-            Label {
-                Text(title).font(IterFont.titleSection)
-            } icon: {
-                Image(systemName: symbol).font(IterFont.headline)
-            }
-            .foregroundStyle(IterColor.textPrimary)
-            .accessibilityAddTraits(.isHeader)
-            Spacer(minLength: IterSpace.sm)
-            if let folderID = section.folderID {
-                Menu {
-                    TripFolderMenu(folderID: folderID, prompt: $prompt)
-                } label: {
-                    Label(String(localized: "Folder Options", comment: "Folder header menu"), systemImage: "ellipsis")
-                        .labelStyle(.iconOnly)
-                }
-                #if os(macOS)
-                .menuStyle(.button)
-                .buttonStyle(.borderless)
-                #endif
-                .menuIndicator(.hidden)
-                .fixedSize()
-            }
         }
-        .contextMenu {
-            if let folderID = section.folderID { TripFolderMenu(folderID: folderID, prompt: $prompt) }
-        }
-    }
-
-    private var symbol: String {
-        switch section.kind {
-        case .pinned: "pin.fill"
-        case .folder: "folder.fill"
-        case .other: "tray.full.fill"
-        }
-    }
-
-    private var emptyFolder: some View {
-        Text("Drag trips here to file them in this folder.", comment: "Empty trip folder on the All Trips page")
-            .font(IterFont.callout)
-            .foregroundStyle(IterColor.textSecondary)
-            .frame(maxWidth: .infinity, minHeight: IterSize.hitTarget + IterSpace.xl)
-            .background(ContentFill(), in: RoundedRectangle(cornerRadius: TripsMetrics.corner, style: .continuous))
     }
 }
 
@@ -149,6 +126,7 @@ struct TripsEmptyState: View {
                         .frame(minWidth: IterSize.lightRingLarge * 2)
                 }
                 .buttonStyle(.borderedProminent)
+                .tint(IterColor.accent)
                 .controlSize(.large)
             }
 
@@ -173,44 +151,26 @@ struct TripsEmptyState: View {
 private struct TemplateCard: View {
     let template: TripTemplate
     let start: () -> Void
-    @State private var isHovering = false
-
-    private var shape: RoundedRectangle { RoundedRectangle(cornerRadius: TripsMetrics.corner, style: .continuous) }
 
     var body: some View {
-        Button(action: start) {
-            VStack(alignment: .leading, spacing: 0) {
-                VStack(alignment: .leading, spacing: IterSpace.xs) {
-                    Text(template.defaultName)
-                        .font(IterFont.titleSpot)
-                        .foregroundStyle(IterColor.textPrimary)
-                        .lineLimit(1)
-                    Text(TimeText.dayAndStops(days: template.dayCount, stops: template.stops.count))
-                        .font(IterFont.callout)
-                        .foregroundStyle(IterColor.textSecondary)
-                    Text(spotNames)
-                        .font(IterFont.secondary)
-                        .foregroundStyle(IterColor.textSecondary)
-                        .lineLimit(2)
-                }
-                .padding(IterSpace.lg + IterSpace.xs)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                Spacer(minLength: 0)
-                TripCover(spot: template.stops.first.flatMap { CuratedSpots.spot(id: $0.spotID) })
-                    .frame(height: 96)
-                    .clipShape(ConcentricRectangle())
-                    .padding(TripsMetrics.inset)
+        TripTile(action: start) {
+            VStack(alignment: .leading, spacing: IterSpace.xs) {
+                Text(template.defaultName)
+                    .font(IterFont.titleSpot)
+                    .foregroundStyle(IterColor.textPrimary)
+                    .lineLimit(1)
+                Text(TimeText.dayAndStops(days: template.dayCount, stops: template.stops.count))
+                    .font(IterFont.callout)
+                    .foregroundStyle(IterColor.textSecondary)
+                Text(spotNames)
+                    .font(IterFont.secondary)
+                    .foregroundStyle(IterColor.textSecondary)
+                    .lineLimit(2)
             }
-            .frame(height: 252)
-            .containerShape(shape)
-            .background(ModuleFill(), in: shape)
-            .contentShape(shape)
-            .scaleEffect(isHovering ? 1.012 : 1)
-            .shadow(color: .black.opacity(isHovering ? 0.14 : 0.05), radius: isHovering ? 16 : 6, y: isHovering ? 8 : 2)
-            .animation(.smooth(duration: 0.2), value: isHovering)
+        } bottom: {
+            TripCover(spot: template.stops.first.flatMap { CuratedSpots.spot(id: $0.spotID) })
         }
-        .buttonStyle(.plain)
-        .onHover { isHovering = $0 }
+        .accessibilityElement(children: .combine)
         .accessibilityLabel(Text("\(template.defaultName), \(TimeText.dayAndStops(days: template.dayCount, stops: template.stops.count))", comment: "VoiceOver: template"))
         .accessibilityHint(Text("Starts a new trip from this template", comment: "VoiceOver hint"))
     }

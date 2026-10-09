@@ -111,13 +111,15 @@ import IterData
         h.store.setPinned(c, true)
         let home = TripsHomeModel(store: h.store, engine: h.scheduler.engine,
                                   now: { TripHarness.start.adding(days: -1).at(hour: 9, in: TripHarness.denver) })
-        let overview = home.overview(today: TripHarness.start.adding(days: -1), pinnedTitle: "Pinned", otherTitle: "Other Trips",
-                                     subfolderTitle: { "\($0) › \($1)" })
+        let overview = home.overview(today: TripHarness.start.adding(days: -1))
         #expect(overview.tripCount == 3)
         #expect(overview.hero?.id == a.id)
-        #expect(overview.sections.map(\.title) == ["Pinned", "Utah", "Idea Box"])
-        #expect(overview.sections[1].entries.map(\.id) == [b.id])
-        #expect(overview.sections[2].folderID == empty.id)
-        #expect(overview.sections[2].entries.isEmpty)
+        #expect(overview.pinned.map(\.id) == [c.id])
+        #expect(overview.others.isEmpty)
+        #expect(overview.folders.map(\.name) == ["Utah", "Idea Box"])
+        #expect(overview.folders[0].entries.map(\.id) == [b.id])
+        #expect(overview.folders[1].id == empty.id)
+        #expect(overview.folders[1].entries.isEmpty)
+        #expect(home.overview(today: TripHarness.start, featuring: false).hero == nil)
     }
 }

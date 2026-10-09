@@ -143,6 +143,10 @@ struct RootView: View {
                    .first(where: { $0.name == name }) {
                 navigation.selection = .locationFolder(folder.id)
             }
+            if let name = AppLaunch.tripFolderName,
+               let folder = model.store.folders(kind: .trips).first(where: { $0.name == name }) {
+                navigation.selection = .tripFolder(folder.id)
+            }
             if let spot = AppLaunch.spot {
                 navigation.selection = .explore
                 navigation.explorePath = [SpotRoute(spot: spot)]
