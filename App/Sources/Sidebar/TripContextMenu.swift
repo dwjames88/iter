@@ -78,24 +78,3 @@ struct TripContextMenu: View {
         }
     }
 }
-
-/// Context menu for a folder row (sidebar), trips or locations.
-struct FolderContextMenu: View {
-    @Environment(AppModel.self) private var model
-    @Environment(AppNavigation.self) private var navigation
-    let folder: FolderRecord
-
-    var body: some View {
-        if folder.parent == nil {
-            Button(String(localized: "New Folder Inside", comment: "Context menu")) {
-                navigation.newFolder(model: model, kind: folder.kind, parent: folder)
-            }
-        }
-        Button(String(localized: "Rename", comment: "Context menu")) { navigation.renamingID = folder.id }
-        Divider()
-        Button(String(localized: "Delete Folder", comment: "Context menu"), role: .destructive) {
-            if navigation.selection == .locationFolder(folder.id) { navigation.selection = .locations }
-            model.store.deleteFolder(folder)
-        }
-    }
-}

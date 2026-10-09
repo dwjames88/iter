@@ -19,13 +19,13 @@ private func trip(_ f: Fixture, _ name: String) -> TripRecord {
 private func dump(_ f: Fixture) -> [String] {
     let context = f.store.context
     let folders = ((try? context.fetch(FetchDescriptor<FolderRecord>())) ?? []).map {
-        "F \($0.id) \($0.name) \($0.kindRaw) \($0.sortOrder) parent=\($0.parent?.id.uuidString ?? "-")"
+        "F \($0.id) \($0.name) \($0.kindRaw) \($0.sortOrder) parent=\($0.parent?.id.uuidString ?? "-") pinned=\($0.isPinned) at=\($0.pinnedAt != nil)"
     }
     let trips = ((try? context.fetch(FetchDescriptor<TripRecord>())) ?? []).map {
         "T \($0.id) \($0.name) folder=\($0.folder?.id.uuidString ?? "-") \($0.sortOrder) pinned=\($0.isPinned) at=\($0.pinnedAt != nil)"
     }
     let places = ((try? context.fetch(FetchDescriptor<PlaceRecord>())) ?? []).map {
-        "P \($0.id) \($0.name) folder=\($0.folder?.id.uuidString ?? "-") \($0.sortOrder) saved=\($0.isSaved)"
+        "P \($0.id) \($0.name) folder=\($0.folder?.id.uuidString ?? "-") \($0.sortOrder) saved=\($0.isSaved) pinned=\($0.isPinned) at=\($0.pinnedAt != nil)"
     }
     return (folders + trips + places).sorted()
 }
@@ -334,6 +334,52 @@ private func dump(_ f: Fixture) -> [String] {
         try verify(.newFolderWithSelection, setup: { f in _ = place(f, "p") }) { f in
             f.store.createFolder(name: "S", kind: .locations, places: f.store.savedPlaces())
         }
+    }
+
+    @Test func pinFolderAndPlace() throws {
+        let f = try Fixture()
+        let a = f.store.createFolder(name: "A", kind: .locations)
+        let b = f.store.createFolder(name: "B", kind: .locations)
+        let t = f.store.createFolder(name: "T", kind: .trips)
+        let p = place(f, "p")
+        #expect(f.store.pinnedFolders(kind: .locations).isEmpty && f.store.pinnedPlaces().isEmpty)
+        f.store.setPinned(b, true)
+        f.store.setPinned(a, true)
+        f.store.setPinned(t, true)
+        f.store.setPinned(p, true)
+        // Pin order, per kind.
+        #expect(f.store.pinnedFolders(kind: .locations).map(\.name) == ["B", "A"])
+        #expect(f.store.pinnedFolders(kind: .trips).map(\.name) == ["T"])
+        #expect(f.store.pinnedPlaces().map(\.name) == ["p"])
+        f.store.setPinned(b, false)
+        #expect(f.store.pinnedFolders(kind: .locations).map(\.name) == ["A"])
+        #expect(b.pinnedAt == nil)
+        // A pinned place that is no longer saved (and is not a user spot) drops out.
+        let saved = f.store.createUserSpot(name: "u", coordinate: Coordinate(latitude: 1, longitude: 1), timeZoneIdentifier: "UTC")
+        saved.origin = .curated
+        saved.isSaved = false
+        f.store.setPinned(saved, true)
+        #expect(f.store.pinnedPlaces().map(\.name) == ["p"])
+    }
+
+    @Test func pinUndoes() throws {
+        try verify(.pinFolder, setup: { f in f.store.createFolder(name: "A", kind: .locations) }) { f in
+            f.store.setPinned(f.store.folders(kind: .locations)[0], true)
+        }
+        try verify(.pinPlace, setup: { f in _ = place(f, "p") }) { f in
+            f.store.setPinned(f.store.savedPlaces()[0], true)
+        }
+    }
+
+    @Test func movePlaceToFolderAndBack() throws {
+        let f = try Fixture()
+        let folder = f.store.createFolder(name: "F", kind: .locations)
+        let p = place(f, "p"), q = place(f, "q")
+        f.store.movePlaces([p, q], to: folder, index: nil)
+        #expect(f.store.savedPlaces(in: folder).count == 2)
+        f.store.movePlaces([p], to: nil, index: nil)
+        #expect(f.store.savedPlaces(in: folder).map(\.name) == ["q"])
+        #expect(p.folder == nil)
     }
 
     @Test func renameFolder() throws {

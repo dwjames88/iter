@@ -11,7 +11,7 @@ enum LibrarySeed {
         let store = model.store
         let tomorrow = model.today(in: .current).adding(days: 1)
 
-        // Trips: the sample trip, pinned (it downloads like any pinned trip); a folder with a subfolder; one unfiled trip.
+        // Trips: the sample trip, pinned (it downloads like any pinned trip); a folder with a subfolder (pinned); one unfiled trip.
         let sample = store.seedSampleTrip(startDay: tomorrow)
         model.offline.pin(sample)
         let utah = store.createFolder(name: "Utah 2027", kind: .trips)
@@ -31,6 +31,11 @@ enum LibrarySeed {
         file(["haystack-rock", "bixby-bridge", "point-reyes-lighthouse"], in: coast, store: store)
         file(["mesa-arch", "delicate-arch"], in: desert, store: store)
         if let spot = CuratedSpots.spot(id: "tunnel-view") { store.setSaved(spot, true) }
+
+        // Pinned to the sidebar: a trip folder, a location folder, a location.
+        store.setPinned(utah, true)
+        store.setPinned(desert, true)
+        if let arch = store.savedPlaces().first(where: { $0.curatedID == "mesa-arch" }) { store.setPinned(arch, true) }
     }
 
     private static func file(_ ids: [String], in folder: FolderRecord, store: IterStore) {

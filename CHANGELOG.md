@@ -10,6 +10,7 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 - **Licensing groundwork**: Iter can now check a licence key with Lemon Squeezy, keep it in the Keychain and work for 14 days offline. It is hidden and switched off, so nothing changes for anyone: Iter is still free, and nothing asks for a key.
 
 ### Changed
+- **Folders live inside All Locations**: the sidebar now lists All Trips and All Locations, then only what you pin (trips, trip folders, locations, location folders). In All Locations, folders are rows at the top with a count: open one, make a New Folder, Rename, Delete, Pin to Sidebar, drag locations onto a folder or use Move to Folder. Right-click a location to pin it. Same on iPad and iPhone.
 - **Search always looks the text up first**: Return in Explore's search field now always searches your places and Apple Maps, so a long place name such as "Great Smoky Mountains National Park" finds the park instead of going to Ask Iter. When the text reads like a request ("foggy forest near Portland for sunrise", a question, or a phrase starting with "find" or "show me"), an **Ask Iter** suggestion sits above the results; choose it to ask.
 
 ### Fixed

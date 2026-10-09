@@ -148,9 +148,9 @@ final class ShellState {
     func follow(_ selection: SidebarItem?) {
         switch selection {
         case .explore: phoneTab = .explore
-        case .trips, nil: phoneTab = .trips; openTripID = nil
+        case .trips, .tripFolder, nil: phoneTab = .trips; openTripID = nil
         case .trip(let id): phoneTab = .trips; openTripID = id
-        case .locations: phoneTab = .locations; openFolderID = nil
+        case .locations, .location: phoneTab = .locations; openFolderID = nil
         case .locationFolder(let id): phoneTab = .locations; openFolderID = id
         }
     }

@@ -13,8 +13,8 @@ import IterCore
     }
 
     /// CloudKit's rules for a SwiftData schema: no unique constraints, every attribute optional or defaulted,
-    /// every relationship optional with an inverse. Checked on the live V2 schema and the frozen V1.
-    @Test(arguments: [IterSchemaV1.self as any VersionedSchema.Type, IterSchemaV2.self])
+    /// every relationship optional with an inverse. Checked on the live V3 schema and the frozen V1 and V2.
+    @Test(arguments: [IterSchemaV1.self as any VersionedSchema.Type, IterSchemaV2.self, IterSchemaV3.self])
     func cloudKitRulesHold(_ version: any VersionedSchema.Type) {
         let schema = Schema(versionedSchema: version)
         #expect(!schema.entities.isEmpty)

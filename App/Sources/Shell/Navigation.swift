@@ -1,14 +1,19 @@
 import Foundation
 import Observation
 import IterCore
+import IterData
 
 /// Where the main window is. Trip-first (plan 6.1-A): trips lead the sidebar, then Locations, then Explore.
 /// A stored selection that no longer decodes (the old `saved` case) falls back to `.trips`.
 enum SidebarItem: Hashable, Codable, Sendable {
     case trips
     case trip(UUID)
+    /// A trip folder pinned to the sidebar: the Trips page showing that folder.
+    case tripFolder(UUID)
     case locations
     case locationFolder(UUID)
+    /// A location pinned to the sidebar: its spot page.
+    case location(UUID)
     case explore
 }
 
@@ -42,15 +47,19 @@ final class AppNavigation {
     var newTripRequest = 0
     /// Import request from File > Import Trip.
     var importRequest = 0
-    /// The trip or folder whose sidebar row is being renamed in place; nil = none.
+    /// The trip or folder a context menu asked to rename; nil = none. The screen that shows it answers with its own
+    /// rename prompt and clears this.
     var renamingID: UUID?
+    /// "New Folder" from the File menu: the kind of folder to make. The Locations and Trips screens take it (and clear
+    /// it) when they appear or when it changes.
+    var newFolderRequest: FolderKind?
 
     func show(_ item: SidebarItem) { selection = item }
 
     func open(_ route: SpotRoute) {
         switch selection {
-        case .locations, .locationFolder: locationsPath.append(route)
-        case .trip, .trips: tripPath.append(route)
+        case .locations, .locationFolder, .location: locationsPath.append(route)
+        case .trip, .trips, .tripFolder: tripPath.append(route)
         default:
             selection = .explore
             explorePath.append(route)

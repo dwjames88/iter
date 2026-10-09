@@ -159,9 +159,54 @@ import IterCore
         #expect(store.lastSaveError == nil)
     }
 
-    @Test func currentSchemaIsVersionTwo() {
-        #expect(IterSchemaV2.versionIdentifier == Schema.Version(2, 0, 0))
-        #expect(IterMigrationPlan.stages.count == 1)
-        #expect(IterSchemaV2.models.count == 4)
+    @Test func versionTwoStoreMigratesToVersionThree() throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("iter-migration-v2-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: dir) }
+        let url = dir.appendingPathComponent("iter.store")
+        let folderID = UUID(), placeID = UUID(), tripID = UUID()
+
+        do {
+            let schema = Schema(versionedSchema: IterSchemaV2.self)
+            let container = try ModelContainer(for: schema, configurations: [ModelConfiguration(schema: schema, url: url, cloudKitDatabase: .none)])
+            let context = ModelContext(container)
+            let folder = IterSchemaV2.FolderRecord(id: folderID)
+            folder.name = "Utah"
+            folder.kindRaw = FolderKind.locations.rawValue
+            folder.sortOrder = 3
+            let place = IterSchemaV2.PlaceRecord(id: placeID)
+            place.name = "Mesa Arch"
+            place.isSaved = true
+            place.sortOrder = 2
+            let trip = IterSchemaV2.TripRecord(id: tripID)
+            trip.name = "Road"
+            trip.isPinned = true
+            trip.pinnedAt = Date(timeIntervalSince1970: 1_700_000_000)
+            context.insert(folder); context.insert(place); context.insert(trip)
+            place.folder = folder
+            try context.save()
+        }
+
+        let store = IterStore(container: try IterSchema.makeContainer(url: url))
+        let folder = try #require(store.folder(id: folderID))
+        #expect(folder.name == "Utah" && folder.kind == .locations && folder.sortOrder == 3)
+        #expect(!folder.isPinned && folder.pinnedAt == nil)
+        let place = try #require(store.place(id: placeID))
+        #expect(place.name == "Mesa Arch" && place.folder?.id == folderID && place.sortOrder == 2)
+        #expect(!place.isPinned && place.pinnedAt == nil)
+        let trip = try #require(store.trip(id: tripID))
+        #expect(trip.isPinned && trip.pinnedAt == Date(timeIntervalSince1970: 1_700_000_000))
+
+        store.setPinned(folder, true)
+        store.setPinned(place, true)
+        #expect(store.pinnedFolders(kind: .locations).map(\.id) == [folderID])
+        #expect(store.pinnedPlaces().map(\.id) == [placeID])
+        #expect(store.lastSaveError == nil)
+    }
+
+    @Test func currentSchemaIsVersionThree() {
+        #expect(IterSchemaV3.versionIdentifier == Schema.Version(3, 0, 0))
+        #expect(IterMigrationPlan.stages.count == 2)
+        #expect(IterSchemaV3.models.count == 4)
     }
 }

@@ -4,24 +4,21 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// The Trips section: All Trips, pinned trips, folders (open and close, not selectable), then unfiled trips.
+/// The Trips section: All Trips, then the trips and trip folders pinned to the sidebar. Folders are managed in All Trips.
 struct SidebarTripsSection: View {
     @Environment(AppModel.self) private var model
-    let expansion: FolderExpansion
 
     var body: some View {
         let _ = model.store.revision
         let store = model.store
         Section {
-            AllTripsRow()
+            Label(String(localized: "All Trips", comment: "Sidebar item"), systemImage: "map")
+                .tag(SidebarItem.trips)
             ForEach(store.pinnedTrips(), id: \.id) { trip in
                 SidebarTripRow(trip: trip)
             }
-            ForEach(store.folders(kind: .trips), id: \.id) { folder in
-                TripsFolderRow(folder: folder, expansion: expansion)
-            }
-            ForEach(store.trips(in: nil).filter { !$0.isPinned }, id: \.id) { trip in
-                SidebarTripRow(trip: trip)
+            ForEach(store.pinnedFolders(kind: .trips), id: \.id) { folder in
+                SidebarFolderRow(folder: folder, item: .tripFolder(folder.id))
             }
         } header: {
             Text("Trips", comment: "Sidebar section")
@@ -29,73 +26,57 @@ struct SidebarTripsSection: View {
     }
 }
 
-private struct AllTripsRow: View {
+/// A pinned trip, with its offline status. Open and Unpin from its menu.
+private struct SidebarTripRow: View {
     @Environment(AppModel.self) private var model
-
-    var body: some View {
-        Label(String(localized: "All Trips", comment: "Sidebar item"), systemImage: "map")
-            .libraryDrop { LibraryDrops(model: model).onAllTrips($0) }
-            .tag(SidebarItem.trips)
-    }
-}
-
-/// One trip. Pinned trips show here only in the pinned group (above the folders), never inside their folder.
-struct SidebarTripRow: View {
-    @Environment(AppModel.self) private var model
+    @Environment(AppNavigation.self) private var navigation
     let trip: TripRecord
 
     var body: some View {
-        RenamableLabel(id: trip.id, title: trip.name, symbol: "point.topleft.down.to.point.bottomright.curvepath",
-                       rename: { model.store.renameTrip(trip, to: $0) }) {
-            if trip.isPinned {
-                Image(systemName: "pin.fill")
-                    .font(.caption2)
-                    .foregroundStyle(IterColor.textSecondary)
-                    .help(Text("Pinned: kept ready offline", comment: "Tooltip"))
-                    .accessibilityLabel(Text("Pinned", comment: "VoiceOver: a pinned trip"))
+        Label {
+            HStack(spacing: IterSpace.xs) {
+                Text(trip.name).lineLimit(1)
+                Spacer(minLength: 0)
+                OfflineStatusBadge(tripID: trip.id)
             }
-            OfflineStatusBadge(tripID: trip.id)
+        } icon: {
+            Image(systemName: "point.topleft.down.to.point.bottomright.curvepath")
         }
-        .draggable(LibraryDragItem.trip(trip.id))
-        .libraryDrop { LibraryDrops(model: model).onTripRow($0, before: trip) }
-        .contextMenu { TripContextMenu(trip: trip) }
+        .contextMenu {
+            Button { navigation.show(.trip(trip.id)) } label: {
+                Label(String(localized: "Open", comment: "Context menu"), systemImage: "arrow.right.circle")
+            }
+            Button { model.offline.unpin(trip) } label: {
+                Label(String(localized: "Unpin Trip", comment: "Context menu"), systemImage: "pin.slash")
+            }
+            Divider()
+            Button(String(localized: "Delete Trip", comment: "Context menu"), role: .destructive) {
+                if navigation.selection == .trip(trip.id) { navigation.selection = .trips }
+                model.store.deleteTrip(trip)
+            }
+        }
         .tag(SidebarItem.trip(trip.id))
     }
 }
 
-/// A trips folder: a disclosure group of subfolders then trips. The row opens and closes; it is not a destination.
-private struct TripsFolderRow: View {
+/// A pinned folder (trips or locations): opens it, Unpin in its menu.
+struct SidebarFolderRow: View {
     @Environment(AppModel.self) private var model
+    @Environment(AppNavigation.self) private var navigation
     let folder: FolderRecord
-    let expansion: FolderExpansion
+    let item: SidebarItem
 
     var body: some View {
-        let store = model.store
-        DisclosureGroup(isExpanded: expansion.binding(for: folder.id)) {
-            ForEach(store.subfolders(of: folder), id: \.id) { sub in
-                TripsFolderRow(folder: sub, expansion: expansion)
+        Label(folder.name, systemImage: "folder")
+            .lineLimit(1)
+            .contextMenu {
+                Button { navigation.show(item) } label: {
+                    Label(String(localized: "Open", comment: "Context menu"), systemImage: "arrow.right.circle")
+                }
+                Button { model.store.setPinned(folder, false) } label: {
+                    Label(String(localized: "Unpin from Sidebar", comment: "Context menu"), systemImage: "pin.slash")
+                }
             }
-            ForEach(store.trips(in: folder).filter { !$0.isPinned }, id: \.id) { trip in
-                SidebarTripRow(trip: trip)
-            }
-        } label: {
-            FolderLabel(folder: folder)
-                .contentShape(Rectangle())
-                .onTapGesture { expansion.set(folder.id, !expansion.isExpanded(folder.id)) }
-                .draggable(LibraryDragItem.folder(folder.id))
-                .libraryDrop { LibraryDrops(model: model).onTripsFolder($0, folder) }
-                .contextMenu { FolderContextMenu(folder: folder) }
-        }
-    }
-}
-
-/// The folder glyph and name, with inline rename.
-struct FolderLabel: View {
-    @Environment(AppModel.self) private var model
-    let folder: FolderRecord
-
-    var body: some View {
-        RenamableLabel(id: folder.id, title: folder.name, symbol: "folder",
-                       rename: { model.store.renameFolder(folder, to: $0) }) {}
+            .tag(item)
     }
 }

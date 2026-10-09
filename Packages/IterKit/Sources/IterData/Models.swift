@@ -20,6 +20,10 @@ public final class FolderRecord {
     public var sortOrder: Double = 0
     public var createdAt: Date = Date.now
     public var updatedAt: Date = Date.now
+    /// Pinned to the sidebar (a trip folder or a location folder). Unrelated to a trip's offline pin.
+    public var isPinned: Bool = false
+    /// When the folder was pinned; orders the pinned group.
+    public var pinnedAt: Date?
     public var parent: FolderRecord?
 
     @Relationship(deleteRule: .nullify, inverse: \FolderRecord.parent)
@@ -70,6 +74,10 @@ public final class PlaceRecord {
     public var folder: FolderRecord?
     /// Order within its folder (ascending).
     public var sortOrder: Double = 0
+    /// Pinned to the sidebar's Locations section.
+    public var isPinned: Bool = false
+    /// When the place was pinned; orders the pinned group.
+    public var pinnedAt: Date?
 
     @Relationship(deleteRule: .nullify, inverse: \StopRecord.place)
     public var stops: [StopRecord]?

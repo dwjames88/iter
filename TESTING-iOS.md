@@ -127,7 +127,7 @@ Pass them after the bundle id with `simctl launch`, or in the scheme's Arguments
 | `-IterSaveOpenWeatherKeyFromArgument YES` | Debug builds: saves that key to the Keychain. |
 | `-IterSmokeTest YES` | Walks the main view models once and logs `smoke:` lines. |
 
-The Mac-only switches (`-IterWindowSize`, `-IterExpandFolders`) do nothing on iOS.
+The Mac-only switches (`-IterWindowSize`) do nothing on iOS.
 
 ### What was seen on the Simulator (2026-10-06, Xcode 27 beta, iOS 26.5 and 27.0 runtimes)
 

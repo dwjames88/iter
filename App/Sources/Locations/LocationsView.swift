@@ -4,8 +4,9 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// Locations: the spots you saved and the ones you added, in one list beside their map. In a folder it shows that
-/// folder's spots (and its subfolders'). Replaces Saved (plan P3.9, critique C65).
+/// Locations: the spots you saved and the ones you added, in one list beside their map, with their folders as rows at
+/// the top (open one, drop locations on it, or use a location's Move to Folder menu). In a folder it shows that folder's
+/// spots (and its subfolders'). The sidebar only lists what is pinned. Replaces Saved (plan P3.9, critique C65).
 struct LocationsView: View {
     /// The location folder to show; nil = All Locations.
     let folderID: UUID?
@@ -19,6 +20,7 @@ struct LocationsView: View {
     @State private var selection: Set<UUID> = []
     @State private var editing: PlaceRecord?
     @State private var pendingDelete: PlaceRecord?
+    @State private var folderPrompt: FolderNameRequest?
 
     /// `selected` opens the screen with those rows selected (snapshots show a selected pin in context).
     init(folderID: UUID?, selected: Set<UUID> = []) {
@@ -33,8 +35,9 @@ struct LocationsView: View {
     var body: some View {
         let all = items
         let shown = SavedArranger.arrange(all, query: query, filter: filter, sort: sort)
+        let _ = model.store.revision
         Group {
-            if all.isEmpty {
+            if all.isEmpty && folders.isEmpty {
                 empty
             } else {
                 FloatingPanelLayout {
@@ -50,6 +53,9 @@ struct LocationsView: View {
         .sheet(item: $editing) { record in
             SpotEditorSheet(mode: .edit(record))
         }
+        .locationFolderNamePrompt($folderPrompt)
+        .onChange(of: navigation.newFolderRequest) { takeNewFolderRequest() }
+        .onAppear { takeNewFolderRequest() }
         .confirmationDialog(LightText.deleteTitle(pendingDelete?.name ?? ""), isPresented: Binding(get: { pendingDelete != nil }, set: { if !$0 { pendingDelete = nil } }),
                             titleVisibility: .visible, presenting: pendingDelete) { record in
             Button(role: .destructive) { delete(record) } label: { Text(LightText.deleteSpot) }
@@ -74,6 +80,21 @@ struct LocationsView: View {
             let score = model.nextLight(for: spot)?.window.score
             return SavedItem(id: record.id, spot: spot, todayScore: score)
         }
+    }
+
+    /// The folders listed at the top: all of them on All Locations, a folder's subfolders inside it.
+    private var folders: [FolderRecord] { locationFolders(in: folder, store: model.store) }
+
+    /// File > New Folder while this screen is up.
+    private func takeNewFolderRequest() {
+        guard navigation.newFolderRequest == .locations else { return }
+        navigation.newFolderRequest = nil
+        folderPrompt = .new(filing: [])
+    }
+
+    private func deleteFolder(_ target: FolderRecord) {
+        if navigation.selection == .locationFolder(target.id) { navigation.selection = .locations }
+        model.store.deleteFolder(target)
     }
 
     private func records(_ ids: Set<UUID>) -> [PlaceRecord] { ids.compactMap { model.store.place(id: $0) } }
@@ -112,6 +133,13 @@ struct LocationsView: View {
     private func list(_ shown: [SavedItem]) -> some View {
         VStack(spacing: 0) {
             FloatingPanelHeader(title: title, subtitle: Text("\(shown.count) spots", comment: "Locations count under the title")) {
+                if let folder {
+                    Button { navigation.show(folder.parent.map { .locationFolder($0.id) } ?? .locations) } label: {
+                        Label(String(localized: "Back", comment: "Toolbar button: up one level in Locations"), systemImage: "chevron.backward")
+                    }
+                    .help(Text("Back to \(folder.parent?.name ?? String(localized: "All Locations", comment: "Screen title"))", comment: "Tooltip"))
+                }
+                newFolderButton
                 sortMenu
             }
             listBody(shown)
@@ -120,10 +148,23 @@ struct LocationsView: View {
 
     private func listBody(_ shown: [SavedItem]) -> some View {
         List(selection: $selection) {
-            ForEach(shown) { item in
-                SavedRow(item: item)
-                    .tag(item.id)
-                    .draggable(containerItemID: item.id)
+            if !folders.isEmpty {
+                Section {
+                    ForEach(folders, id: \.id) { sub in
+                        LocationFolderRow(folder: sub, rename: { folderPrompt = .rename(sub.id) }, delete: { deleteFolder(sub) })
+                    }
+                } header: {
+                    Text("Folders", comment: "Locations section header")
+                }
+            }
+            Section {
+                ForEach(shown) { item in
+                    SavedRow(item: item)
+                        .tag(item.id)
+                        .draggable(containerItemID: item.id)
+                }
+            } header: {
+                if !folders.isEmpty { Text("Locations", comment: "Locations section header") }
             }
         }
         .dragContainer(for: LibraryDragItem.self) { ids in ids.map { LibraryDragItem.place($0) } }
@@ -159,6 +200,13 @@ struct LocationsView: View {
         }
     }
 
+    private var newFolderButton: some View {
+        Button { folderPrompt = .new(filing: []) } label: {
+            Label(String(localized: "New Folder", comment: "Toolbar button"), systemImage: "folder.badge.plus")
+        }
+        .help(Text("New folder", comment: "Tooltip"))
+    }
+
     private var sortMenu: some View {
         Menu {
             Picker(selection: $sort) {
@@ -191,6 +239,7 @@ struct LocationsView: View {
             AddToTripMenu(spot: spot)
             Divider()
         }
+        if !chosen.isEmpty { PinLocationsButton(places: chosen) }
         if !chosen.isEmpty {
             let shared = Set(chosen.map { $0.folder?.id })
             MoveToFolderMenu(kind: .locations, currentFolderID: shared.count == 1 ? shared.first ?? nil : nil,
@@ -198,7 +247,7 @@ struct LocationsView: View {
                 model.store.movePlaces(chosen, to: target, index: nil)
             }
             Button(String(localized: "New Folder with Selection", comment: "Context menu")) {
-                navigation.newFolder(model: model, kind: .locations, places: chosen)
+                folderPrompt = .new(filing: chosen.map(\.id))
             }
             if folderID != nil {
                 Button(String(localized: "Remove from Folder", comment: "Context menu")) {
