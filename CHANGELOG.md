@@ -10,6 +10,7 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 - **Licensing groundwork**: Iter can now check a licence key with Lemon Squeezy, keep it in the Keychain and work for 14 days offline. It is hidden and switched off, so nothing changes for anyone: Iter is still free, and nothing asks for a key.
 
 ### Changed
+- **Trip map shows the globe and daylight**: the trip route map zooms out to the world like Explore and Locations and draws the day/night line.
 - **Folders live inside All Locations**: the sidebar now lists All Trips and All Locations, then only what you pin (trips, trip folders, locations, location folders). In All Locations, folders are rows at the top with a count: open one, make a New Folder, Rename, Delete, Pin to Sidebar, drag locations onto a folder or use Move to Folder. Right-click a location to pin it. Same on iPad and iPhone.
 - **Place card buttons work**: on the Mac, Back, Share and Close in the place card's header did nothing (a click in the window's title bar band became a window drag). Back is now at the leading corner (to the list, as Escape), Share and Close at the trailing corner; the position counter and previous and next buttons are gone. Add to Trip confirms what it did and can make a new trip without leaving Explore, Save flips to Saved, and the image strip switches between Look Around (live, when Apple has it) and satellite.
 - **Maps show terrain and a globe, and the day/night line**: every map now draws with realistic elevation, so Satellite and Hybrid zoom out to Apple Maps' 3D globe (with its own night side and city lights). Standard stays a flat map at world scale. Zoomed out beyond about 2,000 km, a faint day/night line with two twilight bands is drawn on the map for the current time. Turn it off with **Show Daylight** in the map style menu (or View ▸ Map Style).
@@ -18,6 +19,7 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 - **Search always looks the text up first**: Return in Explore's search field now always searches your places and Apple Maps, so a long place name such as "Great Smoky Mountains National Park" finds the park instead of going to Ask Iter. When the text reads like a request ("foggy forest near Portland for sunrise", a question, or a phrase starting with "find" or "show me"), an **Ask Iter** suggestion sits above the results; choose it to ask.
 
 ### Fixed
+- **Card buttons in the title bar band work**: on the Mac, the buttons in the top corner of the Explore and Locations lists (filter menu, New Folder, sort, Back) and the trip card (Share, More) did nothing, because a click there became a window drag. They now take clicks, and menus open.
 - **Updates with a damaged feed entry**: one malformed entry in the update feed no longer blocks every update. Iter skips it, notes it in the log, and still offers the other releases.
 - **Drive times after a dropped connection, without a refresh**: while a trip is open, a drive that MapKit throttled or that failed offline is looked up again on its own after 30 seconds, then 1, 2 and 4 minutes, and every 5 minutes after that. "No route" is still final.
 
