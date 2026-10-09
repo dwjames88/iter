@@ -39,6 +39,7 @@ public final class IterStore {
         self.container = container
         self.context = container.mainContext
         context.undoManager = nil
+        flattenFolders()
     }
 
     // MARK: - Fetching
@@ -418,7 +419,7 @@ public final class IterStore {
 
     /// Makes the records in `state` exactly as snapshotted: recreates, updates or deletes them.
     private func restore(_ state: StoreState) {
-        // Folders first (fields, then parents once every folder exists), so places and trips can link to them.
+        // Folders first, so places and trips can link to them.
         for id in state.folderIDs {
             guard let snapshot = state.folders[id] else { continue }
             let record = folder(id: id) ?? {
@@ -427,10 +428,6 @@ public final class IterStore {
                 return new
             }()
             snapshot.write(to: record)
-        }
-        for id in state.folderIDs {
-            guard let snapshot = state.folders[id], let record = folder(id: id) else { continue }
-            record.parent = snapshot.parentID.flatMap { folder(id: $0) }
         }
         for id in state.placeIDs {
             guard let snapshot = state.places[id] else { continue }
@@ -586,18 +583,47 @@ public final class IterStore {
 
 // MARK: - Folders
 
-/// Folders and filing. Trips and locations never share a folder; nesting is one level (a subfolder's parent is a root
-/// folder of the same kind). Invalid requests are silent no-ops. Moves only change order and membership; they do not
+/// Folders and filing. Trips and locations never share a folder; folders are one level deep (no subfolders).
+/// Invalid requests are silent no-ops. Moves only change order and membership; they do not
 /// change a trip's `updatedAt`.
 extension IterStore {
-    /// Root folders of a kind, ordered (sort order, name, id).
+    /// Folders of a kind, ordered (sort order, name, id).
     public func folders(kind: FolderKind) -> [FolderRecord] {
-        allFolders().filter { $0.kind == kind && $0.parent == nil }.sorted(by: Self.folderOrder)
+        allFolders().filter { $0.kind == kind }.sorted(by: Self.folderOrder)
     }
 
-    /// A root folder's subfolders, ordered. Empty for a subfolder.
-    public func subfolders(of folder: FolderRecord) -> [FolderRecord] {
-        (folder.children ?? []).sorted(by: Self.folderOrder)
+    /// One-time fixup, run when the store opens: folders used to nest one level; now every folder is top level.
+    /// Each nested folder keeps its name, kind, pin, trips and places, loses its parent, and is placed right after its
+    /// former parent (its former siblings keep their relative order); each kind is then renumbered 0, 1, 2...
+    /// Folders of the same name are never merged. Idempotent: with nothing nested it changes nothing.
+    /// Returns how many folders were flattened.
+    @discardableResult
+    func flattenFolders() -> Int {
+        let all = allFolders()
+        let nested = all.filter { $0.parent != nil }
+        guard !nested.isEmpty else { return 0 }
+        for kind in FolderKind.allCases {
+            let ofKind = all.filter { $0.kind == kind }
+            var ordered: [FolderRecord] = []
+            var seen = Set<UUID>()
+            func visit(_ folder: FolderRecord) {
+                guard seen.insert(folder.id).inserted else { return }
+                ordered.append(folder)
+                for child in ofKind.filter({ $0.parent?.id == folder.id }).sorted(by: Self.folderOrder) { visit(child) }
+            }
+            for root in ofKind.filter({ $0.parent == nil }).sorted(by: Self.folderOrder) { visit(root) }
+            // Anything left over (a corrupt parent cycle) goes at the end.
+            for folder in ofKind.sorted(by: Self.folderOrder) { visit(folder) }
+            for (i, folder) in ordered.enumerated() {
+                if folder.sortOrder != Double(i) { folder.sortOrder = Double(i) }
+            }
+        }
+        for folder in nested {
+            folder.parent = nil
+            folder.updatedAt = .now
+        }
+        save()
+        return nested.count
     }
 
     public func folder(id: UUID) -> FolderRecord? {
@@ -627,26 +653,21 @@ extension IterStore {
         return (try? context.fetch(descriptor)) ?? []
     }
 
-    /// Saved and user places filed in `folder` or, for a root folder, in its subfolders; the folder's own first.
+    /// Saved and user places filed in `folder`, ordered.
     public func savedPlaces(in folder: FolderRecord) -> [PlaceRecord] {
-        let saved = savedAndUserPlaces()
-        func direct(_ target: FolderRecord) -> [PlaceRecord] {
-            saved.filter { $0.folder?.id == target.id }.sorted(by: Self.placeOrder)
-        }
-        return direct(folder) + subfolders(of: folder).flatMap(direct)
+        savedAndUserPlaces().filter { $0.folder?.id == folder.id }.sorted(by: Self.placeOrder)
     }
 
-    /// A new, empty folder at the end of its siblings. A `parent` that is not a root folder of the same kind is ignored
-    /// (the folder becomes a root folder).
+    /// A new, empty folder at the end of the top-level list.
     @discardableResult
-    public func createFolder(name: String, kind: FolderKind, parent: FolderRecord? = nil) -> FolderRecord {
-        createFolder(name: name, kind: kind, parent: parent, trips: [], places: [])
+    public func createFolder(name: String, kind: FolderKind) -> FolderRecord {
+        createFolder(name: name, kind: kind, trips: [], places: [])
     }
 
     /// A new folder holding the given selection (trips only for `.trips` folders, places only for `.locations`).
     /// With an empty selection this is a plain `createFolder`.
     @discardableResult
-    public func createFolder(name: String, kind: FolderKind, parent: FolderRecord? = nil,
+    public func createFolder(name: String, kind: FolderKind,
                              trips: [TripRecord] = [], places: [PlaceRecord] = []) -> FolderRecord {
         let trips = kind == .trips ? unique(trips) : []
         let places = kind == .locations ? unique(places) : []
@@ -657,8 +678,7 @@ extension IterStore {
             touchNew(folder: folder.id)
             folder.name = name
             folder.kind = kind
-            if let parent, canNest(under: parent, kind: kind) { folder.parent = parent }
-            folder.sortOrder = nextFolderSortOrder(under: folder.parent, kind: kind, excluding: folder.id)
+            folder.sortOrder = nextFolderSortOrder(kind: kind, excluding: folder.id)
             for (i, trip) in trips.enumerated() {
                 touch(trip)
                 trip.folder = folder
@@ -682,57 +702,37 @@ extension IterStore {
         }
     }
 
-    /// Deletes the folder; its subfolders, trips and places move to the folder's parent (or to the top level / unfiled),
-    /// after what is already there.
+    /// Deletes the folder; its trips move to unfiled and its places to the top level (unfiled), after what is already there.
     public func deleteFolder(_ folder: FolderRecord) {
         perform(.deleteFolder) {
             touch(folder)
-            let parent = folder.parent
-            let kind = folder.kind
-            let doomed = folder.id
-
-            var folderOrder = nextFolderSortOrder(under: parent, kind: kind, excluding: doomed)
-            for child in subfolders(of: folder) {
-                touch(child)
-                child.parent = parent
-                child.sortOrder = folderOrder
-                folderOrder += 1
-                child.updatedAt = .now
-            }
-            if kind == .trips {
-                var order = parent.map { nextTripSortOrder(in: $0) } ?? nextTripSortOrder(in: nil)
+            if folder.kind == .trips {
+                var order = nextTripSortOrder(in: nil)
                 for trip in tripsSorted(in: folder) {
                     touch(trip)
-                    trip.folder = parent
+                    trip.folder = nil
                     trip.sortOrder = order
                     order += 1
                 }
             } else {
-                var order = parent.map { nextPlaceSortOrder(in: $0) } ?? 0
                 for place in (folder.places ?? []).sorted(by: Self.placeOrder) {
                     touch(place)
-                    place.folder = parent
-                    place.sortOrder = parent == nil ? 0 : order
-                    order += 1
+                    place.folder = nil
+                    place.sortOrder = 0
                 }
             }
             context.delete(folder)
         }
     }
 
-    /// Re-parents and/or reorders a folder. `parent` nil = top level. `index` is a position in the target's ordered
-    /// list as it is now (before the move); nil = end. No-op if the parent is not a root folder of the same kind, is the
-    /// folder itself, or the folder has subfolders of its own and `parent` is not nil.
-    public func moveFolder(_ folder: FolderRecord, to parent: FolderRecord?, index: Int?) {
-        if let parent {
-            guard canNest(under: parent, kind: folder.kind), parent.id != folder.id, (folder.children ?? []).isEmpty else { return }
-        }
-        let target = parent.map { subfolders(of: $0) } ?? folders(kind: folder.kind)
+    /// Reorders a folder among the folders of its kind. `index` is a position in that ordered list as it is now (before
+    /// the move); nil = end.
+    public func moveFolder(_ folder: FolderRecord, index: Int?) {
+        let target = folders(kind: folder.kind)
         let ordered = Self.inserting([folder], into: target, at: index) { $0.id }
-        guard folder.parent?.id != parent?.id || ordered.map(\.id) != target.map(\.id) else { return }
+        guard ordered.map(\.id) != target.map(\.id) else { return }
         perform(.moveFolder) {
             touch(folder)
-            if folder.parent?.id != parent?.id { folder.parent = parent }
             folder.updatedAt = .now
             for (i, item) in ordered.enumerated() where item.sortOrder != Double(i) {
                 touch(item)
@@ -820,7 +820,7 @@ extension IterStore {
         }
     }
 
-    /// Pinned folders of a kind (root folders and subfolders), in the order they were pinned.
+    /// Pinned folders of a kind in the order they were pinned.
     public func pinnedFolders(kind: FolderKind) -> [FolderRecord] {
         allFolders().filter { $0.kind == kind && $0.isPinned }.sorted {
             ($0.pinnedAt ?? .distantFuture, $0.id.uuidString) < ($1.pinnedAt ?? .distantFuture, $1.id.uuidString)
@@ -867,14 +867,8 @@ extension IterStore {
         }
     }
 
-    /// One level only, same kind.
-    private func canNest(under parent: FolderRecord, kind: FolderKind) -> Bool {
-        parent.parent == nil && parent.kind == kind
-    }
-
-    private func nextFolderSortOrder(under parent: FolderRecord?, kind: FolderKind, excluding id: UUID) -> Double {
-        let siblings = parent.map { subfolders(of: $0) } ?? folders(kind: kind)
-        return (siblings.filter { $0.id != id }.map(\.sortOrder).max() ?? -1) + 1
+    private func nextFolderSortOrder(kind: FolderKind, excluding id: UUID) -> Double {
+        (folders(kind: kind).filter { $0.id != id }.map(\.sortOrder).max() ?? -1) + 1
     }
 
     private func nextTripSortOrder(in folder: FolderRecord?) -> Double {

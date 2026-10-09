@@ -120,7 +120,6 @@ struct FolderSnapshot: Sendable {
     var name: String
     var kindRaw: String
     var sortOrder: Double
-    var parentID: UUID?
     var createdAt: Date
     var updatedAt: Date
     var isPinned: Bool
@@ -131,14 +130,13 @@ struct FolderSnapshot: Sendable {
         name = record.name
         kindRaw = record.kindRaw
         sortOrder = record.sortOrder
-        parentID = record.parent?.id
         createdAt = record.createdAt
         updatedAt = record.updatedAt
         isPinned = record.isPinned
         pinnedAt = record.pinnedAt
     }
 
-    /// Writes the fields; the parent link is set by the store (`parentID`), once every folder exists.
+    /// Writes the fields.
     func write(to record: FolderRecord) {
         record.name = name
         record.kindRaw = kindRaw

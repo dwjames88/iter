@@ -19,7 +19,7 @@ private func trip(_ f: Fixture, _ name: String) -> TripRecord {
 private func dump(_ f: Fixture) -> [String] {
     let context = f.store.context
     let folders = ((try? context.fetch(FetchDescriptor<FolderRecord>())) ?? []).map {
-        "F \($0.id) \($0.name) \($0.kindRaw) \($0.sortOrder) parent=\($0.parent?.id.uuidString ?? "-") pinned=\($0.isPinned) at=\($0.pinnedAt != nil)"
+        "F \($0.id) \($0.name) \($0.kindRaw) \($0.sortOrder) pinned=\($0.isPinned) at=\($0.pinnedAt != nil)"
     }
     let trips = ((try? context.fetch(FetchDescriptor<TripRecord>())) ?? []).map {
         "T \($0.id) \($0.name) folder=\($0.folder?.id.uuidString ?? "-") \($0.sortOrder) pinned=\($0.isPinned) at=\($0.pinnedAt != nil)"
@@ -55,83 +55,53 @@ private func dump(_ f: Fixture) -> [String] {
         #expect(f.store.folders(kind: .trips).map(\.name) == ["a", "b"])
     }
 
-    @Test func nestingLimitAndKinds() throws {
+    @Test func foldersAreAlwaysTopLevel() throws {
         let f = try Fixture()
-        let root = f.store.createFolder(name: "Root", kind: .trips)
-        let child = f.store.createFolder(name: "Child", kind: .trips, parent: root)
-        #expect(child.parent?.id == root.id)
-        #expect(f.store.subfolders(of: root).map(\.name) == ["Child"])
-        #expect(f.store.folders(kind: .trips).map(\.name) == ["Root"])
-        // A grandchild is refused: the folder becomes a root folder instead.
-        let grand = f.store.createFolder(name: "Grand", kind: .trips, parent: child)
-        #expect(grand.parent == nil)
-        // A parent of the other kind is ignored.
-        let other = f.store.createFolder(name: "Other", kind: .locations, parent: root)
-        #expect(other.parent == nil)
-        // Moves that break the rules are no-ops.
-        let revision = f.store.revision
-        f.store.moveFolder(root, to: child, index: nil)      // into its own child
-        f.store.moveFolder(grand, to: child, index: nil)     // depth 2
-        f.store.moveFolder(other, to: root, index: nil)      // cross kind
-        f.store.moveFolder(root, to: root, index: nil)       // itself
-        let withKids = f.store.createFolder(name: "WithKids", kind: .trips)
-        f.store.createFolder(name: "Kid", kind: .trips, parent: withKids)
-        let before = dump(f)
-        f.store.moveFolder(withKids, to: root, index: nil)   // would make depth 2
-        #expect(dump(f) == before)
-        #expect(f.store.revision > revision)
-        #expect(grand.parent == nil && other.parent == nil && root.parent == nil)
+        let a = f.store.createFolder(name: "A", kind: .trips)
+        let b = f.store.createFolder(name: "B", kind: .trips, trips: [])
+        let loc = f.store.createFolder(name: "L", kind: .locations)
+        #expect(a.parent == nil && b.parent == nil && loc.parent == nil)
+        #expect(f.store.folders(kind: .trips).map(\.name) == ["A", "B"])
+        #expect(f.store.folders(kind: .locations).map(\.name) == ["L"])
     }
 
-    @Test func moveFolderReorderAndNest() throws {
+    @Test func moveFolderReorders() throws {
         let f = try Fixture()
         let a = f.store.createFolder(name: "A", kind: .trips)
         let b = f.store.createFolder(name: "B", kind: .trips)
         let c = f.store.createFolder(name: "C", kind: .trips)
-        f.store.moveFolder(c, to: nil, index: 0)
+        f.store.moveFolder(c, index: 0)
         #expect(f.store.folders(kind: .trips).map(\.name) == ["C", "A", "B"])
-        f.store.moveFolder(c, to: nil, index: nil)
+        f.store.moveFolder(c, index: nil)
         #expect(f.store.folders(kind: .trips).map(\.name) == ["A", "B", "C"])
-        f.store.moveFolder(b, to: a, index: nil)
-        #expect(f.store.folders(kind: .trips).map(\.name) == ["A", "C"])
-        #expect(f.store.subfolders(of: a).map(\.name) == ["B"])
-        f.store.moveFolder(b, to: nil, index: 1)
-        #expect(f.store.folders(kind: .trips).map(\.name) == ["A", "B", "C"])
-        #expect(f.store.subfolders(of: a).isEmpty)
+        let revision = f.store.revision
+        f.store.moveFolder(c, index: nil)   // already last: no-op
+        #expect(f.store.revision == revision)
+        _ = (a, b)
     }
 
-    @Test func deleteMovesContentsUp() throws {
+    @Test func deleteMovesContentsToUnfiled() throws {
         let f = try Fixture()
-        let root = f.store.createFolder(name: "Root", kind: .trips)
-        let sub = f.store.createFolder(name: "Sub", kind: .trips, parent: root)
+        let doomed = f.store.createFolder(name: "Doomed", kind: .trips)
+        let keep = f.store.createFolder(name: "Keep", kind: .trips)
         let t1 = trip(f, "t1")
         let t2 = trip(f, "t2")
-        let t3 = trip(f, "t3")
-        f.store.moveTrips([t1], to: root, index: nil)
-        f.store.moveTrips([t2, t3], to: sub, index: nil)
-        f.store.deleteFolder(sub)
-        #expect(f.store.folder(id: sub.id) == nil)
-        #expect(f.store.trips(in: root).map(\.name) == ["t1", "t2", "t3"])
-        // Deleting a root folder: subfolders become roots, trips become unfiled (after existing unfiled trips).
-        let sub2 = f.store.createFolder(name: "Sub2", kind: .trips, parent: root)
         let loose = trip(f, "loose")
-        f.store.deleteFolder(root)
-        #expect(f.store.folders(kind: .trips).map(\.name) == ["Sub2"])
-        #expect(sub2.parent == nil)
-        #expect(f.store.trips(in: nil).map(\.name) == ["loose", "t1", "t2", "t3"])
-        #expect(f.count(TripRecord.self) == 4)
-        _ = loose
+        f.store.moveTrips([t1, t2], to: doomed, index: nil)
+        f.store.deleteFolder(doomed)
+        #expect(f.store.folder(id: doomed.id) == nil)
+        #expect(f.store.folders(kind: .trips).map(\.name) == ["Keep"])
+        #expect(f.store.trips(in: nil).map(\.name) == ["loose", "t1", "t2"])
+        #expect(f.count(TripRecord.self) == 3)
+        _ = (keep, loose)
     }
 
     @Test func deleteLocationFolderKeepsPlaces() throws {
         let f = try Fixture()
         let root = f.store.createFolder(name: "R", kind: .locations)
-        let sub = f.store.createFolder(name: "S", kind: .locations, parent: root)
         let p1 = place(f, "p1")
         let p2 = place(f, "p2")
-        f.store.movePlaces([p1], to: root, index: nil)
-        f.store.movePlaces([p2], to: sub, index: nil)
-        f.store.deleteFolder(sub)
+        f.store.movePlaces([p1, p2], to: root, index: nil)
         #expect(f.store.savedPlaces(in: root).map(\.name) == ["p1", "p2"])
         f.store.deleteFolder(root)
         #expect(p1.folder == nil && p2.folder == nil)
@@ -188,17 +158,17 @@ private func dump(_ f: Fixture) -> [String] {
     @Test func movePlacesAndSavedPlacesInFolder() throws {
         let f = try Fixture()
         let root = f.store.createFolder(name: "R", kind: .locations)
-        let sub = f.store.createFolder(name: "S", kind: .locations, parent: root)
+        let other = f.store.createFolder(name: "S", kind: .locations)
         let p1 = place(f, "b-place"), p2 = place(f, "a-place"), p3 = place(f, "c-place")
-        f.store.movePlaces([p1, p2], to: root, index: nil)
-        f.store.movePlaces([p3], to: sub, index: nil)
-        #expect(f.store.savedPlaces(in: root).map(\.name) == ["b-place", "a-place", "c-place"])
-        #expect(f.store.savedPlaces(in: sub).map(\.name) == ["c-place"])
+        f.store.movePlaces([p1, p2, p3], to: root, index: nil)
+        f.store.movePlaces([p3], to: other, index: nil)
+        #expect(f.store.savedPlaces(in: root).map(\.name) == ["b-place", "a-place"])
+        #expect(f.store.savedPlaces(in: other).map(\.name) == ["c-place"])
         f.store.movePlaces([p2], to: root, index: 0)
-        #expect(f.store.savedPlaces(in: root).map(\.name) == ["a-place", "b-place", "c-place"])
+        #expect(f.store.savedPlaces(in: root).map(\.name) == ["a-place", "b-place"])
         f.store.movePlaces([p1], to: nil, index: nil)
         #expect(p1.folder == nil)
-        #expect(f.store.savedPlaces(in: root).map(\.name) == ["a-place", "c-place"])
+        #expect(f.store.savedPlaces(in: root).map(\.name) == ["a-place"])
         // Unsaved non-user places are not listed.
         let curated = f.store.addStop(f.spot("mesa-arch"), to: trip(f, "t"), day: 0).place!
         f.store.movePlaces([curated], to: root, index: nil)
@@ -319,7 +289,7 @@ private func dump(_ f: Fixture) -> [String] {
             _ = root
         }
         try verify(.createFolder, setup: { f in f.store.createFolder(name: "R", kind: .trips) }) { f in
-            f.store.createFolder(name: "Sub", kind: .trips, parent: f.store.folders(kind: .trips)[0])
+            f.store.createFolder(name: "Second", kind: .trips)
         }
     }
 
@@ -391,22 +361,18 @@ private func dump(_ f: Fixture) -> [String] {
     @Test func deleteFolderWithEverything() throws {
         try verify(.deleteFolder, setup: { f in
             let root = f.store.createFolder(name: "Root", kind: .trips)
-            let sub = f.store.createFolder(name: "Sub", kind: .trips, parent: root)
-            f.store.createFolder(name: "Sub2", kind: .trips, parent: root)
-            let a = trip(f, "a"), b = trip(f, "b"), c = trip(f, "c")
-            f.store.moveTrips([a], to: root, index: nil)
-            f.store.moveTrips([b, c], to: sub, index: nil)
+            f.store.createFolder(name: "Other", kind: .trips)
+            let a = trip(f, "a"), b = trip(f, "b")
+            f.store.moveTrips([a, b], to: root, index: nil)
             _ = trip(f, "loose")
         }) { f in
             f.store.deleteFolder(f.store.folders(kind: .trips)[0])
         }
         try verify(.deleteFolder, setup: { f in
             let root = f.store.createFolder(name: "R", kind: .locations)
-            let sub = f.store.createFolder(name: "S", kind: .locations, parent: root)
-            f.store.movePlaces([place(f, "p1")], to: root, index: nil)
-            f.store.movePlaces([place(f, "p2")], to: sub, index: nil)
+            f.store.movePlaces([place(f, "p1"), place(f, "p2")], to: root, index: nil)
         }) { f in
-            f.store.deleteFolder(f.store.subfolders(of: f.store.folders(kind: .locations)[0])[0])
+            f.store.deleteFolder(f.store.folders(kind: .locations)[0])
         }
     }
 
@@ -416,14 +382,7 @@ private func dump(_ f: Fixture) -> [String] {
             f.store.createFolder(name: "B", kind: .trips)
             f.store.createFolder(name: "C", kind: .trips)
         }) { f in
-            let folders = f.store.folders(kind: .trips)
-            f.store.moveFolder(folders[2], to: folders[0], index: nil)
-        }
-        try verify(.moveFolder, setup: { f in
-            f.store.createFolder(name: "A", kind: .trips)
-            f.store.createFolder(name: "B", kind: .trips)
-        }) { f in
-            f.store.moveFolder(f.store.folders(kind: .trips)[1], to: nil, index: 0)
+            f.store.moveFolder(f.store.folders(kind: .trips)[2], index: 0)
         }
     }
 

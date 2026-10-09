@@ -5,12 +5,12 @@ import IterCore
 // CloudKit-compatible: every attribute has a default or is optional, no unique constraints,
 // every relationship is optional with an explicit inverse, enums are stored as raw strings.
 
-/// What a folder holds. A folder never mixes kinds, and a subfolder has its parent's kind.
+/// What a folder holds. A folder never mixes kinds.
 public enum FolderKind: String, Sendable, CaseIterable {
     case trips, locations
 }
 
-/// A user folder for trips or locations. Nests at most one level (a parent is always a root folder of the same kind).
+/// A user folder for trips or locations. Folders are one level deep: nothing nests.
 /// Deleting a folder never deletes what is in it; `IterStore.deleteFolder` moves the contents up.
 @Model
 public final class FolderRecord {
@@ -24,8 +24,11 @@ public final class FolderRecord {
     public var isPinned: Bool = false
     /// When the folder was pinned; orders the pinned group.
     public var pinnedAt: Date?
+    /// Deprecated: kept for store compatibility (it is in schema V2 and V3). Always nil after the flatten migration
+    /// (`IterStore.flattenFolders`, run when the store opens); nothing but that migration reads it.
     public var parent: FolderRecord?
 
+    /// Deprecated, see `parent`: always empty.
     @Relationship(deleteRule: .nullify, inverse: \FolderRecord.parent)
     public var children: [FolderRecord]?
     @Relationship(deleteRule: .nullify, inverse: \TripRecord.folder)
