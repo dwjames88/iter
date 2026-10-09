@@ -11,8 +11,8 @@ enum TripsPageMode: Equatable {
     case folder(UUID)
 }
 
-/// The body of All Trips on the Mac and iPad/iPhone: a centred column with the hero, then Pinned trips, folder tiles and
-/// the other trips as full-width grids. Scrolling belongs to the host.
+/// The body of All Trips on the Mac and iPad/iPhone: a centred column with the hero, then pinned trips, folder tiles and
+/// the other trips in one grid. Scrolling belongs to the host.
 struct TripsPageContent: View {
     let overview: TripsOverview
     let today: LocalDay
@@ -24,18 +24,14 @@ struct TripsPageContent: View {
             switch mode {
             case .all:
                 if let hero = overview.hero { TripHeroView(entry: hero, today: today, prompt: $prompt) }
-                if !overview.pinned.isEmpty {
-                    group(String(localized: "Pinned", comment: "Trips group")) { tripCards(overview.pinned) }
-                }
-                if !overview.folders.isEmpty {
-                    group(String(localized: "Folders", comment: "Trips group")) {
-                        ForEach(overview.folders) { TripFolderTileView(tile: $0, prompt: $prompt) }
-                    }
-                }
-                if !overview.others.isEmpty {
-                    let hasOthers = overview.hero != nil || !overview.pinned.isEmpty || !overview.folders.isEmpty
+                if !overview.pinned.isEmpty || !overview.folders.isEmpty || !overview.others.isEmpty {
+                    let title = overview.hero == nil ? nil : String(localized: "Your Trips", comment: "Trips grid title under the hero")
                     UnfileDropGroup {
-                        group(hasOthers ? String(localized: "Trips", comment: "Trips group") : nil) { tripCards(overview.others) }
+                        group(title) {
+                            tripCards(overview.pinned)
+                            ForEach(overview.folders) { TripFolderTileView(tile: $0, prompt: $prompt) }
+                            tripCards(overview.others)
+                        }
                     }
                 }
             case .pinned:
@@ -79,7 +75,7 @@ struct TripsPageContent: View {
     }
 }
 
-/// A trip dropped anywhere on the unfiled group leaves its folder.
+/// A trip dropped on the grid's background leaves its folder (a folder tile files it instead).
 private struct UnfileDropGroup<Content: View>: View {
     @Environment(AppModel.self) private var model
     @ViewBuilder var content: Content
