@@ -56,14 +56,14 @@ extension TripsHomeModel {
 
     /// The page's content. The hero is left out of the groups so it shows once. Folders always show, empty or not, so
     /// there is somewhere to drop a trip. `pinnedTitle`, `otherTitle` and `subfolderTitle` are the localized words.
-    public func overview(today: LocalDay, pinnedTitle: String, otherTitle: String,
+    public func overview(today: LocalDay, featuring: Bool = true, pinnedTitle: String, otherTitle: String,
                          subfolderTitle: (_ folder: String, _ sub: String) -> String) -> TripsOverview {
         _ = store.revision
         let clock = now()
         let all = store.trips()
         let entries = all.map { TripEntry(record: $0, summary: Self.summary(of: $0.plan, engine: engine, now: clock)) }
         let byID = Dictionary(uniqueKeysWithValues: entries.map { ($0.id, $0) })
-        let heroID = Self.heroID(among: entries.map(\.summary), today: today)
+        let heroID = featuring ? Self.heroID(among: entries.map(\.summary), today: today) : nil
         let hero = heroID.flatMap { byID[$0] }
 
         func visible(_ trips: [TripRecord]) -> [TripEntry] {
