@@ -168,7 +168,7 @@ struct LocationsView: View {
                 ForEach(SavedFilter.allCases, id: \.self) { (option: SavedFilter) in Text(LightText.name(option)).tag(option) }
             } label: { Text("Show", comment: "Menu") }
         } label: {
-            Label(String(localized: "Sort and Filter", comment: "Toolbar button"), systemImage: "line.3.horizontal.decrease.circle")
+            Label(String(localized: "Sort and Filter", comment: "Toolbar button"), systemImage: "line.3.horizontal.decrease")
         }
         .help(Text("Sort and filter locations", comment: "Tooltip"))
     }

@@ -48,7 +48,7 @@ struct MapStyleMenu: View {
             }
             #else
             Image(systemName: "map")
-                .frame(width: MapControlStack.size, height: MapControlStack.size)
+                .frame(width: MapControlStack<EmptyView>.size, height: MapControlStack<EmptyView>.size)
                 .contentShape(.rect)
             #endif
         }

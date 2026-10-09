@@ -73,7 +73,6 @@ private struct ExploreContent: View {
         .onChange(of: navigation.searchText) { _, text in if explore.query != text { explore.query = text } }
         .onChange(of: explore.query) { _, query in if navigation.searchText != query { navigation.searchText = query } }
         .onChange(of: navigation.searchSubmitRequest) { handleRequests() }
-        .toolbar { toolbar }
         .sheet(isPresented: draftPresented) {
             if let coordinate = explore.draftCoordinate {
                 SpotEditorSheet(mode: .create(coordinate)) { record in explore.didCreate(record.spot) }
@@ -108,27 +107,4 @@ private struct ExploreContent: View {
         }
     }
 
-    // MARK: Toolbar
-
-    @ToolbarContentBuilder private var toolbar: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            Button {
-                if let region = explore.visibleRegion {
-                    openURL(WindyLink.url(center: region.center, zoom: WindyLink.zoom(forLatitudeDelta: region.latitudeDelta)))
-                }
-            } label: {
-                Label(String(localized: "Windy", comment: "Toolbar button: open the map area on windy.com"), systemImage: "wind")
-            }
-            .disabled(explore.visibleRegion == nil)
-            .help(String(localized: "Open this map area on windy.com", comment: "Tooltip"))
-        }
-        ToolbarItem(placement: .primaryAction) {
-            Toggle(isOn: $explore.isAddingSpot) {
-                Label(String(localized: "Add Spot", comment: "Toolbar toggle: click the map to add your own spot"),
-                      systemImage: "mappin.and.ellipse")
-            }
-            .toggleStyle(.button)
-            .help(String(localized: "Add your own spot: click the map to drop a pin (Esc to cancel)", comment: "Tooltip"))
-        }
-    }
 }

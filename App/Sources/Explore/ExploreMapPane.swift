@@ -17,6 +17,7 @@ struct ExploreMapPane: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
     @Environment(AppModel.self) private var app
+    @Environment(\.openURL) private var openURL
     @State private var position: MapCameraPosition
     /// True once the map wrote a user-positioned `position` (pan, zoom, stepper, compass) that has not settled yet.
     @State private var userInteracted = false
@@ -92,7 +93,22 @@ struct ExploreMapPane: View {
             .mapControls { MapScaleView() }
             .safeAreaPadding(insets)
             .overlay(alignment: .topTrailing) {
-                MapControlStack(scope: mapScope, locate: app.location.showsSystemIndicator ? { locate() } : nil)
+                MapControlStack(scope: mapScope, locate: app.location.showsSystemIndicator ? { locate() } : nil) {
+                    MapControlButton(title: String(localized: "Windy", comment: "Map control: open the map area on windy.com"),
+                                     systemImage: "wind",
+                                     help: String(localized: "Open this map area on windy.com", comment: "Tooltip")) {
+                        if let region = explore.visibleRegion {
+                            openURL(WindyLink.url(center: region.center, zoom: WindyLink.zoom(forLatitudeDelta: region.latitudeDelta)))
+                        }
+                    }
+                    .disabled(explore.visibleRegion == nil)
+                    MapControlButton(title: String(localized: "Add Spot", comment: "Map control: click the map to add your own spot"),
+                                     systemImage: "mappin.and.ellipse",
+                                     help: String(localized: "Add your own spot: click the map to drop a pin (Esc to cancel)", comment: "Tooltip"),
+                                     isOn: explore.isAddingSpot) {
+                        explore.isAddingSpot.toggle()
+                    }
+                }
                     .padding(.top, insets.top)
             }
             .mapScope(mapScope)

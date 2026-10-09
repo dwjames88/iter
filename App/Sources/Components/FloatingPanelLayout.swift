@@ -34,6 +34,8 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
                 .clipShape(Self.shape)
                 .modifier(PanelMaterial(shape: Self.shape))
                 .padding(Self.margin)
+                // As Maps' card: from the top of the window, in the band beside the sidebar the toolbar leaves free.
+                .ignoresSafeArea(edges: .top)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onGeometryChange(for: CGFloat.self) { $0.safeAreaInsets.top } action: { topInset = $0 }
@@ -91,17 +93,19 @@ struct FloatingPanelHeader<Accessory: View>: View {
                         .foregroundStyle(.secondary)
                 }
             }
-            Spacer(minLength: 0)
-            accessory
+            Spacer(minLength: GlassCircleButtonStyle.size + IterSpace.sm)
         }
-        .labelStyle(.iconOnly)
-        .buttonStyle(.glass)
-        .buttonBorderShape(.circle)
-        .controlSize(.extraLarge)
-        .menuIndicator(.hidden)
         .padding(.horizontal, IterSpace.lg)
         .padding(.top, IterSpace.lg)
         .padding(.bottom, IterSpace.sm)
         .frame(maxWidth: .infinity, alignment: .leading)
+        // The card's buttons sit in its corner, concentric with it, as on the place card.
+        .overlay(alignment: .topTrailing) {
+            HStack(spacing: IterSpace.sm) { accessory }
+                .buttonStyle(GlassCircleButtonStyle())
+                .menuStyle(.button)
+                .menuIndicator(.hidden)
+                .padding(GlassCircleButtonStyle.inset)
+        }
     }
 }

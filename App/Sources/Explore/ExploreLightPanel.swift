@@ -105,7 +105,7 @@ struct ExploreLightPanel: View {
                       message: Text(SpotHeaderView.shareMessage(for: spot))) {
                 Label(LightText.share, systemImage: "square.and.arrow.up")
             }
-            .buttonStyle(HeaderCircleStyle())
+            .buttonStyle(GlassCircleButtonStyle())
             .help(String(localized: "Share this location", comment: "Help"))
             Spacer(minLength: 0)
             if let position = explore.panelPosition {
@@ -138,7 +138,7 @@ struct ExploreLightPanel: View {
             Button { explore.closePanel() } label: {
                 Label(String(localized: "Back to places", comment: "VoiceOver"), systemImage: "xmark")
             }
-            .buttonStyle(HeaderCircleStyle())
+            .buttonStyle(GlassCircleButtonStyle())
             .help(String(localized: "Back to places (Esc)", comment: "Tooltip on the place panel's close button"))
         }
         .labelStyle(.iconOnly)
@@ -150,23 +150,12 @@ struct ExploreLightPanel: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    /// The card header buttons: 32 pt glass circles (Maps' 29 pt with more room around the glyph), 11.5 pt from the edges.
+    /// The card header buttons: the shared glass circles in the card's corners.
     fileprivate enum HeaderMetrics {
-        static let size: CGFloat = 32
-        static let inset: CGFloat = 11.5
+        static let size = GlassCircleButtonStyle.size
+        static let inset = GlassCircleButtonStyle.inset
     }
 
-    /// Maps' round card buttons (Share, Close): a 29 pt interactive glass circle with a primary glyph. The system glass
-    /// style has no 29 pt size on the Mac (large is 23 pt, extra large 34 pt).
-    private struct HeaderCircleStyle: ButtonStyle {
-        func makeBody(configuration: Configuration) -> some View {
-            configuration.label
-                .frame(width: HeaderMetrics.size, height: HeaderMetrics.size)
-                .contentShape(.circle)
-                .glassEffect(.regular.interactive(), in: .circle)
-                .opacity(configuration.isPressed ? 0.7 : 1)
-        }
-    }
 
     // MARK: Place
 

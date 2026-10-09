@@ -13,7 +13,6 @@ struct RootView: View {
     @SceneStorage("sidebarSelection") private var storedSelection: Data?
 
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
-    @FocusState private var searchFocused: Bool
     @State private var autoCollapsed = false
     @State private var windowWidth: CGFloat = 0
     /// Below this the sidebar, list and detail cannot all fit at their minimums.
@@ -35,15 +34,17 @@ struct RootView: View {
         @Bindable var onboarding = model.onboarding
         NavigationSplitView(columnVisibility: $columnVisibility) {
             SidebarView()
+                // One search field at the top of the sidebar, as in Maps; the screen showing takes what is typed.
+                .safeAreaInset(edge: .top, spacing: IterSpace.sm) {
+                    SidebarSearchField(text: $navigation.searchText, prompt: searchPrompt,
+                                       focusRequest: navigation.focusSearchRequest, onSubmit: submitSearch)
+                        // Maps' field sits 15 pt in from the sidebar's edges.
+                        .padding(.horizontal, 15)
+                }
                 .navigationSplitViewColumnWidth(min: IterSize.sidebarMin, ideal: IterSize.sidebarIdeal, max: IterSize.sidebarMax)
         } detail: {
             DetailView()
         }
-        // One search field at the top of the sidebar, as in Maps; the screen showing takes what is typed.
-        .searchable(text: $navigation.searchText, placement: .sidebar, prompt: searchPrompt)
-        .searchFocused($searchFocused)
-        .onSubmit(of: .search) { submitSearch() }
-        .onChange(of: navigation.focusSearchRequest) { searchFocused = true }
         .onChange(of: isFilteringLocations) { navigation.searchText = "" }
         .environment(navigation)
         .frame(minWidth: IterSize.mainWindowMinWidth, minHeight: IterSize.windowMinHeight)
@@ -87,9 +88,9 @@ struct RootView: View {
         }
     }
 
-    private var searchPrompt: Text {
-        isFilteringLocations ? Text("Search locations", comment: "Search field prompt")
-                             : Text("Search places or ask Iter", comment: "Explore search field prompt: one field for place names and requests")
+    private var searchPrompt: String {
+        isFilteringLocations ? String(localized: "Search locations", comment: "Search field prompt")
+                             : String(localized: "Search places or ask Iter", comment: "Explore search field prompt: one field for place names and requests")
     }
 
     private func submitSearch() {

@@ -21,6 +21,7 @@ targets:
           - Sidebar/SidebarView.swift
           - Sidebar/SidebarTripsSection.swift
           - Sidebar/SidebarLocationsSection.swift
+          - Sidebar/SidebarSearchField.swift
           - Components/ResizableSplit.swift
           - Components/FloatingPanelLayout.swift
           - Components/MapControlStack.swift

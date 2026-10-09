@@ -148,17 +148,11 @@ struct ExploreListPanel: View {
                 .disabled(!explore.filters.isActive)
         } label: {
             let count = explore.filters.activeCount
-            HStack(spacing: IterSpace.xs) {
-                Image(systemName: count > 0 ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
-                if count > 0 { Text(count, format: .number).monospacedDigit() }
-            }
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel(Text("Sort and filters", comment: "Explore list header menu"))
-            .accessibilityValue(count > 0 ? Text("\(count) filters active", comment: "VoiceOver: number of active filters") : Text("No filters active", comment: "VoiceOver"))
+            // A glass circle in the card's corner; active filters fill the symbol (the count is spoken).
+            Label(String(localized: "Sort and filters", comment: "Explore list header menu"),
+                  systemImage: count > 0 ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease")
+                .accessibilityValue(count > 0 ? Text("\(count) filters active", comment: "VoiceOver: number of active filters") : Text("No filters active", comment: "VoiceOver"))
         }
-        .menuStyle(.button)
-        .buttonBorderShape(explore.filters.activeCount > 0 ? .capsule : .circle)
-        .fixedSize()
         .help(String(localized: "Sort the list and filter by category, what a spot is known for, and source", comment: "Tooltip"))
     }
 
