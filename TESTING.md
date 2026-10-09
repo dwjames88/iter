@@ -4,6 +4,8 @@
 
 ## What changed (2026-10-07)
 
+- **Mac place card header and buttons.** Open a place in Explore. Back (top left) returns to the list with the row still highlighted; Share (top right) opens the system share sheet with a maps.apple.com link; Close dismisses the card and clears the selection. No position counter or up/down buttons. Add to Trip: pick a trip day, the button reads Added and a line says where, with Show Trip; New Trip... makes a trip and stays in Explore. Save becomes Saved. Open in Maps opens Apple Maps. The image strip's Look Around / Satellite control switches the picture (Look Around is live where Apple has coverage, e.g. Bixby Bridge).
+
 Quick Mac checks, with the sample weather on (**Debug ▸ Use Sample Weather**) and Mesa Arch open as a spot page or panel.
 
 - **All Trips.** With seeded trips: a hero on top (cover picture, "Up Next", score, Open), then Pinned trips, Folders (one tile per folder with a strip of its trips' pictures) and Trips. Click a folder tile to open its page (back button "All Trips", folder menu with Rename, Pin to Sidebar, New Folder, Delete); drag a card onto a folder tile to file it, onto the Trips group to unfile it. Right-click a card: Open, Pin, Move to Folder, Rename, Duplicate, Share, Delete. File ▸ New Folder and the toolbar ellipsis open the New Folder prompt. With no trips: illustration, Plan a Trip and three template cards. Check light and dark.

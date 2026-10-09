@@ -11,6 +11,7 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 
 ### Changed
 - **Folders live inside All Locations**: the sidebar now lists All Trips and All Locations, then only what you pin (trips, trip folders, locations, location folders). In All Locations, folders are rows at the top with a count: open one, make a New Folder, Rename, Delete, Pin to Sidebar, drag locations onto a folder or use Move to Folder. Right-click a location to pin it. Same on iPad and iPhone.
+- **Place card buttons work**: on the Mac, Back, Share and Close in the place card's header did nothing (a click in the window's title bar band became a window drag). Back is now at the leading corner (to the list, as Escape), Share and Close at the trailing corner; the position counter and previous and next buttons are gone. Add to Trip confirms what it did and can make a new trip without leaving Explore, Save flips to Saved, and the image strip switches between Look Around (live, when Apple has it) and satellite.
 - **Search always looks the text up first**: Return in Explore's search field now always searches your places and Apple Maps, so a long place name such as "Great Smoky Mountains National Park" finds the park instead of going to Ask Iter. When the text reads like a request ("foggy forest near Portland for sunrise", a question, or a phrase starting with "find" or "show me"), an **Ask Iter** suggestion sits above the results; choose it to ask.
 
 ### Fixed
