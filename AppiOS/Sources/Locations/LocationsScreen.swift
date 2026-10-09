@@ -34,7 +34,7 @@ struct LocationsScreen: View {
             if !folders.isEmpty {
                 Section {
                     ForEach(folders, id: \.id) { sub in
-                        LocationFolderRow(folder: sub, rename: { folderPrompt = .rename(sub.id) }, delete: { folderToDelete = sub })
+                        LocationFolderRow(folder: sub, rename: { folderPrompt = .rename(sub.id) }, delete: { folderToDelete = sub }, clearBackground: true)
                             .swipeActions(edge: .trailing) {
                                 Button(role: .destructive) { folderToDelete = sub } label: { Label(String(localized: "Delete", comment: "Swipe action"), systemImage: "trash") }
                                 Button { folderPrompt = .rename(sub.id) } label: { Label(String(localized: "Rename", comment: "Swipe action"), systemImage: "pencil") }

@@ -85,6 +85,8 @@ struct LocationFolderRow: View {
     let folder: FolderRecord
     let rename: () -> Void
     let delete: () -> Void
+    /// iOS lists drop the cell fill so folder rows sit on the screen background like the spot rows.
+    var clearBackground = false
     @State private var targeted = false
 
     var body: some View {
@@ -118,7 +120,7 @@ struct LocationFolderRow: View {
         .dropDestination(for: LibraryDragItem.self) { items, _ in
             LibraryDrops(model: model).onLocationsFolder(items, folder)
         } isTargeted: { targeted = $0 }
-        .listRowBackground(targeted || ScriptedDropHover.shared.folderID == folder.id ? IterColor.accent.opacity(0.18) : nil)
+        .listRowBackground(targeted || ScriptedDropHover.shared.folderID == folder.id ? IterColor.accent.opacity(0.18) : (clearBackground ? Color.clear : nil))
     }
 }
 
