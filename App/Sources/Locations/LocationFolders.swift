@@ -120,7 +120,7 @@ struct LocationFolderRow: View {
         .dropDestination(for: LibraryDragItem.self) { items, _ in
             LibraryDrops(model: model).onLocationsFolder(items, folder)
         } isTargeted: { targeted = $0 }
-        .listRowBackground(targeted ? IterColor.accent.opacity(0.18) : nil)
+        .listRowBackground(targeted || ScriptedDropHover.shared.folderID == folder.id ? IterColor.accent.opacity(0.18) : nil)
     }
 }
 

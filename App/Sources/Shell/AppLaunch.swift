@@ -30,6 +30,11 @@ import IterFeatures
 /// `-IterMapCamera lat,lon,distanceKm` (for example `20,10,14000` for the whole globe) puts the Explore map's camera there
 /// and keeps it there (the model's fit requests are ignored), for screenshots of the globe. `-IterDaylightDate <ISO 8601>`
 /// (for example `2026-03-20T12:00:00Z`) shades day and night for that moment instead of now.
+/// `-IterDragScript spot-to-folder|stop-reorder` (with `-IterInMemoryStore YES`) runs the drop handlers a drag calls, in process,
+/// logging the model before and after to stdout (`spot-to-folder` needs `-IterSeedLibrary YES -IterSection locations`,
+/// `stop-reorder` needs `-IterSeedTrip YES -IterSection trip`). `-IterResizeScript lo,hi` steps the window width from lo to hi and
+/// back every 16 ms, then holds at 1100/1280/1440/1600/1800 (inside the range). `-IterCaptureWindow <dir>` writes PNGs of the
+/// window (`cacheDisplay`, so MapKit may be blank) at each script milestone. `-IterScriptKeepOpen YES` keeps the app open after.
 enum AppLaunch {
     static let log = Logger(subsystem: "com.dwjames.iter", category: "app")
 

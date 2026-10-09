@@ -179,6 +179,7 @@ struct TripPlanList: View {
             }
             .listStyle(.inset)
             .scrollContentBackground(.hidden)
+            .task { if DebugScripts.dragScript == "stop-reorder" { await runReorderScript() } }
             .onDeleteCommand(perform: removeSelected)
             .onChange(of: state.scrollRequest) {
                 if let request = state.scrollRequest { withAnimation { proxy.scrollTo("header-\(request.day)", anchor: .top) } }
@@ -191,6 +192,31 @@ struct TripPlanList: View {
                 }
             }
         }
+    }
+
+    /// `-IterDragScript stop-reorder`: the targeting and drop calls the rows' drop destinations make, one drag within a day
+    /// (the last stop before the first) and one to the end of another day, with the drop line shown mid-drag.
+    private func runReorderScript() async {
+        await DebugScripts.pause(6)
+        func order() -> String {
+            builder.days.map { "d\($0.index + 1)=" + $0.stops.map { $0.stop.spot.name }.joined(separator: ",") }.joined(separator: " | ")
+        }
+        guard let day = builder.days.first(where: { $0.stops.count >= 2 }), let other = builder.days.first(where: { $0.index != day.index }),
+              let moving = day.stops.last, let first = day.stops.first else { return }
+        let item = StopDragItem(tripID: builder.tripID, stopID: moving.id)
+        DebugScripts.say("reorder before: \(order())")
+        await DebugScripts.capture("drag-stop-0-before")
+        drops.target(.before(first.id), true)
+        await DebugScripts.capture("drag-stop-1-hover-row")
+        let a = drops.drop([item], day: day.index, before: first.id)
+        DebugScripts.say("reorder same-day accepted=\(a): \(order())")
+        await DebugScripts.capture("drag-stop-2-after-row")
+        drops.target(.endOfDay(other.index), true)
+        await DebugScripts.capture("drag-stop-3-hover-day")
+        let b = drops.drop([item], day: other.index, before: nil)
+        DebugScripts.say("reorder cross-day accepted=\(b): \(order())")
+        await DebugScripts.capture("drag-stop-4-after-day")
+        DebugScripts.finish()
     }
 
     @ViewBuilder private func background(_ row: PlanRow, selectedDay: Int?) -> some View {
