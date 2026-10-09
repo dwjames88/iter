@@ -8,6 +8,7 @@ struct AppCommands: Commands {
     let model: AppModel
     @FocusedValue(\.navigation) private var navigation
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
+    @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
 
     var body: some Commands {
         CommandGroup(replacing: .newItem) {
@@ -63,6 +64,7 @@ struct AppCommands: Commands {
                     ForEach(MapStyleChoice.allCases) { Text($0.title).tag($0.rawValue) }
                 }
                 .pickerStyle(.inline)
+                Toggle(String(localized: "Show Daylight", comment: "Menu item: shade the night side of the globe when zoomed out"), isOn: $showsDaylight)
             }
         }
         CommandMenu(String(localized: "Go", comment: "Menu title")) {

@@ -20,6 +20,8 @@ struct LocationsMap: View {
     @State private var visible: GeoRegion?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
+    @State private var daylight = DaylightClock()
+    @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
 
     init(items: [SavedItem], selection: Binding<Set<UUID>>, insets: EdgeInsets = EdgeInsets()) {
         self.items = items
@@ -49,7 +51,8 @@ struct LocationsMap: View {
     }
 
     private var liveMap: some View {
-        Map(position: $position, selection: mapSelection, scope: mapScope) {
+        Map(position: $position, bounds: .globe, selection: mapSelection, scope: mapScope) {
+            if daylight.isShown(isOn: showsDaylight, style: MapStyleChoice(stored: mapStyleRaw)) { DaylightOverlay(daylight.shading) }
             ForEach(drawOrder) { item in
                 let selected = selection.contains(item.id)
                 Annotation(item.spot.name,
@@ -62,6 +65,7 @@ struct LocationsMap: View {
             }
         }
         .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
+        .daylightClock(daylight)
         .mapControls { MapScaleView() }
         .safeAreaPadding(insets)
         .overlay(alignment: .topTrailing) {

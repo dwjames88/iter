@@ -333,9 +333,12 @@ struct LocationsMapHeader: View {
     @State private var position: MapCameraPosition = .automatic
     @State private var selection: UUID?
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
+    @State private var daylight = DaylightClock()
+    @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
 
     var body: some View {
-        Map(position: $position, selection: $selection) {
+        Map(position: $position, bounds: .globe, selection: $selection) {
+            if daylight.isShown(isOn: showsDaylight, style: MapStyleChoice(stored: mapStyleRaw)) { DaylightOverlay(daylight.shading) }
             ForEach(items) { item in
                 Annotation(item.spot.name, coordinate: CLLocationCoordinate2D(latitude: item.spot.coordinate.latitude, longitude: item.spot.coordinate.longitude)) {
                     pin(item.spot)
@@ -345,6 +348,7 @@ struct LocationsMapHeader: View {
             }
         }
         .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
+        .daylightClock(daylight)
         .mapControls { MapCompass() }
         .safeAreaPadding(.bottom, backdropInset ?? 0)
         .overlay(alignment: backdropInset == nil ? .bottomTrailing : .topTrailing) {

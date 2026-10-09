@@ -12,8 +12,9 @@ extension MapStyleChoice {
         }
     }
 
-    /// The MapKit style for this choice. Points of interest stay off, as on every Iter map.
-    func mapStyle(elevation: MapStyle.Elevation = .flat) -> MapStyle {
+    /// The MapKit style for this choice. Points of interest stay off, as on every Iter map. Realistic elevation by
+    /// default: terrain and, zoomed all the way out, Apple Maps' 3D globe.
+    func mapStyle(elevation: MapStyle.Elevation = .realistic) -> MapStyle {
         switch self {
         case .standard: .standard(elevation: elevation, pointsOfInterest: .excludingAll)
         case .satellite: .imagery(elevation: elevation)
@@ -26,6 +27,7 @@ extension MapStyleChoice {
 /// one), writing the shared `iter.map.style` setting that every map reads.
 struct MapStyleMenu: View {
     @AppStorage(MapStyleChoice.storageKey) private var raw = MapStyleChoice.default.rawValue
+    @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
     #if os(iOS)
     /// False inside a control group that draws one glass capsule for all its buttons (Explore's map controls).
     var isGlass = true
@@ -39,6 +41,9 @@ struct MapStyleMenu: View {
                 Text("Map Style", comment: "Map control")
             }
             .pickerStyle(.inline)
+            Toggle(isOn: $showsDaylight) {
+                Text("Show Daylight", comment: "Map style menu: shade the night side of the globe when zoomed out")
+            }
         } label: {
             #if os(iOS)
             if isGlass {

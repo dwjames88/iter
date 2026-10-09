@@ -5,6 +5,7 @@
 ## What changed (2026-10-07)
 
 - **Mac place card header and buttons.** Open a place in Explore. Back (top left) returns to the list with the row still highlighted; Share (top right) opens the system share sheet with a maps.apple.com link; Close dismisses the card and clears the selection. No position counter or up/down buttons. Add to Trip: pick a trip day, the button reads Added and a line says where, with Show Trip; New Trip... makes a trip and stays in Explore. Save becomes Saved. Open in Maps opens Apple Maps. The image strip's Look Around / Satellite control switches the picture (Look Around is live where Apple has coverage, e.g. Bixby Bridge).
+- **Globe and daylight.** Explore and Locations: set the map style to Satellite or Hybrid and zoom all the way out: the map becomes the 3D globe (MapKit lights the night side itself). In Standard, zoom out past about 2,000 km: a faint shade with two twilight bands marks night. Map style menu ▸ **Show Daylight** turns it off (also View ▸ Map Style). Regional views must look unchanged. Screenshots: `-IterMapCamera lat,lon,distanceKm` (for example `15,95,45000`) and `-IterDaylightDate 2026-03-20T12:00:00Z`.
 
 Quick Mac checks, with the sample weather on (**Debug ▸ Use Sample Weather**) and Mesa Arch open as a spot page or panel.
 
