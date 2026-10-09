@@ -4,6 +4,8 @@
 
 ## What changed (2026-10-07)
 
+- **Globe and daylight.** Explore and Locations: set the map style to Satellite or Hybrid and zoom all the way out: the map becomes the 3D globe (MapKit lights the night side itself). In Standard, zoom out past about 2,000 km: a faint shade with two twilight bands marks night. Map style menu ▸ **Show Daylight** turns it off (also View ▸ Map Style). Regional views must look unchanged. Screenshots: `-IterMapCamera lat,lon,distanceKm` (for example `15,95,45000`) and `-IterDaylightDate 2026-03-20T12:00:00Z`.
+
 Quick Mac checks, with the sample weather on (**Debug ▸ Use Sample Weather**) and Mesa Arch open as a spot page or panel.
 
 - **Compass rose.** At the foot of **Light through the day** there is a compass rose (no separate sun and moon module). Drag the time scrubber under it: the sun and moon marks move, and the timeline's marker follows (they share one scrubber). Event labels sit next to their marks. With a classic view the wedge is labelled just outside the rim ("View 263° W"), always shown, never inside the wedge.

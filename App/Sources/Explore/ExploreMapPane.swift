@@ -23,12 +23,18 @@ struct ExploreMapPane: View {
     @State private var userInteracted = false
     @State private var appliedRequest = 0
     @State private var paneSize = CGSize.zero
+    @State private var daylight = DaylightClock()
+    @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
 
     init(explore: ExploreModel, insets: EdgeInsets = EdgeInsets()) {
         self.explore = explore
         self.insets = insets
         // Start framed, so MapKit never shows (and reports) its automatic world camera.
-        if let r = explore.initialCameraRegion {
+        if let launch = AppLaunch.mapCamera {
+            _position = State(initialValue: .camera(MapCamera(
+                centerCoordinate: CLLocationCoordinate2D(latitude: launch.coordinate.latitude, longitude: launch.coordinate.longitude),
+                distance: launch.distanceMetres)))
+        } else if let r = explore.initialCameraRegion {
             _position = State(initialValue: .region(Self.mkRegion(r)))
         } else {
             _position = State(initialValue: .automatic)
@@ -71,7 +77,8 @@ struct ExploreMapPane: View {
 
     private var liveMap: some View {
         MapReader { proxy in
-            Map(position: $position, selection: mapSelection, scope: mapScope) {
+            Map(position: $position, bounds: .globe, selection: mapSelection, scope: mapScope) {
+                if daylight.isShown(isOn: showsDaylight, style: MapStyleChoice(stored: mapStyleRaw)) { DaylightOverlay(daylight.shading) }
                 // The model hands over the items ordered and clustered (MapKit has no z-index: later annotations draw
                 // on top, so the selected pin is last); nothing is sorted or computed here.
                 ForEach(explore.mapItems) { item in
@@ -90,6 +97,7 @@ struct ExploreMapPane: View {
                 }
             }
             .mapStyle(MapStyleChoice(stored: mapStyleRaw).mapStyle())
+            .daylightClock(daylight)
             .mapControls { MapScaleView() }
             .safeAreaPadding(insets)
             .overlay(alignment: .topTrailing) {
@@ -185,7 +193,7 @@ struct ExploreMapPane: View {
     }
 
     private func apply(_ request: CameraRequest, animated: Bool) {
-        guard request.id != appliedRequest else { return }
+        guard request.id != appliedRequest, AppLaunch.mapCamera == nil else { return }
         appliedRequest = request.id
         let target: GeoRegion
         switch request.kind {

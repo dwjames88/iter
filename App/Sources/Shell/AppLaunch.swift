@@ -27,6 +27,9 @@ import IterFeatures
 /// the flag the guide opens once on a first launch (not under tests, a smoke run or `-IterInMemoryStore YES`).
 /// `-IterWindowSize WxH` (for example `1280x820`, `960x652`, or `min` for the window minimum) sets the main window's
 /// content size once at launch; absent, the window opens as usual. Sizes below the minimum are raised to it.
+/// `-IterMapCamera lat,lon,distanceKm` (for example `20,10,14000` for the whole globe) puts the Explore map's camera there
+/// and keeps it there (the model's fit requests are ignored), for screenshots of the globe. `-IterDaylightDate <ISO 8601>`
+/// (for example `2026-03-20T12:00:00Z`) shades day and night for that moment instead of now.
 enum AppLaunch {
     static let log = Logger(subsystem: "com.dwjames.iter", category: "app")
 
@@ -104,6 +107,17 @@ enum AppLaunch {
     static var tripDay: Int? {
         guard let day = Int(UserDefaults.standard.string(forKey: "IterTripDay") ?? ""), day >= 1 else { return nil }
         return day - 1
+    }
+    /// `-IterMapCamera lat,lon,distanceKm`: see the type's comment.
+    static var mapCamera: (coordinate: Coordinate, distanceMetres: Double)? {
+        guard let raw = UserDefaults.standard.string(forKey: "IterMapCamera") else { return nil }
+        let p = raw.split(separator: ",").compactMap { Double($0.trimmingCharacters(in: .whitespaces)) }
+        guard p.count == 3, p[2] > 0 else { return nil }
+        return (Coordinate(latitude: p[0], longitude: p[1]), p[2] * 1000)
+    }
+    /// `-IterDaylightDate <ISO 8601>`: the moment the maps shade as night and day. Absent, now.
+    static var daylightDate: Date? {
+        UserDefaults.standard.string(forKey: "IterDaylightDate").flatMap { try? Date($0, strategy: .iso8601) }
     }
     /// `-IterShowLayoutGrid YES`: the layout grid overlay is on (same key as Debug ▸ Show Layout Grid). For screenshots.
     static var showLayoutGrid: Bool { UserDefaults.standard.bool(forKey: "IterShowLayoutGrid") }

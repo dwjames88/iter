@@ -22,6 +22,8 @@ struct ExploreMapLayer: View {
     @State private var appliedRequest = 0
     @State private var mapSize = CGSize.zero
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
+    @State private var daylight = DaylightClock()
+    @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
 
     init(explore: ExploreModel, bottomInset: CGFloat = 0, leadingInset: CGFloat = 0, onPinSelected: @escaping () -> Void = {}) {
         self.explore = explore
@@ -88,10 +90,11 @@ struct ExploreMapLayer: View {
         })
     }
 
-    private var style: MapStyle { MapStyleChoice(stored: mapStyleRaw).mapStyle(elevation: .realistic) }
+    private var style: MapStyle { MapStyleChoice(stored: mapStyleRaw).mapStyle() }
 
     private var liveMap: some View {
-        Map(position: $position, selection: mapSelection) {
+        Map(position: $position, bounds: .globe, selection: mapSelection) {
+            if daylight.isShown(isOn: showsDaylight, style: MapStyleChoice(stored: mapStyleRaw)) { DaylightOverlay(daylight.shading) }
             ForEach(explore.mapItems) { item in
                 switch item {
                 case .pin(let pin): pinAnnotation(pin)
@@ -110,6 +113,7 @@ struct ExploreMapLayer: View {
             }
         }
         .mapStyle(style)
+        .daylightClock(daylight)
         .mapControls { MapCompass() }
         .safeAreaPadding(.bottom, bottomInset)
         .safeAreaPadding(.leading, leadingInset)

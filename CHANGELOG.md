@@ -9,6 +9,7 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 - **Licensing groundwork**: Iter can now check a licence key with Lemon Squeezy, keep it in the Keychain and work for 14 days offline. It is hidden and switched off, so nothing changes for anyone: Iter is still free, and nothing asks for a key.
 
 ### Changed
+- **Maps show terrain and a globe, and the day/night line**: every map now draws with realistic elevation, so Satellite and Hybrid zoom out to Apple Maps' 3D globe (with its own night side and city lights). Standard stays a flat map at world scale. Zoomed out beyond about 2,000 km, a faint day/night line with two twilight bands is drawn on the map for the current time. Turn it off with **Show Daylight** in the map style menu (or View ▸ Map Style).
 - **Search always looks the text up first**: Return in Explore's search field now always searches your places and Apple Maps, so a long place name such as "Great Smoky Mountains National Park" finds the park instead of going to Ask Iter. When the text reads like a request ("foggy forest near Portland for sunrise", a question, or a phrase starting with "find" or "show me"), an **Ask Iter** suggestion sits above the results; choose it to ask.
 
 ### Fixed
