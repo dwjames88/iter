@@ -5,7 +5,7 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// Locations on iOS (all, or one folder): a chip row of folders, a small collapsible map of the spots, then the list of
+/// Locations on iOS (all, or one folder): a Folders section of rows (count, pin mark, drop target), a small collapsible map of the spots, then the list of
 /// saved and own places. Swipe to unsave or delete (undoable through the store), context menu for the rest.
 struct LocationsScreen: View {
     let folderID: UUID?
@@ -17,24 +17,11 @@ struct LocationsScreen: View {
     @State private var filter: SavedFilter = .all
     @State private var editing: PlaceRecord?
     @State private var pendingDelete: PlaceRecord?
-    @State private var folderPrompt: FolderPrompt?
-    @State private var folderName = ""
-    @State private var confirmDeleteFolder = false
+    @State private var folderPrompt: FolderNameRequest?
+    @State private var folderToDelete: FolderRecord?
     @AppStorage("IterLocationsMapShown") private var mapShown = true
     @Environment(\.isInFloatingSheet) private var isInFloatingSheet
     @Environment(PhoneBackdrop.self) private var backdrop: PhoneBackdrop?
-
-    /// What the single folder-name alert is doing.
-    private enum FolderPrompt: Identifiable {
-        case new(parent: UUID?, filing: UUID?)
-        case rename(UUID)
-        var id: String {
-            switch self {
-            case .new(let parent, let filing): "new-\(parent?.uuidString ?? "")-\(filing?.uuidString ?? "")"
-            case .rename(let id): "rename-\(id)"
-            }
-        }
-    }
 
     private var store: IterStore { model.store }
     private var folder: FolderRecord? { folderID.flatMap { store.folder(id: $0) } }
@@ -44,10 +31,27 @@ struct LocationsScreen: View {
         let all = items
         let shown = SavedArranger.arrange(all, query: query, filter: filter, sort: sort)
         List {
-            FolderChips(folderID: folderID, onNew: { folderPrompt = .new(parent: nil, filing: nil) })
-                .listRowInsets(EdgeInsets())
-                .listRowBackground(Color.clear)
-                .listRowSeparator(.hidden)
+            if !folders.isEmpty {
+                Section {
+                    ForEach(folders, id: \.id) { sub in
+                        LocationFolderRow(folder: sub, rename: { folderPrompt = .rename(sub.id) }, delete: { folderToDelete = sub })
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) { folderToDelete = sub } label: { Label(String(localized: "Delete", comment: "Swipe action"), systemImage: "trash") }
+                                Button { folderPrompt = .rename(sub.id) } label: { Label(String(localized: "Rename", comment: "Swipe action"), systemImage: "pencil") }
+                                    .tint(IterColor.textSecondary)
+                            }
+                            .swipeActions(edge: .leading) {
+                                Button { store.setPinned(sub, !sub.isPinned) } label: {
+                                    Label(sub.isPinned ? String(localized: "Unpin", comment: "Swipe action") : String(localized: "Pin", comment: "Swipe action"),
+                                          systemImage: sub.isPinned ? "pin.slash" : "pin")
+                                }
+                                .tint(IterColor.accent)
+                            }
+                    }
+                } header: {
+                    Text("Folders", comment: "Locations section header")
+                }
+            }
             if !all.isEmpty {
                 HStack {
                     Text("\(shown.count) spots", comment: "Locations count header")
@@ -88,25 +92,16 @@ struct LocationsScreen: View {
         .scrollContentBackground(.hidden)
         .screenBackground()
         .safeAreaInset(edge: .top, spacing: 0) { WeatherStatusBanner(status: model.weatherStatus) }
-        .overlay { if all.isEmpty { empty } }
+        .overlay { if all.isEmpty && folders.isEmpty { empty } }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.large)
         .searchable(text: $query, prompt: Text("Search locations", comment: "Search field prompt"))
         .toolbar { toolbar }
         .sheet(item: $editing) { record in SpotEditorSheet(mode: .edit(record)) }
-        .alert(promptTitle, isPresented: Binding(get: { folderPrompt != nil }, set: { if !$0 { folderPrompt = nil } }), presenting: folderPrompt) { prompt in
-            TextField(String(localized: "Name", comment: "Folder name field"), text: $folderName)
-            Button(String(localized: "Cancel", comment: "Button"), role: .cancel) {}
-            Button(String(localized: "Save", comment: "Button")) { commit(prompt) }
-        }
-        .confirmationDialog(String(localized: "Delete this folder?", comment: "Dialog title"), isPresented: $confirmDeleteFolder, titleVisibility: .visible) {
-            Button(String(localized: "Delete Folder", comment: "Button"), role: .destructive) {
-                if let folder {
-                    navigation.show(.locations)
-                    store.deleteFolder(folder)
-                }
-            }
-        } message: {
+        .locationFolderNamePrompt($folderPrompt)
+        .confirmationDialog(String(localized: "Delete this folder?", comment: "Dialog title"), isPresented: Binding(get: { folderToDelete != nil }, set: { if !$0 { folderToDelete = nil } }), titleVisibility: .visible, presenting: folderToDelete) { target in
+            Button(String(localized: "Delete Folder", comment: "Button"), role: .destructive) { deleteFolder(target) }
+        } message: { _ in
             Text("The spots inside stay saved. Only the folder goes.", comment: "Dialog message: deleting a locations folder")
         }
         .confirmationDialog(LightText.deleteTitle(pendingDelete?.name ?? ""), isPresented: Binding(get: { pendingDelete != nil }, set: { if !$0 { pendingDelete = nil } }),
@@ -115,13 +110,22 @@ struct LocationsScreen: View {
         } message: { record in
             Text(LightText.deleteMessage(stops: record.stops?.count ?? 0))
         }
-        .onChange(of: folderPrompt?.id) { _, _ in
-            switch folderPrompt {
-            case .rename(let id): folderName = store.folder(id: id)?.name ?? ""
-            case .new: folderName = ""
-            case nil: break
-            }
-        }
+        .onChange(of: navigation.newFolderRequest) { takeNewFolderRequest() }
+        .onAppear { takeNewFolderRequest() }
+    }
+
+    private var folders: [FolderRecord] { _ = store.revision; return locationFolders(in: folder, store: store) }
+
+    private func takeNewFolderRequest() {
+        guard navigation.newFolderRequest == .locations else { return }
+        navigation.newFolderRequest = nil
+        folderPrompt = .new(filing: [])
+    }
+
+    private func deleteFolder(_ target: FolderRecord) {
+        folderToDelete = nil
+        if navigation.selection == .locationFolder(target.id) { navigation.selection = target.parent.map { .locationFolder($0.id) } ?? .locations }
+        store.deleteFolder(target)
     }
 
     // MARK: Data
@@ -150,46 +154,24 @@ struct LocationsScreen: View {
                     ForEach(SavedFilter.allCases, id: \.self) { (option: SavedFilter) in Text(LightText.name(option)).tag(option) }
                 } label: { Text("Show", comment: "Menu") }
                 Divider()
-                Button { folderPrompt = .new(parent: nil, filing: nil) } label: {
+                Button { folderPrompt = .new(filing: []) } label: {
                     Label(String(localized: "New Folder", comment: "Menu item"), systemImage: "folder.badge.plus")
                 }
                 if let folder {
-                    if folder.parent == nil {
-                        Button { folderPrompt = .new(parent: folder.id, filing: nil) } label: {
-                            Label(String(localized: "New Folder Inside", comment: "Menu item"), systemImage: "folder.badge.plus")
-                        }
+                    Button { store.setPinned(folder, !folder.isPinned) } label: {
+                        Label(folder.isPinned ? String(localized: "Unpin from Sidebar", comment: "Menu item") : String(localized: "Pin to Sidebar", comment: "Menu item"),
+                              systemImage: folder.isPinned ? "pin.slash" : "pin")
                     }
                     Button { folderPrompt = .rename(folder.id) } label: {
                         Label(String(localized: "Rename Folder", comment: "Menu item"), systemImage: "pencil")
                     }
-                    Button(role: .destructive) { confirmDeleteFolder = true } label: {
+                    Button(role: .destructive) { folderToDelete = folder } label: {
                         Label(String(localized: "Delete Folder", comment: "Menu item"), systemImage: "trash")
                     }
                 }
             } label: {
                 Label(String(localized: "More", comment: "Toolbar button"), systemImage: "ellipsis.circle")
             }
-        }
-    }
-
-    private var promptTitle: String {
-        switch folderPrompt {
-        case .rename: String(localized: "Rename folder", comment: "Alert title")
-        default: String(localized: "New folder", comment: "Alert title")
-        }
-    }
-
-    private func commit(_ prompt: FolderPrompt) {
-        guard let name = LibraryNaming.cleanedName(folderName) else { return }
-        switch prompt {
-        case .new(let parentID, let filingID):
-            let parent = parentID.flatMap { store.folder(id: $0) }
-            let siblings = parent.map { store.subfolders(of: $0) } ?? store.folders(kind: .locations)
-            let unique = LibraryNaming.uniqueName(name, among: siblings.map(\.name))
-            let places = filingID.flatMap { store.place(id: $0) }.map { [$0] } ?? []
-            _ = store.createFolder(name: unique, kind: .locations, parent: parent, places: places)
-        case .rename(let id):
-            if let folder = store.folder(id: id) { store.renameFolder(folder, to: name) }
         }
     }
 
@@ -213,6 +195,7 @@ struct LocationsScreen: View {
                 }
             }
             .contextMenu { menu(for: item) }
+            .draggable(LibraryDragItem.place(item.id))
     }
 
     @ViewBuilder private func menu(for item: SavedItem) -> some View {
@@ -223,7 +206,8 @@ struct LocationsScreen: View {
             MoveToFolderMenu(kind: .locations, currentFolderID: place.folder?.id, inNoFolder: place.folder == nil) { target in
                 store.movePlaces([place], to: target, index: nil)
             }
-            Button { folderPrompt = .new(parent: nil, filing: place.id) } label: {
+            PinLocationsButton(places: [place])
+            Button { folderPrompt = .new(filing: [place.id]) } label: {
                 Label(String(localized: "New Folder with Spot", comment: "Context menu"), systemImage: "folder.badge.plus")
             }
             if folderID != nil {
@@ -335,54 +319,6 @@ private struct LocationRow: View {
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isButton)
     }
-}
-
-// MARK: - Chips
-
-/// All, then each root folder; the current folder (or the root of the current subfolder) is filled. A trailing dashed chip makes a folder.
-private struct FolderChips: View {
-    @Environment(AppModel.self) private var model
-    @Environment(AppNavigation.self) private var navigation
-    let folderID: UUID?
-    let onNew: () -> Void
-
-    var body: some View {
-        let _ = model.store.revision
-        let roots = model.store.folders(kind: .locations)
-        let current = folderID.flatMap { model.store.folder(id: $0) }
-        let selectedRoot = current?.parent?.id ?? current?.id
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: IterSpace.sm) {
-                chip(String(localized: "All", comment: "Locations chip: every spot"), symbol: nil, selected: folderID == nil) {
-                    navigation.show(.locations)
-                }
-                ForEach(roots, id: \.id) { root in
-                    chip(root.name, symbol: "folder", selected: selectedRoot == root.id && current?.parent == nil) {
-                        navigation.show(.locationFolder(root.id))
-                    }
-                    if selectedRoot == root.id {
-                        ForEach(model.store.subfolders(of: root), id: \.id) { sub in
-                            chip(sub.name, symbol: "folder", selected: sub.id == folderID) {
-                                navigation.show(.locationFolder(sub.id))
-                            }
-                        }
-                    }
-                }
-                Button(action: onNew) {
-                    Label(String(localized: "New Folder", comment: "Chip"), systemImage: "plus")
-                }
-                .tint(.secondary)
-            }
-            .filterChipStyle()
-            .padding(.horizontal, IterSpace.lg)
-            .padding(.vertical, IterSpace.xs)
-        }
-    }
-
-    private func chip(_ title: String, symbol: String?, selected: Bool, action: @escaping () -> Void) -> some View {
-        FilterChip(title: title, symbol: symbol, isOn: selected, action: action)
-    }
-
 }
 
 // MARK: - Map

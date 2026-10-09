@@ -9,7 +9,7 @@ public enum StoreAction: String, Sendable, CaseIterable {
     case createTrip, createTripFromTemplate, renameTrip, setTripNotes, setDates, duplicateTrip, deleteTrip, importTrip
     case addStop, removeStop, moveStop, reorderStops, setSession, setNote, setBuffer
     case setSaved, createUserSpot, updatePlace, deletePlace
-    case createFolder, newFolderWithSelection, renameFolder, deleteFolder, moveFolder, moveTrips, movePlaces, pinTrip, unpinTrip
+    case createFolder, newFolderWithSelection, renameFolder, deleteFolder, moveFolder, moveTrips, movePlaces, pinTrip, unpinTrip, pinFolder, unpinFolder, pinPlace, unpinPlace
 }
 
 /// The only way the app changes data. Main-actor, small-data (hundreds of rows), saves after every edit.
@@ -799,6 +799,42 @@ extension IterStore {
     }
 
     // MARK: Helpers
+
+    /// Pins or unpins a folder (trips or locations) to the sidebar. A pinned folder keeps its place and contents.
+    public func setPinned(_ folder: FolderRecord, _ pinned: Bool) {
+        guard folder.isPinned != pinned else { return }
+        perform(pinned ? .pinFolder : .unpinFolder) {
+            touch(folder)
+            folder.isPinned = pinned
+            folder.pinnedAt = pinned ? .now : nil
+        }
+    }
+
+    /// Pins or unpins a place to the sidebar's Locations section.
+    public func setPinned(_ place: PlaceRecord, _ pinned: Bool) {
+        guard place.isPinned != pinned else { return }
+        perform(pinned ? .pinPlace : .unpinPlace) {
+            touch(place)
+            place.isPinned = pinned
+            place.pinnedAt = pinned ? .now : nil
+        }
+    }
+
+    /// Pinned folders of a kind (root folders and subfolders), in the order they were pinned.
+    public func pinnedFolders(kind: FolderKind) -> [FolderRecord] {
+        allFolders().filter { $0.kind == kind && $0.isPinned }.sorted {
+            ($0.pinnedAt ?? .distantFuture, $0.id.uuidString) < ($1.pinnedAt ?? .distantFuture, $1.id.uuidString)
+        }
+    }
+
+    /// Pinned places that are still saved (or user spots), in the order they were pinned.
+    public func pinnedPlaces() -> [PlaceRecord] {
+        let pinned = (try? context.fetch(FetchDescriptor<PlaceRecord>(predicate: #Predicate { $0.isPinned }))) ?? []
+        let user = SpotOrigin.user
+        return pinned.filter { $0.isSaved || $0.origin == user }.sorted {
+            ($0.pinnedAt ?? .distantFuture, $0.id.uuidString) < ($1.pinnedAt ?? .distantFuture, $1.id.uuidString)
+        }
+    }
 
     private func allFolders() -> [FolderRecord] {
         (try? context.fetch(FetchDescriptor<FolderRecord>())) ?? []

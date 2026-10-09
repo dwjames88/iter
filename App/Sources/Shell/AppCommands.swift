@@ -18,7 +18,20 @@ struct AppCommands: Commands {
             .keyboardShortcut("n")
             .disabled(navigation == nil)
             Button(String(localized: "New Folder", comment: "Menu item")) {
-                if let navigation { navigation.newFolder(model: model) }
+                // Asks the current screen to make a folder: Locations when it is up, otherwise All Trips.
+                guard let navigation else { return }
+                switch navigation.selection {
+                case .locations, .locationFolder:
+                    navigation.newFolderRequest = .locations
+                case .location:
+                    navigation.show(.locations)
+                    navigation.newFolderRequest = .locations
+                case .tripFolder, .trips:
+                    navigation.newFolderRequest = .trips
+                case .trip, .explore, nil:
+                    navigation.show(.trips)
+                    navigation.newFolderRequest = .trips
+                }
             }
             .keyboardShortcut("n", modifiers: [.command, .option])
             .disabled(navigation == nil)

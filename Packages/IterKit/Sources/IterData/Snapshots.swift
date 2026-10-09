@@ -14,6 +14,8 @@ struct PlaceSnapshot: Sendable {
     var updatedAt: Date
     var folderID: UUID?
     var sortOrder: Double
+    var isPinned: Bool
+    var pinnedAt: Date?
 
     init(_ record: PlaceRecord) {
         id = record.id
@@ -25,6 +27,8 @@ struct PlaceSnapshot: Sendable {
         updatedAt = record.updatedAt
         folderID = record.folder?.id
         sortOrder = record.sortOrder
+        isPinned = record.isPinned
+        pinnedAt = record.pinnedAt
     }
 
     /// Writes the fields; the folder link is set by the store (`folderID`), once folders exist.
@@ -36,6 +40,8 @@ struct PlaceSnapshot: Sendable {
         record.createdAt = createdAt
         record.updatedAt = updatedAt
         record.sortOrder = sortOrder
+        record.isPinned = isPinned
+        record.pinnedAt = pinnedAt
     }
 }
 
@@ -117,6 +123,8 @@ struct FolderSnapshot: Sendable {
     var parentID: UUID?
     var createdAt: Date
     var updatedAt: Date
+    var isPinned: Bool
+    var pinnedAt: Date?
 
     init(_ record: FolderRecord) {
         id = record.id
@@ -126,6 +134,8 @@ struct FolderSnapshot: Sendable {
         parentID = record.parent?.id
         createdAt = record.createdAt
         updatedAt = record.updatedAt
+        isPinned = record.isPinned
+        pinnedAt = record.pinnedAt
     }
 
     /// Writes the fields; the parent link is set by the store (`parentID`), once every folder exists.
@@ -135,6 +145,8 @@ struct FolderSnapshot: Sendable {
         record.sortOrder = sortOrder
         record.createdAt = createdAt
         record.updatedAt = updatedAt
+        record.isPinned = isPinned
+        record.pinnedAt = pinnedAt
     }
 }
 

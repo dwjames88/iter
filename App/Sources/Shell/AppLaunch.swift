@@ -57,10 +57,12 @@ enum AppLaunch {
     /// `-IterSeedLibrary YES`: a pinned trip, trip folders (one with a subfolder), location folders and saved spots, for
     /// screenshots of the sidebar and Locations (see `LibrarySeed`). Honoured only with `-IterInMemoryStore YES`.
     static var seedLibrary: Bool { inMemoryStore && UserDefaults.standard.bool(forKey: "IterSeedLibrary") }
+    /// `-IterTripFolder <name>`: opens the All Trips page on the trip folder with that name. For screenshots.
+    static var tripFolderName: String? { UserDefaults.standard.string(forKey: "IterTripFolder") }
+    /// `-IterNewFolderPrompt YES`: All Trips opens its New Folder prompt at launch. For screenshots.
+    static var newFolderPrompt: Bool { UserDefaults.standard.bool(forKey: "IterNewFolderPrompt") }
     /// `-IterLocationFolder <name>`: selects the location folder with that name at launch.
     static var locationFolderName: String? { UserDefaults.standard.string(forKey: "IterLocationFolder") }
-    /// `-IterExpandFolders YES`: every sidebar folder shows expanded.
-    static var expandFolders: Bool { UserDefaults.standard.bool(forKey: "IterExpandFolders") }
     static var settingsTab: SettingsTab? {
         switch UserDefaults.standard.string(forKey: "IterSettingsTab") {
         case "general": .general

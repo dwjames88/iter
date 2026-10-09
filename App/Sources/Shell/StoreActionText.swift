@@ -33,6 +33,10 @@ enum StoreActionText {
         case .movePlaces: String(localized: "Move to Folder", comment: "Undo action name")
         case .pinTrip: String(localized: "Pin Trip", comment: "Undo action name")
         case .unpinTrip: String(localized: "Unpin Trip", comment: "Undo action name")
+        case .pinFolder: String(localized: "Pin Folder", comment: "Undo action name")
+        case .unpinFolder: String(localized: "Unpin Folder", comment: "Undo action name")
+        case .pinPlace: String(localized: "Pin Location", comment: "Undo action name")
+        case .unpinPlace: String(localized: "Unpin Location", comment: "Undo action name")
         }
     }
 }
