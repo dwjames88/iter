@@ -45,6 +45,7 @@ struct ExploreLightPanel: View {
                         VStack(alignment: .leading, spacing: IterSpace.lg) {
                             placeHeader
                             actionRow
+                            if explore.canMove(spot.id) { yourCoordinates }
                             lightSummary
                             SpotImages(spot: spot)
                                 .clipShape(RoundedRectangle(cornerRadius: PlaceActionMetrics.cornerRadius, style: .continuous))
@@ -169,6 +170,14 @@ struct ExploreLightPanel: View {
                 }
                 .placeAction()
                 .help(String(localized: "Open this location in Apple Maps", comment: "Help"))
+                if explore.canMove(spot.id) {
+                    Button { explore.beginAdjusting(spot.id) } label: {
+                        Label(String(localized: "Adjust Location", comment: "Place card: move your own spot by panning the map under a crosshair"),
+                              systemImage: "scope")
+                    }
+                    .placeAction()
+                    .help(String(localized: "Move this spot by panning the map under a crosshair", comment: "Help"))
+                }
             }
             if let added {
                 HStack(spacing: IterSpace.xs) {
@@ -193,6 +202,19 @@ struct ExploreLightPanel: View {
             try? await Task.sleep(for: .seconds(4))
             added = nil
         }
+    }
+
+    /// Your own spot's coordinates, editable in place; Return or leaving the field moves it (undo: Move Spot).
+    private var yourCoordinates: some View {
+        Form {
+            CoordinateFieldsSection(coordinate: Binding(get: { spot.coordinate }, set: { explore.move(spot.id, to: $0) }),
+                                    commitsOnSubmit: true)
+        }
+        .formStyle(.grouped)
+        .scrollDisabled(true)
+        .scrollContentBackground(.hidden)
+        .frame(height: 190)
+        .id(spot.id)
     }
 
     private func didAdd(_ result: PlaceCardActions.Added) { added = result }

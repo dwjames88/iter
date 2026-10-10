@@ -22,6 +22,9 @@ struct ExploreMapPane: View {
     /// True once the map wrote a user-positioned `position` (pan, zoom, stepper, compass) that has not settled yet.
     @State private var userInteracted = false
     @State private var appliedRequest = 0
+    @State private var dragGrab = CGSize.zero
+    /// The pane's top-left in window coordinates (the probe and nothing else reads it).
+    @State private var paneOrigin = CGPoint.zero
     @State private var paneSize = CGSize.zero
     @State private var daylight = DaylightClock()
     @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
@@ -33,7 +36,7 @@ struct ExploreMapPane: View {
         if let launch = AppLaunch.mapCamera {
             _position = State(initialValue: .camera(MapCamera(
                 centerCoordinate: CLLocationCoordinate2D(latitude: launch.coordinate.latitude, longitude: launch.coordinate.longitude),
-                distance: launch.distanceMetres)))
+                distance: launch.distanceMetres, heading: 0, pitch: launch.pitch)))
         } else if let r = explore.initialCameraRegion {
             _position = State(initialValue: .region(Self.mkRegion(r)))
         } else {
@@ -55,7 +58,12 @@ struct ExploreMapPane: View {
             }
         }
         .overlay(alignment: .top) {
-            if explore.isAddingSpot {
+            if explore.adjusting != nil {
+                AdjustLocationBanner()
+                    .padding(IterSpace.md)
+                    .padding(.top, insets.top)
+                    .padding(.leading, insets.leading)
+            } else if explore.isAddingSpot {
                 AddSpotBanner { explore.isAddingSpot = false }
                     .padding(IterSpace.md)
                     .padding(.top, insets.top)
@@ -66,6 +74,7 @@ struct ExploreMapPane: View {
             paneSize = $0
             explore.setMapViewport($0)
         }
+        .onGeometryChange(for: CGPoint.self) { $0.frame(in: .global).origin } action: { paneOrigin = $0 }
     }
 
     // MARK: Live map
@@ -83,13 +92,17 @@ struct ExploreMapPane: View {
                 // on top, so the selected pin is last); nothing is sorted or computed here.
                 ForEach(explore.mapItems) { item in
                     switch item {
-                    case .pin(let pin): pinAnnotation(pin)
+                    case .pin(let pin):
+                        if pin.id != explore.adjusting?.id {
+                            if pin.style == .selected, explore.canMove(pin.id) { pointAnnotation(pin) }
+                            pinAnnotation(pin, proxy: proxy)
+                        }
                     case .cluster(let cluster): clusterAnnotation(cluster)
                     }
                 }
                 UserLocationMapContent(location: app.location)
                 if let draft = explore.draftCoordinate {
-                    Annotation(String(localized: "New spot", comment: "Map pin label"), coordinate: clCoordinate(draft), anchor: .bottom) {
+                    Annotation(String(localized: "New spot", comment: "Map pin label"), coordinate: clCoordinate(draft), anchor: .center) {
                         Image(systemName: "mappin.circle.fill")
                             .font(.title)
                             .foregroundStyle(IterColor.mapPin)
@@ -121,6 +134,7 @@ struct ExploreMapPane: View {
             }
             .mapScope(mapScope)
             .onMapCameraChange(frequency: .onEnd) { context in
+                if AppLaunch.convertProbe { runConvertProbe(proxy, context.camera) }
                 IterPerf.once("map.firstSettle")
                 IterPerf.mark("map.settle")
                 let r = context.region
@@ -135,8 +149,36 @@ struct ExploreMapPane: View {
             .onChange(of: position) { _, new in
                 if new.positionedByUser { userInteracted = true }
             }
-            .simultaneousGesture(SpatialTapGesture().onEnded { tap in
-                guard explore.isAddingSpot, let c = proxy.convert(tap.location, from: .local) else { return }
+            .onMapCameraChange(frequency: .continuous) { context in
+                guard explore.adjusting != nil else { return }
+                let c = context.camera.centerCoordinate
+                explore.adjustCenterChanged(Coordinate(latitude: c.latitude, longitude: c.longitude))
+            }
+            .overlay {
+                if explore.adjusting != nil {
+                    // The crosshair is the spot: the map pans under it, and Done saves the coordinate beneath it.
+                    Image(systemName: "plus")
+                        .font(.system(size: IterSize.iconLarge, weight: .light))
+                        .foregroundStyle(IterColor.mapPin)
+                        .shadow(radius: IterStroke.regular)
+                        .padding(insets)
+                        .allowsHitTesting(false)
+                        .accessibilityHidden(true)
+                }
+            }
+            .onChange(of: explore.adjusting?.id) { _, id in
+                // Entering Adjust Location: bring the spot to the middle, keeping the zoom.
+                guard id != nil, let session = explore.adjusting else { return }
+                let span = explore.visibleRegion.map { MKCoordinateSpan(latitudeDelta: $0.latitudeDelta, longitudeDelta: $0.longitudeDelta) }
+                    ?? MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+                withAnimation(reduceMotion ? nil : .smooth) {
+                    position = .region(MKCoordinateRegion(center: clCoordinate(session.original), span: span))
+                }
+            }
+            .simultaneousGesture(SpatialTapGesture(coordinateSpace: .global).onEnded { tap in
+                // Window coordinates on both sides: the map's own `.local` space starts inside the safe-area padding
+                // (the floating card and toolbar), so a tap read in the pane's space landed that far down and across.
+                guard explore.isAddingSpot, let c = proxy.convert(tap.location, from: .global) else { return }
                 explore.dropPin(at: Coordinate(latitude: c.latitude, longitude: c.longitude))
             })
             .onContinuousHover { phase in
@@ -155,17 +197,95 @@ struct ExploreMapPane: View {
         }
     }
 
+    /// Debug aid (`-IterConvertProbe`): converts a grid of screen points to coordinates and back, and the camera centre to
+    /// a screen point, and logs the errors in metres and points. A wrong conversion would show as a large error.
+    private func runConvertProbe(_ proxy: MapProxy, _ camera: MapCamera) {
+        let size = paneSize
+        var worst = 0.0
+        var lines: [String] = []
+        for fx in [0.25, 0.5, 0.75] {
+            for fy in [0.25, 0.5, 0.75] {
+                let point = CGPoint(x: size.width * fx, y: size.height * fy)
+                guard let c = proxy.convert(point, from: .local) else { lines.append("(\(fx),\(fy)) nil"); continue }
+                let back = proxy.convert(c, to: .local) ?? .zero
+                let err = hypot(back.x - point.x, back.y - point.y)
+                worst = max(worst, err)
+                lines.append(String(format: "(%.2f,%.2f) -> %.5f,%.5f -> back %.2f pt off", fx, fy, c.latitude, c.longitude, err))
+            }
+        }
+        let centre = proxy.convert(camera.centerCoordinate, to: .local) ?? .zero
+        let centreGlobal = proxy.convert(camera.centerCoordinate, to: .global) ?? .zero
+        // A pane point read both ways: as a window point (what a tap reports) and as a map-local point shifted by the insets.
+        var worstSpace = 0.0
+        for (fx, fy) in [(0.3, 0.3), (0.6, 0.7), (0.9, 0.2)] {
+            let p = CGPoint(x: size.width * fx, y: size.height * fy)
+            let viaGlobal = proxy.convert(CGPoint(x: paneOrigin.x + p.x, y: paneOrigin.y + p.y), from: .global)
+            let viaLocal = proxy.convert(CGPoint(x: p.x - insets.leading, y: p.y - insets.top), from: .local)
+            if let a = viaGlobal, let b = viaLocal {
+                worstSpace = max(worstSpace, Coordinate(latitude: a.latitude, longitude: a.longitude).distance(to: Coordinate(latitude: b.latitude, longitude: b.longitude)))
+            }
+            let naive = proxy.convert(p, from: .local)
+            if let a = viaGlobal, let n = naive {
+                lines.append(String(format: "tap at pane (%.0f,%.0f): window-space coordinate vs naive-local coordinate differ by %.0f m", p.x, p.y,
+                                    Coordinate(latitude: a.latitude, longitude: a.longitude).distance(to: Coordinate(latitude: n.latitude, longitude: n.longitude))))
+            }
+        }
+        var report = String(format: "ConvertProbe: pane %.0fx%.0f pitch %.0f distance %.0f m; camera centre at (%.1f, %.1f) pt, padded-area centre (%.1f, %.1f); worst round trip %.3f pt; camera centre in window space (%.1f, %.1f), expected (%.1f, %.1f); global vs inset-shifted local differ by %.2f m\n",
+              size.width, size.height, camera.pitch, camera.distance, centre.x, centre.y,
+              insets.leading + (size.width - insets.leading - insets.trailing) / 2, insets.top + (size.height - insets.top - insets.bottom) / 2, worst,
+              centreGlobal.x, centreGlobal.y, paneOrigin.x + insets.leading + (size.width - insets.leading - insets.trailing) / 2,
+              paneOrigin.y + insets.top + (size.height - insets.top - insets.bottom) / 2, worstSpace)
+        for line in lines { report += "ConvertProbe:   \(line)\n" }
+        AppLaunch.log.notice("\(report, privacy: .public)")
+        try? report.write(toFile: NSTemporaryDirectory() + "iter-convert-probe.txt", atomically: true, encoding: .utf8)
+    }
+
     private func locate() {
         withAnimation(reduceMotion ? nil : .smooth) { position = .userLocation(fallback: position) }
     }
 
-    private func pinAnnotation(_ pin: ExplorePin) -> some MapContent {
-        let anchor: UnitPoint = pin.style == .selected ? .bottom : .center
-        return Annotation(pin.name, coordinate: clCoordinate(pin.coordinate), anchor: anchor) {
+    private func pinAnnotation(_ pin: ExplorePin, proxy: MapProxy) -> some MapContent {
+        let anchor = UnitPoint(x: MapPinAnchor.horizontal, y: MapPinAnchor.vertical(for: pin.style))
+        let movable = pin.style == .selected && !explore.isAddingSpot && explore.adjusting == nil && explore.canMove(pin.id)
+        let at = explore.displayCoordinate(for: pin.id, stored: pin.coordinate)
+        return Annotation(pin.name, coordinate: clCoordinate(at), anchor: anchor) {
             pinBody(pin)
+                .gesture(pinDrag(pin, proxy: proxy), isEnabled: movable)
+                .help(movable ? String(localized: "Drag to move your spot", comment: "Tooltip") : "")
         }
         .tag(pin.id)
         .annotationTitles(.hidden)
+    }
+
+    /// The exact point of a selected spot of yours: the pin's pointer ends here, so the place is never read off the unit.
+    private func pointAnnotation(_ pin: ExplorePin) -> some MapContent {
+        Annotation("", coordinate: clCoordinate(explore.displayCoordinate(for: pin.id, stored: pin.coordinate)), anchor: .center) {
+            Circle()
+                .fill(IterColor.mapPin)
+                .frame(width: IterSpace.sm, height: IterSpace.sm)
+                .overlay(Circle().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+        }
+        .annotationTitles(.hidden)
+    }
+
+    /// Drags your own selected spot. The point under the cursor keeps its place relative to the pin's tip, so the pin does
+    /// not jump to the cursor; the coordinate is converted from the global space the gesture reports in.
+    private func pinDrag(_ pin: ExplorePin, proxy: MapProxy) -> some Gesture {
+        DragGesture(minimumDistance: 3, coordinateSpace: .global)
+            .onChanged { value in
+                if explore.dragging == nil {
+                    guard explore.beginDrag(pin.id) else { return }
+                    let tip = proxy.convert(clCoordinate(pin.coordinate), to: .global) ?? value.startLocation
+                    dragGrab = CGSize(width: value.startLocation.x - tip.x, height: value.startLocation.y - tip.y)
+                }
+                let point = CGPoint(x: value.location.x - dragGrab.width, y: value.location.y - dragGrab.height)
+                if let c = proxy.convert(point, from: .global) {
+                    explore.drag(to: Coordinate(latitude: c.latitude, longitude: c.longitude))
+                }
+            }
+            .onEnded { _ in explore.endDrag(commit: true) }
     }
 
     private func clusterAnnotation(_ cluster: ExploreCluster) -> some MapContent {
@@ -259,6 +379,21 @@ struct SimulatedUserLocationDot: View {
             .shadow(color: .black.opacity(0.3), radius: 2, y: 1)
             .accessibilityElement()
             .accessibilityLabel(Text("Your location (simulated)", comment: "VoiceOver: the simulated user location on the map"))
+    }
+}
+
+/// The hint shown while Adjust Location is on. Done and Cancel are the window toolbar's.
+struct AdjustLocationBanner: View {
+    var body: some View {
+        HStack(spacing: IterSpace.sm) {
+            Image(systemName: "scope").foregroundStyle(IterColor.accent)
+            Text("Move the map to put the crosshair on your spot", comment: "Hint banner while Adjust Location is on")
+                .font(IterFont.subheadline)
+        }
+        .padding(.horizontal, IterSpace.md)
+        .padding(.vertical, IterSpace.sm)
+        .glassEffect(.regular, in: .capsule)
+        .accessibilityElement(children: .combine)
     }
 }
 

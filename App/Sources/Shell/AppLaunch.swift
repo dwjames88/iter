@@ -122,13 +122,17 @@ enum AppLaunch {
         guard let day = Int(UserDefaults.standard.string(forKey: "IterTripDay") ?? ""), day >= 1 else { return nil }
         return day - 1
     }
-    /// `-IterMapCamera lat,lon,distanceKm`: see the type's comment.
-    static var mapCamera: (coordinate: Coordinate, distanceMetres: Double)? {
+    /// `-IterMapCamera lat,lon,distanceKm[,pitchDegrees]`: see the type's comment.
+    static var mapCamera: (coordinate: Coordinate, distanceMetres: Double, pitch: Double)? {
         guard let raw = UserDefaults.standard.string(forKey: "IterMapCamera") else { return nil }
         let p = raw.split(separator: ",").compactMap { Double($0.trimmingCharacters(in: .whitespaces)) }
-        guard p.count == 3, p[2] > 0 else { return nil }
-        return (Coordinate(latitude: p[0], longitude: p[1]), p[2] * 1000)
+        guard p.count == 3 || p.count == 4, p[2] > 0 else { return nil }
+        return (Coordinate(latitude: p[0], longitude: p[1]), p[2] * 1000, p.count == 4 ? p[3] : 0)
     }
+    /// `-IterConvertProbe YES` (with `-IterInMemoryStore YES`): once the map settles, logs how screen points convert to
+    /// coordinates and back (`ConvertProbe:` lines in the system log), to check placement under Hybrid, realistic
+    /// elevation and pitch without a mouse.
+    static var convertProbe: Bool { inMemoryStore && UserDefaults.standard.bool(forKey: "IterConvertProbe") }
     /// `-IterDaylightDate <ISO 8601>`: the moment the maps shade as night and day. Absent, now.
     static var daylightDate: Date? {
         UserDefaults.standard.string(forKey: "IterDaylightDate").flatMap { try? Date($0, strategy: .iso8601) }

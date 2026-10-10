@@ -21,6 +21,7 @@ struct ExploreMapLayer: View {
     @State private var userInteracted = false
     @State private var appliedRequest = 0
     @State private var mapSize = CGSize.zero
+    @State private var dragGrab = CGSize.zero
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
     @State private var daylight = DaylightClock()
     @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
@@ -34,7 +35,7 @@ struct ExploreMapLayer: View {
         if let launch = AppLaunch.mapCamera {
             _position = State(initialValue: .camera(MapCamera(
                 centerCoordinate: CLLocationCoordinate2D(latitude: launch.coordinate.latitude, longitude: launch.coordinate.longitude),
-                distance: launch.distanceMetres)))
+                distance: launch.distanceMetres, heading: 0, pitch: launch.pitch)))
         } else if let r = explore.initialCameraRegion {
             _position = State(initialValue: .region(Self.mkRegion(r)))
         } else {
@@ -98,11 +99,19 @@ struct ExploreMapLayer: View {
     private var style: MapStyle { MapStyleChoice(stored: mapStyleRaw).mapStyle() }
 
     private var liveMap: some View {
+        MapReader { proxy in map(proxy) }
+    }
+
+    private func map(_ proxy: MapProxy) -> some View {
         Map(position: $position, bounds: .globe, selection: mapSelection) {
             if daylight.isShown(isOn: showsDaylight, style: MapStyleChoice(stored: mapStyleRaw)) { DaylightOverlay(daylight.shading) }
             ForEach(explore.mapItems) { item in
                 switch item {
-                case .pin(let pin): pinAnnotation(pin)
+                case .pin(let pin):
+                    if pin.id != explore.adjusting?.id {
+                        if pin.style == .selected, explore.canMove(pin.id) { pointAnnotation(pin) }
+                        pinAnnotation(pin, proxy: proxy)
+                    }
                 case .cluster(let cluster): clusterAnnotation(cluster)
                 }
             }
@@ -133,6 +142,32 @@ struct ExploreMapLayer: View {
         .onChange(of: position) { _, new in
             if new.positionedByUser { userInteracted = true }
         }
+        .onMapCameraChange(frequency: .continuous) { context in
+            guard explore.adjusting != nil else { return }
+            let c = context.camera.centerCoordinate
+            explore.adjustCenterChanged(Coordinate(latitude: c.latitude, longitude: c.longitude))
+        }
+        .overlay {
+            if explore.adjusting != nil {
+                // The crosshair is the spot: the map pans under it, and Done saves the coordinate beneath it.
+                Image(systemName: "plus")
+                    .font(.system(size: IterSize.iconLarge, weight: .light))
+                    .foregroundStyle(IterColor.mapPin)
+                    .shadow(radius: IterStroke.regular)
+                    .padding(.bottom, bottomInset)
+                    .padding(.leading, leadingInset)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+            }
+        }
+        .onChange(of: explore.adjusting?.id) { _, id in
+            guard id != nil, let session = explore.adjusting else { return }
+            let span = explore.visibleRegion.map { MKCoordinateSpan(latitudeDelta: $0.latitudeDelta, longitudeDelta: $0.longitudeDelta) }
+                ?? MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            withAnimation(reduceMotion ? nil : .smooth) {
+                position = .region(MKCoordinateRegion(center: clCoordinate(session.original), span: span))
+            }
+        }
         .onChange(of: explore.cameraRequest) { _, request in
             if let request { apply(request, animated: !reduceMotion) }
         }
@@ -141,9 +176,13 @@ struct ExploreMapLayer: View {
         }
     }
 
-    private func pinAnnotation(_ pin: ExplorePin) -> some MapContent {
-        Annotation(pin.name, coordinate: clCoordinate(pin.coordinate), anchor: pin.style == .selected ? .bottom : .center) {
+    private func pinAnnotation(_ pin: ExplorePin, proxy: MapProxy) -> some MapContent {
+        let anchor = UnitPoint(x: MapPinAnchor.horizontal, y: MapPinAnchor.vertical(for: pin.style))
+        let movable = pin.style == .selected && explore.adjusting == nil && explore.canMove(pin.id)
+        let at = explore.displayCoordinate(for: pin.id, stored: pin.coordinate)
+        return Annotation(pin.name, coordinate: clCoordinate(at), anchor: anchor) {
             ExplorePinView(pin: pin)
+                .gesture(pinDrag(pin, proxy: proxy), isEnabled: movable)
                 .contextMenu {
                     if let row = explore.row(id: pin.id) {
                         ExploreSpotMenu(spot: row.spot, day: row.day ?? LocalDay.today(in: row.spot.timeZone))
@@ -152,6 +191,36 @@ struct ExploreMapLayer: View {
         }
         .tag(pin.id)
         .annotationTitles(.hidden)
+    }
+
+    /// The exact point of a selected spot of yours: the pin's pointer ends here, so the place is never read off the unit.
+    private func pointAnnotation(_ pin: ExplorePin) -> some MapContent {
+        Annotation("", coordinate: clCoordinate(explore.displayCoordinate(for: pin.id, stored: pin.coordinate)), anchor: .center) {
+            Circle()
+                .fill(IterColor.mapPin)
+                .frame(width: IterSpace.sm, height: IterSpace.sm)
+                .overlay(Circle().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+        }
+        .annotationTitles(.hidden)
+    }
+
+    /// Drags your own selected spot; the point under the finger keeps its place relative to the pin's tip.
+    private func pinDrag(_ pin: ExplorePin, proxy: MapProxy) -> some Gesture {
+        DragGesture(minimumDistance: 3, coordinateSpace: .global)
+            .onChanged { value in
+                if explore.dragging == nil {
+                    guard explore.beginDrag(pin.id) else { return }
+                    let tip = proxy.convert(clCoordinate(pin.coordinate), to: .global) ?? value.startLocation
+                    dragGrab = CGSize(width: value.startLocation.x - tip.x, height: value.startLocation.y - tip.y)
+                }
+                let point = CGPoint(x: value.location.x - dragGrab.width, y: value.location.y - dragGrab.height)
+                if let c = proxy.convert(point, from: .global) {
+                    explore.drag(to: Coordinate(latitude: c.latitude, longitude: c.longitude))
+                }
+            }
+            .onEnded { _ in explore.endDrag(commit: true) }
     }
 
     private func clusterAnnotation(_ cluster: ExploreCluster) -> some MapContent {

@@ -41,6 +41,18 @@ public final class ExploreModel {
     public var draftCoordinate: Coordinate?
     /// Row under the pointer (list or map): its pin is emphasised.
     public var hoveredID: String?
+    /// Your own spot being dragged on the map: where it is now. Stored only on the drop.
+    public private(set) var dragging: (id: String, coordinate: Coordinate)?
+    /// Adjust Location: the map pans under a crosshair at its centre; Done saves the centre.
+    public private(set) var adjusting: AdjustLocation?
+
+    /// One Adjust Location session.
+    public struct AdjustLocation: Equatable, Sendable {
+        public var id: String
+        public var original: Coordinate
+        /// The map's centre now (the crosshair).
+        public var center: Coordinate
+    }
 
     // MARK: Outputs the view reads
 
@@ -872,6 +884,63 @@ public final class ExploreModel {
     public func dropPin(at coordinate: Coordinate) {
         guard isAddingSpot else { return }
         draftCoordinate = coordinate
+    }
+
+    // MARK: - Move your own spot
+
+    /// Only your own spots move; curated and found places are Apple's and ours.
+    public func canMove(_ id: String) -> Bool {
+        guard let uuid = UUID(uuidString: id), let place = app.store.place(id: uuid) else { return false }
+        return place.origin == .user
+    }
+
+    /// Saves a new place for one of your own spots. The coordinate is yours exactly (never a lookup's), the change is one
+    /// undo step ("Move Spot"), and the forecast for the new place is fetched.
+    public func move(_ id: String, to coordinate: Coordinate) {
+        guard canMove(id), app.store.moveSpot(id: id, to: coordinate) else { return }
+        if let row = row(id: id) { app.spotSaved(row.spot) }
+    }
+
+    /// Where to draw a pin: the drag's coordinate while it is being dragged, else the stored one.
+    public func displayCoordinate(for id: String, stored: Coordinate) -> Coordinate {
+        if let dragging, dragging.id == id { return dragging.coordinate }
+        return stored
+    }
+
+    @discardableResult
+    public func beginDrag(_ id: String) -> Bool {
+        guard canMove(id), adjusting == nil, let row = row(id: id) else { return false }
+        dragging = (id, row.spot.coordinate)
+        return true
+    }
+
+    public func drag(to coordinate: Coordinate) {
+        guard let current = dragging else { return }
+        dragging = (current.id, coordinate)
+    }
+
+    /// The drop. `commit` stores the dragged-to coordinate; otherwise the pin goes back.
+    public func endDrag(commit: Bool) {
+        guard let current = dragging else { return }
+        dragging = nil
+        if commit { move(current.id, to: current.coordinate) }
+    }
+
+    /// Adjust Location from the place card: remembers where the spot was; the view pans the map to it.
+    @discardableResult
+    public func beginAdjusting(_ id: String) -> Bool {
+        guard canMove(id), dragging == nil, let row = row(id: id) else { return false }
+        adjusting = AdjustLocation(id: id, original: row.spot.coordinate, center: row.spot.coordinate)
+        return true
+    }
+
+    public func adjustCenterChanged(_ center: Coordinate) { adjusting?.center = center }
+
+    /// Done saves the crosshair's coordinate; Cancel leaves the spot where it was.
+    public func finishAdjusting(commit: Bool) {
+        guard let session = adjusting else { return }
+        adjusting = nil
+        if commit { move(session.id, to: session.center) }
     }
 
     /// The editor closed without saving.

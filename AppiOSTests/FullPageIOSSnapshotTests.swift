@@ -179,4 +179,61 @@ private let fullPageEnabled = ProcessInfo.processInfo.environment["ITER_SNAPSHOT
             NavigationStack { ExploreSearchScreen() }
         }
     }
+
+    // MARK: Your own spot: placement
+
+    private func ownSpotExplore() -> (AppModel, ExploreModel, ExploreRow) {
+        let model = makeSampleModel()
+        let record = model.store.createUserSpot(name: "Pescadero Beach", locality: "Pescadero, CA",
+                                                coordinate: Coordinate(latitude: 37.2615, longitude: -122.4131),
+                                                timeZoneIdentifier: "America/Los_Angeles")
+        let explore = ExploreModel(app: model, searchDebounce: .zero)
+        explore.didCreate(record.spot)
+        return (model, explore, explore.row(id: record.spot.id)!)
+    }
+
+    /// The place card of your own spot: Adjust Location among the actions and the editable Latitude and Longitude.
+    @Test(.enabled(if: fullPageEnabled)) func ownSpotPlaceCard() async throws {
+        let (model, explore, row) = ownSpotExplore()
+        try await render("pin-place-card", height: 874, settle: .seconds(3), model: model, explore: explore) {
+            NavigationStack { ExplorePlaceDetail(explore: explore, row: row, usesNavigationBar: true) }
+        }
+    }
+
+    /// Adjust Location: Cancel and Done replace the bar's buttons while the map pans under the crosshair.
+    @Test(.enabled(if: fullPageEnabled)) func ownSpotAdjustLocation() async throws {
+        let (model, explore, row) = ownSpotExplore()
+        explore.beginAdjusting(row.id)
+        explore.adjustCenterChanged(Coordinate(latitude: 37.2631, longitude: -122.4102))
+        try await render("pin-adjust", height: 874, settle: .seconds(3), model: model, explore: explore) {
+            NavigationStack { ExplorePlaceDetail(explore: explore, row: row, usesNavigationBar: true) }
+        }
+    }
+
+    /// The spot editor's coordinate section, with the Paste Coordinates button.
+    @Test(.enabled(if: fullPageEnabled)) func coordinateFieldsSection() async throws {
+        let model = makeSampleModel()
+        try await render("pin-coordinate-fields", height: 480, settle: .seconds(2), model: model) {
+            CoordinateFieldsPreview()
+        }
+    }
+
+    /// The map while your own spot is dragged: the pin follows the finger, the stored place is unchanged until the drop.
+    @Test(.enabled(if: fullPageEnabled)) func ownSpotDragOnMap() async throws {
+        let (model, explore, row) = ownSpotExplore()
+        explore.select(row.id, from: .map)
+        explore.beginDrag(row.id)
+        explore.drag(to: Coordinate(latitude: 37.2641, longitude: -122.4091))
+        try await render("pin-drag-map", height: 874, settle: .seconds(5), model: model, explore: explore) {
+            ExploreMapLayer(explore: explore)
+        }
+    }
+}
+
+private struct CoordinateFieldsPreview: View {
+    @State private var coordinate = Coordinate(latitude: 37.2615, longitude: -122.4131)
+    var body: some View {
+        Form { CoordinateFieldsSection(coordinate: $coordinate) }
+            .onAppear {}
+    }
 }

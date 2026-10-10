@@ -27,6 +27,18 @@ struct ExplorePlaceDetail: View {
                 .navigationBarTitleDisplayMode(.large)
                 .navigationBarBackButtonHidden()
                 .toolbar {
+                    if explore.adjusting != nil {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button(role: .cancel) { explore.finishAdjusting(commit: false) } label: {
+                                Text("Cancel", comment: "Toolbar button: leave Adjust Location without saving")
+                            }
+                        }
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button(role: .confirm) { explore.finishAdjusting(commit: true) } label: {
+                                Text("Done", comment: "Toolbar button: save the crosshair's place as the spot's location")
+                            }
+                        }
+                    } else {
                     ToolbarItemGroup(placement: .topBarTrailing) {
                         Button { explore.selectPrevious() } label: {
                             Label(String(localized: "Previous place", comment: "VoiceOver"), systemImage: "chevron.up")
@@ -41,10 +53,41 @@ struct ExplorePlaceDetail: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(role: .close) { explore.closePanel() }
                     }
+                    }
                 }
         } else {
-            detail
+            detail.safeAreaInset(edge: .top) { if explore.adjusting != nil { adjustBar } }
         }
+    }
+
+    /// The iPad column has no navigation bar: Cancel and Done sit at the top of the panel while Adjust Location is on.
+    private var adjustBar: some View {
+        HStack {
+            Button(role: .cancel) { explore.finishAdjusting(commit: false) } label: {
+                Text("Cancel", comment: "Toolbar button: leave Adjust Location without saving")
+            }
+            .buttonStyle(.glass)
+            Spacer()
+            Button(role: .confirm) { explore.finishAdjusting(commit: true) } label: {
+                Text("Done", comment: "Toolbar button: save the crosshair's place as the spot's location")
+            }
+            .buttonStyle(.glassProminent)
+        }
+        .controlSize(.large)
+        .padding(.horizontal, IterSpace.lg)
+        .padding(.vertical, IterSpace.sm)
+    }
+
+    /// Your own spot's coordinates, editable in place; Return or leaving the field moves it (undo: Move Spot).
+    private var yourCoordinates: some View {
+        Form {
+            CoordinateFieldsSection(coordinate: Binding(get: { spot.coordinate }, set: { explore.move(spot.id, to: $0) }),
+                                    commitsOnSubmit: true)
+        }
+        .scrollDisabled(true)
+        .scrollContentBackground(.hidden)
+        .frame(height: 210)
+        .id(spot.id)
     }
 
     private var detail: some View {
@@ -67,6 +110,7 @@ struct ExplorePlaceDetail: View {
                                 .padding(.horizontal, IterSpace.lg)
                         }
                         facts.padding(.horizontal, IterSpace.lg)
+                        if explore.canMove(spot.id) { yourCoordinates }
                     }
                     SpotImages(spot: spot)
                     DetailSections(app: model, spot: spot, day: day)
@@ -206,6 +250,14 @@ struct ExplorePlaceDetail: View {
         HStack(spacing: IterSpace.sm) {
             AddToTripMenu(spot: spot)
                 .placeAction(isProminent: true)
+            if explore.canMove(spot.id) {
+                Button { explore.beginAdjusting(spot.id) } label: {
+                    // The tile is narrow: "Adjust" on it, the full name for VoiceOver.
+                    Label(String(localized: "Adjust", comment: "Place card tile: short for Adjust Location"), systemImage: "scope")
+                }
+                .placeAction()
+                .accessibilityLabel(Text("Adjust Location", comment: "VoiceOver: move your own spot by panning the map under a crosshair"))
+            }
             if spot.origin != .user {
                 let saved = model.store.revision >= 0 && model.store.isSaved(spotID: spot.id)
                 Button { model.store.setSaved(spot, !saved) } label: {

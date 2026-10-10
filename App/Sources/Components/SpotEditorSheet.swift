@@ -28,6 +28,8 @@ struct SpotEditorSheet: View {
     @State private var nameTouched = false
     @State private var localityTouched = false
     @State private var showProblems = false
+    /// Where the small map's camera is, so a typed or pasted coordinate recentres it and a drag of the map does not.
+    @State private var cameraCenter: Coordinate
     private let original: Coordinate
 
     enum LookupState: Equatable { case idle, looking, found, failed }
@@ -52,6 +54,7 @@ struct SpotEditorSheet: View {
         }
         _draft = State(initialValue: start)
         original = start.coordinate
+        _cameraCenter = State(initialValue: start.coordinate)
         _position = State(initialValue: Self.cameraPosition(start.coordinate))
         if let lookupState { _lookup = State(initialValue: lookupState) }
         else if case .create = mode { _lookup = State(initialValue: .looking) }
@@ -69,6 +72,7 @@ struct SpotEditorSheet: View {
                 .padding(.bottom, IterSpace.sm)
             Form {
                 Section { pinMap } footer: { pinFooter }
+                CoordinateFieldsSection(coordinate: $draft.coordinate)
                 Section {
                     nameField
                     TextField(text: localityBinding, prompt: Text("Park, town or region", comment: "Locality placeholder")) {
@@ -107,6 +111,9 @@ struct SpotEditorSheet: View {
         .frame(width: IterSize.listMax, height: IterSize.windowMinHeight + IterSize.listMin / 2)
         .tint(nil)
         .task(id: draft.coordinate) { await lookUp() }
+        .onChange(of: draft.coordinate) { _, new in
+            if new.distance(to: cameraCenter) > 1 { cameraCenter = new; position = Self.cameraPosition(new) }
+        }
     }
 
     // MARK: Pin
@@ -121,6 +128,7 @@ struct SpotEditorSheet: View {
                     .onMapCameraChange(frequency: .onEnd) { context in
                         let c = context.camera.centerCoordinate
                         let moved = Coordinate(latitude: c.latitude, longitude: c.longitude)
+                        cameraCenter = moved
                         if moved.distance(to: draft.coordinate) > 1 { draft.coordinate = moved }
                     }
                 // The tip of the pin is the centre of the map.
@@ -149,7 +157,7 @@ struct SpotEditorSheet: View {
 
     private var pinFooter: some View {
         HStack {
-            Text("Drag the map to move the pin.", comment: "Spot editor map hint")
+            Text("Drag the map to move the pin, or type the coordinates.", comment: "Spot editor map hint")
             Text(coordinateText).monospacedDigit()
             Spacer()
             if draft.coordinate != original {

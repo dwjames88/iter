@@ -31,6 +31,10 @@ struct PhoneShell: View {
                     .interactiveDismissDisabled()
             }
             .onAppear { explore.requestInitialCamera() }
+            .onChange(of: explore.adjusting != nil) { _, adjusting in
+                // Adjust Location: the sheet gets out of the way so the crosshair sits on the visible map.
+                if adjusting { detent = PhoneSheet.peek }
+            }
             .onChange(of: explore.showsPanel) { _, shows in
                 if shows, detent == PhoneSheet.peek { detent = .medium }
             }

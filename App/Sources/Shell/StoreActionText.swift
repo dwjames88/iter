@@ -23,6 +23,7 @@ enum StoreActionText {
         case .setSaved: String(localized: "Save Spot", comment: "Undo action name")
         case .createUserSpot: String(localized: "Add Spot", comment: "Undo action name")
         case .updatePlace: String(localized: "Edit Spot", comment: "Undo action name")
+        case .moveSpot: String(localized: "Move Spot", comment: "Undo action name")
         case .deletePlace: String(localized: "Delete Spot", comment: "Undo action name")
         case .createFolder: String(localized: "New Folder", comment: "Undo action name")
         case .newFolderWithSelection: String(localized: "New Folder with Selection", comment: "Undo action name")

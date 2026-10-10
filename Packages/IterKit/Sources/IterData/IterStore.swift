@@ -8,7 +8,7 @@ import IterCore
 public enum StoreAction: String, Sendable, CaseIterable {
     case createTrip, createTripFromTemplate, renameTrip, setTripNotes, setDates, duplicateTrip, deleteTrip, importTrip
     case addStop, removeStop, moveStop, reorderStops, setSession, setNote, setBuffer
-    case setSaved, createUserSpot, updatePlace, deletePlace
+    case setSaved, createUserSpot, updatePlace, moveSpot, deletePlace
     case createFolder, newFolderWithSelection, renameFolder, deleteFolder, moveFolder, moveTrips, movePlaces, pinTrip, unpinTrip, pinFolder, unpinFolder, pinPlace, unpinPlace
 }
 
@@ -305,6 +305,25 @@ public final class IterStore {
             if let walkInMinutes { place.walkInMinutes = walkInMinutes }
             place.updatedAt = .now
         }
+    }
+
+    /// Moves one of your own spots to `coordinate` and nothing else (drag, Adjust Location, typed or pasted coordinates).
+    /// The coordinate is the caller's, exactly: no lookup result ever replaces it. Undo is named "Move Spot".
+    public func moveSpot(_ place: PlaceRecord, to coordinate: Coordinate) {
+        guard place.origin == .user, place.coordinate != coordinate else { return }
+        perform(.moveSpot) {
+            touch(place)
+            place.coordinate = coordinate
+            place.updatedAt = .now
+        }
+    }
+
+    /// The same by spot id (the id of `PlaceRecord.spot`). False when there is no such spot of yours.
+    @discardableResult
+    public func moveSpot(id: String, to coordinate: Coordinate) -> Bool {
+        guard let uuid = UUID(uuidString: id), let place = place(id: uuid), place.origin == .user else { return false }
+        moveSpot(place, to: coordinate)
+        return true
     }
 
     /// Deletes a place and every stop that used it; undo brings all of it back.

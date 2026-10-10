@@ -74,6 +74,23 @@ private struct ExploreContent: View {
         }
         .navigationTitle(Text("Explore", comment: "Window title"))
         .toolbar(removing: .title)
+        .toolbar {
+            // Adjust Location: the window toolbar carries Cancel and Done while the map pans under the crosshair.
+            if explore.adjusting != nil {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(role: .cancel) { explore.finishAdjusting(commit: false) } label: {
+                        Text("Cancel", comment: "Toolbar button: leave Adjust Location without saving")
+                    }
+                    .keyboardShortcut(.cancelAction)
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(role: .confirm) { explore.finishAdjusting(commit: true) } label: {
+                        Text("Done", comment: "Toolbar button: save the crosshair's place as the spot's location")
+                    }
+                    .keyboardShortcut(.defaultAction)
+                }
+            }
+        }
         // The search field is the window's, in the sidebar (RootView); its text and Return reach Explore here.
         .onChange(of: navigation.searchText) { _, text in if explore.query != text { explore.query = text } }
         .onChange(of: explore.query) { _, query in if navigation.searchText != query { navigation.searchText = query } }
