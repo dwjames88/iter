@@ -45,7 +45,9 @@ struct ExploreListPanel: View {
                 .titlebarOverlaysActive(!explore.showsPanel)
             if explore.showsPanel, let row = explore.selectedRow {
                 ExploreLightPanel(explore: explore, row: row)
-                    .transition(reduceMotion ? .identity : .move(edge: .trailing).combined(with: .opacity))
+                    // Fades only: its header buttons live in a window-level view that follows the card's layout frame, and a
+                    // slide is a render offset that frame never sees (the buttons stayed outside the card, right of it).
+                    .transition(reduceMotion ? .identity : .opacity)
             }
         }
         .animation(reduceMotion ? nil : .snappy(duration: 0.2), value: explore.showsPanel)

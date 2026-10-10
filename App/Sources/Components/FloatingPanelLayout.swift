@@ -69,7 +69,7 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
     /// Apple Maps' card: 8 pt from the window's edges, its corners concentric with the window's.
     static var margin: CGFloat { IterSpace.sm }
     /// Concentric with the 32 pt corner buttons 11.5 pt in (16 + 11.5 = 27.5 pt), as Maps' card is with its buttons.
-    static var shape: RoundedRectangle { RoundedRectangle(cornerRadius: 27.5, style: .continuous) }
+    static var shape: RoundedRectangle { RoundedRectangle(cornerRadius: GlassGeometry.cardCorner, style: .continuous) }
 
     var body: some View {
         ZStack(alignment: isDocked ? .topLeading : .top) {

@@ -42,7 +42,7 @@ enum DebugScripts {
         #if canImport(AppKit)
         guard let dir = captureDir else { return }
         await pause(0.5)   // let SwiftUI settle after the state change
-        guard let window = NSApp.windows.filter({ $0.contentView != nil && $0.frame.width > 400 }).max(by: { $0.frame.width < $1.frame.width }),
+        guard let window = NSApp.windows.filter({ ($0.isVisible || $0.frame.width > 400) && $0.contentView != nil }).max(by: { $0.frame.width < $1.frame.width }),
               let view = window.contentView?.superview ?? window.contentView,
               let rep = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { say("capture \(name): no window"); return }
         view.cacheDisplay(in: view.bounds, to: rep)
@@ -54,13 +54,44 @@ enum DebugScripts {
         #endif
     }
 
+    /// `-IterCaptureAfter <seconds>`: with `-IterCaptureWindow <dir>`, writes one capture (`launch.png`) that many seconds
+    /// after launch and quits (unless `-IterScriptKeepOpen YES`). For a screenshot of a launch state, no script needed.
+    @MainActor static func runCaptureAfter() async {
+        guard AppLaunch.inMemoryStore, captureDir != nil,
+              let seconds = UserDefaults.standard.object(forKey: "IterCaptureAfter") as? Double ?? Double(UserDefaults.standard.string(forKey: "IterCaptureAfter") ?? "")
+        else { return }
+        #if canImport(AppKit)
+        if UserDefaults.standard.integer(forKey: "IterToggleSidebar") > 0 {
+            // `-IterToggleSidebar <n>`: toggles the sidebar n times before the capture, as the toolbar button does.
+            await pause(seconds / 2)
+            for _ in 0..<UserDefaults.standard.integer(forKey: "IterToggleSidebar") {
+                let window = NSApp.windows.max(by: { $0.frame.width < $1.frame.width })
+                func split(_ vc: NSViewController?) -> NSSplitViewController? {
+                    guard let vc else { return nil }
+                    if let s = vc as? NSSplitViewController { return s }
+                    return vc.children.lazy.compactMap(split).first
+                }
+                if let controller = split(window?.contentViewController) {
+                    controller.toggleSidebar(nil)
+                } else {
+                    NSApp.sendAction(#selector(NSSplitViewController.toggleSidebar(_:)), to: nil, from: nil)
+                }
+                await pause(1.5)
+            }
+        }
+        #endif
+        await pause(seconds)
+        await capture("launch")
+        finish()
+    }
+
     /// `-IterResizeScript lo,hi`: steps the window's width from lo to hi and back, one step about every 16 ms, then holds at
     /// 1100, 1280, 1440, 1600 and 1800 (those inside the range) and captures each. Layout warnings land on stderr.
     @MainActor static func runResize() async {
         #if canImport(AppKit)
         guard let range = resizeRange else { return }
         await pause(6)
-        guard let window = NSApp.windows.filter({ $0.contentView != nil && $0.frame.width > 400 }).max(by: { $0.frame.width < $1.frame.width }) else { return }
+        guard let window = NSApp.windows.filter({ $0.isVisible }).max(by: { $0.frame.width < $1.frame.width }) else { return }
         func setWidth(_ w: Double) {
             var frame = window.frame
             frame.size.width = w
@@ -75,7 +106,7 @@ enum DebugScripts {
         let start = Date()
         for w in widths { setWidth(w); await pause(0.016) }
         say("resize sweep \(widths.count) steps in \(Int(Date().timeIntervalSince(start) * 1000)) ms")
-        for w in [1000.0, 1100, 1280, 1440, 1600, 1728, 1800] where range.contains(w) {
+        for w in [1100.0, 1280, 1440, 1600, 1800] where range.contains(w) {
             setWidth(w)
             await capture("resize-\(Int(w))")
         }

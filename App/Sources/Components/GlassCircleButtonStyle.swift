@@ -5,9 +5,9 @@ import IterDesign
 /// circle with a primary glyph, as Maps' card buttons are. A custom style because the Mac's system glass style has no
 /// size between 23 and 34 pt and a `Menu` ignores it (drawing a flat circle).
 struct GlassCircleButtonStyle: ButtonStyle {
-    nonisolated static var size: CGFloat { 32 }
+    nonisolated static var size: CGFloat { GlassGeometry.cornerButton }
     /// From the card's edges, so the card's corner is concentric with the button (16 + 11.5 = 27.5 pt).
-    nonisolated static var inset: CGFloat { 11.5 }
+    nonisolated static var inset: CGFloat { GlassGeometry.cornerButtonInset }
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

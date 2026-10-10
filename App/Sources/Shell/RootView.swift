@@ -65,6 +65,7 @@ struct RootView: View {
         }
         .task { if AppLaunch.settingsTab != nil { openSettings() } }
         .task { await DebugScripts.runResize() }
+        .task { await DebugScripts.runCaptureAfter() }
         .onChange(of: undoManager) { _, new in model.store.undoManager = new }
         // A .iter file opened from Finder (or dropped on the Dock icon) lands here as a new trip.
         .handlesExternalEvents(preferring: ["*"], allowing: ["*"])
