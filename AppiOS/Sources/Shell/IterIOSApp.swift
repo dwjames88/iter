@@ -35,7 +35,7 @@ struct IterIOSApp: App {
         let throwaway = AppLaunch.inMemoryStore || AppLaunch.isRunningTests
         let packs = throwaway ? FileManager.default.temporaryDirectory.appending(path: "IterOfflinePacks-\(UUID().uuidString)", directoryHint: .isDirectory)
                               : OfflinePackStore.defaultRoot()
-        let model = AppModel.live(store: store, scout: AppLaunch.makeScout(), offlinePacks: packs)
+        let model = AppModel.live(store: store, scout: AppLaunch.makeScout(), discovery: AppLaunch.makeDiscovery(), offlinePacks: packs)
         _model = State(initialValue: model)
         if AppLaunch.inMemoryStore, let seed = AppLaunch.seedTrip {
             let trip = store.seedSampleTrip(startDay: model.today(in: .current).adding(days: 1))
