@@ -1,5 +1,6 @@
 import Foundation
 import OSLog
+import IterCore
 #if canImport(AppKit)
 import AppKit
 #endif
@@ -25,6 +26,11 @@ enum DebugScripts {
     static func say(_ text: String) {
         log.notice("\(text, privacy: .public)")
         FileHandle.standardOutput.write(Data((text + "\n").utf8))
+    }
+
+    static func milliseconds(_ d: Duration) -> Double {
+        let c = d.components
+        return Double(c.seconds) * 1000 + Double(c.attoseconds) / 1e15
     }
 
     static func pause(_ seconds: Double) async { try? await Task.sleep(for: .milliseconds(Int(seconds * 1000))) }
@@ -64,13 +70,20 @@ enum DebugScripts {
         finish()
     }
 
+    /// Every launch-switch script, side by side (one task in `RootView`).
+    @MainActor static func runAll() async {
+        async let resize: Void = runResize()
+        async let capture: Void = runCaptureAfter()
+        _ = await (resize, capture)
+    }
+
     /// `-IterResizeScript lo,hi`: steps the window's width from lo to hi and back, one step about every 16 ms, then holds at
     /// 1100, 1280, 1440, 1600 and 1800 (those inside the range) and captures each. Layout warnings land on stderr.
     @MainActor static func runResize() async {
         #if canImport(AppKit)
         guard let range = resizeRange else { return }
         await pause(6)
-        guard let window = NSApp.windows.filter({ $0.isVisible }).max(by: { $0.frame.width < $1.frame.width }) else { return }
+        guard let window = NSApp.windows.filter({ $0.contentView != nil && $0.frame.width > 400 }).max(by: { $0.frame.width < $1.frame.width }) else { return }
         func setWidth(_ w: Double) {
             var frame = window.frame
             frame.size.width = w
@@ -82,10 +95,37 @@ enum DebugScripts {
         let step = 8.0
         var widths = Array(stride(from: range.lowerBound, through: range.upperBound, by: step))
         widths += widths.reversed()
+        IterPerf.resetCounters()
         let start = Date()
-        for w in widths { setWidth(w); await pause(0.016) }
+        // Per step: `sync` is setFrame(display: true) returning (layout and display of the window); `total` adds the
+        // main queue turning twice after it, which is what the next step has to wait behind.
+        var sync = StepStats(), total = StepStats()
+        // `-IterResizeLive NO` runs the sweep as raw `setFrame` calls (no live-resize bracket), the way the script used to.
+        let live = UserDefaults.standard.object(forKey: "IterResizeLive") == nil || UserDefaults.standard.bool(forKey: "IterResizeLive")
+        if live { NotificationCenter.default.post(name: NSWindow.willStartLiveResizeNotification, object: window) }
+        for w in widths {
+            let t0 = ContinuousClock.now
+            setWidth(w)
+            let t1 = ContinuousClock.now
+            await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
+                DispatchQueue.main.async { DispatchQueue.main.async { c.resume() } }
+            }
+            let t2 = ContinuousClock.now
+            sync.record(Self.milliseconds(t1 - t0)); total.record(Self.milliseconds(t2 - t0))
+            await pause(0.016)
+        }
+        if live {
+            NotificationCenter.default.post(name: NSWindow.didEndLiveResizeNotification, object: window)
+            await pause(0.5)
+        }
+        say("resize live=\(live)")
         say("resize sweep \(widths.count) steps in \(Int(Date().timeIntervalSince(start) * 1000)) ms")
-        for w in [1100.0, 1280, 1440, 1600, 1800] where range.contains(w) {
+        say("resize step sync \(sync.summary)")
+        say("resize step total \(total.summary)")
+        say("resize counters \(IterPerf.counterValues().sorted { $0.key < $1.key }.map { "\($0.key)=\($0.value)" }.joined(separator: " "))")
+        IterPerf.log.notice("perf resize step sync \(sync.summary, privacy: .public)")
+        IterPerf.log.notice("perf resize step total \(total.summary, privacy: .public)")
+        for w in [1000.0, 1100, 1280, 1440, 1600, 1728, 1800] where range.contains(w) {
             setWidth(w)
             await capture("resize-\(Int(w))")
         }

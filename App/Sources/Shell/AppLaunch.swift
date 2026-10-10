@@ -197,7 +197,11 @@ struct MainWindowConfigurator: NSViewRepresentable {
     final class Coordinator {
         var appliedLaunchSize = false
         var observer: NSObjectProtocol?
-        deinit { if let observer { NotificationCenter.default.removeObserver(observer) } }
+        var liveObservers: [NSObjectProtocol] = []
+        deinit {
+            if let observer { NotificationCenter.default.removeObserver(observer) }
+            for o in liveObservers { NotificationCenter.default.removeObserver(o) }
+        }
     }
     func makeCoordinator() -> Coordinator { Coordinator() }
 
@@ -223,6 +227,15 @@ struct MainWindowConfigurator: NSViewRepresentable {
                     MainActor.assumeIsolated { publish() }
                 }
                 publish()
+                // The live-resize flag (see `LiveResize`): layout that is costly per step waits for the end.
+                coordinator.liveObservers = [
+                    NotificationCenter.default.addObserver(forName: NSWindow.willStartLiveResizeNotification, object: window, queue: .main) { _ in
+                        MainActor.assumeIsolated { LiveResize.shared.begin() }
+                    },
+                    NotificationCenter.default.addObserver(forName: NSWindow.didEndLiveResizeNotification, object: window, queue: .main) { _ in
+                        MainActor.assumeIsolated { LiveResize.shared.end() }
+                    },
+                ]
             }
             guard !coordinator.appliedLaunchSize, let size = AppLaunch.windowSize else { return }
             coordinator.appliedLaunchSize = true

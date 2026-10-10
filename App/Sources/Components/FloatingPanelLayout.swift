@@ -33,6 +33,10 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
     @State private var measure = Measure()
     /// The planner's mode in use, kept for the hysteresis at the thresholds.
     @State private var plannerMode: PlannerCardLayout.Mode?
+    /// The newest measure while a live resize holds the card as it is (plain storage; nothing observes it).
+    @State private var held = Held()
+    private final class Held { var measure: Measure? }
+    private let liveResize = LiveResize.shared
 
     private var totalWidth: CGFloat { measure.detail }
 
@@ -65,6 +69,15 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
     private var mapInsets: EdgeInsets {
         if isDocked { return EdgeInsets(top: topInset, leading: width + 2 * Self.margin, bottom: 0, trailing: 0) }
         return EdgeInsets(top: topInset, leading: 0, bottom: 0, trailing: width + (totalWidth - width) / 2 + Self.margin)
+    }
+
+    private func apply(_ new: Measure) {
+        guard new != measure else { return }
+        measure = new
+        if placement == .planner {
+            let mode = PlannerCardLayout.mode(windowWidth: new.window, previous: plannerMode)
+            if mode != plannerMode { plannerMode = mode }
+        }
     }
 
     /// Apple Maps' card: 8 pt from the window's edges, its corners concentric with the window's.
@@ -102,11 +115,21 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
             let frame = proxy.frame(in: .global)
             return Measure(window: step(frame.maxX), detail: step(proxy.size.width), leading: frame.minX < 1 ? 0 : 1)
         } action: { new in
-            measure = new
-            if placement == .planner {
-                let mode = PlannerCardLayout.mode(windowWidth: new.window, previous: plannerMode)
-                if mode != plannerMode { plannerMode = mode }
+            // While the window is being dragged the card keeps its width and mode (so the list, the header and the map's
+            // safe area are not laid out at every step; the card may overlap the map more for a moment). The newest
+            // measure is applied once, with a short animation, when the drag ends. Only the planner holds: its width
+            // follows the window all the way.
+            if placement == .planner, liveResize.isActive, measure.window > 0 {
+                held.measure = new
+                return
             }
+            apply(new)
+        }
+        .onChange(of: liveResize.isActive) { _, active in
+            guard !active, let latest = held.measure else { return }
+            held.measure = nil
+            IterPerf.count("panel.resizeApplied")
+            withAnimation(.smooth(duration: 0.25)) { apply(latest) }
         }
         // As in Maps, the map runs under the toolbar with no bar or edge of its own.
         .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
