@@ -14,6 +14,10 @@ Iter is a native macOS 26 app. Its promise: **"Be in the right place when the li
 - **What the snapshots cannot show** is listed in [Not in the snapshots](#not-in-the-snapshots). Read it before trusting a blank area.
 - "Light mode" and "dark mode" are the system appearances. The sidebar, toolbar, Settings and sheets keep system colours; what the app draws itself uses First Light paper and ink (see "Where First Light stops" in TOKENS.md).
 
+## Figma
+
+The Figma file [Iter Design System](https://www.figma.com/design/fn8KkcDxg5hm251OYjzoMn) holds the foundations to build components on. The **Foundations** page has the variables from `tokens.json` (Primitives, Color/Light and Color/Dark, Spacing, Radius, Size, Typography), the `Iter/*` text styles and the `Glass/*` effect styles, which only approximate the system material. The **Assets** page has the logos, the SF Symbols the app uses as `Symbol/<name>` components, the score ramp and the Apple Maps geometry. The **Reference** page has captioned snapshots from `snapshots/`, light and dark. The file mirrors this folder. When the two disagree, this folder and [GLASS-RULES.md](GLASS-RULES.md) win.
+
 ## Contents
 
 1. [Navigation map](#navigation-map)
