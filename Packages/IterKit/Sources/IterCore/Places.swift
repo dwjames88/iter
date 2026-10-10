@@ -120,6 +120,19 @@ public enum RegionProposalError: Error, Sendable, Equatable {
     case unsupported
 }
 
+/// What the app knows when a request starts and the scout should use: the user's "What I like to shoot" text and
+/// taste summary, applied to every prompt through `DiscoveryPrompt.prefixed`.
+public struct ScoutContext: Sendable, Equatable {
+    public var settings: DiscoverySettings
+
+    public init(settings: DiscoverySettings = DiscoverySettings()) {
+        self.settings = settings
+    }
+
+    /// No preferences: prompts are exactly the built-in ones.
+    public static let none = ScoutContext()
+}
+
 public protocol Scouting: Sendable {
     func availability() -> ScoutAvailability
     /// Runs one request. Cancellable via task cancellation. `progress` is called on arbitrary threads.
@@ -130,6 +143,11 @@ public protocol Scouting: Sendable {
     /// Names well-known photography places inside `region`. `areaName` is a locality for context, when known.
     /// The default throws `RegionProposalError.unsupported`.
     func proposePlaces(in region: GeoRegion, areaName: String?) async throws -> [RegionProposal]
+    /// `scout(_:near:progress:)` with the user's preferences. The default drops the context, so existing conformers
+    /// keep working; a conformer that builds prompts uses `context.settings` with `DiscoveryPrompt.prefixed`.
+    func scout(_ request: String, near area: GeoRegion?, context: ScoutContext, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion]
+    /// `proposePlaces(in:areaName:)` with the user's preferences. The default drops the context.
+    func proposePlaces(in region: GeoRegion, areaName: String?, context: ScoutContext) async throws -> [RegionProposal]
 }
 
 extension Scouting {
@@ -141,5 +159,13 @@ extension Scouting {
 
     public func scout(_ request: String, near area: GeoRegion?, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
         try await scout(request, progress: progress)
+    }
+
+    public func scout(_ request: String, near area: GeoRegion?, context: ScoutContext, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
+        try await scout(request, near: area, progress: progress)
+    }
+
+    public func proposePlaces(in region: GeoRegion, areaName: String?, context: ScoutContext) async throws -> [RegionProposal] {
+        try await proposePlaces(in: region, areaName: areaName)
     }
 }

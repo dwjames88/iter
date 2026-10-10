@@ -111,9 +111,10 @@ public final class ScoutModel {
         let report: @Sendable (ScoutProgress) -> Void = { [weak self] progress in
             Task { @MainActor in self?.advance(to: progress, generation: mine) }
         }
+        let context = ScoutContext(settings: app.discoverySettings())
         task = Task { [weak self] in
             do {
-                let found = try await scout.scout(text, near: area, progress: report)
+                let found = try await scout.scout(text, near: area, context: context, progress: report)
                 self?.finish(.results(found), generation: mine, found: found)
             } catch is CancellationError {
                 self?.cancelled(generation: mine)

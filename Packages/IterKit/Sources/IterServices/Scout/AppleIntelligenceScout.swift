@@ -57,11 +57,22 @@ public struct AppleIntelligenceScout: Scouting {
     The map shows the area around "the map". If the request names no place, use near: "the map".
     """
 
-    static func gatheringInstructions(hasArea: Bool) -> String {
-        hasArea ? gatheringInstructions + "\n" + mapAreaInstruction : gatheringInstructions
+    /// The gathering instructions with the user's preferences in front (see `DiscoveryPrompt.prefixed`).
+    static func gatheringInstructions(hasArea: Bool, settings: DiscoverySettings = DiscoverySettings()) -> String {
+        DiscoveryPrompt.prefixed(hasArea ? gatheringInstructions + "\n" + mapAreaInstruction : gatheringInstructions, settings: settings)
+    }
+
+    /// The picking instructions with the user's preferences in front.
+    static func pickingInstructions(settings: DiscoverySettings) -> String {
+        DiscoveryPrompt.prefixed(pickingInstructions, settings: settings)
     }
 
     public func scout(_ request: String, near area: GeoRegion?, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
+        try await scout(request, near: area, context: .none, progress: progress)
+    }
+
+    public func scout(_ request: String, near area: GeoRegion?, context: ScoutContext, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
+        let settings = context.settings
         let state = availability()
         guard state == .available else { throw ScoutError.unavailable(state) }
 
@@ -82,7 +93,7 @@ public struct AppleIntelligenceScout: Scouting {
             while true {
                 gatherAttempt += 1
                 do {
-                    let gatherer = LanguageModelSession(model: .default, tools: tools, instructions: Self.gatheringInstructions(hasArea: area != nil))
+                    let gatherer = LanguageModelSession(model: .default, tools: tools, instructions: Self.gatheringInstructions(hasArea: area != nil, settings: settings))
                     let options = gatherAttempt == 1 ? GenerationOptions(maximumResponseTokens: 40)
                                                      : GenerationOptions(samplingMode: .greedy, maximumResponseTokens: 40)
                     _ = try await gatherer.respond(to: request, options: options)
@@ -110,7 +121,7 @@ public struct AppleIntelligenceScout: Scouting {
             // Step 2: pick. Tools have run, so this is when the answer really starts being written.
             progress(.writing)
             let prompt = "Request: \(request)\n\nCandidates (id | name | details):\n" + rows.joined(separator: "\n")
-            let answer = try await Self.pick(prompt: prompt)
+            let answer = try await Self.pick(prompt: prompt, settings: settings)
 
             let inputs = answer.picks.map { ResolvedPickInput(placeID: $0.placeID, why: $0.why, window: $0.window) }
             await enrichTimeZones(for: inputs, registry: registry)
@@ -128,12 +139,12 @@ public struct AppleIntelligenceScout: Scouting {
     /// Guided generation occasionally fails to parse. Up to three attempts, each with a fresh session; retries use
     /// greedy sampling, which in live runs produced well-formed answers more reliably.
     /// Guardrail, language, context and availability errors are not retried.
-    private static func pick(prompt: String) async throws -> ScoutAnswer {
+    private static func pick(prompt: String, settings: DiscoverySettings) async throws -> ScoutAnswer {
         var attempt = 0
         while true {
             attempt += 1
             do {
-                let picker = LanguageModelSession(model: .default, instructions: pickingInstructions)
+                let picker = LanguageModelSession(model: .default, instructions: pickingInstructions(settings: settings))
                 let options = attempt == 1 ? GenerationOptions(maximumResponseTokens: 700)
                                            : GenerationOptions(samplingMode: .greedy, maximumResponseTokens: 700)
                 return try await picker.respond(to: prompt, generating: ScoutAnswer.self, options: options).content

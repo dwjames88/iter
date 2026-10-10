@@ -30,6 +30,11 @@ extension AppleIntelligenceScout {
     better than invented. Never invent a place. Use the place's proper name.
     """
 
+    /// The proposal instructions with the user's preferences in front.
+    static func proposalInstructions(settings: DiscoverySettings) -> String {
+        DiscoveryPrompt.prefixed(proposalInstructions, settings: settings)
+    }
+
     /// The prompt for one area: the box (south, west, north, east to three decimals) and the locality when known.
     static func proposalPrompt(region: GeoRegion, areaName: String?) -> String {
         func f(_ v: Double) -> String { String(format: "%.3f", v) }
@@ -46,6 +51,10 @@ extension AppleIntelligenceScout {
     /// Asks the on-device model for places in the region. Names only: the caller validates each against a search.
     /// A failed parse is retried once with greedy sampling.
     public func proposePlaces(in region: GeoRegion, areaName: String?) async throws -> [RegionProposal] {
+        try await proposePlaces(in: region, areaName: areaName, context: .none)
+    }
+
+    public func proposePlaces(in region: GeoRegion, areaName: String?, context: ScoutContext) async throws -> [RegionProposal] {
         let state = availability()
         guard state == .available else { throw ScoutError.unavailable(state) }
         let prompt = Self.proposalPrompt(region: region, areaName: areaName)
@@ -54,7 +63,7 @@ extension AppleIntelligenceScout {
             attempt += 1
             do {
                 try Task.checkCancellation()
-                let session = LanguageModelSession(model: .default, instructions: Self.proposalInstructions)
+                let session = LanguageModelSession(model: .default, instructions: Self.proposalInstructions(settings: context.settings))
                 let options = attempt == 1 ? GenerationOptions(maximumResponseTokens: 600)
                                            : GenerationOptions(samplingMode: .greedy, maximumResponseTokens: 600)
                 let answer = try await session.respond(to: prompt, generating: RegionProposalAnswer.self, options: options).content

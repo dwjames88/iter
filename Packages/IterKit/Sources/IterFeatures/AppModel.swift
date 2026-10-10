@@ -21,6 +21,11 @@ public final class AppModel {
     /// Keeps pinned trips ready offline (forecasts, drive legs, images).
     public let offline: PinnedTripDownloader
     public let scout: (any Scouting)?
+    /// Finds places for Search Here and "<feature> in <area>" searches from several sources. Nil in tests and when
+    /// the app has none; Explore then behaves as it did without it.
+    public let discovery: (any Discovering)?
+    /// The user's search choices: what they like to shoot, which sources, ordering, Google credentials.
+    public let searchSettings: SearchSettingsModel
     /// The user's location for "Near you" (inert unless the app passes a live one).
     public let location: UserLocationModel
 
@@ -50,6 +55,8 @@ public final class AppModel {
                 geocoder: any Geocoding,
                 drives: any DriveTimeProviding,
                 scout: (any Scouting)?,
+                discovery: (any Discovering)? = nil,
+                searchSettings: SearchSettingsModel? = nil,
                 weatherSetup: WeatherSetup? = nil,
                 location: UserLocationModel = UserLocationModel(),
                 onboarding: OnboardingModel? = nil,
@@ -66,6 +73,8 @@ public final class AppModel {
         let offlineDrives = (drives as? OfflineDriveTimes) ?? OfflineDriveTimes(wrapping: drives)
         self.drives = offlineDrives
         self.scout = scout
+        self.discovery = discovery
+        self.searchSettings = searchSettings ?? SearchSettingsModel(defaults: defaults, keys: InMemoryDiscoveryKeyStore())
         self.location = location
         self.onboarding = onboarding ?? OnboardingModel(defaults: defaults)
         self.defaults = defaults
@@ -97,15 +106,24 @@ public final class AppModel {
         let cache = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appending(path: "Iter/ForecastCache", directoryHint: .isDirectory)
         let setup = WeatherSetup(keyStore: KeychainAPIKeyStore(), cacheDirectory: cache)
+        let keys = KeychainDiscoveryKeyStore()
         return AppModel(store: store,
                  weather: setup.router,
                  search: MapKitPlaceSearch(),
                  geocoder: MapKitGeocoder(),
                  drives: MapKitDriveTimes(),
                  scout: scout,
+                 discovery: DiscoveryEngine.live(keys: keys),
+                 searchSettings: SearchSettingsModel(keys: keys),
                  weatherSetup: setup,
                  location: .live(),
                  offlinePackDirectory: offlinePacks)
+    }
+
+    /// The discovery settings for a request starting now: the user's choices, with the library summary when they let
+    /// it learn. Prompts, Search Here and feature searches all read this.
+    public func discoverySettings() -> DiscoverySettings {
+        searchSettings.discoverySettings(tasteSummary: searchSettings.learnsFromLibrary ? TasteSummary.make(store: store) : nil)
     }
 
     public func setSampleData(_ enabled: Bool) {
