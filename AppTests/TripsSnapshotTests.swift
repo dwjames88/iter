@@ -160,7 +160,7 @@ enum TripsFixtures {
                     case .drive(let drive):
                         DriveRowView(drive: drive, above: RailTone(drive), below: RailTone(drive))
                     case .stop(let entry):
-                        StopRowView(entry: entry, builder: builder, selection: .constant(nil), railAbove: nil, railBelow: nil)
+                        StopRowView(entry: entry, builder: builder, onRemove: { _ in }, railAbove: nil, railBelow: nil)
                     case .addStop:
                         EmptyView()
                     }
