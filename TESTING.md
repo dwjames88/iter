@@ -89,6 +89,15 @@ open build/Iter.app --args -ITER_OPENWEATHER_KEY <your key>
 
 `open` does not pass environment variables to the app, so use the launch argument with `open`. Either one overrides the Keychain, and Settings replaces the key field with a read-only row saying where the key in use came from: "From environment (ITER_OPENWEATHER_KEY)" or "From launch argument".
 
+**Render copy (screenshots, measurements, hosted tests).** Never run the real app's bundle id for these. `scripts/render.sh` builds a copy with bundle id `com.dwjames.iter.render` (build setting `ITER_BUNDLE_ID`, signed ad hoc, no hardened runtime so Debug can load `Iter.debug.dylib`) into `build/render/Iter.app`, checks the bundle id in its Info.plist, and can launch it hidden:
+
+```
+scripts/render.sh                                  # build only (add --release for a Release copy)
+scripts/render.sh --run --wait 15 --capture build/cap -- -IterSection trips -IterWindowSize 1280x820 -IterSeedLibrary YES
+```
+
+`--run` launches with `open -g -j -n` and always adds `-IterInMemoryStore YES -IterSampleDataEnabled YES`, waits `--wait N` seconds (default 20) or until the app exits, then stops only the PID it launched. `--capture DIR` adds `-IterCaptureWindow DIR` and `-IterCaptureAfter 6`, which writes one `DIR/screen.png` of whatever is showing and quits (set `-IterCaptureAfter <seconds>` yourself for a different delay; scripts write their own milestone PNGs, add `-IterScriptKeepOpen YES` to keep the app open). `cacheDisplay` leaves MapKit and some glass layers blank. `ITER_DD` sets the derived data folder (default `build/DD-render`). A copy with any bundle id other than `com.dwjames.iter` is isolated (`RenderCopy`, `AppLaunch.isRenderCopy`): it forces the in-memory store, skips the sandbox migrations, keeps API keys and the licence in memory (no Keychain prompt) and writes the forecast cache, offline packs and image cache to temp folders. `scripts/snapshots.sh` and the hosted part of `scripts/test.sh` build the same way (`ITER_DD` default `build/DD-render-tests`) and refuse to run unless the host app's bundle id is `com.dwjames.iter.render`.
+
 **When a change takes effect.** Changing anything in Settings ▸ Weather (either picker, key type, model, a cap, saving or removing a key) drops every loaded forecast, and every open screen fetches again with the new setup; saving a key also checks that provider. **Light ▸ Refresh Forecasts (⌘R)** is narrower: it re-requests only the forecasts that failed (no key, key rejected, cap reached, offline), and leaves the ones that loaded alone. The spot page has no Retry button now; ⌘R covers it.
 
 Apple Intelligence (Ask Iter and "Explain") needs Apple Intelligence switched on in **System Settings ▸ Apple Intelligence & Siri**. It is on and working on this Mac.

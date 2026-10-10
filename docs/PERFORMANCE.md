@@ -4,7 +4,7 @@ This file records how Iter is measured, what the first performance-and-correctne
 
 ## How to measure
 
-**Use a separate copy.** Measure a copy of the app that has been re-stamped with its own bundle id and signed ad hoc, so the running app and its preferences are never touched. A Debug copy needs re-signing without hardened runtime, or it cannot load `Iter.debug.dylib`. Prefer Release for anything you quote; Debug numbers are higher (window 620 ms against 245 to 278 ms) and only useful for relative changes.
+**Use a separate copy.** `scripts/render.sh` builds a copy with its own bundle id (`com.dwjames.iter.render`), signed ad hoc, so the running app and its preferences are never touched (it also keeps off the Keychain and the real store). Debug copies are built without hardened runtime so `Iter.debug.dylib` loads. Prefer Release (`scripts/render.sh --release`) for anything you quote; Debug numbers are higher (window 620 ms against 245 to 278 ms) and only useful for relative changes. Run it hidden, for example `scripts/render.sh --release --run --wait 40 -- -IterSection trip -IterSeedTrip YES -IterPerfScript YES -IterPerfQuit YES`; it adds the in-memory and sample-data switches itself and stops only the process it launched.
 
 **Launch switches** (`AppLaunch`; the full list is in ARCHITECTURE.md and TESTING.md). A repeatable run uses:
 
