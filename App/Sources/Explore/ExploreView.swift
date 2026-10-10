@@ -20,7 +20,7 @@ struct ExploreView: View {
             Color.clear.onAppear {
                 let made = ExploreModel(app: model)
                 configure?(made)
-                if let add = AppLaunch.addSpot {
+                if let add = AppLaunch.takeAddSpot(for: .explore) {
                     // The spot editor's Save, without the sheet: default zone from the coordinate, then fetch.
                     let draft = SpotDraft(coordinate: add.coordinate)
                     let record = model.store.createUserSpot(name: add.name, coordinate: draft.coordinate,

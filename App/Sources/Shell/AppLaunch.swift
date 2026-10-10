@@ -108,6 +108,15 @@ enum AppLaunch {
         guard parts.count == 3, let lat = Double(parts[0]), let lon = Double(parts[1]) else { return nil }
         return (Coordinate(latitude: lat, longitude: lon), parts[2])
     }
+    /// Whether `takeAddSpot()` has handed the spot out: the launch spot is added once, by whichever screen is built first.
+    @MainActor private static var addSpotTaken = false
+    /// `addSpot`, once per launch: the Explore and Locations screens both honour `-IterAddSpot`, and only one adds it. With
+    /// `-IterSection` it is the named screen's (a screen restored for a moment before the switch does not take it).
+    @MainActor static func takeAddSpot(for screen: SidebarItem) -> (coordinate: Coordinate, name: String)? {
+        guard !addSpotTaken, section == nil || section == screen, let add = addSpot else { return nil }
+        addSpotTaken = true
+        return add
+    }
     /// `-IterAsk <text>`: Explore puts that text to the ask engine at launch (screenshots of the Ask section).
     static var askText: String? { UserDefaults.standard.string(forKey: "IterAsk") }
     /// `-IterSearchHere YES`: Explore runs Search Here once, as soon as the map's first camera has settled. For screenshots.

@@ -52,7 +52,7 @@ struct LocationsView: View {
         .focusedSceneValue(\.editLocation, selectedRecord.map { record in EditLocationAction { navigation.editingPlace = record } })
         .locationFolderNamePrompt($folderPrompt)
         .onChange(of: navigation.newFolderRequest) { takeNewFolderRequest() }
-        .onAppear { takeNewFolderRequest() }
+        .onAppear { takeNewFolderRequest(); addLaunchSpot() }
         .task { if folderID == nil, DebugScripts.dragScript == "spot-to-folder" { await runSpotToFolderScript() } }
         .confirmationDialog(LightText.deleteTitle(pendingDelete?.name ?? ""), isPresented: Binding(get: { pendingDelete != nil }, set: { if !$0 { pendingDelete = nil } }),
                             titleVisibility: .visible, presenting: pendingDelete) { record in
@@ -60,6 +60,16 @@ struct LocationsView: View {
         } message: { record in
             Text(LightText.deleteMessage(stops: record.stops?.count ?? 0))
         }
+    }
+
+    /// `-IterAddSpot "lat,lon,Name"` (with `-IterInMemoryStore YES`): All Locations adds your own spot there, as the spot
+    /// editor's Save does, and selects it. For the pin-drag test and screenshots; the camera is the launch's (`-IterMapCamera`).
+    private func addLaunchSpot() {
+        guard folderID == nil, let add = AppLaunch.takeAddSpot(for: .locations) else { return }
+        let draft = SpotDraft(coordinate: add.coordinate)
+        let record = model.store.createUserSpot(name: add.name, coordinate: draft.coordinate, timeZoneIdentifier: draft.timeZoneIdentifier)
+        model.spotSaved(record.spot)
+        selection = [record.id]
     }
 
     // MARK: Scripted drag (`-IterDragScript spot-to-folder`)
