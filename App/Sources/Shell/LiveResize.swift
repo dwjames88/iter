@@ -1,5 +1,4 @@
 import SwiftUI
-import AppKit
 
 /// Whether the main window is in a live resize (the user is dragging its edge). One flag, written twice per drag (start and
 /// end), so views can hold what is expensive to re-lay-out while it is true and apply the new size once at the end.
