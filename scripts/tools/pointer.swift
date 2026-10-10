@@ -15,7 +15,13 @@ func number(_ i: Int, _ fallback: Double? = nil) -> Double {
 guard let mode = args.first else { _ = number(99) ; exit(2) }
 let saved = CGEvent(source: nil)!.location
 let source = CGEventSource(stateID: .hidSystemState)
+let logPath = ProcessInfo.processInfo.environment["ITER_POINTER_LOG"]
+func log(_ text: String) {
+    guard let logPath, let h = FileHandle(forWritingAtPath: logPath) ?? { FileManager.default.createFile(atPath: logPath, contents: nil); return FileHandle(forWritingAtPath: logPath) }() else { return }
+    h.seekToEndOfFile(); h.write(Data(String(format: "%.3f %@\n", Date().timeIntervalSince1970, text).utf8)); try? h.close()
+}
 func post(_ type: CGEventType, _ p: CGPoint) {
+    if type != .leftMouseDragged || Int(p.x * 10) % 7 == 0 { log("\(type.rawValue) \(Int(p.x)),\(Int(p.y))") }
     CGEvent(mouseEventSource: source, mouseType: type, mouseCursorPosition: p, mouseButton: .left)!.post(tap: .cghidEventTap)
 }
 switch mode {

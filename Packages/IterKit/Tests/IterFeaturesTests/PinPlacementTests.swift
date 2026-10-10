@@ -200,6 +200,15 @@ private struct NoSearch: PlaceSearching {
         #expect(!PinDrag.keepsSelection(writing: nil, selectedID: nil, hoveredID: nil, selectedIsMovable: false))
     }
 
+    @Test func thePointerIsOnAPinWhenItIsOverTheUnitAboveItsTip() {
+        let tip = CGPoint(x: 500, y: 400)
+        #expect(PinDrag.isOnPin(pointer: CGPoint(x: 500, y: 386), tip: tip), "the grab point")
+        #expect(PinDrag.isOnPin(pointer: tip, tip: tip))
+        #expect(!PinDrag.isOnPin(pointer: CGPoint(x: 500, y: 300), tip: tip), "empty map above the unit")
+        #expect(!PinDrag.isOnPin(pointer: CGPoint(x: 600, y: 386), tip: tip), "empty map beside it")
+        #expect(!PinDrag.isOnPin(pointer: CGPoint(x: 500, y: 420), tip: tip), "empty map below it")
+    }
+
     @Test func curatedAndFoundSpotsCannotBeDragged() async throws {
         let explore = makeExplore(weather: CountingWeather())
         #expect(!explore.canMove("mesa-arch"))

@@ -25,4 +25,11 @@ public enum PinDrag {
     public static func keepsSelection(writing newValue: String?, selectedID: String?, hoveredID: String?, selectedIsMovable: Bool) -> Bool {
         newValue == nil && selectedID != nil && hoveredID == selectedID && selectedIsMovable
     }
+
+    /// Whether a window-space point is on the body of a pin whose tip is at `tip`: the event unit stands on its tip, about
+    /// 60 pt wide and 30 pt tall. The margins cover MapKit drawing a pin a few points off `proxy.convert`'s place under pitch
+    /// and terrain (12 pt seen), and the tip dot below the tip.
+    public static func isOnPin(pointer: CGPoint, tip: CGPoint) -> Bool {
+        abs(pointer.x - tip.x) <= 36 && pointer.y >= tip.y - 48 && pointer.y <= tip.y + 12
+    }
 }

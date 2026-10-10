@@ -24,6 +24,7 @@ struct ExploreMapPane: View {
     @State private var appliedRequest = 0
     @State private var dragGrab = CGSize.zero
     @State private var dragTipBefore: CGPoint?
+    @State private var proxyBox = MapProxyBox()
     /// The pane's top-left in window coordinates (the probe and nothing else reads it).
     @State private var paneOrigin = CGPoint.zero
     @State private var paneSize = CGSize.zero
@@ -90,17 +91,36 @@ struct ExploreMapPane: View {
     private var mapSelection: Binding<String?> {
         Binding(get: { explore.selectedID },
                 set: { new in
+                    if PinDragProbe.shared.isOn { PinDragProbe.shared.event("mapSelection write \(new ?? "nil") selected \(explore.selectedID ?? "nil") hovered \(explore.hoveredID ?? "nil") pointerOnPin \(pointerIsOverSelectedPin())") }
                     guard !explore.isAddingSpot else { return }
-                    // MapKit clears a selected pin when it is clicked; for a spot of yours that click starts "click it, then
-                    // drag it", so it stays selected. A click on empty map (no pin hovered) still clears.
-                    if PinDrag.keepsSelection(writing: new, selectedID: explore.selectedID, hoveredID: explore.hoveredID,
-                                              selectedIsMovable: explore.selectedID.map { explore.canMove($0) } ?? false) { return }
+                    let movable = explore.selectedID.map { explore.canMove($0) } ?? false
+                    // MapKit clears a selected pin when it is clicked, and sometimes selects it again a moment later. For a
+                    // spot of yours that click starts "click it, then drag it", so it stays selected (and the re-selection is
+                    // the same selection, so it never pans the map). A click on empty map still clears. Hover says the pointer
+                    // is on the pin; it is not always tracked (a pitched map), so the pointer's own place is checked too.
+                    if PinDrag.keepsSelection(writing: new, selectedID: explore.selectedID,
+                                              hoveredID: pointerIsOverSelectedPin() ? explore.selectedID : explore.hoveredID,
+                                              selectedIsMovable: movable) { return }
                     explore.select(new, from: .map)
                 })
     }
 
+    /// Whether the pointer is on the selected pin's body, read in window space like the drag.
+    private func pointerIsOverSelectedPin() -> Bool {
+        guard let id = explore.selectedID, let proxy = proxyBox.proxy, let row = explore.row(id: id),
+              let window = NSApp.keyWindow ?? NSApp.mainWindow else { return false }
+        guard let tip = proxy.convert(clCoordinate(row.spot.coordinate), to: .global) else { return false }
+        // The click that caused this decides when it is recent; the pointer may have moved on since.
+        if let click = proxyBox.lastClick, ProcessInfo.processInfo.systemUptime - click.time < 1.5 {
+            return PinDrag.isOnPin(pointer: click.point, tip: tip)
+        }
+        let mouse = NSEvent.mouseLocation
+        return PinDrag.isOnPin(pointer: CGPoint(x: mouse.x - window.frame.minX, y: window.frame.maxY - mouse.y), tip: tip)
+    }
+
     private var liveMap: some View {
         MapReader { proxy in
+            let _ = proxyBox.proxy = proxy
             Map(position: $position, bounds: .globe, selection: mapSelection, scope: mapScope) {
                 if daylight.isShown(isOn: showsDaylight, style: MapStyleChoice(stored: mapStyleRaw)) { DaylightOverlay(daylight.shading) }
                 // The model hands over the items ordered and clustered (MapKit has no z-index: later annotations draw
@@ -174,6 +194,10 @@ struct ExploreMapPane: View {
                 if new.positionedByUser { userInteracted = true }
             }
             .onMapCameraChange(frequency: .continuous) { context in
+                if PinDragProbe.shared.isOn {
+                    let c = context.camera
+                    PinDragProbe.shared.event(String(format: "camera %.6f,%.6f pitch %.1f dist %.1f", c.centerCoordinate.latitude, c.centerCoordinate.longitude, c.pitch, c.distance))
+                }
                 guard explore.adjusting != nil else { return }
                 let c = context.camera.centerCoordinate
                 explore.adjustCenterChanged(Coordinate(latitude: c.latitude, longitude: c.longitude))
@@ -193,6 +217,7 @@ struct ExploreMapPane: View {
             .onChange(of: explore.selectedID) { _, selected in
                 guard PinDragProbe.shared.isOn else { return }
                 PinDragProbe.shared.note("selectedID", selected ?? "")
+                PinDragProbe.shared.event("selected \(selected ?? "-")")
                 Task { try? await Task.sleep(for: .milliseconds(600)); probeSpot(proxy) }
             }
             .onChange(of: explore.adjusting == nil) { _, _ in
@@ -222,6 +247,7 @@ struct ExploreMapPane: View {
             }
         }
         .onChange(of: explore.cameraRequest) { _, request in
+            if PinDragProbe.shared.isOn, let request { PinDragProbe.shared.event("cameraRequest \(request.id) \(request.kind)") }
             if let request { apply(request, animated: !reduceMotion) }
         }
         .onAppear {
@@ -412,6 +438,27 @@ struct ExploreMapPane: View {
     private func clCoordinate(_ c: Coordinate) -> CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude)
     }
+}
+
+/// The map's proxy for the selection binding, which is built outside the map's reader. Not state: nothing redraws on it.
+/// It also remembers where the last click began (window space, top-left origin): MapKit reports a click on a pin about half
+/// a second later, and the pointer may have moved on by then.
+@MainActor
+final class MapProxyBox {
+    var proxy: MapProxy?
+    private(set) var lastClick: (point: CGPoint, time: TimeInterval)?
+    private var monitor: Any?
+
+    init() {
+        monitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { [weak self] event in
+            if let window = event.window {
+                self?.lastClick = (CGPoint(x: event.locationInWindow.x, y: window.frame.height - event.locationInWindow.y), event.timestamp)
+            }
+            return event
+        }
+    }
+
+    isolated deinit { if let monitor { NSEvent.removeMonitor(monitor) } }
 }
 
 /// The user's position on a live map: MapKit's own blue dot for a real, permitted location; for a simulated one

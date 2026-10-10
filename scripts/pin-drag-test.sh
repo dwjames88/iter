@@ -18,6 +18,7 @@ WORK="$(mktemp -d "${TMPDIR:-/tmp}/iter-pindrag.XXXXXX")"
 TOOL="$WORK/pointer"
 CAMERAS="${ITER_PINDRAG_CAMERAS:-3 km flat=34.64,-120.61,3;80 km flat=34.64,-120.61,80;pitched=34.64,-120.61,0.5,45}"
 PID=""
+export ITER_POINTER_LOG="${ITER_POINTER_LOG:-$WORK/pointer.log}"
 cleanup() { [ -n "$PID" ] && kill "$PID" 2>/dev/null; rm -rf "$WORK"; }
 trap cleanup EXIT
 
@@ -53,12 +54,13 @@ drag_case() {
   gx="$(J '.spot.grabGlobal.x')"; gy="$(J '.spot.grabGlobal.y')"
   "$TOOL" drag "$gx" "$gy" "$(awk "BEGIN{print $gx+($dx)}")" "$(awk "BEGIN{print $gy+($dy)}")"
   if ! wait_for "(.moves | length) > $before and (.moves[-1].tipAfterWindow != null)" 8; then
-    cp "$PROBE" "${TMPDIR:-/tmp}/pindrag-fail-$case.json" 2>/dev/null; report "$name" "$case" 0 "no committed move (the pointer panned the map or never reached the pin)"; return
+    cp "$PROBE" "${TMPDIR:-/tmp}/pindrag-fail-$case.json" 2>/dev/null; cp "$ITER_POINTER_LOG" "${TMPDIR:-/tmp}/pindrag-fail-$case.pointer.log" 2>/dev/null; report "$name" "$case" 0 "no committed move (the pointer panned the map or never reached the pin)"; return
   fi
   local err tol tipdx tipdy tiperr drift pan
   err="$(J '.moves[-1].errorMetres')"
   tol="$(J '[3, .spot.metresPer2pt] | max')"
-  tiperr="$(J '.moves[-1] | ((.tipAfterWindow.x - (.tipBeforeWindow.x + .deltaX)) as $a | (.tipAfterWindow.y - (.tipBeforeWindow.y + .deltaY)) as $b | ($a*$a + $b*$b | sqrt))')"
+  # Judged against the delta this script posted (not the gesture's own report), so a wrong conversion cannot pass.
+  tiperr="$(jq -r --argjson dx "$dx" --argjson dy "$dy" '.moves[-1] | ((.tipAfterWindow.x - (.tipBeforeWindow.x + $dx)) as $a | (.tipAfterWindow.y - (.tipBeforeWindow.y + $dy)) as $b | ($a*$a + $b*$b | sqrt))' "$PROBE")"
   drift="$(jq -r --argjson lat0 "${CAM0% *}" --argjson lon0 "${CAM0#* }" '.camera as $c | (($c.lat - $lat0) * 111320) as $y | (($c.lon - $lon0) * 111320 * ($lat0 * 0.0174533 | cos)) as $x | ($x*$x + $y*$y | sqrt)' "$PROBE")"
   pan="$(awk -v d="$drift" -v t="$tol" 'BEGIN{print (d <= t) ? 1 : 0}')"
   local ok=1
