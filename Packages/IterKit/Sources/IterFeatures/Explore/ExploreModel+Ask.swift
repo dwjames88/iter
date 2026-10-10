@@ -32,7 +32,8 @@ extension ExploreModel {
         case .searching(let q), .failed(let q), .finished(let q, _): mapsBusy = q == text
         case .idle: break
         }
-        return SearchSuggestions.make(query: text, askAvailability: askAvailability).filter { suggestion in
+        return SearchSuggestions.make(query: text, askAvailability: askAvailability,
+                                      discoveryAvailable: app.discovery != nil && app.searchSettings.hasDiscoverySources).filter { suggestion in
             switch suggestion.kind {
             case .appleMaps: !mapsBusy
             case .ask: !askBusy

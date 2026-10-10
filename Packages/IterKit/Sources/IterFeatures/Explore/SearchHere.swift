@@ -11,21 +11,37 @@ import IterServices
 public enum SearchHereSource: String, Hashable, Sendable, CaseIterable {
     case maps
     case ask
+    /// Found by Discovery (OpenStreetMap, Wikipedia, Wikivoyage, Reddit, Google).
+    case discovery
 }
 
 /// One Search Here result. A place both sources found is one result with both sources.
 public struct SearchHereResult: Hashable, Sendable, Identifiable {
     public var place: PlaceResult
     public var sources: Set<SearchHereSource>
-    /// Ask's one-sentence reason, when Ask found it.
+    /// Ask's (or a source's) one-sentence reason, when there is one.
     public var note: String?
+    /// Every data source behind the result, as the app draws them: `.appleMaps` for anything Apple Maps lists
+    /// (Ask's proposals are confirmed there), plus each Discovery source that found it.
+    public var discoverySources: Set<DiscoverySourceID>
+    public var elevationMeters: Double?
+    /// Pages that mention the place (Wikipedia, Reddit, ...).
+    public var links: [URL]
+    /// What kind of place Discovery says it is; used when Apple Maps gives no category.
+    public var category: SpotCategory?
 
     public var id: String { place.id }
 
-    public init(place: PlaceResult, sources: Set<SearchHereSource>, note: String? = nil) {
+    public init(place: PlaceResult, sources: Set<SearchHereSource>, note: String? = nil,
+                discoverySources: Set<DiscoverySourceID>? = nil, elevationMeters: Double? = nil, links: [URL] = [],
+                category: SpotCategory? = nil) {
         self.place = place
         self.sources = sources
         self.note = note
+        self.discoverySources = discoverySources ?? (sources.contains(.discovery) ? [] : [.appleMaps])
+        self.elevationMeters = elevationMeters
+        self.links = links
+        self.category = category
     }
 }
 
@@ -70,11 +86,28 @@ public struct SearchHereStatus: Equatable, Sendable {
         case failed
     }
 
+    /// Where Discovery stands.
+    public enum DiscoveryOutcome: Equatable, Sendable {
+        /// Not running: no engine, or every Discovery source is switched off.
+        case off
+        case running
+        /// How many results Discovery contributed (including ones Maps or Ask also found).
+        case found(Int)
+        /// Discovery ran and found nothing inside the region.
+        case none
+        /// The run itself failed (not a single source: see `discovery`).
+        case failed
+    }
+
     public var phase: Phase = .idle
     /// The region that was searched.
     public var region: GeoRegion?
     public var maps: MapsOutcome = .pending
     public var ask: AskOutcome = .pending
+    public var discoveryOutcome: DiscoveryOutcome = .off
+    /// What happened to each Discovery source in the last run (`.unavailable(reason)`, `.needsKey`, `.disabled`, ...).
+    /// Empty until Discovery finishes. The app says which source was unavailable from this.
+    public var discovery: [DiscoverySourceID: DiscoverySourceStatus] = [:]
     /// Results listed now, after merging.
     public var total = 0
 
@@ -195,6 +228,19 @@ public enum SearchHereValidator {
 
 // MARK: - Merge
 
+extension FeatureKind {
+    /// The spot category a place of this kind gets when Apple Maps gives none.
+    public var spotCategory: SpotCategory {
+        switch self {
+        case .waterfall: .waterfall
+        case .beach, .lighthouse: .coast
+        case .canyon: .desert
+        case .bridge, .castle: .architecture
+        case .peak, .lake, .arch, .viewpoint, .glacier, .hotSpring, .cave: .landscape
+        }
+    }
+}
+
 public enum SearchHereMerge {
     /// Same name within this distance is the same place.
     public static let sameNameMeters = 500.0
@@ -208,22 +254,47 @@ public enum SearchHereMerge {
         return distance <= sameNameMeters && SearchHereNames.match(a.name, b.name)
     }
 
-    /// Maps results first in their own order, then Ask-only results in theirs. Anything outside `region` is dropped.
-    /// A place found twice keeps the first entry (Maps wins); when Ask found it too, the result lists both sources and
-    /// carries Ask's reason as its note.
-    public static func merge(maps: [PlaceResult], ask: [ValidatedProposal], region: GeoRegion) -> [SearchHereResult] {
+    /// Maps results first in their own order, then Ask-only results in theirs, then Discovery-only results in their
+    /// ranked order. Anything outside `region` is dropped. A place found twice keeps the first entry (Maps wins) and
+    /// gains the other's sources, elevation, links and reason.
+    public static func merge(maps: [PlaceResult], ask: [ValidatedProposal], discovered: [DiscoveredPlace] = [],
+                             locality: String = "", region: GeoRegion) -> [SearchHereResult] {
+        merge(maps: maps, ask: ask, discovered: discovered, locality: locality, inside: region.contains)
+    }
+
+    /// The same merge with any containment rule (a park's real outline, for a feature search).
+    public static func merge(maps: [PlaceResult], ask: [ValidatedProposal], discovered: [DiscoveredPlace] = [],
+                             locality: String = "", inside: (Coordinate) -> Bool) -> [SearchHereResult] {
         var out: [SearchHereResult] = []
-        for place in maps where region.contains(place.coordinate) {
+        for place in maps where inside(place.coordinate) {
             if out.contains(where: { isDuplicate($0.place, place) }) { continue }
             out.append(SearchHereResult(place: place, sources: [.maps]))
         }
-        for proposal in ask where region.contains(proposal.place.coordinate) {
+        for proposal in ask where inside(proposal.place.coordinate) {
             let why = proposal.why.isEmpty ? nil : proposal.why
             if let i = out.firstIndex(where: { isDuplicate($0.place, proposal.place) }) {
                 out[i].sources.insert(.ask)
                 if out[i].note == nil { out[i].note = why }
             } else {
                 out.append(SearchHereResult(place: proposal.place, sources: [.ask], note: why))
+            }
+        }
+        for found in discovered {
+            guard let coordinate = found.coordinate, inside(coordinate) else { continue }
+            let place = PlaceResult(id: "discovery-" + found.id, name: found.name, locality: locality, coordinate: coordinate,
+                                    timeZoneIdentifier: nil, pointOfInterestCategory: nil)
+            let note = found.why ?? found.snippet
+            if let i = out.firstIndex(where: { isDuplicate($0.place, place) }) {
+                out[i].sources.insert(.discovery)
+                out[i].discoverySources.formUnion(found.sources)
+                if out[i].note == nil { out[i].note = note }
+                if out[i].elevationMeters == nil { out[i].elevationMeters = found.elevationMeters }
+                if out[i].category == nil { out[i].category = found.feature?.spotCategory }
+                for link in found.links where !out[i].links.contains(link) { out[i].links.append(link) }
+            } else {
+                out.append(SearchHereResult(place: place, sources: [.discovery], note: note, discoverySources: found.sources,
+                                            elevationMeters: found.elevationMeters, links: found.links,
+                                            category: found.feature?.spotCategory))
             }
         }
         return out

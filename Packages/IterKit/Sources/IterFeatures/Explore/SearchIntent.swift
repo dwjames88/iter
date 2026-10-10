@@ -1,4 +1,5 @@
 import Foundation
+import IterCore
 
 /// Whether the text in Explore's search field reads like a request for the ask engine (the scout), or like a place
 /// name. Return always runs the local search (curated places and Apple Maps); this only decides whether an "Ask Iter"
@@ -43,6 +44,12 @@ public enum SearchIntent: Equatable, Sendable {
     static let constraintMarkers = [
         "hour of", "minutes of", "miles of", "km of", "drive from", "near me", "golden hour", "blue hour", "milky way",
     ]
+
+    /// "mountains in Glacier National Park" as a feature and an area; nil for any other text. Independent of
+    /// `classify`: such a text may also read like a request (it can show both rows).
+    public static func featureQuery(_ query: String) -> FeatureAreaQuery? {
+        FeatureAreaQuery.parse(query)
+    }
 
     public static func classify(_ query: String) -> SearchIntent {
         let folded = query

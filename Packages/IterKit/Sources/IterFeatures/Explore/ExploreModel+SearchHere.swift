@@ -57,6 +57,13 @@ extension ExploreModel {
         generation == searchHereGeneration && !Task.isCancelled
     }
 
+    /// What an extra source (Ask or Discovery) came back with. Plain values so the child tasks can return them.
+    private enum HereExtra: Sendable {
+        case ask(validated: [ValidatedProposal]?, failure: SearchHereStatus.AskOutcome?)
+        case discovery(DiscoveryReport?)
+        case cancelled
+    }
+
     private func runSearchHere(region: GeoRegion, generation: Int) async {
         // Apple Maps.
         let search = app.search
@@ -69,45 +76,108 @@ extension ExploreModel {
         searchHereStatus.maps = found.anySucceeded ? .found(mapsResults.count) : .failed
         requestInViewForecasts()
 
-        // Ask.
-        guard let scout = app.scout else { return finishWithoutAsk(.unavailable(.unavailable("No scout"))) }
-        let availability = scout.availability()
-        guard availability == .available else { return finishWithoutAsk(.unavailable(availability)) }
+        // What else runs: Ask when the device can, Discovery when there is an engine and a source switched on.
+        var scout: (any Scouting)?
+        if let candidate = app.scout {
+            let availability = candidate.availability()
+            if availability == .available { scout = candidate } else { searchHereStatus.ask = .unavailable(availability) }
+        } else {
+            searchHereStatus.ask = .unavailable(.unavailable("No scout"))
+        }
+        let settings = app.discoverySettings()
+        let discovery = app.searchSettings.hasDiscoverySources ? app.discovery : nil
+        guard scout != nil || discovery != nil else { return finishSearchHere() }
         searchHereStatus.phase = .asking
-        searchHereStatus.ask = .running
+        if scout != nil { searchHereStatus.ask = .running }
+        if discovery != nil { searchHereStatus.discoveryOutcome = .running }
 
         let areaName = (try? await app.geocoder.reverseGeocode(region.center))?.locality
         guard isCurrent(generation) else { return }
-        let proposals: [RegionProposal]
-        do {
-            proposals = try await scout.proposePlaces(in: region, areaName: (areaName?.isEmpty ?? true) ? nil : areaName)
-        } catch is CancellationError {
-            return
-        } catch {
-            guard isCurrent(generation) else { return }
-            switch error {
-            case RegionProposalError.unsupported: finishWithoutAsk(.unavailable(.unavailable("Unsupported")))
-            case ScoutError.unavailable(let reason): finishWithoutAsk(.unavailable(reason))
-            default: finishWithoutAsk(.failed)
+        let name = (areaName?.isEmpty ?? true) ? nil : areaName
+        let context = ScoutContext(settings: settings)
+        let area = DiscoveryArea(name: name, region: region, boundary: nil)
+
+        var askValidated: [ValidatedProposal] = []
+        var discovered: [DiscoveredPlace] = []
+        await withTaskGroup(of: HereExtra.self) { group in
+            if let scout {
+                group.addTask { await Self.askExtra(scout, region: region, areaName: name, context: context, search: search) }
             }
-            return
+            if let discovery {
+                group.addTask { await Self.discoveryExtra(discovery, area: area, settings: settings) }
+            }
+            for await extra in group {
+                guard isCurrent(generation) else { group.cancelAll(); return }
+                switch extra {
+                case .cancelled:
+                    group.cancelAll()
+                    return
+                case .ask(let validated, let failure):
+                    if let validated { askValidated = validated }
+                    if let failure { searchHereStatus.ask = failure }
+                case .discovery(let report):
+                    if let report {
+                        discovered = report.places
+                        searchHereStatus.discovery = report.statuses
+                    } else {
+                        searchHereStatus.discoveryOutcome = .failed
+                    }
+                }
+                let merged = SearchHereMerge.merge(maps: mapsKept, ask: askValidated, discovered: discovered,
+                                                   locality: name ?? "", region: region)
+                setSearchHereResults(merged)
+                if case .ask(let validated, _) = extra, validated != nil {
+                    let contributed = merged.filter { $0.sources.contains(.ask) }.count
+                    searchHereStatus.ask = contributed == 0 ? .none : .found(contributed)
+                }
+                if case .discovery(let report) = extra, report != nil {
+                    let contributed = merged.filter { $0.sources.contains(.discovery) }.count
+                    searchHereStatus.discoveryOutcome = contributed == 0 ? .none : .found(contributed)
+                }
+                requestInViewForecasts()
+            }
         }
         guard isCurrent(generation) else { return }
-        let validated = await SearchHereValidator.validate(proposals, in: region, search: search)
-        guard isCurrent(generation) else { return }
-        let merged = SearchHereMerge.merge(maps: mapsKept, ask: validated, region: region)
-        setSearchHereResults(merged)
-        let contributed = merged.filter { $0.sources.contains(.ask) }.count
-        searchHereStatus.ask = contributed == 0 ? .none : .found(contributed)
+        finishSearchHere()
+    }
+
+    private func finishSearchHere() {
         searchHereStatus.phase = .finished
         searchHereTask = nil
         requestInViewForecasts()
     }
 
-    private func finishWithoutAsk(_ outcome: SearchHereStatus.AskOutcome) {
-        searchHereStatus.ask = outcome
-        searchHereStatus.phase = .finished
-        searchHereTask = nil
+    /// Ask: the scout names places in the region and each name is confirmed by a search. A failure is an outcome,
+    /// not a throw; only cancellation stops the lot.
+    private nonisolated static func askExtra(_ scout: any Scouting, region: GeoRegion, areaName: String?, context: ScoutContext,
+                                             search: any PlaceSearching) async -> HereExtra {
+        let proposals: [RegionProposal]
+        do {
+            proposals = try await scout.proposePlaces(in: region, areaName: areaName, context: context)
+        } catch is CancellationError {
+            return .cancelled
+        } catch RegionProposalError.unsupported {
+            return .ask(validated: nil, failure: .unavailable(.unavailable("Unsupported")))
+        } catch ScoutError.unavailable(let reason) {
+            return .ask(validated: nil, failure: .unavailable(reason))
+        } catch {
+            return .ask(validated: nil, failure: .failed)
+        }
+        if Task.isCancelled { return .cancelled }
+        let validated = await SearchHereValidator.validate(proposals, in: region, search: search)
+        if Task.isCancelled { return .cancelled }
+        return .ask(validated: validated, failure: nil)
+    }
+
+    private nonisolated static func discoveryExtra(_ discovery: any Discovering, area: DiscoveryArea,
+                                                   settings: DiscoverySettings) async -> HereExtra {
+        do {
+            return .discovery(try await discovery.discover(area: area, feature: nil, text: nil, settings: settings))
+        } catch is CancellationError {
+            return .cancelled
+        } catch {
+            return .discovery(nil)
+        }
     }
 
     private func requestInViewForecasts() {
@@ -143,14 +213,31 @@ extension ExploreModel {
                                         && SearchHereNames.match(spot.name, place.name))
             }
             if listed { continue }
-            let spot = spot(from: place)
-            guard Self.matches(spot, source: .appleMaps, filters: filters, query: stamp.query) else { continue }
-            let event = nextEvent(for: spot, bucket: stamp.timeBucket, now: now)
-            rows.append(ExploreRow(spot: spot, source: .appleMaps, window: event?.window, day: event?.day,
-                                   isLoading: app.forecasts.isLoading(spot.coordinate),
-                                   distanceMeters: stamp.origin.map { $0.distance(to: spot.coordinate) },
-                                   note: result.note, driveSeconds: nil, viaAsk: result.sources.contains(.ask)))
+            if let row = resultRow(result, stamp: stamp, now: now) { rows.append(row) }
         }
         return rows
+    }
+
+    /// One row for a Search Here or feature-search result, scored through the normal path. Nil when the filters hide it.
+    func resultRow(_ result: SearchHereResult, stamp: DerivedStamp, now: Date) -> ExploreRow? {
+        let spot = spot(from: result)
+        guard Self.matches(spot, source: .appleMaps, filters: filters, query: stamp.query) else { return nil }
+        let event = nextEvent(for: spot, bucket: stamp.timeBucket, now: now)
+        var row = ExploreRow(spot: spot, source: .appleMaps, window: event?.window, day: event?.day,
+                             isLoading: app.forecasts.isLoading(spot.coordinate),
+                             distanceMeters: stamp.origin.map { $0.distance(to: spot.coordinate) },
+                             note: result.note, driveSeconds: nil, viaAsk: result.sources.contains(.ask))
+        row.sources = result.discoverySources
+        row.elevationMeters = result.elevationMeters
+        row.links = result.links
+        return row
+    }
+
+    /// A result as a spot: the place, Discovery's kind when Apple Maps has no category, and the elevation.
+    func spot(from result: SearchHereResult) -> Spot {
+        var spot = spot(from: result.place)
+        if result.place.pointOfInterestCategory == nil, let category = result.category { spot.category = category }
+        spot.elevationMeters = result.elevationMeters
+        return spot
     }
 }

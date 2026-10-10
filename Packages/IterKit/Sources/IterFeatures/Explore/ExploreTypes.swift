@@ -65,6 +65,13 @@ public struct ExploreRow: Identifiable, Hashable, Sendable {
     public var driveSeconds: TimeInterval?
     /// Ask found this place (In View rows only), so the app can draw it as an Ask result.
     public var viaAsk: Bool = false
+    /// Every data source that lists the place (Apple Maps, OpenStreetMap, Wikipedia, ...); empty for curated and
+    /// your own spots. `viaAsk` is the Ask marker beside it.
+    public var sources: Set<DiscoverySourceID> = []
+    /// Height above sea level in metres, when a source gave one.
+    public var elevationMeters: Double?
+    /// Pages that mention the place.
+    public var links: [URL] = []
 
     public var id: String { spot.id }
     public var score: Int? { window?.score }
@@ -79,6 +86,9 @@ public struct ExploreRow: Identifiable, Hashable, Sendable {
 public enum ExploreSectionKind: Hashable, Sendable {
     /// What Search Here found in the visible map region. First when present.
     case inView
+    /// What a typed "<feature> in <area>" search found: Discovery and Apple Maps together, inside the area. After the
+    /// Ask section when there is one, otherwise first.
+    case feature
     /// What the ask engine suggested for the request. Always first; rows come only from its grounded suggestions.
     case ask
     /// Curated and your own spots, when there is no location to group them by.
@@ -109,6 +119,42 @@ public enum ExploreSearchState: Equatable, Sendable {
         if case .searching = self { return true }
         return false
     }
+}
+
+/// Progress and outcome of a typed "<feature> in <area>" search, as facts. The app phrases them.
+public struct FeatureSearchStatus: Equatable, Sendable {
+    public enum Phase: Equatable, Sendable {
+        case idle
+        /// Looking up the area and its outline.
+        case resolvingArea
+        /// Apple Maps and Discovery are searching; results show as each finishes.
+        case searching
+        case finished
+    }
+
+    public var phase: Phase = .idle
+    /// The text that was searched.
+    public var query = ""
+    public var feature: FeatureKind?
+    /// The area as typed.
+    public var areaName = ""
+    /// The area could not be found, so the search fell back to a plain Apple Maps search.
+    public var areaNotFound = false
+    /// The area's real outline was found (results are cut to it); otherwise a box around it was used.
+    public var hasBoundary = false
+    public var maps: SearchHereStatus.MapsOutcome = .pending
+    /// What happened to each Discovery source (`.unavailable(reason)`, `.needsKey`, ...). Empty until Discovery ends.
+    public var sources: [DiscoverySourceID: DiscoverySourceStatus] = [:]
+    /// Discovery itself failed (not a single source).
+    public var discoveryFailed = false
+    /// Results listed now.
+    public var total = 0
+
+    public init() {}
+
+    public static let idle = FeatureSearchStatus()
+
+    public var isSearching: Bool { phase == .resolvingArea || phase == .searching }
 }
 
 /// How a pin is drawn. The map has hierarchy (critique C28): one selected, a few chips, the rest dots.

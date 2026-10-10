@@ -13,6 +13,15 @@ public struct SearchSuggestion: Equatable, Sendable, Identifiable {
     public var kind: Kind
     /// The suggestion Return runs: the first of the list.
     public var isTop: Bool
+    /// Set on the Apple Maps row when the text reads "<feature> in <area>" and Discovery will answer it too, so the
+    /// app can label the row "Mountains in Glacier National Park" and mention the sources.
+    public var featureQuery: FeatureAreaQuery?
+
+    public init(kind: Kind, isTop: Bool, featureQuery: FeatureAreaQuery? = nil) {
+        self.kind = kind
+        self.isTop = isTop
+        self.featureQuery = featureQuery
+    }
 
     public var id: String {
         switch kind {
@@ -48,10 +57,13 @@ public struct SearchSuggestion: Equatable, Sendable, Identifiable {
 ///   ("Mesa Arch", "Great Smoky Mountains National Park") gets none. An Ask that cannot run stays in the list,
 ///   flagged unavailable. The Ask is never the top row.
 public enum SearchSuggestions {
-    public static func make(query: String, askAvailability: ScoutAvailability) -> [SearchSuggestion] {
+    /// `discoveryAvailable`: an engine is present and a Discovery source is on; then a "<feature> in <area>" text marks
+    /// the top row with its parsed query (it runs as a feature search).
+    public static func make(query: String, askAvailability: ScoutAvailability, discoveryAvailable: Bool = false) -> [SearchSuggestion] {
         let text = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return [] }
-        var list = [SearchSuggestion(kind: .appleMaps(query: text), isTop: true)]
+        let feature = discoveryAvailable ? SearchIntent.featureQuery(text) : nil
+        var list = [SearchSuggestion(kind: .appleMaps(query: text), isTop: true, featureQuery: feature)]
         if SearchIntent.classify(text) == .ask {
             list.append(SearchSuggestion(kind: .ask(query: text, availability: askAvailability), isTop: false))
         }

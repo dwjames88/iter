@@ -44,8 +44,8 @@ public final class ExploreModel {
 
     // MARK: Outputs the view reads
 
-    public private(set) var appleResults: [Spot] = []
-    public private(set) var searchState: ExploreSearchState = .idle
+    public internal(set) var appleResults: [Spot] = []
+    public internal(set) var searchState: ExploreSearchState = .idle
     public private(set) var selectedID: String?
     public private(set) var selectionSource: SelectionSource = .program
     /// The list column shows the selected place's light panel instead of the list. Only while a place is selected;
@@ -63,6 +63,12 @@ public final class ExploreModel {
     public internal(set) var searchHereStatus: SearchHereStatus = .idle
     /// What Search Here found, merged, in list order.
     public internal(set) var searchHereResults: [SearchHereResult] = []
+    /// What a typed "<feature> in <area>" search found, merged, in list order. Empty for every other search.
+    public internal(set) var featureResults: [SearchHereResult] = []
+    /// Progress and outcome of that search, per source.
+    public internal(set) var featureStatus: FeatureSearchStatus = .idle
+    /// The area that search resolved (name, box and outline), for drawing it.
+    public internal(set) var featureArea: DiscoveryArea?
     /// The map pane's size in points, reported by the view; the pin clusterer needs its width. Zero until known.
     public private(set) var mapViewport: CGSize = .zero
     /// Bumped once per applied batch of scores, so views and the derived cache see new scores in one change.
@@ -78,13 +84,15 @@ public final class ExploreModel {
     private static let metersPerMile = 1609.344
 
     @ObservationIgnored public var searchDebounce: Duration
-    @ObservationIgnored public private(set) var searchTask: Task<Void, Never>?
+    @ObservationIgnored public internal(set) var searchTask: Task<Void, Never>?
     @ObservationIgnored private var requestCounter = 0
     @ObservationIgnored var searchHereTask: Task<Void, Never>?
     /// Bumped by every Search Here start and cancel; a task whose number is out of date never writes.
     @ObservationIgnored var searchHereGeneration = 0
     /// Bumped when `searchHereResults` changes, so the derived stamp stays cheap to compare.
     @ObservationIgnored var searchHereRevision = 0
+    /// Bumped when `featureResults` changes.
+    @ObservationIgnored var featureRevision = 0
     @ObservationIgnored private var scoreCache: [ScoreKey: CachedWindow] = [:]
     /// The newest computed event per spot id, shown while a row's key is being rescored.
     @ObservationIgnored private var lastEvent: [String: CachedWindow] = [:]
@@ -168,6 +176,7 @@ public final class ExploreModel {
         var appleIDs: [String]
         var ask: [ScoutSuggestion]
         var inViewRevision: Int
+        var featureRevision: Int
         /// What distances are measured from: you, else the map centre while sorting by distance.
         var origin: Coordinate?
         var hasLocation: Bool
@@ -191,7 +200,7 @@ public final class ExploreModel {
         let stamp = DerivedStamp(timeBucket: Self.timeBucket(app.now()), forecastRevision: app.forecasts.revision,
                                  storeRevision: app.store.revision, filters: filters, sort: sort,
                                  query: query.trimmingCharacters(in: .whitespacesAndNewlines),
-                                 appleIDs: appleResults.map(\.id), ask: askSuggestions, inViewRevision: searchHereRevision, origin: origin, hasLocation: user != nil,
+                                 appleIDs: appleResults.map(\.id), ask: askSuggestions, inViewRevision: searchHereRevision, featureRevision: featureRevision, origin: origin, hasLocation: user != nil,
                                  radiusMiles: app.location.radiusMiles, scoreRevision: scoreRevision)
         return stamp
     }
@@ -222,7 +231,7 @@ public final class ExploreModel {
         out += yours.map { ($0, .yours) }
         out += appleResults.map { ($0, .appleMaps) }
         // The Ask section and In View own their spots: they appear once, there.
-        let owned = Set(askSuggestions.map(\.spot.id)).union(searchHereResults.map(\.id))
+        let owned = Set(askSuggestions.map(\.spot.id)).union(searchHereResults.map(\.id)).union(featureResults.map(\.id))
         return owned.isEmpty ? out : out.filter { !owned.contains($0.0.id) }
     }
 
@@ -233,7 +242,8 @@ public final class ExploreModel {
             let event = nextEvent(for: spot, bucket: stamp.timeBucket, now: now)
             rows.append(ExploreRow(spot: spot, source: source, window: event?.window, day: event?.day,
                                    isLoading: app.forecasts.isLoading(spot.coordinate),
-                                   distanceMeters: stamp.origin.map { $0.distance(to: spot.coordinate) }))
+                                   distanceMeters: stamp.origin.map { $0.distance(to: spot.coordinate) },
+                                   sources: source == .appleMaps ? [.appleMaps] : [], elevationMeters: spot.elevationMeters))
         }
         let own = rows.filter { $0.source != .appleMaps }
         let apple = Self.sorted(rows.filter { $0.source == .appleMaps }, by: sort)
@@ -248,6 +258,8 @@ public final class ExploreModel {
                               note: suggestion.why.isEmpty ? nil : suggestion.why, driveSeconds: suggestion.driveSeconds)
         }
         if !askRows.isEmpty { sections.append(ExploreSection(kind: .ask, rows: askRows)) }
+        let featureRows = featureRows(stamp, now: now, claimed: Set(askRows.map(\.id)))
+        if !featureRows.isEmpty { sections.append(ExploreSection(kind: .feature, rows: featureRows)) }
         let inViewRows = inViewRows(stamp, now: now, claimed: Set(askRows.map(\.id)))
         if stamp.hasLocation {
             let radius = Double(stamp.radiusMiles) * Self.metersPerMile
@@ -544,7 +556,7 @@ public final class ExploreModel {
     /// listed row. Falls back to every row when filters leave Near you empty. Capped by `MapCameraPolicy.maxAutomaticSpan`.
     public var fitCoordinates: [Coordinate] {
         if hasLocation {
-            let near = derived.sections.filter { $0.kind == .ask || $0.kind == .nearYou || $0.kind == .appleMaps }.flatMap(\.rows)
+            let near = derived.sections.filter { $0.kind == .ask || $0.kind == .feature || $0.kind == .nearYou || $0.kind == .appleMaps }.flatMap(\.rows)
             if !near.isEmpty { return near.map(\.spot.coordinate) + [app.location.coordinate].compactMap { $0 } }
         }
         // Search Here results never move the camera.
@@ -761,6 +773,7 @@ public final class ExploreModel {
             searchTask?.cancel()
             searchTask = nil
             appleResults = []
+            clearFeatureResults()
             searchState = .idle
             askModel.reset()
         } else {
@@ -784,6 +797,8 @@ public final class ExploreModel {
         guard !trimmed.isEmpty else { return }
         cancelSearchHere()
         searchTask?.cancel()
+        if let parsed = featureQuery(for: trimmed) { return runFeatureSearch(trimmed, parsed) }
+        featureStatus = .idle
         searchState = .searching(query: trimmed)
         let region = visibleRegion
         let search = app.search
@@ -809,7 +824,8 @@ public final class ExploreModel {
         if searchState.isSearching { searchState = .idle }
     }
 
-    private func finishSearch(_ query: String, places: [PlaceResult]) {
+    func finishSearch(_ query: String, places: [PlaceResult]) {
+        clearFeatureResults()
         appleResults = places.map(spot(from:))
         searchState = .finished(query: query, count: places.count)
         resultSetChanged()
@@ -822,7 +838,10 @@ public final class ExploreModel {
     /// that fit weighs every Near You spot, so a result far from them was left off screen. Nothing moves when every
     /// result is already visible.
     private func showSearchResults() {
-        let found = appleResults.map(\.coordinate)
+        showResults(appleResults.map(\.coordinate))
+    }
+
+    func showResults(_ found: [Coordinate]) {
         guard !found.isEmpty, let region = MapCameraPolicy.fit(found) else { return }
         if let visible = visibleRegion, found.allSatisfy(visible.contains) { return }
         cameraPolicy.didApplyFit(region)
@@ -841,6 +860,9 @@ public final class ExploreModel {
     func zoneIdentifier(near coordinate: Coordinate) -> String {
         TimeZoneEstimate.identifier(for: coordinate)
     }
+
+    /// The user's "What I like to shoot" text, trimmed; nil when empty. The Ask row says "Using: ..." with it.
+    public var activePromptPrefix: String? { app.searchSettings.activePromptPrefix }
 
     // MARK: - Add your own spot
 
