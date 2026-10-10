@@ -49,6 +49,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Iter uses your location to show photo spots within reach of you and how long the drive is, without asking each time you open it.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Iter uses your location to show photo spots within reach of you and how long the drive is.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

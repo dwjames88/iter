@@ -4,14 +4,14 @@ import IterDesign
 import IterFeatures
 import IterServices
 
-/// A quiet strip above the list while there is no location: it asks, points to Settings, or says it is looking.
+/// A quiet strip above the list while there is no location: it points to Settings, or says it is looking (Iter asks for location itself when the window appears).
 /// The list below it is always usable (every spot, one section), so this never blocks.
 struct ExploreLocationBanner: View {
     @Bindable var explore: ExploreModel
     @Environment(\.openURL) private var openURL
 
     var body: some View {
-        if !explore.hasLocation {
+        if location.bannerState != .none {
             VStack(alignment: .leading, spacing: IterSpace.xs) {
                 content
             }
@@ -27,34 +27,30 @@ struct ExploreLocationBanner: View {
     private var location: UserLocationModel { explore.app.location }
 
     @ViewBuilder private var content: some View {
-        switch location.authorization {
-        case .notDetermined:
-            prompt(action: LightText.useMyLocation, help: String(localized: "Ask to use your location", comment: "Tooltip")) {
-                explore.start()
-            }
-        case .denied, .restricted:
+        switch location.bannerState {
+        case .none:
+            EmptyView()
+        case .openSettings:
             prompt(action: LightText.openLocationSettings, help: String(localized: "Open Location Services in System Settings", comment: "Tooltip")) {
                 openURL(UserLocationModel.settingsURL)
             }
-        case .authorized:
-            if location.isLocating {
-                HStack(spacing: IterSpace.sm) {
-                    ProgressView().controlSize(.small)
-                    Text(LightText.findingLocation)
-                        .font(IterFont.caption)
-                        .foregroundStyle(IterColor.textSecondary)
-                }
-                .accessibilityElement(children: .combine)
-            } else {
-                HStack(spacing: IterSpace.sm) {
-                    Text(LightText.locationUnavailable)
-                        .font(IterFont.caption)
-                        .foregroundStyle(IterColor.textSecondary)
-                    Spacer(minLength: 0)
-                    Button(LightText.tryAgain) { location.refresh() }
-                        .controlSize(.small)
-                        .help(String(localized: "Look for your location again", comment: "Tooltip"))
-                }
+        case .finding:
+            HStack(spacing: IterSpace.sm) {
+                ProgressView().controlSize(.small)
+                Text(LightText.findingLocation)
+                    .font(IterFont.caption)
+                    .foregroundStyle(IterColor.textSecondary)
+            }
+            .accessibilityElement(children: .combine)
+        case .unavailable:
+            HStack(spacing: IterSpace.sm) {
+                Text(LightText.locationUnavailable)
+                    .font(IterFont.caption)
+                    .foregroundStyle(IterColor.textSecondary)
+                Spacer(minLength: 0)
+                Button(LightText.tryAgain) { location.refresh() }
+                    .controlSize(.small)
+                    .help(String(localized: "Look for your location again", comment: "Tooltip"))
             }
         }
     }

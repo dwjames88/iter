@@ -626,9 +626,6 @@
     "Ask gets a short summary of the spots you save, pin and add to trips. It stays on this device." : {
       "comment" : "Settings footer: library learning"
     },
-    "Ask to use your location" : {
-      "comment" : "Tooltip"
-    },
     "Asking…" : {
       "comment" : "Search Here progress: Apple Intelligence is naming places in the visible area"
     },
@@ -2812,9 +2809,6 @@
     },
     "Use" : {
       "comment" : "Settings: the forecast source Iter uses"
-    },
-    "Use My Location" : {
-      "comment" : "Button: allow location for the near-you list"
     },
     "Use My Saved Spots and Trips" : {
       "comment" : "Settings toggle"

@@ -215,6 +215,12 @@ private func place(_ id: String, _ name: String, lat: Double = 38.7, lon: Double
         #expect(explore.row(id: "mesa-arch")?.isLoading == false)
     }
 
+    @Test func nearYouIsThereAsSoonAsLocationIsAuthorizedWithAFix() async throws {
+        let explore = try await makeExplore(at: moab)
+        #expect(explore.app.location.bannerState == .none)
+        #expect(explore.sections.first?.kind == .nearYou)
+    }
+
     @Test func requestForecastsSkipsACollapsedMorePlaces() async throws {
         let explore = try await makeExplore(at: moab, radius: 50)
         let more = try #require(explore.sections.first { $0.kind == .morePlaces })

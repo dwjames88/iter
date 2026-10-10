@@ -61,8 +61,36 @@ public final class CoreLocationProvider: NSObject, UserLocationProviding, @preco
         case .notDetermined: .notDetermined
         case .denied: .denied
         case .restricted: .restricted
-        default: .authorized   // authorizedAlways / authorizedWhenInUse
+        case .authorizedAlways: .authorized
+        default: status.rawValue == Self.whenInUseRawValue ? .authorized : .denied
         }
+    }
+
+    /// `CLAuthorizationStatus.authorizedWhenInUse` (4); the case is unavailable on macOS, so it is matched by raw value there.
+    private static let whenInUseRawValue: Int32 = 4
+
+    /// iPhone only: once While Using is allowed, Iter asks one time to upgrade to Always.
+    static func shouldRequestAlwaysUpgrade(status: CLAuthorizationStatus, alreadyAsked: Bool, supportsAlways: Bool) -> Bool {
+        supportsAlways && !alreadyAsked && status.rawValue == whenInUseRawValue
+    }
+
+    public static let askedAlwaysKey = "IterAskedAlwaysLocation"
+
+    #if os(iOS)
+    private static let supportsAlways = true
+    #else
+    private static let supportsAlways = false
+    #endif
+
+    private func upgradeToAlwaysIfNeeded() {
+        let defaults = UserDefaults.standard
+        guard Self.shouldRequestAlwaysUpgrade(status: manager.authorizationStatus,
+                                              alreadyAsked: defaults.bool(forKey: Self.askedAlwaysKey),
+                                              supportsAlways: Self.supportsAlways) else { return }
+        defaults.set(true, forKey: Self.askedAlwaysKey)
+        #if os(iOS)
+        manager.requestAlwaysAuthorization()
+        #endif
     }
 
     public func requestAuthorization() {
@@ -97,6 +125,7 @@ public final class CoreLocationProvider: NSObject, UserLocationProviding, @preco
     }
 
     public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        upgradeToAlwaysIfNeeded()
         onAuthorizationChange?(Self.map(manager.authorizationStatus))
     }
 

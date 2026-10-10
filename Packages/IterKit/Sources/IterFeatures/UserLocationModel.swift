@@ -55,12 +55,43 @@ public final class UserLocationModel {
         return Coordinate(latitude: lat, longitude: lon)
     }
 
-    /// `-IterLocation lat,lon` gives a simulated fixed location; otherwise CoreLocation.
+    /// `-IterLocation lat,lon` gives a simulated fixed location (this is the stub); a render copy without one never touches
+    /// CoreLocation (no dialog); otherwise CoreLocation.
     public static func live() -> UserLocationModel {
-        if let fixed = parseLaunchLocation(UserDefaults.standard.string(forKey: launchArgumentKey)) {
-            return UserLocationModel(provider: FixedLocationProvider(fixed), isSimulated: true)
+        let (provider, simulated) = provider(launchLocation: UserDefaults.standard.string(forKey: launchArgumentKey),
+                                             isRenderCopy: RenderCopy.isCurrent)
+        return UserLocationModel(provider: provider, isSimulated: simulated)
+    }
+
+    static func provider(launchLocation: String?, isRenderCopy: Bool) -> (any UserLocationProviding, simulated: Bool) {
+        if let fixed = parseLaunchLocation(launchLocation) { return (FixedLocationProvider(fixed), true) }
+        if isRenderCopy { return (InertLocationProvider(), false) }
+        return (CoreLocationProvider(), false)
+    }
+
+    /// Which strip Explore shows above the list.
+    public enum BannerState: Sendable, Equatable { case none, openSettings, finding, unavailable }
+
+    public static func bannerState(authorization: LocationAuthorization, isLocating: Bool, hasFix: Bool) -> BannerState {
+        switch authorization {
+        case .notDetermined: .none   // the system dialog is on screen
+        case .denied, .restricted: .openSettings
+        case .authorized: hasFix ? .none : (isLocating ? .finding : .unavailable)
         }
-        return UserLocationModel(provider: CoreLocationProvider())
+    }
+
+    public var bannerState: BannerState {
+        Self.bannerState(authorization: authorization, isLocating: isLocating, hasFix: coordinate != nil)
+    }
+
+    @ObservationIgnored private var requestedAtLaunch = false
+
+    /// Called once the main window is up: asks for location (the system dialog the first time), then fetches a fix if allowed.
+    /// Authorization is requested at most once per process, however often this is called.
+    public func requestAtLaunch() {
+        guard !requestedAtLaunch else { return }
+        requestedAtLaunch = true
+        start()
     }
 
     /// Call when Explore first appears. Idempotent.

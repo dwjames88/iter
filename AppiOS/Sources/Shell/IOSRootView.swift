@@ -37,6 +37,7 @@ struct IOSRootView: View {
             model.store.undoManager = undoManager
             applyLaunchSelection()
             AppLaunch.presentOnboardingIfWanted(model)
+            if !AppLaunch.isRunningTests { model.location.requestAtLaunch() }
         }
         .onChange(of: undoManager) { _, new in model.store.undoManager = new }
         .onChange(of: navigation.selection) { _, new in shell.follow(new) }

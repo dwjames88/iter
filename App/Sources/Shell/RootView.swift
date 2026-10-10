@@ -43,6 +43,7 @@ struct RootView: View {
             model.store.undoManager = undoManager
             restoreSelection()
             AppLaunch.presentOnboardingIfWanted(model)
+            if !AppLaunch.isRunningTests { model.location.requestAtLaunch() }
         }
         .task { if AppLaunch.settingsTab != nil { openSettings() } }
         .task { await DebugScripts.runAll() }

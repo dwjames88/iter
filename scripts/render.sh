@@ -9,6 +9,7 @@
 #                                          plus your args; wait N seconds (default 20) or until it exits; then stop that PID only
 #   --capture DIR                          adds -IterCaptureWindow DIR and, unless you pass -IterCaptureAfter, -IterCaptureAfter 6
 #                                          (one screen.png of whatever is showing, then the app quits)
+#   --run adds -IterLocation 37.77,-122.42 (San Francisco) unless you pass -IterLocation, so no location dialog ever shows
 # Environment: ITER_DD = derived data path (default build/DD-render).
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -58,6 +59,8 @@ if [ -n "$CAPTURE" ]; then
 fi
 # Only a PID that was not there before this launch, matched on the full path of this render copy, is ever ours.
 BEFORE="$(pgrep -f "$OUT/Contents/MacOS/Iter" || true)"
+# A render copy never uses real location (no dialog): give it San Francisco unless the caller chose a place.
+case " ${APP_ARGS[*]-} " in *" -IterLocation "*) ;; *) APP_ARGS+=(-IterLocation 37.77,-122.42) ;; esac
 open -g -j -n "$OUT" --args -IterInMemoryStore YES -IterSampleDataEnabled YES ${APP_ARGS[@]+"${APP_ARGS[@]}"}
 PID=""
 for _ in $(seq 1 50); do

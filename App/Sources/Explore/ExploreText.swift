@@ -60,7 +60,6 @@ extension LightText {
     static func locationPromptDetail(radiusMiles: Int) -> String {
         String(localized: "Iter uses your location to show spots within \(radiusMiles) miles.", comment: "Explore banner: why location is asked for; the number is the radius in miles")
     }
-    static let useMyLocation = String(localized: "Use My Location", comment: "Button: allow location for the near-you list")
     static let openLocationSettings = String(localized: "Open Location Settings", comment: "Button: open System Settings > Location Services")
     static let findingLocation = String(localized: "Finding your location…", comment: "Progress in the Explore banner while the location is being found")
     static let locationUnavailable = String(localized: "Couldn't find your location.", comment: "Explore banner: no fix yet")

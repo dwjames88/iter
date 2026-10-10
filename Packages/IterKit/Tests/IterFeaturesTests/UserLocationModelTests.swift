@@ -120,4 +120,62 @@ private func settle() async { for _ in 0..<20 { await Task.yield() } }
         #expect(model.authorization == .notDetermined)
         #expect(model.coordinate == nil)
     }
+
+    @Test func requestAtLaunchAsksOnceAcrossRepeatedCalls() async {
+        let fake = FakeLocation(.notDetermined)
+        let model = UserLocationModel(provider: fake, defaults: suite())
+        model.requestAtLaunch()
+        model.requestAtLaunch()
+        #expect(fake.authorizationRequests == 1)
+        // The grant lands later: a fix follows with no further request.
+        fake.authorization = .authorized; fake.fix = sf
+        fake.onAuthorizationChange?(.authorized)
+        await settle()
+        #expect(model.coordinate == sf)
+        #expect(fake.authorizationRequests == 1)
+    }
+
+    @Test func requestAtLaunchDoesNotAskWhenAlreadyDecided() async {
+        let allowed = FakeLocation(.authorized, fix: sf)
+        let allowedModel = UserLocationModel(provider: allowed, defaults: suite())
+        allowedModel.requestAtLaunch(); allowedModel.requestAtLaunch(); await settle()
+        #expect(allowed.authorizationRequests == 0)
+        #expect(allowed.fixRequests == 1)
+        #expect(allowedModel.coordinate == sf)
+        let denied = FakeLocation(.denied)
+        UserLocationModel(provider: denied, defaults: suite()).requestAtLaunch()
+        #expect(denied.authorizationRequests == 0)
+    }
+
+    @Test func bannerStates() {
+        typealias M = UserLocationModel
+        #expect(M.bannerState(authorization: .notDetermined, isLocating: false, hasFix: false) == .none)
+        #expect(M.bannerState(authorization: .denied, isLocating: false, hasFix: false) == .openSettings)
+        #expect(M.bannerState(authorization: .restricted, isLocating: false, hasFix: false) == .openSettings)
+        #expect(M.bannerState(authorization: .authorized, isLocating: true, hasFix: false) == .finding)
+        #expect(M.bannerState(authorization: .authorized, isLocating: false, hasFix: false) == .unavailable)
+        #expect(M.bannerState(authorization: .authorized, isLocating: false, hasFix: true) == .none)
+        #expect(M.bannerState(authorization: .authorized, isLocating: true, hasFix: true) == .none)
+    }
+
+    @Test func bannerStateFollowsTheModel() async {
+        let model = UserLocationModel(provider: FakeLocation(.notDetermined), defaults: suite())
+        #expect(model.bannerState == .none)
+        let fake = FakeLocation(.authorized, fix: sf)
+        let allowed = UserLocationModel(provider: fake, defaults: suite())
+        allowed.requestAtLaunch()
+        #expect(allowed.bannerState == .finding)
+        await settle()
+        #expect(allowed.bannerState == .none)
+    }
+
+    @Test func renderCopyWithoutLaunchLocationNeverUsesCoreLocation() {
+        let render = UserLocationModel.provider(launchLocation: nil, isRenderCopy: true)
+        #expect(render.0 is InertLocationProvider)
+        #expect(!render.simulated)
+        let stub = UserLocationModel.provider(launchLocation: "37.77,-122.42", isRenderCopy: true)
+        #expect(stub.0 is FixedLocationProvider)
+        #expect(stub.simulated)
+        #expect(UserLocationModel.provider(launchLocation: nil, isRenderCopy: false).0 is CoreLocationProvider)
+    }
 }
