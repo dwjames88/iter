@@ -69,6 +69,9 @@ private struct ExploreContent: View {
     var body: some View {
         FloatingPanelLayout {
             ExploreListPanel(explore: explore)
+                // The card header sits above the title bar, over the toolbar: while Adjust Location shows Cancel and Done there,
+                // the header must not take their clicks (and must not hide Cancel behind its Back button).
+                .titlebarOverlaysActive(explore.adjusting == nil)
         } map: { insets in
             ExploreMapPane(explore: explore, insets: insets)
         }
