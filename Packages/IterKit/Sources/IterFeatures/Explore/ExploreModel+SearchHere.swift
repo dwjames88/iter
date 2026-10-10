@@ -15,7 +15,8 @@ extension ExploreModel {
     public var showsSearchHere: Bool {
         guard let visible = visibleRegion, !searchHereStatus.isSearching else { return false }
         guard query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return false }
-        return rows.isEmpty || SearchHereRules.isStale(listRegion: listRegion, visible: visible)
+        // The cheap region test first: `rows` reads the derived cache (a stamp comparison), which is only needed when fresh.
+        return SearchHereRules.isStale(listRegion: listRegion, visible: visible) || rows.isEmpty
     }
 
     /// Searches the visible region. A second press replaces a running search. Does nothing before the map has a region.
@@ -204,11 +205,19 @@ extension ExploreModel {
     /// The In View rows: the results in merge order, minus any that a curated or your own spot already lists.
     func inViewRows(_ stamp: DerivedStamp, now: Date, claimed: Set<String>) -> [ExploreRow] {
         guard !searchHereResults.isEmpty else { return [] }
-        let own = CuratedSpots.all + app.store.savedPlaces().filter { $0.origin == .user }.map(\.spot)
+        // Only own spots near the results can match one, so box the results and scan those (not every result against
+        // every curated spot, with a name normalisation per pair).
+        let lats = searchHereResults.map(\.place.coordinate.latitude), lons = searchHereResults.map(\.place.coordinate.longitude)
+        let latMargin = 0.006
+        let lonMargin = 0.006 / max(cos((lats.map(abs).max() ?? 0) * .pi / 180), 0.01)
+        let box = (lat: (lats.min()! - latMargin)...(lats.max()! + latMargin), lon: (lons.min()! - lonMargin)...(lons.max()! + lonMargin))
+        let allOwn = CuratedSpots.all + app.store.savedPlaces().filter { $0.origin == .user }.map(\.spot)
+        let ownIDs = Set(allOwn.map(\.id))
+        let own = allOwn.filter { box.lat.contains($0.coordinate.latitude) && box.lon.contains($0.coordinate.longitude) }
         var rows: [ExploreRow] = []
         for result in searchHereResults where !claimed.contains(result.id) {
             let place = result.place
-            let listed = own.contains { spot in
+            let listed = ownIDs.contains(place.id) || own.contains { spot in
                 spot.id == place.id || (spot.coordinate.distance(to: place.coordinate) <= SearchHereMerge.sameNameMeters
                                         && SearchHereNames.match(spot.name, place.name))
             }

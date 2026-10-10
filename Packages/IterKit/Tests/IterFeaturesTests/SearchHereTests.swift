@@ -47,6 +47,7 @@ private final class HereScout: Scouting, @unchecked Sendable { // test double; s
     private let availabilityValue: ScoutAvailability
     private let outcome: Result<[RegionProposal], any Error>
     private var _calls = 0
+    private var _exited = 0
     private var _areaNames: [String?] = []
 
     init(availability: ScoutAvailability = .available, outcome: Result<[RegionProposal], any Error> = .success([]), hold: Bool = false) {
@@ -58,11 +59,21 @@ private final class HereScout: Scouting, @unchecked Sendable { // test double; s
     var calls: Int { lock.withLock { _calls } }
     var areaNames: [String?] { lock.withLock { _areaNames } }
     func release() { lock.withLock { _holding = false } }
+    /// Calls to `proposePlaces` that have returned or thrown.
+    var exited: Int { lock.withLock { _exited } }
+
+    /// Releases the hold and waits until every started call has finished, then lets the model's continuations run.
+    func releaseAndDrain() async {
+        release()
+        for _ in 0..<2000 where exited < calls { await Task.yield(); try? await Task.sleep(for: .milliseconds(1)) }
+        for _ in 0..<50 { await Task.yield() }
+    }
 
     func availability() -> ScoutAvailability { availabilityValue }
     func scout(_ request: String, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] { [] }
     func proposePlaces(in region: GeoRegion, areaName: String?) async throws -> [RegionProposal] {
         lock.withLock { _calls += 1; _areaNames.append(areaName) }
+        defer { lock.withLock { _exited += 1 } }
         while lock.withLock({ _holding }) {
             try Task.checkCancellation()
             try await Task.sleep(for: .milliseconds(5))
@@ -381,15 +392,16 @@ private func until(_ condition: () -> Bool) async {
         let explore = try makeHere(search: s, scout: scout)
         explore.cameraDidChange(to: moab)
         explore.searchHere()
-        await until { explore.searchHereStatus.phase == .asking }
+        // The phase flips before the scout is called; wait for the call itself so the first run really was in flight.
+        await until { explore.searchHereStatus.phase == .asking && scout.calls == 1 }
         let second = region(38.6, -109.55, 1, 1)
         explore.cameraDidChange(to: second, byUser: true)
         explore.searchHere()
         #expect(explore.searchHereStatus.region == second)
         #expect(explore.listRegion == second)
+        await until { scout.calls == 2 }
         scout.release()
         await until { explore.searchHereStatus.phase == .finished }
-        await until { scout.calls >= 2 }
         #expect(explore.searchHereStatus.phase == .finished)
         #expect(explore.searchHereResults.map(\.id).contains("ridge"))
         #expect(scout.calls == 2)
@@ -408,8 +420,7 @@ private func until(_ condition: () -> Bool) async {
         #expect(explore.searchHereStatus == .idle)
         #expect(explore.searchHereResults.isEmpty)
         #expect(!explore.sections.contains { $0.kind == .inView })
-        scout.release()
-        try await Task.sleep(for: .milliseconds(60))
+        await scout.releaseAndDrain()
         #expect(explore.searchHereStatus == .idle)
         #expect(explore.searchHereResults.isEmpty)
     }

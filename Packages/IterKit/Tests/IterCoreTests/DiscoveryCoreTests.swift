@@ -24,6 +24,12 @@ import Testing
         ("slot canyons near Page, Arizona", .canyon, "Page, Arizona"),
         ("caves in Mammoth Cave", .cave, "Mammoth Cave"),
         ("beaches of the Olympic Peninsula", .beach, "Olympic Peninsula"),
+        ("peaks in Glacier National Park at sunset", .peak, "Glacier National Park"),
+        ("waterfalls in Yosemite for sunrise", .waterfall, "Yosemite"),
+        ("lakes near Banff at golden hour", .lake, "Banff"),
+        ("arches in Moab for blue hour tomorrow", .arch, "Moab"),
+        ("beaches in Oregon this weekend", .beach, "Oregon"),
+        ("lighthouses on the Maine coast tonight", .lighthouse, "Maine coast"),
     ])
     func parses(text: String, feature: FeatureKind, area: String) {
         #expect(FeatureAreaQuery.parse(text) == FeatureAreaQuery(feature: feature, area: area))
@@ -33,6 +39,12 @@ import Testing
         "sunrise spots in Glacier National Park",     // no known feature
         "mountains",                                  // no area
         "waterfalls near me",                         // not a named area
+        "waterfalls near here for sunrise",           // a map phrase, not a place
+        "peaks around here at sunset",
+        "lakes in this area",
+        "viewpoints in the map tonight",
+        "arches nearby",
+        "beaches near my location",
         "waterfalls in",                              // empty area
         "Glacier National Park mountains",            // no preposition
         "good light for a lake tomorrow",             // feature, but no preposition after it

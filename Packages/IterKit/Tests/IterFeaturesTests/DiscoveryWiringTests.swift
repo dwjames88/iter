@@ -64,6 +64,7 @@ private final class WireDiscovery: Discovering, @unchecked Sendable { // test do
     private var _holding: Bool
     private var _calls: [(area: DiscoveryArea, feature: FeatureKind?, settings: DiscoverySettings)] = []
     private var _resolved: [String] = []
+    private var _exited = 0
     let area: DiscoveryArea?
     let outcome: Result<DiscoveryReport, any Error>
 
@@ -76,6 +77,16 @@ private final class WireDiscovery: Discovering, @unchecked Sendable { // test do
     var calls: [(area: DiscoveryArea, feature: FeatureKind?, settings: DiscoverySettings)] { lock.withLock { _calls } }
     var resolved: [String] { lock.withLock { _resolved } }
     func release() { lock.withLock { _holding = false } }
+    /// Calls to `discover` that have returned or thrown.
+    var exited: Int { lock.withLock { _exited } }
+
+    /// Releases the hold and waits until every started `discover` call has finished, then lets the model's
+    /// continuations run: replaces a fixed sleep, so a "nothing landed" check cannot pass before the work ended.
+    func releaseAndDrain() async {
+        release()
+        for _ in 0..<2000 where exited < calls.count { await Task.yield(); try? await Task.sleep(for: .milliseconds(1)) }
+        for _ in 0..<50 { await Task.yield() }
+    }
 
     func resolveArea(named name: String, fallbackSearch: (any PlaceSearching)?) async -> DiscoveryArea? {
         lock.withLock { _resolved.append(name) }
@@ -84,6 +95,7 @@ private final class WireDiscovery: Discovering, @unchecked Sendable { // test do
 
     func discover(area: DiscoveryArea, feature: FeatureKind?, text: String?, settings: DiscoverySettings) async throws -> DiscoveryReport {
         lock.withLock { _calls.append((area, feature, settings)) }
+        defer { lock.withLock { _exited += 1 } }
         while lock.withLock({ _holding }) {
             try Task.checkCancellation()
             try await Task.sleep(for: .milliseconds(5))
@@ -403,8 +415,7 @@ private func glacierEngine(wikivoyageDown: Bool = false) -> DiscoveryEngine {
         #expect(explore.featureResults.isEmpty)
         #expect(explore.featureStatus == .idle)
         #expect(explore.searchState == .idle)
-        fake.release()
-        try await Task.sleep(for: .milliseconds(60))
+        await fake.releaseAndDrain()
         #expect(explore.featureResults.isEmpty)
         #expect(!explore.sections.contains { $0.kind == .feature })
     }
@@ -478,6 +489,14 @@ private func glacierEngine(wikivoyageDown: Bool = false) -> DiscoveryEngine {
         #expect(SearchSuggestions.make(query: "Mesa Arch", askAvailability: .available, discoveryAvailable: true).first?.featureQuery == nil)
         let explore = try makeWired(search: WireSearch(), discovery: glacierEngine())
         explore.query = "mountains in Glacier National Park"
+        #expect(explore.searchSuggestions.first?.featureQuery?.area == "Glacier National Park")
+    }
+
+    @Test func aMapPhraseIsNeverOfferedAsAnArea() throws {
+        let explore = try makeWired(search: WireSearch(), discovery: glacierEngine())
+        explore.query = "waterfalls near here for sunrise"
+        #expect(explore.searchSuggestions.allSatisfy { $0.featureQuery == nil })
+        explore.query = "peaks in Glacier National Park at sunset"
         #expect(explore.searchSuggestions.first?.featureQuery?.area == "Glacier National Park")
     }
 }
@@ -646,8 +665,7 @@ private func glacierEngine(wikivoyageDown: Bool = false) -> DiscoveryEngine {
         await until { explore.searchHereStatus.discoveryOutcome == .running }
         explore.query = "arch"
         #expect(explore.searchHereStatus == .idle)
-        fake.release()
-        try await Task.sleep(for: .milliseconds(60))
+        await fake.releaseAndDrain()
         #expect(explore.searchHereResults.isEmpty)
     }
 }

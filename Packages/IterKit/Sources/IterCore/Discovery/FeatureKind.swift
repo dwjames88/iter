@@ -156,7 +156,7 @@ public struct FeatureAreaQuery: Hashable, Sendable {
                     guard Array(lower[next..<(next + prep.count)]) == prep else { continue }
                     var areaWords = Array(words[(next + prep.count)...])
                     if let first = areaWords.first, stripPunctuation(first).lowercased() == "the", areaWords.count > 1 { areaWords.removeFirst() }
-                    let area = areaWords.joined(separator: " ").trimmingCharacters(in: CharacterSet(charactersIn: " .,;:!?\"'"))
+                    let area = stripQualifiers(areaWords.joined(separator: " ").trimmingCharacters(in: trimSet))
                     guard isNamedArea(area) else { continue }
                     return FeatureAreaQuery(feature: feature, area: area)
                 }
@@ -165,12 +165,46 @@ public struct FeatureAreaQuery: Hashable, Sendable {
         return nil
     }
 
+    private static let trimSet = CharacterSet(charactersIn: " .,;:!?\"'")
+
+    /// Map or "where I am" phrases: an area that is, or starts with, one of these is not a named place.
+    private static let deicticStarts: [String] = ["here", "me", "my", "map", "the map", "this map", "this area", "this place", "this region",
+                                                   "this trip", "the trip", "the area", "nearby", "near by", "around here", "around me",
+                                                   "there", "where i am", "where we are", "the world", "anywhere", "everywhere"]
+    /// Trailing light or time qualifiers ("for sunrise", "at golden hour", "tonight", "this weekend").
+    private static let qualifierSuffixes: [String] = [
+        "for sunrise", "for sunset", "at sunrise", "at sunset", "at dawn", "at dusk", "at golden hour", "for golden hour",
+        "during golden hour", "at blue hour", "for blue hour", "during blue hour", "at night", "for astrophotography",
+        "tonight", "tomorrow", "today", "this weekend", "this evening", "this morning", "tomorrow morning", "tomorrow night",
+        "tomorrow evening", "in the morning", "in the evening",
+    ]
+
+    static func stripQualifiers(_ area: String) -> String {
+        var current = area
+        var changed = true
+        while changed {
+            changed = false
+            let lower = current.lowercased()
+            for q in qualifierSuffixes where lower.hasSuffix(q) {
+                let head = lower.dropLast(q.count)
+                guard head.isEmpty || head.hasSuffix(" ") else { continue }
+                current = String(current.dropLast(q.count)).trimmingCharacters(in: trimSet)
+                changed = true
+                break
+            }
+        }
+        return current
+    }
+
     private static func stripPunctuation(_ word: String) -> String {
         word.trimmingCharacters(in: CharacterSet(charactersIn: ",.;:!?\"'()"))
     }
 
     private static func isNamedArea(_ area: String) -> Bool {
         guard area.count >= 2, area.count <= 80, area.contains(where: { $0.isLetter }) else { return false }
-        return !notAnArea.contains(area.lowercased())
+        let lower = area.lowercased()
+        if notAnArea.contains(lower) { return false }
+        for d in deicticStarts where lower == d || lower.hasPrefix(d + " ") { return false }
+        return true
     }
 }
