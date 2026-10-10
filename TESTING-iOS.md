@@ -119,7 +119,7 @@ Pass them after the bundle id with `simctl launch`, or in the scheme's Arguments
 | `-IterNewTrip YES` | The Trips list opens the New Trip sheet. |
 | `-IterTripsFilter pinned\|<folder name>` | The Trips list opens with that chip selected. |
 | `-IterLocationFolder <name>` | Opens that location folder. |
-| `-IterSettingsTab weather\|intelligence\|about\|general\|licence` | Opens that Settings page (`general` stays on the list; `licence` needs `-IterShowLicensing YES`). |
+| `-IterSettingsTab weather\|intelligence\|search\|about\|general\|licence` | Opens that Settings page (`general` stays on the list; `licence` needs `-IterShowLicensing YES`). |
 | `-IterShowLicensing YES` | Shows a Licence row in Settings. Hidden by default; licensing is not enforced in 0.x. See docs/LICENSING.md. |
 | `-IterAppearance light\|dark` | Forces the appearance. |
 | `-IterMapCamera lat,lon,distanceKm` | The Explore map starts at that camera (for example `20,10,30000` for the globe) and ignores fit requests. For screenshots. |

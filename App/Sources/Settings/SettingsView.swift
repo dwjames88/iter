@@ -5,9 +5,9 @@ import IterDesign
 import IterServices
 import IterFeatures
 
-enum SettingsTab: Hashable { case general, weather, intelligence, updates, licence, about }
+enum SettingsTab: Hashable { case general, weather, intelligence, search, updates, licence, about }
 
-/// The Settings window: General, Weather, Apple Intelligence, Updates, About; Licence too, when launched with `-IterShowLicensing YES`.
+/// The Settings window: General, Weather, Apple Intelligence, Search, Updates, About; Licence too, when launched with `-IterShowLicensing YES`.
 struct SettingsView: View {
     @State private var tab: SettingsTab
 
@@ -26,6 +26,9 @@ struct SettingsView: View {
             IntelligenceSettingsPane()
                 .tabItem { Label(String(localized: "Apple Intelligence", comment: "Settings tab"), systemImage: "sparkles") }
                 .tag(SettingsTab.intelligence)
+            SearchSettingsPane()
+                .tabItem { Label(String(localized: "Search", comment: "Settings tab"), systemImage: "magnifyingglass") }
+                .tag(SettingsTab.search)
             #if os(macOS)
             UpdatesSettingsPane()
                 .tabItem { Label(String(localized: "Updates", comment: "Settings tab"), systemImage: "arrow.down.circle") }
@@ -133,8 +136,11 @@ private struct AboutSettingsPane: View {
             } header: {
                 Text("Data Sources and Attribution", comment: "About: heading for provider credits")
             } footer: {
-                Text("Sun and moon times are calculated on this Mac. Weather is from the source you choose in Settings ▸ Weather: Apple Weather, OpenWeather or Windy (contains data from the Windy database). Places and drive times are from Apple Maps, alongside Iter's curated spots.",
+                VStack(alignment: .leading, spacing: IterSpace.sm) {
+                    Text("Sun and moon times are calculated on this Mac. Weather is from the source you choose in Settings ▸ Weather: Apple Weather, OpenWeather or Windy (contains data from the Windy database). Places and drive times are from Apple Maps, alongside Iter's curated spots.",
                      comment: "About: data sources")
+                    Text(SearchSettingsText.attribution)
+                }
             }
         }
         .formStyle(.grouped)

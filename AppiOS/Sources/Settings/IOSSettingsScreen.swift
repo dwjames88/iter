@@ -7,7 +7,7 @@ import IterServices
 import IterFeatures
 
 /// Settings on iOS: a grouped form. Weather, Apple Intelligence and About are pushed pages; Location, Updates and General
-/// sit inline. `-IterSettingsTab weather|intelligence|about|licence` pushes that page at launch.
+/// sit inline. `-IterSettingsTab weather|intelligence|search|about|licence` pushes that page at launch.
 struct IOSSettingsScreen: View {
     @Environment(AppModel.self) private var model
     @Environment(\.openURL) private var openURL
@@ -27,6 +27,10 @@ struct IOSSettingsScreen: View {
                 NavigationLink { IntelligenceSettingsPage() } label: {
                     row(String(localized: "Apple Intelligence", comment: "Settings row"), symbol: "sparkles",
                         detail: IOSSettingsText.intelligenceSummary(model.scout?.availability() ?? .unavailable("")))
+                }
+                NavigationLink { SearchSettingsPane().navigationTitle(String(localized: "Search", comment: "Screen title")).navigationBarTitleDisplayMode(.inline) } label: {
+                    row(String(localized: "Search", comment: "Settings row"), symbol: "magnifyingglass",
+                        detail: model.searchSettings.hasGoogleKey ? String(localized: "Google on", comment: "Settings row detail: Google search key saved") : "")
                 }
             }
             locationSection
@@ -69,6 +73,7 @@ struct IOSSettingsScreen: View {
             switch tab {
             case .weather: WeatherSettingsPage()
             case .intelligence: IntelligenceSettingsPage()
+            case .search: SearchSettingsPane().navigationTitle(String(localized: "Search", comment: "Screen title")).navigationBarTitleDisplayMode(.inline)
             case .about: AboutSettingsPage()
             case .licence: LicenceSettingsPane().navigationTitle(String(localized: "Licence", comment: "Screen title")).navigationBarTitleDisplayMode(.inline)
             case .general, .updates: EmptyView()
@@ -247,8 +252,11 @@ private struct AboutSettingsPage: View {
             } header: {
                 Text("Data Sources and Attribution", comment: "About: heading for provider credits")
             } footer: {
-                Text("Sun and moon times are calculated on this device. Weather is from the source you choose in Settings > Weather: OpenWeather or Windy (contains data from the Windy database). Places and drive times are from Apple Maps, alongside Iter's curated spots.",
+                VStack(alignment: .leading, spacing: IterSpace.sm) {
+                    Text("Sun and moon times are calculated on this device. Weather is from the source you choose in Settings > Weather: OpenWeather or Windy (contains data from the Windy database). Places and drive times are from Apple Maps, alongside Iter's curated spots.",
                      comment: "About: data sources on iOS")
+                    Text(SearchSettingsText.attribution)
+                }
             }
         }
         .navigationTitle(String(localized: "About", comment: "Screen title"))
