@@ -29,6 +29,7 @@ targets:
           - Explore/ExploreListPanel.swift
           - Explore/ExploreMapPane.swift
           - Explore/ExplorePerfScript.swift
+          - Explore/PinDragProbe.swift      # Mac-only: the -IterPinDragProbe report for scripts/pin-drag-test.sh
           - Explore/ExplorePlaceCard.swift   # retired on the Mac (replaced by ExploreLightPanel); excluded until it is gone
           - Locations/LocationsView.swift
           - Locations/LocationsMap.swift
