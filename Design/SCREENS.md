@@ -26,10 +26,11 @@ Iter is a native macOS 26 app. Its promise: **"Be in the right place when the li
 8. [Spot page](#spot-page)
 9. [Locations](#locations)
 10. [Spot editor sheet](#spot-editor-sheet)
-11. [Settings](#settings)
-12. [Menus, popovers, dialogs not in the snapshots](#menus-popovers-and-dialogs)
-13. [Not in the snapshots](#not-in-the-snapshots)
-14. [Cross-screen conventions](#cross-screen-conventions)
+11. [Edit Location sheet](#edit-location-sheet)
+12. [Settings](#settings)
+13. [Menus, popovers, dialogs not in the snapshots](#menus-popovers-and-dialogs)
+14. [Not in the snapshots](#not-in-the-snapshots)
+15. [Cross-screen conventions](#cross-screen-conventions)
 
 ---
 
@@ -47,11 +48,12 @@ Iter is a native macOS 26 app. Its promise: **"Be in the right place when the li
 | New Trip sheet | Sheet | New Trip (menu, toolbar, empty-state button, template row) |
 | Change Dates sheet | Sheet | Trip builder: date line in the header, or Trip Actions menu |
 | Spot editor sheet | Sheet | Explore (after a click in Add Spot mode), Spot page Edit (your own spots), Locations context menu Edit… |
+| Edit Location sheet | Sheet | Edit on the Explore place card, Edit ▸ Edit Location… (⌘E) in Locations and on a spot page, Edit… in a Locations or pinned sidebar row's context menu; on iPhone a Locations row's swipe or menu, and More on a place |
 | Add Stop popover | Popover | Trip builder: "Add Stop" row under each day |
 | Score legend popover | Sidebar, bottom "i" | 340 x 700 pt popover, scrolls: [ScoreLegend](COMPONENTS.md#scorelegend) (bands with score ranges, light windows with symbols, how sure, source). Rendered in `snapshots/scorelegend-popover-{light,dark}-340x700.png`. |
 | Set-up time popover | Popover | Trip builder: the "20 min set-up" link on a stop |
 | Settings | Separate window, four tabs | App menu > Settings… (⌘,) |
-| Place card | Floating panel over the Explore map | Selecting a pin or row |
+| Place card | The Explore list column's second state (Mac); a sheet on iPhone | Selecting a pin or row |
 
 A new section's detail replaces the previous one. Trips are listed first in the sidebar because the plan makes the trip the home of the app. The main window restores its last sidebar selection on launch (falls back to All Trips if that trip or folder is gone). Folder rows in the Trips group only open and close; they are not destinations.
 
@@ -89,7 +91,7 @@ Screen-level shortcuts:
 | Explore list | Return | Opens the light panel for the selected row |
 | Explore list | Double-click | Opens the spot page |
 | Explore light panel | Up, Down | Step to the previous or next place in list order; the pin follows |
-| Explore light panel | Esc, **‹ Places** | Back to the list at the same scroll position, the row still selected (Esc is left to Add Spot mode while it is on) |
+| Explore light panel | Esc, **Back** | Back to the list at the same scroll position, the row still selected (Esc is left to Add Spot mode while it is on) |
 | Explore | ⌘F | Focuses the search field, in the list and in the panel |
 | Spot page | ⌘D | Save / unsave (not offered on your own spots) |
 | Spot page | ⌘E | Edit (your own spots only) |
@@ -298,7 +300,7 @@ List column, top to bottom ([ExploreListPanel](COMPONENTS.md#explorelistpanel)):
 
 **Light panel** ([ExploreLightPanel](COMPONENTS.md#explorelightpanel)). The column is 340 to 520 pt wide, and the panel fills it, on `background/content`. Top to bottom:
 
-1. **Header** (padding `space/sm` vertical, `grid/inset` horizontal), then a divider: **‹ Places** at the leading edge (`chevron.left`, accent, tooltip "Back to places (Esc)"), then "3 of 16" (`type/secondary`, `text/secondary`, digits monospaced), then up and down steppers (`chevron.up`, `chevron.down`; each disabled at the end of the list).
+1. **Header** (inside the card, from the first frame): three 32 pt glass circles, 11.5 pt (`GlassGeometry.cornerButtonInset`) from the card's top and side edges, concentric with its 27.5 pt corner: **Back** (`chevron.backward`, leading; tooltip "Back to Places (Esc)") and, at the trailing edge, **Share** (`square.and.arrow.up`) and **Close** (`xmark`). There is no position counter or up and down buttons; Up and Down in the list move through the places.
 2. The weather banner, when weather is missing.
 3. **Place:** name (`type/title/spot`, up to two lines); on its baseline at the trailing edge the next event as a large event unit (44 pt, start time), with "Tomorrow" before it when it is tomorrow's. Under both, locality · distance (only with a location) · [ProvenanceTag](COMPONENTS.md#provenancetag) in `type/secondary`, `text/secondary`.
 4. **Image strip** ([SpotImageStrip](COMPONENTS.md#spotimagestrip), `size/imageStripHeight`, 200 pt), running to both column edges.
@@ -306,9 +308,15 @@ List column, top to bottom ([ExploreListPanel](COMPONENTS.md#explorelistpanel)):
 6. **Light through the day** ([LightTimeline](COMPONENTS.md#lighttimeline) at panel density): a segmented range control at the full width under the title, a readout line, the sky band (88 pt) and the cloud and rain plot (112 pt) at the column's width with no label gutter (the 0, 50 and 100 percent labels sit inside the plot), the hour axis with a time pill at the marker, and the legend. Hover or drag reads any time. From 350 pt wide the legend line ends in "Drag to read any time" (on the readout line when the legend has no room). The timeline grows with the column.
 7. **Outlook** (`calendar`, "10-day outlook for Sunrise"; [OutlookStrip](COMPONENTS.md#outlookstrip) in a filled card): one row per day, today first, on the lane grid: disclosure chevron, the day (the best day carries **Best**), the compact event unit. **Click a day to open it in place**: its windows appear under it as [WindowRow](COMPONENTS.md#windowrow)s (name, event unit with its time range; the rating is the unit alone), expandable to their reasons. One day is open at a time; clicking it again closes it; clicking another opens that one. Opening a day selects it, so the timeline, compass and hours follow. Today lists only the windows still ahead; when none is left it says "No light windows are left today." (or the polar line). There is no separate Today or Coming up list.
 8. **Hour by hour**: the spot page's section at panel density (see below). The compass (Sun and moon) is part of Light through the day.
-9. **Actions:** **Save** / **Saved** (hidden for your own spots) and [AddToTripMenu](COMPONENTS.md#addtotripmenu); then the source line ([ForecastSourceLine](COMPONENTS.md#forecastsourceline)) and a link-style **Show Full Page** that opens the spot page for the chosen day.
+9. **Actions:** [AddToTripMenu](COMPONENTS.md#addtotripmenu) (the main action), **Save** / **Saved** (hidden for your own spots), **Edit** (`pencil`; saved and own spots, opens the [Edit Location sheet](#edit-location-sheet)), **Open in Maps** and, on your own spots, **Adjust Location** (`scope`); then the source line ([ForecastSourceLine](COMPONENTS.md#forecastsourceline)) and a link-style **Show Full Page** that opens the spot page for the chosen day.
 
 The panel scrolls under its header. Windy and Look Around are on the full page only.
+
+**Moving your own spot.** Three ways, all one undo step ("Undo Move Spot"; the coordinate is exactly what you set, no lookup replaces it):
+
+- **Drag the pin.** Select your spot and drag its pin on the map; drop it where you want it. A small dot marks the exact point under the pin's pointer.
+- **Adjust Location** (the `scope` button on the card). The map recentres on the spot (zoom kept) and a crosshair sits where the spot is; a banner says "Move the map to put the crosshair on your spot". Pan the map under the crosshair; **Cancel** and **Done** are in the window toolbar (iPhone: the sheet drops to its peek and they are in the navigation bar; iPad: at the top of the panel). Done saves the coordinate under the crosshair; Cancel leaves the spot where it was.
+- **Latitude and Longitude** (a grouped form on the card, your own spots only): type a value and press Return or leave the field. **Paste Coordinates** reads the clipboard: "37.26, -122.41", "37.26°N 122.41°W", degrees-minutes-seconds or an Apple Maps share link. Out-of-range values show a problem line in `status/danger` and do not move the spot.
 
 Map: [ExploreMapPane](COMPONENTS.md#exploremappane), showing the user's location (system blue dot and button; a simulated dot with `-IterLocation`; nothing without permission) and framing it with Near You in the first fit, with [ExplorePinView](COMPONENTS.md#explorepinview)s, and the [AddSpotBanner](COMPONENTS.md#addspotbanner) docked top in Add Spot mode. Nothing else floats over the map. The selected pin is the only mark of the selection on the map. Map controls: zoom stepper, compass, scale. Map style: standard, flat, no points of interest.
 
@@ -326,7 +334,7 @@ Toolbar (all primary-action placement), left to right. The window toolbar draws 
 
 **Components.** [ExploreLightPanel](COMPONENTS.md#explorelightpanel), [ExploreSuggestions](COMPONENTS.md#exploresuggestions), [ExploreAskSection](COMPONENTS.md#exploreasksection) (running, failure, results), [ExploreRow](COMPONENTS.md#explorerow), [ExplorePinView](COMPONENTS.md#explorepinview), [ExploreClusterView](COMPONENTS.md#exploreclusterview), [SpotImageStrip](COMPONENTS.md#spotimagestrip), [LightTimeline](COMPONENTS.md#lighttimeline), [DayWindowsList](COMPONENTS.md#daywindowslist), [AddSpotBanner](COMPONENTS.md#addspotbanner), [EventScore](COMPONENTS.md#eventscore-the-event-unit), [EventLane](COMPONENTS.md#eventlane), [WindowSymbol](COMPONENTS.md#windowsymbol), [WeatherStatusBanner](COMPONENTS.md#weatherstatusbanner), [ProvenanceTag](COMPONENTS.md#provenancetag), [LayoutGridOverlay](COMPONENTS.md#layoutgridoverlay), [AddToTripMenu](COMPONENTS.md#addtotripmenu), [SampleDataLabel](COMPONENTS.md#sampledatalabel), [ForecastSourceLines](COMPONENTS.md#forecastsourcelines), [WindyLink](COMPONENTS.md#windylink), [SpotEditorSheet](COMPONENTS.md#spoteditorsheet), ContentUnavailableView, [MapStandIn](COMPONENTS.md#mapstandin)-style stand-in (snapshots).
 
-**Actions.** Click a row to select it: its pin becomes the selected pin at once and, after the double-click interval, the light panel replaces the list. A double-click inside that interval opens the spot page instead. The arrow keys in the list move the selection and open the panel at once; Return opens it. In the panel, Up and Down step to the previous and next place in list order (the pin follows and the map pans only if the pin is out of view), and Esc or **‹ Places** goes back to the list at the same scroll position with the row still selected. Typing in or changing the search, or running a suggestion, returns to the list. **Show Full Page** opens the spot page for the row's day. Click a pin to select it: the list scrolls to its row and the panel opens (or switches to that place if it was already open). Click empty map to clear the selection and return to the list. A row selection recentres the map without zooming out. Rows do not expand in place. Right-click on a row or pin: Open, Save or Unsave (not on your own spots), Add to Trip ▸, divider, Open in Maps, Copy Coordinates. Hovering a pin gives it a chip. In Add Spot mode a click on the map drops a pin and opens the [Spot editor sheet](#spot-editor-sheet); the cursor is a crosshair and pins do not respond. A spot you just added opens in the panel.
+**Actions.** Click a row to select it: its pin becomes the selected pin at once and, after the double-click interval, the light panel replaces the list. A double-click inside that interval opens the spot page instead. The arrow keys in the list move the selection and open the panel at once; Return opens it. In the panel, Up and Down step to the previous and next place in list order (the pin follows and the map pans only if the pin is out of view), and Esc or **Back** goes back to the list at the same scroll position with the row still selected. Typing in or changing the search, or running a suggestion, returns to the list. **Show Full Page** opens the spot page for the row's day. Click a pin to select it: the list scrolls to its row and the panel opens (or switches to that place if it was already open). Click empty map to clear the selection and return to the list. A row selection recentres the map without zooming out. Rows do not expand in place. Right-click on a row or pin: Open, Save or Unsave (not on your own spots), Add to Trip ▸, divider, Open in Maps, Copy Coordinates. Hovering a pin gives it a chip. In Add Spot mode a click on the map drops a pin and opens the [Spot editor sheet](#spot-editor-sheet); the cursor is a crosshair and pins do not respond. A spot you just added opens in the panel.
 
 **Which window a row shows.** One rule for Explore, Locations and Ask: the next sunrise or sunset event at the spot, in the spot's own local time. A window counts until it ends; after today's sunset the row shows tomorrow's sunrise; it looks up to 4 days ahead; where the sun gives neither (polar) it falls back to the first non-night window not yet over. Blue hours and night are never in a list row; they are in the panel and on the spot page. The start time's tooltip says "Tomorrow" when the window is tomorrow's.
 
@@ -522,6 +530,20 @@ Map: [LocationsMap](COMPONENTS.md#locationsmap), one pin per listed spot, framed
 | Validation errors | Save with a blank name or bad walk-in | Raspberry problem lines under the fields. | not rendered |
 
 ---
+
+## Edit Location sheet
+
+**Purpose.** Change a saved place or one of your own: name, place, notes, folder, pin and, for your own spots, position and light facts. Mac and iOS share the form (`PlaceEditorSheet`).
+
+**Placement.** Sheet (Mac: 520 pt wide, `layout/listMax`; iPhone and iPad: a system sheet with an inline navigation title **Edit Location**). System grouped Form; **Cancel** and **Done** in the toolbar, Done disabled while the draft is invalid. Done saves in one undo step ("Undo Edit Location"); Cancel changes nothing.
+
+**Regions, top to bottom.**
+
+1. **Name** (required: "Name this location to save it.") and **Place**.
+2. Your own spot: the [CoordinateFieldsSection](COMPONENTS.md#coordinatefieldssection) (Latitude, Longitude, Paste Coordinates), then **Category**, **Walk-in (minutes)**, **Tags** and the **Best light (choose any)** toggles. A catalogue spot (Iter's curated list) shows instead a read-only section **From the Catalogue**: Coordinates, Category, Best light and Walk-in, with the footer "This spot comes from Iter's catalogue, so its position, category and light are fixed. Your name, place, notes, folder and pin are saved with your copy."
+3. **Notes**, then **Folder** (a location folder, or None) and **Pin to Sidebar**.
+
+A new coordinate moves the pin and fetches the new forecast on Done. Not in the snapshots (a sheet over a live form).
 
 ## Settings
 

@@ -15,7 +15,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 
 1. [Light Index components](#light-index-components): [EventScore (the event unit)](#eventscore-the-event-unit), [WindowSymbol](#windowsymbol), [ScoreLegend](#scorelegend), [WindowLanes](#windowlanes), [EventLane](#eventlane), [LayoutGridOverlay](#layoutgridoverlay)
 2. [Honesty and provenance](#honesty-and-provenance-components): [SampleDataLabel](#sampledatalabel), [WeatherStatusBanner](#weatherstatusbanner), [WeatherAttributionView](#weatherattributionview) (with ForecastSourceLine, [ForecastSourceLines](#forecastsourcelines) and WeatherDataSources), [WindyLink](#windylink), [ProvenanceTag](#provenancetag), [Warning lines](#warning-lines), [Weather status text and score notes](#weather-status-text-and-score-notes)
-3. [Shared](#shared-components): [AddToTripMenu](#addtotripmenu), [MapStandIn](#mapstandin), [SpotEditorSheet](#spoteditorsheet), [ModuleCard](#modulecard)
+3. [Shared](#shared-components): [AddToTripMenu](#addtotripmenu), [MapStandIn](#mapstandin), [SpotEditorSheet](#spoteditorsheet), [PlaceEditorSheet](#placeeditorsheet), [CoordinateFieldsSection](#coordinatefieldssection), [GlassGeometry](#glassgeometry), [ModuleCard](#modulecard)
 4. [Shell](#shell-components): [TripContextMenu](#tripcontextmenu), [FolderContextMenu](#foldercontextmenu), [Sidebar rows](#sidebar-rows), [OfflineStatusBadge](#offlinestatusbadge)
 5. [Trips](#trips-components): [TripCard](#tripcard), [TemplateRow](#templaterow), [TripHeader](#tripheader), [TripOverviewStrip](#tripoverviewstrip), [TripPlanList](#tripplanlist), [DayHeader](#dayheader), [StopRow](#stoprow), [StopNumberBadge](#stopnumberbadge), [DriveRow](#driverow), [OvernightBoundary](#overnightboundary), [SuggestionBanner](#suggestionbanner), [TripRouteMap](#triproutemap), [AddStopPopover](#addstoppopover)
 6. [Explore](#explore-components): [ExploreListPanel](#explorelistpanel), [ExploreLocationBanner](#explorelocationbanner), [ExploreRow](#explorerow), [ExploreMapPane](#exploremappane), [ExplorePinView](#explorepinview), [ExploreClusterView](#exploreclusterview), [ExploreLightPanel](#explorelightpanel), [ExploreSuggestions](#exploresuggestions), [SpotImageStrip](#spotimagestrip), [AddSpotBanner](#addspotbanner), [SearchHereControl](#searchherecontrol)
@@ -265,6 +265,29 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Accessibility:** map labelled "Map with the spot's pin at the centre" with the coordinates as its value.
 - **Used on:** Explore (create), Spot page and Locations (edit).
 
+### PlaceEditorSheet
+
+- **Type, file:** `PlaceEditorSheet`, `Components/PlaceEditorSheet.swift` (compiled on both platforms).
+- **One job:** edit a saved or own place: name, place, notes, folder, pin and, for your own spots, position, category, walk-in, tags and best light.
+- **Anatomy and states:** see [Edit Location sheet](SCREENS.md#edit-location-sheet). A system grouped Form in a `NavigationStack` with Cancel and Done in the toolbar; state is a `PlaceEditDraft`. A curated spot shows its catalogue facts in a read-only section ("From the Catalogue") with a footer saying why.
+- **Behaviour:** Done calls `AppModel.applyEdit` (one undo step, "Edit Location"; a moved coordinate requests the forecast). Edit ▸ Edit Location… (⌘E) runs it through the `editLocation` focused value.
+- **Tokens:** system controls only; `status/danger` for problem lines, `layout/listMax` for the Mac sheet's width.
+- **Used on:** Explore place card, Spot page, Locations (Mac and iOS), pinned sidebar rows.
+
+### CoordinateFieldsSection
+
+- **Type, file:** `CoordinateFieldsSection`, `Components/CoordinateFieldsSection.swift` (both platforms); its text and validation are `CoordinateFields` in IterFeatures.
+- **One job:** edit a latitude and longitude as decimal-degree text, with Paste Coordinates.
+- **Anatomy:** a Form section: **Latitude** and **Longitude** rows (a trailing, right-aligned text field with monospaced digits, placeholder 0.0; numbers-and-punctuation keyboard on iOS), a problem line under a bad value (`exclamationmark.triangle.fill`, `type/caption`, `status/danger`: "Latitude is a number from -90 to 90."), and a **Paste Coordinates** button (`doc.on.clipboard`; tooltip "Paste a latitude and longitude, or an Apple Maps link") with "No coordinates found on the clipboard." when the paste read nothing. Pasting accepts "37.26, -122.41", "37.26°N 122.41°W", degrees-minutes-seconds and Apple Maps links.
+- **Behaviour:** the bound coordinate changes only while both fields are valid. By default every valid edit commits at once (the spot editor); with `commitsOnSubmit` typing waits for Return, leaving the field or Paste Coordinates (the Mac place card, so a saved spot is not moved on every keystroke). A coordinate changed from outside (a drag, the map) rewrites the text.
+- **Used on:** [SpotEditorSheet](#spoteditorsheet), [PlaceEditorSheet](#placeeditorsheet), the Explore place card (your own spots).
+
+### GlassGeometry
+
+- **Type, file:** `GlassGeometry`, `Packages/IterKit/Sources/IterDesign/GlassGeometry.swift`.
+- **One job:** the floating cards' glass measurements, from Apple Maps (see GLASS-RULES.md), in one place.
+- **Values:** `cardCorner` 27.5 pt; `cornerButton` 32 pt; `cornerButtonInset` 11.5 pt, the card's radius less the button's (27.5 - 16), which makes the card's corner concentric with a corner button. Used by the Mac place card header and the planner card's Share and More buttons.
+
 ### ModuleCard
 
 - **Type, file:** `ModuleCard`, `Spot/SpotLayout.swift` (replaces `SpotCard`).
@@ -394,6 +417,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
   The old schedule headline ("Leave … · park … · set up by …") is gone: the leave time is in the drive row's gutter, the set-up time in the stop's gutter.
 - **States:** default; selected (system list selection, and the map pin follows); scored (event unit by band); unscored (the window's symbol alone with a spinner beside it while the stop's forecast is in flight; the session menu items simply have no score; the screen's weather banner says why); out of order (violet line); window missing (violet line, menu shows "no window this day"); dragging (the row follows the pointer); infeasible incoming drive (shown on the drive row above, not on the stop).
 - **Context menu:** Open Spot Page, Open in Maps, Move Up, Move Down, Move to Day ▸, Remove from Trip.
+- **iOS:** the session picker and the Move to Day menu in edit mode are system `Menu`s with `.menuStyle(.button)` and `filterChipStyle()` (the bordered capsule the Explore filter chips use), not hand-filled capsules; Move to Day is an icon-only `calendar` label with the VoiceOver name "Move to day".
 - **Accessibility:** container labelled "Stop 2, Monument Valley"; custom actions Move Up, Move Down, Remove from Trip.
 - **Tokens:** `space/sm`, `space/xs`, `type/headline`, `type/timeSmall`, `type/caption`, `type/callout`.
 - **Used on:** Trip builder.
@@ -476,6 +500,13 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Interaction:** a click selects the row and, after the double-click interval, opens its [ExploreLightPanel](#explorelightpanel). The arrow keys and Return open the panel at once. Double-click opens the spot page. Rows do not expand.
 - **Accessibility:** one element: name, locality, the distance when a location is known, then the window's words, score, band, confidence and start time ("Sunrise, Light Index 68, Good, Medium confidence, starts 07:20").
 
+### MapStyleMenu
+
+- **Type, file:** `MapStyleMenu`, `Explore/MapStyleControl.swift` (both platforms).
+- **One job:** choose Standard, Satellite or Hybrid, and Show Daylight; one choice for every map.
+- **iOS:** a `map` symbol button. Alone it is the system glass circle (`.buttonStyle(.glass)`, `.buttonBorderShape(.circle)`, large control size); inside the shared glass capsule that groups it with the location button (`isGlass: false`) the capsule is the glass. The earlier hand-drawn `RoundGlassLabel` is gone: no control draws its own glass.
+- **Used on:** Explore and Locations maps, the trip route map.
+
 ### ExploreMapPane
 
 - **Type, file:** `ExploreMapPane`, `Explore/ExploreMapPane.swift`.
@@ -483,7 +514,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Anatomy:** a MapKit map (standard, flat, points of interest hidden; zoom stepper, compass, scale), the user's location (with location permission, MapKit's own blue dot (`UserAnnotation`) and a user-location button leading the controls; with a simulated location (`-IterLocation`) a 14 pt `map/userLocation` dot with a 2.5 pt white ring, labelled "Your location (simulated)", and no button. Without permission, neither.), pins as [ExplorePinView](#explorepinview) and, where pins would overlap, [ExploreClusterView](#exploreclusterview) counts, a "New spot" `mappin.circle.fill` (`accent/primary`, title size) at a dropped draft pin; overlay: [AddSpotBanner](#addspotbanner) top, inset `space/md`. **Camera:** [MapCameraPolicy](SCREENS.md#explore) fits the Near You set (else every listed spot), never wider than a 40° span; once you move the map it stays yours, is saved for this screen and restored on relaunch, and a change in the list refits only if you have not touched it; selecting a spot pans to it without zooming out, keeping the pin just inside the edge on every side (no part of the map is covered).
 - **Selection:** selecting a pin opens the light panel for it (or switches the open panel to it); clicking empty map clears the selection and the column returns to the list.
 - **Items and clustering:** the pane draws `explore.mapItems` and computes nothing in `body`. Items are ordered for drawing: dots, clusters, chips, the hovered pin, then the selected pin on top; by id within each group. Pins that fall in the same cell of a world-fixed grid (about 48 pt at the current zoom, regrouped only when the zoom bucket changes, never by panning) become one cluster; the selected and hovered pins are never clustered, a cell with one pin keeps its normal style, and nothing is clustered before the map's first settle or when the view is narrower than 0.1° of longitude. The chip budget (the best 6 scored pins in view) is spent only on pins that stay individual. A pin's context menu looks its spot up when it opens. The pane reports its size to the model (`setMapViewport`).
-- **States:** default; a selection; Add Spot mode (crosshair cursor, pins not clickable); a draft pin placed (the editor sheet is open).
+- **States:** default; a selection; Add Spot mode (crosshair cursor, pins not clickable); a draft pin placed (the editor sheet is open); your own selected spot: draggable pin (the point under the cursor keeps its offset from the pin's tip, drop saves, Undo Move Spot), with a small dot at its exact point; Adjust Location (a crosshair at the centre of the map, an `AdjustLocationBanner` hint, Cancel and Done in the window toolbar). Taps and drags are read in the `.global` space (see ARCHITECTURE.md, Pin placement on the map).
 
 ### ExploreClusterView
 
@@ -516,7 +547,7 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Type, file:** `ExploreLightPanel`, `Explore/ExploreLightPanel.swift`.
 - **One job:** the selected place and its light, in the list column, in place of the list. It opens for a row or a pin selection.
 - **Anatomy:** fills the list column (340 to 520 pt wide, the full height), `background/content`, with the [layout grid](#layoutgridoverlay) available over it. Top to bottom:
-  1. **Header** (padding `grid/inset` horizontal, `space/sm` vertical), then a divider: **‹ Places** (`chevron.left` and the word, `type/subheadline`, accent, borderless; tooltip "Back to places (Esc)"), a spacer, "3 of 16" (`type/subheadline`, `text/secondary`, monospaced digits; VoiceOver "Place 3 of 16"), and two borderless steppers `chevron.up` and `chevron.down` in `text/secondary` (tooltips "Previous place (Up Arrow)" and "Next place (Down Arrow)"; each disabled at its end of the list).
+  1. **Header** (inside the card, from the first frame; `PlaceCardHeader`): **Back** (`chevron.backward`, leading; tooltip "Back to Places (Esc)"), **Share** (`square.and.arrow.up`) and **Close** (`xmark`) at the trailing edge, each a 32 pt `GlassCircleButtonStyle` circle in one glass container, `GlassGeometry.cornerButtonInset` (11.5 pt) from the card's top and side edges. No position counter, no steppers.
   2. The [WeatherStatusBanner](#weatherstatusbanner) when weather is missing.
   3. A scroll view, sections `space/xl` apart:
      - **Place header** (16 pt inset, `space/xs` between lines): the name (`type/title/spot`, up to two lines, header trait) and, on its first baseline at the trailing edge, the next window as a large [EventScore](#eventscore-the-event-unit) (44 pt, start time) with "Tomorrow" (`type/secondary`, `text/secondary`) before it when it is tomorrow's; beneath both, one line of locality · distance (only when Iter knows where you are) · [ProvenanceTag](#provenancetag) (`type/secondary`, `text/secondary`). No unit when the spot has no such window.
@@ -524,9 +555,9 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
      - **Spot sections** at panel density, built by one `SpotModel` for the place and the day, in this order: [SpotFactsRow](#spotfactsrow) ("Good to know", with the best window first), [LightTimeline](#lighttimeline) ("Light through the day", with the compass), [OutlookStrip](#outlookstrip) (the days open in place) and [HourlyStrip](#hourlystrip). Windy and Look Around are on the full page only. The hour-by-hour section drops its source line; the actions below carry it.
      - **Actions** (16 pt inset): **Save** / **Saved** (`bookmark`, hidden for your own spots) and [AddToTripMenu](#addtotripmenu) side by side; below them the [ForecastSourceLine](#forecastsourceline) and a link-style **Show Full Page** that opens the spot page for the row's day. (There is no Open button.)
 - **States:** scored; unscored (the sections still show sun and moon); loading; no window; saved; your own spot (no Save button); scrolled to the lower half (`-IterPanelScrolled YES`, see TESTING.md); at the narrowest column (340 pt: the timeline's "Drag to read any time" hint is dropped below 350 pt).
-- **Behaviour:** the panel takes keyboard focus when it opens. Up and Down step to the previous and next place in list order (`ExploreModel.selectPrevious()` and `selectNext()`; the list scrolls to the row and the pin follows). Esc and **‹ Places** call `closePanel()`: the list returns at the same scroll position with the row still selected and takes the keyboard. Esc is ignored while Add Spot mode is on. The scroll view starts at the top for each place; sections are rebuilt for each place and day. A new or changed search, running a suggestion or an Ask, and clearing the selection also close it. `showsPanel` and `panelPosition` ("3 of 16") live on the model.
+- **Behaviour:** the panel takes keyboard focus when it opens. Up and Down step to the previous and next place in list order (`ExploreModel.selectPrevious()` and `selectNext()`; the list scrolls to the row and the pin follows). Esc and **Back** call `closePanel()`: the list returns at the same scroll position with the row still selected and takes the keyboard. Esc is ignored while Add Spot mode is on. The scroll view starts at the top for each place; sections are rebuilt for each place and day. A new or changed search, running a suggestion or an Ask, and clearing the selection also close it. `showsPanel` lives on the model.
 - **Transition:** fades in (`.snappy`, 0.2 s); none with Reduce Motion. It must not slide: the header's buttons live in a window-level view (`titlebarClickable`) that follows the card's layout frame, which a slide's render offset never moves. Corner buttons sit `GlassGeometry.cornerButtonInset` (11.5 pt) from the card's top and side edges.
-- **Accessibility:** container labelled "Place panel for Mesa Arch". The back button reads "Back to places"; the steppers "Previous place" and "Next place"; the place header's unit reads as the list row does.
+- **Accessibility:** container labelled "Place panel for Mesa Arch". The back button reads "Back to Places", Share "Share this location" and Close "Close"; the place header's unit reads as the list row does.
 - **Tokens:** `size/imageStripHeight`, `layout/listColumnMin`, `layout/listMax`, `grid/inset`, `space/xl`, `space/lg`; the timeline's sizes are `SpotLayout.panelSkyHeight` (88) and `panelPlotHeight` (112).
 
 ### ExploreSuggestions
