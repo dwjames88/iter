@@ -67,10 +67,6 @@ enum DebugScripts {
         guard let range = resizeRange else { return }
         await pause(6)
         guard let window = NSApp.windows.filter({ $0.contentView != nil && $0.frame.width > 400 }).max(by: { $0.frame.width < $1.frame.width }) else { return }
-=======
-        // A hidden launch (`open -j`) has no visible window; the widest window is the one (a hidden window reports neither visible nor main-capable).
-        guard let window = NSApp.windows.filter({ $0.isVisible || $0.frame.width > 600 }).max(by: { $0.frame.width < $1.frame.width }) else { say("resize: no window in \(NSApp.windows.map { "\(type(of: $0)) vis=\($0.isVisible) main=\($0.canBecomeMain) w=\(Int($0.frame.width))" })"); return }
->>>>>>> 1ce6bf8 (Mac: per-step timing (median, p90, max) in the resize script)
         func setWidth(_ w: Double) {
             var frame = window.frame
             frame.size.width = w
@@ -98,7 +94,10 @@ enum DebugScripts {
             await pause(0.016)
         }
         say("resize sweep \(widths.count) steps in \(Int(Date().timeIntervalSince(start) * 1000)) ms")
-<<<<<<< HEAD
+        say("resize step sync \(sync.summary)")
+        say("resize step total \(total.summary)")
+        IterPerf.log.notice("perf resize step sync \(sync.summary, privacy: .public)")
+        IterPerf.log.notice("perf resize step total \(total.summary, privacy: .public)")
         for w in [1000.0, 1100, 1280, 1440, 1600, 1728, 1800] where range.contains(w) {
             setWidth(w)
             await capture("resize-\(Int(w))")
