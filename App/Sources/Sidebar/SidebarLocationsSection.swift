@@ -27,7 +27,7 @@ struct SidebarLocationsSection: View {
     }
 }
 
-/// A pinned location: opens its spot page. Open and Unpin from its menu.
+/// A pinned location: opens its spot page. Open, Edit and Unpin from its menu.
 private struct SidebarPlaceRow: View {
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
@@ -39,6 +39,9 @@ private struct SidebarPlaceRow: View {
             .contextMenu {
                 Button { navigation.show(.location(place.id)) } label: {
                     Label(String(localized: "Open", comment: "Context menu"), systemImage: "arrow.right.circle")
+                }
+                Button { navigation.editingPlace = place } label: {
+                    Label(String(localized: "Edit…", comment: "Context menu"), systemImage: "pencil")
                 }
                 Button { model.store.setPinned(place, false) } label: {
                     Label(String(localized: "Unpin from Sidebar", comment: "Context menu"), systemImage: "pin.slash")

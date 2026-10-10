@@ -122,6 +122,15 @@ public final class PlaceRecord {
              popularity: popularity, tags: tags, origin: origin)
     }
 
+    /// Refreshes a curated record from the catalogue, leaving the text the user may have edited (name, place, notes).
+    func applyCatalogue(_ spot: Spot) {
+        let name = name, locality = locality, notes = notes
+        apply(spot)
+        self.name = name
+        self.locality = locality
+        self.notes = notes
+    }
+
     /// Copies a spot's content (not identity) into this record.
     func apply(_ spot: Spot) {
         name = spot.name

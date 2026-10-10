@@ -7,7 +7,7 @@ import IterDesign
 import IterFeatures
 
 /// Name, place, provenance, and the page's actions: Add to Trip, Save, Open in Maps, Share, and for the user's own
-/// spots Edit and Delete (both undoable through the store).
+/// spots Delete, and Edit for any saved or own spot (both undoable through the store).
 struct SpotHeaderView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
@@ -55,8 +55,9 @@ struct SpotHeaderView: View {
             }
         }
         .sheet(item: $editing) { record in
-            SpotEditorSheet(mode: .edit(record))
+            PlaceEditorSheet(record: record)
         }
+        .focusedSceneValue(\.editLocation, editable.map { record in EditLocationAction { editing = record } })
         .confirmationDialog(LightText.deleteTitle(spot.name), isPresented: $confirmingDelete, titleVisibility: .visible) {
             Button(LightText.deleteSpot, role: .destructive) { deleteSpot() }
         } message: {
@@ -100,11 +101,12 @@ struct SpotHeaderView: View {
             }
             .frame(width: tileWidth)
             .help(String(localized: "Share this location", comment: "Help"))
-            if record != nil {
-                Button { editing = record } label: { Label(LightText.edit, systemImage: "pencil") }
-                    .keyboardShortcut("e")
+            if let editable {
+                Button { editing = editable } label: { Label(LightText.edit, systemImage: "pencil") }
                     .frame(width: tileWidth)
-                    .help(String(localized: "Edit this spot", comment: "Help"))
+                    .help(String(localized: "Edit this location", comment: "Help"))
+            }
+            if record != nil {
                 Button(role: .destructive) { requestDelete() } label: { Label(LightText.delete, systemImage: "trash") }
                     .frame(width: tileWidth)
                     .help(String(localized: "Delete this spot", comment: "Help"))
@@ -114,7 +116,13 @@ struct SpotHeaderView: View {
         .placeAction()
     }
 
-    /// The editable record, for the user's own spots.
+    /// The record to edit: the user's own spot, or any place saved to Locations.
+    private var editable: PlaceRecord? {
+        guard model.store.revision >= 0 else { return nil }
+        return model.store.editableRecord(for: spot)
+    }
+
+    /// The record that can be deleted: the user's own spots.
     private var record: PlaceRecord? {
         guard spot.origin == .user, model.store.revision >= 0, let id = UUID(uuidString: spot.id) else { return nil }
         return model.store.place(id: id)

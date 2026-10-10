@@ -56,6 +56,10 @@ final class AppNavigation {
     /// it) when they appear or when it changes.
     var newFolderRequest: FolderKind?
 
+    /// The saved or own place the window's Edit Location sheet is editing; nil = none. Set by the place card, the
+    /// Locations list and the sidebar's pinned rows; the window presents the sheet.
+    var editingPlace: PlaceRecord?
+
     func show(_ item: SidebarItem) { selection = item }
 
     func open(_ route: SpotRoute) {

@@ -54,6 +54,9 @@ struct RootView: View {
             if new == .all { autoCollapsed = false }
         }
         .focusedSceneValue(\.navigation, navigation)
+        .sheet(item: $navigation.editingPlace) { record in
+            PlaceEditorSheet(record: record)
+        }
         .sheet(isPresented: $onboarding.isPresented, onDismiss: { model.onboarding.dismissed() }) {
             OnboardingView()
         }

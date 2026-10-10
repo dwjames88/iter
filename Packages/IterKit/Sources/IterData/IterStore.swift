@@ -326,6 +326,64 @@ public final class IterStore {
         return true
     }
 
+    /// The record behind a spot the user can edit: one they added, or any place saved to Locations. nil for a spot that
+    /// is only a search result or a catalogue entry.
+    public func editableRecord(for spot: Spot) -> PlaceRecord? {
+        guard let record = findPlace(for: spot), record.isSaved || record.origin == .user else { return nil }
+        return record
+    }
+
+    /// The spot as the store has it now, so a page or card opened before an edit shows the edit. Unsaved spots are as given.
+    public func current(_ spot: Spot) -> Spot {
+        editableRecord(for: spot)?.spot ?? spot
+    }
+
+    /// Applies an edit from the place editor as ONE undo step. Fields that are the catalogue's (see `PlaceEdit.editsFacts`)
+    /// are left alone for a curated spot. Returns whether anything changed; an edit that changes nothing is not an undo step.
+    @discardableResult
+    public func editPlace(_ place: PlaceRecord, _ edit: PlaceEdit) -> Bool {
+        let facts = PlaceEdit.editsFacts(of: place.origin)
+        let target = edit.folderID.flatMap { id in folder(id: id).flatMap { $0.kind == .locations ? $0 : nil } }
+        let current = PlaceEdit(place)
+        var wanted = edit
+        if !facts {
+            wanted.category = current.category
+            wanted.bestLight = current.bestLight
+            wanted.tags = current.tags
+            wanted.walkInMinutes = current.walkInMinutes
+            wanted.coordinate = current.coordinate
+            wanted.timeZoneIdentifier = current.timeZoneIdentifier
+        }
+        wanted.folderID = target?.id
+        guard wanted != current else { return false }
+        perform(.updatePlace) {
+            touch(place)
+            let contentChanged = wanted.name != current.name || wanted.locality != current.locality || wanted.notes != current.notes
+                || wanted.category != current.category || wanted.bestLight != current.bestLight || wanted.tags != current.tags
+                || wanted.walkInMinutes != current.walkInMinutes || wanted.coordinate != current.coordinate
+                || wanted.timeZoneIdentifier != current.timeZoneIdentifier
+            place.name = wanted.name
+            place.locality = wanted.locality
+            place.notes = wanted.notes
+            place.category = wanted.category
+            place.bestLight = wanted.bestLight
+            place.tags = wanted.tags
+            place.walkInMinutes = wanted.walkInMinutes
+            place.coordinate = wanted.coordinate
+            place.timeZoneIdentifier = wanted.timeZoneIdentifier
+            if wanted.folderID != current.folderID {
+                place.folder = target
+                place.sortOrder = target.map { nextPlaceSortOrder(in: $0) } ?? 0
+            }
+            if wanted.isPinned != current.isPinned {
+                place.isPinned = wanted.isPinned
+                place.pinnedAt = wanted.isPinned ? .now : nil
+            }
+            if contentChanged { place.updatedAt = .now }
+        }
+        return true
+    }
+
     /// Deletes a place and every stop that used it; undo brings all of it back.
     public func deletePlace(_ place: PlaceRecord) {
         perform(.deletePlace) {
@@ -582,7 +640,8 @@ public final class IterStore {
     private func upsertPlace(for spot: Spot) -> PlaceRecord {
         if let existing = findPlace(for: spot) {
             touch(existing)
-            if spot.origin == .curated { existing.apply(spot) }
+            // A saved catalogue spot keeps what the user typed (name, place, notes); the catalogue's facts refresh.
+            if spot.origin == .curated { existing.applyCatalogue(spot) }
             return existing
         }
         let uuid = UUID(uuidString: spot.id)

@@ -32,7 +32,7 @@ struct SpotPageScreen: View {
             page = made
             await made.start()
         }
-        .sheet(item: $editing) { record in SpotEditorSheet(mode: .edit(record)) }
+        .sheet(item: $editing) { record in PlaceEditorSheet(record: record) }
         .confirmationDialog(LightText.deleteTitle(spot.name), isPresented: $confirmingDelete, titleVisibility: .visible) {
             Button(LightText.deleteSpot, role: .destructive) { deleteSpot() }
         } message: {
@@ -43,13 +43,20 @@ struct SpotPageScreen: View {
     /// The spot as the store has it now (a user's spot can be edited from this page).
     private var spot: Spot {
         let base = page?.spot ?? route.spot
-        guard base.origin == .user, model.store.revision >= 0, let id = UUID(uuidString: base.id), let record = model.store.place(id: id) else { return base }
-        return record.spot
+        guard model.store.revision >= 0 else { return base }
+        return model.store.current(base)
     }
 
+    /// Own spots only: the ones that can be deleted.
     private var record: PlaceRecord? {
         guard spot.origin == .user, model.store.revision >= 0, let id = UUID(uuidString: spot.id) else { return nil }
         return model.store.place(id: id)
+    }
+
+    /// Any saved or own spot can be edited.
+    private var editable: PlaceRecord? {
+        guard model.store.revision >= 0 else { return nil }
+        return model.store.editableRecord(for: spot)
     }
 
     private func deleteSpot() {
@@ -145,9 +152,11 @@ struct SpotPageScreen: View {
                 Button { ExploreActions.copyCoordinates(spot) } label: {
                     Label(String(localized: "Copy coordinates", comment: "Menu item"), systemImage: "doc.on.doc")
                 }
-                if let record {
+                if let editable {
                     Divider()
-                    Button { editing = record } label: { Label(LightText.edit, systemImage: "pencil") }
+                    Button { editing = editable } label: { Label(LightText.edit, systemImage: "pencil") }
+                }
+                if record != nil {
                     Button(role: .destructive) { confirmingDelete = true } label: { Label(LightText.delete, systemImage: "trash") }
                 }
             } label: {

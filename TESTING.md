@@ -170,6 +170,14 @@ open build/Iter.app --args -IterInMemoryStore YES -IterScoutStub results -IterSe
 
 To supply a key for one run, see "Development switches" above.
 
+## Editing a saved or own location
+
+1. Save a spot from Explore (or add your own with Add Spot on Map). Select it in Locations and press Command-E, or use Edit on the place card, Edit... in a row's context menu or a pinned sidebar row. On iPhone swipe a Locations row right, or use the row's menu, or More on a place.
+2. Change name, place, notes, folder or Pin to Sidebar and press Done: the card, list, sidebar and map update at once. Cancel changes nothing.
+3. On your own spot, type a new Latitude and Longitude (out of range shows a problem and disables Done). Done moves the pin and fetches the new forecast.
+4. On a saved catalogue spot (for example Mesa Arch) position, category and light are listed read-only under From the Catalogue, with the reason.
+5. Edit > Undo Edit Location puts everything back in one step.
+
 ## Keyboard
 
 ⌘N New Trip · ⇧⌘N Add Spot on Map · ⌘O Import Trip · ⌘F Find Spots (focuses the search field, in the list and in the panel) · ⌘1 Trips · ⌘2 Explore · ⌘3 Locations · ⌥⌘N New Folder · ⌘R Refresh Forecasts · ⌘D Save spot · ⌘E Edit your spot · ⌘Z / ⇧⌘Z Undo / Redo · Delete removes the selected stop or spot · ⌘, Settings.

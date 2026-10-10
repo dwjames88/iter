@@ -7,6 +7,7 @@ import IterFeatures
 struct AppCommands: Commands {
     let model: AppModel
     @FocusedValue(\.navigation) private var navigation
+    @FocusedValue(\.editLocation) private var editLocation
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
     @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
 
@@ -49,6 +50,11 @@ struct AppCommands: Commands {
             }
             .keyboardShortcut("o")
             .disabled(navigation == nil)
+        }
+        CommandGroup(after: .pasteboard) {
+            Button(String(localized: "Edit Location…", comment: "Menu item: edit the saved or own place shown")) { editLocation?.run() }
+                .keyboardShortcut("e")
+                .disabled(editLocation == nil)
         }
         CommandGroup(after: .textEditing) {
             Button(String(localized: "Find Spots", comment: "Menu item")) {

@@ -52,10 +52,9 @@ struct SpotPage: View {
         .onChange(of: liveSpot) { _, new in page.update(spot: new) }
     }
 
-    /// The spot as the store has it now (a user's spot can be edited from this page).
+    /// The spot as the store has it now (a saved or own spot can be edited from this page).
     private var liveSpot: Spot {
-        let spot = page.spot
-        guard spot.origin == .user, model.store.revision >= 0, let id = UUID(uuidString: spot.id), let record = model.store.place(id: id) else { return spot }
-        return record.spot
+        guard model.store.revision >= 0 else { return page.spot }
+        return model.store.current(page.spot)
     }
 }

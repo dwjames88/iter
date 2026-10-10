@@ -201,6 +201,16 @@ public final class AppModel {
         forecasts.request(spot.coordinate)
     }
 
+    /// Saves the place editor's Done: one undoable edit, then the forecast for a moved coordinate is fetched now so the
+    /// card, list and map show the new score straight away. Returns false when the draft has problems or changed nothing.
+    @discardableResult
+    public func applyEdit(_ draft: PlaceEditDraft, to record: PlaceRecord) -> Bool {
+        guard let edit = draft.edit(for: record) else { return false }
+        let changed = store.editPlace(record, edit)
+        if changed { spotSaved(record.spot) }
+        return changed
+    }
+
     /// The intent to show for a spot: the user's choice, else the spot's own best light.
     public func intent(for spot: Spot) -> LightIntent { preferredIntent ?? spot.defaultIntent }
 }

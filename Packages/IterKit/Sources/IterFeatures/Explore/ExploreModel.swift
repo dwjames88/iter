@@ -238,10 +238,14 @@ public final class ExploreModel {
 
     /// All spots that could be listed before the search text and filters, with their source.
     private func candidates() -> [(Spot, ExploreSource)] {
-        var out: [(Spot, ExploreSource)] = CuratedSpots.all.map { ($0, .curated) }
-        let yours = app.store.savedPlaces().filter { $0.origin == .user }.map(\.spot)
+        // A saved spot shows the user's edits (name, place, notes, and for their own and Apple Maps spots the facts too).
+        let saved = app.store.savedPlaces()
+        let edited = Dictionary(saved.compactMap { r in r.curatedID.map { ($0, r.spot) } }, uniquingKeysWith: { a, _ in a })
+        let editedApple = Dictionary(saved.compactMap { r in r.externalID.map { ($0, r.spot) } }, uniquingKeysWith: { a, _ in a })
+        var out: [(Spot, ExploreSource)] = CuratedSpots.all.map { (edited[$0.id] ?? $0, .curated) }
+        let yours = saved.filter { $0.origin == .user }.map(\.spot)
         out += yours.map { ($0, .yours) }
-        out += appleResults.map { ($0, .appleMaps) }
+        out += appleResults.map { (editedApple[$0.id] ?? $0, .appleMaps) }
         // The Ask section and In View own their spots: they appear once, there.
         let owned = Set(askSuggestions.map(\.spot.id)).union(searchHereResults.map(\.id)).union(featureResults.map(\.id))
         return owned.isEmpty ? out : out.filter { !owned.contains($0.0.id) }

@@ -86,6 +86,7 @@ struct ExploreLightPanel: View {
         .environment(\.spotDensity, .panel)
         .focusable()
         .focused($isFocused)
+        .focusedSceneValue(\.editLocation, editable.map { record in EditLocationAction { navigation.editingPlace = record } })
         .focusEffectDisabled()
         .onKeyPress(.escape) {
             // Add Spot mode owns Escape (its banner's Cancel), as sheets do.
@@ -164,6 +165,11 @@ struct ExploreLightPanel: View {
                     .placeAction(isProminent: true)
                 if spot.origin != .user {
                     saveButton.placeAction()
+                }
+                if let editable {
+                    Button { navigation.editingPlace = editable } label: { Label(LightText.edit, systemImage: "pencil") }
+                        .placeAction()
+                        .help(String(localized: "Edit this location", comment: "Help"))
                 }
                 Button { cardActions.openInMaps(spot) } label: {
                     Label(LightText.openInMaps, systemImage: "map")
@@ -255,6 +261,12 @@ struct ExploreLightPanel: View {
             }
         }
         .help(saved ? String(localized: "Remove from Saved", comment: "Tooltip") : String(localized: "Save this spot", comment: "Tooltip"))
+    }
+
+    /// The record behind the card when the place is saved or yours; the card's Edit and Command-E open its editor.
+    private var editable: PlaceRecord? {
+        _ = model.store.revision
+        return model.store.editableRecord(for: spot)
     }
 
     private var isSaved: Bool {

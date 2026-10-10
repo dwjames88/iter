@@ -18,7 +18,6 @@ struct LocationsView: View {
     @State private var sort: SavedSort = .name
     @State private var filter: SavedFilter = .all
     @State private var selection: Set<UUID> = []
-    @State private var editing: PlaceRecord?
     @State private var pendingDelete: PlaceRecord?
     @State private var folderPrompt: FolderNameRequest?
 
@@ -50,9 +49,7 @@ struct LocationsView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationTitle(title)
         .toolbar(removing: .title)
-        .sheet(item: $editing) { record in
-            SpotEditorSheet(mode: .edit(record))
-        }
+        .focusedSceneValue(\.editLocation, selectedRecord.map { record in EditLocationAction { navigation.editingPlace = record } })
         .locationFolderNamePrompt($folderPrompt)
         .onChange(of: navigation.newFolderRequest) { takeNewFolderRequest() }
         .onAppear { takeNewFolderRequest() }
@@ -124,6 +121,12 @@ struct LocationsView: View {
     }
 
     private func records(_ ids: Set<UUID>) -> [PlaceRecord] { ids.compactMap { model.store.place(id: $0) } }
+
+    /// The one selected location, for Edit > Edit Location (Command-E).
+    private var selectedRecord: PlaceRecord? {
+        let chosen = records(selection)
+        return chosen.count == 1 ? chosen.first : nil
+    }
 
     // MARK: Empty
 
@@ -262,6 +265,7 @@ struct LocationsView: View {
         if let record = chosen.first, chosen.count == 1 {
             let spot = record.spot
             Button { navigation.open(SpotRoute(spot: spot)) } label: { Label(String(localized: "Open", comment: "Menu item"), systemImage: "arrow.right.circle") }
+            Button { navigation.editingPlace = record } label: { Label(String(localized: "Edit…", comment: "Menu item"), systemImage: "pencil") }
             AddToTripMenu(spot: spot)
             Divider()
         }
@@ -288,7 +292,6 @@ struct LocationsView: View {
     @ViewBuilder private func removal(_ chosen: [PlaceRecord]) -> some View {
         if let record = chosen.first, chosen.count == 1 {
             if record.origin == .user {
-                Button { editing = record } label: { Label(String(localized: "Edit…", comment: "Menu item"), systemImage: "pencil") }
                 Button(role: .destructive) { requestDelete(record) } label: { Label(String(localized: "Delete", comment: "Menu item"), systemImage: "trash") }
             } else {
                 Button { model.store.setSaved(record.spot, false) } label: { Label(String(localized: "Unsave", comment: "Menu item"), systemImage: "bookmark.slash") }

@@ -13,6 +13,7 @@ struct ExplorePlaceDetail: View {
 
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
+    @State private var editing: PlaceRecord?
 
     private var spot: Spot { row.spot }
     private var day: LocalDay { model.today(in: spot.timeZone) }
@@ -90,6 +91,12 @@ struct ExplorePlaceDetail: View {
         .id(spot.id)
     }
 
+    /// The record behind the place when it is saved or yours; More > Edit opens its editor.
+    private var editable: PlaceRecord? {
+        guard model.store.revision >= 0 else { return nil }
+        return model.store.editableRecord(for: spot)
+    }
+
     private var detail: some View {
         VStack(spacing: 0) {
             if !usesNavigationBar { header }
@@ -131,6 +138,7 @@ struct ExplorePlaceDetail: View {
         .environment(\.spotDensity, .panel)
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Text("Place panel for \(spot.name)", comment: "VoiceOver"))
+        .sheet(item: $editing) { record in PlaceEditorSheet(record: record) }
     }
 
     // MARK: Header
@@ -276,6 +284,9 @@ struct ExplorePlaceDetail: View {
                 }
                 Button { ExploreActions.open(spot, day: row.day ?? day, navigation: navigation) } label: {
                     Label(String(localized: "Show Full Page", comment: "Menu item"), systemImage: "arrow.right.circle")
+                }
+                if let editable {
+                    Button { editing = editable } label: { Label(LightText.edit, systemImage: "pencil") }
                 }
             } label: {
                 Label(String(localized: "More", comment: "Place card action: more actions"), systemImage: "ellipsis")

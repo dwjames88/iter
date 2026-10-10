@@ -5,30 +5,36 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 
 ## [Unreleased]
 
-### Added
-- **All Trips redesign**: the page is a centred column with your next trip as a hero (its first spot's picture, dates, size, the next light and an Open button), then soft cards for Pinned trips, each folder and the rest. Make folders from the page's ellipsis menu, move trips with their context menu or by dragging a card onto a folder, and start from a friendlier empty state with template picture cards. iPad shows the grid, iPhone one column.
-- **Trips on iPhone**: the trip cards swipe again: swipe right to pin or unpin, swipe left to delete, with an Undo banner that brings a deleted trip back.
-- **Licensing groundwork**: Iter can now check a licence key with Lemon Squeezy, keep it in the Keychain and work for 14 days offline. It is hidden and switched off, so nothing changes for anyone: Iter is still free, and nothing asks for a key.
+<!-- These are the release notes intended for v0.3.0. -->
 
-### Changed
-- **Folders are one level deep**: folders no longer nest. Any subfolder from an earlier version moves to the top level, right after the folder it was in, keeping its name, pin, trips and locations. Deleting a folder moves its trips out to All Trips and its locations out to All Locations.
-- **All Trips hero**: the Open button is the accent action over the picture (system prominent glass), with a little extra shading under the text, and drops under the next-session line on a narrow phone.
-- **Trip map shows the globe and daylight**: the trip route map zooms out to the world like Explore and Locations and draws the day/night line.
-- **Folders live inside All Locations**: the sidebar now lists All Trips and All Locations, then only what you pin (trips, trip folders, locations, location folders). In All Locations, folders are rows at the top with a count: open one, make a New Folder, Rename, Delete, Pin to Sidebar, drag locations onto a folder or use Move to Folder. Right-click a location to pin it. Same on iPad and iPhone.
-- **Place card buttons work**: on the Mac, Back, Share and Close in the place card's header did nothing (a click in the window's title bar band became a window drag). Back is now at the leading corner (to the list, as Escape), Share and Close at the trailing corner; the position counter and previous and next buttons are gone. Add to Trip confirms what it did and can make a new trip without leaving Explore, Save flips to Saved, and the image strip switches between Look Around (live, when Apple has it) and satellite.
-- **Maps show terrain and a globe, and the day/night line**: every map now draws with realistic elevation, so Satellite and Hybrid zoom out to Apple Maps' 3D globe (with its own night side and city lights). Standard stays a flat map at world scale (MapKit has no public way to give it the globe), so the globe is now the default style; anyone who picked a style keeps it. Zoomed out beyond about 2,000 km, a faint day/night line with two twilight bands is drawn on the map for the current time. Turn it off with **Show Daylight** in the map style menu (or View ▸ Map Style).
-- **Trip planner card**: the day planner is a wider card (560 to 800 pt, growing with the window) in the middle of the map, which frames the route in the strip beside it. Share and More are round glass buttons in the card's corner and the title sits beside them, not under them. The day strip starts with All Days and marks the chosen day in the accent; each day shows Sunrise at and Sunset at on sky-coloured badges; stops carry the same numbered accent disc as their map pin; Add Stop is a standard button.
-- **Trip planner speed**: picking a stop or day, dragging a stop and nudging are quicker and no longer make the map zoom twice. Choosing a stop pans the map only if its pin is out of view and never refits it.
-- **Search always looks the text up first**: Return in Explore's search field now always searches your places and Apple Maps, so a long place name such as "Great Smoky Mountains National Park" finds the park instead of going to Ask Iter. When the text reads like a request ("foggy forest near Portland for sunrise", a question, or a phrase starting with "find" or "show me"), an **Ask Iter** suggestion sits above the results; choose it to ask.
+### New
+- **Edit any saved or own location**: Edit is on the place card, the spot page, Locations rows (context menu, swipe on iPhone) and pinned sidebar rows, and Command-E edits the location you are looking at. Change the name, place, notes, folder, pin and, for your own and Apple Maps spots, the coordinates, category, best light, walk-in and tags. A saved catalogue spot keeps its position, category and light fixed (the sheet says why) but its name, place and notes are yours. One undo step: Undo Edit Location.
+- **A Liquid Glass redesign, laid out like Apple Maps**: on the Mac, map actions sit on the map, the search field is Maps' own, cards have glass corners and sizes match Maps. On iPhone, the map fills the screen under one floating sheet with the tab bar at its foot, and Explore uses standard system controls, filter chips included.
+- **A globe with daylight**: every map shows realistic terrain, and Satellite and Hybrid zoom out to Apple Maps' 3D globe with its night side and city lights. Hybrid is now the default style (Standard cannot show the globe), and anyone who chose a style keeps it. Zoomed far out, a faint day and night line with twilight bands is drawn for the current time. Turn it off with **Show Daylight** in the map style menu (Mac: View ▸ Map Style). The trip route map reaches the globe and daylight too.
+- **A new All Trips page**: your next trip is a hero with its first spot's picture, dates, size, the next light and an Open button. Below it, soft cards for Pinned trips, each folder and the rest. Move trips with the context menu or by dragging a card onto a folder. An empty page offers template picture cards. iPad shows a grid, iPhone one column.
+- **Folders inside All Locations**: folders are rows at the top with a count. Open one, make a New Folder, Rename, Delete, Pin to Sidebar, drag locations onto a folder or use Move to Folder. Right-click a location to pin it. Works on Mac, iPad and iPhone.
+- **A cleaner sidebar**: it lists All Trips and All Locations, then only what you pin (trips, trip folders, locations, location folders). The Mac sidebar also has a search field.
+- **A wider trip planner card (Mac)**: 560 to 800 pt, growing with the window, in the middle of the map, which frames the route in the strip beside it. Share and More are round glass buttons in the card's corner. The day strip starts with All Days and marks the chosen day in the accent. Each day shows Sunrise at and Sunset at on sky-coloured badges, and stops carry the same numbered disc as their map pin.
+- **Swipe your trips (iPhone)**: swipe right to pin or unpin, swipe left to delete, with an Undo banner that brings a deleted trip back.
+- **Licensing groundwork**: Iter can check a licence key, keep it in the Keychain and work for 14 days offline. It is hidden and switched off. Iter is still free, and nothing asks for a key.
+- **Move your own spots**: drag the selected pin of a spot you added (Mac, iPhone and iPad), or choose **Adjust Location** on its place card and pan the map under a crosshair (Done saves, Cancel restores). The place card and the spot editor have **Latitude** and **Longitude** fields and a **Paste Coordinates** button that reads "lat, lon", degrees with N/S/E/W, and Apple Maps links. Each move can be undone, and the light is scored again for the new place.
+<!-- pass 4 -->
+
+### Improved
+- **Search looks the text up first**: Return in Explore's search field always searches your places and Apple Maps, so a long name such as "Great Smoky Mountains National Park" finds the park. When the text reads like a request ("foggy forest near Portland for sunrise", a question, or a phrase starting with "find" or "show me"), an **Ask Iter** suggestion sits above the results; choose it to ask.
+- **A faster trip planner (Mac)**: picking a stop or day, dragging a stop and nudging are quicker and no longer make the map zoom twice. Choosing a stop pans the map only if its pin is out of view.
+- **Place card actions (Mac)**: Back is at the leading corner (to the list, as Escape), with Share and Close at the trailing corner. Add to Trip confirms what it did and can make a new trip without leaving Explore. Save flips to Saved. The image strip switches between Look Around (live, when Apple has it) and satellite.
+- **All Trips hero**: Open is the accent action over the picture, with a little extra shading under the text. On a narrow phone it drops under the next-session line.
+- **Folders are one level deep**: folders no longer nest. A subfolder from an earlier version moves to the top level, right after its parent, keeping its name, pin, trips and locations. Deleting a folder moves its trips to All Trips and its locations to All Locations.
+<!-- pass 4 -->
 
 ### Fixed
-- **Place card buttons**: Back, Share and Close sat outside the card, floating over the map beside its edge, after you opened a place. They are back inside the card, above the title: the card now fades in instead of sliding, so its buttons start where the card is.
-- **Card buttons in the title bar band work**: on the Mac, the buttons in the top corner of the Explore and Locations lists (filter menu, New Folder, sort, Back) and the trip card (Share, More) did nothing, because a click there became a window drag. They now take clicks, and menus open.
-- **Updates with a damaged feed entry**: one malformed entry in the update feed no longer blocks every update. Iter skips it, notes it in the log, and still offers the other releases.
-- **Drive times after a dropped connection, without a refresh**: while a trip is open, a drive that MapKit throttled or that failed offline is looked up again on its own after 30 seconds, then 1, 2 and 4 minutes, and every 5 minutes after that. "No route" is still final.
-
-### Docs
-- **Glass rules**: `Design/GLASS-RULES.md` collects the Liquid Glass, geometry and component rules from the recent Mac and iOS redesign commits and the HIG in one page for anyone touching UI.
+- **Buttons in the top corner (Mac)**: the filter menu, New Folder, sort and Back buttons on the Explore and Locations lists, and Share and More on the trip card, did nothing because a click there became a window drag. They take clicks now, and menus open.
+- **Place card buttons (Mac)**: Back, Share and Close in the place card's header work again.
+- **Updates with a damaged feed entry**: one malformed entry no longer blocks every update. Iter skips it and still offers the other releases.
+- **Drive times after a dropped connection**: while a trip is open, a drive that was throttled or failed offline is looked up again on its own, after 30 seconds, then 1, 2 and 4 minutes, then every 5 minutes. "No route" is still final.
+- **Dropped pins land where you click (Mac)**: Add Spot placed the spot to one side of the click, by hundreds of metres to kilometres depending on zoom, because the click was read in the map's padded area under the card and toolbar. It now lands exactly where you click. Selecting a pin no longer makes it jump, and your selected spot shows a dot at its exact point.
+<!-- pass 4 -->
 
 ## [0.2.0] - 2026-10-07
 

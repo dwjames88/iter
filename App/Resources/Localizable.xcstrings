@@ -1064,6 +1064,9 @@
     "Edit Note" : {
       "comment" : "Undo action name"
     },
+    "Edit Location" : {
+      "comment" : "Undo action name"
+    },
     "Edit Spot" : {
       "comment" : "Undo action name"
     },

@@ -97,7 +97,7 @@ struct LocationsScreen: View {
         .navigationBarTitleDisplayMode(.large)
         .searchable(text: $query, prompt: Text("Search locations", comment: "Search field prompt"))
         .toolbar { toolbar }
-        .sheet(item: $editing) { record in SpotEditorSheet(mode: .edit(record)) }
+        .sheet(item: $editing) { record in PlaceEditorSheet(record: record) }
         .locationFolderNamePrompt($folderPrompt)
         .confirmationDialog(String(localized: "Delete this folder?", comment: "Dialog title"), isPresented: Binding(get: { folderToDelete != nil }, set: { if !$0 { folderToDelete = nil } }), titleVisibility: .visible, presenting: folderToDelete) { target in
             Button(String(localized: "Delete Folder", comment: "Button"), role: .destructive) { deleteFolder(target) }
@@ -181,6 +181,12 @@ struct LocationsScreen: View {
         Button { open(item.spot) } label: { LocationRow(item: item) }
             .buttonStyle(.plain)
             .listRowBackground(Color.clear)
+            .swipeActions(edge: .leading) {
+                if let place = record(item) {
+                    Button { editing = place } label: { Label(String(localized: "Edit", comment: "Swipe action"), systemImage: "pencil") }
+                        .tint(IterColor.accent)
+                }
+            }
             .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                 if let place = record(item) {
                     if place.origin == .user {
@@ -201,6 +207,7 @@ struct LocationsScreen: View {
     @ViewBuilder private func menu(for item: SavedItem) -> some View {
         if let place = record(item) {
             Button { open(item.spot) } label: { Label(String(localized: "Open", comment: "Menu item"), systemImage: "arrow.right.circle") }
+            Button { editing = place } label: { Label(String(localized: "Edit…", comment: "Menu item"), systemImage: "pencil") }
             AddToTripMenu(spot: item.spot)
             Divider()
             MoveToFolderMenu(kind: .locations, currentFolderID: place.folder?.id, inNoFolder: place.folder == nil) { target in
@@ -217,7 +224,6 @@ struct LocationsScreen: View {
             }
             Divider()
             if place.origin == .user {
-                Button { editing = place } label: { Label(String(localized: "Edit…", comment: "Menu item"), systemImage: "pencil") }
                 Button(role: .destructive) { requestDelete(place) } label: { Label(String(localized: "Delete", comment: "Menu item"), systemImage: "trash") }
             } else {
                 Button(role: .destructive) { store.setSaved(place.spot, false) } label: {
