@@ -52,6 +52,7 @@ echo "Built $OUT ($CONFIG, $ID)"
 
 if [ -n "$CAPTURE" ]; then
   mkdir -p "$CAPTURE"
+  CAPTURE="$(cd "$CAPTURE" && pwd)"   # the app resolves a relative folder against its own cwd and writes nowhere
   APP_ARGS+=(-IterCaptureWindow "$CAPTURE")
   case " ${APP_ARGS[*]} " in *" -IterCaptureAfter "*) ;; *) APP_ARGS+=(-IterCaptureAfter 6) ;; esac
 fi

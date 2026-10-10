@@ -69,6 +69,9 @@ enum PlaceActionMetrics {
     static let title = Font.system(size: 11, weight: .semibold)
     static let labelSpacing: CGFloat = 4
     static let verticalPadding: CGFloat = 8
+    /// Four tiles share the 340 pt column, so the label gets all but 4 pt of each side ("Open in Maps" must not truncate).
+    static let horizontalPadding: CGFloat = 4
+    static let minimumScale: CGFloat = 0.7
     #else
     static let height: CGFloat = 52
     static let cornerRadius: CGFloat = 14
@@ -76,6 +79,8 @@ enum PlaceActionMetrics {
     static let title = Font.caption.weight(.semibold)
     static let labelSpacing: CGFloat = 4
     static let verticalPadding: CGFloat = 8
+    static let horizontalPadding: CGFloat = 8
+    static let minimumScale: CGFloat = 0.85
     #endif
 }
 
@@ -84,10 +89,10 @@ private struct PlaceActionLabelStyle: LabelStyle {
         VStack(spacing: PlaceActionMetrics.labelSpacing) {
             configuration.icon.font(.system(size: PlaceActionMetrics.glyph, weight: .semibold))
                 .imageScale(.medium)
-            configuration.title.font(PlaceActionMetrics.title).lineLimit(1).minimumScaleFactor(0.85)
+            configuration.title.font(PlaceActionMetrics.title).lineLimit(1).minimumScaleFactor(PlaceActionMetrics.minimumScale)
         }
         .padding(.vertical, PlaceActionMetrics.verticalPadding)
-        .padding(.horizontal, IterSpace.sm)
+        .padding(.horizontal, PlaceActionMetrics.horizontalPadding)
         .frame(maxWidth: .infinity, minHeight: PlaceActionMetrics.height)
     }
 }
