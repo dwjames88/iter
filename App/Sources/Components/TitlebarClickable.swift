@@ -100,6 +100,18 @@ private final class Anchor<Content: View>: NSView {
         sync()
     }
 
+    /// A transition or an animated offset can move the anchor (or an ancestor) without a layout pass or a geometry
+    /// change SwiftUI reports; follow every origin change too, or the header is left where the move started.
+    override func setFrameOrigin(_ newOrigin: NSPoint) {
+        super.setFrameOrigin(newOrigin)
+        sync()
+    }
+
+    override func viewDidMoveToSuperview() {
+        super.viewDidMoveToSuperview()
+        sync()
+    }
+
     override func viewDidEndLiveResize() {
         super.viewDidEndLiveResize()
         sync()
