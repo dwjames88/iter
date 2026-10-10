@@ -1,0 +1,49 @@
+{
+ "kind": "customsearch#search",
+ "url": {
+  "type": "application/json",
+  "template": "https://www.googleapis.com/customsearch/v1?q={searchTerms}"
+ },
+ "queries": {
+  "request": [
+   {
+    "title": "Google Custom Search - best photography spots mountains Glacier National Park",
+    "totalResults": "3",
+    "searchTerms": "best photography spots mountains Glacier National Park",
+    "count": 3,
+    "startIndex": 1,
+    "inputEncoding": "utf8",
+    "outputEncoding": "utf8",
+    "safe": "off",
+    "cx": "EXAMPLE_ENGINE_ID"
+   }
+  ]
+ },
+ "items": [
+  {
+   "kind": "customsearch#result",
+   "title": "10 best photo spots in Glacier National Park",
+   "htmlTitle": "10 best photo spots",
+   "link": "https://example.com/glacier-photo-spots",
+   "displayLink": "example.com",
+   "snippet": "From Mount Cleveland to Hidden Lake Overlook, these are the places photographers keep returning to.",
+   "htmlSnippet": "",
+   "cacheId": "",
+   "formattedUrl": "https://example.com/glacier-photo-spots"
+  },
+  {
+   "kind": "customsearch#result",
+   "title": "Siyeh Peak sunrise guide",
+   "link": "https://example.com/siyeh",
+   "displayLink": "example.com",
+   "snippet": "Siyeh Peak is the highest summit in the Lewis Range of the park and holds good alpenglow."
+  },
+  {
+   "kind": "customsearch#result",
+   "title": "Glacier National Park travel tips",
+   "link": "https://example.com/tips",
+   "displayLink": "example.com",
+   "snippet": "Parking at Logan Pass fills early."
+  }
+ ]
+}
