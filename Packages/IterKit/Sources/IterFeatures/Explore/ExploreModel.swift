@@ -911,11 +911,25 @@ public final class ExploreModel {
         return stored
     }
 
+    /// Starts a drag on one of your own pins, selected or not: a press on an unselected pin selects it in the same gesture
+    /// (see `selectForDrag`), so the first drag never needs a click first.
     @discardableResult
     public func beginDrag(_ id: String) -> Bool {
-        guard canMove(id), adjusting == nil, let row = row(id: id) else { return false }
+        guard canMove(id), adjusting == nil, !isAddingSpot, let row = row(id: id) else { return false }
+        selectForDrag(id)
         dragging = (id, row.spot.coordinate)
         return true
+    }
+
+    /// Selects a pin the way a map click does (the panel opens, the list scrolls to the row) but leaves the camera alone:
+    /// the map must stay still under the pointer while the pin is dragged.
+    private func selectForDrag(_ id: String) {
+        guard derived.byID[id] != nil else { return }
+        showsPanel = true
+        guard selectedID != id else { return }
+        selectedID = id
+        selectionSource = .map
+        scrollRequest = (nextRequestID(), id)
     }
 
     public func drag(to coordinate: Coordinate) {
