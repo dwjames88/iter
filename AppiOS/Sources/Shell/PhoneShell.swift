@@ -36,7 +36,12 @@ struct PhoneShell: View {
                 if adjusting { detent = PhoneSheet.peek }
             }
             .onChange(of: explore.showsPanel) { _, shows in
-                if shows, detent == PhoneSheet.peek { detent = .medium }
+                // A pin picked up by touch and hold selects it too, but the sheet waits for the drop: it must not
+                // move the map under the finger.
+                if shows, explore.dragging == nil, detent == PhoneSheet.peek { detent = .medium }
+            }
+            .onChange(of: explore.dragging == nil) { _, dropped in
+                if dropped, explore.showsPanel, detent == PhoneSheet.peek { detent = .medium }
             }
     }
 

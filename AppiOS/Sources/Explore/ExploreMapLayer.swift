@@ -17,11 +17,15 @@ struct ExploreMapLayer: View {
 
     @Environment(AppModel.self) private var app
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.renderMode) private var renderMode
     @State private var position: MapCameraPosition
     @State private var userInteracted = false
     @State private var appliedRequest = 0
     @State private var mapSize = CGSize.zero
-    @State private var dragGrab = CGSize.zero
+    /// Where the finger grabbed the pin, relative to its tip; nil until the first drag value after the lift.
+    @State private var dragGrab: CGSize?
+    /// True while a press-and-hold drag gesture is in flight; its reset (end or cancel) puts a stray drag back.
+    @GestureState private var holding = false
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
     @State private var daylight = DaylightClock()
     @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
@@ -46,7 +50,9 @@ struct ExploreMapLayer: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             ZStack {
-                if mapSize.width > 0, mapSize.height > 0 {
+                if renderMode == .snapshot {
+                    ExploreMapLayerStandIn(explore: explore)
+                } else if mapSize.width > 0, mapSize.height > 0 {
                     liveMap
                 } else {
                     Color(IterColor.backgroundWindow)
@@ -109,7 +115,7 @@ struct ExploreMapLayer: View {
                 switch item {
                 case .pin(let pin):
                     if pin.id != explore.adjusting?.id {
-                        if pin.style == .selected, explore.canMove(pin.id) { pointAnnotation(pin) }
+                        if explore.canMove(pin.id), pin.style == .selected || explore.dragging?.id == pin.id { pointAnnotation(pin) }
                         pinAnnotation(pin, proxy: proxy)
                     }
                 case .cluster(let cluster): clusterAnnotation(cluster)
@@ -141,6 +147,10 @@ struct ExploreMapLayer: View {
         }
         .onChange(of: position) { _, new in
             if new.positionedByUser { userInteracted = true }
+        }
+        .onChange(of: holding) { _, now in
+            // A drag that was interrupted (a call, the system gesture) never reaches `onEnded`: the pin goes back.
+            if !now, explore.dragging != nil { explore.endDrag(commit: false) }
         }
         .onMapCameraChange(frequency: .continuous) { context in
             guard explore.adjusting != nil else { return }
@@ -178,11 +188,16 @@ struct ExploreMapLayer: View {
 
     private func pinAnnotation(_ pin: ExplorePin, proxy: MapProxy) -> some MapContent {
         let anchor = UnitPoint(x: MapPinAnchor.horizontal, y: MapPinAnchor.vertical(for: pin.style))
-        let movable = pin.style == .selected && explore.adjusting == nil && explore.canMove(pin.id)
+        let movable = explore.adjusting == nil && !explore.isAddingSpot && explore.canMove(pin.id)
+        let lifted = explore.dragging?.id == pin.id
         let at = explore.displayCoordinate(for: pin.id, stored: pin.coordinate)
         return Annotation(pin.name, coordinate: clCoordinate(at), anchor: anchor) {
             ExplorePinView(pin: pin)
-                .gesture(pinDrag(pin, proxy: proxy), isEnabled: movable)
+                // Lifted while it is carried: up a little, with a soft shadow below (no motion with Reduce Motion).
+                .modifier(LiftedPin(isLifted: lifted))
+                .sensoryFeedback(.impact(weight: .light), trigger: lifted) { _, now in now }
+                // Press and hold, then drag: a plain swipe across a pin still pans the map, and a tap still selects it.
+                .highPriorityGesture(pinDrag(pin, proxy: proxy), isEnabled: movable)
                 .contextMenu {
                     if let row = explore.row(id: pin.id) {
                         ExploreSpotMenu(spot: row.spot, day: row.day ?? LocalDay.today(in: row.spot.timeZone))
@@ -193,34 +208,54 @@ struct ExploreMapLayer: View {
         .annotationTitles(.hidden)
     }
 
-    /// The exact point of a selected spot of yours: the pin's pointer ends here, so the place is never read off the unit.
+    /// The exact point of a spot of yours that is selected or being carried: the pin's pointer ends here, so the place is
+    /// never read off the unit.
     private func pointAnnotation(_ pin: ExplorePin) -> some MapContent {
         Annotation("", coordinate: clCoordinate(explore.displayCoordinate(for: pin.id, stored: pin.coordinate)), anchor: .center) {
-            Circle()
-                .fill(IterColor.mapPin)
-                .frame(width: IterSpace.sm, height: IterSpace.sm)
-                .overlay(Circle().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
-                .allowsHitTesting(false)
-                .accessibilityHidden(true)
+            PinTipDot()
         }
         .annotationTitles(.hidden)
     }
 
-    /// Drags your own selected spot; the point under the finger keeps its place relative to the pin's tip.
+    /// Seconds to hold before the pin lifts.
+    private static let holdDuration = 0.3
+
+    /// Moves one of your own spots: touch and hold the pin until it lifts, then drag. The point under the finger keeps its
+    /// place relative to the pin's tip (window space, as the Mac map does), and the drop is the tip.
     private func pinDrag(_ pin: ExplorePin, proxy: MapProxy) -> some Gesture {
-        DragGesture(minimumDistance: 3, coordinateSpace: .global)
+        LongPressGesture(minimumDuration: Self.holdDuration)
+            .sequenced(before: DragGesture(minimumDistance: 0, coordinateSpace: .global))
+            .updating($holding) { _, state, _ in state = true }
             .onChanged { value in
+                guard case .second(true, let drag) = value else { return }
                 if explore.dragging == nil {
                     guard explore.beginDrag(pin.id) else { return }
-                    let tip = proxy.convert(clCoordinate(pin.coordinate), to: .global) ?? value.startLocation
-                    dragGrab = CGSize(width: value.startLocation.x - tip.x, height: value.startLocation.y - tip.y)
+                    dragGrab = nil
+                    MoveSpotTip.didMove()
                 }
-                let point = CGPoint(x: value.location.x - dragGrab.width, y: value.location.y - dragGrab.height)
-                if let c = proxy.convert(point, from: .global) {
-                    explore.drag(to: Coordinate(latitude: c.latitude, longitude: c.longitude))
-                }
+                if let drag { carry(drag, pin: pin, proxy: proxy) }
             }
-            .onEnded { _ in explore.endDrag(commit: true) }
+            .onEnded { value in
+                // The last touch position counts even if no change event carried it.
+                if case .second(true, let drag?) = value, explore.dragging != nil { carry(drag, pin: pin, proxy: proxy) }
+                // Held without moving: nothing to save (and no empty undo step).
+                let moved = explore.dragging.map { $0.coordinate != pin.coordinate } ?? false
+                explore.endDrag(commit: moved)
+                dragGrab = nil
+            }
+    }
+
+    /// Puts the dragged pin's tip where the finger is, keeping the grab offset from the first touch.
+    private func carry(_ drag: DragGesture.Value, pin: ExplorePin, proxy: MapProxy) {
+        if dragGrab == nil {
+            let tip = proxy.convert(clCoordinate(pin.coordinate), to: .global) ?? drag.startLocation
+            dragGrab = CGSize(width: drag.startLocation.x - tip.x, height: drag.startLocation.y - tip.y)
+        }
+        let grab = dragGrab ?? .zero
+        let point = CGPoint(x: drag.location.x - grab.width, y: drag.location.y - grab.height)
+        if let c = proxy.convert(point, from: .global) {
+            explore.drag(to: Coordinate(latitude: c.latitude, longitude: c.longitude))
+        }
     }
 
     private func clusterAnnotation(_ cluster: ExploreCluster) -> some MapContent {
