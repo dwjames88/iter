@@ -332,6 +332,7 @@ struct ExploreMapPane: View {
               let row = explore.row(id: id) else { return }
         var style = "none"
         for case .pin(let pin) in explore.mapItems where pin.id == id { style = "\(pin.style)" }
+        PinDragProbe.shared.note("clusters", explore.mapItems.filter { if case .cluster = $0 { true } else { false } }.count)
         PinDragProbe.shared.spotShown(id: id, coordinate: row.spot.coordinate, style: style, proxy: proxy)
     }
 
