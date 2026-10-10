@@ -1,6 +1,6 @@
 # Data providers
 
-Where Iter's forecasts come from, what each source can and cannot give the Light Index, and what each one costs, permits and requires. Provider facts were read from the providers' own pages and checked 5 October 2026. Prices and terms change; check the linked pages before relying on them.
+Where Iter's forecasts and place discoveries come from (place discovery is the last major section, "Place discovery sources"), what each source can and cannot give the Light Index, and what each one costs, permits and requires. Provider facts were read from the providers' own pages and checked 5 October 2026. Prices and terms change; check the linked pages before relying on them.
 
 Iter has three forecast providers (plus Sample Data, which is for testing only). The user chooses a primary in Settings ▸ Weather and, optionally, a fallback ("If it fails, try"). `WeatherRouter` tries them in order. If the primary fails and the fallback answers, the forecast records which source failed, and every screen says so ("OpenWeather (Apple Weather unavailable)"; the reason is not claimed beyond that). If all fail, the primary's error is shown.
 
@@ -149,6 +149,50 @@ For Windy, a spot in an uncovered region costs two calls (regional model, then G
 ## Keys
 
 Keys are never in the repo, in UserDefaults or in logs. Order of lookup: environment variable (`ITER_OPENWEATHER_KEY`, `ITER_WINDY_KEY`), then launch argument (`-ITER_OPENWEATHER_KEY <key>`), then the login Keychain (service `com.dwjames.iter.weather`, account `openWeather` or `windy`). Settings says where the key in use came from ("From environment (ITER_WINDY_KEY)" or "From launch argument") and then shows no key field. See [TESTING.md](../TESTING.md) for steps.
+
+## Place discovery sources
+
+Explore's "Search Here", typed feature searches ("waterfalls in Glacier") and Ask can look beyond Apple Maps and the curated list. The code is `Packages/IterKit/Sources/IterServices/Discovery/`. The user chooses sources in Settings ▸ Search; the free ones are on by default, Google is off until the user adds their own key. These facts were read from the code and the providers' public documentation; terms change, so check the linked pages before a release.
+
+**Shared behaviour** (`DiscoveryHTTP`, `DiscoveryRateLimiter`, `DiscoveryCache`):
+
+* Every request has a 10 second timeout and the User-Agent `Iter/<version or dev> (photography trip planner; https://github.com/dwjames88)`. No email address, no user name, no device identifier.
+* Requests to one host are spaced (minimum time between starts) and run one at a time. Responses are cached on disk under the system Caches directory (`Caches/Iter/Discovery`) and in memory, so a repeated search inside the cache time makes no network call. Errors and, for Overpass, HTML error pages are not cached.
+* Nothing is sent but the area (a place name or a map box), the feature words ("waterfalls") and any words the user typed. The user's "What I Like to Shoot" text and library summary go only to the on-device model, never to these providers.
+* HTTP 403 and 429 show as "Rate limited", 502 to 504 as "Server busy". A failing source never blocks the others.
+
+| Source | Endpoint | What is sent | Spacing | Cache |
+|---|---|---|---|---|
+| Reddit | `https://www.reddit.com/search.json`, `/r/<multireddit>/search.json`, and the area's own subreddit if it exists | Search words (area and feature), 25 posts, relevance order | 2 s | 6 hours |
+| OpenStreetMap (Overpass) | `https://overpass-api.de/api/interpreter` (POST) | An Overpass QL query: a bounding box and the OSM tags for the feature | 1 s, one in flight | 7 days |
+| Wikipedia | `https://en.wikipedia.org/w/api.php` | Geosearch coordinates (up to 9 points, 10 km radius) and page ids for intro extracts | 0.2 s | 7 days |
+| Wikivoyage | `https://en.wikivoyage.org/w/api.php` | The area's name (page lookup, then a title search if there is no exact page) | 0.2 s | 7 days |
+| Google Programmable Search | `https://www.googleapis.com/customsearch/v1` | `key`, `cx`, and "best photography spots" plus the search words, 10 results | 0.2 s | 7 days |
+| Apple Maps | MapKit (on the system) | The search words and map region | Apple's own | Apple's own |
+
+### Reddit
+
+Public read-only JSON, no key and no login. Searches the site, a multireddit of photography and outdoors subreddits (EarthPorn, itookapicture, photography, landscapephotography, NationalPark, hiking) and, when the area name makes a plausible subreddit name, that one. Posts are text for the on-device extractor; NSFW posts are dropped. Reddit often refuses unfamiliar clients, so a 403 or 429 is common and is reported as "Rate limited" without retrying. After a limit the remaining Reddit requests for that search are skipped. Terms: <https://www.redditinc.com/policies/data-api-terms> (the Data API terms and the user agreement apply to Reddit content). Iter shows a link to the post, not a copy of it, and credits "Reddit public posts" in Settings ▸ About.
+
+### OpenStreetMap through Overpass
+
+Free, no key. Data is © OpenStreetMap contributors under the Open Database Licence (ODbL), which needs visible attribution: <https://www.openstreetmap.org/copyright>. Iter credits it in Settings ▸ About. The public Overpass server is shared and sometimes busy: Iter sends one request per search, with a server timeout of 20 seconds and a cap of 400 elements (100 per kind when no feature is named), and treats an HTML "too busy" page as "Server busy". Overpass usage policy: <https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances>.
+
+### Wikipedia and Wikivoyage
+
+Free, no key, MediaWiki API. Wikipedia text is CC BY-SA 4.0 (<https://creativecommons.org/licenses/by-sa/4.0/>); Wikivoyage listings are CC BY-SA too. Iter uses titles, coordinates and a two-sentence extract as a snippet and links to the page. Credited in Settings ▸ About. API etiquette (a descriptive User-Agent, serial requests): <https://api.wikimedia.org/wiki/Documentation/Getting_started/Etiquette>.
+
+### Google Programmable Search (optional)
+
+Google has no free places API. This source works only if the user makes their own Programmable Search Engine (<https://programmablesearchengine.google.com/>) and a Custom Search JSON API key (<https://developers.google.com/custom-search/v1/overview>), and pastes both in Settings ▸ Search. Google's free allowance is small and queries beyond it are billed to the user's own Google account; Iter does not proxy or share a key. The key and engine id are stored only in the login Keychain (service `com.dwjames.iter.discovery`), never in UserDefaults, logs or the repo. The API takes the key as a URL query parameter, so Iter strips the key and engine id from any error text before it can be shown. Results are titles and snippets, read by the on-device extractor. Terms: <https://developers.google.com/terms>. Without both values saved, no request is made. Removing the credentials switches Google off.
+
+### Apple Maps
+
+Used for every search and cannot be turned off. It goes through MapKit, so Apple's terms and attribution apply and Iter adds no network call of its own. Places and drive times are credited in Settings ▸ About.
+
+### Why this honesty matters
+
+Discovery sends place and search words to third parties, so Settings ▸ Search says which are used, that they are free public services with limits, and that nothing else is sent. Each source's credit is in Settings ▸ About ("Place discovery uses OpenStreetMap data © OpenStreetMap contributors (ODbL), Wikipedia and Wikivoyage (CC BY-SA), and Reddit public posts; Google only with your own key."). Fixtures for these providers are described in `Packages/IterKit/Tests/IterServicesTests/Fixtures/discovery/README.md`.
 
 ## Fixtures
 
