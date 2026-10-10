@@ -139,6 +139,14 @@ enum AppLaunch {
     /// coordinates and back (`ConvertProbe:` lines in the system log), to check placement under Hybrid, realistic
     /// elevation and pitch without a mouse.
     static var convertProbe: Bool { inMemoryStore && UserDefaults.standard.bool(forKey: "IterConvertProbe") }
+    /// `-IterPinDragProbe <file>` (with `-IterInMemoryStore YES`): once the map settles, writes JSON to that file with the
+    /// window's frame in CG display coordinates and the selected own spot's stored coordinate, tip and a point to grab it
+    /// by, then adds each committed move with the coordinate the drop point should have given. `scripts/pin-drag-test.sh`
+    /// drives real pointer events against it.
+    static var pinDragProbeFile: String? {
+        guard inMemoryStore, let path = UserDefaults.standard.string(forKey: "IterPinDragProbe"), !path.isEmpty else { return nil }
+        return path
+    }
     /// `-IterDaylightDate <ISO 8601>`: the moment the maps shade as night and day. Absent, now.
     static var daylightDate: Date? {
         UserDefaults.standard.string(forKey: "IterDaylightDate").flatMap { try? Date($0, strategy: .iso8601) }

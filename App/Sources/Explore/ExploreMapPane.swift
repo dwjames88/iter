@@ -23,6 +23,7 @@ struct ExploreMapPane: View {
     @State private var userInteracted = false
     @State private var appliedRequest = 0
     @State private var dragGrab = CGSize.zero
+    @State private var dragTipBefore: CGPoint?
     /// The pane's top-left in window coordinates (the probe and nothing else reads it).
     @State private var paneOrigin = CGPoint.zero
     @State private var paneSize = CGSize.zero
@@ -88,7 +89,14 @@ struct ExploreMapPane: View {
 
     private var mapSelection: Binding<String?> {
         Binding(get: { explore.selectedID },
-                set: { if !explore.isAddingSpot { explore.select($0, from: .map) } })
+                set: { new in
+                    guard !explore.isAddingSpot else { return }
+                    // MapKit clears a selected pin when it is clicked; for a spot of yours that click starts "click it, then
+                    // drag it", so it stays selected. A click on empty map (no pin hovered) still clears.
+                    if PinDrag.keepsSelection(writing: new, selectedID: explore.selectedID, hoveredID: explore.hoveredID,
+                                              selectedIsMovable: explore.selectedID.map { explore.canMove($0) } ?? false) { return }
+                    explore.select(new, from: .map)
+                })
     }
 
     private var liveMap: some View {
@@ -101,7 +109,7 @@ struct ExploreMapPane: View {
                     switch item {
                     case .pin(let pin):
                         if pin.id != explore.adjusting?.id {
-                            if pin.style == .selected, explore.canMove(pin.id) { pointAnnotation(pin) }
+                            if pin.style == .selected || explore.dragging?.id == pin.id, explore.canMove(pin.id) { pointAnnotation(pin) }
                             pinAnnotation(pin, proxy: proxy)
                         }
                     case .cluster(let cluster): clusterAnnotation(cluster)
@@ -142,6 +150,15 @@ struct ExploreMapPane: View {
             .mapScope(mapScope)
             .onMapCameraChange(frequency: .onEnd) { context in
                 if AppLaunch.convertProbe { runConvertProbe(proxy, context.camera) }
+                if PinDragProbe.shared.isOn {
+                    PinDragProbe.shared.cameraSettled(context.camera); probeSpot(proxy)
+                    if explore.adjusting != nil {
+                        // Where the crosshair is drawn (the padded area's centre, in window space) and what is under it.
+                        let at = CGPoint(x: paneOrigin.x + insets.leading + (paneSize.width - insets.leading - insets.trailing) / 2,
+                                         y: paneOrigin.y + insets.top + (paneSize.height - insets.top - insets.bottom) / 2)
+                        if let c = proxy.convert(at, from: .global) { PinDragProbe.shared.note("crosshair", ["lat": c.latitude, "lon": c.longitude]) }
+                    }
+                }
                 IterPerf.once("map.firstSettle")
                 IterPerf.mark("map.settle")
                 let r = context.region
@@ -172,6 +189,15 @@ struct ExploreMapPane: View {
                         .allowsHitTesting(false)
                         .accessibilityHidden(true)
                 }
+            }
+            .onChange(of: explore.selectedID) { _, selected in
+                guard PinDragProbe.shared.isOn else { return }
+                PinDragProbe.shared.note("selectedID", selected ?? "")
+                Task { try? await Task.sleep(for: .milliseconds(600)); probeSpot(proxy) }
+            }
+            .onChange(of: explore.adjusting == nil) { _, _ in
+                guard PinDragProbe.shared.isOn else { return }
+                Task { try? await Task.sleep(for: .milliseconds(600)); probeSpot(proxy) }
             }
             .onChange(of: explore.adjusting?.id) { _, id in
                 // Entering Adjust Location: bring the spot to the middle, keeping the zoom.
@@ -253,10 +279,17 @@ struct ExploreMapPane: View {
 
     private func pinAnnotation(_ pin: ExplorePin, proxy: MapProxy) -> some MapContent {
         let anchor = UnitPoint(x: MapPinAnchor.horizontal, y: MapPinAnchor.vertical(for: pin.style))
-        let movable = pin.style == .selected && !explore.isAddingSpot && explore.adjusting == nil && explore.canMove(pin.id)
+        // Every spot of yours drags, selected or not (a press on an unselected one selects it first).
+        let movable = !explore.isAddingSpot && explore.adjusting == nil && explore.canMove(pin.id)
+        let lifted = explore.dragging?.id == pin.id
         let at = explore.displayCoordinate(for: pin.id, stored: pin.coordinate)
         return Annotation(pin.name, coordinate: clCoordinate(at), anchor: anchor) {
             pinBody(pin)
+                // Held pins rise a little, with a soft shadow; only the drawing rises, the coordinate stays the tip's.
+                .shadow(color: .black.opacity(lifted ? 0.3 : 0), radius: lifted ? 4 : 0, y: lifted ? 3 : 0)
+                .offset(y: lifted ? -PinDrag.liftPoints : 0)
+                .animation(reduceMotion ? nil : .smooth, value: lifted)
+                .pointerStyle(movable ? (lifted ? .grabActive : .grabIdle) : nil)
                 .gesture(pinDrag(pin, proxy: proxy), isEnabled: movable)
                 .help(movable ? String(localized: "Drag to move your spot", comment: "Tooltip") : "")
         }
@@ -277,7 +310,7 @@ struct ExploreMapPane: View {
         .annotationTitles(.hidden)
     }
 
-    /// Drags your own selected spot. The point under the cursor keeps its place relative to the pin's tip, so the pin does
+    /// Drags one of your own spots. The point under the cursor keeps its place relative to the pin's tip, so the pin does
     /// not jump to the cursor; the coordinate is converted from the global space the gesture reports in.
     private func pinDrag(_ pin: ExplorePin, proxy: MapProxy) -> some Gesture {
         DragGesture(minimumDistance: 3, coordinateSpace: .global)
@@ -285,14 +318,38 @@ struct ExploreMapPane: View {
                 if explore.dragging == nil {
                     guard explore.beginDrag(pin.id) else { return }
                     let tip = proxy.convert(clCoordinate(pin.coordinate), to: .global) ?? value.startLocation
-                    dragGrab = CGSize(width: value.startLocation.x - tip.x, height: value.startLocation.y - tip.y)
+                    dragGrab = PinDrag.grab(pointer: value.startLocation, tip: tip)
+                    dragTipBefore = tip
                 }
-                let point = CGPoint(x: value.location.x - dragGrab.width, y: value.location.y - dragGrab.height)
+                let point = PinDrag.tipPoint(pointer: value.location, grab: dragGrab)
                 if let c = proxy.convert(point, from: .global) {
                     explore.drag(to: Coordinate(latitude: c.latitude, longitude: c.longitude))
                 }
             }
-            .onEnded { _ in explore.endDrag(commit: true) }
+            .onEnded { value in
+                let drop = PinDrag.tipPoint(pointer: value.location, grab: dragGrab)
+                let expected = proxy.convert(drop, from: .global).map { Coordinate(latitude: $0.latitude, longitude: $0.longitude) }
+                let delta = CGSize(width: value.location.x - value.startLocation.x, height: value.location.y - value.startLocation.y)
+                let id = pin.id
+                explore.endDrag(commit: true)
+                if PinDragProbe.shared.isOn, let stored = explore.row(id: id)?.spot.coordinate {
+                    PinDragProbe.shared.moveCommitted(stored: stored, expected: expected, delta: delta, tipBefore: dragTipBefore, proxy: proxy)
+                    Task {
+                        try? await Task.sleep(for: .milliseconds(500))
+                        PinDragProbe.shared.tipAfterDrop(stored: stored, proxy: proxy)
+                        probeSpot(proxy)
+                    }
+                }
+            }
+    }
+
+    /// `-IterPinDragProbe`: reports the selected spot of yours (see `PinDragProbe`).
+    private func probeSpot(_ proxy: MapProxy) {
+        guard let id = explore.selectedID.flatMap({ explore.canMove($0) ? $0 : nil }) ?? PinDragProbe.shared.lastID,
+              let row = explore.row(id: id) else { return }
+        var style = "none"
+        for case .pin(let pin) in explore.mapItems where pin.id == id { style = "\(pin.style)" }
+        PinDragProbe.shared.spotShown(id: id, coordinate: row.spot.coordinate, style: style, proxy: proxy)
     }
 
     private func clusterAnnotation(_ cluster: ExploreCluster) -> some MapContent {
