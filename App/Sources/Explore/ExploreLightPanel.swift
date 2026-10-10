@@ -45,6 +45,7 @@ struct ExploreLightPanel: View {
                         VStack(alignment: .leading, spacing: IterSpace.lg) {
                             placeHeader
                             actionRow
+                            MoveSpotTipView(canMove: explore.canMove(spot.id))
                             if explore.canMove(spot.id) { yourCoordinates }
                             lightSummary
                             SpotImages(spot: spot)
@@ -95,6 +96,8 @@ struct ExploreLightPanel: View {
             return .handled
         }
         .onAppear { isFocused = true }
+        // The pin is dragged on the map (its code is in the map pane); the tip is done once a drag starts.
+        .onChange(of: explore.dragging?.id) { _, id in if id != nil { MoveSpotTip.didMove() } }
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Text("Place panel for \(spot.name)", comment: "VoiceOver"))
     }
@@ -177,7 +180,7 @@ struct ExploreLightPanel: View {
                 .placeAction()
                 .help(String(localized: "Open this location in Apple Maps", comment: "Help"))
                 if explore.canMove(spot.id) {
-                    Button { explore.beginAdjusting(spot.id) } label: {
+                    Button { if explore.beginAdjusting(spot.id) { MoveSpotTip.didMove() } } label: {
                         Label(String(localized: "Adjust Location", comment: "Place card: move your own spot by panning the map under a crosshair"),
                               systemImage: "scope")
                     }

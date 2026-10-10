@@ -44,6 +44,7 @@ struct IterIOSApp: App {
             }
         }
         if AppLaunch.seedLibrary { LibrarySeed.run(model) }
+        MoveSpotTip.configure()
         model.offline.attach(imagery: .shared, pointSize: CGSize(width: IterSize.imageRequestWidth, height: IterSize.imageStripHeight), scale: 3)
         if !AppLaunch.isRunningTests { model.offline.start() }
         if AppLaunch.smokeTest {

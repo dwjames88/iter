@@ -105,6 +105,7 @@ struct ExplorePlaceDetail: View {
                 VStack(alignment: .leading, spacing: IterSpace.xl) {
                     VStack(alignment: .leading, spacing: IterSpace.lg) {
                         actionRow.padding(.horizontal, IterSpace.lg)
+                        MoveSpotTipView(canMove: explore.canMove(spot.id)).padding(.horizontal, IterSpace.lg)
                         TimelineView(.periodic(from: .now, by: 30)) { context in
                             let _ = context.date
                             LightStatusBand(status: LightStatus(window: row.window, isLoading: row.isLoading, now: model.now()),
@@ -259,7 +260,7 @@ struct ExplorePlaceDetail: View {
             AddToTripMenu(spot: spot)
                 .placeAction(isProminent: true)
             if explore.canMove(spot.id) {
-                Button { explore.beginAdjusting(spot.id) } label: {
+                Button { if explore.beginAdjusting(spot.id) { MoveSpotTip.didMove() } } label: {
                     // The tile is narrow: "Adjust" on it, the full name for VoiceOver.
                     Label(String(localized: "Adjust", comment: "Place card tile: short for Adjust Location"), systemImage: "scope")
                 }
