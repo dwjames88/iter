@@ -100,6 +100,7 @@ struct ExploreListPanel: View {
             }
             VStack(alignment: .leading, spacing: IterSpace.sm) {
                 if explore.hasSampleScores { SampleDataLabel(style: .inline) }
+                SearchHereControl(explore: explore)
                 searchStatus
             }
             .font(IterFont.subheadline)
@@ -177,12 +178,12 @@ struct ExploreListPanel: View {
         case .searching(let query):
             HStack(spacing: IterSpace.sm) {
                 ProgressView().controlSize(.small)
-                Text(LightText.searchingApple).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
+                Text(progressText).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
                 Spacer(minLength: 0)
                 Button(String(localized: "Cancel", comment: "Button")) { explore.cancelSearch() }
                     .controlSize(.small)
             }
-            .accessibilityLabel(LightText.searchingApple + " " + query)
+            .accessibilityLabel(progressText + " " + query)
         case .failed(let query):
             HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
                 Label(LightText.searchFailed(query), systemImage: "exclamationmark.triangle")
@@ -193,9 +194,22 @@ struct ExploreListPanel: View {
                 Button(String(localized: "Retry", comment: "Button")) { explore.searchAppleMaps() }
                     .controlSize(.small)
             }
-        case .idle, .finished:
+        case .finished:
+            if explore.featureStatus.areaNotFound {
+                Text(LightText.areaNotFound(explore.featureStatus.areaName))
+                    .font(IterFont.caption)
+                    .foregroundStyle(IterColor.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        case .idle:
             EmptyView()
         }
+    }
+
+    private var progressText: String {
+        explore.featureStatus.isSearching
+            ? LightText.searchProgress(explore.featureStatus, area: LightText.featureAreaName(explore))
+            : LightText.searchingApple
     }
 
     // MARK: List
@@ -204,7 +218,7 @@ struct ExploreListPanel: View {
         if explore.rows.isEmpty, !explore.searchState.isSearching, !explore.hasAskContent {
             VStack(spacing: 0) {
                 if !explore.searchSuggestions.isEmpty {
-                    ExploreSuggestionsView(suggestions: explore.searchSuggestions) { explore.run($0) }
+                    ExploreSuggestionsView(suggestions: explore.searchSuggestions, promptPrefix: explore.activePromptPrefix) { explore.run($0) }
                         .padding(.horizontal, IterSpace.md)
                         .padding(.vertical, IterSpace.sm)
                     Divider()
@@ -273,7 +287,15 @@ struct ExploreListPanel: View {
         }
     }
 
-    private func headerLabel(_ section: ExploreSection) -> some View {
+    @ViewBuilder private func headerLabel(_ section: ExploreSection) -> some View {
+        if let header = explore.resultHeader(for: section) {
+            ResultSectionHeader(title: header.title, sources: header.sources, notes: header.notes, titleFont: IterFont.moduleTitle)
+        } else {
+            plainHeaderLabel(section)
+        }
+    }
+
+    private func plainHeaderLabel(_ section: ExploreSection) -> some View {
         HStack {
             Text(sectionTitle(section))
             Spacer()
@@ -284,8 +306,7 @@ struct ExploreListPanel: View {
     /// One row per spot. A click selects it (the list's selection, so its pin is highlighted) and opens its panel.
     @ViewBuilder private func rows(in section: ExploreSection) -> some View {
         ForEach(section.rows) { row in
-            ExploreRowView(row: row, showsDistance: explore.hasLocation)
-                .equatable()
+            rowContent(row, in: section)
                 .id(row.id)
                 .tag(row.id)
                 .onAppear { explore.requestForecast(for: row.id) }
@@ -294,6 +315,15 @@ struct ExploreListPanel: View {
                 .onHover { inside in
                     if inside { explore.hoveredID = row.id } else if explore.hoveredID == row.id { explore.hoveredID = nil }
                 }
+        }
+    }
+
+    /// The plain row; in the In View and feature sections, the row with its sources line (and the Ask row for Ask's places).
+    @ViewBuilder private func rowContent(_ row: ExploreRow, in section: ExploreSection) -> some View {
+        if section.kind == .inView || section.kind == .feature {
+            ExploreResultRow(row: row, showsDistance: explore.hasLocation)
+        } else {
+            ExploreRowView(row: row, showsDistance: explore.hasLocation).equatable()
         }
     }
 
@@ -321,7 +351,7 @@ struct ExploreListPanel: View {
         ScrollViewReader { proxy in
             List(selection: selection) {
                 if !explore.searchSuggestions.isEmpty {
-                    ExploreSuggestionsView(suggestions: explore.searchSuggestions) { explore.run($0) }
+                    ExploreSuggestionsView(suggestions: explore.searchSuggestions, promptPrefix: explore.activePromptPrefix) { explore.run($0) }
                 }
                 if explore.hasAskContent { ExploreAskSection(explore: explore) }
                 ForEach(explore.sections.filter { $0.kind != .ask }) { section in

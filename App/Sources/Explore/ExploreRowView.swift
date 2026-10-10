@@ -14,6 +14,9 @@ struct ExploreRowView: View, Equatable {
     let row: ExploreRow
     /// Shown after the locality ("Big Sur, CA · 42 mi") when there is a location to measure from.
     var showsDistance = false
+    /// A Search Here or feature-search result: a quiet line under the locality names the sources that list the place and
+    /// its height above sea level.
+    var showsSources = false
 
     var body: some View {
         let _ = IterPerf.count("row.body")
@@ -22,7 +25,7 @@ struct ExploreRowView: View, Equatable {
             .frame(minHeight: IterGrid.rowDouble, alignment: .leading)
             .contentShape(Rectangle())
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel(LightText.rowDescription(row, showsDistance: showsDistance))
+            .accessibilityLabel(LightText.rowDescription(row, showsDistance: showsDistance, showsSources: showsSources))
     }
 
     private var summary: some View {
@@ -49,6 +52,13 @@ struct ExploreRowView: View, Equatable {
                 }
                 .font(IterFont.secondary)
                 .foregroundStyle(IterColor.textSecondary)
+                if showsSources, let line = LightText.provenanceLine(row) {
+                    Text(line)
+                        .font(IterFont.caption)
+                        .foregroundStyle(IterColor.textTertiary)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
             Spacer(minLength: 0)
             EventLane(window: row.window, zone: row.spot.timeZone, isLoading: row.isLoading, isTomorrow: LightText.isTomorrow(row))

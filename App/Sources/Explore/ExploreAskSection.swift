@@ -13,6 +13,8 @@ import IterServices
 /// button. An Ask the device cannot run stays, quiet and disabled, with the reason.
 struct ExploreSuggestionsView: View {
     let suggestions: [SearchSuggestion]
+    /// The person's "What I like to shoot" text (`ExploreModel.activePromptPrefix`), noted under the Ask row.
+    var promptPrefix: String?
     let action: (SearchSuggestion) -> Void
 
     var body: some View {
@@ -25,7 +27,7 @@ struct ExploreSuggestionsView: View {
                             .foregroundStyle(IterColor.textSecondary)
                             .accessibilityAddTraits(.isHeader)
                     }
-                    ExploreSuggestionRow(suggestion: suggestion, runsOnReturn: suggestion.isTop) { action(suggestion) }
+                    ExploreSuggestionRow(suggestion: suggestion, runsOnReturn: suggestion.isTop, promptPrefix: promptPrefix) { action(suggestion) }
                 }
             }
         }
@@ -38,6 +40,7 @@ struct ExploreSuggestionRow: View {
     let suggestion: SearchSuggestion
     /// The top suggestion: the one Return runs.
     var runsOnReturn = false
+    var promptPrefix: String?
     let action: () -> Void
 
     private var symbol: String {
@@ -62,6 +65,12 @@ struct ExploreSuggestionRow: View {
                             .foregroundStyle(IterColor.textSecondary)
                             .lineLimit(2)
                     }
+                    if let promptPrefix, suggestion.isAvailable, case .ask = suggestion.kind {
+                        Text(LightText.usingShootingNotes)
+                            .font(IterFont.caption)
+                            .foregroundStyle(IterColor.textSecondary)
+                            .help(LightText.shootingNotesPreview(promptPrefix))
+                    }
                 }
                 Spacer(minLength: 0)
                 if runsOnReturn && suggestion.isAvailable {
@@ -79,7 +88,8 @@ struct ExploreSuggestionRow: View {
         .buttonStyle(.plain)
         .disabled(!suggestion.isAvailable)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(LightText.suggestionAccessibility(suggestion))
+        .accessibilityLabel(LightText.suggestionAccessibility(suggestion)
+            + (promptPrefix != nil && suggestion.isAvailable && suggestion.kind.isAsk ? ". " + LightText.usingShootingNotes : ""))
         .accessibilityAddTraits(.isButton)
         .accessibilityHint(runsOnReturn && suggestion.isAvailable
             ? Text("Runs when you press Return", comment: "VoiceOver hint on the top search suggestion") : Text(verbatim: ""))
@@ -229,10 +239,12 @@ struct ExploreAskSection: View {
 struct ExploreAskRow: View {
     let row: ExploreRow
     var showsDistance = false
+    /// An In View result: the sources line shows under the locality (Maps · Ask).
+    var showsSources = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.xxs) {
-            ExploreRowView(row: row, showsDistance: showsDistance)
+            ExploreRowView(row: row, showsDistance: showsDistance, showsSources: showsSources)
             if let seconds = row.driveSeconds {
                 Label(LightText.askDrive(seconds), systemImage: "car")
                     .font(IterFont.caption)
@@ -251,6 +263,10 @@ struct ExploreAskRow: View {
         }
         .padding(.bottom, IterSpace.xs)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(LightText.askRowAccessibility(row, showsDistance: showsDistance))
+        .accessibilityLabel(LightText.askRowAccessibility(row, showsDistance: showsDistance, showsSources: showsSources))
     }
+}
+
+private extension SearchSuggestion.Kind {
+    var isAsk: Bool { if case .ask = self { true } else { false } }
 }

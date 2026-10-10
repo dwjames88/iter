@@ -17,7 +17,7 @@ extension LightText {
 
     static func suggestionTitle(_ suggestion: SearchSuggestion) -> String {
         switch suggestion.kind {
-        case .appleMaps(let query): searchApple(query)
+        case .appleMaps(let query): suggestion.featureQuery.map(findFeature) ?? searchApple(query)
         case .ask(let query, _): String(localized: "Ask Iter: \(query)", comment: "Search suggestion that puts the search text to Apple Intelligence")
         }
     }
@@ -25,7 +25,7 @@ extension LightText {
     /// Second line: what the row does, or, for an Ask that cannot run, why not.
     static func suggestionDetail(_ suggestion: SearchSuggestion) -> String? {
         switch suggestion.kind {
-        case .appleMaps: nil
+        case .appleMaps: suggestion.featureQuery == nil ? nil : findFeatureDetail
         case .ask(_, let availability):
             availability == .available
                 ? String(localized: "Find real places that fit, with a note on why", comment: "Second line of the Ask Iter suggestion")
@@ -53,7 +53,7 @@ extension LightText {
     static func suggestionAccessibility(_ suggestion: SearchSuggestion) -> String {
         switch suggestion.kind {
         case .appleMaps(let query):
-            String(localized: "Search Apple Maps for \(query)", comment: "VoiceOver label of the Apple Maps suggestion")
+            suggestion.featureQuery.map(findFeature) ?? String(localized: "Search Apple Maps for \(query)", comment: "VoiceOver label of the Apple Maps suggestion")
         case .ask(let query, let availability):
             availability == .available
                 ? String(localized: "Ask Iter: \(query)", comment: "VoiceOver label of the Ask suggestion")
@@ -73,8 +73,8 @@ extension LightText {
 
     static let askNoteLabel = String(localized: "Note from Apple Intelligence", comment: "VoiceOver prefix and tooltip of the on-device model's one-line reason for a suggestion")
 
-    static func askRowAccessibility(_ row: ExploreRow, showsDistance: Bool) -> String {
-        var parts = [rowDescription(row, showsDistance: showsDistance)]
+    static func askRowAccessibility(_ row: ExploreRow, showsDistance: Bool, showsSources: Bool = false) -> String {
+        var parts = [rowDescription(row, showsDistance: showsDistance, showsSources: showsSources)]
         if let seconds = row.driveSeconds { parts.append(askDrive(seconds)) }
         if let note = row.note { parts.append(askNoteLabel + ": " + note) }
         return parts.joined(separator: ", ")
