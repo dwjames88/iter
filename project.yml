@@ -27,6 +27,9 @@ settings:
     # outside the scripts (for example from Xcode), so it never outranks a released build.
     CURRENT_PROJECT_VERSION: "0"
     ITER_GIT_COMMIT: ""
+    # The Mac app's bundle id. scripts/render.sh and scripts/snapshots.sh override it with com.dwjames.iter.render so a render or
+    # test copy never runs as the real app (it then keeps off the Keychain and the real store: see RenderCopy).
+    ITER_BUNDLE_ID: com.dwjames.iter
     # In-app updates (IterUpdater). The feed is the latest GitHub Release's appcast.json asset; the public key
     # verifies each update's Ed25519 signature. scripts/release.sh writes the key the first time it runs.
     ITER_UPDATE_FEED_URL: "https://github.com/dwjames88/iter/releases/latest/download/appcast.json"
@@ -75,7 +78,7 @@ targets:
         product: IterUpdater
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dwjames.iter
+        PRODUCT_BUNDLE_IDENTIFIER: $(ITER_BUNDLE_ID)
         PRODUCT_NAME: Iter
         INFOPLIST_FILE: App/Info.plist
         # Default build has no WeatherKit entitlement: the Personal Team cannot provision it.
@@ -95,7 +98,7 @@ targets:
       - target: Iter
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dwjames.iter.tests
+        PRODUCT_BUNDLE_IDENTIFIER: $(ITER_BUNDLE_ID).tests
         GENERATE_INFOPLIST_FILE: YES
         TEST_HOST: $(BUILT_PRODUCTS_DIR)/Iter.app/Contents/MacOS/Iter
         BUNDLE_LOADER: $(TEST_HOST)
