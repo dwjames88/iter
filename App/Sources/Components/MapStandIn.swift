@@ -12,6 +12,8 @@ struct MapStandIn: View {
         var selected = false
         /// An event-unit pin (as on the Explore and Locations maps) instead of the plain marker.
         var event: Event?
+        /// Carried (a pin of yours mid-drag): lifted with a shadow, the exact point marked under it.
+        var lifted = false
     }
 
     struct Event {
@@ -39,11 +41,13 @@ struct MapStandIn: View {
                     .stroke(IterColor.route, lineWidth: IterStroke.route)
                     ForEach(pins) { pin in
                         let p = project(pin.coordinate, region, geo.size)
+                        if pin.lifted { PinTipDot().position(p) }
                         if let event = pin.event {
                             // The pin's bottom tip sits on the coordinate, like the live map's bottom-anchored annotation.
                             EventScore(window: event.window, zone: event.zone, timeStyle: .start, variant: .pin,
                                        isLoading: event.isLoading, isTomorrow: event.isTomorrow, isSelected: pin.selected)
                                 .fixedSize()
+                                .modifier(LiftedPin(isLifted: pin.lifted))
                                 .position(x: p.x, y: p.y - (EventScore.height(.pin) + IterSpace.xs) / 2)
                         } else {
                         VStack(spacing: IterSpace.xxs) {

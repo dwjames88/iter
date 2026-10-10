@@ -341,13 +341,46 @@ struct LocationsMapHeader: View {
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
     @State private var daylight = DaylightClock()
     @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
+    /// Moving your own spots: touch and hold a pin of yours, then drag. A drag never opens the spot.
+    @State private var dragHolder = OwnPinDragHolder()
+    @State private var lastDragEnd = ProcessInfo.processInfo.systemUptime - 10
+    /// A drag model to use instead of the view's own (a snapshot shows a pin mid-drag).
+    var preparedDrag: OwnPinDragModel?
+    @Environment(\.renderMode) private var renderMode
 
     var body: some View {
-        Map(position: $position, bounds: .globe, selection: $selection) {
+        if renderMode == .snapshot {
+            // A live map does not render offscreen: the same pins, lift and tip dot on a flat ground.
+            let drag = preparedDrag ?? dragHolder.model(for: model)
+            MapStandIn(pins: items.map { item in
+                let id = item.id.uuidString
+                let event = model.savedEvent(for: item.spot)
+                return .init(id: id, coordinate: drag.displayCoordinate(for: id, stored: item.spot.coordinate), label: item.spot.name,
+                             event: event.map { .init(window: $0.window, zone: item.spot.timeZone, isLoading: $0.isLoading, isTomorrow: $0.isTomorrow) },
+                             lifted: drag.dragging?.id == id)
+            })
+        } else {
+            MapReader { proxy in map(proxy) }
+        }
+    }
+
+    private func map(_ proxy: MapProxy) -> some View {
+        let drag = preparedDrag ?? dragHolder.model(for: model)
+        return Map(position: $position, bounds: .globe, selection: $selection) {
             if daylight.isShown(isOn: showsDaylight, style: MapStyleChoice(stored: mapStyleRaw)) { DaylightOverlay(daylight.shading) }
             ForEach(items) { item in
-                Annotation(item.spot.name, coordinate: CLLocationCoordinate2D(latitude: item.spot.coordinate.latitude, longitude: item.spot.coordinate.longitude)) {
-                    pin(item.spot)
+                let id = item.id.uuidString
+                let event = model.savedEvent(for: item.spot)
+                let at = drag.displayCoordinate(for: id, stored: item.spot.coordinate)
+                // The exact point of the spot being carried: the pin's pointer ends here.
+                if drag.dragging?.id == id {
+                    Annotation("", coordinate: clCoordinate(at), anchor: .center) { PinTipDot() }
+                        .annotationTitles(.hidden)
+                }
+                Annotation(item.spot.name, coordinate: clCoordinate(at),
+                           anchor: UnitPoint(x: MapPinAnchor.horizontal, y: MapPinAnchor.vertical(for: event == nil ? .dot : .chip))) {
+                    pin(item.spot, event: event)
+                        .ownPinDrag(id: id, stored: item.spot.coordinate, host: drag, proxy: proxy, isEnabled: drag.canMove(id))
                 }
                 .tag(item.id)
                 .annotationTitles(.hidden)
@@ -369,15 +402,22 @@ struct LocationsMapHeader: View {
         }
         .onAppear { position = Self.framing(items) }
         .onChange(of: items.map(\.id)) { withAnimation { position = Self.framing(items) } }
+        .onChange(of: drag.dragging?.id) { _, id in if id == nil { lastDragEnd = ProcessInfo.processInfo.systemUptime } }
         .onChange(of: selection) { _, id in
             guard let id, let item = items.first(where: { $0.id == id }) else { return }
             selection = nil
+            // Letting go of a carried pin is not a tap: the spot stays closed and the sheet holds still.
+            guard drag.dragging == nil, ProcessInfo.processInfo.systemUptime - lastDragEnd > 0.8 else { return }
             onOpen(item.spot)
         }
     }
 
-    @ViewBuilder private func pin(_ spot: Spot) -> some View {
-        if let event = model.savedEvent(for: spot) {
+    private func clCoordinate(_ c: Coordinate) -> CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude)
+    }
+
+    @ViewBuilder private func pin(_ spot: Spot, event: SavedEvent?) -> some View {
+        if let event {
             EventScore(window: event.window, zone: spot.timeZone, timeStyle: .start, variant: .pin,
                        isLoading: event.isLoading, isTomorrow: event.isTomorrow, isSelected: false)
         } else {
