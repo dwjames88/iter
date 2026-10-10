@@ -186,3 +186,29 @@ public struct LagStats: Sendable, Equatable {
 
     private static func format(_ v: Double) -> String { String(format: "%.1f", v) }
 }
+
+/// Per-step durations of a repeated scripted action (the window resize sweep): median, 90th percentile and max, in
+/// milliseconds. Pure bookkeeping, so it is tested without a clock.
+public struct StepStats: Sendable, Equatable {
+    public private(set) var samples: [Double] = []
+    public init() {}
+
+    public mutating func record(_ milliseconds: Double) { samples.append(max(0, milliseconds)) }
+
+    public var count: Int { samples.count }
+    public var maxMilliseconds: Double { samples.max() ?? 0 }
+    public var medianMilliseconds: Double { percentile(0.5) }
+    public var p90Milliseconds: Double { percentile(0.9) }
+
+    /// Nearest-rank percentile (`p` in 0...1); 0 for no samples.
+    public func percentile(_ p: Double) -> Double {
+        guard !samples.isEmpty else { return 0 }
+        let sorted = samples.sorted()
+        let rank = Int((p * Double(sorted.count)).rounded(.up))
+        return sorted[min(sorted.count - 1, max(0, rank - 1))]
+    }
+
+    public var summary: String {
+        String(format: "n=%d median=%.1fms p90=%.1fms max=%.1fms", count, medianMilliseconds, p90Milliseconds, maxMilliseconds)
+    }
+}

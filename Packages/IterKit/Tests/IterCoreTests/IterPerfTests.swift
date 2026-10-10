@@ -21,3 +21,22 @@ struct IterPerfTests {
         #expect(stats.summary.contains("h16=0"))
     }
 }
+
+@Suite("Step statistics")
+struct StepStatsTests {
+    @Test("median, p90 and max by nearest rank")
+    func percentiles() {
+        var s = StepStats()
+        for ms in 1...10 { s.record(Double(ms)) }
+        #expect(s.count == 10)
+        #expect(s.medianMilliseconds == 5)
+        #expect(s.p90Milliseconds == 9)
+        #expect(s.maxMilliseconds == 10)
+    }
+
+    @Test("no samples reports zeros")
+    func empty() {
+        let s = StepStats()
+        #expect(s.medianMilliseconds == 0 && s.p90Milliseconds == 0 && s.maxMilliseconds == 0)
+    }
+}
