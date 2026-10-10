@@ -25,6 +25,25 @@ public protocol PlaceSearching: Sendable {
     func search(_ query: String, near region: GeoRegion?) async throws -> [PlaceResult]
     /// Points of interest of the given MapKit categories within `radiusMeters` of `center`.
     func pointsOfInterest(near center: Coordinate, radiusMeters: Double, categories: [String]) async throws -> [PlaceResult]
+    /// Points of interest of the given MapKit categories inside `region`.
+    /// The default searches a circle around the region's centre that reaches its corners; conformers with a native
+    /// region request override it.
+    func pointsOfInterest(in region: GeoRegion, categories: [String]) async throws -> [PlaceResult]
+}
+
+extension PlaceSearching {
+    public func pointsOfInterest(in region: GeoRegion, categories: [String]) async throws -> [PlaceResult] {
+        try await pointsOfInterest(near: region.center, radiusMeters: region.halfDiagonalMeters, categories: categories)
+    }
+}
+
+extension GeoRegion {
+    /// Metres from the centre to a corner of the box.
+    public var halfDiagonalMeters: Double {
+        let corner = Coordinate(latitude: min(90, max(-90, center.latitude + latitudeDelta / 2)),
+                                longitude: center.longitude + longitudeDelta / 2)
+        return center.distance(to: corner)
+    }
 }
 
 public protocol Geocoding: Sendable {
@@ -80,6 +99,27 @@ public enum ScoutProgress: Hashable, Sendable {
     case writing
 }
 
+/// A place name the model proposed for an area. It is not trusted until a search has found a real place of that name
+/// inside the area.
+public struct RegionProposal: Hashable, Sendable {
+    public var name: String
+    /// The model's one-sentence reason.
+    public var why: String
+    /// Where the model thinks it is, if it said. Never used as the place's position.
+    public var approximate: Coordinate?
+
+    public init(name: String, why: String, approximate: Coordinate? = nil) {
+        self.name = name
+        self.why = why
+        self.approximate = approximate
+    }
+}
+
+/// Thrown by a `Scouting` that cannot propose places for a region. Callers treat it as "Ask unavailable".
+public enum RegionProposalError: Error, Sendable, Equatable {
+    case unsupported
+}
+
 public protocol Scouting: Sendable {
     func availability() -> ScoutAvailability
     /// Runs one request. Cancellable via task cancellation. `progress` is called on arbitrary threads.
@@ -87,9 +127,18 @@ public protocol Scouting: Sendable {
     /// Runs one request with the map's visible region as context: "near the map" means near `area`.
     /// The default ignores the area and calls the two-argument form, so existing conformers keep working.
     func scout(_ request: String, near area: GeoRegion?, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion]
+    /// Names well-known photography places inside `region`. `areaName` is a locality for context, when known.
+    /// The default throws `RegionProposalError.unsupported`.
+    func proposePlaces(in region: GeoRegion, areaName: String?) async throws -> [RegionProposal]
 }
 
 extension Scouting {
+    /// Names well-known photography places inside `region`. `areaName` is a locality for context, when known.
+    /// The default throws `RegionProposalError.unsupported`, so existing conformers keep working.
+    public func proposePlaces(in region: GeoRegion, areaName: String?) async throws -> [RegionProposal] {
+        throw RegionProposalError.unsupported
+    }
+
     public func scout(_ request: String, near area: GeoRegion?, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
         try await scout(request, progress: progress)
     }

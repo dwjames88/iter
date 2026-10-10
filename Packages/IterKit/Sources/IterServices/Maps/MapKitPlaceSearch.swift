@@ -27,4 +27,13 @@ public struct MapKitPlaceSearch: PlaceSearching {
         let response = try await MKLocalSearch(request: request).start()
         return MapKitMapping.unique(response.mapItems.map(MapKitMapping.placeResult(from:)))
     }
+
+    public func pointsOfInterest(in region: GeoRegion, categories: [String]) async throws -> [PlaceResult] {
+        let request = MKLocalPointsOfInterestRequest(coordinateRegion: MapKitMapping.region(region))
+        if !categories.isEmpty {
+            request.pointOfInterestFilter = MKPointOfInterestFilter(including: categories.map(MKPointOfInterestCategory.init(rawValue:)))
+        }
+        let response = try await MKLocalSearch(request: request).start()
+        return MapKitMapping.unique(response.mapItems.map(MapKitMapping.placeResult(from:)))
+    }
 }
