@@ -27,9 +27,10 @@ struct IterApp: App {
         store.actionName = StoreActionText.name
         // An in-memory or test run keeps its offline packs in a throwaway folder so it never cleans up the real ones.
         let throwaway = AppLaunch.inMemoryStore || AppLaunch.isRunningTests
-        let packs = throwaway ? FileManager.default.temporaryDirectory.appending(path: "IterOfflinePacks-\(UUID().uuidString)", directoryHint: .isDirectory)
+        let packs = throwaway ? RenderCopy.scratchDirectory("OfflinePacks-\(UUID().uuidString)")
                               : OfflinePackStore.defaultRoot()
-        let model = AppModel.live(store: store, scout: AppLaunch.makeScout(), discovery: AppLaunch.makeDiscovery(), offlinePacks: packs)
+        let model = AppModel.live(store: store, scout: AppLaunch.makeScout(), discovery: AppLaunch.makeDiscovery(), offlinePacks: packs,
+                                  isolated: AppLaunch.isRenderCopy)
         _model = State(initialValue: model)
         // `-IterSeedTrip YES` (with `-IterInMemoryStore YES` only): the Canyon Country sample trip, starting tomorrow,
         // so `-IterSection trip` opens a 4-day trip for screenshots and measurements without touching real data.

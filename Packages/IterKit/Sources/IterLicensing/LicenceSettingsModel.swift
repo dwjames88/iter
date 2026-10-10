@@ -29,8 +29,9 @@ public final class LicenceSettingsModel {
     }
 
     /// The real thing: Keychain storage under `com.dwjames.iter.license`, Lemon Squeezy over `URLSession.shared`.
-    public static func live(suggestedName: String = LicenceSettingsModel.accountName()) -> LicenceSettingsModel {
-        let store = LicenseStore(storage: KeychainLicenseStorage())
+    /// `isolated` (a render or test copy) keeps the licence in memory instead of the Keychain.
+    public static func live(suggestedName: String = LicenceSettingsModel.accountName(), isolated: Bool = false) -> LicenceSettingsModel {
+        let store = LicenseStore(storage: isolated ? InMemoryLicenseStorage() : KeychainLicenseStorage())
         let manager = LicenseManager(client: LicenseClient(configuration: LicenceSetup.clientConfiguration), store: store)
         return LicenceSettingsModel(manager: manager, store: store, suggestedName: suggestedName)
     }

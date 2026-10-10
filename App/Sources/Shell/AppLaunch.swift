@@ -38,11 +38,17 @@ import IterFeatures
 /// logging the model before and after to stdout (`spot-to-folder` needs `-IterSeedLibrary YES -IterSection locations`,
 /// `stop-reorder` needs `-IterSeedTrip YES -IterSection trip`). `-IterResizeScript lo,hi` steps the window width from lo to hi and
 /// back every 16 ms, then holds at 1000/1100/1280/1440/1600/1728/1800 (inside the range). `-IterCaptureWindow <dir>` writes PNGs of the
-/// window (`cacheDisplay`, so MapKit may be blank) at each script milestone. `-IterScriptKeepOpen YES` keeps the app open after.
+/// window (`cacheDisplay`, so MapKit may be blank) at each script milestone; `-IterCaptureAfter <seconds>` writes one `screen.png` of
+/// whatever is showing after that long (no script needed) and quits. `-IterScriptKeepOpen YES` keeps the app open after.
 enum AppLaunch {
     static let log = Logger(subsystem: "com.dwjames.iter", category: "app")
 
-    static var inMemoryStore: Bool { UserDefaults.standard.bool(forKey: "IterInMemoryStore") }
+    /// True for a render or test copy (a bundle id other than `com.dwjames.iter`; `scripts/render.sh`, `scripts/snapshots.sh`).
+    /// The one seam for isolation: such a copy forces the in-memory store, skips the sandbox migrations, keeps API keys and the
+    /// licence in memory (no Keychain prompt), and writes its forecast cache, offline packs and image cache to temp folders.
+    static let isRenderCopy = RenderCopy.isCurrent
+    /// The in-memory store switch, forced on for a render copy.
+    static var inMemoryStore: Bool { isRenderCopy || UserDefaults.standard.bool(forKey: "IterInMemoryStore") }
     static var isRunningTests: Bool { ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
         || ProcessInfo.processInfo.environment["XCTestBundlePath"] != nil }
     /// Opens the first-run guide per `-IterOnboarding` and the rules above. Call once the window has appeared.

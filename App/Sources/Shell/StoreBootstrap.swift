@@ -11,7 +11,7 @@ enum StoreBootstrap {
     static func makeContainer(inMemory: Bool) throws -> ModelContainer {
         // A test run never touches a real store: unsandboxed, SwiftData's default would be the file every other
         // unsandboxed app shares (`~/Library/Application Support/default.store`).
-        if inMemory || AppLaunch.isRunningTests { return try IterSchema.makeContainer(inMemory: true) }
+        if inMemory || AppLaunch.isRenderCopy || AppLaunch.isRunningTests { return try IterSchema.makeContainer(inMemory: true) }
         if StoreLocation.isSandboxed() { return try IterSchema.makeContainer(inMemory: false) }
 
         let bundleIdentifier = Bundle.main.bundleIdentifier ?? "com.dwjames.iter"

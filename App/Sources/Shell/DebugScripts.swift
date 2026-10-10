@@ -60,6 +60,15 @@ enum DebugScripts {
         #endif
     }
 
+    /// `-IterCaptureAfter <seconds>` (with `-IterCaptureWindow <dir>`): one capture of whatever is on screen after that long, written
+    /// as `<dir>/screen.png`, then the app quits unless `-IterScriptKeepOpen YES`. Lets any screen be captured without a script.
+    @MainActor static func runCaptureAfter() async {
+        guard captureDir != nil, let raw = UserDefaults.standard.string(forKey: "IterCaptureAfter"), let seconds = Double(raw), seconds >= 0 else { return }
+        await pause(seconds)
+        await capture("screen")
+        finish()
+    }
+
     /// `-IterResizeScript lo,hi`: steps the window's width from lo to hi and back, one step about every 16 ms, then holds at
     /// 1100, 1280, 1440, 1600 and 1800 (those inside the range) and captures each. Layout warnings land on stderr.
     @MainActor static func runResize() async {

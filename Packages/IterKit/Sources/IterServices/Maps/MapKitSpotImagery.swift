@@ -11,7 +11,8 @@ import UIKit
 /// Spot imagery from MapKit: Look Around first (when Apple has it here), then a satellite snapshot.
 /// Memory cache, then disk, then MapKit; identical concurrent requests share one job.
 public final class MapKitSpotImagery: SpotImageryProviding {
-    public static let shared = MapKitSpotImagery()
+    /// A render or test copy (`RenderCopy`) keeps its disk cache in a throwaway folder, not the user's Caches.
+    public static let shared = MapKitSpotImagery(directory: RenderCopy.isCurrent ? RenderCopy.scratchDirectory("SpotImagery") : nil)
 
     private let disk: SpotImageDiskCache
     private let memory: SpotImageMemoryCache

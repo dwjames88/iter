@@ -114,14 +114,17 @@ public final class AppModel {
     }
 
     /// The real app: the weather router (Apple Weather, OpenWeather, Windy as the user chose), MapKit, on-disk store.
-    /// `offlinePacks` is where pinned trips' offline packs live; pass a throwaway folder with an in-memory store, or
+    /// `isolated` swaps the Keychain and disk cache for memory. `offlinePacks` is where pinned trips' offline packs live; pass a throwaway folder with an in-memory store, or
     /// the launch-time clean-up would remove the real packs (their trips are not in that store).
     public static func live(store: IterStore, scout: (any Scouting)?, discovery override: DiscoveryChoice = .live,
-                            offlinePacks: URL? = OfflinePackStore.defaultRoot()) -> AppModel {
-        let cache = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                            offlinePacks: URL? = OfflinePackStore.defaultRoot(),
+                            isolated: Bool = false) -> AppModel {
+        // `isolated` (a render or test copy, see `RenderCopy`): no Keychain, no on-disk forecast cache.
+        let cache = isolated ? nil : try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appending(path: "Iter/ForecastCache", directoryHint: .isDirectory)
-        let setup = WeatherSetup(keyStore: KeychainAPIKeyStore(), cacheDirectory: cache)
-        let keys = KeychainDiscoveryKeyStore()
+        let apiKeys: any APIKeyStore = isolated ? InMemoryAPIKeyStore() : KeychainAPIKeyStore()
+        let setup = WeatherSetup(keyStore: apiKeys, cacheDirectory: cache)
+        let keys: any DiscoveryKeyStore = isolated ? InMemoryDiscoveryKeyStore() : KeychainDiscoveryKeyStore()
         return AppModel(store: store,
                  weather: setup.router,
                  search: MapKitPlaceSearch(),

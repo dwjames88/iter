@@ -6,7 +6,7 @@ import IterLicensing
 /// with `-IterShowLicensing YES` (see `AppLaunch.showLicensing`). The words and the state live in
 /// `LicenceSettingsModel`; this view only lays them out.
 struct LicenceSettingsPane: View {
-    @State private var model = LicenceSettingsModel.live(suggestedName: LicenceSettingsPane.suggestedName)
+    @State private var model = LicenceSettingsModel.live(suggestedName: LicenceSettingsPane.suggestedName, isolated: AppLaunch.isRenderCopy)
     @State private var confirmingDeactivate = false
 
     var body: some View {

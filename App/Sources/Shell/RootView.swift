@@ -14,16 +14,15 @@ struct RootView: View {
 
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var autoCollapsed = false
-    /// Whether the window is narrower than `sidebarCollapseWidth`; nil until the window reports. Only this crossing is state:
-    /// the raw width changes every step of a live resize and used to re-evaluate the whole window each time.
-    @State private var windowIsNarrow: Bool?
+    @State private var windowWidth: CGFloat = 0
     /// Below this the sidebar, list and detail cannot all fit at their minimums.
     private var sidebarCollapseWidth: CGFloat { IterSize.sidebarIdeal + IterSize.mainWindowMinWidth }
 
     /// The sidebar gives way first: collapse it when the WINDOW is too narrow for sidebar plus detail minimum, bring it
     /// back when there is room again, but only if this rule (not the person) collapsed it.
-    private func applyCollapseRule(narrow: Bool) {
-        if narrow {
+    private func applyCollapseRule(_ width: CGFloat) {
+        guard width > 0 else { return }
+        if width < sidebarCollapseWidth {
             if columnVisibility != .detailOnly { columnVisibility = .detailOnly; autoCollapsed = true }
         } else if autoCollapsed {
             autoCollapsed = false
@@ -32,9 +31,29 @@ struct RootView: View {
     }
 
     var body: some View {
-        let _ = IterPerf.count("root.body")
         @Bindable var onboarding = model.onboarding
-        splitView
+        NavigationSplitView(columnVisibility: $columnVisibility) {
+            SidebarView()
+                // One search field at the top of the sidebar, as in Maps; the screen showing takes what is typed.
+                .safeAreaInset(edge: .top, spacing: IterSpace.sm) {
+                    SidebarSearchField(text: $navigation.searchText, prompt: searchPrompt,
+                                       focusRequest: navigation.focusSearchRequest, onSubmit: submitSearch)
+                        // Maps' field sits 15 pt in from the sidebar's edges.
+                        .padding(.horizontal, 15)
+                }
+                .navigationSplitViewColumnWidth(min: IterSize.sidebarMin, ideal: IterSize.sidebarIdeal, max: IterSize.sidebarMax)
+        } detail: {
+            DetailView()
+        }
+        .onChange(of: isFilteringLocations) { navigation.searchText = "" }
+        .environment(navigation)
+        .frame(minWidth: IterSize.mainWindowMinWidth, minHeight: IterSize.windowMinHeight)
+        .background(MainWindowConfigurator(minSize: CGSize(width: IterSize.mainWindowMinWidth, height: IterSize.windowMinHeight), contentWidth: $windowWidth))
+        .onChange(of: windowWidth) { _, width in applyCollapseRule(width) }
+        .onChange(of: columnVisibility) { _, new in
+            if new == .all { autoCollapsed = false }
+        }
+        .focusedSceneValue(\.navigation, navigation)
         .sheet(isPresented: $onboarding.isPresented, onDismiss: { model.onboarding.dismissed() }) {
             OnboardingView()
         }
@@ -61,32 +80,6 @@ struct RootView: View {
         }
         // A selected trip or folder that is deleted (or whose creation is undone) falls back to its section's landing.
         .onChange(of: model.store.revision) { fixStaleSelection() }
-    }
-
-    /// The split view and its window rules; kept apart from `body` so the type checker can cope with the chain.
-    private var splitView: some View {
-        NavigationSplitView(columnVisibility: $columnVisibility) {
-            SidebarView()
-                // One search field at the top of the sidebar, as in Maps; the screen showing takes what is typed.
-                .safeAreaInset(edge: .top, spacing: IterSpace.sm) {
-                    SidebarSearchField(text: $navigation.searchText, prompt: searchPrompt,
-                                       focusRequest: navigation.focusSearchRequest, onSubmit: submitSearch)
-                        // Maps' field sits 15 pt in from the sidebar's edges.
-                        .padding(.horizontal, 15)
-                }
-                .navigationSplitViewColumnWidth(min: IterSize.sidebarMin, ideal: IterSize.sidebarIdeal, max: IterSize.sidebarMax)
-        } detail: {
-            DetailView()
-        }
-        .onChange(of: isFilteringLocations) { navigation.searchText = "" }
-        .environment(navigation)
-        .frame(minWidth: IterSize.mainWindowMinWidth, minHeight: IterSize.windowMinHeight)
-        .background(MainWindowConfigurator(minSize: CGSize(width: IterSize.mainWindowMinWidth, height: IterSize.windowMinHeight), narrowBelow: sidebarCollapseWidth, isNarrow: $windowIsNarrow))
-        .onChange(of: windowIsNarrow) { _, narrow in if let narrow { applyCollapseRule(narrow: narrow) } }
-        .onChange(of: columnVisibility) { _, new in
-            if new == .all { autoCollapsed = false }
-        }
-        .focusedSceneValue(\.navigation, navigation)
     }
 
     /// Locations filters with the field; everywhere else it searches places.
