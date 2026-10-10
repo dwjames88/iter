@@ -700,16 +700,18 @@ public final class ExploreModel {
 
     /// Pin hierarchy: the selected spot and the hovered one carry a chip; so do the best few scored spots in view;
     /// everything else is a small dot (pattern #4, critique C28). The selected and hovered pins are never clustered,
-    /// and the chip budget is spent on pins that stay individual.
+    /// and the chip budget is spent on pins that stay individual. Your own spots are never clustered either, so they
+    /// can always be dragged.
     private func buildMapSnapshot(_ value: Derived) -> MapSnapshot {
         let region = visibleRegion
         let fixed = Set([selectedID, hoveredID].compactMap { $0 })
-        let candidates = value.rows.filter { !fixed.contains($0.id) }.map {
+        let own = Set(value.rows.filter { $0.source == .yours }.map(\.id))
+        let candidates = value.rows.filter { !fixed.contains($0.id) && !own.contains($0.id) }.map {
             PinClusterer.Candidate(id: $0.id, coordinate: $0.spot.coordinate, score: $0.score,
                                    band: $0.window?.assessment.lightScore?.band)
         }
         let grouped = PinClusterer.cluster(candidates, region: region, viewportWidth: Double(mapViewport.width))
-        let single = Set(grouped.singles)
+        let single = Set(grouped.singles).union(own)
         let chipIDs = Set(value.rows
             .filter { single.contains($0.id) && $0.score != nil && (region?.contains($0.spot.coordinate) ?? true) }
             .sorted { ($0.score ?? 0) != ($1.score ?? 0) ? ($0.score ?? 0) > ($1.score ?? 0) : $0.id < $1.id }

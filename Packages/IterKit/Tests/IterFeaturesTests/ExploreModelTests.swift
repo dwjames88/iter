@@ -860,24 +860,20 @@ private func clusteredExplore(region: GeoRegion = westUS) async throws -> Explor
         for group in Dictionary(grouping: items, by: rank).values { #expect(group.map(\.id) == group.map(\.id).sorted()) }
     }
 
-    @Test func coLocatedSpotsAreIndividualPinsBelowTheCutoff() async throws {
+    @Test func coLocatedCuratedSpotsAreIndividualPinsBelowTheCutoff() async throws {
         let explore = try await makeExplore()
         let spot = CuratedSpots.all[0]
-        let a = explore.app.store.createUserSpot(name: "A", coordinate: spot.coordinate, timeZoneIdentifier: "America/Denver")
-        let b = explore.app.store.createUserSpot(name: "B", coordinate: spot.coordinate, timeZoneIdentifier: "America/Denver")
         explore.setMapViewport(viewport)
         explore.cameraDidChange(to: GeoRegion(center: spot.coordinate, latitudeDelta: 3, longitudeDelta: 4))
-        func clusterCount() -> Int { explore.mapItems.filter { if case .cluster = $0 { true } else { false } }.count }
         let cluster = try #require(explore.mapItems.compactMap { item -> ExploreCluster? in
             if case .cluster(let c) = item { c } else { nil }
-        }.first { $0.memberIDs.contains(a.spot.id) && $0.memberIDs.contains(b.spot.id) })
+        }.first)
         explore.zoomToCluster(cluster.id)
         guard case .fit(let region)? = explore.cameraRequest?.kind else { Issue.record("expected a fit"); return }
         #expect(region.longitudeDelta >= PinClusterer.minimumFitSpan && region.latitudeDelta >= PinClusterer.minimumFitSpan)
         explore.cameraDidChange(to: region)
         let ids = Set(explore.mapItems.compactMap { item -> String? in if case .pin(let p) = item { p.id } else { nil } })
-        #expect(ids.contains(a.spot.id) && ids.contains(b.spot.id))
-        #expect(clusterCount() == 0)
+        #expect(Set(cluster.memberIDs).isSubset(of: ids))
     }
 
     @Test func theHoveredPinStaysIndividual() async throws {
@@ -918,6 +914,48 @@ private func clusteredExplore(region: GeoRegion = westUS) async throws -> Explor
         let chips = explore.pins.filter { $0.style == .chip }
         #expect(chips.count <= ExploreModel.pinBudget)
         #expect(chips.allSatisfy { !clustered.contains($0.id) })
+    }
+
+    @Test func yourOwnSpotIsNeverClusteredAndDoesNotCountInACluster() async throws {
+        let explore = try await clusteredExplore()
+        let cluster = try #require(explore.mapItems.compactMap { item -> ExploreCluster? in
+            if case .cluster(let c) = item { c } else { nil }
+        }.first)
+        let spot = explore.app.store.createUserSpot(name: "Mine", coordinate: cluster.memberCoordinates[0],
+                                                    timeZoneIdentifier: "America/Los_Angeles").spot
+        explore.app.spotSaved(spot)
+        explore.didCreate(spot)
+        explore.select(nil)
+        explore.cameraDidChange(to: westUS)
+        #expect(explore.canMove(spot.id))
+        var members = 0
+        for item in explore.mapItems {
+            if case .cluster(let c) = item { #expect(!c.memberIDs.contains(spot.id)); members += c.count } else { members += 1 }
+        }
+        #expect(explore.pins.contains { $0.id == spot.id && $0.style != .selected })
+        #expect(members == explore.rows.count, "every row is still drawn exactly once")
+        let again = try #require(explore.mapItems.compactMap { item -> ExploreCluster? in
+            if case .cluster(let c) = item, c.memberCoordinates.contains(cluster.memberCoordinates[0]) { c } else { nil }
+        }.first)
+        #expect(again.count == cluster.count, "the curated cluster is unchanged")
+    }
+
+    @Test func twoOwnSpotsAtOnePlaceStayTwoPins() async throws {
+        let explore = try await clusteredExplore()
+        let place = Coordinate(latitude: 31.2, longitude: -108.9)
+        let ids = (0..<2).map { i -> String in
+            let spot = explore.app.store.createUserSpot(name: "Mine \(i)", coordinate: place,
+                                                        timeZoneIdentifier: "America/Denver").spot
+            explore.app.spotSaved(spot)
+            explore.didCreate(spot)
+            return spot.id
+        }
+        explore.select(nil)
+        explore.cameraDidChange(to: westUS)
+        for id in ids {
+            #expect(explore.mapItems.contains { if case .pin(let p) = $0 { p.id == id } else { false } })
+        }
+        #expect(explore.mapItems.allSatisfy { if case .cluster(let c) = $0 { Set(c.memberIDs).isDisjoint(with: ids) } else { true } })
     }
 
     @Test func clickingAClusterRequestsAFitThatIsNotAUserMove() async throws {
