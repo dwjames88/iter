@@ -117,7 +117,7 @@ private struct TripBuilderContent: View {
 
     @ViewBuilder private func builderBody(_ plan: TripPlan, _ builder: TripBuilderModel) -> some View {
         let state = self.state
-        FloatingPanelLayout(placement: .centered(min: 560, max: 800, fraction: 0.62)) {
+        FloatingPanelLayout(panelWidth: IterSize.listIdeal, placement: .planner) {
             VStack(spacing: 0) {
                 TripHeader(plan: plan, builder: builder, tripActions: tripActions(plan, builder)) { changesDates = true }
                 WeatherStatusBanner(status: model.weatherStatus)

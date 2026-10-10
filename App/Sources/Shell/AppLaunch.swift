@@ -37,7 +37,7 @@ import IterFeatures
 /// `-IterDragScript spot-to-folder|stop-reorder` (with `-IterInMemoryStore YES`) runs the drop handlers a drag calls, in process,
 /// logging the model before and after to stdout (`spot-to-folder` needs `-IterSeedLibrary YES -IterSection locations`,
 /// `stop-reorder` needs `-IterSeedTrip YES -IterSection trip`). `-IterResizeScript lo,hi` steps the window width from lo to hi and
-/// back every 16 ms, then holds at 1100/1280/1440/1600/1800 (inside the range). `-IterCaptureWindow <dir>` writes PNGs of the
+/// back every 16 ms, then holds at 1000/1100/1280/1440/1600/1728/1800 (inside the range). `-IterCaptureWindow <dir>` writes PNGs of the
 /// window (`cacheDisplay`, so MapKit may be blank) at each script milestone. `-IterScriptKeepOpen YES` keeps the app open after.
 enum AppLaunch {
     static let log = Logger(subsystem: "com.dwjames.iter", category: "app")

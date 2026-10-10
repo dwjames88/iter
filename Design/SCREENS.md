@@ -206,6 +206,16 @@ The snapshot draws the sheet on a regular-material panel with 12 pt corners, cen
 
 **Regions, left to right.** A horizontal split view (draggable divider): left column minimum 340 pt (`layout/listColumnMin`), ideal 520 pt; right map minimum 420 pt (`layout/detailMin`).
 
+**Card by window width (Mac).** The card is a floating Liquid Glass card (the sidebar-variant `NSGlassEffectView`, 27.5 pt corners concentric with the 32 pt Share and More buttons, 8 pt from the window's edges) and follows the window's content width, sidebar included (`PlannerCardLayout`, a pure function with unit tests):
+
+| Window width | Mode | Card |
+|---|---|---|
+| 1440 pt and up | Wide | Centred; 62 % of the detail area (the window less the sidebar), between 560 and 800 pt. The route is framed in the map strip to the card's leading side. |
+| 1100 up to 1440 pt | Capped | Centred, narrowed so the visible map (detail area less the card) is at least 40 % of the window; never under 340 pt or wider than the wide card would be. Route framed as above. |
+| Under 1100 pt | Side | Docked to the leading edge like the Explore card (360 pt, narrowing to 340 pt so the map beside it keeps its 420 pt minimum), full height inset 8 pt; the map fills the trailing side and the route is framed in it. |
+
+A mode is held until the window is 8 pt past its threshold on the way down (hysteresis), and the card's size is measured in 4 pt steps, so a live resize at a threshold does not flap and no state is written per pixel. The wide card's width jumps at 1440 (the 40 % rule applies only below it, by design). The map's safe area follows the card in every mode: a leading inset when docked, a trailing inset for the strip left of a centred card.
+
 **Route map camera.** The route map fits the whole trip when the builder first opens, never wider than a 40 degree span. Once you move the map, the camera is yours: it is saved for that trip and restored on relaunch, and changing stops refits only while you have not touched it. Selecting a stop pans to it with the zoom kept.
 
 Left column, top to bottom:

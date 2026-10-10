@@ -1,16 +1,27 @@
 import SwiftUI
 import AppKit
 import IterDesign
+import IterFeatures
 
 /// The Apple Maps layout: the map fills the window, under the toolbar, and the screen's list floats over the map's
 /// leading edge on one Liquid Glass panel. The map gets `insets` (the toolbar above, the panel on the leading edge) for
 /// its safe area, so framing, selection and the map's own controls stay in the part of the map that shows.
 struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
-    /// Where the card sits. `.leading` (Explore, Locations) hugs the sidebar edge at `panelWidth`; `.centered` (the trip
-    /// builder) sits in the middle of the map and grows with the window between `min` and `max`, a fraction of it wide.
+    /// Where the card sits. `.leading` (Explore, Locations) hugs the sidebar edge at `panelWidth`; `.planner` (the trip
+    /// builder) follows the window's width (`PlannerCardLayout`): centred and wide in a big window, centred and narrowed
+    /// so the map keeps 40 % of the window in a medium one, docked to the leading edge like `.leading` in a small one.
     enum Placement: Equatable {
         case leading
-        case centered(min: CGFloat, max: CGFloat, fraction: CGFloat)
+        case planner
+    }
+
+    /// The measured sizes the layout is decided from. Whole numbers in steps of 4 pt for the planner, so a live resize
+    /// writes state a quarter as often and the mode is only re-decided when the width has moved.
+    private struct Measure: Equatable {
+        var window: CGFloat = 0
+        var detail: CGFloat = 0
+        /// The area's leading edge in the window: 0 when the sidebar is collapsed and the window's controls float over it.
+        var leading: CGFloat = 0
     }
 
     var panelWidth: CGFloat = IterSize.listIdeal
@@ -18,18 +29,32 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
     @ViewBuilder var panel: Panel
     @ViewBuilder var map: (_ insets: EdgeInsets) -> MapContent
     @State private var topInset: CGFloat = 0
-    @State private var totalWidth: CGFloat = 0
+    @State private var measure = Measure()
+    /// The planner's mode in use, kept for the hysteresis at the thresholds.
+    @State private var plannerMode: PlannerCardLayout.Mode?
+
+    private var totalWidth: CGFloat { measure.detail }
+
+    /// The planner's decision for the width measured now (see `PlannerCardLayout`).
+    private var planner: PlannerCardLayout {
+        PlannerCardLayout.resolve(windowWidth: measure.window, detailWidth: measure.detail, previous: plannerMode,
+                                  sideWidth: panelWidth, floorWidth: IterSize.listColumnMin, detailMin: IterSize.detailMin)
+    }
+
+    /// Docked to the leading edge: always for `.leading`, and for the planner in a small window.
+    private var isDocked: Bool {
+        switch placement {
+        case .leading: true
+        case .planner: planner.mode == .side
+        }
+    }
 
     /// The panel narrows (to the list column minimum) before the visible map drops below the detail minimum.
     private var width: CGFloat {
+        guard totalWidth > 0 else { return placement == .leading ? panelWidth : PlannerCardLayout.wideMin }
         switch placement {
-        case .leading:
-            guard totalWidth > 0 else { return panelWidth }
-            return max(IterSize.listColumnMin, min(panelWidth, totalWidth - 2 * Self.margin - IterSize.detailMin))
-        case .centered(let low, let high, let fraction):
-            guard totalWidth > 0 else { return low }
-            // Never wider than the window leaves room for, so the map still shows a strip each side where it can.
-            return max(IterSize.listColumnMin, min(max(low, min(high, totalWidth * fraction)), totalWidth - 2 * Self.margin))
+        case .leading: return max(IterSize.listColumnMin, min(panelWidth, totalWidth - 2 * Self.margin - IterSize.detailMin))
+        case .planner: return planner.cardWidth
         }
     }
 
@@ -37,10 +62,8 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
     /// middle of the map, which no edge inset can describe; the map frames its content in the strip on the card's leading
     /// side (the card's trailing side and the map controls are left alone), so a fitted route is never behind the card.
     private var mapInsets: EdgeInsets {
-        switch placement {
-        case .leading: EdgeInsets(top: topInset, leading: width + 2 * Self.margin, bottom: 0, trailing: 0)
-        case .centered: EdgeInsets(top: topInset, leading: 0, bottom: 0, trailing: width + (totalWidth - width) / 2 + Self.margin)
-        }
+        if isDocked { return EdgeInsets(top: topInset, leading: width + 2 * Self.margin, bottom: 0, trailing: 0) }
+        return EdgeInsets(top: topInset, leading: 0, bottom: 0, trailing: width + (totalWidth - width) / 2 + Self.margin)
     }
 
     /// Apple Maps' card: 8 pt from the window's edges, its corners concentric with the window's.
@@ -49,7 +72,7 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
     static var shape: RoundedRectangle { RoundedRectangle(cornerRadius: 27.5, style: .continuous) }
 
     var body: some View {
-        ZStack(alignment: placement == .leading ? .topLeading : .top) {
+        ZStack(alignment: isDocked ? .topLeading : .top) {
             map(mapInsets)
                 .ignoresSafeArea(edges: .top)
             panel
@@ -59,12 +82,28 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
                 .clipShape(Self.shape)
                 .modifier(PanelMaterial(shape: Self.shape))
                 .padding(Self.margin)
+                // A docked planner card with the sidebar collapsed starts below the toolbar, so the window's controls
+                // (traffic lights, sidebar toggle) do not sit on its title.
+                .padding(.top, placement == .planner && isDocked && measure.leading == 0 ? topInset : 0)
                 // As Maps' card: from the top of the window, in the band beside the sidebar the toolbar leaves free.
                 .ignoresSafeArea(edges: .top)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onGeometryChange(for: CGFloat.self) { $0.safeAreaInsets.top } action: { topInset = $0 }
-        .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { totalWidth = $0 }
+        .onGeometryChange(for: Measure.self) { [placement] proxy in
+            // The window's content width is this area's trailing edge in window coordinates (the sidebar, when it shows,
+            // is what lies to the leading side).
+            guard placement == .planner else { return Measure(window: 0, detail: proxy.size.width) }
+            func step(_ value: CGFloat) -> CGFloat { (value / 4).rounded() * 4 }
+            let frame = proxy.frame(in: .global)
+            return Measure(window: step(frame.maxX), detail: step(proxy.size.width), leading: frame.minX < 1 ? 0 : 1)
+        } action: { new in
+            measure = new
+            if placement == .planner {
+                let mode = PlannerCardLayout.mode(windowWidth: new.window, previous: plannerMode)
+                if mode != plannerMode { plannerMode = mode }
+            }
+        }
         // As in Maps, the map runs under the toolbar with no bar or edge of its own.
         .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
     }

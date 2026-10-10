@@ -42,7 +42,7 @@ enum DebugScripts {
         #if canImport(AppKit)
         guard let dir = captureDir else { return }
         await pause(0.5)   // let SwiftUI settle after the state change
-        guard let window = NSApp.windows.filter({ $0.isVisible && $0.contentView != nil }).max(by: { $0.frame.width < $1.frame.width }),
+        guard let window = NSApp.windows.filter({ $0.contentView != nil && $0.frame.width > 400 }).max(by: { $0.frame.width < $1.frame.width }),
               let view = window.contentView?.superview ?? window.contentView,
               let rep = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { say("capture \(name): no window"); return }
         view.cacheDisplay(in: view.bounds, to: rep)
@@ -60,7 +60,7 @@ enum DebugScripts {
         #if canImport(AppKit)
         guard let range = resizeRange else { return }
         await pause(6)
-        guard let window = NSApp.windows.filter({ $0.isVisible }).max(by: { $0.frame.width < $1.frame.width }) else { return }
+        guard let window = NSApp.windows.filter({ $0.contentView != nil && $0.frame.width > 400 }).max(by: { $0.frame.width < $1.frame.width }) else { return }
         func setWidth(_ w: Double) {
             var frame = window.frame
             frame.size.width = w
@@ -75,7 +75,7 @@ enum DebugScripts {
         let start = Date()
         for w in widths { setWidth(w); await pause(0.016) }
         say("resize sweep \(widths.count) steps in \(Int(Date().timeIntervalSince(start) * 1000)) ms")
-        for w in [1100.0, 1280, 1440, 1600, 1800] where range.contains(w) {
+        for w in [1000.0, 1100, 1280, 1440, 1600, 1728, 1800] where range.contains(w) {
             setWidth(w)
             await capture("resize-\(Int(w))")
         }

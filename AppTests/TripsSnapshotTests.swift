@@ -83,6 +83,19 @@ enum TripsFixtures {
         try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: id, initialDay: 1) }, model: model), screen: "trip", state: "builder", settle: settle)
     }
 
+    /// The planner card's three modes by window width (`PlannerCardLayout`): docked at 1000, centred and capped at 1280,
+    /// centred and wide at 1600. The snapshot window is the detail alone, so its width is the window's.
+    @Test(.enabled(if: Snapshot.enabled)) func plannerCardByWidth() async throws {
+        let model = TripsFixtures.model()
+        let id = model.store.trips()[0].id
+        let cases: [(state: String, width: CGFloat)] = [("side", 1000), ("capped", 1280), ("wide", 1600)]
+        for (state, width) in cases {
+            let size = Snapshot.Size(name: "\(Int(width))x820", width: width, height: 820)
+            try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: id, initialDay: 1) }, model: model),
+                                      screen: "trip", state: "planner-card-\(state)", sizes: [size], settle: settle)
+        }
+    }
+
     @Test(.enabled(if: Snapshot.enabled)) func builderWeatherOffline() async throws {
         let model = TripsFixtures.model(weather: .notEnabled)
         let id = model.store.trips()[0].id
