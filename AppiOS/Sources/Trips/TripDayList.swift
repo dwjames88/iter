@@ -322,15 +322,16 @@ private struct StopCard: View {
                             .disabled(day == entry.stop.dayIndex)
                     }
                 } label: {
-                    Image(systemName: "calendar")
+                    Label(String(localized: "Move to day", comment: "Edit mode: menu to move a stop to another day"), systemImage: "calendar")
+                        .labelStyle(.iconOnly)
                         .font(IterFont.subheadline)
-                        .foregroundStyle(IterColor.textPrimary)
-                        .frame(width: IterSize.hitTarget, height: IterSize.hitTarget - IterSpace.sm)
-                        .background(ModuleFill(), in: Capsule())
                 }
                 .accessibilityLabel(Text("Move to day", comment: "Edit mode: menu to move a stop to another day"))
             }
         }
+        // System bordered capsules, as the filter chips are, not hand-filled capsules.
+        .menuStyle(.button)
+        .filterChipStyle()
         .padding(.leading, IterSize.badgeHeight + IterSpace.sm)
     }
 
@@ -339,9 +340,6 @@ private struct StopCard: View {
             .font(IterFont.subheadline)
             .foregroundStyle(IterColor.textPrimary)
             .lineLimit(1)
-            .padding(.horizontal, IterSpace.sm)
-            .frame(minHeight: IterSize.hitTarget - IterSpace.sm)
-            .background(ModuleFill(), in: Capsule())
     }
 }
 

@@ -47,7 +47,7 @@ struct MapStyleMenu: View {
         } label: {
             #if os(iOS)
             if isGlass {
-                RoundGlassLabel(systemImage: "map")
+                Label(String(localized: "Map Style", comment: "Map control"), systemImage: "map").labelStyle(.iconOnly)
             } else {
                 MapControlLabel(systemImage: "map")
             }
@@ -57,6 +57,10 @@ struct MapStyleMenu: View {
                 .contentShape(.rect)
             #endif
         }
+        #if os(iOS)
+        // Alone, the system glass circle; inside a shared capsule (isGlass false) the capsule is the glass.
+        .modifier(SystemGlassCircle(isGlass: isGlass))
+        #endif
         #if os(macOS)
         .menuStyle(.button)
         .buttonStyle(.plain)
@@ -66,3 +70,17 @@ struct MapStyleMenu: View {
         .accessibilityLabel(Text("Map Style", comment: "Map control"))
     }
 }
+
+#if os(iOS)
+private struct SystemGlassCircle: ViewModifier {
+    let isGlass: Bool
+
+    func body(content: Content) -> some View {
+        if isGlass {
+            content.buttonStyle(.glass).buttonBorderShape(.circle).controlSize(.large)
+        } else {
+            content
+        }
+    }
+}
+#endif

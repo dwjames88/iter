@@ -1,19 +1,6 @@
 import SwiftUI
 import IterDesign
 
-/// A 44 pt round glass button label. Use inside `Button` or `Menu`.
-struct RoundGlassLabel: View {
-    let systemImage: String
-    var body: some View {
-        Image(systemName: systemImage)
-            .font(.system(size: 17, weight: .semibold))
-            .foregroundStyle(.primary)
-            .frame(width: 44, height: 44)
-            .glassEffect(.regular.interactive(), in: .circle)
-            .contentShape(Circle())
-    }
-}
-
 /// A 44 pt icon for a button in a group of map controls that share one glass capsule (as Maps groups map style and
 /// location).
 struct MapControlLabel: View {
