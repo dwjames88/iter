@@ -56,6 +56,13 @@ public final class ExploreModel {
     public private(set) var scrollRequest: (id: Int, target: String)?
     /// The map's visible region, reported by the view when the camera settles.
     public private(set) var visibleRegion: GeoRegion?
+    /// The region the current list matches: set when the camera settles other than by the user, and to the searched
+    /// region when Search Here runs. A user move leaves it, so the distance from it says the list is out of date.
+    public internal(set) var listRegion: GeoRegion?
+    /// Search Here progress and outcome, as facts.
+    public internal(set) var searchHereStatus: SearchHereStatus = .idle
+    /// What Search Here found, merged, in list order.
+    public internal(set) var searchHereResults: [SearchHereResult] = []
     /// The map pane's size in points, reported by the view; the pin clusterer needs its width. Zero until known.
     public private(set) var mapViewport: CGSize = .zero
     /// Bumped once per applied batch of scores, so views and the derived cache see new scores in one change.
@@ -73,6 +80,11 @@ public final class ExploreModel {
     @ObservationIgnored public var searchDebounce: Duration
     @ObservationIgnored public private(set) var searchTask: Task<Void, Never>?
     @ObservationIgnored private var requestCounter = 0
+    @ObservationIgnored var searchHereTask: Task<Void, Never>?
+    /// Bumped by every Search Here start and cancel; a task whose number is out of date never writes.
+    @ObservationIgnored var searchHereGeneration = 0
+    /// Bumped when `searchHereResults` changes, so the derived stamp stays cheap to compare.
+    @ObservationIgnored var searchHereRevision = 0
     @ObservationIgnored private var scoreCache: [ScoreKey: CachedWindow] = [:]
     /// The newest computed event per spot id, shown while a row's key is being rescored.
     @ObservationIgnored private var lastEvent: [String: CachedWindow] = [:]
@@ -145,7 +157,7 @@ public final class ExploreModel {
         var items: [ExploreMapItem]
         var pins: [ExplorePin]
     }
-    private struct DerivedStamp: Equatable {
+    struct DerivedStamp: Equatable {
         /// Five-minute bucket of the clock, so each row's next event rolls over after its sunset.
         var timeBucket: Int
         var forecastRevision: Int
@@ -155,6 +167,7 @@ public final class ExploreModel {
         var query: String
         var appleIDs: [String]
         var ask: [ScoutSuggestion]
+        var inViewRevision: Int
         /// What distances are measured from: you, else the map centre while sorting by distance.
         var origin: Coordinate?
         var hasLocation: Bool
@@ -178,7 +191,7 @@ public final class ExploreModel {
         let stamp = DerivedStamp(timeBucket: Self.timeBucket(app.now()), forecastRevision: app.forecasts.revision,
                                  storeRevision: app.store.revision, filters: filters, sort: sort,
                                  query: query.trimmingCharacters(in: .whitespacesAndNewlines),
-                                 appleIDs: appleResults.map(\.id), ask: askSuggestions, origin: origin, hasLocation: user != nil,
+                                 appleIDs: appleResults.map(\.id), ask: askSuggestions, inViewRevision: searchHereRevision, origin: origin, hasLocation: user != nil,
                                  radiusMiles: app.location.radiusMiles, scoreRevision: scoreRevision)
         return stamp
     }
@@ -208,9 +221,9 @@ public final class ExploreModel {
         let yours = app.store.savedPlaces().filter { $0.origin == .user }.map(\.spot)
         out += yours.map { ($0, .yours) }
         out += appleResults.map { ($0, .appleMaps) }
-        // The Ask section owns its spots: they appear once, there.
-        let asked = Set(askSuggestions.map(\.spot.id))
-        return asked.isEmpty ? out : out.filter { !asked.contains($0.0.id) }
+        // The Ask section and In View own their spots: they appear once, there.
+        let owned = Set(askSuggestions.map(\.spot.id)).union(searchHereResults.map(\.id))
+        return owned.isEmpty ? out : out.filter { !owned.contains($0.0.id) }
     }
 
     private func buildDerived(_ stamp: DerivedStamp) -> Derived {
@@ -235,6 +248,7 @@ public final class ExploreModel {
                               note: suggestion.why.isEmpty ? nil : suggestion.why, driveSeconds: suggestion.driveSeconds)
         }
         if !askRows.isEmpty { sections.append(ExploreSection(kind: .ask, rows: askRows)) }
+        let inViewRows = inViewRows(stamp, now: now, claimed: Set(askRows.map(\.id)))
         if stamp.hasLocation {
             let radius = Double(stamp.radiusMiles) * Self.metersPerMile
             let near = own.filter { ($0.distanceMeters ?? .infinity) <= radius }
@@ -253,6 +267,7 @@ public final class ExploreModel {
             if !spots.isEmpty { sections.append(ExploreSection(kind: .spots, rows: spots)) }
         }
         if !apple.isEmpty { sections.append(ExploreSection(kind: .appleMaps, rows: apple)) }
+        if !inViewRows.isEmpty { sections.insert(ExploreSection(kind: .inView, rows: inViewRows), at: 0) }
         let flat = sections.flatMap(\.rows)
         return Derived(sections: sections, rows: flat, byID: Dictionary(flat.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a }))
     }
@@ -260,7 +275,7 @@ public final class ExploreModel {
     /// The spot's next sunrise or sunset, read from the score cache. Pure read: it never computes and never starts a
     /// fetch (see `requestForecasts`). A missing key is queued for the batch scorer, and meanwhile the spot's last
     /// computed event (if any) stands in, so a row keeps its old score instead of flashing empty.
-    private func nextEvent(for spot: Spot, bucket: Int, now: Date) -> (day: LocalDay, window: LightWindow)? {
+    func nextEvent(for spot: Spot, bucket: Int, now: Date) -> (day: LocalDay, window: LightWindow)? {
         let state = app.forecasts.state(for: spot.coordinate)
         let tag: String
         switch state {
@@ -532,7 +547,8 @@ public final class ExploreModel {
             let near = derived.sections.filter { $0.kind == .ask || $0.kind == .nearYou || $0.kind == .appleMaps }.flatMap(\.rows)
             if !near.isEmpty { return near.map(\.spot.coordinate) + [app.location.coordinate].compactMap { $0 } }
         }
-        return rows.map(\.spot.coordinate)
+        // Search Here results never move the camera.
+        return derived.sections.filter { $0.kind != .inView }.flatMap(\.rows).map(\.spot.coordinate)
     }
 
     /// Where the map should start, and how it was chosen. The saved camera is kept when the user chose it or when it
@@ -589,6 +605,7 @@ public final class ExploreModel {
     public func cameraDidChange(to region: GeoRegion, byUser: Bool = false) {
         guard visibleRegion != region else { return }
         visibleRegion = region
+        if !byUser { listRegion = region }
         switch cameraPolicy.cameraSettled(region, byUser: byUser) {
         case .saved:
             cameraPolicy.save(screen: Self.cameraScreenKey, defaults: defaults)
@@ -619,7 +636,7 @@ public final class ExploreModel {
         contentChanged()
     }
 
-    private func dropSelectionIfHidden() {
+    func dropSelectionIfHidden() {
         if let id = selectedID, derived.byID[id] == nil {
             selectedID = nil
             showsPanel = false
@@ -746,6 +763,8 @@ public final class ExploreModel {
             appleResults = []
             searchState = .idle
             askModel.reset()
+        } else {
+            cancelSearchHere()
         }
         resultSetChanged()
     }
@@ -763,6 +782,7 @@ public final class ExploreModel {
         closePanel()
         let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
+        cancelSearchHere()
         searchTask?.cancel()
         searchState = .searching(query: trimmed)
         let region = visibleRegion

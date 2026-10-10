@@ -53,6 +53,7 @@ extension ExploreModel {
         closePanel()
         let text = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return }
+        cancelSearchHere()
         if askModel.isRunning { askModel.cancel() }
         askModel.request = text
         askModel.run(area: visibleRegion)

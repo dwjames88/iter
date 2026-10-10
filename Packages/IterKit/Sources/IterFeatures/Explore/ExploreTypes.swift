@@ -63,6 +63,8 @@ public struct ExploreRow: Identifiable, Hashable, Sendable {
     public var note: String?
     /// Drive time the scout computed, on rows of the Ask section only.
     public var driveSeconds: TimeInterval?
+    /// Ask found this place (In View rows only), so the app can draw it as an Ask result.
+    public var viaAsk: Bool = false
 
     public var id: String { spot.id }
     public var score: Int? { window?.score }
@@ -75,6 +77,8 @@ public struct ExploreRow: Identifiable, Hashable, Sendable {
 }
 
 public enum ExploreSectionKind: Hashable, Sendable {
+    /// What Search Here found in the visible map region. First when present.
+    case inView
     /// What the ask engine suggested for the request. Always first; rows come only from its grounded suggestions.
     case ask
     /// Curated and your own spots, when there is no location to group them by.
