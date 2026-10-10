@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    " + " : {
+      "comment" : "Joins source names in a section header, e.g. Maps + Ask"
+    },
     "%@ %@" : {
       "comment" : "A trip day in the overview strip, e.g. Thu 8\nOutlook row: weekday and day of the month, e.g. Thu 8\nVoiceOver: a day's sunrise or sunset and its time",
       "localizations" : {
@@ -92,6 +95,17 @@
         }
       }
     },
+    "%@ at %@" : {
+      "comment" : "Day header: sunrise or sunset and its time, e.g. Sunset at 18:14\nPlace card: a light window and its start time, e.g. Sunset at 18:14",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ at %2$@"
+          }
+        }
+      }
+    },
     "%@ away" : {
       "comment" : "VoiceOver: distance from you"
     },
@@ -139,8 +153,11 @@
     "%@ rejected the weather key. Check it in Settings." : {
       "comment" : "Weather banner: key rejected; argument is the provider"
     },
+    "%@ unavailable" : {
+      "comment" : "A web source could not answer; the first part is its name, e.g. Reddit unavailable"
+    },
     "%@ · %@" : {
-      "comment" : "Add stop row: place and distance from the anchor stop\nDrive time and distance between two stops\nRose readout: bearing and height of the sun or moon\nRose readout: bearing of the sun or moon below the horizon\nSession menu item: window name and its time range\nWeather source and its model, e.g. Windy · GFS",
+      "comment" : "Add stop row: place and distance from the anchor stop\nDrive time and distance between two stops\nHero eyebrow: which trip, then its dates\nRose readout: bearing and height of the sun or moon\nRose readout: bearing of the sun or moon below the horizon\nSession menu item: window name and its time range\nWeather source and its model, e.g. Windy · GFS",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -215,6 +232,23 @@
           }
         }
       }
+    },
+    "%@ · Light score %lld" : {
+      "comment" : "Place card: the window's day and its Light Index score",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · Light score %2$lld"
+          }
+        }
+      }
+    },
+    "%@ · Loading the forecast" : {
+      "comment" : "Place card: the window's day while its score loads"
+    },
+    "%@ · No score yet" : {
+      "comment" : "Place card: the window's day when it has no score"
     },
     "%@ · no window this day" : {
       "comment" : "A stop's session that the sun does not produce that day"
@@ -301,6 +335,17 @@
         }
       }
     },
+    "%lld %@ in %@" : {
+      "comment" : "Feature search section header: count, kind of place (Peaks), area name",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld %2$@ in %3$@"
+          }
+        }
+      }
+    },
     "%lld days · %lld stops" : {
       "comment" : "Trip size on a trip card, e.g. 4 days · 6 stops",
       "localizations" : {
@@ -315,28 +360,20 @@
     "%lld filters active" : {
       "comment" : "VoiceOver: number of active filters"
     },
+    "%lld locations" : {
+      "comment" : "VoiceOver: how many locations a folder holds"
+    },
     "%lld min set-up" : {
       "comment" : "Minutes to be set up before the window starts"
     },
     "%lld min walk-in" : {
       "comment" : "Spot fact: walk from parking\nWalk from parking to the shooting spot"
     },
-    "%lld of %lld" : {
-      "comment" : "Place panel header: the place's position in the list, e.g. 3 of 16",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld of %2$lld"
-          }
-        }
-      }
-    },
     "%lld places, zoom in" : {
       "comment" : "VoiceOver: a group of map pins that are too close to tell apart; the number is how many"
     },
     "%lld spots" : {
-      "comment" : "Locations count footer"
+      "comment" : "Locations count under the title"
     },
     "%lld-day outlook for %@" : {
       "comment" : "Outlook strip title with the number of days and the chosen intent, e.g. 8-day outlook for Sunset",
@@ -392,6 +429,9 @@
     "A thick upper deck mutes the colour." : {
       "comment" : "Light reason"
     },
+    "API Key" : {
+      "comment" : "Settings field"
+    },
     "API key" : {
       "comment" : "Settings field"
     },
@@ -403,6 +443,9 @@
     },
     "About Iter" : {
       "comment" : "Menu item"
+    },
+    "About the Search API" : {
+      "comment" : "Settings: link to the Custom Search API overview"
     },
     "Access, gear, crowds, permits" : {
       "comment" : "Notes placeholder"
@@ -417,7 +460,7 @@
       "comment" : "VoiceOver: add a spot to the trip"
     },
     "Add Spot" : {
-      "comment" : "Toolbar toggle: click the map to add your own spot\nUndo action name"
+      "comment" : "Map control: click the map to add your own spot\nUndo action name"
     },
     "Add Spot on Map" : {
       "comment" : "Menu item"
@@ -447,7 +490,7 @@
       "comment" : "Tooltip"
     },
     "Added" : {
-      "comment" : "VoiceOver value"
+      "comment" : "Place card: Add to Trip just worked\nVoiceOver value"
     },
     "Added by You" : {
       "comment" : "Saved filter"
@@ -455,8 +498,11 @@
     "Added by you" : {
       "comment" : "Spot provenance"
     },
+    "Added to every Ask and Discovery request on this device. It never leaves this device except as part of the on-device prompt." : {
+      "comment" : "Settings footer: the personal search prefix"
+    },
     "All Days" : {
-      "comment" : "Map day switcher: every day is shown\nMap day switcher: show every day"
+      "comment" : "Map day switcher: every day is shown\nMap day switcher: show every day\nOverview strip: every day"
     },
     "All Locations" : {
       "comment" : "Screen title\nSidebar item"
@@ -465,13 +511,16 @@
       "comment" : "Saved filter"
     },
     "All Trips" : {
-      "comment" : "Screen title\nSidebar item"
+      "comment" : "Back button on a trip folder's page\nScreen title\nSidebar item"
     },
     "All sessions have passed" : {
       "comment" : "Trip card when every session is in the past"
     },
     "Allow Location…" : {
       "comment" : "Onboarding location: asks the system for permission"
+    },
+    "Always used" : {
+      "comment" : "Settings: Apple Maps cannot be turned off"
     },
     "Apple Intelligence" : {
       "comment" : "Settings tab"
@@ -501,7 +550,13 @@
       "comment" : "Ask unavailable detail: other reason"
     },
     "Apple Maps" : {
-      "comment" : "List section: places found by searching Apple Maps\nSaved filter\nSearch suggestions group title: place lookup\nSource filter: places found by searching Apple Maps\nSpot provenance"
+      "comment" : "Discovery source\nList section: places found by searching Apple Maps\nSaved filter\nSearch suggestions group title: place lookup\nSource filter: places found by searching Apple Maps\nSpot provenance"
+    },
+    "Apple Maps and the web sources you've turned on" : {
+      "comment" : "Second line of the feature search suggestion"
+    },
+    "Apple Maps unavailable" : {
+      "comment" : "Search Here or feature search: Apple Maps could not answer"
     },
     "Apple Weather" : {
       "comment" : "Weather provider name"
@@ -516,7 +571,7 @@
       "comment" : "Spot category"
     },
     "Ask" : {
-      "comment" : "Onboarding summary: row label for the Ask feature"
+      "comment" : "Onboarding summary: row label for the Ask feature\nSource name on a result row and in a section header: Apple Intelligence suggested the place"
     },
     "Ask Iter" : {
       "comment" : "List section: places suggested for a request\nOnboarding Ask: title\nSearch suggestions group title: ask Apple Intelligence\nSettings section: the Apple Intelligence search in Explore\nSpot provenance: found by Ask Iter (Apple Intelligence) in Explore"
@@ -568,8 +623,14 @@
     "Ask finds places from a plain question, such as “quiet lakes for sunrise near Bishop”, and explains a score in words. It uses Apple Intelligence, which runs on this Mac." : {
       "comment" : "Onboarding Ask: what it does (Mac)"
     },
+    "Ask gets a short summary of the spots you save, pin and add to trips. It stays on this device." : {
+      "comment" : "Settings footer: library learning"
+    },
     "Ask to use your location" : {
       "comment" : "Tooltip"
+    },
+    "Asking…" : {
+      "comment" : "Search Here progress: Apple Intelligence is naming places in the visible area"
     },
     "Astro" : {
       "comment" : "Spot category"
@@ -578,16 +639,19 @@
       "comment" : "Onboarding Ask: works (Mac)"
     },
     "Back" : {
-      "comment" : "Onboarding: previous step"
+      "comment" : "Onboarding: previous step\nToolbar button: up one level in Locations"
+    },
+    "Back to %@" : {
+      "comment" : "Tooltip"
     },
     "Back to All Trips" : {
       "comment" : "Button"
     },
-    "Back to places" : {
+    "Back to Places" : {
       "comment" : "VoiceOver"
     },
-    "Back to places (Esc)" : {
-      "comment" : "Tooltip on the place panel's back button"
+    "Back to Places (Esc)" : {
+      "comment" : "Tooltip on the place card's back button"
     },
     "Bare sky: clean light, flat colour." : {
       "comment" : "Light reason for a cloudless golden hour"
@@ -657,7 +721,7 @@
       "comment" : "Onboarding weather: no network"
     },
     "Cancel" : {
-      "comment" : "Alert button\nButton\nButton: stop the running Ask\nUpdate window button"
+      "comment" : "Alert button\nButton\nButton: stop a running Search Here\nButton: stop the running Ask\nUpdate window button"
     },
     "Category" : {
       "comment" : "Filters submenu\nSpot editor field: single choice"
@@ -722,6 +786,9 @@
     "Choose the day shown on the map" : {
       "comment" : "Tooltip"
     },
+    "Choose the map style" : {
+      "comment" : "Tooltip"
+    },
     "Choosing the best matches" : {
       "comment" : "Ask progress stage"
     },
@@ -730,6 +797,9 @@
     },
     "Classic view faces %@" : {
       "comment" : "Sun and moon rose: direction the classic composition faces"
+    },
+    "Clear" : {
+      "comment" : "VoiceOver: clear the search field"
     },
     "Clear Filters" : {
       "comment" : "Button\nMenu item"
@@ -743,11 +813,17 @@
     "Clear sky for stars." : {
       "comment" : "Light reason at night"
     },
+    "Clear the search" : {
+      "comment" : "Tooltip"
+    },
     "Click the map to drop a pin for your spot" : {
       "comment" : "Hint banner while Add Spot mode is on"
     },
     "Click to rename" : {
       "comment" : "Tooltip"
+    },
+    "Close" : {
+      "comment" : "Tooltip on the place card's close button\nVoiceOver"
     },
     "Cloud" : {
       "comment" : "Hourly row label"
@@ -797,6 +873,9 @@
     "Couldn't download for offline use" : {
       "comment" : "Offline status: the download failed"
     },
+    "Couldn't find %@. Showing Apple Maps results." : {
+      "comment" : "Feature search fell back to a plain Apple Maps search because the area was not found"
+    },
     "Couldn't find your location." : {
       "comment" : "Explore banner: no fix yet"
     },
@@ -809,6 +888,9 @@
     "Couldn't reach %@" : {
       "comment" : "Settings weather status; the name is a weather provider"
     },
+    "Couldn't remove from your Keychain." : {
+      "comment" : "Settings: Keychain error"
+    },
     "Couldn't remove the key from your Keychain." : {
       "comment" : "Settings: Keychain error"
     },
@@ -818,6 +900,9 @@
     "Couldn't save the key to your Keychain." : {
       "comment" : "Settings: Keychain error"
     },
+    "Couldn't save to your Keychain." : {
+      "comment" : "Settings: Keychain error"
+    },
     "Couldn't search Apple Maps for “%@”." : {
       "comment" : "Inline error under the search field"
     },
@@ -825,7 +910,10 @@
       "comment" : "Explanation failure"
     },
     "Create" : {
-      "comment" : "Button: create the trip"
+      "comment" : "Button\nButton: create the trip"
+    },
+    "Create a Search Engine" : {
+      "comment" : "Settings: link to Google Programmable Search"
     },
     "Create a free account at OpenWeather." : {
       "comment" : "Onboarding weather step 1"
@@ -886,7 +974,7 @@
       "comment" : "Reset alert button"
     },
     "Delete Folder" : {
-      "comment" : "Context menu\nUndo action name"
+      "comment" : "Context menu\nFolder menu: its trips move up, none are deleted\nUndo action name"
     },
     "Delete Spot" : {
       "comment" : "Button\nUndo action name"
@@ -951,6 +1039,9 @@
     },
     "Drag to read any time" : {
       "comment" : "Hint at the end of the timeline legend in the Explore panel"
+    },
+    "Drag trips here, or use a trip's Move to Folder menu." : {
+      "comment" : "Empty trip folder"
     },
     "Drive doesn't fit: %@ short" : {
       "comment" : "Schedule issue: the drive takes longer than the time available"
@@ -1039,6 +1130,17 @@
     "Find" : {
       "comment" : "Sidebar section"
     },
+    "Find %@ in %@" : {
+      "comment" : "Search suggestion that lists every place of one kind in a named area, e.g. Find Peaks in Glacier National Park",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Find %1$@ in %2$@"
+          }
+        }
+      }
+    },
     "Find Spots" : {
       "comment" : "Menu item"
     },
@@ -1048,6 +1150,9 @@
     "Find spots, see when the light is best, and plan trips around it." : {
       "comment" : "Onboarding welcome: how to use Iter"
     },
+    "Finding %@…" : {
+      "comment" : "Feature search progress: looking up the named area"
+    },
     "Finding your location…" : {
       "comment" : "Progress in the Explore banner while the location is being found"
     },
@@ -1056,6 +1161,24 @@
     },
     "Flat, blocked or wet. Not worth the trip." : {
       "comment" : "Score legend: Poor"
+    },
+    "Folder" : {
+      "comment" : "Eyebrow on a trip folder's tile"
+    },
+    "Folder Options" : {
+      "comment" : "Folder header menu"
+    },
+    "Folder name" : {
+      "comment" : "Placeholder"
+    },
+    "Folders" : {
+      "comment" : "Locations section header"
+    },
+    "Folders and Import" : {
+      "comment" : "Tooltip"
+    },
+    "Folders group trips on this page." : {
+      "comment" : "Alert message"
     },
     "Forecast is about %lld days ahead of this window." : {
       "comment" : "Forecast lead note"
@@ -1117,6 +1240,12 @@
     "Good visibility." : {
       "comment" : "Light reason"
     },
+    "Google" : {
+      "comment" : "Discovery source\nSource name: Google search"
+    },
+    "Google (Optional)" : {
+      "comment" : "Settings section"
+    },
     "Great" : {
       "comment" : "Light Index band"
     },
@@ -1174,25 +1303,20 @@
     "If the first source can't answer, Iter asks the second. A fallback is always named next to the forecast." : {
       "comment" : "Settings footer"
     },
-    "Image %lld of %lld" : {
-      "comment" : "VoiceOver: position in the place card's image strip",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Image %1$lld of %2$lld"
-          }
-        }
-      }
+    "Image" : {
+      "comment" : "VoiceOver: the place card's image source control"
     },
     "Import Trip" : {
       "comment" : "Undo action name"
     },
     "Import Trip…" : {
-      "comment" : "Menu item"
+      "comment" : "Menu item\nToolbar menu"
     },
     "In Certificates, Identifiers & Profiles, enable WeatherKit for the App ID com.dwjames.iter, on both the Capabilities and App Services tabs." : {
       "comment" : "WeatherKit setup step"
+    },
+    "In View" : {
+      "comment" : "List section: places Search Here found in the visible map area"
     },
     "Install and Relaunch" : {
       "comment" : "Update window button"
@@ -1306,6 +1430,12 @@
     "Last quarter" : {
       "comment" : "Moon phase"
     },
+    "Latest Trip" : {
+      "comment" : "Hero eyebrow: the most recent finished trip"
+    },
+    "Learn From My Library" : {
+      "comment" : "Settings section"
+    },
     "Leave" : {
       "comment" : "Label under a drive's leave-by time"
     },
@@ -1381,14 +1511,20 @@
     "Location is on." : {
       "comment" : "Onboarding location: allowed"
     },
+    "Location not found" : {
+      "comment" : "Empty title"
+    },
     "Locations" : {
-      "comment" : "Menu item\nSidebar section"
+      "comment" : "Locations section header\nMenu item\nSidebar section"
     },
     "Look Around" : {
-      "comment" : "Source label on a spot image\nSpot page section title"
+      "comment" : "Spot page section title"
     },
     "Look Around view of %@" : {
       "comment" : "VoiceOver: image of a spot"
+    },
+    "Look for places in the part of the map you can see" : {
+      "comment" : "Tooltip and VoiceOver hint on the Search Here button"
     },
     "Look for your location again" : {
       "comment" : "Tooltip"
@@ -1429,6 +1565,9 @@
     "Map with the spot's pin at the centre" : {
       "comment" : "VoiceOver"
     },
+    "Maps" : {
+      "comment" : "Source name on a result row and in a section header: Apple Maps"
+    },
     "Medium" : {
       "comment" : "Short confidence label"
     },
@@ -1446,6 +1585,9 @@
     },
     "Midday" : {
       "comment" : "Best light a spot is known for"
+    },
+    "Mixed" : {
+      "comment" : "Discovery preference"
     },
     "Model" : {
       "comment" : "Settings field"
@@ -1476,6 +1618,9 @@
     "Moonset" : {
       "comment" : "Moon event"
     },
+    "More" : {
+      "comment" : "Toolbar menu"
+    },
     "More Places" : {
       "comment" : "List section: every other spot beyond the near-you radius"
     },
@@ -1501,7 +1646,7 @@
       "comment" : "Context menu\nUndo action name"
     },
     "Name" : {
-      "comment" : "Inline rename field\nNew trip field\nSaved sort order\nSort option\nSpot editor field"
+      "comment" : "Folder name field\nNew trip field\nSaved sort order\nSort option\nSpot editor field"
     },
     "Name this spot" : {
       "comment" : "Name placeholder"
@@ -1534,13 +1679,13 @@
       "comment" : "Toolbar button"
     },
     "New Folder" : {
-      "comment" : "Default name of a new folder\nMenu item\nUndo action name"
-    },
-    "New Folder Inside" : {
-      "comment" : "Context menu"
+      "comment" : "Alert title\nDefault name of a new folder\nMenu item\nToolbar button\nUndo action name"
     },
     "New Folder with Selection" : {
       "comment" : "Context menu\nUndo action name"
+    },
+    "New Folder…" : {
+      "comment" : "Folder menu\nMove to Folder menu\nToolbar menu"
     },
     "New Location" : {
       "comment" : "Menu item: drops a pin on the Explore map"
@@ -1549,7 +1694,7 @@
 
     },
     "New Trip" : {
-      "comment" : "Default trip name\nMenu item\nPrimary button on the empty trips screen\nSheet title\nToolbar button\nUndo action name"
+      "comment" : "Default trip name\nMenu item\nSheet title\nToolbar button\nUndo action name"
     },
     "New Trip (⌘N)" : {
       "comment" : "Tooltip"
@@ -1557,10 +1702,13 @@
     "New Trip from Template" : {
       "comment" : "Undo action name"
     },
-    "New Trip with This Spot" : {
-      "comment" : "Menu item"
+    "New Trip or Location" : {
+      "comment" : "Tooltip"
     },
-    "New Trip, Folder or Location" : {
+    "New Trip…" : {
+      "comment" : "Menu item: make a trip with this spot on it"
+    },
+    "New folder" : {
       "comment" : "Tooltip"
     },
     "New here? Start in Explore: pick a place to see its light, then add it to a trip." : {
@@ -1577,15 +1725,6 @@
     },
     "Next day" : {
       "comment" : "Accessibility label\nTooltip"
-    },
-    "Next image" : {
-      "comment" : "VoiceOver and tooltip"
-    },
-    "Next place" : {
-      "comment" : "VoiceOver"
-    },
-    "Next place (Down Arrow)" : {
-      "comment" : "Tooltip"
     },
     "Next sunrise %@" : {
       "comment" : "Sun time when there is no score"
@@ -1621,6 +1760,9 @@
     },
     "No Matching Spots" : {
       "comment" : "Empty state title"
+    },
+    "No Places in View" : {
+      "comment" : "Search Here found nothing in the visible map area"
     },
     "No filters active" : {
       "comment" : "VoiceOver"
@@ -1682,6 +1824,9 @@
     "Not enabled for this build" : {
       "comment" : "Settings weather status"
     },
+    "Not set up" : {
+
+    },
     "Not set up yet: use the banner or Settings ▸ Weather" : {
       "comment" : "Onboarding summary: no weather key"
     },
@@ -1725,7 +1870,7 @@
       "comment" : "Onboarding weather step 3"
     },
     "Open" : {
-      "comment" : "Context menu\nContext menu: open the spot page\nMenu item"
+      "comment" : "Context menu\nContext menu: open the spot page\nHero button: opens the featured trip\nMenu item"
     },
     "Open Location Services in System Settings" : {
       "comment" : "Tooltip"
@@ -1775,6 +1920,9 @@
     "Open this spot on windy.com in your browser" : {
       "comment" : "Tooltip"
     },
+    "OpenStreetMap" : {
+      "comment" : "Discovery source\nSource name: OpenStreetMap"
+    },
     "OpenWeather" : {
       "comment" : "Weather provider name"
     },
@@ -1793,6 +1941,9 @@
     "OpenWeather says this key is over its daily limit." : {
       "comment" : "Onboarding weather: HTTP 429"
     },
+    "Opens the folder" : {
+      "comment" : "VoiceOver hint"
+    },
     "Opens the trip" : {
       "comment" : "VoiceOver hint"
     },
@@ -1802,7 +1953,7 @@
     "Optional" : {
       "comment" : "Walk-in placeholder"
     },
-    "Or start from a template" : {
+    "Or Start from a Template" : {
       "comment" : "Heading above the trip templates"
     },
     "Orientation" : {
@@ -1851,52 +2002,59 @@
     "Paste your key" : {
 
     },
+    "Peaks" : {
+      "comment" : "Feature search header: mountain peaks"
+    },
     "Pick your spots and days. Iter works out when to leave so you are set up before the light arrives." : {
       "comment" : "Empty trips screen explanation"
+    },
+    "Pin Folder" : {
+      "comment" : "Undo action name"
+    },
+    "Pin Location" : {
+      "comment" : "Undo action name"
     },
     "Pin Trip" : {
       "comment" : "Context menu: keeps the trip downloaded for offline use\nUndo action name"
     },
-    "Pinned" : {
-      "comment" : "VoiceOver: a pinned trip"
+    "Pin to Sidebar" : {
+      "comment" : "Context menu\nFolder menu"
+    },
+    "Pinned to sidebar" : {
+      "comment" : "VoiceOver: a pinned folder"
     },
     "Pinned trips keep forecasts, drive times, routes and spot images on this Mac. The base map isn't stored: MapKit has no way to download map tiles for offline use." : {
       "comment" : "Tooltip on a pinned trip's offline status"
     },
-    "Pinned: kept ready offline" : {
-      "comment" : "Tooltip"
-    },
     "Place" : {
       "comment" : "Spot editor field"
     },
-    "Place %lld of %lld" : {
-      "comment" : "VoiceOver",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Place %1$lld of %2$lld"
-          }
-        }
-      }
+    "Place discovery uses OpenStreetMap data © OpenStreetMap contributors (ODbL), Wikipedia and Wikivoyage (CC BY-SA), and Reddit public posts; Google only with your own key." : {
+      "comment" : "About: discovery source attribution"
     },
     "Place panel for %@" : {
       "comment" : "VoiceOver"
     },
     "Places" : {
-      "comment" : "Place panel: back to the list of places\nVoiceOver label of the Explore list"
+      "comment" : "Feature search header when the kind of place is unknown\nList section: places a typed feature search found; the header normally names the kind and area\nVoiceOver label of the Explore list"
     },
     "Places come from Apple Maps and Iter's curated list. Iter checks every place exists; the notes are written by Apple Intelligence." : {
       "comment" : "Ask section footer: where places and notes come from"
     },
-    "Plan trips around the light" : {
+    "Plan Trips Around the Light" : {
       "comment" : "Empty trips screen headline"
+    },
+    "Plan a Trip" : {
+      "comment" : "Primary button on the empty trips screen"
     },
     "Poor" : {
       "comment" : "Light Index band"
     },
     "Popular" : {
-      "comment" : "List section: iconic spots beyond the near-you radius"
+      "comment" : "Discovery preference\nList section: iconic spots beyond the near-you radius"
+    },
+    "Popular puts the most talked-about places first, Unique the lesser-known ones. Mixed alternates." : {
+      "comment" : "Settings footer: result order"
     },
     "Popularity" : {
       "comment" : "Sort option: most popular first"
@@ -1904,26 +2062,23 @@
     "Pre-release channels may come later." : {
       "comment" : "Settings footer"
     },
+    "Prefer" : {
+      "comment" : "Settings field: which kind of results come first"
+    },
     "Press Return" : {
       "comment" : "Tooltip on the top search suggestion"
     },
     "Previous day" : {
       "comment" : "Accessibility label\nTooltip"
     },
-    "Previous image" : {
-      "comment" : "VoiceOver and tooltip"
-    },
-    "Previous place" : {
-      "comment" : "VoiceOver"
-    },
-    "Previous place (Up Arrow)" : {
-      "comment" : "Tooltip"
-    },
     "Professional" : {
       "comment" : "Windy key type"
     },
     "Puts the stops in the order their light arrives." : {
       "comment" : "Light-first suggestion explanation"
+    },
+    "Quiet alpine lakes at sunrise, long-exposure waterfalls, no crowds" : {
+      "comment" : "Settings: placeholder for what the user likes to shoot"
     },
     "Rain" : {
       "comment" : "Hourly row label\nLight factor"
@@ -1948,6 +2103,9 @@
     },
     "Ready offline" : {
       "comment" : "Offline status of a pinned trip"
+    },
+    "Reddit" : {
+      "comment" : "Discovery source\nSource name: Reddit"
     },
     "Refresh Forecasts" : {
       "comment" : "Menu item"
@@ -1980,13 +2138,19 @@
       "comment" : "Context menu\nVoiceOver action"
     },
     "Rename" : {
-      "comment" : "Context menu"
+      "comment" : "Button\nContext menu"
     },
     "Rename Folder" : {
-      "comment" : "Undo action name"
+      "comment" : "Alert title\nUndo action name"
+    },
+    "Rename Folder…" : {
+      "comment" : "Folder menu"
     },
     "Rename Trip" : {
-      "comment" : "Undo action name"
+      "comment" : "Alert title\nUndo action name"
+    },
+    "Rename…" : {
+      "comment" : "Context menu"
     },
     "Reorder Stops" : {
       "comment" : "Undo action name"
@@ -1999,6 +2163,9 @@
     },
     "Reset Pin" : {
       "comment" : "Button"
+    },
+    "Results" : {
+      "comment" : "Settings section"
     },
     "Retry" : {
       "comment" : "Button"
@@ -2016,7 +2183,7 @@
       "comment" : "Banner title when sample weather is on\nLabel on scores made from sample weather\nWeather source name: made-up data for demos"
     },
     "Satellite" : {
-      "comment" : "Map style\nSource label on a spot image"
+      "comment" : "Map style"
     },
     "Satellite view of %@" : {
       "comment" : "VoiceOver: image of a spot"
@@ -2060,6 +2227,9 @@
     "Scores use made-up weather. Turn off in the Debug menu." : {
       "comment" : "Banner explanation"
     },
+    "Search" : {
+      "comment" : "Settings tab"
+    },
     "Search Apple Maps Instead" : {
       "comment" : "Button under an Ask that could not run: use the ordinary place search"
     },
@@ -2068,6 +2238,15 @@
     },
     "Search Apple Maps for “%@”" : {
       "comment" : "List row that runs an Apple Maps search"
+    },
+    "Search Engine ID" : {
+      "comment" : "Settings field"
+    },
+    "Search Here" : {
+      "comment" : "Button over the Explore list: search the part of the map in view\nMenu item: search the part of the map in view in Explore"
+    },
+    "Search engine ID" : {
+      "comment" : "Settings: Programmable Search Engine ID prompt"
     },
     "Search locations" : {
       "comment" : "Search field prompt"
@@ -2078,14 +2257,31 @@
     "Search spots" : {
       "comment" : "Add stop search field"
     },
+    "Searching %@ in %@…" : {
+      "comment" : "Feature search progress: kind of place (Peaks) and area name",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Searching %1$@ in %2$@…"
+          }
+        }
+      }
+    },
     "Searching Apple Maps…" : {
       "comment" : "Progress while searching"
+    },
+    "Searching Maps…" : {
+      "comment" : "Search Here progress: Apple Maps is searching the visible area"
     },
     "Searching for places" : {
       "comment" : "Ask progress stage"
     },
     "Searching near %@" : {
       "comment" : "Ask progress stage, with the place being searched"
+    },
+    "Searching the Web…" : {
+      "comment" : "Search Here progress: Wikipedia, OpenStreetMap and the other web sources are being searched"
     },
     "Seed Sample Trip" : {
       "comment" : "Debug menu item"
@@ -2135,11 +2331,20 @@
     "Show All Locations" : {
       "comment" : "Button"
     },
+    "Show Daylight" : {
+      "comment" : "Map style menu: shade the night side of the globe when zoomed out\nMenu item: shade the night side of the globe when zoomed out"
+    },
     "Show Full Page" : {
       "comment" : "Place panel: open the spot's full page"
     },
     "Show Layout Grid" : {
       "comment" : "Debug menu item: overlay the 8 pt grid and lane guides"
+    },
+    "Show Trip" : {
+      "comment" : "Place card: open the trip the spot was just added to"
+    },
+    "Show every day on the map" : {
+      "comment" : "Tooltip"
     },
     "Show spots near you" : {
       "comment" : "Explore banner title when location is not yet allowed"
@@ -2152,6 +2357,9 @@
     },
     "Show this day's windows" : {
       "comment" : "Help"
+    },
+    "Show your location" : {
+      "comment" : "Map control\nTooltip"
     },
     "Shows this day's light windows" : {
       "comment" : "VoiceOver hint"
@@ -2201,6 +2409,9 @@
     "Source" : {
       "comment" : "Filters submenu"
     },
+    "Sources" : {
+      "comment" : "Settings section"
+    },
     "Spots" : {
       "comment" : "List section: curated and your own spots"
     },
@@ -2220,7 +2431,7 @@
       "comment" : "VoiceOver hint"
     },
     "Status" : {
-      "comment" : "Licence row"
+      "comment" : "Licence row\nSettings field"
     },
     "Step %lld of %lld" : {
       "comment" : "Ask progress, e.g. Step 2 of 4\nOnboarding: progress; the placeholders are the current step and the number of steps",
@@ -2249,6 +2460,9 @@
     },
     "Stop looking" : {
       "comment" : "Tooltip on the Cancel button while an Ask runs"
+    },
+    "Stop searching and remove the results" : {
+      "comment" : "Tooltip on the Cancel button while Search Here runs"
     },
     "Street" : {
       "comment" : "Spot category"
@@ -2440,8 +2654,14 @@
     "The update was cancelled." : {
       "comment" : "Update failure: cancelled"
     },
+    "There is no free Google places API. If you want Google results, make your own Programmable Search Engine and API key. Google bills against your account after its free daily allowance. Off until you add them, and kept in your Keychain." : {
+      "comment" : "Settings footer: Google search is optional and uses the user's own key"
+    },
     "There is no score to explain for this window." : {
       "comment" : "Explanation failure"
+    },
+    "These are free public sources. They are rate limited and their answers are cached. Nothing is sent except the place and the search words." : {
+      "comment" : "Settings footer: discovery sources"
     },
     "This Mac can't run Apple Intelligence" : {
       "comment" : "Ask unavailable title"
@@ -2498,7 +2718,7 @@
       "comment" : "Settings section: WeatherKit setup steps"
     },
     "Today" : {
-      "comment" : "Relative day"
+      "comment" : "Place panel: the next window is today\nRelative day"
     },
     "Tomorrow" : {
       "comment" : "Place panel: the next window is tomorrow\nRelative day"
@@ -2536,17 +2756,38 @@
     "Turn the rose so north, or the classic view, is at the top" : {
       "comment" : "Help for the rose orientation control"
     },
+    "Under Way" : {
+      "comment" : "Hero eyebrow: the trip happening now"
+    },
     "Understanding your request" : {
       "comment" : "Ask progress stage"
     },
+    "Unique" : {
+      "comment" : "Discovery preference"
+    },
+    "Unpin Folder" : {
+      "comment" : "Undo action name"
+    },
+    "Unpin Location" : {
+      "comment" : "Undo action name"
+    },
     "Unpin Trip" : {
       "comment" : "Context menu\nUndo action name"
+    },
+    "Unpin from Sidebar" : {
+      "comment" : "Context menu\nFolder menu"
     },
     "Unsave" : {
       "comment" : "Context menu\nMenu item"
     },
     "Until a forecast source works, sun and moon times are exact and light scores stay empty." : {
       "comment" : "Settings footer: what works without weather"
+    },
+    "Up Next" : {
+      "comment" : "Hero eyebrow: the next trip to start"
+    },
+    "Up to %lld results" : {
+      "comment" : "Settings field with its value, e.g. Up to 20 results"
     },
     "Updated %@" : {
       "comment" : "Forecast age"
@@ -2572,8 +2813,14 @@
     "Use My Location" : {
       "comment" : "Button: allow location for the near-you list"
     },
+    "Use My Saved Spots and Trips" : {
+      "comment" : "Settings toggle"
+    },
     "Use Sample Weather" : {
       "comment" : "Debug menu item"
+    },
+    "Using your shooting notes" : {
+      "comment" : "Under the Ask suggestion when the person wrote what they like to shoot in Settings"
     },
     "Verifying…" : {
       "comment" : "Update window: checking the download"
@@ -2651,8 +2898,14 @@
     "Weather isn't answering." : {
       "comment" : "Weather banner: generic failure"
     },
+    "Web sources unavailable" : {
+      "comment" : "Search Here or feature search: the web sources (Wikipedia, OpenStreetMap, ...) could not be searched"
+    },
     "Welcome to Iter" : {
       "comment" : "Help menu item: reopens the first-run guide\nOnboarding: welcome title"
+    },
+    "What I Like to Shoot" : {
+      "comment" : "Settings field\nSettings section"
     },
     "What the scores mean" : {
       "comment" : "Button\nPopover title\nTooltip"
@@ -2666,6 +2919,12 @@
     "Why this score" : {
       "comment" : "Heading above the factors behind a score"
     },
+    "Wikipedia" : {
+      "comment" : "Discovery source\nSource name: Wikipedia"
+    },
+    "Wikivoyage" : {
+      "comment" : "Discovery source\nSource name: Wikivoyage"
+    },
     "Wildlife" : {
       "comment" : "Spot category"
     },
@@ -2676,7 +2935,7 @@
       "comment" : "Hourly strip footnote naming the wind unit"
     },
     "Windy" : {
-      "comment" : "Spot page section title\nToolbar button: open the map area on windy.com\nWeather provider name"
+      "comment" : "Map control: open the map area on windy.com\nSpot page section title\nWeather provider name"
     },
     "Windy's map shows cloud by height, rain and wind around this spot. It opens on windy.com: Windy doesn't allow its map inside other weather apps." : {
       "comment" : "Spot page Windy section"
@@ -2717,6 +2976,9 @@
     "Your Spots" : {
       "comment" : "Source filter: spots the user added"
     },
+    "Your Trips" : {
+      "comment" : "Trips grid title under the hero"
+    },
     "Your location" : {
       "comment" : "Onboarding location: title"
     },
@@ -2728,6 +2990,9 @@
     },
     "Zoom the timeline, arc and hourly strip to sunrise or sunset" : {
       "comment" : "Help"
+    },
+    "^[%lld Place](inflect: true) in View" : {
+      "comment" : "In View section header: number of places Search Here found"
     },
     "^[%lld conflict](inflect: true)" : {
 
@@ -2755,11 +3020,20 @@
         }
       }
     },
+    "^[%lld trip](inflect: true)" : {
+      "comment" : "Number of trips in a folder tile"
+    },
     "below the horizon" : {
       "comment" : "Sun or moon is below the horizon"
     },
+    "elevation %@" : {
+      "comment" : "VoiceOver: height above sea level of a result"
+    },
     "estimated" : {
       "comment" : "Marks a drive time that is a straight-line estimate, not a road route"
+    },
+    "from %@" : {
+      "comment" : "VoiceOver: the sources that list a result, e.g. from Maps, Wikipedia"
     },
     "high" : {
       "comment" : "Cloud layer name inside a sentence"
