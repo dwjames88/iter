@@ -18,7 +18,7 @@ DD="${ITER_DD:-build/DD-render-tests}"
 OVERRIDES=(ITER_BUNDLE_ID=com.dwjames.iter.render CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= ENABLE_HARDENED_RUNTIME=NO)
 # Build first and refuse to run unless the host app really carries the render bundle id.
 xcodebuild build-for-testing -project Iter.xcodeproj -scheme Iter -destination 'platform=macOS' -derivedDataPath "$DD" \
-  "${OVERRIDES[@]}" -quiet 2>&1 | grep -E "error:" || true
+  "${OVERRIDES[@]}" -quiet 2>&1 | { grep -E "error:" | grep -v "failed with exit code 0" || true; }
 HOST_ID="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$DD/Build/Products/Debug/Iter.app/Contents/Info.plist" 2>/dev/null || true)"
 if [ "$HOST_ID" != "com.dwjames.iter.render" ]; then echo "Refusing to run the hosted tests: host bundle id is '$HOST_ID', not com.dwjames.iter.render" >&2; exit 1; fi
 TEST_RUNNER_ITER_SNAPSHOT_RUN=$RUN TEST_RUNNER_ITER_SNAPSHOT_DIR="$OUT" TEST_RUNNER_ITER_SNAPSHOTS=1 xcodebuild test-without-building -project Iter.xcodeproj -scheme Iter -destination 'platform=macOS' \

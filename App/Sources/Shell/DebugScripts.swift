@@ -1,6 +1,5 @@
 import Foundation
 import OSLog
-import IterCore
 #if canImport(AppKit)
 import AppKit
 #endif
@@ -28,11 +27,6 @@ enum DebugScripts {
         FileHandle.standardOutput.write(Data((text + "\n").utf8))
     }
 
-    static func milliseconds(_ d: Duration) -> Double {
-        let c = d.components
-        return Double(c.seconds) * 1000 + Double(c.attoseconds) / 1e15
-    }
-
     static func pause(_ seconds: Double) async { try? await Task.sleep(for: .milliseconds(Int(seconds * 1000))) }
 
     /// Quits when the script is done, unless `-IterScriptKeepOpen YES`.
@@ -48,7 +42,8 @@ enum DebugScripts {
         #if canImport(AppKit)
         guard let dir = captureDir else { return }
         await pause(0.5)   // let SwiftUI settle after the state change
-        guard let window = NSApp.windows.filter({ $0.contentView != nil && $0.frame.width > 400 }).max(by: { $0.frame.width < $1.frame.width }),
+        // A hidden launch (`open -j`, scripts/render.sh) has windows that exist but are not "visible": take them too.
+        guard let window = NSApp.windows.filter({ $0.contentView != nil && ($0.isVisible || $0.frame.width > 400) }).max(by: { $0.frame.width < $1.frame.width }),
               let view = window.contentView?.superview ?? window.contentView,
               let rep = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { say("capture \(name): no window"); return }
         view.cacheDisplay(in: view.bounds, to: rep)
@@ -75,7 +70,7 @@ enum DebugScripts {
         #if canImport(AppKit)
         guard let range = resizeRange else { return }
         await pause(6)
-        guard let window = NSApp.windows.filter({ $0.contentView != nil && $0.frame.width > 400 }).max(by: { $0.frame.width < $1.frame.width }) else { return }
+        guard let window = NSApp.windows.filter({ $0.isVisible }).max(by: { $0.frame.width < $1.frame.width }) else { return }
         func setWidth(_ w: Double) {
             var frame = window.frame
             frame.size.width = w
@@ -87,29 +82,10 @@ enum DebugScripts {
         let step = 8.0
         var widths = Array(stride(from: range.lowerBound, through: range.upperBound, by: step))
         widths += widths.reversed()
-        IterPerf.resetCounters()
         let start = Date()
-        // Per step: `sync` is setFrame(display: true) returning (layout and display of the window); `total` adds the
-        // main queue turning twice after it, which is what the next step has to wait behind.
-        var sync = StepStats(), total = StepStats()
-        for w in widths {
-            let t0 = ContinuousClock.now
-            setWidth(w)
-            let t1 = ContinuousClock.now
-            await withCheckedContinuation { (c: CheckedContinuation<Void, Never>) in
-                DispatchQueue.main.async { DispatchQueue.main.async { c.resume() } }
-            }
-            let t2 = ContinuousClock.now
-            sync.record(Self.milliseconds(t1 - t0)); total.record(Self.milliseconds(t2 - t0))
-            await pause(0.016)
-        }
+        for w in widths { setWidth(w); await pause(0.016) }
         say("resize sweep \(widths.count) steps in \(Int(Date().timeIntervalSince(start) * 1000)) ms")
-        say("resize step sync \(sync.summary)")
-        say("resize step total \(total.summary)")
-        say("resize counters \(IterPerf.counterValues().sorted { $0.key < $1.key }.map { "\($0.key)=\($0.value)" }.joined(separator: " "))")
-        IterPerf.log.notice("perf resize step sync \(sync.summary, privacy: .public)")
-        IterPerf.log.notice("perf resize step total \(total.summary, privacy: .public)")
-        for w in [1000.0, 1100, 1280, 1440, 1600, 1728, 1800] where range.contains(w) {
+        for w in [1100.0, 1280, 1440, 1600, 1800] where range.contains(w) {
             setWidth(w)
             await capture("resize-\(Int(w))")
         }

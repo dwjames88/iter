@@ -36,7 +36,7 @@ VERSION_ARGS=($("$ROOT/scripts/version.sh"))
 SIGN=(CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= ENABLE_HARDENED_RUNTIME=NO)
 set +e
 xcodebuild -project Iter.xcodeproj -scheme Iter -configuration "$CONFIG" -derivedDataPath "$DD" \
-  ITER_BUNDLE_ID="$RENDER_ID" "${SIGN[@]}" "${VERSION_ARGS[@]}" build -quiet 2>&1 | { grep -E "error:" || true; }
+  ITER_BUNDLE_ID="$RENDER_ID" "${SIGN[@]}" "${VERSION_ARGS[@]}" build -quiet 2>&1 | { grep -E "error:" | grep -v "failed with exit code 0" || true; }
 STATUS=${PIPESTATUS[0]}
 set -e
 BUILT="$DD/Build/Products/$CONFIG/Iter.app"
