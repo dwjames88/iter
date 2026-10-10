@@ -57,6 +57,12 @@ struct AppCommands: Commands {
             }
             .keyboardShortcut("f")
             .disabled(navigation == nil)
+            Button(String(localized: "Search Here", comment: "Menu item: search the part of the map in view in Explore")) {
+                navigation?.selection = .explore
+                navigation?.searchHereRequest += 1
+            }
+            .keyboardShortcut("f", modifiers: [.command, .shift])
+            .disabled(navigation == nil)
         }
         CommandGroup(after: .toolbar) {
             Menu(String(localized: "Map Style", comment: "Menu title")) {

@@ -22,6 +22,10 @@ import IterFeatures
 /// `-IterScoutStub unavailable|results` replaces the Apple Intelligence scout with a stub, for screenshots only and honoured only with
 /// `-IterInMemoryStore YES` (see `makeScout`): `unavailable` reports Apple Intelligence as turned off, `results` answers with three real
 /// curated spots near the asked-about map region and canned notes.
+/// `-IterDiscoveryStub results|off` (with `-IterInMemoryStore YES`) replaces Discovery for screenshots: `results` answers from canned
+/// places with their sources (see `StubDiscovery`; Glacier, Moab and Yosemite areas, Reddit reported unavailable), `off` runs without it.
+/// `-IterSearchHere YES` runs Search Here once, when the map's first camera has settled. With `-IterScoutStub results` the stub also
+/// proposes a few real landmark names inside the visible region, so Search Here shows Ask rows.
 /// `-IterShowLayoutGrid YES` draws the 8 pt layout grid and lane guides over lists and cards (Debug ▸ Show Layout Grid).
 /// `-IterOnboarding show|skip`: `show` opens the first-run guide at launch even if it was seen; `skip` never opens it. Without
 /// the flag the guide opens once on a first launch (not under tests, a smoke run or `-IterInMemoryStore YES`).
@@ -99,6 +103,8 @@ enum AppLaunch {
     }
     /// `-IterAsk <text>`: Explore puts that text to the ask engine at launch (screenshots of the Ask section).
     static var askText: String? { UserDefaults.standard.string(forKey: "IterAsk") }
+    /// `-IterSearchHere YES`: Explore runs Search Here once, as soon as the map's first camera has settled. For screenshots.
+    static var searchHere: Bool { UserDefaults.standard.bool(forKey: "IterSearchHere") }
     /// `-IterPanelScrolled YES`: the place panel opens already scrolled to its lower half (When to go at the top). For screenshots.
     static var panelScrolled: Bool { UserDefaults.standard.bool(forKey: "IterPanelScrolled") }
     /// Open today in the outlook when the panel's model is built (`-IterOutlookOpen YES`). Debug and snapshot aid.
@@ -145,6 +151,15 @@ enum AppLaunch {
     /// For screenshots only: with `-IterInMemoryStore YES`, `-IterScoutStub unavailable` returns a stub that reports
     /// `.appleIntelligenceNotEnabled`, and `-IterScoutStub results` returns a stub that answers every request with three
     /// real curated spots nearest the map region and canned notes. Never used with the real store.
+    static func makeDiscovery() -> AppModel.DiscoveryChoice {
+        guard inMemoryStore, let stub = UserDefaults.standard.string(forKey: "IterDiscoveryStub") else { return .live }
+        switch stub {
+        case "results": return .stub(StubDiscovery())
+        case "off": return .off
+        default: return .live
+        }
+    }
+
     static func makeScout() -> (any Scouting)? {
         if inMemoryStore, let stub = UserDefaults.standard.string(forKey: "IterScoutStub") {
             switch stub {
@@ -210,6 +225,13 @@ private struct StubScout: Scouting {
 
     func scout(_ request: String, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {
         try await scout(request, near: nil, progress: progress)
+    }
+
+    /// Search Here: a few real landmark names inside the region (Search Here confirms each with the place search).
+    func proposePlaces(in region: GeoRegion, areaName: String?) async throws -> [RegionProposal] {
+        guard answers else { throw ScoutError.unavailable(.appleIntelligenceNotEnabled) }
+        try await Task.sleep(for: .milliseconds(300))
+        return StubPlaces.proposals(in: region)
     }
 
     func scout(_ request: String, near area: GeoRegion?, progress: @escaping @Sendable (ScoutProgress) -> Void) async throws -> [ScoutSuggestion] {

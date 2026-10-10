@@ -36,6 +36,8 @@ final class AppNavigation {
 
     /// Explore's search field focus request (Edit > Find).
     var focusSearchRequest = 0
+    /// Explore: search the part of the map in view (Edit > Search Here, ⌘⇧F).
+    var searchHereRequest = 0
     /// The window's one search field, at the top of the sidebar as in Maps: Explore searches places and asks Iter with
     /// it; Locations filters with it.
     var searchText = ""
