@@ -35,6 +35,7 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 - **More system controls on iPhone**: the map style button is the system glass button, and a trip stop's session and day menus are standard bordered buttons.
 
 ### Fixed
+- **Move your own pin on the map**: on the Mac, drag any of your own pins straight away, selected or not (the press selects it); a click on your selected pin keeps it selected and never moves the map; the pointer shows an open hand over it and a closed hand while dragging, and the pin lifts while held. On iPhone and iPad, touch and hold your pin, then drag it. The drop re-scores the place and is one Undo Move Spot. Adjust Location's Done and Cancel now take clicks on the Mac (the place card was covering them). A one-time tip on your spot's card says how to move it, and Edit Location has the same small pin map as Add Spot.
 - **Buttons in the top corner (Mac)**: the filter menu, New Folder, sort and Back buttons on the Explore and Locations lists, and Share and More on the trip card, did nothing because a click there became a window drag. They take clicks now, and menus open.
 - **Place card buttons (Mac)**: Back, Share and Close in the place card's header work again.
 - **Updates with a damaged feed entry**: one malformed entry no longer blocks every update. Iter skips it and still offers the other releases.
