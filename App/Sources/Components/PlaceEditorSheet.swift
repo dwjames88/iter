@@ -42,6 +42,7 @@ struct PlaceEditorSheet: View {
                     LabeledField(text: $draft.locality, prompt: Text("Park, town or region", comment: "Locality placeholder")) { Text("Place", comment: "Place editor field") }
                 }
                 if draft.editsFacts {
+                    SpotPinMapSection(coordinate: $draft.coordinate, original: record.coordinate, label: draft.name.trimmingCharacters(in: .whitespacesAndNewlines))
                     CoordinateFieldsSection(coordinate: $draft.coordinate)
                     factsSections
                 } else {

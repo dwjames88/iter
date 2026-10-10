@@ -1,5 +1,4 @@
 import SwiftUI
-import MapKit
 import IterCore
 import IterData
 import IterDesign
@@ -20,16 +19,12 @@ struct SpotEditorSheet: View {
 
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.renderMode) private var renderMode
 
     @State private var draft: SpotDraft
     @State private var lookup: LookupState
-    @State private var position: MapCameraPosition
     @State private var nameTouched = false
     @State private var localityTouched = false
     @State private var showProblems = false
-    /// Where the small map's camera is, so a typed or pasted coordinate recentres it and a drag of the map does not.
-    @State private var cameraCenter: Coordinate
     private let original: Coordinate
 
     enum LookupState: Equatable { case idle, looking, found, failed }
@@ -54,8 +49,6 @@ struct SpotEditorSheet: View {
         }
         _draft = State(initialValue: start)
         original = start.coordinate
-        _cameraCenter = State(initialValue: start.coordinate)
-        _position = State(initialValue: Self.cameraPosition(start.coordinate))
         if let lookupState { _lookup = State(initialValue: lookupState) }
         else if case .create = mode { _lookup = State(initialValue: .looking) }
         else { _lookup = State(initialValue: .idle) }
@@ -71,7 +64,7 @@ struct SpotEditorSheet: View {
                 .padding([.horizontal, .top], IterSpace.sheet)
                 .padding(.bottom, IterSpace.sm)
             Form {
-                Section { pinMap } footer: { pinFooter }
+                SpotPinMapSection(coordinate: $draft.coordinate, original: original, label: draft.trimmedName)
                 CoordinateFieldsSection(coordinate: $draft.coordinate)
                 Section {
                     nameField
@@ -111,68 +104,6 @@ struct SpotEditorSheet: View {
         .frame(width: IterSize.listMax, height: IterSize.windowMinHeight + IterSize.listMin / 2)
         .tint(nil)
         .task(id: draft.coordinate) { await lookUp() }
-        .onChange(of: draft.coordinate) { _, new in
-            if new.distance(to: cameraCenter) > 1 { cameraCenter = new; position = Self.cameraPosition(new) }
-        }
-    }
-
-    // MARK: Pin
-
-    private var pinMap: some View {
-        ZStack {
-            if renderMode == .snapshot {
-                MapStandIn(pins: [.init(id: "pin", coordinate: draft.coordinate, label: draft.trimmedName.isEmpty ? "" : draft.trimmedName, selected: true)])
-            } else {
-                Map(position: $position, interactionModes: [.pan, .zoom])
-                    .mapStyle(.standard(elevation: .realistic))
-                    .onMapCameraChange(frequency: .onEnd) { context in
-                        let c = context.camera.centerCoordinate
-                        let moved = Coordinate(latitude: c.latitude, longitude: c.longitude)
-                        cameraCenter = moved
-                        if moved.distance(to: draft.coordinate) > 1 { draft.coordinate = moved }
-                    }
-                // The tip of the pin is the centre of the map.
-                Image(systemName: "mappin")
-                    .font(.largeTitle)
-                    .foregroundStyle(IterColor.accent)
-                    .shadow(radius: IterStroke.regular)
-                    .offset(y: -IterSize.iconLarge)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
-            }
-        }
-        .frame(height: IterSize.arcHeight)
-        .clipShape(RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous).strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("Map with the spot's pin at the centre", comment: "VoiceOver"))
-        .accessibilityValue(coordinateText)
-    }
-
-    private var coordinateText: String {
-        let lat = draft.coordinate.latitude.formatted(.number.precision(.fractionLength(4)))
-        let lon = draft.coordinate.longitude.formatted(.number.precision(.fractionLength(4)))
-        return "\(lat), \(lon)"
-    }
-
-    private var pinFooter: some View {
-        HStack {
-            Text("Drag the map to move the pin, or type the coordinates.", comment: "Spot editor map hint")
-            Text(coordinateText).monospacedDigit()
-            Spacer()
-            if draft.coordinate != original {
-                Button {
-                    draft.coordinate = original
-                    position = Self.cameraPosition(original)
-                } label: { Text("Reset Pin", comment: "Button") }
-                .linkButtonStyle()
-            }
-        }
-    }
-
-    private static func cameraPosition(_ c: Coordinate) -> MapCameraPosition {
-        .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude),
-                                   span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)))
     }
 
     // MARK: Fields
