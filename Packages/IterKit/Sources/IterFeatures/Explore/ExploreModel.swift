@@ -9,7 +9,7 @@ import IterServices
 /// One selection drives pin, row and the place panel that replaces the list column (pattern #5). Platform-neutral; the view draws it.
 @MainActor
 @Observable
-public final class ExploreModel {
+public final class ExploreModel: PinDragHost {
     public let app: AppModel
     /// The ask engine (the scout). Its state is what the Ask section draws.
     public let askModel: ScoutModel

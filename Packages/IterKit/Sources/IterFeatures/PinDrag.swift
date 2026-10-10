@@ -9,6 +9,12 @@ public enum PinDrag {
     /// How far a pin rises while it is held, in points. Only the drawing rises; the coordinate is the tip's.
     public static let liftPoints: CGFloat = 5
 
+    /// Seconds a finger holds a pin before it lifts and follows (touch screens; a pointer drags straight away).
+    public static let holdSeconds: Double = 0.3
+
+    /// How far a pointer moves, in points, before a press on a pin becomes a drag.
+    public static let pointerMinimumDistance: CGFloat = 3
+
     /// Where the pointer is relative to the tip when the drag starts.
     public static func grab(pointer: CGPoint, tip: CGPoint) -> CGSize {
         CGSize(width: pointer.x - tip.x, height: pointer.y - tip.y)
