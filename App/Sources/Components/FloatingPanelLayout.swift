@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import IterCore
 import IterDesign
 import IterFeatures
 
@@ -72,6 +73,7 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
     static var shape: RoundedRectangle { RoundedRectangle(cornerRadius: GlassGeometry.cardCorner, style: .continuous) }
 
     var body: some View {
+        let _ = IterPerf.count("panel.body")
         ZStack(alignment: isDocked ? .topLeading : .top) {
             map(mapInsets)
                 .ignoresSafeArea(edges: .top)
@@ -90,10 +92,12 @@ struct FloatingPanelLayout<Panel: View, MapContent: View>: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onGeometryChange(for: CGFloat.self) { $0.safeAreaInsets.top } action: { topInset = $0 }
-        .onGeometryChange(for: Measure.self) { [placement] proxy in
+        .onGeometryChange(for: Measure.self) { [placement, dockedCap = panelWidth + 2 * Self.margin + IterSize.detailMin] proxy in
             // The window's content width is this area's trailing edge in window coordinates (the sidebar, when it shows,
             // is what lies to the leading side).
-            guard placement == .planner else { return Measure(window: 0, detail: proxy.size.width) }
+            // A docked card only reads the width below `dockedCap` (above it nothing changes), so a window that is wide enough
+            // writes no state while it resizes.
+            guard placement == .planner else { return Measure(window: 0, detail: min(proxy.size.width, dockedCap)) }
             func step(_ value: CGFloat) -> CGFloat { (value / 4).rounded() * 4 }
             let frame = proxy.frame(in: .global)
             return Measure(window: step(frame.maxX), detail: step(proxy.size.width), leading: frame.minX < 1 ? 0 : 1)

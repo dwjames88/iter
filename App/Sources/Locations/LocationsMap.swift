@@ -46,7 +46,10 @@ struct LocationsMap: View {
                 Color.clear
             }
         }
-        .onGeometryChange(for: CGSize.self) { $0.size } action: { paneSize = $0 }
+        .onGeometryChange(for: CGSize.self) { $0.size } action: { size in
+            // Only the first size matters (it creates the map); later ones are not state, so a live resize does not re-run this view.
+            if paneSize == .zero { paneSize = size }
+        }
         .onChange(of: items.map(\.id)) { withAnimation { position = Self.framing(items) } }
     }
 

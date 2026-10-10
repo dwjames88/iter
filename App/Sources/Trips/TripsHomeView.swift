@@ -14,6 +14,7 @@ struct TripsHomeView: View {
     @State private var prompt: TripNamePrompt?
 
     var body: some View {
+        let _ = IterPerf.count("trips.body")
         let today = model.today(in: .current)
         let overview = home.overview(today: today, featuring: openFolderID == nil)
         let openFolder = openFolderID.flatMap { model.store.folder(id: $0) }

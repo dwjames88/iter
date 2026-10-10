@@ -53,6 +53,9 @@ public enum IterPerf {
         counters.withLock { $0 }
     }
 
+    /// Zeroes every counter (a script that wants the counts for one phase).
+    public static func resetCounters() { counters.withLock { $0.removeAll() } }
+
     /// Logs every counter, and the main-thread lag figures while the monitor runs. `resetLag` starts a fresh lag window
     /// afterwards, so each report covers the work since the previous one.
     public static func report(_ label: String, resetLag: Bool = false) {

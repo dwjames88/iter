@@ -14,15 +14,16 @@ struct RootView: View {
 
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var autoCollapsed = false
-    @State private var windowWidth: CGFloat = 0
+    /// Whether the window is narrower than `sidebarCollapseWidth`; nil until the window reports. Only this crossing is state:
+    /// the raw width changes every step of a live resize and used to re-evaluate the whole window each time.
+    @State private var windowIsNarrow: Bool?
     /// Below this the sidebar, list and detail cannot all fit at their minimums.
     private var sidebarCollapseWidth: CGFloat { IterSize.sidebarIdeal + IterSize.mainWindowMinWidth }
 
     /// The sidebar gives way first: collapse it when the WINDOW is too narrow for sidebar plus detail minimum, bring it
     /// back when there is room again, but only if this rule (not the person) collapsed it.
-    private func applyCollapseRule(_ width: CGFloat) {
-        guard width > 0 else { return }
-        if width < sidebarCollapseWidth {
+    private func applyCollapseRule(narrow: Bool) {
+        if narrow {
             if columnVisibility != .detailOnly { columnVisibility = .detailOnly; autoCollapsed = true }
         } else if autoCollapsed {
             autoCollapsed = false
@@ -31,6 +32,7 @@ struct RootView: View {
     }
 
     var body: some View {
+        let _ = IterPerf.count("root.body")
         @Bindable var onboarding = model.onboarding
         NavigationSplitView(columnVisibility: $columnVisibility) {
             SidebarView()
@@ -48,8 +50,8 @@ struct RootView: View {
         .onChange(of: isFilteringLocations) { navigation.searchText = "" }
         .environment(navigation)
         .frame(minWidth: IterSize.mainWindowMinWidth, minHeight: IterSize.windowMinHeight)
-        .background(MainWindowConfigurator(minSize: CGSize(width: IterSize.mainWindowMinWidth, height: IterSize.windowMinHeight), contentWidth: $windowWidth))
-        .onChange(of: windowWidth) { _, width in applyCollapseRule(width) }
+        .background(MainWindowConfigurator(minSize: CGSize(width: IterSize.mainWindowMinWidth, height: IterSize.windowMinHeight), narrowBelow: sidebarCollapseWidth, isNarrow: $windowIsNarrow))
+        .onChange(of: windowIsNarrow) { _, narrow in if let narrow { applyCollapseRule(narrow: narrow) } }
         .onChange(of: columnVisibility) { _, new in
             if new == .all { autoCollapsed = false }
         }

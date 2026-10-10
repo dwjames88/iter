@@ -17,7 +17,11 @@ struct TripRouteMap: View {
     /// The selected stop and day, shared with the day strip and the list.
     let state: TripViewState
     /// What covers the map: the toolbar above it (and the panel, when it floats over the leading edge).
-    var insets = EdgeInsets()
+    /// The safe area the layout asks for. It follows the card's width, which changes every step of a live resize, so the map
+    /// takes it through `insets` below, once the resize is still.
+    let requestedInsets: EdgeInsets
+    @State private var appliedInsets: EdgeInsets
+    private var insets: EdgeInsets { appliedInsets }
     /// The map's own day choice (none today: the card's day strip is the switcher).
     var chooseDay: (Int?) -> Void = { _ in }
     @Namespace private var mapScope
@@ -25,7 +29,13 @@ struct TripRouteMap: View {
     @State private var position: MapCameraPosition
     /// True once the map wrote a user-positioned `position` (pan, zoom, stepper, compass) that has not settled yet.
     @State private var userInteracted = false
+    /// The pane's size the map was last framed for. Set at the first real size, then only once a resize has been still
+    /// for a moment (`resizeDebounce`): writing it per frame re-evaluated the map and re-framed the camera every step.
     @State private var paneSize = CGSize.zero
+    @State private var resizeDebounce = TrailingDebouncer(delay: .milliseconds(120))
+    /// The newest size and insets, read when a resize has been still (plain storage: writing it invalidates nothing).
+    @State private var latest = Latest()
+    private final class Latest { var size = CGSize.zero; var insets = EdgeInsets() }
     @State private var appliedRequest = 0
     /// The framing last applied and how often a settle far from it has been corrected.
     @State private var framed: GeoRegion?
@@ -37,7 +47,10 @@ struct TripRouteMap: View {
     init(builder: TripBuilderModel, state: TripViewState, insets: EdgeInsets = EdgeInsets(), chooseDay: @escaping (Int?) -> Void = { _ in }) {
         self.builder = builder
         self.state = state
-        self.insets = insets
+        self.requestedInsets = insets
+        _appliedInsets = State(initialValue: insets)
+        let seed = Latest(); seed.insets = insets
+        _latest = State(initialValue: seed)
         self.chooseDay = chooseDay
         // Start framed, so MapKit never shows (and reports) its automatic world camera.
         if let r = builder.initialCameraRegion {
@@ -67,11 +80,19 @@ struct TripRouteMap: View {
             }
         }
         .onGeometryChange(for: CGSize.self) { $0.size } action: { size in
-            let first = paneSize == .zero
-            paneSize = size
-            // The globe's camera drifts when the pane is laid out again (the card settling), so the framing the model last
-            // asked for is applied once more as the map gets its real size.
-            if !first, !userInteracted, let request = builder.cameraRequest { apply(request, animated: false, force: true) }
+            latest.size = size
+            if paneSize == .zero { paneSize = size; return }
+            settleSoon()
+        }
+        .onChange(of: requestedInsets) { _, new in
+            latest.insets = new
+            // The toolbar's inset is not a resize; take it at once. The card's edge waits for the resize to stop.
+            if new.top != appliedInsets.top { appliedInsets.top = new.top }
+            settleSoon()
+        }
+        .onChange(of: paneSize) { old, _ in
+            // Re-applied with the view's current insets, not those of the step that scheduled it.
+            if old != .zero, !userInteracted, let request = builder.cameraRequest { apply(request, animated: false, force: true) }
         }
         .accessibilityLabel(Text("Route map", comment: "Accessibility label"))
         .onAppear {
@@ -83,6 +104,18 @@ struct TripRouteMap: View {
         .onChange(of: builder.fitCoordinates) { builder.contentChanged() }
         .onChange(of: builder.cameraRequest) { _, request in
             if let request { apply(request, animated: true) }
+        }
+    }
+
+    /// Takes the newest pane size and insets once the window has stopped changing size. The globe's camera drifts when the
+    /// pane is laid out again (the card settling), so the framing the model last asked for is applied once more then (the
+    /// `onChange(of: paneSize)` below), not at every step of the resize.
+    private func settleSoon() {
+        let latest = latest
+        resizeDebounce.schedule {
+            IterPerf.count("trip.resizeSettled")
+            appliedInsets = latest.insets
+            paneSize = latest.size
         }
     }
 

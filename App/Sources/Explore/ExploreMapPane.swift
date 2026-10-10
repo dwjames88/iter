@@ -26,6 +26,8 @@ struct ExploreMapPane: View {
     /// The pane's top-left in window coordinates (the probe and nothing else reads it).
     @State private var paneOrigin = CGPoint.zero
     @State private var paneSize = CGSize.zero
+    /// The pane's size reaches the model (for clustering) once a resize is still; the first size is taken at once.
+    @State private var resizeDebounce = TrailingDebouncer(delay: .milliseconds(120))
     @State private var daylight = DaylightClock()
     @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
 
@@ -70,9 +72,14 @@ struct ExploreMapPane: View {
                     .padding(.leading, insets.leading)
             }
         }
-        .onGeometryChange(for: CGSize.self) { $0.size } action: {
-            paneSize = $0
-            explore.setMapViewport($0)
+        .onGeometryChange(for: CGSize.self) { $0.size } action: { size in
+            if paneSize == .zero {
+                paneSize = size
+                explore.setMapViewport(size)
+            } else {
+                // Only the model needs later sizes (clustering); `paneSize` just says the pane has had one.
+                resizeDebounce.schedule { explore.setMapViewport(size) }
+            }
         }
         .onGeometryChange(for: CGPoint.self) { $0.frame(in: .global).origin } action: { paneOrigin = $0 }
     }

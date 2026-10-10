@@ -183,8 +183,10 @@ enum AppLaunch {
 /// `-IterWindowSize` once.
 struct MainWindowConfigurator: NSViewRepresentable {
     let minSize: CGSize
-    /// The window's content width, kept current as the window resizes.
-    @Binding var contentWidth: CGFloat
+    /// The width under which `isNarrow` is true.
+    let narrowBelow: CGFloat
+    /// Whether the window's content is narrower than `narrowBelow`. Written only when that changes, not on every resize step.
+    @Binding var isNarrow: Bool?
 
     final class Coordinator {
         var appliedLaunchSize = false
@@ -197,7 +199,7 @@ struct MainWindowConfigurator: NSViewRepresentable {
 
     func updateNSView(_ view: NSView, context: Context) {
         let minSize = minSize
-        let contentWidth = $contentWidth
+        let isNarrow = $isNarrow, narrowBelow = narrowBelow
         let coordinator = context.coordinator
         DispatchQueue.main.async {
             guard let window = view.window else { return }
@@ -206,7 +208,9 @@ struct MainWindowConfigurator: NSViewRepresentable {
                 let publish: @MainActor () -> Void = { [weak window] in
                     guard let window else { return }
                     let width = window.contentLayoutRect.width
-                    if abs(width - contentWidth.wrappedValue) > 0.5 { contentWidth.wrappedValue = width }
+                    guard width > 0 else { return }
+                    let narrow = width < narrowBelow
+                    if isNarrow.wrappedValue != narrow { isNarrow.wrappedValue = narrow }
                 }
                 coordinator.observer = NotificationCenter.default.addObserver(
                     forName: NSWindow.didResizeNotification, object: window, queue: .main) { _ in

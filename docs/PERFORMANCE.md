@@ -146,6 +146,28 @@ Time Profiler, main thread, whole interaction part of the script: 8.3 s before, 
 
 Pinned by tests (`TripBuilderPerfTests`): a selection issues no camera request, repeated `contentChanged()` for the same framing is free, an identical recompute publishes no layout, a missed settle after the first good one is not asked again, and the drawn route is thinned but keeps its ends.
 
+## Pass 3: window resize
+
+**Method.** `-IterResizeScript 1100,1800` steps the window's width across the range and back (176 steps of 8 pt, one about every 16 ms, `setFrame(display: true)`). Each step now records two times with `StepStats`: **sync**, until `setFrame` returns (layout and display of the window), and **total**, which adds two turns of the main queue and is what the next step waits behind. The script prints median, p90 and max for both, and the counters for the sweep (`root.body`, `panel.body`, `trip.mapBody`, `map.paneBody` and so on), to stdout and to the log (`perf resize step ...`). Release re-stamped copy, hidden, in-memory store, sample weather, 1280x820 start, median of 3 runs of the per-run median, p90 and max. "Before" is `main` with only the timing added; the trip planner row after is on the adaptive card (`PlannerCardLayout`), and the same tree without this pass measured 63 / 72 / 120 ms. The screens: trip planner (`-IterSeedTrip YES -IterSection trip`), All Trips (`-IterSeedLibrary YES -IterSection trips`), Explore (`-IterSection explore -IterLocation 37.77,-122.42`), Locations (`-IterSeedLibrary YES -IterSection locations`). The script now finds the window of a hidden (`open -j`) launch too.
+
+| Screen | Before, median / p90 / max per step | After |
+|---|---|---|
+| Trip planner | 62 / 81 / 107 ms | 38 / 44 / 71 ms |
+| All Trips | 23 / 28 / 48 ms | 15 / 16 / 55 ms |
+| Explore | 48 / 52 / 96 ms | 28 / 32 / 75 ms |
+| Locations | 31 / 33 / 49 ms | 17 / 20 / 39 ms |
+
+**Where the time went.** Time Profiler on the main thread (symbolicated against the dSYM): app code is a few percent of every sweep; the rest is SwiftUI's `NSHostingView.layout`, the attribute graph and MapKit's own frame work. So the lever was how often app state made SwiftUI and MapKit redo that work:
+
+1. **The window width was state in `RootView`.** `MainWindowConfigurator` wrote the raw content width to `@State` on every resize notification, only so the sidebar-collapse rule could compare it with one threshold. Every step re-evaluated the whole window (sidebar and detail). It now publishes only whether the window is narrower than the threshold (`windowIsNarrow`), so it writes state when the rule's answer changes.
+2. **`FloatingPanelLayout` wrote the pane width per step** for Explore and Locations, where the card is docked and its width only depends on the window below `panelWidth + 2 x margin + detailMin` (about 800 pt). The measure is capped there, so a wide window writes nothing. This also removed one body evaluation of the map pane per step.
+3. **Map panes took their size per step.** Explore pushed the size to the model for clustering and Locations kept it in state, only to know a pane had a size. Locations now keeps the first size only; Explore passes later sizes to the model once the resize has been still for 120 ms (`TrailingDebouncer`).
+4. **The trip map re-framed the camera every step.** The pane size change re-applied the model's camera request (`trip.cameraRequestApplied` 174 per sweep), and the card's changing edge changed the map's safe area each step. The map now takes the new size and insets together once the resize has been still, then re-applies the framing once. The card keeps its width rules; only what the map is told lags by 120 ms.
+
+**Pinned by tests.** `TrailingDebouncerTests` (a burst of 50 calls runs the last one once, a cancelled action never runs, spaced calls each run) and `StepStatsTests` (nearest-rank median, p90 and max). The counters in the script's output are the check for "no state per step": `root.body` and `trips.body` stay at 0 for a sweep, `map.paneBody` and `panel.body` fell as above, `trip.cameraRequestApplied` is 0.
+
+**Left.** The trip planner is at 38 ms, not 16: the card's width follows the window, so its list, header and the map's safe area change every step, and MapKit settles its camera about twice a step (`trip.cameraSettle` 348) on the main thread. Making the card hold its width during a live resize would change its sizing rules. Explore still evaluates the map pane's body once a step (28 ms). Locations evaluates `savedEvent(for:)` for every pin when the map body runs, and an All Trips card re-evaluates `TripNextLine` (the next-session line, an engine call) when the grid re-measures; neither is per step now, but both would cost on any other trigger. A live drag with a mouse (`inLiveResize`) was not run; the script resizes in process.
+
 ## What is left
 
 * **Light panel open in Explore** settles in about 230 ms, almost all SwiftUI building the panel's view tree. Cutting it needs the panel restructured; not done.

@@ -78,6 +78,7 @@ enum DebugScripts {
         let step = 8.0
         var widths = Array(stride(from: range.lowerBound, through: range.upperBound, by: step))
         widths += widths.reversed()
+        IterPerf.resetCounters()
         let start = Date()
         // Per step: `sync` is setFrame(display: true) returning (layout and display of the window); `total` adds the
         // main queue turning twice after it, which is what the next step has to wait behind.
@@ -96,6 +97,7 @@ enum DebugScripts {
         say("resize sweep \(widths.count) steps in \(Int(Date().timeIntervalSince(start) * 1000)) ms")
         say("resize step sync \(sync.summary)")
         say("resize step total \(total.summary)")
+        say("resize counters \(IterPerf.counterValues().sorted { $0.key < $1.key }.map { "\($0.key)=\($0.value)" }.joined(separator: " "))")
         IterPerf.log.notice("perf resize step sync \(sync.summary, privacy: .public)")
         IterPerf.log.notice("perf resize step total \(total.summary, privacy: .public)")
         for w in [1000.0, 1100, 1280, 1440, 1600, 1728, 1800] where range.contains(w) {
