@@ -1,0 +1,253 @@
+{
+ "version": 0.6,
+ "generator": "Overpass API 0.7.62.11 87bfad18",
+ "osm3s": {
+  "timestamp_osm_base": "2026-10-10T00:36:55Z",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+ },
+ "elements": [
+  {
+   "type": "node",
+   "id": 243671668,
+   "lat": 37.7275534,
+   "lon": -119.5437476,
+   "tags": {
+    "alt_name": "Yonapah",
+    "ele": "1538",
+    "height": "97",
+    "name": "Vernal Fall",
+    "tourism": "attraction",
+    "waterway": "waterfall",
+    "wikidata": "Q2620166",
+    "wikipedia": "en:Vernal Fall"
+   }
+  },
+  {
+   "type": "node",
+   "id": 243671720,
+   "lat": 37.7249029,
+   "lon": -119.5333639,
+   "tags": {
+    "ele": "1801",
+    "height": "181",
+    "name": "Nevada Fall",
+    "name:zh": "\u5185\u534e\u8fbe\u7011\u5e03",
+    "tourism": "attraction",
+    "waterway": "waterfall",
+    "wikidata": "Q38586"
+   }
+  },
+  {
+   "type": "node",
+   "id": 243671729,
+   "lat": 37.7269009,
+   "lon": -119.5408931,
+   "tags": {
+    "ele": "1555",
+    "gnis:feature_id": "252485",
+    "name": "Silver Apron",
+    "waterway": "waterfall"
+   }
+  },
+  {
+   "type": "node",
+   "id": 773001756,
+   "lat": 37.7139258,
+   "lon": -119.5614481,
+   "tags": {
+    "height": "110",
+    "name": "Illilouette Fall",
+    "tourism": "attraction",
+    "waterway": "waterfall",
+    "wikidata": "Q37588"
+   }
+  },
+  {
+   "type": "node",
+   "id": 2169177764,
+   "lat": 37.7168053,
+   "lon": -119.6467733,
+   "tags": {
+    "ele": "1352",
+    "gnis:feature_id": "257449",
+    "height": "188",
+    "loc_name": "Pohono",
+    "name": "Bridalveil Fall",
+    "name:ru": "\u0432\u043e\u0434\u043e\u043f\u0430\u0434 \u0411\u0440\u0430\u0439\u0434\u043b\u0432\u0435\u0439\u043b",
+    "tourism": "attraction",
+    "waterway": "waterfall",
+    "wikidata": "Q2360422",
+    "wikipedia": "en:Bridalveil Fall"
+   }
+  },
+  {
+   "type": "node",
+   "id": 2384221575,
+   "lat": 37.7542908,
+   "lon": -119.5972692,
+   "tags": {
+    "alt_name": "Yosemite Falls",
+    "gnis:feature_id": "252230",
+    "height": "206",
+    "intermittent": "yes",
+    "name": "Middle Cascades",
+    "name:zh": "\u4e2d\u4f18\u80dc\u7f8e\u5730\u5927\u7011\u5e03",
+    "seasonal": "yes",
+    "source": "GNIS",
+    "waterway": "waterfall",
+    "wikidata": "Q491677",
+    "wikipedia": "en:Yosemite Falls"
+   }
+  },
+  {
+   "type": "node",
+   "id": 2389657981,
+   "lat": 37.7514442,
+   "lon": -119.5971408,
+   "tags": {
+    "ele": "1368",
+    "gnis:feature_id": "227800",
+    "height": "98",
+    "intermittent": "yes",
+    "name": "Lower Yosemite Fall",
+    "name:zh": "\u4e0b\u4f18\u80dc\u7f8e\u5730\u5927\u7011\u5e03",
+    "seasonal": "yes",
+    "tourism": "attraction",
+    "waterway": "waterfall",
+    "wikidata": "Q491677",
+    "wikipedia": "en:Yosemite Falls"
+   }
+  },
+  {
+   "type": "node",
+   "id": 2389658050,
+   "lat": 37.7360133,
+   "lon": -119.6477914,
+   "tags": {
+    "description": "Tallest uninterrupted waterfall in the United States of America",
+    "ele": "1918",
+    "gnis:feature_id": "265392",
+    "height": "491.4",
+    "intermittent": "yes",
+    "name": "Ribbon Fall",
+    "seasonal": "yes",
+    "waterway": "waterfall",
+    "wikidata": "Q2982001",
+    "wikipedia": "en:Ribbon Fall"
+   }
+  },
+  {
+   "type": "node",
+   "id": 2389658093,
+   "lat": 37.7249146,
+   "lon": -119.5964966,
+   "tags": {
+    "ele": "1716",
+    "gnis:feature_id": "253839",
+    "height": "590",
+    "intermittent": "yes",
+    "name": "Sentinel Fall",
+    "seasonal": "yes",
+    "waterway": "waterfall",
+    "wikidata": "Q7451320",
+    "wikipedia": "en:Sentinel Fall"
+   }
+  },
+  {
+   "type": "node",
+   "id": 2389658133,
+   "lat": 37.7043694,
+   "lon": -119.6692389,
+   "tags": {
+    "ele": "1962",
+    "gnis:feature_id": "266204",
+    "height": "175",
+    "intermittent": "yes",
+    "name": "Silver Strand Falls",
+    "name:zh": "\u94f6\u8272\u4e1d\u7ebf\u5927\u7011\u5e03",
+    "seasonal": "yes",
+    "waterway": "waterfall",
+    "wikidata": "Q37590"
+   }
+  },
+  {
+   "type": "node",
+   "id": 2389658166,
+   "lat": 37.7350371,
+   "lon": -119.5748942,
+   "tags": {
+    "ele": "1341",
+    "gnis:feature_id": "253925",
+    "height": "310",
+    "name": "Staircase Falls",
+    "waterway": "waterfall",
+    "wikidata": "Q37584",
+    "wikipedia": "en:Staircase Falls"
+   }
+  },
+  {
+   "type": "node",
+   "id": 2389658224,
+   "lat": 37.7569712,
+   "lon": -119.5967689,
+   "tags": {
+    "ele": "1599",
+    "gnis:feature_id": "236934",
+    "height": "440",
+    "intermittent": "yes",
+    "name": "Upper Yosemite Fall",
+    "name:zh": "\u4e0a\u4f18\u80dc\u7f8e\u5730\u5927\u7011\u5e03",
+    "seasonal": "yes",
+    "tourism": "attraction",
+    "waterway": "waterfall",
+    "wikidata": "Q491677",
+    "wikipedia": "en:Yosemite Falls"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4065344346,
+   "lat": 37.749598,
+   "lon": -119.5710356,
+   "tags": {
+    "ele": "1632",
+    "gnis:feature_id": "255055",
+    "height": "380",
+    "intermittent": "yes",
+    "name": "Royal Arch Cascade",
+    "seasonal": "yes",
+    "waterway": "waterfall",
+    "wikidata": "Q37586",
+    "wikipedia": "en:Royal Arch Cascade"
+   }
+  },
+  {
+   "type": "node",
+   "id": 4848694621,
+   "lat": 37.7312956,
+   "lon": -119.6281908,
+   "tags": {
+    "ele": "1875",
+    "height": "470",
+    "name": "Horsetail Fall",
+    "seasonal": "yes",
+    "waterway": "waterfall",
+    "wikidata": "Q37385",
+    "wikipedia": "en:Horsetail Fall (Yosemite)"
+   }
+  },
+  {
+   "type": "node",
+   "id": 9620017765,
+   "lat": 37.7593644,
+   "lon": -119.5299333,
+   "tags": {
+    "alt_name": "Hidden Falls;Tenaya Creek Falls",
+    "name": "Three Chute Falls",
+    "waterway": "waterfall",
+    "wikidata": "Q7797390",
+    "wikipedia": "en:Three Chute Falls"
+   }
+  }
+ ]
+}

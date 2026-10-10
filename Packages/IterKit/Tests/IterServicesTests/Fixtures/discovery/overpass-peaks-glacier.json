@@ -1,0 +1,446 @@
+{
+ "version": 0.6,
+ "generator": "Overpass API 0.7.62.11 (trimmed)",
+ "elements": [
+  {
+   "type": "node",
+   "id": 357925027,
+   "lat": 48.925,
+   "lon": -113.8480556,
+   "tags": {
+    "ele": "3190",
+    "gnis:feature_id": "769931",
+    "name": "Mount Cleveland",
+    "natural": "peak",
+    "prominence": "1590",
+    "source:prominence": "3190-1600 (Col at the S of Summit Mountain)",
+    "wikidata": "Q3321762",
+    "wikipedia": "en:Mount Cleveland (Montana)"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357926676,
+   "lat": 48.6908079,
+   "lon": -113.6364988,
+   "tags": {
+    "ele": "2939",
+    "gnis:feature_id": "771825",
+    "name": "Going-to-the-Sun Mountain",
+    "natural": "peak",
+    "wikidata": "Q5577737",
+    "wikipedia": "en:Going-to-the-Sun Mountain"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357927539,
+   "lat": 48.6005267,
+   "lon": -113.7220574,
+   "tags": {
+    "ele": "3064",
+    "gnis:feature_id": "772780",
+    "name": "Mount Jackson",
+    "natural": "peak",
+    "wikidata": "Q6921473"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357929929,
+   "lat": 48.671918,
+   "lon": -113.7234476,
+   "tags": {
+    "ele": "2666",
+    "gnis:feature_id": "775738",
+    "name": "Reynolds Mountain",
+    "natural": "peak",
+    "wikidata": "Q7319655",
+    "wikipedia": "en:Reynolds Mountain"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357932720,
+   "lat": 48.2621844,
+   "lon": -114.4670834,
+   "tags": {
+    "ele": "1223",
+    "gnis:feature_id": "779291",
+    "name": "Bald Rock",
+    "natural": "peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357933095,
+   "lat": 48.5063549,
+   "lon": -114.3481896,
+   "tags": {
+    "ele": "2078",
+    "gnis:feature_id": "779846",
+    "name": "Big Mountain",
+    "natural": "peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357933819,
+   "lat": 48.8533042,
+   "lon": -114.4368111,
+   "tags": {
+    "ele": "1601",
+    "gnis:feature_id": "781131",
+    "name": "Center Mountain",
+    "natural": "peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357934213,
+   "lat": 48.724414,
+   "lon": -114.3154152,
+   "tags": {
+    "ele": "1838",
+    "gnis:feature_id": "782022",
+    "name": "Cyclone Peak",
+    "natural": "peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357928175,
+   "lat": 48.5274696,
+   "lon": -113.305098,
+   "tags": {
+    "ele": "1854",
+    "gnis:feature_id": "773666",
+    "name": "Looking Glass Hill",
+    "natural": "peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357929743,
+   "lat": 48.5921941,
+   "lon": -113.2553755,
+   "tags": {
+    "ele": "1723",
+    "gnis:feature_id": "775615",
+    "name": "Red Blanket Butte",
+    "natural": "peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357932697,
+   "lat": 48.4608012,
+   "lon": -113.2703731,
+   "tags": {
+    "ele": "1703",
+    "gnis:feature_id": "779281",
+    "name": "Bald Hill",
+    "natural": "peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357923429,
+   "lat": 48.997198,
+   "lon": -114.2079143,
+   "tags": {
+    "ele": "2959",
+    "gnis:feature_id": "767965",
+    "name": "Long Knife Peak",
+    "natural": "peak",
+    "wikidata": "Q8533552"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357923515,
+   "lat": 48.7577154,
+   "lon": -113.7114821,
+   "tags": {
+    "ele": "2257",
+    "gnis:feature_id": "768261",
+    "name": "Angel Wing",
+    "natural": "peak",
+    "wikidata": "Q49008802"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357924365,
+   "lat": 48.638305,
+   "lon": -113.8178947,
+   "tags": {
+    "ele": "2610",
+    "gnis:feature_id": "769286",
+    "name": "Mount Brown",
+    "natural": "peak",
+    "wikidata": "Q6919878"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357924975,
+   "lat": 48.3816308,
+   "lon": -113.5137137,
+   "tags": {
+    "ele": "2687",
+    "gnis:feature_id": "769874",
+    "name": "Church Butte",
+    "natural": "peak",
+    "wikidata": "Q5116563"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357925591,
+   "lat": 48.6652519,
+   "lon": -113.4009346,
+   "tags": {
+    "ele": "2641",
+    "gnis:feature_id": "770671",
+    "name": "Divide Mountain",
+    "natural": "peak",
+    "wikidata": "Q5284003",
+    "wikipedia": "en:Divide Mountain"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357926570,
+   "lat": 48.6402503,
+   "lon": -113.7226137,
+   "tags": {
+    "ele": "2620",
+    "gnis:feature_id": "771660",
+    "name": "Fusillade Mountain",
+    "natural": "peak",
+    "wikidata": "Q5510054",
+    "wikipedia": "en:Fusillade Mountain"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357927062,
+   "lat": 48.7328083,
+   "lon": -113.7328048,
+   "tags": {
+    "ele": "2282",
+    "gnis:feature_id": "772281",
+    "name": "Haystack Butte",
+    "natural": "peak",
+    "wikidata": "Q49035531"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357927635,
+   "lat": 48.6319171,
+   "lon": -113.4895471,
+   "tags": {
+    "ele": "2371",
+    "gnis:feature_id": "772933",
+    "name": "Kakitos Mountain",
+    "natural": "peak",
+    "wikidata": "Q49040621",
+    "wikipedia": "en:Kakitos Mountain"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357928098,
+   "lat": 48.8058068,
+   "lon": -114.0470723,
+   "tags": {
+    "ele": "2603",
+    "gnis:feature_id": "773557",
+    "name": "Logging Mountain",
+    "natural": "peak",
+    "wikidata": "Q6667382"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357928470,
+   "lat": 48.559414,
+   "lon": -113.4653802,
+   "tags": {
+    "ele": "2485",
+    "gnis:feature_id": "774074",
+    "name": "Medicine Grizzly Peak",
+    "natural": "peak",
+    "wikidata": "Q6806703",
+    "wikipedia": "en:Medicine Grizzly Peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357929037,
+   "lat": 48.9033077,
+   "lon": -114.1612446,
+   "tags": {
+    "ele": "2718",
+    "gnis:feature_id": "774881",
+    "name": "Numa Peak",
+    "natural": "peak",
+    "wikidata": "Q7069032"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357929264,
+   "lat": 48.456355,
+   "lon": -113.5903838,
+   "tags": {
+    "ele": "2637",
+    "gnis:feature_id": "775156",
+    "name": "Peril Peak",
+    "natural": "peak",
+    "wikidata": "Q7168497"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357929832,
+   "lat": 48.8649752,
+   "lon": -114.0065156,
+   "tags": {
+    "ele": "2473",
+    "gnis:feature_id": "775674",
+    "name": "Redhorn Peak",
+    "natural": "peak",
+    "wikidata": "Q7305919",
+    "wikipedia": "en:Redhorn Peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357930550,
+   "lat": 48.883595,
+   "lon": -113.5620433,
+   "tags": {
+    "ele": "2584",
+    "gnis:feature_id": "776476",
+    "name": "Sherburne Peak",
+    "natural": "peak",
+    "wikidata": "Q7494776",
+    "wikipedia": "en:Sherburne Peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357930940,
+   "lat": 48.898117,
+   "lon": -113.8583132,
+   "tags": {
+    "ele": "2701",
+    "gnis:feature_id": "777240",
+    "name": "Stoney Indian Peaks",
+    "natural": "peak",
+    "wikidata": "Q7619413",
+    "wikipedia": "en:Stoney Indian Peaks"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357931928,
+   "lat": 48.6808057,
+   "lon": -113.8740086,
+   "tags": {
+    "ele": "2679",
+    "gnis:feature_id": "778008",
+    "name": "Mount Vaught",
+    "natural": "peak",
+    "wikidata": "Q6924314"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357932401,
+   "lat": 48.4405214,
+   "lon": -113.6106619,
+   "tags": {
+    "ele": "2492",
+    "gnis:feature_id": "778660",
+    "name": "Wolftail Mountain",
+    "natural": "peak",
+    "wikidata": "Q8030229"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357932977,
+   "lat": 48.4332988,
+   "lon": -113.9653941,
+   "tags": {
+    "ele": "1942",
+    "gnis:feature_id": "779681",
+    "name": "Belton Point",
+    "natural": "peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357934345,
+   "lat": 48.4319099,
+   "lon": -113.9659496,
+   "tags": {
+    "ele": "1941",
+    "gnis:feature_id": "782311",
+    "name": "Desert Mountain",
+    "natural": "peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357934741,
+   "lat": 48.3946872,
+   "lon": -113.9328925,
+   "tags": {
+    "ele": "1646",
+    "gnis:feature_id": "783185",
+    "name": "Emery Hill",
+    "natural": "peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357935322,
+   "lat": 48.3357974,
+   "lon": -113.7770534,
+   "tags": {
+    "ele": "2609",
+    "gnis:feature_id": "784260",
+    "name": "Great Northern Mountain",
+    "natural": "peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 357936423,
+   "lat": 48.3566309,
+   "lon": -114.0142833,
+   "tags": {
+    "ele": "1466",
+    "gnis:feature_id": "786197",
+    "name": "Lion Hill",
+    "natural": "peak"
+   }
+  },
+  {
+   "type": "node",
+   "id": 1,
+   "lat": 48.7,
+   "lon": -113.7,
+   "tags": {
+    "name": "Fixture Ridge (synthetic ele test)",
+    "natural": "peak",
+    "ele": "10,466 ft"
+   }
+  }
+ ]
+}
