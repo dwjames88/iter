@@ -53,6 +53,9 @@ struct ExploreView: View {
 @MainActor private enum HandledRequests {
     static var submit: [ObjectIdentifier: Int] = [:]
     static var addSpot: [ObjectIdentifier: Int] = [:]
+    static var searchHere: [ObjectIdentifier: Int] = [:]
+    /// `-IterSearchHere` runs once per launch, not on every return to Explore.
+    static var launchSearchHereDone = false
 }
 
 private struct ExploreContent: View {
@@ -60,6 +63,8 @@ private struct ExploreContent: View {
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
     @Environment(\.openURL) private var openURL
+    /// Search Here was asked for (menu, ⌘⇧F, or `-IterSearchHere`) before the map had a region; it runs when one arrives.
+    @State private var searchHerePending = AppLaunch.searchHere && !HandledRequests.launchSearchHereDone
 
     var body: some View {
         FloatingPanelLayout {
@@ -82,6 +87,7 @@ private struct ExploreContent: View {
         .onAppear {
             explore.start()
             explore.requestInitialCamera()
+            runPendingSearchHere()
             if navigation.searchText.isEmpty { navigation.searchText = explore.query } else { explore.query = navigation.searchText }
             handleRequests()
         }
@@ -89,14 +95,28 @@ private struct ExploreContent: View {
         .onChange(of: model.location.coordinate) { explore.locationChanged() }
         .onChange(of: model.location.radiusMiles) { explore.contentChanged() }
         .onChange(of: navigation.addSpotModeRequest) { handleRequests() }
+        .onChange(of: navigation.searchHereRequest) { handleRequests() }
+        .onChange(of: explore.visibleRegion) { runPendingSearchHere() }
     }
 
     private var draftPresented: Binding<Bool> {
         Binding(get: { explore.draftCoordinate != nil }, set: { if !$0 { explore.cancelDraft() } })
     }
 
+    private func runPendingSearchHere() {
+        guard searchHerePending, explore.visibleRegion != nil else { return }
+        searchHerePending = false
+        HandledRequests.launchSearchHereDone = true
+        explore.searchHere()
+    }
+
     private func handleRequests() {
         let key = ObjectIdentifier(navigation)
+        if navigation.searchHereRequest != HandledRequests.searchHere[key, default: 0] {
+            HandledRequests.searchHere[key] = navigation.searchHereRequest
+            searchHerePending = true
+            runPendingSearchHere()
+        }
         if navigation.searchSubmitRequest != HandledRequests.submit[key, default: 0] {
             HandledRequests.submit[key] = navigation.searchSubmitRequest
             explore.submitSearch()

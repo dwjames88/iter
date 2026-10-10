@@ -49,6 +49,8 @@ struct ExploreBrowser: View {
                                      options: sortOptions, selection: $explore.sort)
                 .padding(.horizontal, IterSpace.lg)
             ChipRow(chips: chips)
+            SearchHereControl(explore: explore)
+                .padding(.horizontal, IterSpace.lg)
             List {
                 Group {
                     WeatherStatusBanner(status: explore.weatherStatus)
@@ -111,12 +113,12 @@ struct ExploreBrowser: View {
         case .searching(let query):
             HStack(spacing: IterSpace.sm) {
                 ProgressView().controlSize(.small)
-                Text(LightText.searchingApple).font(.footnote).foregroundStyle(IterColor.textSecondary)
+                Text(progressText).font(.footnote).foregroundStyle(IterColor.textSecondary)
                 Spacer(minLength: 0)
                 Button(String(localized: "Cancel", comment: "Button")) { explore.cancelSearch() }.font(.footnote)
             }
             .padding(.horizontal, IterSpace.lg).padding(.vertical, IterSpace.sm)
-            .accessibilityLabel(LightText.searchingApple + " " + query)
+            .accessibilityLabel(progressText + " " + query)
         case .failed(let query):
             HStack(spacing: IterSpace.sm) {
                 Label(LightText.searchFailed(query), systemImage: "exclamationmark.triangle")
@@ -125,9 +127,21 @@ struct ExploreBrowser: View {
                 Button(String(localized: "Retry", comment: "Button")) { explore.searchAppleMaps() }.font(.footnote)
             }
             .padding(.horizontal, IterSpace.lg).padding(.vertical, IterSpace.sm)
-        case .idle, .finished:
+        case .finished:
+            if explore.featureStatus.areaNotFound {
+                Text(LightText.areaNotFound(explore.featureStatus.areaName))
+                    .font(.footnote).foregroundStyle(IterColor.textSecondary)
+                    .padding(.horizontal, IterSpace.lg).padding(.vertical, IterSpace.sm)
+            }
+        case .idle:
             EmptyView()
         }
+    }
+
+    private var progressText: String {
+        explore.featureStatus.isSearching
+            ? LightText.searchProgress(explore.featureStatus, area: LightText.featureAreaName(explore))
+            : LightText.searchingApple
     }
 
     // MARK: Content
@@ -136,7 +150,7 @@ struct ExploreBrowser: View {
         if explore.rows.isEmpty, !explore.searchState.isSearching, !explore.hasAskContent {
             VStack(spacing: IterSpace.sm) {
                 if !explore.searchSuggestions.isEmpty {
-                    ExploreSuggestionsView(suggestions: explore.searchSuggestions) { explore.run($0) }
+                    ExploreSuggestionsView(suggestions: explore.searchSuggestions, promptPrefix: explore.activePromptPrefix) { explore.run($0) }
                         .padding(.horizontal, IterSpace.lg)
                 }
                 emptyState
@@ -144,7 +158,7 @@ struct ExploreBrowser: View {
             .plainListRow()
         } else {
             if !explore.searchSuggestions.isEmpty {
-                ExploreSuggestionsView(suggestions: explore.searchSuggestions) { explore.run($0) }
+                ExploreSuggestionsView(suggestions: explore.searchSuggestions, promptPrefix: explore.activePromptPrefix) { explore.run($0) }
                     .padding(.horizontal, IterSpace.lg)
                     .plainListRow()
             }
@@ -188,20 +202,30 @@ struct ExploreBrowser: View {
     @ViewBuilder private func sectionView(_ section: ExploreSection) -> some View {
         let isMore = section.kind == .morePlaces
         let showsRows = !isMore || explore.isMorePlacesOpen
+            if let header = explore.resultHeader(for: section) {
+                ResultSectionHeader(title: header.title, sources: header.sources, notes: header.notes,
+                                    titleFont: .subheadline.weight(.semibold), detailFont: .footnote)
+                    .padding(.horizontal, IterSpace.lg)
+                    .frame(minHeight: 44, alignment: .leading)
+                    .padding(.top, IterSpace.sm)
+                    .plainListRow()
+            } else {
             Button {
                 if isMore { withAnimation(reduceMotion ? nil : .snappy(duration: 0.2)) { explore.setMorePlacesOpen(!explore.isMorePlacesOpen) } }
             } label: {
-                HStack(spacing: IterSpace.sm) {
-                    if isMore { Image(systemName: showsRows ? "chevron.down" : "chevron.right").imageScale(.small) }
-                    Text(sectionTitle(section))
-                    Spacer()
-                    Text(section.rows.count, format: .number).monospacedDigit()
+                do {
+                    HStack(spacing: IterSpace.sm) {
+                        if isMore { Image(systemName: showsRows ? "chevron.down" : "chevron.right").imageScale(.small) }
+                        Text(sectionTitle(section))
+                        Spacer()
+                        Text(section.rows.count, format: .number).monospacedDigit()
+                    }
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(IterColor.textSecondary)
+                    .padding(.horizontal, IterSpace.lg)
+                    .frame(minHeight: 44)
+                    .contentShape(Rectangle())
                 }
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(IterColor.textSecondary)
-                .padding(.horizontal, IterSpace.lg)
-                .frame(minHeight: 44)
-                .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
             .disabled(!isMore)
@@ -209,9 +233,10 @@ struct ExploreBrowser: View {
             .accessibilityValue(isMore ? (showsRows ? Text("Expanded", comment: "VoiceOver") : Text("Collapsed", comment: "VoiceOver")) : Text(verbatim: ""))
             .padding(.top, IterSpace.sm)
             .plainListRow()
+            }
             if showsRows {
                 ForEach(section.rows) { row in
-                    ExploreRowButton(explore: explore, row: row) { open(row) }
+                    ExploreRowButton(explore: explore, row: row, isResult: section.kind == .inView || section.kind == .feature) { open(row) }
                 }
             }
     }
@@ -221,12 +246,14 @@ struct ExploreBrowser: View {
 struct ExploreRowButton: View {
     @Bindable var explore: ExploreModel
     let row: ExploreRow
+    /// A Search Here or feature-search result: shows its sources and height, and Ask's note.
+    var isResult = false
     let action: () -> Void
     @Environment(AppModel.self) private var model
 
     var body: some View {
         Button(action: action) {
-            ExploreRowView(row: row, showsDistance: explore.hasLocation)
+            rowContent
                 .frame(minHeight: 56)
                 .contentShape(Rectangle())
         }
@@ -235,6 +262,14 @@ struct ExploreRowButton: View {
         .listRowBackground(explore.selectedID == row.id ? Color.primary.opacity(0.08) : Color.clear)
         .onAppear { explore.requestForecast(for: row.id) }
         .contextMenu { ExploreSpotMenu(spot: row.spot, day: row.day ?? model.today(in: row.spot.timeZone)) }
+    }
+
+    @ViewBuilder private var rowContent: some View {
+        if isResult {
+            ExploreResultRow(row: row, showsDistance: explore.hasLocation)
+        } else {
+            ExploreRowView(row: row, showsDistance: explore.hasLocation)
+        }
     }
 }
 

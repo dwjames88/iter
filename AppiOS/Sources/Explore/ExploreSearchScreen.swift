@@ -18,7 +18,7 @@ struct ExploreSearchScreen: View {
                     emptyState
                 } else {
                     if !explore.searchSuggestions.isEmpty {
-                        ExploreSuggestionsView(suggestions: explore.searchSuggestions) { explore.run($0) }
+                        ExploreSuggestionsView(suggestions: explore.searchSuggestions, promptPrefix: explore.activePromptPrefix) { explore.run($0) }
                             .padding(.horizontal, IterSpace.lg)
                     }
                     progress

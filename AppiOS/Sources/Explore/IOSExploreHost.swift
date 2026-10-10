@@ -8,11 +8,18 @@ import IterFeatures
 struct IOSExploreHost<Content: View>: View {
     @Environment(AppModel.self) private var model
     @State private var explore: ExploreModel?
+    /// `-IterSearchHere YES`: Search Here runs once, when the map's first camera has settled.
+    @State private var searchHerePending = AppLaunch.searchHere
     @ViewBuilder var content: () -> Content
 
     var body: some View {
         if let explore {
             content().environment(explore)
+                .onChange(of: explore.visibleRegion) {
+                    guard searchHerePending, explore.visibleRegion != nil else { return }
+                    searchHerePending = false
+                    explore.searchHere()
+                }
         } else {
             Color.clear.onAppear {
                 let made = ExploreModel(app: model)

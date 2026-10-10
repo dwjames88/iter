@@ -111,6 +111,8 @@ Pass them after the bundle id with `simctl launch`, or in the scheme's Arguments
 | `-IterSearchPreview YES` | Shows the search screen inside the Explore tab (debug aid). |
 | `-IterAsk <text>` | Puts that request to Ask at launch. |
 | `-IterScoutStub unavailable\|results` | A stand-in for Apple Intelligence: reports it off, or answers with three curated spots. Only with `-IterInMemoryStore YES`. |
+| `-IterSearchHere YES` | Runs Search Here once, when the map's first camera has settled. |
+| `-IterDiscoveryStub results\|off` | Canned Discovery places with sources (Glacier, Moab, Yosemite), or Discovery off. Only with `-IterInMemoryStore YES`. `-IterScoutStub results` also proposes landmark names for Search Here. |
 | `-IterAddSpot "lat,lon,Name"` | Adds your own spot at launch (in-memory only). |
 | `-IterTripDay <n>` | The builder opens on day n (1-based). |
 | `-IterEditStops YES` | The builder opens in Edit mode. |

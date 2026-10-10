@@ -29,7 +29,7 @@ struct IterApp: App {
         let throwaway = AppLaunch.inMemoryStore || AppLaunch.isRunningTests
         let packs = throwaway ? FileManager.default.temporaryDirectory.appending(path: "IterOfflinePacks-\(UUID().uuidString)", directoryHint: .isDirectory)
                               : OfflinePackStore.defaultRoot()
-        let model = AppModel.live(store: store, scout: AppLaunch.makeScout(), offlinePacks: packs)
+        let model = AppModel.live(store: store, scout: AppLaunch.makeScout(), discovery: AppLaunch.makeDiscovery(), offlinePacks: packs)
         _model = State(initialValue: model)
         // `-IterSeedTrip YES` (with `-IterInMemoryStore YES` only): the Canyon Country sample trip, starting tomorrow,
         // so `-IterSection trip` opens a 4-day trip for screenshots and measurements without touching real data.

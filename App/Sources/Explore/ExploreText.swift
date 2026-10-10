@@ -25,6 +25,8 @@ extension LightText {
 
     static func name(_ section: ExploreSectionKind) -> String {
         switch section {
+        case .inView: inViewName
+        case .feature: String(localized: "Places", comment: "List section: places a typed feature search found; the header normally names the kind and area")
         case .ask: String(localized: "Ask Iter", comment: "List section: places suggested for a request")
         case .spots: String(localized: "Spots", comment: "List section: curated and your own spots")
         case .nearYou: String(localized: "Near You", comment: "List section: spots close to your location")
@@ -133,10 +135,18 @@ extension LightText {
         String(localized: "\(count) places, zoom in", comment: "VoiceOver: a group of map pins that are too close to tell apart; the number is how many")
     }
 
-    static func rowDescription(_ row: ExploreRow, showsDistance: Bool = false) -> String {
+    static func rowDescription(_ row: ExploreRow, showsDistance: Bool = false, showsSources: Bool = false) -> String {
         var parts = [row.spot.name, row.spot.locality].filter { !$0.isEmpty }
         if showsDistance, let meters = row.distanceMeters {
             parts.append(String(localized: "\(distance(meters: meters)) away", comment: "VoiceOver: distance from you"))
+        }
+        if showsSources {
+            if let meters = row.elevationMeters {
+                parts.append(String(localized: "elevation \(elevation(meters: meters))", comment: "VoiceOver: height above sea level of a result"))
+            }
+            if let sources = sourcesLine(row) {
+                parts.append(String(localized: "from \(sources.replacingOccurrences(of: " · ", with: ", "))", comment: "VoiceOver: the sources that list a result, e.g. from Maps, Wikipedia"))
+            }
         }
         if let light = rowLight(row) { parts.append(light) }
         return parts.joined(separator: ", ")

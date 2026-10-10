@@ -98,10 +98,25 @@ public final class AppModel {
 
     public var ephemeris: any Ephemeris { engine.ephemeris }
 
+    /// Which discovery engine the real app runs. `.stub` and `.off` are for screenshots (launch switch `-IterDiscoveryStub`).
+    public enum DiscoveryChoice: Sendable {
+        case live
+        case off
+        case stub(any Discovering)
+
+        func resolve(keys: any DiscoveryKeyStore) -> (any Discovering)? {
+            switch self {
+            case .live: DiscoveryEngine.live(keys: keys)
+            case .off: nil
+            case .stub(let engine): engine
+            }
+        }
+    }
+
     /// The real app: the weather router (Apple Weather, OpenWeather, Windy as the user chose), MapKit, on-disk store.
     /// `offlinePacks` is where pinned trips' offline packs live; pass a throwaway folder with an in-memory store, or
     /// the launch-time clean-up would remove the real packs (their trips are not in that store).
-    public static func live(store: IterStore, scout: (any Scouting)?,
+    public static func live(store: IterStore, scout: (any Scouting)?, discovery override: DiscoveryChoice = .live,
                             offlinePacks: URL? = OfflinePackStore.defaultRoot()) -> AppModel {
         let cache = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appending(path: "Iter/ForecastCache", directoryHint: .isDirectory)
@@ -113,7 +128,7 @@ public final class AppModel {
                  geocoder: MapKitGeocoder(),
                  drives: MapKitDriveTimes(),
                  scout: scout,
-                 discovery: DiscoveryEngine.live(keys: keys),
+                 discovery: override.resolve(keys: keys),
                  searchSettings: SearchSettingsModel(keys: keys),
                  weatherSetup: setup,
                  location: .live(),
