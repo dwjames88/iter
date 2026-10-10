@@ -71,7 +71,7 @@ extension View {
     ///
     /// - Mac: drag straight away (3 pt), open and closed hand, a tooltip.
     /// - iPhone and iPad: touch and hold 0.3 s until it lifts (haptic), then drag; a swipe still pans, a tap still selects.
-    /// - Both: the pin rises 5 pt with a shadow while held; the point under the pointer keeps its place relative to the tip;
+    /// - Both: the pin rises with a shadow while held (5 pt on the Mac, a little more on touch screens, where the finger covers it); the point under the pointer keeps its place relative to the tip;
     ///   the drop is the tip, converted in window space; nothing is stored unless the pin moved.
     func ownPinDrag<Host: PinDragHost>(id: String, stored: Coordinate, host: Host, proxy: MapProxy, isEnabled: Bool,
                                        onDrop: ((PinDrop) -> Void)? = nil) -> some View {
