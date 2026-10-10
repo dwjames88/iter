@@ -147,6 +147,10 @@ The Mac-only switches (`-IterWindowSize`) do nothing on iOS.
 
 The Simulator cannot be tapped from a script, so these were built and compiled but not exercised: dragging the Explore sheet between heights, swipe actions, reorder drags in Edit, context menus, the share sheet and importing a `.iter` file, the file picker, and any drag and drop. They need a person at a device. The iPad layout and the device install were checked as far as the Simulator and the build allow; the install steps above were not run on a real iPhone for this file.
 
+## Search Here on iPhone
+
+Pan the Explore map and tap **Search Here** at the top of the sheet's list; an **In View** section lists what Maps, Ask and the web sources found, each row with its sources and elevation. Type "peaks in Glacier National Park" for a feature search. **Settings ▸ Search** has the personal prefix, the library toggle, Popular / Unique / Mixed, the sources and an optional Google key. Switches are in the table above (`-IterSearchHere YES`, `-IterScoutStub results`, `-IterDiscoveryStub results|off`, `-IterSettingsTab search`). Snapshots: `scripts/snapshots-ios.sh "iPhone 17 Pro" ExploreSearchHereIOSSnapshotTests` and `SearchSettingsIOSSnapshotTests`. Not tested by hand: a real Search Here against live MapKit, Apple Intelligence and the web sources, and the Google key flow. Reddit may refuse unauthenticated clients, shown as "Reddit unavailable".
+
 ## Known issues and limits
 
 1. **Apple Intelligence on the Simulator.** Ask depends on the device's model. What the screens say is described under the Simulator results above; use `-IterScoutStub results` to see the Ask layout without it.

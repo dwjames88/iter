@@ -68,6 +68,7 @@ From `App/Sources/Shell/AppCommands.swift`, plus screen-level shortcuts. None of
 | File | Add Spot on Map | ⇧⌘N | Switches to Explore and turns on Add Spot mode. |
 | File | Import Trip… | ⌘O | Opens a file picker for `.iter` (or .json) files; imports as a new trip. |
 | Edit (after text editing) | Find Spots | ⌘F | Switches to Explore and focuses the search field. |
+| Edit (after text editing) | Search Here | ⇧⌘F | Switches to Explore and searches the part of the map in view (see [Explore](#explore)). |
 | Go | Trips | ⌘1 | |
 | Go | Explore | ⌘2 | |
 | Go | Locations | ⌘3 | |
@@ -332,6 +333,24 @@ Toolbar (all primary-action placement), left to right. The window toolbar draws 
 
 Clearing the search field removes the Ask section. Snapshots: `snapshots/explore-search-place-{light,dark}-{1280x820,960x640}.png` (Mesa Arch: Apple Maps first), `snapshots/explore-search-request-…` (a request: Ask Iter first) and `snapshots/explore-search-unavailable-…` (Apple Intelligence off: the Ask row disabled with its reason), each drawn as the list column alone (the toolbar's search field cannot render offscreen); and `snapshots/explore-ask-results-{light,dark}-{1280x820,960x640}.png` and `snapshots/explore-ask-unavailable-{light,dark}-{1280x820,960x640}.png`.
 
+**Search Here.** A button at the top of the Explore list (the Mac card, the iPhone sheet and the iPad column) that searches the part of the map you can see. Menu: Edit ▸ Search Here (⌘⇧F). It never moves the camera. The slot holds exactly one of these:
+
+| State | When | What shows | Snapshots |
+|---|---|---|---|
+| Visible | The map has a region, the search field is empty, nothing is running, and the list is empty or no longer describes the map (the centre moved more than a fraction of the searched area, or the zoom changed by more than a factor) | [SearchHereControl](COMPONENTS.md#searchherecontrol): a system glass capsule, `magnifyingglass` + "Search Here" | `snapshots/ios-explore-search-here-visible-{light,dark}.png` |
+| Searching Maps | Pressed; Apple Maps is searching the area | A small spinner, "Searching Maps…" and a **Cancel** button. Any earlier results go; a second press replaces a running search | `snapshots/ios-explore-search-here-loading-{light,dark}.png` |
+| Asking | Maps answered; Ask (Apple Intelligence) and the web sources are still working | The In View section is already listing the Maps results; the slot reads "Asking…" (or "Searching the Web…" when Ask cannot run), with Cancel. More rows join as each source finishes | `snapshots/ios-explore-search-here-asking-{light,dark}.png` |
+| Results | Everything has answered | The button is gone (the list matches the map). The **In View** section is first in the list: "12 Places in View · Maps + Ask + Wikipedia" (`type/captionStrong` title, the sources in `type/caption`), then the rows | `snapshots/ios-explore-search-here-results-{light,dark}.png` |
+| Empty | Finished with no places | A quiet line under the slot: "No Places in View", plus any source that could not answer | not rendered |
+| Ask unavailable | Apple Intelligence is off or cannot run | Search Here still runs without Ask. The slot says why in one quiet line ("Apple Intelligence is turned off") and the header's sources omit Ask | `snapshots/ios-explore-search-here-ask-off-{light,dark}.png` |
+| Source unavailable | A source failed, was rate limited or refused the request | A quiet line under the section header, for example "Reddit unavailable", "Web sources unavailable" or "Apple Maps unavailable". The other sources' places still list | in the results snapshots |
+
+Typing in the search field, running another search or pressing Cancel removes the In View section. Rows that a curated spot or one of your own spots already lists are left out of In View. Each In View row is the normal [ExploreRow](COMPONENTS.md#explorerow); a place that Ask suggested also carries Ask's note.
+
+**Feature search.** Typing "peaks in Glacier National Park" (a feature, a preposition and a named area) makes the top suggestion "Find Peaks in Glacier National Park" ("Apple Maps and the web sources you've turned on"). Return runs it. Phrases that mean the map ("near here", "this area", "nearby") and trailing light or time words ("at sunset", "for sunrise", "this weekend") are not part of the area, so they never make a feature search for the wrong place. While it runs the line under the field reads "Finding Glacier National Park…", then "Searching Peaks in Glacier National Park…". The result is a **Feature** section above the other sections: "24 Peaks in Glacier National Park · Maps + OpenStreetMap + Wikipedia", every place inside the park boundary, ordered by the chosen sort, and the camera fits them. If the area cannot be found, the ordinary Apple Maps results show with "Couldn't find <area>. Showing Apple Maps results." Snapshot: `snapshots/ios-explore-feature-results-{light,dark}.png`.
+
+**Sources line and elevation.** A row from In View or a feature search ends with one quiet line (`type/caption`, `text/secondary`): the sources that list the place, in the app's order, joined by " · " ("Maps · Wikipedia · OpenStreetMap"; "Ask" when Apple Intelligence suggested it), then the elevation when a source gave one ("2,938 m", or feet where people read heights in feet). A place is never shown without at least one source. With a shooting note set in Settings ▸ Search, the Ask suggestion's second line reads "Using your shooting notes" (`snapshots/ios-explore-search-prefix-{light,dark}.png`).
+
 **Weather for any location.** A spot's score comes from a forecast fetched for its own coordinate (curated, your own, Apple Maps, Ask results, trip stops), shared per spot per hour and counted against the daily cap. A spot you add is fetched as soon as you save it.
 
 **States.**
@@ -498,7 +517,7 @@ Map: [LocationsMap](COMPONENTS.md#locationsmap), one pin per listed spot, framed
 
 **Purpose.** Units, set-up time; forecast and Apple Intelligence status; about.
 
-**Placement.** The Settings window (⌘,), a separate window, 552 pt wide (`layout/listMax` + `space/xxl`), tab view with four tabs along the top: **General** (`gearshape`), **Weather** (`cloud.sun`), **Apple Intelligence** (`sparkles`), **About** (`info.circle`). Each pane is a grouped form of system controls only (see [Controls](COMPONENTS.md#controls)); `Stepper` labels carry their value.
+**Placement.** The Settings window (⌘,), a separate window, 552 pt wide (`layout/listMax` + `space/xxl`), tab view with tabs along the top: **General** (`gearshape`), **Weather** (`cloud.sun`), **Apple Intelligence** (`sparkles`), **Search** (`magnifyingglass`), **About** (`info.circle`). Each pane is a grouped form of system controls only (see [Controls](COMPONENTS.md#controls)); `Stepper` labels carry their value.
 
 **General.** Section 1: **Temperature** (System, Celsius (°C), Fahrenheit (°F)). Section 2: a stepper whose label carries its value, "Set-up time before a window: 20 min" (0 to 90 in steps of 5), with footer "How long before a light window starts that a new stop wants you set up. Each stop can change it."
 
@@ -516,6 +535,16 @@ Map: [LocationsMap](COMPONENTS.md#locationsmap), one pin per listed spot, framed
 4. Section **Data Sources and Attribution**, always shown, below the provider sections (moved here from the content screens, owner's instruction 2026-10-06; to be revisited before release): `WeatherDataSources` ([WeatherAttributionView](COMPONENTS.md#weatherattributionview) strings, all providers): the Apple Weather mark with **Legal attribution** (once attribution info has loaded), "Weather data © OpenWeather" linking openweathermap.org, "Contains data from the Windy database" with a **Windy.com** link (Windy's logo is still not shipped, a known gap), the inline Sample data label when sample is on, then "Light Index modified from forecast data".
 
 Status line strings ([ProviderStatusRow](COMPONENTS.md#providerstatusrow)): "Working · last update 19:40" (button **Check**); "Needs an API key"; "Not enabled for this build" (**Check Again**); "Testing key: Windy's data is shuffled, so Iter won't score from it" (**Check**); "Key rejected" (**Check Again**); "Daily cap reached (800 of 800)" (**Check Again**); "Couldn't reach OpenWeather" (**Check Again**, and the technical detail under it, selectable); "Not checked yet" (**Check**); "Checking…" with a spinner. Opening the tab checks Apple Weather always, and OpenWeather or Windy only when it is the primary or fallback and has a key.
+
+**Search.** Settings ▸ Search (Mac tab and iOS page; launch with `-IterSettingsTab search`). A grouped form, top to bottom:
+
+1. Section **What I Like to Shoot**: a multi-line field (prompt "Quiet alpine lakes at sunrise, long-exposure waterfalls, no crowds"). Footer: the text is added to every Ask and Discovery request on this device and never leaves it except as part of the on-device prompt. With text in it, the Ask suggestion says "Using your shooting notes".
+2. Section **Learn From My Library**: a toggle "Use My Saved Spots and Trips" (on by default). The footer says Ask gets a short summary of what you save, pin and add to trips, and that it stays on the device.
+3. Section **Results**: **Prefer** (Popular, Unique, Mixed; Mixed by default) and a stepper "Up to 20 results" (the number is the value). Footer: Popular puts the most talked-about places first, Unique the lesser-known ones, Mixed alternates.
+4. Section **Sources**: Apple Maps ("Always used", it cannot be turned off), then a toggle each for OpenStreetMap, Wikipedia, Wikivoyage, Reddit and Google. The first four are on by default; Google turns on when a key is saved. Footer: these are free public sources, they are rate limited and cached, and nothing is sent but the place and the search words.
+5. Section **Google (Optional)**: a status row, **API Key** (secure), **Search Engine ID**, **Save** and a destructive **Remove**, links to create a Programmable Search Engine and to the API overview. Footer: there is no free Google places API; bring your own key; Google bills your account after its free daily allowance. The key lives in the Keychain, never in defaults.
+
+Snapshot: `snapshots/ios-settings-search-{light,dark}.png`. A source switched off is skipped; with every web source off, Search Here and typed feature searches fall back to Apple Maps (and Ask) alone.
 
 **Apple Intelligence.** Section "Ask Iter": a status row. Ready: `checkmark.circle` "Apple Intelligence is ready" and "Ask Iter, in Explore's search, understands your request with the model on this Mac, then looks up real places in Apple Maps and Iter's curated list." Otherwise the same notice as Ask's unavailable states (title with icon, detail) and, when it is turned off, **Open System Settings**.
 

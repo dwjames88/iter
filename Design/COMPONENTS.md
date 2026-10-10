@@ -18,10 +18,10 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 3. [Shared](#shared-components): [AddToTripMenu](#addtotripmenu), [MapStandIn](#mapstandin), [SpotEditorSheet](#spoteditorsheet), [ModuleCard](#modulecard)
 4. [Shell](#shell-components): [TripContextMenu](#tripcontextmenu), [FolderContextMenu](#foldercontextmenu), [Sidebar rows](#sidebar-rows), [OfflineStatusBadge](#offlinestatusbadge)
 5. [Trips](#trips-components): [TripCard](#tripcard), [TemplateRow](#templaterow), [TripHeader](#tripheader), [TripOverviewStrip](#tripoverviewstrip), [TripPlanList](#tripplanlist), [DayHeader](#dayheader), [StopRow](#stoprow), [StopNumberBadge](#stopnumberbadge), [DriveRow](#driverow), [OvernightBoundary](#overnightboundary), [SuggestionBanner](#suggestionbanner), [TripRouteMap](#triproutemap), [AddStopPopover](#addstoppopover)
-6. [Explore](#explore-components): [ExploreListPanel](#explorelistpanel), [ExploreLocationBanner](#explorelocationbanner), [ExploreRow](#explorerow), [ExploreMapPane](#exploremappane), [ExplorePinView](#explorepinview), [ExploreClusterView](#exploreclusterview), [ExploreLightPanel](#explorelightpanel), [ExploreSuggestions](#exploresuggestions), [SpotImageStrip](#spotimagestrip), [AddSpotBanner](#addspotbanner)
+6. [Explore](#explore-components): [ExploreListPanel](#explorelistpanel), [ExploreLocationBanner](#explorelocationbanner), [ExploreRow](#explorerow), [ExploreMapPane](#exploremappane), [ExplorePinView](#explorepinview), [ExploreClusterView](#exploreclusterview), [ExploreLightPanel](#explorelightpanel), [ExploreSuggestions](#exploresuggestions), [SpotImageStrip](#spotimagestrip), [AddSpotBanner](#addspotbanner), [SearchHereControl](#searchherecontrol)
 7. [Spot page](#spot-page-components): [SpotHeader](#spotheader), [WhenToGoSection](#whentogosection), [SunTimesLine](#suntimesline), [OutlookStrip](#outlookstrip), [DayWindowsList](#daywindowslist), [WindowRow](#windowrow), [ReasonsGrid](#reasonsgrid), [SignedBar](#signedbar), [ExplainBlock](#explainblock), [LightTimeline](#lighttimeline), [SkyRose](#skyrose), [TimeScrubber](#timescrubber), [FullWidthSegmentedPicker](#fullwidthsegmentedpicker), [HourlyStrip](#hourlystrip), [WindySection](#windysection), [SpotFactsRow](#spotfactsrow), [LookAroundSection](#lookaroundsection)
 8. [Locations and Ask](#locations-and-ask-components): [SavedRow](#savedrow), [LocationsMap](#locationsmap), [ExploreAskSection](#exploreasksection)
-9. [Settings components](#settings-components): [ProviderStatusRow](#providerstatusrow)
+9. [Settings components](#settings-components): [ProviderStatusRow](#providerstatusrow), [SearchSettingsPane](#searchsettingspane)
 10. [Controls](#controls)
 11. [System components](#system-components)
 12. [Rules that cut across components](#rules-that-cut-across-components)
@@ -758,6 +758,21 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **States:** one or several selected (shared with the list; a click on a pin selects its row, a click on empty map clears the selection); no spots (the screen shows its empty state instead). Snapshots draw a [MapStandIn](#mapstandin) with the same event-unit pins (`snapshots/locations-map-selected-*`).
 - **Used on:** Locations.
 
+### SearchHereControl
+
+- **Type, file:** `SearchHereControl` and `ResultSectionHeader`, `Explore/SearchHereViews.swift`. Words in `Explore/SearchHereText.swift` (`LightText` extension).
+- **One job:** let the person search the part of the map in view, show that it is running, and say honestly when it found nothing. It never shows a count of its own; the section headers carry the counts.
+- **Anatomy:** one slot at the top of the Explore list, `space/xs` between its lines. *Button:* a `GlassEffectContainer` holding one system `.glass` button with a capsule border shape (`magnifyingglass` + "Search Here"; `controlSize(.large)` on iOS), tooltip and VoiceOver hint "Look for places in the part of the map you can see". *Progress:* a small spinner, the stage in `type/caption`, `text/secondary` ("Searching Maps…", "Asking…", "Searching the Web…") and a small **Cancel** (44 pt tall on iOS). *Notes:* quiet lines in `type/caption`, `text/secondary` for an empty run or a source that could not answer.
+- **States:** button; progress; none (the list matches the map); notes. Changes between them fade (the button also scales from 0.92), and not at all with Reduce Motion.
+- **Glass rule:** the button is system glass, in a container, over the list; it is not given its own fill or outline (see [GLASS-RULES.md](GLASS-RULES.md)).
+- **Accessibility:** the button reads "Search Here" with its hint; the progress row is a container; the notes read as one element.
+- **Used on:** [ExploreListPanel](#explorelistpanel) on the Mac and the iPad column, the Explore sheet on iPhone.
+
+#### ResultSectionHeader and the sources line
+
+- **ResultSectionHeader:** the header of the In View and Feature sections: the title ("12 Places in View", "24 Peaks in Glacier National Park") in `type/captionStrong`, then " · " and the sources ("Maps + Ask + Wikipedia") in `type/caption`, all `text/secondary`; under it one `type/caption` line per note ("Reddit unavailable", "Searching Peaks in Glacier National Park…"). One VoiceOver header element.
+- **Sources line:** at the foot of a result row, `type/caption`, `text/secondary`: the sources that list the place joined by " · ", then the elevation ("Maps · Wikipedia · 2,938 m"). Built by `LightText.provenanceLine`; absent when the row has neither.
+
 ### ExploreAskSection
 
 - **Type, file:** `ExploreAskSection`, `ExploreAskRow`; `Explore/ExploreAskSection.swift`. Words in `Explore/AskText.swift`.
@@ -801,6 +816,14 @@ Hand-off for rebuilding Iter's components in a design tool. Companion files: [SC
 - **Key row:** secure field (label "API key", prompt "Paste your key", or "Saved in Keychain. Paste to replace") + **Save** (disabled while empty; Return also saves) + destructive **Remove** once a key exists. A key from the environment or a launch argument replaces the field with a read-only value: "From environment (ITER_WINDY_KEY)" or "From launch argument". Keychain errors: "Couldn't save the key to your Keychain." / "Couldn't remove the key from your Keychain." in `status/danger`, `type/caption`. A key is never displayed.
 - **Calls today:** a system labelled row "Calls today" with the count ("12", monospaced digits), and below it a `Stepper` whose label carries its value, "Daily cap: 800 calls" (0 to 10,000, step 50), that sets the daily cap. OpenWeather and Windy only.
 - **Used on:** Settings > Weather, three times (Apple Weather without key row or calls).
+
+### SearchSettingsPane
+
+- **Type, file:** `SearchSettingsPane` and `GoogleSearchSection`, `Settings/SearchSettingsPane.swift`. The state is `SearchSettingsModel` (`IterFeatures/Explore`), stored in `UserDefaults` under keys starting "IterSearch"; the Google key and engine id are in the Keychain only.
+- **One job:** let the person say what they like to shoot, whether the library informs Ask, how results are ordered, and which web sources are searched.
+- **Anatomy:** a grouped form of system controls: What I Like to Shoot (multi-line field), Learn From My Library (toggle), Results (Prefer pop-up of Popular, Unique, Mixed; "Up to 20 results" stepper), Sources (Apple Maps fixed on, one toggle per web source) and Google (Optional) with its key fields. Strings and footers are in [SCREENS.md](SCREENS.md#settings).
+- **States:** Google without a key (status "Not set up", Save disabled while a field is empty); Google saved (the engine id shown, key never shown, Remove offered); Keychain error ("Couldn't save to your Keychain.").
+- **Used on:** Settings ▸ Search on the Mac, the Search page of Settings on iPhone and iPad. Snapshots: `snapshots/ios-settings-search-{light,dark}.png`.
 
 ## Controls
 
