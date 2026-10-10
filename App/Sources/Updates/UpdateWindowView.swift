@@ -131,7 +131,7 @@ struct UpdateWindowView: View {
                 }
                 .frame(height: 200)
                 .background(.background)
-                .overlay { RoundedRectangle(cornerRadius: 6).strokeBorder(.separator) }
+                .overlay { RoundedRectangle(cornerRadius: IterRadius.badge, style: .continuous).strokeBorder(.separator) }
             }
             if !item.notarized {
                 Text("This build is signed but not yet notarised by Apple. Iter installs it directly, so macOS won't ask again.",

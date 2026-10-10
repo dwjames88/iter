@@ -27,7 +27,7 @@ struct LightWindowRow: View {
             Spacer(minLength: 0)
         }
         .padding(IterSpace.md)
-        .background(ModuleFill(), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .background(ModuleFill(), in: RoundedRectangle(cornerRadius: IterRadius.panel, style: .continuous))
         .accessibilityElement(children: .combine)
     }
 

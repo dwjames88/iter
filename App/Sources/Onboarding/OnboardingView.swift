@@ -342,7 +342,7 @@ struct OnboardingView: View {
                 summaryRow(String(localized: "Ask", comment: "Onboarding summary: row label for the Ask feature"), Self.askState(model.scout?.availability()).text)
             }
             .padding(.horizontal, IterSpace.md)
-            .background(IterColor.backgroundModule, in: RoundedRectangle(cornerRadius: IterRadius.card))
+            .background(IterColor.backgroundModule, in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
             Text("New here? Start in Explore: pick a place to see its light, then add it to a trip.",
                  comment: "Onboarding done: where to begin")
             Link(String(localized: "Take the Guided Tour", comment: "Onboarding done: link to the README tour"),
