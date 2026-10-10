@@ -22,10 +22,6 @@ struct ExploreMapLayer: View {
     @State private var userInteracted = false
     @State private var appliedRequest = 0
     @State private var mapSize = CGSize.zero
-    /// Where the finger grabbed the pin, relative to its tip; nil until the first drag value after the lift.
-    @State private var dragGrab: CGSize?
-    /// True while a press-and-hold drag gesture is in flight; its reset (end or cancel) puts a stray drag back.
-    @GestureState private var holding = false
     @AppStorage(MapStyleChoice.storageKey) private var mapStyleRaw = MapStyleChoice.default.rawValue
     @State private var daylight = DaylightClock()
     @AppStorage(DaylightClock.storageKey) private var showsDaylight = true
@@ -148,10 +144,6 @@ struct ExploreMapLayer: View {
         .onChange(of: position) { _, new in
             if new.positionedByUser { userInteracted = true }
         }
-        .onChange(of: holding) { _, now in
-            // A drag that was interrupted (a call, the system gesture) never reaches `onEnded`: the pin goes back.
-            if !now, explore.dragging != nil { explore.endDrag(commit: false) }
-        }
         .onMapCameraChange(frequency: .continuous) { context in
             guard explore.adjusting != nil else { return }
             let c = context.camera.centerCoordinate
@@ -189,15 +181,11 @@ struct ExploreMapLayer: View {
     private func pinAnnotation(_ pin: ExplorePin, proxy: MapProxy) -> some MapContent {
         let anchor = UnitPoint(x: MapPinAnchor.horizontal, y: MapPinAnchor.vertical(for: pin.style))
         let movable = explore.adjusting == nil && !explore.isAddingSpot && explore.canMove(pin.id)
-        let lifted = explore.dragging?.id == pin.id
         let at = explore.displayCoordinate(for: pin.id, stored: pin.coordinate)
         return Annotation(pin.name, coordinate: clCoordinate(at), anchor: anchor) {
             ExplorePinView(pin: pin)
-                // Lifted while it is carried: up a little, with a soft shadow below (no motion with Reduce Motion).
-                .modifier(LiftedPin(isLifted: lifted))
-                .sensoryFeedback(.impact(weight: .light), trigger: lifted) { _, now in now }
-                // Press and hold, then drag: a plain swipe across a pin still pans the map, and a tap still selects it.
-                .highPriorityGesture(pinDrag(pin, proxy: proxy), isEnabled: movable)
+                // Touch and hold, then drag (lift, haptic and the rest are the shared modifier's).
+                .ownPinDrag(id: pin.id, stored: pin.coordinate, host: explore, proxy: proxy, isEnabled: movable)
                 .contextMenu {
                     if let row = explore.row(id: pin.id) {
                         ExploreSpotMenu(spot: row.spot, day: row.day ?? LocalDay.today(in: row.spot.timeZone))
@@ -215,47 +203,6 @@ struct ExploreMapLayer: View {
             PinTipDot()
         }
         .annotationTitles(.hidden)
-    }
-
-    /// Seconds to hold before the pin lifts.
-    private static let holdDuration = 0.3
-
-    /// Moves one of your own spots: touch and hold the pin until it lifts, then drag. The point under the finger keeps its
-    /// place relative to the pin's tip (window space, as the Mac map does), and the drop is the tip.
-    private func pinDrag(_ pin: ExplorePin, proxy: MapProxy) -> some Gesture {
-        LongPressGesture(minimumDuration: Self.holdDuration)
-            .sequenced(before: DragGesture(minimumDistance: 0, coordinateSpace: .global))
-            .updating($holding) { _, state, _ in state = true }
-            .onChanged { value in
-                guard case .second(true, let drag) = value else { return }
-                if explore.dragging == nil {
-                    guard explore.beginDrag(pin.id) else { return }
-                    dragGrab = nil
-                    MoveSpotTip.didMove()
-                }
-                if let drag { carry(drag, pin: pin, proxy: proxy) }
-            }
-            .onEnded { value in
-                // The last touch position counts even if no change event carried it.
-                if case .second(true, let drag?) = value, explore.dragging != nil { carry(drag, pin: pin, proxy: proxy) }
-                // Held without moving: nothing to save (and no empty undo step).
-                let moved = explore.dragging.map { $0.coordinate != pin.coordinate } ?? false
-                explore.endDrag(commit: moved)
-                dragGrab = nil
-            }
-    }
-
-    /// Puts the dragged pin's tip where the finger is, keeping the grab offset from the first touch.
-    private func carry(_ drag: DragGesture.Value, pin: ExplorePin, proxy: MapProxy) {
-        if dragGrab == nil {
-            let tip = proxy.convert(clCoordinate(pin.coordinate), to: .global) ?? drag.startLocation
-            dragGrab = CGSize(width: drag.startLocation.x - tip.x, height: drag.startLocation.y - tip.y)
-        }
-        let grab = dragGrab ?? .zero
-        let point = CGPoint(x: drag.location.x - grab.width, y: drag.location.y - grab.height)
-        if let c = proxy.convert(point, from: .global) {
-            explore.drag(to: Coordinate(latitude: c.latitude, longitude: c.longitude))
-        }
     }
 
     private func clusterAnnotation(_ cluster: ExploreCluster) -> some MapContent {

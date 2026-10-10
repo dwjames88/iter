@@ -3,32 +3,6 @@ import IterCore
 import IterDesign
 import IterFeatures
 
-/// How a pin looks while it is carried: up a little, with a soft shadow below it. Shared by the live map and the
-/// snapshot stand-in, so what the snapshot shows is what the map draws. Reduce Motion keeps the lift but drops the motion.
-struct LiftedPin: ViewModifier {
-    let isLifted: Bool
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    func body(content: Content) -> some View {
-        content
-            .shadow(color: .black.opacity(isLifted ? 0.3 : 0), radius: isLifted ? IterSpace.sm : 0, y: isLifted ? IterSpace.sm : 0)
-            .offset(y: isLifted ? -IterSpace.md : 0)
-            .animation(reduceMotion ? nil : .smooth, value: isLifted)
-    }
-}
-
-/// The exact point of one of your own spots, under its pin: the pointer ends here, so the place is never read off the pin.
-struct PinTipDot: View {
-    var body: some View {
-        Circle()
-            .fill(IterColor.mapPin)
-            .frame(width: IterSpace.sm, height: IterSpace.sm)
-            .overlay(Circle().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
-            .allowsHitTesting(false)
-            .accessibilityHidden(true)
-    }
-}
-
 /// Snapshot renders cannot draw a live map. This draws the same pins, with the same pin views, lift and tip dot, on a flat
 /// ground at the framed region, so a pin in the middle of a drag can be reviewed.
 struct ExploreMapLayerStandIn: View {
