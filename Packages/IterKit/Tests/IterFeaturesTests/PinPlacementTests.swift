@@ -116,6 +116,90 @@ private struct NoSearch: PlaceSearching {
         #expect(explore.displayCoordinate(for: record.spot.id, stored: beach) == beach)
     }
 
+    @Test func aDragOnAnUnselectedOwnSpotSelectsItAndLeavesTheCameraAlone() async throws {
+        let explore = makeExplore(weather: CountingWeather())
+        let record = explore.app.store.createUserSpot(name: "Beach", coordinate: beach, timeZoneIdentifier: "America/Los_Angeles")
+        explore.didCreate(record.spot)
+        let id = record.spot.id
+        explore.select(nil)
+        explore.closePanel()
+        #expect(explore.selectedID == nil && !explore.showsPanel)
+        let before = explore.cameraRequest?.id
+        #expect(explore.beginDrag(id))
+        #expect(explore.selectedID == id && explore.showsPanel)
+        #expect(explore.cameraRequest?.id == before, "no camera request: the map stays still under the pointer")
+    }
+
+    @Test func aDropIsOneUndoStepRestoresOnUndoAndRescoresTheNewPlace() async throws {
+        let weather = CountingWeather()
+        let explore = makeExplore(weather: weather)
+        let undo = UndoManager()
+        undo.groupsByEvent = false
+        explore.app.store.undoManager = undo
+        undo.beginUndoGrouping()
+        let record = explore.app.store.createUserSpot(name: "Beach", coordinate: beach, timeZoneIdentifier: "America/Los_Angeles")
+        undo.endUndoGrouping()
+        explore.didCreate(record.spot)
+        let id = record.spot.id
+        let target = Coordinate(latitude: 36.5612345, longitude: -121.9412345)
+
+        explore.select(nil)
+        #expect(explore.beginDrag(id))
+        explore.drag(to: Coordinate(latitude: 36.555, longitude: -121.945))
+        explore.drag(to: target)
+        undo.beginUndoGrouping()
+        explore.endDrag(commit: true)
+        undo.endUndoGrouping()
+        #expect(record.coordinate == target, "stored exactly")
+        #expect(undo.undoActionName == "moveSpot")  // the app names it "Move Spot" (StoreActionText)
+        #expect(explore.row(id: id)?.spot.coordinate == target)
+        for _ in 0..<200 where !weather.calls.contains(target.cacheKey) { try await Task.sleep(for: .milliseconds(5)) }
+        #expect(weather.calls.contains(target.cacheKey), "the row is scored for the new place: its forecast is requested")
+        #expect(!weather.calls.contains(Coordinate(latitude: 36.555, longitude: -121.945).cacheKey), "the in-between drag points are never fetched")
+
+        undo.undo()
+        #expect(record.coordinate == beach, "one undo puts it back")
+        #expect(explore.row(id: id)?.spot.coordinate == beach)
+    }
+
+    @Test func aCancelledDragPutsTheSpotBackAndThereIsNoDragDuringAddSpotOrAdjust() async throws {
+        let explore = makeExplore(weather: CountingWeather())
+        let record = explore.app.store.createUserSpot(name: "Beach", coordinate: beach, timeZoneIdentifier: "America/Los_Angeles")
+        explore.didCreate(record.spot)
+        let id = record.spot.id
+        #expect(explore.beginDrag(id))
+        explore.drag(to: Coordinate(latitude: 2, longitude: 2))
+        explore.endDrag(commit: false)
+        #expect(record.coordinate == beach && explore.dragging == nil)
+
+        explore.beginAddingSpot()
+        #expect(!explore.beginDrag(id), "no drag during Add Spot")
+        explore.isAddingSpot = false
+
+        #expect(explore.beginAdjusting(id))
+        #expect(!explore.beginDrag(id), "no drag during Adjust Location")
+        explore.finishAdjusting(commit: false)
+        #expect(explore.beginDrag(id))
+    }
+
+    @Test func grabAndDropMathKeepsTheTipUnderTheGrabOffset() {
+        let tip = CGPoint(x: 400, y: 300)
+        let pointer = CGPoint(x: 400, y: 286)  // the capsule, 14 pt above the tip
+        let grab = PinDrag.grab(pointer: pointer, tip: tip)
+        #expect(grab == CGSize(width: 0, height: -14))
+        #expect(PinDrag.tipPoint(pointer: pointer, grab: grab) == tip, "no move yet: the tip has not jumped to the cursor")
+        #expect(PinDrag.tipPoint(pointer: CGPoint(x: 460, y: 346), grab: grab) == CGPoint(x: 460, y: 360), "tip + delta")
+    }
+
+    @Test func clickingYourSelectedPinKeepsItSelectedButEmptyMapStillClears() {
+        #expect(PinDrag.keepsSelection(writing: nil, selectedID: "a", hoveredID: "a", selectedIsMovable: true))
+        #expect(!PinDrag.keepsSelection(writing: nil, selectedID: "a", hoveredID: nil, selectedIsMovable: true), "empty map")
+        #expect(!PinDrag.keepsSelection(writing: nil, selectedID: "a", hoveredID: "b", selectedIsMovable: true))
+        #expect(!PinDrag.keepsSelection(writing: nil, selectedID: "a", hoveredID: "a", selectedIsMovable: false), "catalogue pins keep today's toggle")
+        #expect(!PinDrag.keepsSelection(writing: "b", selectedID: "a", hoveredID: "a", selectedIsMovable: true), "selecting another pin")
+        #expect(!PinDrag.keepsSelection(writing: nil, selectedID: nil, hoveredID: nil, selectedIsMovable: false))
+    }
+
     @Test func curatedAndFoundSpotsCannotBeDragged() async throws {
         let explore = makeExplore(weather: CountingWeather())
         #expect(!explore.canMove("mesa-arch"))
