@@ -363,6 +363,9 @@
     "%lld locations" : {
       "comment" : "VoiceOver: how many locations a folder holds"
     },
+    "%lld min" : {
+      "comment" : "Place editor: walk-in minutes value"
+    },
     "%lld min set-up" : {
       "comment" : "Minutes to be set up before the window starts"
     },
@@ -500,6 +503,9 @@
     },
     "Added to every Ask and Discovery request on this device. It never leaves this device except as part of the on-device prompt." : {
       "comment" : "Settings footer: the personal search prefix"
+    },
+    "Adjust Location" : {
+      "comment" : "Place card: move your own spot by panning the map under a crosshair"
     },
     "All Days" : {
       "comment" : "Map day switcher: every day is shown\nMap day switcher: show every day\nOverview strip: every day"
@@ -679,8 +685,11 @@
     "Best for the spot" : {
       "comment" : "Windy model choice"
     },
+    "Best light" : {
+      "comment" : "Place editor field"
+    },
     "Best light (choose any)" : {
-      "comment" : "Spot editor section: multiple choice"
+      "comment" : "Place editor section: multiple choice\nSpot editor section: multiple choice"
     },
     "Best light: %@ at %@" : {
       "comment" : "VoiceOver: the day's best window and its start time",
@@ -718,10 +727,10 @@
       "comment" : "Onboarding weather: no network"
     },
     "Cancel" : {
-      "comment" : "Alert button\nButton\nButton: stop a running Search Here\nButton: stop the running Ask\nUpdate window button"
+      "comment" : "Alert button\nButton\nButton: stop a running Search Here\nButton: stop the running Ask\nToolbar button: leave Adjust Location without saving\nUpdate window button"
     },
     "Category" : {
-      "comment" : "Filters submenu\nSpot editor field: single choice"
+      "comment" : "Filters submenu\nPlace editor field\nPlace editor field: single choice\nSpot editor field: single choice"
     },
     "Celsius (°C)" : {
       "comment" : "Temperature unit"
@@ -857,6 +866,9 @@
     },
     "Continue" : {
       "comment" : "Onboarding: next step"
+    },
+    "Coordinates" : {
+      "comment" : "Place editor field"
     },
     "Copy Coordinates" : {
       "comment" : "Context menu"
@@ -1000,6 +1012,9 @@
     "Do This Later" : {
       "comment" : "Onboarding weather: skip the setup"
     },
+    "Done" : {
+      "comment" : "Button: save the place editor\nToolbar button: save the crosshair's place as the spot's location"
+    },
     "Download from GitHub" : {
       "comment" : "Update window button"
     },
@@ -1031,8 +1046,14 @@
     "Drag locations here from All Locations, or choose Move to Folder from a location's menu." : {
       "comment" : "Locations folder empty explanation"
     },
-    "Drag the map to move the pin." : {
+    "Drag the map to move the pin, or type the coordinates." : {
       "comment" : "Spot editor map hint"
+    },
+    "Drag the pin to move it, or choose Adjust Location." : {
+      "comment" : "Tip message on the Mac: moving your own spot"
+    },
+    "Drag to move your spot" : {
+      "comment" : "Tooltip"
     },
     "Drag to read any time" : {
       "comment" : "Hint at the end of the timeline legend in the Explore panel"
@@ -1058,20 +1079,23 @@
     "Edit" : {
       "comment" : "Button"
     },
-    "Edit Note" : {
-      "comment" : "Undo action name"
-    },
     "Edit Location" : {
+      "comment" : "Place editor title\nUndo action name"
+    },
+    "Edit Location…" : {
+      "comment" : "Menu item: edit the saved or own place shown"
+    },
+    "Edit Note" : {
       "comment" : "Undo action name"
     },
     "Edit Spot" : {
       "comment" : "Undo action name"
     },
-    "Edit this spot" : {
+    "Edit this location" : {
       "comment" : "Help"
     },
     "Edit…" : {
-      "comment" : "Menu item"
+      "comment" : "Context menu\nMenu item"
     },
     "Empty trip" : {
       "comment" : "No template"
@@ -1163,7 +1187,7 @@
       "comment" : "Score legend: Poor"
     },
     "Folder" : {
-      "comment" : "Eyebrow on a trip folder's tile"
+      "comment" : "Eyebrow on a trip folder's tile\nPlace editor field"
     },
     "Folder Options" : {
       "comment" : "Folder header menu"
@@ -1206,6 +1230,9 @@
     },
     "From launch argument" : {
       "comment" : "Settings: the key comes from a launch argument"
+    },
+    "From the Catalogue" : {
+      "comment" : "Place editor section: facts a curated spot keeps"
     },
     "Full day" : {
       "comment" : "Timeline zoom option"
@@ -1433,6 +1460,9 @@
     "Latest Trip" : {
       "comment" : "Hero eyebrow: the most recent finished trip"
     },
+    "Latitude" : {
+      "comment" : "Spot editor field: decimal degrees"
+    },
     "Learn From My Library" : {
       "comment" : "Settings section"
     },
@@ -1516,6 +1546,9 @@
     },
     "Locations" : {
       "comment" : "Locations section header\nMenu item\nSidebar section"
+    },
+    "Longitude" : {
+      "comment" : "Spot editor field: decimal degrees"
     },
     "Look Around" : {
       "comment" : "Spot page section title"
@@ -1633,11 +1666,23 @@
     "Move Folder" : {
       "comment" : "Undo action name"
     },
+    "Move Spot" : {
+      "comment" : "Undo action name"
+    },
     "Move Stop" : {
       "comment" : "Undo action name"
     },
+    "Move This Spot" : {
+      "comment" : "Tip title: how to move one of your own spots"
+    },
     "Move Up" : {
       "comment" : "Context menu\nVoiceOver action"
+    },
+    "Move the map to put the crosshair on your spot" : {
+      "comment" : "Hint banner while Adjust Location is on"
+    },
+    "Move this spot by panning the map under a crosshair" : {
+      "comment" : "Help"
     },
     "Move to Day" : {
       "comment" : "Context menu submenu"
@@ -1646,7 +1691,13 @@
       "comment" : "Context menu\nUndo action name"
     },
     "Name" : {
-      "comment" : "Folder name field\nNew trip field\nSaved sort order\nSort option\nSpot editor field"
+      "comment" : "Folder name field\nNew trip field\nPlace editor field\nSaved sort order\nSort option\nSpot editor field"
+    },
+    "Name this location" : {
+      "comment" : "Name placeholder"
+    },
+    "Name this location to save it." : {
+      "comment" : "Validation: name required"
     },
     "Name this spot" : {
       "comment" : "Name placeholder"
@@ -1764,6 +1815,9 @@
     "No Places in View" : {
       "comment" : "Search Here found nothing in the visible map area"
     },
+    "No coordinates found on the clipboard." : {
+      "comment" : "Spot editor: Paste Coordinates found nothing"
+    },
     "No filters active" : {
       "comment" : "VoiceOver"
     },
@@ -1804,7 +1858,7 @@
       "comment" : "Outlook cell when the sun gives no such window"
     },
     "None" : {
-      "comment" : "Settings: no fallback forecast source"
+      "comment" : "Place editor: not in a folder\nSettings: no fallback forecast source"
     },
     "North up" : {
       "comment" : "Sun and moon rose: north is at the top"
@@ -1837,7 +1891,7 @@
       "comment" : "VoiceOver prefix and tooltip of the on-device model's one-line reason for a suggestion"
     },
     "Notes" : {
-      "comment" : "Spot editor field\nSpot notes heading"
+      "comment" : "Place editor field\nPlace editor section\nSpot editor field\nSpot notes heading"
     },
     "Nothing fits the current search and filters." : {
       "comment" : "Empty state description"
@@ -1996,6 +2050,12 @@
     "Passed" : {
       "comment" : "Outlook row for today when the day's headline window is over"
     },
+    "Paste Coordinates" : {
+      "comment" : "Button: read a latitude and longitude from the clipboard"
+    },
+    "Paste a latitude and longitude, or an Apple Maps link" : {
+      "comment" : "Tooltip"
+    },
     "Paste your API key" : {
       "comment" : "Onboarding weather: key field prompt"
     },
@@ -2018,7 +2078,7 @@
       "comment" : "Context menu: keeps the trip downloaded for offline use\nUndo action name"
     },
     "Pin to Sidebar" : {
-      "comment" : "Context menu\nFolder menu"
+      "comment" : "Context menu\nFolder menu\nPlace editor field"
     },
     "Pinned to sidebar" : {
       "comment" : "VoiceOver: a pinned folder"
@@ -2027,7 +2087,7 @@
       "comment" : "Tooltip on a pinned trip's offline status"
     },
     "Place" : {
-      "comment" : "Spot editor field"
+      "comment" : "Place editor field\nSpot editor field"
     },
     "Place discovery uses OpenStreetMap data © OpenStreetMap contributors (ODbL), Wikipedia and Wikivoyage (CC BY-SA), and Reddit public posts; Google only with your own key." : {
       "comment" : "About: discovery source attribution"
@@ -2285,6 +2345,9 @@
     },
     "Seed Sample Trip" : {
       "comment" : "Debug menu item"
+    },
+    "Separate with commas" : {
+      "comment" : "Tags placeholder"
     },
     "Session" : {
       "comment" : "Accessibility label of the session menu"
@@ -2576,6 +2639,9 @@
     "System" : {
       "comment" : "Temperature unit follows the system"
     },
+    "Tags" : {
+      "comment" : "Place editor field"
+    },
     "Take the Guided Tour" : {
       "comment" : "Onboarding done: link to the README tour"
     },
@@ -2698,6 +2764,9 @@
     },
     "This only takes a moment." : {
       "comment" : "Update window: checking for updates"
+    },
+    "This spot comes from Iter's catalogue, so its position, category and light are fixed. Your name, place, notes, folder and pin are saved with your copy." : {
+      "comment" : "Place editor footer: why a curated spot's facts are read-only"
     },
     "This trip was deleted or its creation was undone." : {
       "comment" : "Empty state explanation"
@@ -2859,8 +2928,11 @@
         }
       }
     },
+    "Walk-in" : {
+      "comment" : "Place editor field"
+    },
     "Walk-in (minutes)" : {
-      "comment" : "Spot editor field: minutes from parking"
+      "comment" : "Place editor field: minutes from parking\nSpot editor field: minutes from parking"
     },
     "Walk-in unknown" : {
       "comment" : "Spot fact when the walk from parking is not known"
@@ -2941,7 +3013,7 @@
       "comment" : "Link to windy.com in the Windy attribution"
     },
     "With none chosen, light is shown for sunset." : {
-      "comment" : "Spot editor best light footer"
+      "comment" : "Place editor best light footer\nSpot editor best light footer"
     },
     "Workable, but nothing special." : {
       "comment" : "Score legend: Fair"
