@@ -35,7 +35,7 @@ extension LayoutLane {
     /// from the trailing edge, and lanes are `IterGrid.laneGap` apart. `disclosure` adds the leading chevron lane
     /// after the inset.
     @MainActor
-    static func standardRowLanes(disclosure: Bool, event: EventScore.Variant, time: TimeStyle) -> [LayoutLane] {
+    static func standardRowLanes(disclosure: Bool, event: ScoreChip.Size, time: TimeStyle) -> [LayoutLane] {
         var lanes: [LayoutLane] = []
         if disclosure {
             lanes.append(LayoutLane(edge: .leading, x: IterGrid.inset, width: IterGrid.disclosureLane))
@@ -46,7 +46,7 @@ extension LayoutLane {
             lanes.append(LayoutLane(edge: .trailing, x: x, width: width))
             x += width + IterGrid.laneGap
         }
-        add(EventScore.unitWidth(event, timeStyle: time))
+        add(ScoreChip.maxWidth(size: event, timeStyle: time))
         return lanes
     }
 }

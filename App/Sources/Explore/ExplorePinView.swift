@@ -4,7 +4,7 @@ import IterDesign
 import IterFeatures
 
 /// One map pin. Three weights give the map hierarchy (critique C28): the selected spot, a few chips, the rest dots.
-/// Chips and the selected pin are the event unit (`EventScore` `.pin`): symbol, score and time are one capsule, with no
+/// Chips and the selected pin are the event unit (`ScoreChip` `.pin`): symbol, score and time are one capsule, with no
 /// outline. Selection is scale, elevation and shadow (the Apple Maps idiom), never a coral border.
 struct ExplorePinView: View, Equatable {
     let pin: ExplorePin
@@ -43,7 +43,7 @@ struct ExplorePinView: View, Equatable {
     /// The chip: the pin variant of the event unit, with its time.
     @ViewBuilder private var chip: some View {
         if let light = pin.light {
-            EventScore(pin: light, zone: pin.timeZone, isSelected: false)
+            ScoreChip(pin: light, zone: pin.timeZone, isSelected: false)
         } else {
             dot
         }
@@ -51,7 +51,7 @@ struct ExplorePinView: View, Equatable {
 
     @ViewBuilder private var selected: some View {
         if let light = pin.light {
-            EventScore(pin: light, zone: pin.timeZone, isSelected: true)
+            ScoreChip(pin: light, zone: pin.timeZone, isSelected: true)
         } else {
             Text(pin.name)
                 .font(IterFont.captionStrong)

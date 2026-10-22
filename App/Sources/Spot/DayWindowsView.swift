@@ -5,7 +5,7 @@ import IterFeatures
 
 /// The lane widths shared by every window row, measured once.
 @MainActor enum WindowLanes {
-    static let unit = EventScore.unitWidth(.regular, timeStyle: .range)
+    static let unit = ScoreChip.maxWidth(size: .small, timeStyle: .range)
     /// How far windows inside an open day are indented: one disclosure lane and its gap.
     static let nestedIndent = IterGrid.disclosureLane + IterGrid.laneGap
     /// Where the label lane starts: inset, disclosure lane, lane gap. Dividers and reasons indent to it.
@@ -43,7 +43,7 @@ struct DayWindowsList: View {
             }
             // Nested one disclosure lane: a window's chevron sits under the day's label, so it reads as part of the day.
             .padding(.leading, WindowLanes.nestedIndent)
-            .layoutGrid(lanes: LayoutLane.standardRowLanes(disclosure: true, event: .regular, time: .range))
+            .layoutGrid(lanes: LayoutLane.standardRowLanes(disclosure: true, event: .small, time: .range))
         }
     }
 
@@ -96,8 +96,9 @@ struct WindowRow: View {
                         .foregroundStyle(IterColor.textPrimary)
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    EventScore(window: window, zone: page.timeZone, timeStyle: .range, variant: .regular,
+                    ScoreChip(window: window, zone: page.timeZone, timeStyle: .range, size: .small,
                                isLoading: page.isLoadingForecast)
+                        .frame(width: WindowLanes.unit, alignment: .trailing)
                 }
                 .padding(.horizontal, IterGrid.inset)
                 .padding(.vertical, IterSpace.sm)

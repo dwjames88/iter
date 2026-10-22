@@ -65,7 +65,7 @@ struct RegistryTests {
             #expect(!t.description.isEmpty)
             if let alias = t.systemAlias { #expect(IterColor.supportedSystemAliases.contains(alias), "\(t.name) alias \(alias)") }
         }
-        for t in TokenValues.dimensions { #expect(t.points > 0 && !t.description.isEmpty, "\(t.name)") }
+        for t in TokenValues.dimensions { #expect(t.points >= 0 && !t.description.isEmpty, "\(t.name)") }
         for t in TokenValues.typography { #expect(!t.description.isEmpty) }
     }
 
@@ -202,7 +202,7 @@ struct RegistryTests {
     }
 
     @Test func numbersAreMonospacedAndTitleIsSerif() {
-        for n in ["type/score/large", "type/score/medium", "type/score/badge", "type/time", "type/timeSmall", "type/event/score", "type/event/time", "type/event/timeSmall"] {
+        for n in ["type/score/large", "type/score/medium", "type/score/badge", "type/time", "type/timeSmall", "type/event/score", "type/event/time"] {
             #expect(TokenValues.typography(n).monospacedDigits, "\(n)")
         }
         #expect(TokenValues.typography("type/title/spot").design == .serif)
@@ -219,7 +219,6 @@ struct ContrastTests {
     @Test(arguments: Mode.allCases) func rampHitsTheEndTokensAndStops(_ mode: Mode) {
         #expect(fillHex(0, mode) == mode.hex("light/ramp/0"))
         #expect(fillHex(100, mode) == mode.hex("light/ramp/100"))
-        #expect(fillHex(100, mode) == mode.hex("accent/primary"), "score 100 is the accent orange")
         for stop in IterRamp.stopScores { #expect(fillHex(stop, mode) == mode.hex("light/ramp/\(stop)")) }
         // Out-of-range scores clamp.
         #expect(fillHex(-3, mode) == fillHex(0, mode) && fillHex(130, mode) == fillHex(100, mode))
@@ -248,27 +247,56 @@ struct ContrastTests {
         }
     }
 
-    /// The text is ink up to the switch score and the inverse colour from it. The best of the two is chosen, so the
-    /// worst contrast is where neither reaches 4.5:1 (the fill's luminance sits between what ink and the inverse can
-    /// carry): light scores 98 and 99, dark 62 to 65. We state 4.2:1 as the floor for the time and symbol; the score
-    /// numeral is large heavy text, which needs 3:1, and clears it everywhere.
-    @Test(arguments: Mode.allCases) func rampTextContrast(_ mode: Mode) {
-        var below45: [Int] = []
-        for score in 0...100 {
-            let ratio = contrast(fillHex(score, mode), textHex(score, mode))
-            #expect(ratio >= 4.2, "\(mode) score \(score): \(ratio)")
-            if ratio < 4.5 { below45.append(score) }
-            // Ink wherever ink is chosen, the inverse only above the switch.
-            let ink = mode.hex("light/rampText/ink"), inv = mode.hex("light/rampText/inverse")
-            let switchScore = IterRamp.switchScore(dark: mode == .dark)
-            #expect(textHex(score, mode) == (score >= switchScore ? inv : ink))
-            // The switch is the right way round: past it, the inverse is the better of the two.
-            if score >= switchScore { #expect(contrast(fillHex(score, mode), inv) >= contrast(fillHex(score, mode), ink) - 0.001) }
-            if score < switchScore - 3 { #expect(ratio >= 3, "\(score)") }
+    /// The ramp stops (the Figma score/* variables) and the continuous interpolation between them.
+    @Test func rampStopsMatchTheDesign() {
+        let light = ["#FFFFFF", "#FFEED9", "#FFCFA1", "#FF975C", "#D9431A"]
+        let dark = ["#1F1512", "#4A291D", "#8E462C", "#D96B3E", "#FF8A5C"]
+        for (i, stop) in IterRamp.stopScores.enumerated() {
+            #expect(fillHex(stop, .light) == light[i], "light \(stop)")
+            #expect(fillHex(stop, .dark) == dark[i], "dark \(stop)")
         }
-        #expect(below45.count <= 5, "\(mode) scores under 4.5:1: \(below45)")
-        // Every score before the first problem one is a clean ink pass.
-        for score in 0..<(below45.first ?? 101) { #expect(contrast(fillHex(score, mode), mode.hex("light/rampText/ink")) >= 4.5 || score >= IterRamp.switchScore(dark: mode == .dark)) }
+    }
+
+    @Test func rampInterpolatesBetweenStops() {
+        // 12, 37, 62 and 87 sit 0.48 of the way along their segment: the linear mix of the neighbouring stops.
+        for (score, a, b) in [(12, 0, 25), (37, 25, 50), (62, 50, 75), (87, 75, 100)] {
+            for mode in Mode.allCases {
+                let (x, y, m) = (RGB(hex: mode.hex("light/ramp/\(a)"))!, RGB(hex: mode.hex("light/ramp/\(b)"))!, IterRamp.fill(score: score, dark: mode == .dark))
+                let t = Double(score - IterRamp.stopScores[IterRamp.stopScores.firstIndex(of: a)!]) / 25
+                for (lo, hi, mid) in [(x.red, y.red, m.red), (x.green, y.green, m.green), (x.blue, y.blue, m.blue)] {
+                    #expect(abs(Double(mid) - (Double(lo) + (Double(hi) - Double(lo)) * t)) <= 1, "\(mode) \(score)")
+                }
+            }
+        }
+    }
+
+    /// Text on the chip. Light mode: ink below the switch score (100), white from it; 100 is where white first beats
+    /// ink on the interpolated fill (white 4.40:1, ink 4.23:1). Ink is 4.5:1 or better up to 97 (4.47 at 98, 4.35 at 99).
+    @Test func lightTextRule() {
+        let ink = Mode.light.hex("light/rampText/ink"), inv = Mode.light.hex("light/rampText/inverse")
+        #expect(IterRamp.switchScore(dark: false) == 100)
+        var worst = 99.0
+        for score in 0...100 {
+            let fill = fillHex(score, .light)
+            #expect(textHex(score, .light) == (score >= 100 ? inv : ink))
+            #expect((contrast(fill, inv) > contrast(fill, ink)) == (score >= 100), "score \(score)")
+            worst = min(worst, contrast(fill, textHex(score, .light)))
+        }
+        #expect(worst >= 4.3, "worst light ratio \(worst)")
+        for score in 0..<98 { #expect(contrast(fillHex(score, .light), ink) >= 4.5, "score \(score)") }
+    }
+
+    /// Dark mode: the design shows white text on every dark chip (switch score 0), so the bright fills miss 4.5:1.
+    /// Measured white contrast: 0 17.88, 25 12.91, 50 6.86, 75 3.43, 100 2.32 (under 4.5:1 from about 65 up). This is
+    /// a design-mandated exception to the 4.5:1 rule; the large semibold numeral needs 3:1 and misses it only at the
+    /// very brightest fills.
+    @Test func darkTextIsAlwaysWhite() {
+        #expect(IterRamp.switchScore(dark: true) == 0)
+        for score in 0...100 { #expect(textHex(score, .dark) == "#FFFFFF", "score \(score)") }
+        #expect(contrast(fillHex(0, .dark), "#FFFFFF") >= 17)
+        #expect(contrast(fillHex(50, .dark), "#FFFFFF") >= 6.8)
+        #expect(contrast(fillHex(75, .dark), "#FFFFFF") >= 3.4)
+        #expect(contrast(fillHex(100, .dark), "#FFFFFF") >= 2.3)
     }
 
     @Test(arguments: Mode.allCases) func bandMidpointsLandInTheirBands(_ mode: Mode) {

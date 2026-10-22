@@ -42,7 +42,7 @@ struct ExploreMapLayerStandIn: View {
     }
 
     private func pinHeight(_ pin: ExplorePin) -> CGFloat {
-        pin.style == .dot ? 0 : EventScore.height(.pin) + IterSpace.xs
+        pin.style == .dot ? 0 : ScoreChip.height(.pin) + IterSpace.xs
     }
 
     private func project(_ c: Coordinate, _ r: GeoRegion, _ size: CGSize) -> CGPoint {

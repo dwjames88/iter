@@ -44,11 +44,11 @@ struct MapStandIn: View {
                         if pin.lifted { PinTipDot().position(p) }
                         if let event = pin.event {
                             // The pin's bottom tip sits on the coordinate, like the live map's bottom-anchored annotation.
-                            EventScore(window: event.window, zone: event.zone, timeStyle: .start, variant: .pin,
+                            ScoreChip(window: event.window, zone: event.zone, timeStyle: .start, size: .pin,
                                        isLoading: event.isLoading, isTomorrow: event.isTomorrow, isSelected: pin.selected)
                                 .fixedSize()
                                 .modifier(LiftedPin(isLifted: pin.lifted))
-                                .position(x: p.x, y: p.y - (EventScore.height(.pin) + IterSpace.xs) / 2)
+                                .position(x: p.x, y: p.y - (ScoreChip.height(.pin) + IterSpace.xs) / 2)
                         } else {
                         VStack(spacing: IterSpace.xxs) {
                             Circle()

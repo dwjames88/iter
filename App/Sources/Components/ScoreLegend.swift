@@ -42,7 +42,7 @@ struct ScoreLegend: View {
                     HStack(spacing: IterSpace.md) {
                         Image(systemName: LightText.symbol(kind))
                             .symbolRenderingMode(.monochrome)
-                            .font(.system(size: IterEvent.symbolLarge))
+                            .font(IterFont.body)
                             .foregroundStyle(IterColor.textPrimary)
                             .frame(width: IterGrid.disclosureLane + IterSpace.md)
                             .accessibilityHidden(true)
@@ -75,7 +75,7 @@ struct ScoreLegend: View {
     private func swatch(_ band: LightBand, range: ClosedRange<Int>) -> some View {
         let height = IterEvent.heightCompact
         let score = IterRamp.midpoint(band)
-        let shape = RoundedRectangle(cornerRadius: height * IterEvent.cornerRatio, style: .continuous)
+        let shape = RoundedRectangle(cornerRadius: IterEvent.radiusCompact, style: .continuous)
         return Text(score, format: .number)
             .font(IterFont.eventScore(size: IterEvent.scoreCompact))
             .monospacedDigit()

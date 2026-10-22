@@ -36,10 +36,10 @@ struct TripNextLine: View {
                     .foregroundStyle(text)
                     .lineLimit(1)
                 if let stop, let window = window(stop, next) {
-                    EventScore(window: window, zone: next.timeZone, timeStyle: .start, variant: .compact,
+                    ScoreChip(window: window, zone: next.timeZone, timeStyle: .start, size: .compact,
                                isLoading: model.forecasts.isLoading(stop.spot.coordinate))
                 } else {
-                    EventScore(kind: next.kind, start: next.start, zone: next.timeZone, variant: .compact)
+                    ScoreChip(kind: next.kind, start: next.start, zone: next.timeZone, size: .compact)
                 }
                 Text(TimeText.weekday(next.day))
                     .font(IterFont.secondary)

@@ -316,7 +316,7 @@ private struct OverviewCellView: View {
     /// The day's best window as the event unit (symbol, score and start time in one capsule).
     @ViewBuilder private var bestWindow: some View {
         if let best = cell.bestWindow {
-            EventScore(window: best.window, zone: best.zone, timeStyle: .start, variant: .compact)
+            ScoreChip(window: best.window, zone: best.zone, timeStyle: .start, size: .compact)
         }
     }
 

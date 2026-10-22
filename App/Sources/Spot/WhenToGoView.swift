@@ -200,12 +200,13 @@ struct OutlookStrip: View {
 
     @ViewBuilder private func chip(_ window: LightWindow?) -> some View {
         if let window {
-            EventScore(window: window, zone: page.timeZone, timeStyle: .start, variant: .compact, isLoading: page.isLoadingForecast)
+            ScoreChip(window: window, zone: page.timeZone, timeStyle: .start, size: .compact, isLoading: page.isLoadingForecast)
+                .frame(width: ScoreChip.maxWidth(size: .compact, timeStyle: .start), alignment: .trailing)
         } else {
             ZStack {
                 if page.isLoadingForecast { ProgressView().controlSize(.small) }
             }
-            .frame(width: EventScore.unitWidth(.compact, timeStyle: .start), height: IterEvent.heightCompact)
+            .frame(width: ScoreChip.maxWidth(size: .compact, timeStyle: .start), height: IterEvent.heightCompact)
         }
     }
 

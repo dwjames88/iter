@@ -418,7 +418,7 @@ struct LocationsMapHeader: View {
 
     @ViewBuilder private func pin(_ spot: Spot, event: SavedEvent?) -> some View {
         if let event {
-            EventScore(window: event.window, zone: spot.timeZone, timeStyle: .start, variant: .pin,
+            ScoreChip(window: event.window, zone: spot.timeZone, timeStyle: .start, size: .pin,
                        isLoading: event.isLoading, isTomorrow: event.isTomorrow, isSelected: false)
         } else {
             Circle().fill(IterColor.mapPin)

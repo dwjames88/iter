@@ -171,7 +171,7 @@ private struct AddStopRowView: View {
                     Text(detail).font(IterFont.caption).foregroundStyle(IterColor.textSecondary).lineLimit(1)
                 }
                 Spacer(minLength: IterSpace.sm)
-                if let window { EventScore(window: window, zone: candidate.spot.timeZone, timeStyle: .start, variant: .compact) }
+                if let window { ScoreChip(window: window, zone: candidate.spot.timeZone, timeStyle: .start, size: .compact) }
                 Image(systemName: isAdded ? "checkmark.circle.fill" : "plus.circle")
                     .font(IterFont.callout)
                     .foregroundStyle(isAdded ? IterColor.textSecondary.color : IterColor.accent)

@@ -73,8 +73,8 @@ struct LightStatusBand: View {
     }
 }
 
-/// The headline fact of a detail screen: the next window as the large event unit (symbol, score and start time in one
-/// capsule; `EventScore` has no variant that hides the time, so no second big time is drawn), with the day and the
+/// The headline fact of a detail screen: the next window as the small score chip (symbol, start time and score in one
+/// rounded rectangle; `ScoreChip` has no size that hides the time, so no second big time is drawn), with the day and the
 /// window's span beneath it.
 struct LightHeadline: View {
     let window: LightWindow
@@ -85,7 +85,7 @@ struct LightHeadline: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.sm) {
-            EventScore(window: window, zone: zone, timeStyle: .start, variant: .large, isLoading: isLoading, isTomorrow: isTomorrow)
+            ScoreChip(window: window, zone: zone, timeStyle: .start, size: .small, isLoading: isLoading, isTomorrow: isTomorrow)
             Text([LightText.name(window.kind), dayLabel].compactMap { $0 }.joined(separator: " · "))
                 .font(.headline)
                 .foregroundStyle(IterColor.textPrimary)

@@ -252,7 +252,7 @@ private struct StopCard: View {
     }
 
     private func score(_ window: LightWindow) -> some View {
-        EventScore(window: window, zone: zone, timeStyle: .start, variant: .regular, isLoading: model.forecasts.isLoading(spot.coordinate))
+        ScoreChip(window: window, zone: zone, timeStyle: .start, size: .small, isLoading: model.forecasts.isLoading(spot.coordinate))
     }
 
     /// "Leave 4:10 · set up by 5:52" (just the set-up time for a stop with no drive into it).

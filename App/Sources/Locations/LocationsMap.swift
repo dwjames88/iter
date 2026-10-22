@@ -205,7 +205,7 @@ struct LocationsMap: View {
     }
 }
 
-/// One Locations map pin: the event unit exactly as Explore draws it (`EventScore` pin variant, borderless, selection
+/// One Locations map pin: the event unit exactly as Explore draws it (`ScoreChip` pin variant, borderless, selection
 /// by scale and shadow), showing the spot's next sunrise or sunset, the same window as its list row.
 private struct LocationsPinView: View {
     let spot: Spot
@@ -216,7 +216,7 @@ private struct LocationsPinView: View {
     var body: some View {
         Group {
             if let event {
-                EventScore(window: event.window, zone: spot.timeZone, timeStyle: .start, variant: .pin,
+                ScoreChip(window: event.window, zone: spot.timeZone, timeStyle: .start, size: .pin,
                            isLoading: event.isLoading, isTomorrow: event.isTomorrow, isSelected: isSelected)
             } else if isSelected {
                 Text(spot.name)

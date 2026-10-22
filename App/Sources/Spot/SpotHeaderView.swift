@@ -41,7 +41,7 @@ struct SpotHeaderView: View {
             }
             if let nextEvent, let zone, let today {
                 HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
-                    EventScore(window: nextEvent.window, zone: zone, timeStyle: .start, variant: .large,
+                    ScoreChip(window: nextEvent.window, zone: zone, timeStyle: .start, size: .large,
                                isTomorrow: nextEvent.day != today)
                     Text(LightText.relativeDay(nextEvent.day, today: today))
                         .font(IterFont.secondary)

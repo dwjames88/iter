@@ -102,7 +102,7 @@ struct StopRowView: View {
             }
             Spacer(minLength: IterSpace.sm)
             if let window = entry.sessionWindow {
-                EventScore(window: window, zone: zone, timeStyle: .start, variant: .regular, isLoading: model.forecasts.isLoading(spot.coordinate))
+                ScoreChip(window: window, zone: zone, timeStyle: .start, size: .small, isLoading: model.forecasts.isLoading(spot.coordinate))
                     // The unit never truncates; the name column gives way (it wraps to two lines).
                 .fixedSize()
             }

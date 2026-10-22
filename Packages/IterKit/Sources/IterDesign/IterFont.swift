@@ -20,13 +20,13 @@ public enum IterFont {
     public static let time = make("type/time")
     public static let timeSmall = make("type/timeSmall")
 
-    /// The event unit's numeral at a fixed point size (weight, design and monospaced digits from `type/event/score`).
+    /// The score chip's numeral at a fixed point size (weight, design and monospaced digits from `type/event/score`).
     public static func eventScore(size: CGFloat) -> Font { fixed("type/event/score", size: size) }
-    /// The event unit's time at a fixed point size: thin in the large unit, light below it.
-    public static func eventTime(size: CGFloat, large: Bool) -> Font { fixed(large ? "type/event/time" : "type/event/timeSmall", size: size) }
+    /// The score chip's window time at a fixed point size.
+    public static func eventTime(size: CGFloat) -> Font { fixed("type/event/time", size: size) }
     /// Weight of those two tokens, for text measurement.
     public static func eventScoreWeight() -> FontWeightName { TokenValues.typography("type/event/score").weight }
-    public static func eventTimeWeight(large: Bool) -> FontWeightName { TokenValues.typography(large ? "type/event/time" : "type/event/timeSmall").weight }
+    public static func eventTimeWeight() -> FontWeightName { TokenValues.typography("type/event/time").weight }
 
     private static func fixed(_ name: String, size: CGFloat) -> Font {
         let t = TokenValues.typography(name)
