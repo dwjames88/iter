@@ -48,3 +48,13 @@ struct SidebarSearchField: View {
         .onChange(of: focusRequest) { isFocused = true }
     }
 }
+
+#Preview("Search field, light") {
+    SidebarSearchField(text: .constant(""), prompt: "Search places or ask Iter", focusRequest: 0, onSubmit: {})
+        .padding(15).frame(width: 300).preferredColorScheme(.light)
+}
+
+#Preview("Search field, dark") {
+    SidebarSearchField(text: .constant("Moab"), prompt: "Search places or ask Iter", focusRequest: 0, onSubmit: {})
+        .padding(15).frame(width: 300).preferredColorScheme(.dark)
+}

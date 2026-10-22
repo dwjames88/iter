@@ -71,8 +71,8 @@ struct RootView: View {
                 .safeAreaInset(edge: .top, spacing: IterSpace.sm) {
                     SidebarSearchField(text: $navigation.searchText, prompt: searchPrompt,
                                        focusRequest: navigation.focusSearchRequest, onSubmit: submitSearch)
-                        // Maps' field sits 15 pt in from the sidebar's edges.
-                        .padding(.horizontal, 15)
+                        // The design's search frame is padded 12 pt.
+                        .padding(.horizontal, 12)
                 }
                 .navigationSplitViewColumnWidth(min: IterSize.sidebarMin, ideal: IterSize.sidebarIdeal, max: IterSize.sidebarMax)
         } detail: {

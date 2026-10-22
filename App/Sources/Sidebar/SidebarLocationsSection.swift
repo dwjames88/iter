@@ -12,17 +12,21 @@ struct SidebarLocationsSection: View {
     var body: some View {
         let _ = model.store.revision
         let store = model.store
+        let places = store.pinnedPlaces()
+        let folders = store.pinnedFolders(kind: .locations)
         Section {
-            Label(String(localized: "All Locations", comment: "Sidebar item"), systemImage: "mappin.and.ellipse")
-                .tag(SidebarItem.locations)
-            ForEach(store.pinnedPlaces(), id: \.id) { place in
-                SidebarPlaceRow(place: place)
-            }
-            ForEach(store.pinnedFolders(kind: .locations), id: \.id) { folder in
-                SidebarFolderRow(folder: folder, item: .locationFolder(folder.id))
+            SidebarDisclosureRow(String(localized: "All Locations", comment: "Sidebar item"), systemImage: "mappin.and.ellipse",
+                                 tag: SidebarItem.locations, storageKey: "sidebarLocationsExpanded",
+                                 hasChildren: !places.isEmpty || !folders.isEmpty) {
+                ForEach(folders, id: \.id) { folder in
+                    SidebarFolderRow(folder: folder, item: .locationFolder(folder.id))
+                }
+                ForEach(places, id: \.id) { place in
+                    SidebarPlaceRow(place: place)
+                }
             }
         } header: {
-            Text("Locations", comment: "Sidebar section")
+            SidebarSectionHeader(String(localized: "Locations", comment: "Sidebar section"))
         }
     }
 }
@@ -34,8 +38,7 @@ private struct SidebarPlaceRow: View {
     let place: PlaceRecord
 
     var body: some View {
-        Label(place.name, systemImage: "mappin")
-            .lineLimit(1)
+        SidebarRow(place.name, systemImage: "mappin")
             .contextMenu {
                 Button { navigation.show(.location(place.id)) } label: {
                     Label(String(localized: "Open", comment: "Context menu"), systemImage: "arrow.right.circle")

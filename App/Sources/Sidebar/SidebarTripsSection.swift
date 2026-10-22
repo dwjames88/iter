@@ -11,17 +11,21 @@ struct SidebarTripsSection: View {
     var body: some View {
         let _ = model.store.revision
         let store = model.store
+        let trips = store.pinnedTrips()
+        let folders = store.pinnedFolders(kind: .trips)
         Section {
-            Label(String(localized: "All Trips", comment: "Sidebar item"), systemImage: "map")
-                .tag(SidebarItem.trips)
-            ForEach(store.pinnedTrips(), id: \.id) { trip in
-                SidebarTripRow(trip: trip)
-            }
-            ForEach(store.pinnedFolders(kind: .trips), id: \.id) { folder in
-                SidebarFolderRow(folder: folder, item: .tripFolder(folder.id))
+            SidebarDisclosureRow(String(localized: "All Trips", comment: "Sidebar item"), systemImage: "map",
+                                 tag: SidebarItem.trips, storageKey: "sidebarTripsExpanded",
+                                 hasChildren: !trips.isEmpty || !folders.isEmpty) {
+                ForEach(folders, id: \.id) { folder in
+                    SidebarFolderRow(folder: folder, item: .tripFolder(folder.id))
+                }
+                ForEach(trips, id: \.id) { trip in
+                    SidebarTripRow(trip: trip)
+                }
             }
         } header: {
-            Text("Trips", comment: "Sidebar section")
+            SidebarSectionHeader(String(localized: "Trips", comment: "Sidebar section"))
         }
     }
 }
@@ -33,14 +37,8 @@ private struct SidebarTripRow: View {
     let trip: TripRecord
 
     var body: some View {
-        Label {
-            HStack(spacing: IterSpace.xs) {
-                Text(trip.name).lineLimit(1)
-                Spacer(minLength: 0)
-                OfflineStatusBadge(tripID: trip.id)
-            }
-        } icon: {
-            Image(systemName: "point.topleft.down.to.point.bottomright.curvepath")
+        SidebarRow(trip.name, systemImage: "point.topleft.down.to.point.bottomright.curvepath") {
+            OfflineStatusBadge(tripID: trip.id)
         }
         .contextMenu {
             Button { navigation.show(.trip(trip.id)) } label: {
@@ -67,8 +65,7 @@ struct SidebarFolderRow: View {
     let item: SidebarItem
 
     var body: some View {
-        Label(folder.name, systemImage: "folder")
-            .lineLimit(1)
+        SidebarRow(folder.name, systemImage: "folder")
             .contextMenu {
                 Button { navigation.show(item) } label: {
                     Label(String(localized: "Open", comment: "Context menu"), systemImage: "arrow.right.circle")
