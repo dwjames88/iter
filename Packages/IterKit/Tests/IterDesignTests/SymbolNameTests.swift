@@ -30,6 +30,8 @@ struct SymbolNameTests {
         "symbol",                 // SpotFactsView.fact(_ symbol:), call-site literals scanned
         "systemImage",            // MapControlButton(systemImage:), call-site literals scanned
         "String",                 // a `systemImage: String` property declaration, not a use
+        "option.symbol",          // LightWindowPicker.Option(symbol:), call-site literals and LightText.symbol scanned
+        "item.symbol",            // TripMetaItem(symbol:), call-site literals scanned
     ]
 
     struct Use { let name: String; let file: String; let line: Int }

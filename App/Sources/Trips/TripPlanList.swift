@@ -9,69 +9,6 @@ enum DropSpot: Hashable {
     case endOfDay(Int)
 }
 
-/// One row of the plan, flattened: each day is a header row, its banners, its timeline and an Add Stop row, drawn as one
-/// rounded container; overnight boundaries sit between containers. Equatable, so a row whose content is unchanged is not
-/// rebuilt when another row's is.
-private struct PlanRow: Identifiable, Equatable {
-    enum Kind: Equatable {
-        case header(TripDayGroup)
-        case suggestion(OrderingSuggestion)
-        case conflicts(Int)
-        case drive(TripDriveItem, isDriveIn: Bool, above: RailTone?, below: RailTone?)
-        case stop(TripStopEntry, above: RailTone?, below: RailTone?)
-        case addStop
-        case overnight(OvernightBoundary)
-    }
-
-    var id: String
-    var day: Int
-    var kind: Kind
-    /// nil for rows outside a container.
-    var position: ContainerPosition?
-}
-
-private func planRows(_ layout: TripDayLayout) -> [PlanRow] {
-    var rows: [PlanRow] = []
-    for group in layout.groups {
-        let day = group.index
-        var inside: [PlanRow] = [PlanRow(id: "header-\(day)", day: day, kind: .header(group))]
-        if let suggestion = group.suggestion {
-            inside.append(PlanRow(id: "suggestion-\(day)", day: day, kind: .suggestion(suggestion)))
-        }
-        if group.hasConflict {
-            inside.append(PlanRow(id: "conflicts-\(day)", day: day, kind: .conflicts(group.conflictCount)))
-        }
-        for (index, item) in group.items.enumerated() {
-            let before = index > 0 ? group.items[index - 1] : nil
-            let after = index + 1 < group.items.count ? group.items[index + 1] : nil
-            func tone(_ item: TripTimelineItem?) -> RailTone? {
-                switch item {
-                case .drive(let drive), .driveIn(let drive): RailTone(drive)
-                default: nil
-                }
-            }
-            switch item {
-            case .driveIn(let drive):
-                inside.append(PlanRow(id: item.id, day: day, kind: .drive(drive, isDriveIn: true, above: nil, below: RailTone(drive))))
-            case .drive(let drive):
-                inside.append(PlanRow(id: item.id, day: day, kind: .drive(drive, isDriveIn: false, above: RailTone(drive), below: RailTone(drive))))
-            case .stop(let entry):
-                inside.append(PlanRow(id: item.id, day: day, kind: .stop(entry, above: tone(before), below: tone(after))))
-            case .addStop:
-                inside.append(PlanRow(id: item.id, day: day, kind: .addStop))
-            }
-        }
-        for (index, var row) in inside.enumerated() {
-            row.position = inside.count == 1 ? .only : index == 0 ? .first : index == inside.count - 1 ? .last : .middle
-            rows.append(row)
-        }
-        if let boundary = group.overnightAfter {
-            rows.append(PlanRow(id: "overnight-\(day)", day: day, kind: .overnight(boundary)))
-        }
-    }
-    return rows
-}
-
 // MARK: - Drag and drop
 
 /// The drag and drop of stops, and the one place a drop indicator is read from. Dragging across rows changes `spot` many
@@ -141,44 +78,108 @@ private extension View {
 
 // MARK: - The list
 
-/// The plan: one container per day (header, banners, timeline, Add Stop), overnight boundaries between them. Reordering
-/// and moving between days is drag and drop on rows (drop on a row to go before it, on a day header or the Add Stop row
-/// to go to the end), plus the context menu's Move Up, Move Down and Move to Day for the keyboard and VoiceOver.
+/// What one List row of the panel is: the header card, the banner, the day selector, a row of the plan, or the 24 pt gap
+/// between two cards (a row of its own, so a card's background never stretches over it).
+private enum PanelItem: Identifiable {
+    case row(TripBuilderRow)
+    case gap(String)
+
+    var id: String {
+        switch self {
+        case .row(let row): row.id
+        case .gap(let id): id
+        }
+    }
+}
+
+private func panelItems(_ layout: TripDayLayout) -> [PanelItem] {
+    var items: [PanelItem] = []
+    for row in TripBuilderRow.make(layout) {
+        items.append(.row(row))
+        switch row.kind {
+        case .footer, .transfer: items.append(.gap("gap-\(row.id)"))
+        default: break
+        }
+    }
+    return items
+}
+
+/// The Trip Builder panel's list: the header card, the day selector and the day cards (with the transfer cards between
+/// them) as rows of one List, so everything scrolls together. Reordering and moving between days is drag and drop on rows
+/// (drop on a row to go before it, on a day header or the Add Stop row to go to the end), plus the context menu's Move Up,
+/// Move Down and Move to Day for the keyboard and VoiceOver.
 ///
-/// Every row is an `Equatable` view of its own value, so a selection, a day change or a drop rebuilds the rows whose
-/// content changed and no others; the system List draws the selection highlight itself.
+/// Every plan row is an `Equatable` view of its own value, so a selection, a day change or a drop rebuilds the rows whose
+/// content changed and no others. The List has no selection of its own (its highlight would paint a blue bar over the
+/// card): a tap on a stop selects it and the card draws the accent outline.
 struct TripPlanList: View {
     @Environment(AppModel.self) private var model
+    let plan: TripPlan
     let builder: TripBuilderModel
     let state: TripViewState
+    let tripActions: TripCornerActions
+    let changeDates: () -> Void
+    /// A day chosen on a selector card; nil returns to all days.
+    let chooseDay: (Int?) -> Void
     @State private var drops: TripDropCoordinator
 
-    init(builder: TripBuilderModel, state: TripViewState) {
+    init(plan: TripPlan, builder: TripBuilderModel, state: TripViewState, tripActions: TripCornerActions,
+         changeDates: @escaping () -> Void, chooseDay: @escaping (Int?) -> Void) {
+        self.plan = plan
         self.builder = builder
         self.state = state
+        self.tripActions = tripActions
+        self.changeDates = changeDates
+        self.chooseDay = chooseDay
         _drops = State(initialValue: TripDropCoordinator(builder: builder, state: state))
     }
 
+    private static let edge = BuilderMetrics.panelInset - BuilderMetrics.listMargin
+
     var body: some View {
         let _ = IterPerf.count("trip.listBody")
-        let selectedDay = state.selectedDay
+        let selection = state.selection
         ScrollViewReader { proxy in
-            List(selection: Binding(get: { state.selection }, set: { state.select($0, from: .list) })) {
-                ForEach(planRows(builder.layout)) { row in
-                    PlanRowView(row: row, daySelected: row.day == selectedDay, builder: builder, state: state, drops: drops)
-                        .equatable()
+            List {
+                header
+                if WeatherStatusText.message(model.weatherStatus) != nil {
+                    WeatherStatusBanner(status: model.weatherStatus)
+                        .plain(top: 0, bottom: BuilderMetrics.sectionGap)
+                }
+                if builder.layout.groups.count > 1 {
+                    DaySelectorRow(builder: builder, state: state, choose: chooseDay)
+                        .listRowInsets(EdgeInsets(top: 0, leading: -BuilderMetrics.listMargin, bottom: 0, trailing: -BuilderMetrics.listMargin))
                         .listRowSeparator(.hidden)
-                        .listRowInsets(EdgeInsets(top: 0, leading: IterSpace.lg, bottom: 0, trailing: IterSpace.lg))
-                        .listRowBackground(background(row, selectedDay: selectedDay))
+                        .listRowBackground(Color.clear)
+                }
+                ForEach(panelItems(builder.layout)) { item in
+                    switch item {
+                    case .row(let row):
+                        PlanRowView(row: row, isSelected: selection.map { row.id == "stop-\($0)" } ?? false,
+                                    builder: builder, state: state, drops: drops)
+                            .equatable()
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: 0, leading: Self.edge, bottom: 0, trailing: Self.edge))
+                            .listRowBackground(background(row))
+                    case .gap:
+                        Color.clear
+                            .frame(height: BuilderMetrics.sectionGap)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(Color.clear)
+                    }
                 }
                 if showsScores {
                     ForecastSourceLines(app: model, coordinates: builder.days.flatMap(\.stops).map(\.stop.spot.coordinate))
-                        .selectionDisabled()
+                        .padding(.horizontal, Self.edge)
                         .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
                 }
             }
-            .listStyle(.inset)
+            .listStyle(.plain)
+            .environment(\.defaultMinListRowHeight, 1)
             .scrollContentBackground(.hidden)
+            .background(IterColor.backgroundWindow.ignoresSafeArea())
             .task { if DebugScripts.dragScript == "stop-reorder" { await runReorderScript() } }
             .onDeleteCommand(perform: removeSelected)
             .onChange(of: state.scrollRequest) {
@@ -192,6 +193,35 @@ struct TripPlanList: View {
                 }
             }
         }
+    }
+
+    /// The header card, the panel's first row.
+    private var header: some View {
+        TripHeaderCard(title: plan.name, meta: metaItems, onRename: { builder.rename(to: $0) }) {
+            TripCardCornerButtons(actions: tripActions)
+        } accessory: {
+            if OfflineStatusText.label(model.offline.status(for: plan.id)) != nil {
+                OfflineStatusBadge(tripID: plan.id, style: .header)
+            }
+        }
+        .plain(top: IterSpace.sm, bottom: BuilderMetrics.sectionGap)
+    }
+
+    private var metaItems: [TripMetaItem] {
+        var items = [
+            TripMetaItem(symbol: "calendar", text: TimeText.tripDates(from: plan.startDay, to: plan.day(plan.dayCount - 1)),
+                         help: Text("Change Dates…", comment: "Tooltip"), action: changeDates),
+            TripMetaItem(symbol: "point.topleft.filled.down.to.point.bottomright.curvepath",
+                         text: TimeText.tripSize(days: plan.dayCount, stops: plan.stops.count)),
+        ]
+        if builder.totalDriveSeconds >= 60 {
+            let base = String(localized: "\(TimeText.distance(builder.totalDriveMeters)) • \(TimeText.duration(builder.totalDriveSeconds))",
+                              comment: "Trip total driving distance and time, e.g. 490 mi • 9 h 34 min")
+            let text = builder.hasEstimatedDrive
+                ? String(localized: "\(base) (estimated)", comment: "Trip driving total that includes estimated drives") : base
+            items.append(TripMetaItem(symbol: "car.fill", text: text))
+        }
+        return items
     }
 
     /// `-IterDragScript stop-reorder`: the targeting and drop calls the rows' drop destinations make, one drag within a day
@@ -219,16 +249,12 @@ struct TripPlanList: View {
         DebugScripts.finish()
     }
 
-    @ViewBuilder private func background(_ row: PlanRow, selectedDay: Int?) -> some View {
+    @ViewBuilder private func background(_ row: TripBuilderRow) -> some View {
         if let position = row.position {
-            DayContainerBackground(position: position, selected: row.day == selectedDay, isHeader: isHeader(row))
+            DayCardBackground(position: position)
         } else {
             Color.clear
         }
-    }
-
-    private func isHeader(_ row: PlanRow) -> Bool {
-        if case .header = row.kind { true } else { false }
     }
 
     private func removeSelected() {
@@ -242,48 +268,83 @@ struct TripPlanList: View {
     }
 }
 
-/// One row, drawn from its value alone (`==` compares the row and whether its day is the selected one).
+private extension View {
+    /// A List row with the panel's side inset, no background or separator, and the given spacing above and below.
+    func plain(top: CGFloat, bottom: CGFloat) -> some View {
+        self.padding(.top, top)
+            .padding(.bottom, bottom)
+            .listRowInsets(EdgeInsets(top: 0, leading: BuilderMetrics.panelInset - BuilderMetrics.listMargin, bottom: 0, trailing: BuilderMetrics.panelInset - BuilderMetrics.listMargin))
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
+    }
+}
+
+/// The day selector as a list row; it reads the selected day itself, so choosing a day redraws the selector and not the list.
+private struct DaySelectorRow: View {
+    let builder: TripBuilderModel
+    let state: TripViewState
+    let choose: (Int?) -> Void
+
+    var body: some View {
+        DaySelector(items: builder.layout.daySummaries.map(DaySelectorItem.init), selectedDay: state.selectedDay, onSelect: choose)
+            .padding(.bottom, BuilderMetrics.sectionGap - 16)
+    }
+}
+
+/// One plan row, drawn from its value alone (`==` compares the row and whether it is the selected stop).
 private struct PlanRowView: View, Equatable {
-    let row: PlanRow
-    let daySelected: Bool
+    let row: TripBuilderRow
+    let isSelected: Bool
     let builder: TripBuilderModel
     let state: TripViewState
     let drops: TripDropCoordinator
 
     nonisolated static func == (lhs: PlanRowView, rhs: PlanRowView) -> Bool {
-        lhs.row == rhs.row && lhs.daySelected == rhs.daySelected
+        lhs.row == rhs.row && lhs.isSelected == rhs.isSelected
     }
 
     var body: some View {
         switch row.kind {
-        case .header(let group):
-            DayHeaderRow(group: group, isSelected: daySelected)
-                .selectionDisabled()
+        case .dayHeader(let group):
+            DayCardHeader(dayName: TimeText.dayName(index: group.index), date: TimeText.dayHeading(group.date),
+                          totals: LightText.dayTotalsLine(stops: group.stopCount, drivingSeconds: group.drivingSeconds),
+                          sunrise: group.sunrise.map { LightText.sunTime(.goldenMorning, at: $0, in: group.timeZone) },
+                          sunset: group.sunset.map { LightText.sunTime(.goldenEvening, at: $0, in: group.timeZone) })
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .padding(.bottom, 18)
                 .onTapGesture { TripBuilderChoose.day(row.day, builder: builder, state: state) }
                 .stopDrop(into: row.day, before: nil, coordinator: drops)
         case .suggestion(let suggestion):
             SuggestionBanner(suggestion: suggestion, builder: builder)
-                .padding(.vertical, IterSpace.xs)
-                .selectionDisabled()
+                .padding(.horizontal, 16)
+                .padding(.vertical, 2)
         case .conflicts(let count):
             DayConflictRow(count: count)
-                .selectionDisabled()
-        case .drive(let drive, let isDriveIn, let above, let below):
-            DriveRowView(drive: drive, isDriveIn: isDriveIn, above: above, below: below)
-                .selectionDisabled()
-                .stopDrop(into: row.day, before: drive.toStopID, coordinator: drops)
-        case .stop(let entry, let above, let below):
-            StopRowView(entry: entry, builder: builder, onRemove: remove, railAbove: above, railBelow: below)
-                .tag(entry.id)
+                .padding(.horizontal, 16)
+        case .stop(let entry):
+            StopRowView(entry: entry, builder: builder, isSelected: isSelected, onRemove: remove)
+                .padding(.horizontal, BuilderMetrics.bodyInset)
+                .padding(.vertical, 2)
+                .onTapGesture { state.select(entry.id, from: .list) }
                 .draggable(StopDragItem(tripID: builder.tripID, stopID: entry.id))
                 .stopDrop(into: row.day, before: entry.id, indicator: entry.previous == nil, coordinator: drops)
-        case .addStop:
-            AddStopRow(builder: builder, day: row.day)
-                .selectionDisabled()
+        case .drive(let drive):
+            DriveRowAdapter(drive: drive, style: .inline)
+                .padding(.horizontal, BuilderMetrics.bodyInset)
+                .padding(.vertical, 2)
+                .stopDrop(into: row.day, before: drive.toStopID, coordinator: drops)
+        case .footer(let day, let overnight):
+            DayFooter(builder: builder, day: day, overnight: overnight)
                 .stopDrop(into: row.day, before: nil, coordinator: drops)
-        case .overnight(let boundary):
-            OvernightBoundaryRow(boundary: boundary)
-                .selectionDisabled()
+        case .transfer(let drive, let overnight):
+            if let drive {
+                DriveRowAdapter(drive: drive, style: .transfer(overnight))
+                    .stopDrop(into: row.day, before: drive.toStopID, coordinator: drops)
+            } else if let overnight {
+                OvernightNote(text: ConnectorText.overnightNear(overnight.place))
+                    .padding(.horizontal, 24)
+            }
         }
     }
 
@@ -293,7 +354,31 @@ private struct PlanRowView: View, Equatable {
     }
 }
 
-/// Chooses a day from a tap on its header: the same path as the strip.
+/// Feeds `DriveSegmentRow` from a drive of the plan.
+private struct DriveRowAdapter: View {
+    enum Style { case inline, transfer(OvernightBoundary?) }
+
+    let drive: TripDriveItem
+    let style: Style
+
+    var body: some View {
+        let leaveBy = drive.leaveBy.map { TimeText.time($0, in: drive.leaveZone) }
+        let summary = drive.leg.map(ConnectorText.driveLine)
+        let warning = drive.shortBySeconds.map { ScheduleText.driveDoesNotFit(shortBy: $0) }
+        switch style {
+        case .inline:
+            DriveSegmentRow(style: .inline, leaveBy: leaveBy, summary: summary, isEstimate: drive.isEstimate, warning: warning)
+        case .transfer(let overnight):
+            let part = drive.leaveBy.map { DayPart.of($0, in: drive.leaveZone) } ?? .morning
+            DriveSegmentRow(style: .transfer(headline: ConnectorText.transferHeadline(part), from: drive.fromName,
+                                             overnight: overnight.map { ConnectorText.overnightNear($0.place) },
+                                             hotels: overnight?.coordinate),
+                            leaveBy: leaveBy, summary: summary, isEstimate: drive.isEstimate, warning: warning)
+        }
+    }
+}
+
+/// Chooses a day from a tap on its header: the same path as the selector.
 @MainActor
 enum TripBuilderChoose {
     static func day(_ day: Int, builder: TripBuilderModel, state: TripViewState) {
@@ -302,26 +387,26 @@ enum TripBuilderChoose {
     }
 }
 
-/// "Add Stop" at the foot of a day: a system bordered button that opens the add-stop popover. The popover's state lives
-/// here, so opening it rebuilds this row and not the list.
-private struct AddStopRow: View {
+/// The foot of a day card: Add Stop (a system bordered button that opens the add-stop popover) and, when this card ends
+/// the day you sleep after, the overnight note. The popover's state lives here, so opening it rebuilds this row and not the
+/// list.
+private struct DayFooter: View {
     let builder: TripBuilderModel
     let day: Int
+    let overnight: OvernightBoundary?
     @State private var isAdding = false
 
     var body: some View {
-        Button { isAdding = true } label: {
-            Label(String(localized: "Add Stop", comment: "Button at the end of a day"), systemImage: "plus")
+        HStack(spacing: 8) {
+            AddStopButton { isAdding = true }
+                .popover(isPresented: $isAdding, arrowEdge: .bottom) { AddStopPopover(builder: builder, day: day) }
+            Spacer(minLength: 8)
+            if let overnight { OvernightNote(text: ConnectorText.overnightNear(overnight.place)) }
         }
-        .buttonStyle(.bordered)
-        .buttonBorderShape(.capsule)
-        .padding(.vertical, IterSpace.md)
-        .padding(.leading, TimelineMetrics.gutterWidth + TimelineMetrics.railWidth + IterSpace.sm * 2)
+        .padding(.horizontal, 12 + BuilderMetrics.bodyInset)
+        .padding(.top, 14)
+        .padding(.bottom, 16)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .help(Text("Add a stop to this day, nearest spots first", comment: "Tooltip"))
-        .popover(isPresented: $isAdding, arrowEdge: .bottom) {
-            AddStopPopover(builder: builder, day: day)
-        }
     }
 }
 

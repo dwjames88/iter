@@ -4,76 +4,53 @@ import IterCore
 import IterDesign
 import IterFeatures
 
-/// The round number shared by the list and the map pins.
+/// The stop's number, neutral grey.
+// TODO(w6): iOS (AppiOS/Sources/Trips/TripDayList.swift) still draws this; move it onto `NumberBadge(style: .neutral)`
+// and delete it.
 struct StopNumberBadge: View {
     let number: Int
 
     var body: some View {
-        Text(number, format: .number)
-            .font(IterFont.captionStrong)
-            .monospacedDigit()
-            .foregroundStyle(IterColor.textPrimary)
-            .frame(width: IterSize.badgeHeight, height: IterSize.badgeHeight)
-            .background(.quaternary, in: Circle())
-            .accessibilityHidden(true)
+        NumberBadge(number: number, style: .neutral, size: IterSize.badgeHeight)
     }
 }
 
-/// The stop's node on the timeline rail: the same solid accent disc and number as its pin on the map, so a row and its pin
-/// read as one thing.
-struct StopNumberNode: View {
-    let number: Int
-
-    var body: some View {
-        Text(number, format: .number)
-            .font(IterFont.captionStrong)
-            .monospacedDigit()
-            .foregroundStyle(IterColor.onAccent)
-            .frame(width: IterSize.badgeHeight, height: IterSize.badgeHeight)
-            .background(IterColor.accentEmphasis, in: Circle())
-            .accessibilityHidden(true)
-    }
-}
-
-/// One stop on a day's timeline: the set-up time in the gutter, the numbered node on the rail, then the stop itself
-/// (name, light, session, walk-in and set-up, note). Leave times belong to the drive row above it.
+/// One stop in a day card, as the list draws it: the `StopCard` fed from the entry, with the row's behaviour around it (the
+/// context menu, VoiceOver actions, the session menu, the set-up editor and the note). Leave times belong to the drive row
+/// above it.
 struct StopRowView: View {
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
     let entry: TripStopEntry
     let builder: TripBuilderModel
+    var isSelected = false
     /// Removes this stop (the list clears the selection with it).
     var onRemove: (UUID) -> Void
-    /// The rail above and below the node: the drive into this stop and the drive out of it.
-    var railAbove: RailTone?
-    var railBelow: RailTone?
 
-    @State private var editsBuffer = false
+    @State private var editsSetUp = false
 
     private var spot: Spot { entry.stop.spot }
     private var zone: TimeZone { spot.timeZone }
 
-    private static let verticalPadding = IterSpace.sm
-
     var body: some View {
-        HStack(alignment: .top, spacing: 0) {
-            TimeGutter(time: entry.schedule?.setUpBy, zone: zone, label: String(localized: "Set up", comment: "Label under a stop's set-up time"))
-                .padding(.top, Self.verticalPadding)
-            TimelineRail(above: railAbove, below: railBelow, nodeTop: Self.verticalPadding, nodeSize: IterSize.badgeHeight) {
-                StopNumberNode(number: entry.number)
+        StopCard(time: entry.schedule?.setUpBy.map { TimeText.time($0, in: zone) },
+                 timeLabel: String(localized: "Set up", comment: "Label under a stop's set-up time"),
+                 number: entry.number, name: spot.name, locality: spot.locality,
+                 walkText: ScheduleText.parkLine(entry.schedule, minutes: spot.walkInMinutes, in: zone),
+                 setUpText: ScheduleText.setUpShort(minutes: entry.stop.setUpBufferMinutes),
+                 issues: ScheduleText.rowIssues(for: entry), isSelected: isSelected,
+                 onOpenSpot: { navigation.open(SpotRoute(spot: spot, day: builder.plan?.day(entry.stop.dayIndex))) },
+                 editsSetUp: $editsSetUp) {
+            LightWindowPicker(options: pickerOptions, selection: entry.stop.session, closedLabel: closedLabel) { builder.setSession(entry.id, to: $0) }
+        } score: {
+            if let window = entry.sessionWindow {
+                ScoreChip(window: window, zone: zone, timeStyle: .start, size: .small, isLoading: model.forecasts.isLoading(spot.coordinate))
             }
-            VStack(alignment: .leading, spacing: IterSpace.xs) {
-                titleLine
-                sessionLine
-                ForEach(ScheduleText.rowIssues(for: entry), id: \.self) { issue in
-                    IssueLine(text: issue)
-                }
-                StopNoteField(stopID: entry.id, note: entry.stop.note, builder: builder)
-            }
-            .padding(.leading, IterSpace.sm)
-            .padding(.vertical, Self.verticalPadding)
+        } note: {
+            NotePlaceholder(note: entry.stop.note) { builder.setNote(entry.id, to: $0) }
+        } setUpEditor: {
+            setUpEditor
         }
-        .contentShape(Rectangle())
         .contextMenu { StopContextMenu(entry: entry, builder: builder, onRemove: remove) }
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Text("Stop \(entry.number), \(spot.name)", comment: "VoiceOver: a trip stop"))
@@ -84,109 +61,20 @@ struct StopRowView: View {
 
     private func remove() { onRemove(entry.id) }
 
-    // MARK: Lines
-
-    private var titleLine: some View {
-        HStack(alignment: .top, spacing: IterSpace.sm) {
-            VStack(alignment: .leading, spacing: 0) {
-                Button {
-                    navigation.open(SpotRoute(spot: spot, day: builder.plan?.day(entry.stop.dayIndex)))
-                } label: {
-                    Text(spot.name).font(IterFont.headline).foregroundStyle(IterColor.textPrimary).lineLimit(2)
-                }
-                .buttonStyle(.plain)
-                .help(Text("Open spot page", comment: "Tooltip"))
-                if !spot.locality.isEmpty {
-                    Text(spot.locality).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary).lineLimit(1)
-                }
-            }
-            Spacer(minLength: IterSpace.sm)
-            if let window = entry.sessionWindow {
-                ScoreChip(window: window, zone: zone, timeStyle: .start, size: .small, isLoading: model.forecasts.isLoading(spot.coordinate))
-                    // The unit never truncates; the name column gives way (it wraps to two lines).
-                .fixedSize()
-            }
+    private var pickerOptions: [LightWindowPicker.Option] {
+        var options = entry.windows.map {
+            LightWindowPicker.Option(kind: $0.kind, title: LightText.sessionMenuItem($0, in: zone), symbol: LightText.symbol($0.kind))
         }
-    }
-
-    /// Session menu, walk-in and set-up on one line when they fit; otherwise the menu on its own line with the
-    /// walk-in and set-up text under it (no flexible heights, so the row never grows blank space).
-    private var sessionLine: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(spacing: IterSpace.sm) {
-                sessionMenu
-                walkInText
-                Text(verbatim: "·").accessibilityHidden(true)
-                bufferButton
-            }
-            .fixedSize()
-            VStack(alignment: .leading, spacing: IterSpace.xxs) {
-                sessionMenu
-                HStack(spacing: IterSpace.sm) {
-                    walkInText
-                    Text(verbatim: "·").accessibilityHidden(true)
-                    bufferButton
-                }
-                .fixedSize()
-            }
-            VStack(alignment: .leading, spacing: IterSpace.xxs) {
-                sessionMenu
-                walkInText
-                bufferButton
-            }
+        if entry.sessionWindow == nil {
+            options.append(.init(kind: entry.stop.session, title: LightText.noSession(entry.stop.session), symbol: LightText.symbol(entry.stop.session)))
         }
-        .font(IterFont.caption)
-        .foregroundStyle(IterColor.textSecondary)
-        .lineLimit(1)
-        .popover(isPresented: $editsBuffer, arrowEdge: .bottom) { bufferEditor }
+        return options
     }
 
-    /// The closed menu names the session and its time; the score is in the event unit above it, so it is not repeated.
-    /// The open menu lists every window with its score for the day, which is what you compare to choose.
-    private var sessionMenu: some View {
-        Menu {
-            Picker(selection: sessionBinding) {
-                ForEach(entry.windows) { window in
-                    Label(LightText.sessionMenuItem(window, in: zone), systemImage: LightText.symbol(window.kind)).tag(window.kind)
-                }
-                if entry.sessionWindow == nil {
-                    Text(LightText.noSession(entry.stop.session)).tag(entry.stop.session)
-                }
-            } label: {
-                Text("Session", comment: "Accessibility label of the session menu")
-            }
-            .pickerStyle(.inline)
-            .labelsHidden()
-        } label: {
-            Text(entry.sessionWindow.map { LightText.sessionLabel($0, in: zone) } ?? LightText.noSession(entry.stop.session))
-        }
-        .menuStyle(.button)
-        .controlSize(.small)
-        .fixedSize()
-        .accessibilityLabel(Text("Session", comment: "Accessibility label of the session menu"))
-        .accessibilityValue(Text(entry.sessionWindow.map { LightText.sessionLabel($0, in: zone) } ?? LightText.noSession(entry.stop.session)))
-        .help(Text("Which light to shoot here: each window with its time and score for this day", comment: "Tooltip"))
-    }
+    /// The closed menu names the window only; its time and score are in the chip beside it.
+    private var closedLabel: String { LightText.name(entry.stop.session) }
 
-    private var walkInText: some View { Text(ScheduleText.parkAndWalk(entry.schedule, minutes: spot.walkInMinutes, in: zone)) }
-
-    private var bufferButton: some View {
-        Button { editsBuffer = true } label: {
-            Text(ScheduleText.buffer(minutes: entry.stop.setUpBufferMinutes))
-        }
-        #if os(macOS)
-        .buttonStyle(.link)
-        #else
-        .buttonStyle(.borderless)
-        #endif
-        .help(Text("Change how long before the window you want to be set up", comment: "Tooltip"))
-    }
-
-    private var sessionBinding: Binding<LightWindowKind> {
-        Binding(get: { entry.stop.session }, set: { builder.setSession(entry.id, to: $0) })
-    }
-
-    private var bufferEditor: some View {
+    private var setUpEditor: some View {
         Stepper(value: Binding(get: { entry.stop.setUpBufferMinutes }, set: { builder.setBuffer(entry.id, minutes: $0) }),
                 in: 0...120, step: 5) {
             Text("Set up \(entry.stop.setUpBufferMinutes) min before the window", comment: "Set-up buffer editor")
@@ -206,35 +94,6 @@ struct IssueLine: View {
         } icon: {
             Image(systemName: "exclamationmark.triangle.fill").font(IterFont.caption).foregroundStyle(IterColor.warning)
         }
-    }
-}
-
-/// The stop's note, edited in place and saved a moment after you stop typing (and when you leave the field).
-struct StopNoteField: View {
-    let stopID: UUID
-    let note: String
-    let builder: TripBuilderModel
-    @State private var text = ""
-    @FocusState private var focused: Bool
-
-    var body: some View {
-        TextField(String(localized: "Add a note", comment: "Placeholder for a stop's note"), text: $text, axis: .vertical)
-            .textFieldStyle(.plain)
-            .font(IterFont.callout)
-            .lineLimit(1...4)
-            .focused($focused)
-            .onAppear { text = note }
-            .onChange(of: note) { if !focused { text = note } }
-            .onChange(of: focused) { if !focused { commit() } }
-            .onSubmit(commit)
-            .task(id: text) {
-                try? await Task.sleep(for: .seconds(1))
-                if !Task.isCancelled { commit() }
-            }
-    }
-
-    private func commit() {
-        if text != note { builder.setNote(stopID, to: text) }
     }
 }
 

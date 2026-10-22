@@ -9,12 +9,15 @@ struct GlassCircleButtonStyle: ButtonStyle {
     /// From the card's edges, so the card's corner is concentric with the button (16 + 11.5 = 27.5 pt).
     nonisolated static var inset: CGFloat { GlassGeometry.cornerButtonInset }
 
+    /// The circle's diameter (32 pt by default; the Trip Builder's header asks for 36).
+    var diameter: CGFloat = GlassCircleButtonStyle.size
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .labelStyle(.iconOnly)
             .font(.system(size: 13, weight: .semibold))
             .foregroundStyle(.primary)
-            .frame(width: Self.size, height: Self.size)
+            .frame(width: diameter, height: diameter)
             .contentShape(.circle)
             .glassEffect(.regular.interactive(), in: .circle)
             .opacity(configuration.isPressed ? 0.7 : 1)

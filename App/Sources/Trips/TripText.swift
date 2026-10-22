@@ -171,3 +171,102 @@ enum ConnectorText {
     static let overnight = String(localized: "Overnight", comment: "Boundary between two trip days when the place is unknown")
     static let driveEstimatedHelp = String(localized: "Drive time estimated", comment: "Explains an estimated drive")
 }
+
+// MARK: - Trip Builder phrasing (the redesigned panel: bullets, full weekday names)
+
+extension TimeText {
+    private static var builderUTC: TimeZone { TimeZone(identifier: "UTC")! }
+
+    /// "Tue, Oct 6": one end of the trip's date range.
+    private static func shortDate(_ day: LocalDay) -> String {
+        var style = Date.FormatStyle().weekday(.abbreviated).month(.abbreviated).day()
+        style.timeZone = builderUTC
+        return day.noon(in: builderUTC).formatted(style)
+    }
+
+    /// "Tue, Oct 6 – Fri, Oct 9"; a one-day trip is just "Tue, Oct 6".
+    static func tripDates(from start: LocalDay, to end: LocalDay) -> String {
+        if start == end { return shortDate(start) }
+        return String(localized: "\(shortDate(start)) – \(shortDate(end))", comment: "Trip header date range, e.g. Tue, Oct 6 – Fri, Oct 9")
+    }
+
+    /// "Tuesday, Oct 6": a day card's date.
+    static func dayHeading(_ day: LocalDay) -> String {
+        var style = Date.FormatStyle().weekday(.wide).month(.abbreviated).day()
+        style.timeZone = builderUTC
+        return day.noon(in: builderUTC).formatted(style)
+    }
+
+    /// "Tuesday": a day selector card's weekday.
+    static func weekdayName(_ day: LocalDay) -> String {
+        var style = Date.FormatStyle().weekday(.wide)
+        style.timeZone = builderUTC
+        return day.noon(in: builderUTC).formatted(style)
+    }
+
+    /// "4 days • 6 stops"
+    static func tripSize(days: Int, stops: Int) -> String {
+        let d = InflectedCount.string("day", count: days) { AttributedString(localized: "^[\(days) day](inflect: true)") }
+        let s = InflectedCount.string("stop", count: stops) { AttributedString(localized: "^[\(stops) stop](inflect: true)") }
+        return String(localized: "\(d) • \(s)", comment: "Trip size in the builder header, e.g. 4 days • 6 stops")
+    }
+
+    /// "1 Stop", "2 Stops", "No Stops": a day selector card's count, in title case.
+    static func stopCountTitle(_ count: Int) -> String {
+        guard count > 0 else { return String(localized: "No Stops", comment: "Day selector card of a day with no stops") }
+        return InflectedCount.string("stop", count: count) { AttributedString(localized: "^[\(count) stop](inflect: true)") }.localizedCapitalized
+    }
+}
+
+extension LightText {
+    /// "1 stop" or "2 stops • 5 h 26 min of driving": a day card's totals.
+    static func dayTotalsLine(stops: Int, drivingSeconds: TimeInterval) -> String {
+        guard stops > 0 else { return String(localized: "No stops yet", comment: "Day header for a day with no stops") }
+        let count = InflectedCount.string("stop", count: stops) { AttributedString(localized: "^[\(stops) stop](inflect: true)") }
+        if drivingSeconds < 60 { return count }
+        return String(localized: "\(count) • \(TimeText.duration(drivingSeconds)) of driving", comment: "Day card total: stops and driving time")
+    }
+
+    /// "Sunrise at 06:25" / "Sunset at 18:01"
+    static func sunTime(_ kind: LightWindowKind, at time: Date, in zone: TimeZone) -> String {
+        let label = kind == .goldenMorning ? String(localized: "Sunrise", comment: "Day card: sunrise") : String(localized: "Sunset", comment: "Day card: sunset")
+        return String(localized: "\(label) at \(TimeText.time(time, in: zone))", comment: "Day card: sunrise or sunset and its time, e.g. Sunset at 18:14")
+    }
+}
+
+extension ScheduleText {
+    /// "Park at 16:42 • 25 min walk in": where the walk starts and how long it is (the set-up part is its own button).
+    static func parkLine(_ schedule: StopSchedule?, minutes: Int?, in zone: TimeZone) -> String {
+        let walk = minutes.map { String(localized: "\($0) min walk in", comment: "Walk from parking to the shooting spot") }
+            ?? String(localized: "walk in unknown", comment: "Walk from parking to the shooting spot is not known")
+        guard let schedule, schedule.walkInKnown, let arriveBy = schedule.arriveBy, arriveBy != schedule.setUpBy else { return walk }
+        return String(localized: "Park at \(TimeText.time(arriveBy, in: zone)) • \(walk)", comment: "Park time, then the walk to the shooting spot")
+    }
+
+    /// "20 min setup"
+    static func setUpShort(minutes: Int) -> String {
+        String(localized: "\(minutes) min setup", comment: "Minutes to be set up before the window starts")
+    }
+}
+
+extension ConnectorText {
+    /// "3 h 21 min • 183 mi"
+    static func driveLine(_ leg: DriveLeg) -> String {
+        String(localized: "\(TimeText.duration(leg.seconds)) • \(TimeText.distance(leg.meters))", comment: "Drive time and distance between two stops")
+    }
+
+    /// "Overnight near Page, AZ"
+    static func overnightNear(_ place: String) -> String {
+        String(localized: "Overnight near \(place)", comment: "Where you sleep between two trip days, e.g. Overnight near Page, AZ")
+    }
+
+    /// The transfer card's sentence, by the part of the day you leave in.
+    static func transferHeadline(_ part: DayPart) -> String {
+        switch part {
+        case .morning: String(localized: "Drive to the next area in the morning, before the shoot.", comment: "Transfer card between two days")
+        case .afternoon: String(localized: "Drive to the next area in the afternoon, before the shoot.", comment: "Transfer card between two days")
+        case .evening: String(localized: "Drive to the next area in the evening, before the shoot.", comment: "Transfer card between two days")
+        case .night: String(localized: "Drive to the next area at night, before the shoot.", comment: "Transfer card between two days")
+        }
+    }
+}

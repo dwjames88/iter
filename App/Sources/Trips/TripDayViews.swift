@@ -3,147 +3,6 @@ import IterCore
 import IterDesign
 import IterFeatures
 
-// MARK: - Day container
-
-/// Where a row sits inside its day's container.
-enum ContainerPosition {
-    case first, middle, last, only
-
-    var roundsTop: Bool { self == .first || self == .only }
-    var roundsBottom: Bool { self == .last || self == .only }
-}
-
-/// The outline of a day container as seen by one row: the side edges, plus the top edge and corners on the first row
-/// and the bottom edge and corners on the last. Rows stack with no gap, so the edges join into one rounded outline.
-private struct ContainerOutline: Shape {
-    let position: ContainerPosition
-    let radius: CGFloat
-    let lineWidth: CGFloat
-
-    func path(in rect: CGRect) -> Path {
-        let inset = lineWidth / 2
-        let minX = rect.minX + inset, maxX = rect.maxX - inset
-        let minY = rect.minY + (position.roundsTop ? inset : 0)
-        let maxY = rect.maxY - (position.roundsBottom ? inset : 0)
-        let r = radius
-        var path = Path()
-        // Left edge, bottom to top, then across the top.
-        path.move(to: CGPoint(x: minX, y: position.roundsBottom ? maxY - r : maxY))
-        path.addLine(to: CGPoint(x: minX, y: position.roundsTop ? minY + r : minY))
-        if position.roundsTop {
-            path.addArc(tangent1End: CGPoint(x: minX, y: minY), tangent2End: CGPoint(x: minX + r, y: minY), radius: r)
-            path.addLine(to: CGPoint(x: maxX - r, y: minY))
-            path.addArc(tangent1End: CGPoint(x: maxX, y: minY), tangent2End: CGPoint(x: maxX, y: minY + r), radius: r)
-        } else {
-            path.move(to: CGPoint(x: maxX, y: minY))
-        }
-        // Right edge, top to bottom, then across the bottom.
-        path.addLine(to: CGPoint(x: maxX, y: position.roundsBottom ? maxY - r : maxY))
-        if position.roundsBottom {
-            path.addArc(tangent1End: CGPoint(x: maxX, y: maxY), tangent2End: CGPoint(x: maxX - r, y: maxY), radius: r)
-            path.addLine(to: CGPoint(x: minX + r, y: maxY))
-            path.addArc(tangent1End: CGPoint(x: minX, y: maxY), tangent2End: CGPoint(x: minX, y: maxY - r), radius: r)
-        }
-        return path
-    }
-}
-
-/// One row's slice of a day's container: a content-coloured fill with rounded top corners on the first row and rounded
-/// bottom corners on the last, and a hairline outline (accent when the day is selected). Used as `listRowBackground`.
-struct DayContainerBackground: View {
-    let position: ContainerPosition
-    var selected = false
-    /// The header row sits on a slightly stronger ground than the timeline under it.
-    var isHeader = false
-
-    private var radius: CGFloat { IterRadius.card }
-    private var lineWidth: CGFloat { selected ? IterStroke.regular : IterStroke.hairline }
-
-    var body: some View {
-        ZStack {
-            UnevenRoundedRectangle(topLeadingRadius: position.roundsTop ? radius : 0,
-                                   bottomLeadingRadius: position.roundsBottom ? radius : 0,
-                                   bottomTrailingRadius: position.roundsBottom ? radius : 0,
-                                   topTrailingRadius: position.roundsTop ? radius : 0,
-                                   style: .continuous)
-                .fill(isHeader ? AnyShapeStyle(ControlFill()) : AnyShapeStyle(ContentFill()))
-            if isHeader && selected {
-                // The selected day's header takes the accent as a wash, so the day you are in is the one you see first.
-                UnevenRoundedRectangle(topLeadingRadius: radius, bottomLeadingRadius: 0, bottomTrailingRadius: 0,
-                                       topTrailingRadius: radius, style: .continuous)
-                    .fill(IterColor.accent.opacity(0.10))
-            }
-            ContainerOutline(position: position, radius: radius, lineWidth: lineWidth)
-                .stroke(selected ? IterColor.accent : IterColor.separator, lineWidth: lineWidth)
-            if isHeader {
-                // The header is set apart from the timeline by a hairline along its bottom edge.
-                VStack { Spacer(minLength: 0); Rectangle().fill(IterColor.separator).frame(height: IterStroke.hairline) }
-            }
-        }
-        .padding(.horizontal, IterSpace.md)
-    }
-}
-
-// MARK: - Day header
-
-/// The first row of a day's container: which day, how loaded it is, and its light (sunrise and sunset on the sky colours
-/// of the light-window badges, as the place card names a window: "Sunset at 18:14").
-struct DayHeaderRow: View {
-    let group: TripDayGroup
-    var isSelected = false
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: IterSpace.sm) {
-            HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
-                Text(TimeText.dayName(index: group.index))
-                    .font(IterFont.titleSection)
-                    .foregroundStyle(isSelected ? AnyShapeStyle(IterColor.accentText) : AnyShapeStyle(IterColor.textPrimary))
-                Text(TimeText.longDay(group.date))
-                    .font(IterFont.subheadline)
-                    .foregroundStyle(IterColor.textSecondary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-                Spacer(minLength: IterSpace.sm)
-                Text(LightText.dayTotals(stops: group.stopCount, drivingSeconds: group.drivingSeconds))
-                    .font(IterFont.caption)
-                    .foregroundStyle(IterColor.textSecondary)
-                    .monospacedDigit()
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-            }
-            light
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.vertical, IterSpace.md)
-        .contentShape(Rectangle())
-        .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isHeader)
-    }
-
-    /// Sunrise and sunset in the zone of the day's first stop, each on the sky colours of its light.
-    @ViewBuilder private var light: some View {
-        if group.sunrise != nil || group.sunset != nil {
-            HStack(spacing: IterSpace.lg) {
-                if let sunrise = group.sunrise { bookend(.goldenMorning, label: String(localized: "Sunrise", comment: "Day header: sunrise"), time: sunrise) }
-                if let sunset = group.sunset { bookend(.goldenEvening, label: String(localized: "Sunset", comment: "Day header: sunset"), time: sunset) }
-            }
-            .lineLimit(1)
-        }
-    }
-
-    private func bookend(_ kind: LightWindowKind, label: String, time: Date) -> some View {
-        HStack(spacing: IterSpace.sm) {
-            LightWindowBadge(kind: kind, size: 24)
-            Text("\(label) at \(TimeText.time(time, in: group.timeZone))", comment: "Day header: sunrise or sunset and its time, e.g. Sunset at 18:14")
-                .font(IterFont.secondary)
-                .monospacedDigit()
-                .foregroundStyle(IterColor.textPrimary)
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("\(label) \(TimeText.time(time, in: group.timeZone))", comment: "VoiceOver: a day's sunrise or sunset and its time"))
-    }
-}
-
 /// A day's conflicts in one line, under the header. Each conflict is spelled out on its own stop or drive.
 struct DayConflictRow: View {
     let count: Int
@@ -165,6 +24,7 @@ struct DayConflictRow: View {
 // MARK: - Overnight boundary
 
 /// Between two day containers: where you sleep. Not selectable and not a drop target.
+// TODO(w6): iOS only (AppiOS/Sources/Trips/TripDayList.swift); the Mac uses `OvernightNote` and the transfer card.
 struct OvernightBoundaryRow: View {
     let boundary: OvernightBoundary
 
@@ -190,6 +50,7 @@ struct OvernightBoundaryRow: View {
 
 /// One cell per day, side by side: the day's name and date, its stops, its best window and a conflict mark.
 /// Selecting a cell selects that day everywhere (list, map).
+// TODO(w6): iOS only (AppiOS/Sources/Trips/TripBuilderScreen.swift); the Mac uses `DaySelector`.
 struct TripOverviewStrip: View {
     let cells: [TripOverviewCell]
     let selectedDay: Int?
@@ -346,21 +207,5 @@ private struct OverviewCellView: View {
             parts.append(InflectedCount.string("conflict", count: cell.conflictCount) { AttributedString(localized: "^[\(cell.conflictCount) conflict](inflect: true)") })
         }
         return parts.joined(separator: ", ")
-    }
-}
-
-// MARK: - The strip on the Mac card
-
-/// The day strip as the Mac card shows it: reads the selected day itself, so choosing a day or a stop redraws the strip and
-/// not the card around it.
-struct TripDayStrip: View {
-    let builder: TripBuilderModel
-    let state: TripViewState
-    let choose: (Int?) -> Void
-
-    var body: some View {
-        VStack(spacing: 0) {
-            TripOverviewStrip(cells: builder.layout.overviewCells, selectedDay: state.selectedDay, selectAll: { choose(nil) }) { choose($0) }
-        }
     }
 }

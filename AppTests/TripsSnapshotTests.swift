@@ -83,17 +83,20 @@ enum TripsFixtures {
         try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: id, initialDay: 1) }, model: model), screen: "trip", state: "builder", settle: settle)
     }
 
-    /// The planner card's three modes by window width (`PlannerCardLayout`): docked at 1000, centred and capped at 1280,
-    /// centred and wide at 1600. The snapshot window is the detail alone, so its width is the window's.
-    @Test(.enabled(if: Snapshot.enabled)) func plannerCardByWidth() async throws {
+    /// The Trip Builder panel alone (the inspector's content): the offscreen harness cannot draw `.inspector`, so the panel
+    /// is rendered at its own size, 640 x 1400, beside nothing, for the sample trip, the conflicted trip and the offline-weather case.
+    @Test(.enabled(if: Snapshot.enabled)) func builderPanel() async throws {
         let model = TripsFixtures.model()
-        let id = model.store.trips()[0].id
-        let cases: [(state: String, width: CGFloat)] = [("side", 1000), ("capped", 1280), ("wide", 1600)]
-        for (state, width) in cases {
-            let size = Snapshot.Size(name: "\(Int(width))x820", width: width, height: 820)
-            try await Snapshot.render(Fixtures.host(NavigationStack { TripBuilderView(tripID: id, initialDay: 1) }, model: model),
-                                      screen: "trip", state: "planner-card-\(state)", sizes: [size], settle: settle)
-        }
+        let size = Snapshot.Size(name: "640x1400", width: 640, height: 1400)
+        try await Snapshot.render(Fixtures.host(try await TripBuilderPanelFixture.panel(model, day: 0), model: model),
+                                  screen: "trip", state: "builder-panel", sizes: [size], settle: settle, chrome: .bare)
+    }
+
+    @Test(.enabled(if: Snapshot.enabled)) func builderPanelConflict() async throws {
+        let model = TripsFixtures.conflictedModel()
+        let size = Snapshot.Size(name: "640x1400", width: 640, height: 1400)
+        try await Snapshot.render(Fixtures.host(try await TripBuilderPanelFixture.panel(model, day: 1), model: model),
+                                  screen: "trip", state: "builder-panel-conflict", sizes: [size], settle: settle, chrome: .bare)
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func builderWeatherOffline() async throws {
@@ -143,34 +146,12 @@ enum TripsFixtures {
         try await Snapshot.render(Fixtures.host(sheet, model: model), screen: "trip", state: "change-dates-sheet", settle: settle)
     }
 
-    /// A day's timeline in a 560 pt column: the drive in, stops, drives between them and Add Stop, as the list draws them.
+    /// The backwards trip's panel (a drive that does not fit, a day out of order, the transfer card), 640 pt wide.
     @Test(.enabled(if: Snapshot.enabled)) func stopRow() async throws {
         let model = TripsFixtures.backwardsModel()
-        let id = model.store.trips()[0].id
-        let builder = TripBuilderModel(tripID: id, store: model.store, scheduler: model.scheduler, drives: model.drives,
-                                       forecasts: model.forecasts, now: { Fixtures.now })
-        await builder.waitForLegs()
-        let rows = VStack(alignment: .leading, spacing: 0) {
-            ForEach(builder.layout.groups) { group in
-                DayHeaderRow(group: group).padding(.horizontal)
-                ForEach(group.items) { item in
-                    switch item {
-                    case .driveIn(let drive):
-                        DriveRowView(drive: drive, isDriveIn: true, above: nil, below: RailTone(drive))
-                    case .drive(let drive):
-                        DriveRowView(drive: drive, above: RailTone(drive), below: RailTone(drive))
-                    case .stop(let entry):
-                        StopRowView(entry: entry, builder: builder, onRemove: { _ in }, railAbove: nil, railBelow: nil)
-                    case .addStop:
-                        EmptyView()
-                    }
-                }
-                if let boundary = group.overnightAfter { OvernightBoundaryRow(boundary: boundary) }
-            }
-        }
-        .padding()
-        .frame(width: 560)
-        try await Snapshot.render(Fixtures.host(rows, model: model), screen: "trip", state: "stoprow", settle: settle)
+        let size = Snapshot.Size(name: "640x1100", width: 640, height: 1100)
+        try await Snapshot.render(Fixtures.host(try await TripBuilderPanelFixture.panel(model, day: 1), model: model),
+                                  screen: "trip", state: "stoprow", sizes: [size], settle: settle, chrome: .bare)
     }
 
     @Test func fixturesBuild() {
@@ -179,5 +160,23 @@ enum TripsFixtures {
         // Keep the model alive while its records are read: the container goes with it.
         let backwards = TripsFixtures.backwardsModel()
         #expect(backwards.store.trips().first?.orderedStops.count == 4)
+    }
+}
+
+/// The builder panel the way the Mac window hosts it, for snapshots.
+@MainActor
+enum TripBuilderPanelFixture {
+    static func panel(_ model: AppModel, day: Int?) async throws -> some View {
+        let id = model.store.trips()[0].id
+        let builder = TripBuilderModel(tripID: id, store: model.store, scheduler: model.scheduler, drives: model.drives,
+                                       forecasts: model.forecasts, now: { Fixtures.now })
+        await builder.waitForLegs()
+        let state = TripViewState(day: day)
+        let plan = builder.plan!
+        let actions = TripCornerActions(planName: plan.name, isLoading: false,
+                                        shareItem: LazyTripDocument(tripName: plan.name, build: { nil }),
+                                        changeDates: {}, exportTrip: {}, duplicate: {}, delete: {})
+        return TripPlanList(plan: plan, builder: builder, state: state, tripActions: actions, changeDates: {}, chooseDay: { _ in })
+            .frame(width: 640)
     }
 }

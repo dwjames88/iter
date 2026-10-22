@@ -55,7 +55,7 @@ struct TripDayList: View {
                     .listRowBackground(Rectangle().fill(ModuleFill()))
             }
             ForEach(group.stops) { entry in
-                StopCard(entry: entry, builder: builder, plan: plan, drive: drives[entry.id]?.0, isDriveIn: drives[entry.id]?.1 ?? false)
+                IOSStopCard(entry: entry, builder: builder, plan: plan, drive: drives[entry.id]?.0, isDriveIn: drives[entry.id]?.1 ?? false)
                     .id("stop-\(entry.id)")
                     .listRowBackground(Rectangle().fill(ModuleFill()))
                     .listRowInsets(EdgeInsets(top: IterSpace.sm, leading: IterSpace.lg, bottom: IterSpace.sm, trailing: IterSpace.lg))
@@ -195,7 +195,8 @@ private struct SuggestionCard: View {
 
 // MARK: - Stop
 
-private struct StopCard: View {
+// TODO(w6): iOS — replace with the shared `StopCard` component (renamed only to clear the new Components/TripBuilder/StopCard).
+private struct IOSStopCard: View {
     @Environment(AppModel.self) private var model
     @Environment(AppNavigation.self) private var navigation
     @Environment(\.editMode) private var editMode

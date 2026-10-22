@@ -4,7 +4,8 @@ import IterData
 import IterDesign
 import IterFeatures
 
-/// The trip builder (plan 6.3-A): the plan as day containers with feasibility connectors on the left, the route on the right.
+/// The trip builder: three columns. The sidebar, the route map and, in the system inspector on the trailing edge, the Trip
+/// Builder panel (header card, day selector, day cards).
 struct TripBuilderView: View {
     let tripID: UUID
     /// The day selected on first appearance (0-based); `-IterTripDay` for captures.
@@ -33,6 +34,8 @@ private struct TripBuilderContent: View {
     @State private var changesDates = false
     @State private var exports = false
     @State private var exportMessage: String?
+    /// The Trip Builder panel (the inspector) is shown; remembered per window.
+    @SceneStorage("tripBuilderShown") private var showsBuilder = true
 
     init(tripID: UUID, model: AppModel, initialDay: Int?) {
         self.tripID = tripID
@@ -59,9 +62,31 @@ private struct TripBuilderContent: View {
                 Color.clear
             }
         }
+        .inspector(isPresented: $showsBuilder) { panel }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button { showsBuilder.toggle() } label: {
+                    Label(String(localized: "Trip Builder", comment: "Toolbar button: shows or hides the trip builder panel"), systemImage: "sidebar.trailing")
+                }
+                .keyboardShortcut("0", modifiers: [.command, .option])
+                .help(Text("Show or hide the Trip Builder", comment: "Tooltip"))
+            }
+        }
         .onAppear(perform: makeBuilderIfNeeded)
         .onDisappear { builder?.viewDisappeared() }
         .tripFlows()
+    }
+
+    /// The Trip Builder panel, in the system inspector on the trailing edge. The design's panel is 639 pt; at 560 the map keeps
+    /// 440 pt in a 1280 pt window (the sidebar takes 280).
+    @ViewBuilder private var panel: some View {
+        if let builder, let plan = builder.plan {
+            TripPlanList(plan: plan, builder: builder, state: state, tripActions: tripActions(plan, builder),
+                         changeDates: { changesDates = true }, chooseDay: { Self.chooseDay($0, in: builder, state: state) })
+                .inspectorColumnWidth(min: 480, ideal: 560, max: 680)
+        } else {
+            Color.clear.inspectorColumnWidth(min: 480, ideal: 560, max: 680)
+        }
     }
 
     private func makeBuilderIfNeeded() {
@@ -117,18 +142,7 @@ private struct TripBuilderContent: View {
 
     @ViewBuilder private func builderBody(_ plan: TripPlan, _ builder: TripBuilderModel) -> some View {
         let state = self.state
-        FloatingPanelLayout(panelWidth: IterSize.listIdeal, placement: .planner) {
-            VStack(spacing: 0) {
-                TripHeader(plan: plan, builder: builder, tripActions: tripActions(plan, builder)) { changesDates = true }
-                WeatherStatusBanner(status: model.weatherStatus)
-                if builder.layout.groups.count > 1 {
-                    TripDayStrip(builder: builder, state: state) { Self.chooseDay($0, in: builder, state: state) }
-                }
-                TripPlanList(builder: builder, state: state)
-            }
-        } map: { insets in
-            TripRouteMap(builder: builder, state: state, insets: insets) { Self.chooseDay($0, in: builder, state: state) }
-        }
+        TripMapColumn(builder: builder, state: state) { Self.chooseDay($0, in: builder, state: state) }
         .navigationTitle(plan.name)
         .toolbar(removing: .title)
         .onChange(of: model.store.revision) { builder.refreshIfChanged() }
@@ -155,7 +169,7 @@ private struct TripBuilderContent: View {
     /// The `.iter` document, built on demand: `fileExporter` asks for it only while `exports` is true.
     private var exportItem: TripDocument? { record.map { model.store.document(for: $0) } }
 
-    /// Share and More, the card's two corner buttons (round glass, in the card's top corner row as on Maps' place card).
+    /// Share and More, the header card's two round glass buttons.
     private func tripActions(_ plan: TripPlan, _ builder: TripBuilderModel) -> TripCornerActions {
         TripCornerActions(
             planName: plan.name,
@@ -241,103 +255,27 @@ struct TripCardCornerButtons: View {
                 .menuIndicator(.hidden)
                 .help(Text("Change dates, export, duplicate or delete this trip", comment: "Tooltip"))
             }
-            .buttonStyle(GlassCircleButtonStyle())
+            .buttonStyle(GlassCircleButtonStyle(diameter: 36))
         }
     }
-
-    /// The space the buttons take, so the title never runs under them.
-    static var reservedWidth: CGFloat { GlassCircleButtonStyle.size * 2 + IterSpace.sm + GlassCircleButtonStyle.inset + IterSpace.sm }
 }
 
-// MARK: - Header
+// MARK: - Map column
 
-/// The card's header, as Maps titles its cards: the corner buttons sit in the card's top corner (concentric with it), the
-/// title runs beside them and never under them, then the dates and the trip's totals, each with its symbol.
-private struct TripHeader: View {
-    let plan: TripPlan
+/// The map column: the route fills it under the toolbar. Its top inset (the toolbar) is measured here; nothing floats over
+/// it any more, so it needs no leading or trailing inset.
+private struct TripMapColumn: View {
     let builder: TripBuilderModel
-    let tripActions: TripCornerActions
-    let changeDates: () -> Void
-
-    @State private var name = ""
-    @FocusState private var focused: Bool
+    let state: TripViewState
+    let chooseDay: (Int?) -> Void
+    @State private var topInset: CGFloat = 0
 
     var body: some View {
-        // Formatted once per pass; the layouts below share them.
-        let dates = TimeText.dateRange(from: plan.startDay, to: plan.day(plan.dayCount - 1))
-        let size = TimeText.dayAndStops(days: plan.dayCount, stops: plan.stops.count)
-        let driving: String? = builder.totalDriveSeconds >= 60 ? totalDriving : nil
-        VStack(alignment: .leading, spacing: IterSpace.sm) {
-            TextField(String(localized: "Trip name", comment: "Placeholder"), text: $name)
-                .textFieldStyle(.plain)
-                .font(.largeTitle.bold())
-                .lineLimit(1)
-                .focused($focused)
-                .onSubmit(commit)
-                .onChange(of: focused) { if !focused { commit() } }
-                .onChange(of: plan.name) { if !focused { name = plan.name } }
-                .onAppear { name = plan.name }
-                .help(Text("Click to rename", comment: "Tooltip"))
-                .accessibilityLabel(Text("Trip name", comment: "Accessibility label"))
-                // Beside the corner buttons, not under them.
-                .padding(.trailing, TripCardCornerButtons.reservedWidth)
-            ViewThatFits(in: .horizontal) {
-                HStack(spacing: IterSpace.lg) {
-                    datesButton(dates)
-                    summary("signpost.right.and.left", size)
-                    if let driving { summary("car", driving) }
-                }
-                .fixedSize(horizontal: true, vertical: false)
-                VStack(alignment: .leading, spacing: IterSpace.xs) {
-                    HStack(spacing: IterSpace.lg) {
-                        datesButton(dates)
-                        summary("signpost.right.and.left", size)
-                    }
-                    if let driving { summary("car", driving) }
-                }
-                VStack(alignment: .leading, spacing: IterSpace.xs) {
-                    datesButton(dates)
-                    summary("signpost.right.and.left", size)
-                    if let driving { summary("car", driving) }
-                }
-            }
-            .font(IterFont.subheadline)
-            .foregroundStyle(IterColor.textSecondary)
-            OfflineStatusBadge(tripID: plan.id, style: .header)
-        }
-        .padding(.horizontal, IterSpace.lg)
-        .padding(.top, IterSpace.lg)
-        .padding(.bottom, IterSpace.md)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .overlay(alignment: .topTrailing) {
-            TripCardCornerButtons(actions: tripActions).titlebarClickable().fixedSize().padding(GlassCircleButtonStyle.inset)
-        }
-    }
-
-    private func datesButton(_ title: String) -> some View {
-        Button(action: changeDates) {
-            Label(title, systemImage: "calendar")
-        }
-        .buttonStyle(.borderless)
-        .help(Text("Change Dates…", comment: "Tooltip"))
-    }
-
-    private func summary(_ symbol: String, _ text: String) -> some View {
-        Label {
-            Text(text).monospacedDigit()
-        } icon: {
-            Image(systemName: symbol).foregroundStyle(IterColor.textTertiary)
-        }
-    }
-
-    private var totalDriving: String {
-        let base = String(localized: "\(TimeText.distance(builder.totalDriveMeters)) · \(TimeText.duration(builder.totalDriveSeconds)) driving",
-                          comment: "Trip total driving distance and time")
-        return builder.hasEstimatedDrive ? String(localized: "\(base) (estimated)", comment: "Trip driving total that includes estimated drives") : base
-    }
-
-    private func commit() {
-        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmed.isEmpty { name = plan.name } else if trimmed != plan.name { builder.rename(to: trimmed) }
+        TripRouteMap(builder: builder, state: state, insets: EdgeInsets(top: topInset, leading: 0, bottom: 0, trailing: 0), chooseDay: chooseDay)
+            .ignoresSafeArea(edges: .top)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .onGeometryChange(for: CGFloat.self) { $0.safeAreaInsets.top } action: { topInset = $0 }
+            // As in Maps, the map runs under the toolbar with no bar or edge of its own.
+            .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
     }
 }
