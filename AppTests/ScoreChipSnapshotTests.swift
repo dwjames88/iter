@@ -46,6 +46,28 @@ import IterDesign
                                   settle: .milliseconds(300), chrome: .bare)
     }
 
+    /// Scores 7 and 100 side by side per size: the chips are the same width.
+    @Test(.enabled(if: Snapshot.enabled)) func fixedwidth() async throws {
+        for size in ScoreChip.Size.allCases {
+            print("scorechip width \(size): \(ScoreChip.maxWidth(size: size, timeStyle: .start)) x \(ScoreChip.height(size)), score field \(ScoreChip.scoreFieldWidth(size))")
+        }
+        let view = VStack(alignment: .leading, spacing: IterSpace.xl) {
+            ForEach([ScoreChip.Size.large, .small, .compact, .pin], id: \.self) { size in
+                HStack(alignment: .bottom, spacing: IterSpace.lg) {
+                    Self.chip(Self.window(score: 7), size)
+                    Self.chip(Self.window(score: 100), size)
+                    Self.chip(Self.window(score: nil), size)
+                }
+            }
+        }
+        .padding(IterSpace.xl)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(IterColor.backgroundWindow)
+        try await Snapshot.render(view, screen: "scorechip", state: "fixedwidth",
+                                  sizes: [Snapshot.Size(name: "420x300", width: 420, height: 300)],
+                                  settle: .milliseconds(300), chrome: .bare)
+    }
+
     /// Window kinds, the range time, low confidence, a 100, the selected pin.
     @Test(.enabled(if: Snapshot.enabled)) func states() async throws {
         let view = VStack(alignment: .leading, spacing: IterSpace.xl) {

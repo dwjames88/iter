@@ -26,8 +26,7 @@ enum TimeStyle: Hashable, Sendable {
 /// symbol above its time; on the right the score as a semibold monospaced-digit numeral. Symbol, time and score share
 /// one ink (`IterColor.rampText(score:)`: ink in light mode up to the switch score, white above it; cream in dark
 /// mode). Scores below `event/hairlineBelowScore` get a hairline, since their fill is too close to the ground. The chip
-/// hugs its content; lists that stack chips reserve a lane of `maxWidth(size:timeStyle:)` and trail-align the chip in
-/// it. A window without a score is the same size and layout without the numeral: no fill, a hairline outline, the
+/// hugs its content; lists that stack chips reserve a lane of `maxWidth(size:timeStyle:)`. A window without a score is the same size and layout without the numeral: no fill, a hairline outline, the
 /// symbol in its standalone colour (and a mini spinner beside it while the forecast loads). Sizes are fixed points
 /// from the `event/*` tokens, not Dynamic Type: the chip is a fixed-height badge. The `pin` size is the compact chip
 /// over the map, with a pointer, a shadow and a selected scale.
@@ -121,14 +120,20 @@ struct ScoreChip: View {
         let shape = RoundedRectangle(cornerRadius: Self.radius(s), style: .continuous)
         return HStack(spacing: Self.gap(s)) {
             column(color: score.map { IterColor.rampText(score: $0.value) } ?? IterColor.textPrimary.color)
-            if let score {
-                Text(score.value, format: .number)
-                    .font(IterFont.eventScore(size: Self.scoreSize(s)))
-                    .monospacedDigit()
-                    .foregroundStyle(IterColor.rampText(score: score.value))
-                    .lineLimit(1)
-                    .fixedSize()
+            // The score field is one fixed width per size (wide enough for "100"), the number trailing-aligned in it,
+            // so the chip is the same size at every score. An unscored chip keeps the empty field.
+            ZStack(alignment: .trailing) {
+                Color.clear
+                if let score {
+                    Text(score.value, format: .number)
+                        .font(IterFont.eventScore(size: Self.scoreSize(s)))
+                        .monospacedDigit()
+                        .foregroundStyle(IterColor.rampText(score: score.value))
+                        .lineLimit(1)
+                        .fixedSize()
+                }
             }
+            .frame(width: Self.scoreFieldWidth(s))
         }
         .padding(.horizontal, Self.padding(s))
         .padding(.vertical, Self.paddingV(s))
@@ -220,19 +225,29 @@ struct ScoreChip: View {
 
     // MARK: Lane width
 
-    /// The widest a scored chip of this size gets with this time style: padding, the symbol-and-time column, the gap
+    /// The width of every chip of this size with this time style: padding, the symbol-and-time column, the gap
     /// and the numeral "100". Lists that stack chips (Explore rows, the layout grid, day windows) reserve this as a
-    /// lane and trail-align each chip in it, so the lanes line up although the chips hug their content.
+    /// lane and trail-align each chip in it. Every chip of a size and time style is this wide at any score.
     static func maxWidth(size: Size, timeStyle: TimeStyle) -> CGFloat {
         let s = size == .pin ? .compact : size
         let key = WidthKey(size: s, style: timeStyle, locale: "\(Locale.current.identifier)|\(Locale.current.hourCycle)")
         if let hit = widths.withLock({ $0[key] }) { return hit }
-        let numeral = measure("100", font: .monospacedDigitSystemFont(ofSize: scoreSize(s), weight: weight(IterFont.eventScoreWeight())))
+        let numeral = scoreFieldWidth(s)
         let column = max(ceil(timeSize(s) * 1.25), timeLaneWidth(timeStyle, size: s))
         let width = ceil(padding(s) * 2 + column + gap(s) + numeral)
         widths.withLock { $0[key] = width }
         return width
     }
+
+    /// The fixed width of the score field: "100" in the size's semibold monospaced-digit font, measured once.
+    static func scoreFieldWidth(_ size: Size) -> CGFloat {
+        let s = size == .pin ? .compact : size
+        if let hit = fieldWidths.withLock({ $0[s] }) { return hit }
+        let width = ceil(measure("100", font: .monospacedDigitSystemFont(ofSize: scoreSize(s), weight: weight(IterFont.eventScoreWeight()))))
+        fieldWidths.withLock { $0[s] = width }
+        return width
+    }
+    private static let fieldWidths = Mutex<[Size: CGFloat]>([:])
 
     private struct WidthKey: Hashable {
         var size: Size
@@ -306,7 +321,7 @@ private struct ScoreChipGrid: View {
         VStack(alignment: .leading, spacing: IterSpace.lg) {
             ForEach(Self.sizes, id: \.self) { size in
                 HStack(alignment: .top, spacing: IterSpace.lg) {
-                    ForEach([0, 25, 50, 75, 100], id: \.self) { ScoreChip(window: Self.window($0), zone: Self.zone, size: size) }
+                    ForEach([0, 7, 25, 50, 75, 100], id: \.self) { ScoreChip(window: Self.window($0), zone: Self.zone, size: size) }
                     ScoreChip(window: Self.window(nil), zone: Self.zone, size: size)
                 }
             }
