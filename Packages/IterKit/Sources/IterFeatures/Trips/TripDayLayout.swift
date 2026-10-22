@@ -78,6 +78,8 @@ public struct OvernightBoundary: Sendable, Equatable, Identifiable {
     public var afterDay: Int
     public var spotName: String
     public var locality: String
+    /// Where the sleeping stop's spot is (for finding hotels near it).
+    public var coordinate: Coordinate
 
     public var id: Int { afterDay }
     /// "Page, AZ", or the spot's name when it has no locality.
@@ -182,7 +184,8 @@ public struct TripDayLayout: Sendable, Equatable {
             if let lastStop {
                 groups[position].overnightAfter = OvernightBoundary(afterDay: groups[position].index,
                                                                     spotName: lastStop.stop.spot.name,
-                                                                    locality: lastStop.stop.spot.locality)
+                                                                    locality: lastStop.stop.spot.locality,
+                                                                    coordinate: lastStop.stop.spot.coordinate)
             }
         }
         return TripDayLayout(groups: groups)
