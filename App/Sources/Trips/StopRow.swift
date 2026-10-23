@@ -4,17 +4,6 @@ import IterCore
 import IterDesign
 import IterFeatures
 
-/// The stop's number, neutral grey.
-// TODO(w6): iOS (AppiOS/Sources/Trips/TripDayList.swift) still draws this; move it onto `NumberBadge(style: .neutral)`
-// and delete it.
-struct StopNumberBadge: View {
-    let number: Int
-
-    var body: some View {
-        NumberBadge(number: number, style: .neutral, size: IterSize.badgeHeight)
-    }
-}
-
 /// One stop in a day card, as the list draws it: the `StopCard` fed from the entry, with the row's behaviour around it (the
 /// context menu, VoiceOver actions, the session menu, the set-up editor and the note). Leave times belong to the drive row
 /// above it.

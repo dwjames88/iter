@@ -238,8 +238,11 @@ extension ScheduleText {
     /// "Park at 16:42 • 25 min walk in": where the walk starts and how long it is (the set-up part is its own button).
     static func parkLine(_ schedule: StopSchedule?, minutes: Int?, in zone: TimeZone) -> String {
         let walk = minutes.map { String(localized: "\($0) min walk in", comment: "Walk from parking to the shooting spot") }
-            ?? String(localized: "walk in unknown", comment: "Walk from parking to the shooting spot is not known")
-        guard let schedule, schedule.walkInKnown, let arriveBy = schedule.arriveBy, arriveBy != schedule.setUpBy else { return walk }
+            ?? String(localized: "walk in unknown", comment: "Walk from parking to the shooting spot is not known, in the middle of a line")
+        guard let schedule, schedule.walkInKnown, let arriveBy = schedule.arriveBy, arriveBy != schedule.setUpBy else {
+            // Sentence case when it starts the line.
+            return minutes == nil ? String(localized: "Walk-in unknown", comment: "Walk from parking to the shooting spot is not known, at the start of a line") : walk
+        }
         return String(localized: "Park at \(TimeText.time(arriveBy, in: zone)) • \(walk)", comment: "Park time, then the walk to the shooting spot")
     }
 
@@ -263,6 +266,7 @@ extension ConnectorText {
     /// The transfer card's sentence, by the part of the day you leave in.
     static func transferHeadline(_ part: DayPart) -> String {
         switch part {
+        case .earlyMorning: String(localized: "Drive to the next area early in the morning, before the shoot.", comment: "Transfer card between two days, leaving between midnight and 5 am")
         case .morning: String(localized: "Drive to the next area in the morning, before the shoot.", comment: "Transfer card between two days")
         case .afternoon: String(localized: "Drive to the next area in the afternoon, before the shoot.", comment: "Transfer card between two days")
         case .evening: String(localized: "Drive to the next area in the evening, before the shoot.", comment: "Transfer card between two days")

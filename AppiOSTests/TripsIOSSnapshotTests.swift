@@ -145,6 +145,16 @@ private let tripsSnapshotsEnabled = ProcessInfo.processInfo.environment["ITER_SN
         try await render("trips-all", model: model, fitContent: true) { NavigationStack { TripsListScreen() } }
     }
 
+    /// The Trip Builder of the sample trip, from the shared Trip Builder components.
+    @Test(.enabled(if: tripsSnapshotsEnabled)) func tripBuilder() async throws {
+        let model = makeTripsModel()
+        model.store.seedSampleTrip(startDay: model.today(in: .current).adding(days: 1))
+        guard let trip = model.store.trips().first else { return }
+        try await render("trip-builder", model: model, fitContent: true, settle: .seconds(5)) {
+            NavigationStack { TripBuilderScreen(tripID: trip.id) }
+        }
+    }
+
     @Test(.enabled(if: tripsSnapshotsEnabled)) func allTripsEmpty() async throws {
         try await render("trips-empty", model: makeTripsModel(), fitContent: false) { NavigationStack { TripsListScreen() } }
     }

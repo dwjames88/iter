@@ -5,7 +5,7 @@
       "comment" : "Joins source names in a section header, e.g. Maps + Ask"
     },
     "%@ %@" : {
-      "comment" : "A trip day in the overview strip, e.g. Thu 8\nOutlook row: weekday and day of the month, e.g. Thu 8\nVoiceOver: a day's sunrise or sunset and its time",
+      "comment" : "A trip day in the overview strip, e.g. Thu 8\nOutlook row: weekday and day of the month, e.g. Thu 8",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -96,7 +96,7 @@
       }
     },
     "%@ at %@" : {
-      "comment" : "Day header: sunrise or sunset and its time, e.g. Sunset at 18:14\nPlace card: a light window and its start time, e.g. Sunset at 18:14",
+      "comment" : "Day card: sunrise or sunset and its time, e.g. Sunset at 18:14\nPlace card: a light window and its start time, e.g. Sunset at 18:14",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -168,7 +168,7 @@
       }
     },
     "%@ · %@ driving" : {
-      "comment" : "Day total: stops and driving time\nTrip total driving distance and time",
+      "comment" : "Day total: stops and driving time",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -265,12 +265,34 @@
       }
     },
     "%@ – %@" : {
-      "comment" : "Trip date range, e.g. Wed 7 – Sat 10 Oct",
+      "comment" : "Trip date range, e.g. Wed 7 – Sat 10 Oct\nTrip header date range, e.g. Tue, Oct 6 – Fri, Oct 9",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ – %2$@"
+          }
+        }
+      }
+    },
+    "%@ • %@" : {
+      "comment" : "Drive time and distance between two stops\nTrip size in the builder header, e.g. 4 days • 6 stops\nTrip total driving distance and time, e.g. 490 mi • 9 h 34 min",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ • %2$@"
+          }
+        }
+      }
+    },
+    "%@ • %@ of driving" : {
+      "comment" : "Day card total: stops and driving time",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ • %2$@ of driving"
           }
         }
       }
@@ -282,7 +304,7 @@
       "comment" : "Weather banner: testing key; argument is the provider"
     },
     "%@, %@" : {
-      "comment" : "VoiceOver: a window with its time\nVoiceOver: an overview cell's day\nVoiceOver: template",
+      "comment" : "VoiceOver: a window with its time\nVoiceOver: template",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -368,6 +390,12 @@
     },
     "%lld min set-up" : {
       "comment" : "Minutes to be set up before the window starts"
+    },
+    "%lld min setup" : {
+      "comment" : "Minutes to be set up before the window starts"
+    },
+    "%lld min walk in" : {
+      "comment" : "Walk from parking to the shooting spot"
     },
     "%lld min walk-in" : {
       "comment" : "Spot fact: walk from parking\nWalk from parking to the shooting spot"
@@ -474,7 +502,7 @@
     "Add Your Own Spot" : {
       "comment" : "Button: drop a pin on the Explore map"
     },
-    "Add a note" : {
+    "Add a note…" : {
       "comment" : "Placeholder for a stop's note"
     },
     "Add a stop to this day, nearest spots first" : {
@@ -508,7 +536,7 @@
       "comment" : "Place card: move your own spot by panning the map under a crosshair"
     },
     "All Days" : {
-      "comment" : "Map day switcher: every day is shown\nMap day switcher: show every day\nOverview strip: every day"
+      "comment" : "Map day switcher: every day is shown\nMap day switcher: show every day"
     },
     "All Locations" : {
       "comment" : "Screen title\nSidebar item"
@@ -690,17 +718,6 @@
     },
     "Best light (choose any)" : {
       "comment" : "Place editor section: multiple choice\nSpot editor section: multiple choice"
-    },
-    "Best light: %@ at %@" : {
-      "comment" : "VoiceOver: the day's best window and its start time",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Best light: %1$@ at %2$@"
-          }
-        }
-      }
     },
     "Beyond the forecast: the last forecast day's weather carried forward." : {
       "comment" : "Score footnote: scored by persistence beyond the provider's horizon"
@@ -1067,6 +1084,21 @@
     "Drive time estimated" : {
       "comment" : "Explains an estimated drive"
     },
+    "Drive to the next area at night, before the shoot." : {
+      "comment" : "Transfer card between two days"
+    },
+    "Drive to the next area early in the morning, before the shoot." : {
+      "comment" : "Transfer card between two days, leaving between midnight and 5 am"
+    },
+    "Drive to the next area in the afternoon, before the shoot." : {
+      "comment" : "Transfer card between two days"
+    },
+    "Drive to the next area in the evening, before the shoot." : {
+      "comment" : "Transfer card between two days"
+    },
+    "Drive to the next area in the morning, before the shoot." : {
+      "comment" : "Transfer card between two days"
+    },
     "Duplicate" : {
       "comment" : "Context menu\nMenu item"
     },
@@ -1168,6 +1200,9 @@
     "Find Spots" : {
       "comment" : "Menu item"
     },
+    "Find hotels" : {
+      "comment" : "Button on an overnight: opens Apple Maps searching for hotels there"
+    },
     "Find real places that fit, with a note on why" : {
       "comment" : "Second line of the Ask Iter suggestion"
     },
@@ -1221,9 +1256,6 @@
     },
     "Forest" : {
       "comment" : "Spot category"
-    },
-    "From %@" : {
-      "comment" : "Under the drive into a day's first stop: where the drive starts"
     },
     "From environment (%@)" : {
       "comment" : "Settings: the key comes from an environment variable"
@@ -1466,11 +1498,11 @@
     "Learn From My Library" : {
       "comment" : "Settings section"
     },
-    "Leave" : {
-      "comment" : "Label under a drive's leave-by time"
-    },
     "Leave Add Spot (Esc)" : {
       "comment" : "Tooltip"
+    },
+    "Leave by" : {
+      "comment" : "Label under a drive's leave-by time"
     },
     "Legal attribution" : {
       "comment" : "Link to Apple Weather legal attribution"
@@ -1726,9 +1758,6 @@
     "Never" : {
       "comment" : "Settings: updates have not been checked yet"
     },
-    "New" : {
-      "comment" : "Toolbar button"
-    },
     "New Folder" : {
       "comment" : "Alert title\nDefault name of a new folder\nMenu item\nToolbar button\nUndo action name"
     },
@@ -1754,7 +1783,7 @@
       "comment" : "Undo action name"
     },
     "New Trip or Location" : {
-      "comment" : "Tooltip"
+      "comment" : "Button\nTooltip"
     },
     "New Trip…" : {
       "comment" : "Menu item: make a trip with this spot on it"
@@ -1815,6 +1844,9 @@
     "No Places in View" : {
       "comment" : "Search Here found nothing in the visible map area"
     },
+    "No Stops" : {
+      "comment" : "Day selector card of a day with no stops"
+    },
     "No coordinates found on the clipboard." : {
       "comment" : "Spot editor: Paste Coordinates found nothing"
     },
@@ -1841,9 +1873,6 @@
     },
     "No spots here" : {
       "comment" : "Locations filter result empty"
-    },
-    "No stops" : {
-      "comment" : "Overview cell of a day with no stops\nVoiceOver: a day with no stops"
     },
     "No stops yet" : {
       "comment" : "Day header for a day with no stops"
@@ -1886,6 +1915,9 @@
     },
     "Not supported on this Mac" : {
       "comment" : "Onboarding Ask: hardware too old (Mac)"
+    },
+    "Note" : {
+      "comment" : "Accessibility label of a stop's note field"
     },
     "Note from Apple Intelligence" : {
       "comment" : "VoiceOver prefix and tooltip of the on-device model's one-line reason for a suggestion"
@@ -2030,6 +2062,9 @@
     "Overnight" : {
       "comment" : "Boundary between two trip days when the place is unknown"
     },
+    "Overnight near %@" : {
+      "comment" : "Where you sleep between two trip days, e.g. Overnight near Page, AZ"
+    },
     "Overnight · near %@" : {
       "comment" : "Boundary between two trip days; the place is where you sleep, e.g. Overnight · near Page, AZ"
     },
@@ -2040,6 +2075,17 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Park %1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "Park at %@ • %@" : {
+      "comment" : "Park time, then the walk to the shooting spot",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Park at %1$@ • %2$@"
           }
         }
       }
@@ -2233,6 +2279,9 @@
     "Route map" : {
       "comment" : "Accessibility label"
     },
+    "Row" : {
+
+    },
     "Runs when you press Return" : {
       "comment" : "VoiceOver hint on the top search suggestion"
     },
@@ -2295,6 +2344,9 @@
     },
     "Search Apple Maps for %@" : {
       "comment" : "VoiceOver label of the Apple Maps suggestion"
+    },
+    "Search Apple Maps for hotels near this overnight" : {
+      "comment" : "Tooltip"
     },
     "Search Apple Maps for “%@”" : {
       "comment" : "List row that runs an Apple Maps search"
@@ -2406,7 +2458,7 @@
     "Show Trip" : {
       "comment" : "Place card: open the trip the spot was just added to"
     },
-    "Show every day on the map" : {
+    "Show or hide the Trip Builder" : {
       "comment" : "Tooltip"
     },
     "Show spots near you" : {
@@ -2416,7 +2468,10 @@
       "comment" : "Help"
     },
     "Show this day" : {
-      "comment" : "Button that selects the best day\nTooltip"
+      "comment" : "Button that selects the best day"
+    },
+    "Show this day on the map" : {
+      "comment" : "Tooltip"
     },
     "Show this day's windows" : {
       "comment" : "Help"
@@ -2608,7 +2663,7 @@
       }
     },
     "Sunrise" : {
-      "comment" : "Best light a spot is known for\nDay header: sunrise\nLight intent\nLight window: golden hour after sunrise\nShort light window name for pins\nSun event"
+      "comment" : "Best light a spot is known for\nDay card: sunrise\nLight intent\nLight window: golden hour after sunrise\nShort light window name for pins\nSun event"
     },
     "Sunrise %@" : {
       "comment" : "A day's sunrise only"
@@ -2628,7 +2683,7 @@
       "comment" : "Timeline zoom option"
     },
     "Sunset" : {
-      "comment" : "Best light a spot is known for\nDay header: sunset\nLight intent\nLight window: golden hour before sunset\nShort light window name for pins\nSun event"
+      "comment" : "Best light a spot is known for\nDay card: sunset\nLight intent\nLight window: golden hour before sunset\nShort light window name for pins\nSun event"
     },
     "Sunset %@" : {
       "comment" : "A day's sunset only"
@@ -2750,9 +2805,6 @@
     "This copy of Iter runs in the App Sandbox, so it can't replace itself. Download the new version from GitHub instead." : {
       "comment" : "Update blocked: the app is sandboxed"
     },
-    "This day has schedule conflicts" : {
-      "comment" : "Tooltip"
-    },
     "This file isn't an Iter trip, or it is damaged. Nothing was imported." : {
       "comment" : "Import error"
     },
@@ -2795,6 +2847,9 @@
     "Trip Actions" : {
       "comment" : "Toolbar menu"
     },
+    "Trip Builder" : {
+      "comment" : "Toolbar button: shows or hides the trip builder panel"
+    },
     "Trip Not Found" : {
       "comment" : "Empty state title"
     },
@@ -2805,7 +2860,7 @@
       "comment" : "Offline status: the pinned trip was edited after it downloaded"
     },
     "Trip days" : {
-      "comment" : "Accessibility label of the trip overview strip"
+      "comment" : "Accessibility label of the day selector"
     },
     "Trip name" : {
       "comment" : "Accessibility label\nPlaceholder"
@@ -2935,7 +2990,7 @@
       "comment" : "Place editor field: minutes from parking\nSpot editor field: minutes from parking"
     },
     "Walk-in unknown" : {
-      "comment" : "Spot fact when the walk from parking is not known"
+      "comment" : "Spot fact when the walk from parking is not known\nWalk from parking to the shooting spot is not known, at the start of a line"
     },
     "Waning crescent" : {
       "comment" : "Moon phase"
@@ -3063,9 +3118,6 @@
     "^[%lld Place](inflect: true) in View" : {
       "comment" : "In View section header: number of places Search Here found"
     },
-    "^[%lld conflict](inflect: true)" : {
-
-    },
     "^[%lld conflict](inflect: true) on this day" : {
       "comment" : "Day summary: how many schedule conflicts the day has"
     },
@@ -3102,7 +3154,7 @@
       "comment" : "Marks a drive time that is a straight-line estimate, not a road route"
     },
     "from %@" : {
-      "comment" : "VoiceOver: the sources that list a result, e.g. from Maps, Wikipedia"
+      "comment" : "Transfer card: where the drive starts, after its time and distance\nVoiceOver: the sources that list a result, e.g. from Maps, Wikipedia"
     },
     "high" : {
       "comment" : "Cloud layer name inside a sentence"
@@ -3124,6 +3176,9 @@
     },
     "tomorrow" : {
       "comment" : "VoiceOver: the next window is tomorrow"
+    },
+    "walk in unknown" : {
+      "comment" : "Walk from parking to the shooting spot is not known, in the middle of a line"
     },
     "walk-in unknown" : {
       "comment" : "Walk from parking to the shooting spot is not known"

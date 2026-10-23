@@ -10,10 +10,18 @@ struct AddStopButton: View {
         Button(action: action) {
             Label(String(localized: "Add Stop", comment: "Button at the end of a day"), systemImage: "plus")
                 .font(BuilderType.control)
+                #if os(iOS)
+                // iOS: the capsule grows to the 44 pt touch target (GLASS-RULES).
+                .frame(minHeight: IterSize.hitTarget - 12)
+                #endif
         }
         .buttonStyle(.bordered)
         .buttonBorderShape(.capsule)
+        #if os(macOS)
         .controlSize(.small)
+        #else
+        .controlSize(.regular)
+        #endif
         .help(Text("Add a stop to this day, nearest spots first", comment: "Tooltip"))
     }
 }

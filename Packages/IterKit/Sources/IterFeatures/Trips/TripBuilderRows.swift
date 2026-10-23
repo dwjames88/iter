@@ -80,13 +80,14 @@ public struct TripBuilderRow: Identifiable, Equatable, Sendable {
 
 /// The part of the day a moment falls in, for sentences like "Drive to the next area in the morning".
 public enum DayPart: Sendable, Equatable {
-    case morning, afternoon, evening, night
+    case earlyMorning, morning, afternoon, evening, night
 
-    /// 05:00-11:59 morning, 12:00-16:59 afternoon, 17:00-20:59 evening, otherwise night.
+    /// 00:00-04:59 early morning, 05:00-11:59 morning, 12:00-16:59 afternoon, 17:00-20:59 evening, 21:00-23:59 night.
     public static func of(_ date: Date, in zone: TimeZone) -> DayPart {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = zone
         switch calendar.component(.hour, from: date) {
+        case 0..<5: return .earlyMorning
         case 5..<12: return .morning
         case 12..<17: return .afternoon
         case 17..<21: return .evening

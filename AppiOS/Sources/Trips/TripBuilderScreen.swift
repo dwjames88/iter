@@ -128,16 +128,14 @@ private struct TripBuilderContent: View {
     private func planColumn(showsMap: Bool) -> some View {
         VStack(spacing: 0) {
             WeatherStatusBanner(status: model.weatherStatus)
-            TripSummaryBar(plan: plan, builder: builder, collapsible: showsMap, collapsed: $mapCollapsed)
             if showsMap, !mapCollapsed {
                 TripRouteMapView(builder: builder, selectedDay: $selectedDay, onSelectStop: scrollToStop)
                     .frame(height: 220)
                     .transition(.opacity)
             }
-            if builder.layout.groups.count > 1 {
-                TripOverviewStrip(cells: builder.layout.overviewCells, selectedDay: selectedDay) { chooseDay($0) }
-            }
-            TripDayList(plan: plan, builder: builder, selectedDay: $selectedDay, scrollTarget: scrollRequest) { addingToDay = $0 }
+            TripDayList(plan: plan, builder: builder, selectedDay: selectedDay, scrollTarget: scrollRequest,
+                        mapCollapsed: showsMap ? $mapCollapsed : nil, changeDates: { changesDates = true },
+                        chooseDay: chooseDay) { addingToDay = $0 }
         }
         .animation(.snappy, value: mapCollapsed)
     }
@@ -246,57 +244,4 @@ struct DayScrollTarget: Equatable {
 private struct AddStopTarget: Identifiable {
     var day: Int
     var id: Int { day }
-}
-
-// MARK: - Summary bar
-
-/// Dates, size and driving total, the offline badge, and (on iPhone) the chevron that collapses the route map.
-private struct TripSummaryBar: View {
-    let plan: TripPlan
-    let builder: TripBuilderModel
-    let collapsible: Bool
-    @Binding var collapsed: Bool
-
-    var body: some View {
-        HStack(spacing: IterSpace.sm) {
-            VStack(alignment: .leading, spacing: IterSpace.xxs) {
-                Text(TimeText.dateRange(from: plan.startDay, to: plan.day(plan.dayCount - 1)))
-                    .font(.subheadline)
-                    .foregroundStyle(IterColor.textSecondary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                Text(summary)
-                    .font(IterFont.subheadline)
-                    .foregroundStyle(IterColor.textPrimary)
-                    .monospacedDigit()
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-            }
-            Spacer(minLength: IterSpace.sm)
-            OfflineStatusBadge(tripID: plan.id, style: .row)
-            if collapsible {
-                Button { collapsed.toggle() } label: {
-                    Image(systemName: "chevron.down")
-                        .rotationEffect(.degrees(collapsed ? 180 : 0))
-                        .font(IterFont.bodyEmphasis)
-                        .foregroundStyle(IterColor.textSecondary)
-                        .frame(width: IterSize.hitTarget, height: IterSize.hitTarget)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel(collapsed ? Text("Show route map", comment: "Accessibility label") : Text("Hide route map", comment: "Accessibility label"))
-            }
-        }
-        .padding(.leading, IterSpace.lg)
-        .padding(.trailing, collapsible ? IterSpace.xs : IterSpace.lg)
-        .padding(.vertical, IterSpace.xs)
-        .frame(minHeight: IterSize.hitTarget + IterSpace.sm)
-        .screenBackground(ignoresSafeAreaEdges: [])
-    }
-
-    private var summary: String {
-        let size = TimeText.dayAndStops(days: plan.dayCount, stops: plan.stops.count)
-        guard builder.totalDriveSeconds >= 60 else { return size }
-        return "\(size) · \(TimeText.duration(builder.totalDriveSeconds)) \(String(localized: "driving", comment: "Trip summary: after a drive time"))"
-    }
 }

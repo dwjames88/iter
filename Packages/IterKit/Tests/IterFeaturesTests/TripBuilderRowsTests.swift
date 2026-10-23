@@ -118,7 +118,7 @@ import IterData
                                                           hour: hour, minute: minute))!
             return DayPart.of(date, in: zone)
         }
-        #expect(part(4, 59) == .night)
+        #expect(part(4, 59) == .earlyMorning)
         #expect(part(5, 0) == .morning)
         #expect(part(11, 59) == .morning)
         #expect(part(12, 0) == .afternoon)
@@ -126,7 +126,8 @@ import IterData
         #expect(part(17, 0) == .evening)
         #expect(part(20, 59) == .evening)
         #expect(part(21, 0) == .night)
-        #expect(part(0, 0) == .night)
+        #expect(part(0, 0) == .earlyMorning)
+        #expect(part(23, 59) == .night)
     }
 
     @Test func daySummariesFallBackToTheFirstStopsSession() async {

@@ -340,14 +340,14 @@ import IterFeatures
         #expect(NSFont.preferredFont(forTextStyle: .body).pointSize > 0)
     }
 
-    @Test func eventScoreWidthsArePositive() {
-        for variant: EventScore.Variant in [.compact, .regular, .large, .pin] {
-            #expect(EventScore.laneWidth(variant) > 0)
-            #expect(EventScore.unitWidth(variant, timeStyle: .start) > EventScore.laneWidth(variant))
+    @Test func scoreChipWidthsArePositive() {
+        for size in ScoreChip.Size.allCases {
+            #expect(ScoreChip.scoreFieldWidth(size) > 0)
+            #expect(ScoreChip.maxWidth(size: size, timeStyle: .start) > ScoreChip.scoreFieldWidth(size))
         }
     }
 
-    @Test func largerVariantsAreWider() {
-        #expect(EventScore.unitWidth(.large, timeStyle: .start) > EventScore.unitWidth(.compact, timeStyle: .start))
+    @Test func largerSizesAreWider() {
+        #expect(ScoreChip.maxWidth(size: .large, timeStyle: .start) > ScoreChip.maxWidth(size: .compact, timeStyle: .start))
     }
 }

@@ -63,23 +63,18 @@ struct DriveSegmentRow: View {
                 if let summary {
                     HStack(alignment: .firstTextBaseline, spacing: 8) {
                         Image(systemName: "info.circle").font(BuilderType.body).foregroundStyle(IterColor.accentText).accessibilityHidden(true)
-                        HStack(spacing: 4) {
-                            Text(summary).foregroundStyle(IterColor.textPrimary).monospacedDigit()
-                            if let from {
-                                Text("from \(from)", comment: "Transfer card: where the drive starts, after its time and distance")
-                                    .foregroundStyle(IterColor.textTertiary)
-                                    .lineLimit(1)
-                            }
+                        ViewThatFits(in: .horizontal) {
+                            HStack(spacing: 4) { summaryParts(summary, from) }
+                            VStack(alignment: .leading, spacing: 2) { summaryParts(summary, from) }
                         }
                         .font(BuilderType.body)
                     }
                 }
                 if let warning { warningLine(warning) }
                 if let overnight {
-                    HStack(spacing: 8) {
-                        Image(systemName: "moon.zzz").font(BuilderType.bodyStrong).accessibilityHidden(true)
-                        Text(overnight).font(BuilderType.bodyStrong).lineLimit(1)
-                        if let hotels { FindHotelsButton(coordinate: hotels) }
+                    ViewThatFits(in: .horizontal) {
+                        HStack(spacing: 8) { overnightParts(overnight, hotels) }
+                        VStack(alignment: .leading, spacing: 4) { overnightParts(overnight, hotels) }
                     }
                     .foregroundStyle(IterColor.textTertiary)
                 }
@@ -90,6 +85,23 @@ struct DriveSegmentRow: View {
         .background(IterColor.backgroundContent, in: RoundedRectangle(cornerRadius: BuilderMetrics.innerCorner, style: .continuous))
         .padding(.horizontal, 24)
         .accessibilityElement(children: .contain)
+    }
+
+    @ViewBuilder private func summaryParts(_ summary: String, _ from: String?) -> some View {
+        Text(summary).foregroundStyle(IterColor.textPrimary).monospacedDigit()
+        if let from {
+            Text("from \(from)", comment: "Transfer card: where the drive starts, after its time and distance")
+                .foregroundStyle(IterColor.textTertiary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    @ViewBuilder private func overnightParts(_ overnight: String, _ hotels: Coordinate?) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: "moon.zzz").font(BuilderType.bodyStrong).accessibilityHidden(true)
+            Text(overnight).font(BuilderType.bodyStrong).fixedSize(horizontal: false, vertical: true)
+        }
+        if let hotels { FindHotelsButton(coordinate: hotels) }
     }
 
     // MARK: Shared
