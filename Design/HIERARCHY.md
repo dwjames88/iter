@@ -23,11 +23,11 @@ Module titles use `type/moduleTitle` (subheadline 11 semibold, `text/secondary`,
 - **Lanes** (left to right, fixed widths so columns line up across rows; tokens under `grid/lane/*`):
   1. disclosure (chevron) 16, or absent for the whole list (never present on some rows and blank on others unless the list has expandable rows; then the blank lane is kept so text aligns),
   2. label (flexible): window name, day or spot name,
-  3. event unit (fixed: head and tail at their widest, measured; symbol, score and time live inside it),
-  The time is part of the event unit, never a lane of its own, and the unit is the whole rating: there is no band-word or confidence lane (the band and confidence are in the unit's VoiceOver label and tooltip, and the legend behind the sidebar's "i" explains the colours and scores).
+  3. event unit, the score chip (fixed: one width per size at every score, the score field as wide as "100"; the symbol over the time, then the score, live inside it),
+  The time is part of the score chip, never a lane of its own, and the chip is the whole rating: there is no band-word or confidence lane (the band and confidence are in the unit's VoiceOver label and tooltip, and the legend behind the sidebar's "i" explains the colours and scores).
   Lane gap 8 (`grid/lane/gap`).
 - **Baselines.** Text in every lane of a row shares the first text baseline (`HStack(alignment: .firstTextBaseline)`); the event unit's number sits on that baseline.
-- **Row heights.** Single-line rows 32 (`grid/row/single`), two-line rows 48 (`grid/row/double`). Rows are a minimum height, so a wrapping name grows the row in 16 pt steps of feel, never by odd padding.
+- **Row heights.** Single-line rows 32 (`grid/row/single`), two-line rows 48 (`grid/row/double`). Rows are a minimum height, so a wrapping name grows the row in 16 pt steps of feel, never by odd padding; a row holding a 38 pt small score chip is as tall as the chip needs.
 - **Section headers** have one treatment: `type/moduleTitle`, 8 below it to the content, 24 above it from the previous section.
 - **Check it.** Debug ▸ Show Layout Grid overlays the 8 pt grid and the lane guides on every list and card.
 

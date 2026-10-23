@@ -19,7 +19,7 @@ Measured from Apple Maps. The latest values (b15548c) supersede earlier ones suc
 - Corner buttons: 32 pt glass circles (`GlassCircleButtonStyle.swift`), used for Share, Close, filter and sort menus; previous and next share one glass capsule.
 - Card corner 27.5 pt, concentric with the 32 pt corner buttons (the older 26 pt card went with 29 pt buttons). Do not hand-pick radii.
 - Panels, imagery and prominent buttons use `ConcentricRectangle`, concentric with the window or parent shape.
-- Sidebar search: 37 pt glass capsule, 13 pt text, 15 pt inset from the sidebar edges.
+- Sidebar search: 37 pt glass capsule, 13 pt text, 12 pt inset from the sidebar edges (the Figma sidebar's padding). The sidebar is 280 pt wide on the paper background; its bottom bar holds plain borderless buttons (info, +), no glass.
 - Action tiles: 39 to 52 pt tall, one style and shape per row (`PlaceActionStyle.swift`); the main action filled with the accent, the rest the accent on a faint accent fill (or bordered, monochrome labels on iOS).
 - Filter chips: 44 pt, system toggle buttons, monochrome (`FilterChip` and `filterChipStyle()` in `AppiOS/Sources/Explore/Components/SheetComponents.swift`).
 - Map controls: one stack (`MapControlStack.swift`); Windy and Add Spot share a glass capsule at the top of it, not the toolbar.
@@ -27,7 +27,7 @@ Measured from Apple Maps. The latest values (b15548c) supersede earlier ones suc
 ## Components
 
 - System components for everything: `List`, `NavigationStack`, toolbars, `Toggle`, `Menu`, `Picker`. Do not rebuild them. `RoundGlassButton` is gone; do not bring it back.
-- Mac: full-bleed map under the toolbar, list on a floating glass card (`FloatingPanelLayout`, `FloatingPanelHeader`). Search lives in the sidebar, not over the card.
+- Mac: full-bleed map under the toolbar, list on a floating glass card (`FloatingPanelLayout`, `FloatingPanelHeader`) in Explore and Locations. Search lives in the sidebar, not over the card. The trip view has no floating card: sidebar, map, and the Trip Builder in the system `.inspector`; its cards (header, day selector, days, stops) are solid content, and only the Share and More buttons in the header card are glass.
 - iOS: large-title navigation bars; title, count and More/Share in the bar's toolbar glass group; an opened place is pushed in the sheet with the system Close and previous/next in the toolbar.
 - iPhone: the map fills the screen and one floating system sheet (peek, half, full) holds the tab bar at its foot. Use system detents, no hand-built sheet or drag gesture.
 - iPad: one glass column; header and close are system glass buttons.

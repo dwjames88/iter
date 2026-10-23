@@ -183,32 +183,32 @@ Every token, its values and its one job. Generated from the registry.
 | `grid/lane/disclosure` | 16 | Width of the disclosure (chevron) lane. |
 | `grid/row/single` | 32 | Minimum height of a single-line row. |
 | `grid/row/double` | 48 | Minimum height of a two-line row. |
-| `event/height/compact` | 26 | Event unit height for pins, outlook days and Add Stop rows (a soft rounded rectangle, not a capsule). |
-| `event/height/regular` | 32 | Event unit height in list rows (Explore, Locations, trip stops, day windows), about the height of the old pill plus one line of padding. |
-| `event/height/large` | 52 | Event unit height in panel and page headers and trip overview cells. |
-| `event/cornerRatio` | 0.25 | Event unit corner radius as a fraction of its height (a ratio, not points). |
-| `event/score/compact` | 14 | Score numeral point size in the compact unit (heavy weight). |
-| `event/score/regular` | 16 | Score numeral point size in the regular unit: 3 pt above body text (13 pt). |
-| `event/score/large` | 30 | Score numeral point size in the large unit. |
-| `event/time/compact` | 8 | Start time point size in the compact unit (light weight; 8 pt is the legible minimum). |
-| `event/time/regular` | 9 | Start time point size in the regular unit (light weight). |
-| `event/time/large` | 12 | Start time point size in the large unit. |
-| `event/symbol/compact` | 8 | Window symbol point size above the time in the compact unit. |
-| `event/symbol/regular` | 9 | Window symbol point size above the time in the regular unit. |
-| `event/symbol/large` | 12 | Window symbol point size above the time in the large unit. |
-| `event/stackGap/compact` | 1 | Gap between the symbol and the time in the compact unit. |
-| `event/stackGap/regular` | 2 | Gap between the symbol and the time in the regular unit. |
-| `event/stackGap/large` | 4 | Gap between the symbol and the time in the large unit. |
-| `event/gap` | 6 | Gap between the numeral and the symbol-and-time stack, regular unit. |
-| `event/gapCompact` | 4 | Gap between the numeral and the stack, compact unit. |
-| `event/gapLarge` | 8 | Gap between the numeral and the stack, large unit. |
-| `event/padding` | 8 | Horizontal padding inside the regular unit. |
-| `event/paddingCompact` | 6 | Horizontal padding inside the compact unit. |
-| `event/paddingLarge` | 12 | Horizontal padding inside the large unit. |
+| `event/height/compact` | 26 | Score chip height, compact: map pins and overview cells (not in the design; derived from small, scaled down). |
+| `event/height/small` | 38 | Score chip height, small: list rows and trip stops (the design's small Score, 76 x 38 pt at score 100). |
+| `event/height/large` | 48 | Score chip height, large: headers (the design's large Score, 108 x 48 pt at score 100). |
+| `event/radius/compact` | 9 | Score chip corner radius, compact size (continuous rounded rectangle; a fixed radius, not a ratio of the height). |
+| `event/radius/small` | 12 | Score chip corner radius, small size (continuous rounded rectangle; a fixed radius, not a ratio of the height). |
+| `event/radius/large` | 16 | Score chip corner radius, large size (continuous rounded rectangle; a fixed radius, not a ratio of the height). |
+| `event/score/compact` | 12 | Score numeral point size (semibold, monospaced digits) in the compact score chip. |
+| `event/score/small` | 15 | Score numeral point size (semibold, monospaced digits) in the small score chip. |
+| `event/score/large` | 26 | Score numeral point size (semibold, monospaced digits) in the large score chip. |
+| `event/time/compact` | 7 | Window time and symbol point size (semibold, monospaced digits) in the compact score chip. |
+| `event/time/small` | 8 | Window time and symbol point size (semibold, monospaced digits) in the small score chip. |
+| `event/time/large` | 10 | Window time and symbol point size (semibold, monospaced digits) in the large score chip. |
+| `event/gap/compact` | 5 | Gap between the symbol-and-time column and the numeral in the compact score chip. |
+| `event/gap/small` | 8 | Gap between the symbol-and-time column and the numeral in the small score chip. |
+| `event/gap/large` | 8 | Gap between the symbol-and-time column and the numeral in the large score chip. |
+| `event/padding/compact` | 6 | Horizontal padding inside the chip in the compact score chip. |
+| `event/padding/small` | 8 | Horizontal padding inside the chip in the small score chip. |
+| `event/padding/large` | 12 | Horizontal padding inside the chip in the large score chip. |
+| `event/paddingV/compact` | 4 | Vertical padding inside the chip in the compact score chip. |
+| `event/paddingV/small` | 6 | Vertical padding inside the chip in the small score chip. |
+| `event/paddingV/large` | 8 | Vertical padding inside the chip in the large score chip. |
 | `event/pinShadowRadius` | 4 | Shadow radius under a map pin label. |
 | `event/pinShadowRadiusSelected` | 12 | Shadow radius under the selected map pin label. |
 | `event/pinScaleSelected` | 1.15 | Scale factor (a ratio, not points) of the selected map pin label, anchored at its pointer. |
-| `event/lowConfidenceOpacity` | 0.85 | Opacity of an event chip whose score has low confidence (a ratio, not points). |
+| `event/lowConfidenceOpacity` | 0.85 | Opacity of a score chip whose score has low confidence (a ratio, not points). |
+| `event/hairlineBelowScore` | 45 | Scores below this get a separator hairline around the score chip, because their fill (white to pale peach) is too close to the ground to read as a shape (a score, not points). |
 | `radius/badge` | 6 | Corner radius of Light Index badges and chips. |
 | `radius/control` | 8 | Corner radius of custom controls. |
 | `radius/card` | 12 | Corner radius of cards and thumbnails. |
@@ -236,8 +236,8 @@ Every token, its values and its one job. Generated from the registry.
 | `chart/arcMarker` | 14 | Sun and moon marker diameter on the arc. |
 | `chart/hourlyTintHeight` | 40 | Height of the hourly tint strip. |
 | `chart/windowMinWidth` | 4 | Narrowest a light window may be drawn on the timeline. |
-| `layout/sidebarMin` | 240 | Sidebar minimum width: equal to the ideal, so the sidebar never squeezes; it collapses instead. |
-| `layout/sidebarIdeal` | 240 | Sidebar ideal width. |
+| `layout/sidebarMin` | 280 | Sidebar minimum width: equal to the ideal, so the sidebar never squeezes; it collapses instead. |
+| `layout/sidebarIdeal` | 280 | Sidebar ideal width. |
 | `layout/sidebarMax` | 320 | Sidebar maximum width. |
 | `layout/listMin` | 300 | Content list minimum width. |
 | `layout/listIdeal` | 360 | Content list ideal width. |
