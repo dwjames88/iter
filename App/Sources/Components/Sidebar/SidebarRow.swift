@@ -1,12 +1,14 @@
 import SwiftUI
 import IterDesign
 
-/// A sidebar row: a title and an SF Symbol in the accent colour (monochrome), an optional trailing accessory (for
+/// A sidebar row: a title and an SF Symbol in the accent colour (monochrome, the selection foreground when the row is selected), an optional trailing accessory (for
 /// example an offline badge), one line. The selection highlight is the list's own. Tag it at the call site.
 struct SidebarRow<Accessory: View>: View {
     let title: String
     let systemImage: String
     @ViewBuilder let accessory: () -> Accessory
+    /// `.increased` when the row is selected in an emphasized (key) sidebar: the list fills it with the accent.
+    @Environment(\.backgroundProminence) private var prominence
 
     init(_ title: String, systemImage: String, @ViewBuilder accessory: @escaping () -> Accessory) {
         self.title = title
@@ -24,7 +26,8 @@ struct SidebarRow<Accessory: View>: View {
         } icon: {
             Image(systemName: systemImage)
                 .symbolRenderingMode(.monochrome)
-                .foregroundStyle(IterColor.accent)
+                // Accent on paper; on the accent selection fill follow the label's foreground (white) instead.
+                .foregroundStyle(prominence == .increased ? AnyShapeStyle(.primary) : AnyShapeStyle(IterColor.accent))
         }
     }
 }
