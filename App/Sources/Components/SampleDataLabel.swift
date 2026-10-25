@@ -21,7 +21,11 @@ struct SampleDataLabel: View {
                     Text("Scores use made-up weather. Turn off in the Debug menu.", comment: "Banner explanation")
                         .font(IterFont.caption)
                         .foregroundStyle(IterColor.textSecondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                        // No `fixedSize(vertical:)` here: the banner sits in the sidebar column, and a height that depends
+                        // on the width makes the column's minimum size change during AppKit's constraints pass. With the
+                        // trip inspector open that never settled and AppKit threw "more Update Constraints in Window
+                        // passes than there are views". Unfixed, the text still wraps to the lines it needs.
+                        .lineLimit(nil)
                 }
             } icon: {
                 Image(systemName: "flask").foregroundStyle(IterColor.warning)
