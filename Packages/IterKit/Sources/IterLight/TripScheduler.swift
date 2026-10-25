@@ -50,6 +50,9 @@ public struct TripScheduler: Sendable {
     /// - leaveBy = arriveBy − drive from the previous stop (supplied leg, else a straight-line estimate marked `.driveEstimated`).
     /// - The previous stop is free when its window ends (you shoot through it). Leaving earlier gives `.driveDoesNotFit`.
     ///   This is checked across days too, so an overnight drive is verified rather than assumed.
+    /// - For a stop whose previous stop is on an earlier day, the trip's transfer timing into that day applies. Morning is
+    ///   as above. `.eveningBefore`: leaveBy = the previous stop's window end (nil when that window is missing), and the
+    ///   drive does not fit only when leaveBy + drive is after this stop's arriveBy.
     /// - `.outOfOrder` when, on the same day, this window starts before the previous stop's window.
     public func schedule(_ trip: TripPlan, legs: [LegKey: DriveLeg], windows: SessionWindows? = nil) -> TripSchedule {
         schedule(stops: Self.ordered(trip.stops), in: trip, legs: legs, windows: windows ?? sessionWindows(for: trip))
@@ -69,6 +72,7 @@ public struct TripScheduler: Sendable {
             var issues: [ScheduleIssue] = []
             var setUpBy: Date?, arriveBy: Date?, leaveBy: Date?
             var leg: DriveLeg?
+            var timing: TransferTiming?
             let walkKnown = stop.spot.walkInMinutes != nil
 
             if let window {
@@ -85,10 +89,21 @@ public struct TripScheduler: Sendable {
                     leg = DriveLeg.estimate(from: previous.stop.spot.coordinate, to: stop.spot.coordinate)
                 }
                 if leg?.isEstimate == true { issues.append(.driveEstimated) }
-                if let leg, let arriveBy {
-                    leaveBy = arriveBy.addingTimeInterval(-leg.seconds)
-                    if let freeAt = previous.window?.end, leaveBy! < freeAt {
-                        issues.append(.driveDoesNotFit(shortBySeconds: freeAt.timeIntervalSince(leaveBy!)))
+                if stop.dayIndex > previous.stop.dayIndex { timing = trip.transferTiming(intoDay: stop.dayIndex) }
+                if let leg {
+                    if timing == .eveningBefore {
+                        // The drive starts when the previous session ends; it must be done by this stop's arrival.
+                        if let freeAt = previous.window?.end {
+                            leaveBy = freeAt
+                            if let arriveBy, freeAt.addingTimeInterval(leg.seconds) > arriveBy {
+                                issues.append(.driveDoesNotFit(shortBySeconds: freeAt.addingTimeInterval(leg.seconds).timeIntervalSince(arriveBy)))
+                            }
+                        }
+                    } else if let arriveBy {
+                        leaveBy = arriveBy.addingTimeInterval(-leg.seconds)
+                        if let freeAt = previous.window?.end, leaveBy! < freeAt {
+                            issues.append(.driveDoesNotFit(shortBySeconds: freeAt.timeIntervalSince(leaveBy!)))
+                        }
                     }
                 }
                 if let window, let prevWindow = previous.window,
@@ -98,7 +113,8 @@ public struct TripScheduler: Sendable {
             }
 
             result.append(StopSchedule(stopID: stop.id, window: window, setUpBy: setUpBy, arriveBy: arriveBy, leaveBy: leaveBy,
-                                       legFromPrevious: leg, walkInKnown: walkKnown, issues: issues))
+                                       legFromPrevious: leg, walkInKnown: walkKnown, issues: issues,
+                                       transferTiming: timing))
             previous = (stop, window)
         }
         return TripSchedule(stops: result)

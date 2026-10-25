@@ -57,6 +57,24 @@ import IterData
         #expect(!rows[6...].contains { if case .drive = $0.kind { true } else { false } })
     }
 
+    @Test func theTransferRowCarriesTheTimingTheNoteAndTheDestinationOvernight() async {
+        let h = TripHarness()
+        let trip = h.makeTrip()
+        let model = h.model(for: trip)
+        await model.waitForLegs()
+        let arriving = model.days[1].stops[0]
+        model.setDriveNote(arriving.id, to: "Fuel in Kanab")
+        model.setTransferTiming(intoDay: 1, to: .eveningBefore)
+        let rows = TripBuilderRow.make(model.layout)
+        guard case .transfer(let drive, let overnight) = rows[5].kind else { Issue.record("transfer"); return }
+        #expect(drive?.transferTiming == .eveningBefore)
+        #expect(drive?.note == "Fuel in Kanab")
+        #expect(overnight?.spotName == arriving.stop.spot.name)
+        #expect(overnight == model.layout.groups[0].overnightAfter)
+        // The inline drive of day 0 has no timing.
+        if case .drive(let inline) = rows[2].kind { #expect(inline.transferTiming == nil) } else { Issue.record("drive") }
+    }
+
     @Test func aMiddleDayWithNoStopsKeepsTheOvernightInItsFooter() async {
         let h = TripHarness()
         let trip = h.store.createTrip(name: "Gap", startDay: TripHarness.start, dayCount: 3)

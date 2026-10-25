@@ -179,6 +179,85 @@ import IterData
         #expect(!model.days[0].hasEstimatedDrive)
         #expect(model.days[0].sunrise != nil && model.days[0].sunset != nil)
     }
+
+    @Test func eveningBeforeMovesTheOvernightDriveToTheDayBefore() async {
+        let h = TripHarness()
+        let trip = h.makeTrip()
+        let model = h.model(for: trip, drives: FakeDrives(minutes: 30))
+        await model.waitForLegs()
+        #expect(model.days[1].transferTiming == .morning)
+        model.setTransferTiming(intoDay: 1, to: .eveningBefore)
+        #expect(model.days[1].transferTiming == .eveningBefore)
+        #expect(model.days[0].transferTiming == .morning)
+        #expect(model.days[0].drivingSeconds == 60 * 60)   // Mesa -> Delicate, then the overnight drive
+        #expect(model.days[1].drivingSeconds == 0)
+        #expect(model.days[1].stops[0].schedule?.transferTiming == .eveningBefore)
+        model.setTransferTiming(intoDay: 1, to: .morning)
+        #expect(model.days[0].drivingSeconds == 30 * 60)
+        #expect(model.days[1].drivingSeconds == 30 * 60)
+    }
+
+    @Test func eveningBeforeMovesTheOvernightToTheDestination() async {
+        let h = TripHarness()
+        let trip = h.makeTrip()
+        let model = h.model(for: trip)
+        await model.waitForLegs()
+        let delicate = model.days[0].stops[1].stop.spot
+        let horseshoe = model.days[1].stops[0].stop.spot
+        #expect(model.layout.groups[0].overnightAfter?.spotName == delicate.name)
+        model.setTransferTiming(intoDay: 1, to: .eveningBefore)
+        let overnight = model.layout.groups[0].overnightAfter
+        #expect(overnight?.spotName == horseshoe.name)
+        #expect(overnight?.locality == horseshoe.locality)
+        #expect(overnight?.coordinate == horseshoe.coordinate)
+        model.setTransferTiming(intoDay: 1, to: .morning)
+        #expect(model.layout.groups[0].overnightAfter?.spotName == delicate.name)
+    }
+
+    @Test func timingAndDriveNotePersistAndSurviveARefresh() async {
+        let h = TripHarness()
+        let trip = h.makeTrip()
+        let model = h.model(for: trip)
+        await model.waitForLegs()
+        let arriving = model.days[1].stops[0].id
+        model.setTransferTiming(intoDay: 1, to: .eveningBefore)
+        model.setDriveNote(arriving, to: "Sleep in Page")
+        model.refresh()
+        #expect(model.plan?.transferTimings == [1: .eveningBefore])
+        #expect(model.plan?.stops.first { $0.id == arriving }?.driveNote == "Sleep in Page")
+        #expect(trip.transferTimingsRaw == "1:eveningBefore")
+        let fresh = h.model(for: trip)
+        #expect(fresh.days[1].transferTiming == .eveningBefore)
+        guard case .driveIn(let drive)? = fresh.layout.groups[1].items.first else { Issue.record("driveIn"); return }
+        #expect(drive.note == "Sleep in Page")
+        #expect(drive.transferTiming == .eveningBefore)
+    }
+
+    @Test func timingAndDriveNoteEditsAreUndoable() async {
+        let h = TripHarness()
+        let undo = UndoManager()
+        undo.groupsByEvent = false
+        let trip = h.makeTrip()
+        h.store.undoManager = undo
+        let model = h.model(for: trip)
+        let arriving = model.days[1].stops[0].id
+        undo.beginUndoGrouping()
+        model.setTransferTiming(intoDay: 1, to: .eveningBefore)
+        undo.endUndoGrouping()
+        undo.beginUndoGrouping()
+        model.setDriveNote(arriving, to: "Fuel up")
+        undo.endUndoGrouping()
+        undo.undo()
+        model.refresh()
+        #expect(model.plan?.stops.first { $0.id == arriving }?.driveNote == "")
+        #expect(model.days[1].transferTiming == .eveningBefore)
+        undo.undo()
+        model.refresh()
+        #expect(model.days[1].transferTiming == .morning)
+        undo.redo()
+        model.refresh()
+        #expect(model.days[1].transferTiming == .eveningBefore)
+    }
 }
 
 @MainActor

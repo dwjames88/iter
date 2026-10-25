@@ -27,7 +27,8 @@ public struct TripDay: Identifiable, Sendable, Equatable {
     public var index: Int
     public var day: LocalDay
     public var stops: [TripStopEntry]
-    /// Driving between this day's stops plus the drive into its first stop from the day before.
+    /// Driving between this day's stops plus the drive into its first stop from the day before (a morning transfer; an
+    /// evening-before transfer counts toward the day before instead).
     public var drivingSeconds: TimeInterval
     /// Any of those drives is a straight-line estimate.
     public var hasEstimatedDrive: Bool
@@ -35,6 +36,8 @@ public struct TripDay: Identifiable, Sendable, Equatable {
     public var sunrise: Date?
     public var sunset: Date?
     public var timeZoneIdentifier: String?
+    /// When the drive into this day's first stop happens (morning for the first day and when there is no such drive).
+    public var transferTiming: TransferTiming = .morning
 
     public var id: Int { index }
     public var timeZone: TimeZone { timeZoneIdentifier.flatMap(TimeZone.init(identifier:)) ?? .current }
@@ -614,27 +617,36 @@ public final class TripBuilderModel {
     private func buildDays(plan: TripPlan, schedule: TripSchedule) -> [TripDay] {
         var number = 0
         var previous: TripStopPlan?
-        var out: [TripDay] = []
+        var entriesByDay: [[TripStopEntry]] = Array(repeating: [], count: plan.dayCount)
+        var driving: [TimeInterval] = Array(repeating: 0, count: plan.dayCount)
+        var estimated: [Bool] = Array(repeating: false, count: plan.dayCount)
         for index in 0..<plan.dayCount {
-            let date = plan.day(index)
-            var entries: [TripStopEntry] = []
-            var driving: TimeInterval = 0
-            var estimated = false
             for stop in plan.stops(onDay: index) {
                 number += 1
                 guard let light = lights[stop.id] else { continue }
                 let entrySchedule = schedule.schedule(for: stop.id)
                 if let leg = entrySchedule?.legFromPrevious {
-                    driving += leg.seconds
-                    if leg.isEstimate { estimated = true }
+                    // An evening-before transfer is driven the day before, after the previous stop.
+                    var driveDay = index
+                    if let previous, previous.dayIndex < index, plan.transferTiming(intoDay: index) == .eveningBefore {
+                        driveDay = previous.dayIndex
+                    }
+                    driving[driveDay] += leg.seconds
+                    if leg.isEstimate { estimated[driveDay] = true }
                 }
-                entries.append(TripStopEntry(stop: stop, number: number, schedule: entrySchedule, previous: previous,
-                                             windows: light.windows, sessionWindow: light.window(stop.session)))
+                entriesByDay[index].append(TripStopEntry(stop: stop, number: number, schedule: entrySchedule, previous: previous,
+                                                         windows: light.windows, sessionWindow: light.window(stop.session)))
                 previous = stop
             }
+        }
+        var out: [TripDay] = []
+        for index in 0..<plan.dayCount {
+            let entries = entriesByDay[index]
             let first = entries.first.flatMap { lights[$0.id] }
-            out.append(TripDay(index: index, day: date, stops: entries, drivingSeconds: driving, hasEstimatedDrive: estimated,
-                               sunrise: first?.sun.sunrise, sunset: first?.sun.sunset, timeZoneIdentifier: first?.timeZoneIdentifier))
+            out.append(TripDay(index: index, day: plan.day(index), stops: entries, drivingSeconds: driving[index],
+                               hasEstimatedDrive: estimated[index],
+                               sunrise: first?.sun.sunrise, sunset: first?.sun.sunset, timeZoneIdentifier: first?.timeZoneIdentifier,
+                               transferTiming: plan.transferTiming(intoDay: index)))
         }
         return out
     }
@@ -743,6 +755,20 @@ public final class TripBuilderModel {
     public func setNote(_ id: UUID, to note: String) {
         guard let stop = stopRecord(id) else { return }
         store.setNote(stop, to: note)
+        refresh()
+    }
+
+    /// Chooses whether the transfer into `day` is driven in the morning or the evening before.
+    public func setTransferTiming(intoDay day: Int, to timing: TransferTiming) {
+        guard let record = record() else { return }
+        store.setTransferTiming(record, intoDay: day, to: timing)
+        refresh()
+    }
+
+    /// Sets the note about the drive into the stop `stopID` (it stays with that stop if stops are reordered).
+    public func setDriveNote(_ stopID: UUID, to note: String) {
+        guard let stop = stopRecord(stopID) else { return }
+        store.setDriveNote(stop, to: note)
         refresh()
     }
 

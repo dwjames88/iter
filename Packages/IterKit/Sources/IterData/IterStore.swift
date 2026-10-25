@@ -7,7 +7,7 @@ import IterCore
 /// Every mutation the store performs; each registers one undo group named by `IterStore.actionName`.
 public enum StoreAction: String, Sendable, CaseIterable {
     case createTrip, createTripFromTemplate, renameTrip, setTripNotes, setDates, duplicateTrip, deleteTrip, importTrip
-    case addStop, removeStop, moveStop, reorderStops, setSession, setNote, setBuffer
+    case addStop, removeStop, moveStop, reorderStops, setSession, setNote, setBuffer, setDriveNote, setTransferTiming
     case setSaved, createUserSpot, updatePlace, moveSpot, deletePlace
     case createFolder, newFolderWithSelection, renameFolder, deleteFolder, moveFolder, moveTrips, movePlaces, pinTrip, unpinTrip, pinFolder, unpinFolder, pinPlace, unpinPlace
 }
@@ -103,6 +103,7 @@ public final class IterStore {
             let displaced = ordered.filter { $0.dayIndex > last }
             trip.startDay = startDay
             trip.dayCount = count
+            trip.transferTimings = trip.transferTimings.filter { $0.key < count }
             if !displaced.isEmpty {
                 let kept = ordered.filter { $0.dayIndex == last }
                 for stop in displaced { stop.dayIndex = last }
@@ -119,6 +120,7 @@ public final class IterStore {
         perform(.duplicateTrip) {
             let copy = makeTrip(name: name ?? trip.name, startDay: trip.startDay, dayCount: trip.dayCount)
             copy.notes = trip.notes
+            copy.transferTimingsRaw = trip.transferTimingsRaw
             for stop in trip.orderedStops {
                 let new = StopRecord()
                 context.insert(new)
@@ -129,6 +131,7 @@ public final class IterStore {
                 new.sessionRaw = stop.sessionRaw
                 new.setUpBufferMinutes = stop.setUpBufferMinutes
                 new.note = stop.note
+                new.driveNote = stop.driveNote
             }
             // Filed with the original, right after it.
             copy.folder = trip.folder
@@ -217,6 +220,24 @@ public final class IterStore {
     public func setNote(_ stop: StopRecord, to note: String) {
         guard stop.note != note else { return }
         editStop(stop, .setNote) { $0.note = note }
+    }
+
+    /// Sets the note about the drive into `stop`. It stays with that stop when stops are reordered.
+    public func setDriveNote(_ stop: StopRecord, to note: String) {
+        guard stop.driveNote != note else { return }
+        editStop(stop, .setDriveNote) { $0.driveNote = note }
+    }
+
+    /// Chooses when the transfer into `day` (a day after the first) happens. Morning is the default.
+    public func setTransferTiming(_ trip: TripRecord, intoDay day: Int, to timing: TransferTiming) {
+        guard day > 0, day < trip.dayCount, trip.transferTiming(intoDay: day) != timing else { return }
+        perform(.setTransferTiming) {
+            touch(trip)
+            var timings = trip.transferTimings
+            timings[day] = timing == .morning ? nil : timing
+            trip.transferTimings = timings
+            trip.updatedAt = .now
+        }
     }
 
     public func setBuffer(_ stop: StopRecord, minutes: Int) {
@@ -412,11 +433,13 @@ public final class IterStore {
             let plan = document.trip
             let trip = makeTrip(name: plan.name, startDay: plan.startDay, dayCount: plan.dayCount)
             trip.notes = plan.notes
+            trip.transferTimings = plan.transferTimings.filter { $0.key < trip.dayCount }
             for stop in plan.stops {
                 let place = upsertPlace(for: stop.spot)
                 let record = insertStop(place: place, in: trip, day: stop.dayIndex, session: stop.session, index: nil)
                 record.setUpBufferMinutes = stop.setUpBufferMinutes
                 record.note = stop.note
+                record.driveNote = stop.driveNote
             }
             return trip
         }

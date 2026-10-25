@@ -226,3 +226,74 @@ private func leg(_ a: TripStopPlan, _ b: TripStopPlan, minutes: Double) -> (LegK
         #expect(sch.suggestOrdering(trip([dark, evening], days: 1), legs: [:]).isEmpty)
     }
 }
+
+@Suite struct TransferTimingSchedule {
+    private func plan(_ stops: [TripStopPlan], timings: [Int: TransferTiming]) -> TripPlan {
+        TripPlan(name: "t", startDay: testDay, dayCount: 2, stops: stops, transferTimings: timings)
+    }
+
+    @Test func eveningBeforeLeavesWhenThePreviousSessionEnds() {
+        let a = stop("a", day: 0, .goldenEvening)
+        let b = stop("b", day: 1, .goldenMorning, walk: 0)
+        let legs = Dictionary(uniqueKeysWithValues: [leg(a, b, minutes: 5 * 60)])
+        let s = scheduler.schedule(plan([a, b], timings: [1: .eveningBefore]), legs: legs)
+        let sa = s.schedule(for: a.id)!, sb = s.schedule(for: b.id)!
+        #expect(sb.leaveBy == sa.window!.end)
+        #expect(sb.transferTiming == .eveningBefore)
+        #expect(sb.issues.isEmpty)
+        #expect(sa.transferTiming == nil)
+    }
+
+    @Test func eveningBeforeDoesNotFitWhenTheDriveIsLongerThanTheGap() {
+        let a = stop("a", day: 0, .goldenEvening)
+        let b = stop("b", day: 1, .goldenMorning, walk: 0)
+        let legs = Dictionary(uniqueKeysWithValues: [leg(a, b, minutes: 13 * 60)])
+        let s = scheduler.schedule(plan([a, b], timings: [1: .eveningBefore]), legs: legs)
+        let sa = s.schedule(for: a.id)!, sb = s.schedule(for: b.id)!
+        let short = sa.window!.end.addingTimeInterval(13 * 3600).timeIntervalSince(sb.arriveBy!)
+        #expect(short > 0)
+        #expect(sb.issues == [.driveDoesNotFit(shortBySeconds: short)])
+        #expect(sb.leaveBy == sa.window!.end)
+    }
+
+    @Test func eveningBeforeWithAMissingPreviousWindowHasNoLeaveBy() {
+        var eph = FixedEphemeris()
+        let normal = eph.sun
+        eph.sun = { d in d == testDay ? SunEvents(day: d, kind: .polarDay, solarNoon: FixedEphemeris.at(d, 12)) : normal(d) }
+        let sch = TripScheduler(engine: LightEngine(ephemeris: eph))
+        let a = stop("a", day: 0, .goldenEvening)
+        let b = stop("b", day: 1, .goldenMorning, walk: 0)
+        let legs = Dictionary(uniqueKeysWithValues: [leg(a, b, minutes: 60)])
+        let sb = sch.schedule(plan([a, b], timings: [1: .eveningBefore]), legs: legs).schedule(for: b.id)!
+        #expect(sb.leaveBy == nil)
+        #expect(!sb.issues.contains { if case .driveDoesNotFit = $0 { true } else { false } })
+    }
+
+    @Test func morningIsTheDefaultAndSameDayDrivesIgnoreTheTiming() {
+        let a = stop("a", day: 0, .goldenMorning)
+        let b = stop("b", day: 0, .goldenEvening, walk: 0)
+        let c = stop("c", day: 1, .goldenMorning, walk: 0)
+        let legs = Dictionary(uniqueKeysWithValues: [leg(a, b, minutes: 20), leg(b, c, minutes: 60)])
+        let morning = scheduler.schedule(plan([a, b, c], timings: [:]), legs: legs)
+        let explicit = scheduler.schedule(plan([a, b, c], timings: [1: .morning]), legs: legs)
+        #expect(morning == explicit)
+        let sc = morning.schedule(for: c.id)!
+        #expect(sc.leaveBy == sc.arriveBy!.addingTimeInterval(-3600))
+        #expect(sc.transferTiming == .morning)
+        #expect(morning.schedule(for: b.id)!.transferTiming == nil)
+        // A timing keyed to day 0 or to a day that does not start with an overnight drive is harmless.
+        #expect(plan([a], timings: [0: .eveningBefore]).transferTiming(intoDay: 0) == .morning)
+        let evening = scheduler.schedule(plan([a, b, c], timings: [1: .eveningBefore]), legs: legs)
+        #expect(evening.schedule(for: b.id) == morning.schedule(for: b.id))
+    }
+
+    @Test func orderingSuggestionsStayConsistentWithTheTiming() {
+        let a = stop("a", day: 0, .goldenEvening)
+        let b = stop("b", day: 1, .goldenMorning, walk: 0)
+        let t = plan([a, b], timings: [1: .eveningBefore])
+        let legs = Dictionary(uniqueKeysWithValues: [leg(a, b, minutes: 13 * 60)])
+        #expect(scheduler.schedule(t, legs: legs).issueCount == 1)
+        #expect(scheduler.suggestOrdering(t, legs: legs).isEmpty)
+        #expect(scheduler.legPairsNeeded(for: t) == [LegKey(a.id, b.id)])
+    }
+}

@@ -204,9 +204,80 @@ import IterCore
         #expect(store.lastSaveError == nil)
     }
 
-    @Test func currentSchemaIsVersionThree() {
+    @Test func versionThreeStoreMigratesToVersionFour() throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("iter-migration-v3-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: dir) }
+        let url = dir.appendingPathComponent("iter.store")
+        let folderID = UUID(), placeID = UUID(), tripID = UUID(), stopAID = UUID(), stopBID = UUID()
+        let pinned = Date(timeIntervalSince1970: 1_700_000_000)
+
+        do {
+            let schema = Schema(versionedSchema: IterSchemaV3.self)
+            let container = try ModelContainer(for: schema, configurations: [ModelConfiguration(schema: schema, url: url, cloudKitDatabase: .none)])
+            let context = ModelContext(container)
+            let folder = IterSchemaV3.FolderRecord(id: folderID)
+            folder.name = "Road trips"
+            folder.isPinned = true
+            folder.pinnedAt = pinned
+            let place = IterSchemaV3.PlaceRecord(id: placeID)
+            place.name = "Mesa Arch"
+            place.isSaved = true
+            place.isPinned = true
+            place.pinnedAt = pinned
+            let trip = IterSchemaV3.TripRecord(id: tripID)
+            trip.name = "Utah"
+            trip.startDayISO = "2026-10-10"
+            trip.dayCount = 2
+            trip.notes = "Bring tripod"
+            trip.isPinned = true
+            trip.pinnedAt = pinned
+            let a = IterSchemaV3.StopRecord(id: stopAID)
+            a.dayIndex = 0
+            a.note = "First"
+            a.setUpBufferMinutes = 35
+            let b = IterSchemaV3.StopRecord(id: stopBID)
+            b.dayIndex = 1
+            b.note = "Second"
+            for model in [place] { context.insert(model) }
+            context.insert(folder); context.insert(trip); context.insert(a); context.insert(b)
+            trip.folder = folder
+            a.trip = trip; a.place = place
+            b.trip = trip; b.place = place
+            try context.save()
+        }
+
+        let store = IterStore(container: try IterSchema.makeContainer(url: url))
+        let trip = try #require(store.trip(id: tripID))
+        #expect(trip.name == "Utah" && trip.dayCount == 2 && trip.notes == "Bring tripod")
+        #expect(trip.isPinned && trip.pinnedAt == pinned)
+        #expect(trip.folder?.id == folderID)
+        #expect(trip.transferTimingsRaw == "")
+        #expect(trip.plan.transferTiming(intoDay: 1) == .morning)
+        #expect(trip.plan.transferTimings.isEmpty)
+        let stops = trip.orderedStops
+        #expect(stops.map(\.id) == [stopAID, stopBID])
+        #expect(stops.map(\.note) == ["First", "Second"])
+        #expect(stops[0].setUpBufferMinutes == 35)
+        #expect(stops.allSatisfy { $0.driveNote == "" && $0.place?.id == placeID })
+        let folder = try #require(store.folder(id: folderID))
+        #expect(folder.isPinned && folder.pinnedAt == pinned)
+        let place = try #require(store.place(id: placeID))
+        #expect(place.isPinned && place.isSaved && place.pinnedAt == pinned)
+
+        // The new fields work on migrated data.
+        store.setTransferTiming(trip, intoDay: 1, to: .eveningBefore)
+        store.setDriveNote(stops[1], to: "Fuel first")
+        #expect(trip.plan.transferTimings == [1: .eveningBefore])
+        #expect(trip.orderedStops[1].driveNote == "Fuel first")
+        #expect(store.lastSaveError == nil)
+    }
+
+    @Test func currentSchemaIsVersionFour() {
+        #expect(IterSchemaV4.versionIdentifier == Schema.Version(4, 0, 0))
         #expect(IterSchemaV3.versionIdentifier == Schema.Version(3, 0, 0))
-        #expect(IterMigrationPlan.stages.count == 2)
-        #expect(IterSchemaV3.models.count == 4)
+        #expect(IterMigrationPlan.stages.count == 3)
+        #expect(IterMigrationPlan.schemas.count == 4)
+        #expect(IterSchemaV3.models.count == 4 && IterSchemaV4.models.count == 4)
     }
 }

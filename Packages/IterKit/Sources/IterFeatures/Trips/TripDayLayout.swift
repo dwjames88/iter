@@ -33,6 +33,10 @@ public struct TripDriveItem: Identifiable, Sendable, Equatable {
     public var leaveZone: TimeZone
     /// How far the drive is from fitting, nil when it fits.
     public var shortBySeconds: TimeInterval?
+    /// When the drive happens, for a transfer into a day's first stop; nil for a drive between two stops of one day.
+    public var transferTiming: TransferTiming?
+    /// The note about this drive (the arriving stop's `driveNote`).
+    public var note: String = ""
 
     public var id: UUID { toStopID }
     public var fits: Bool { shortBySeconds == nil }
@@ -178,14 +182,20 @@ public struct TripDayLayout: Sendable, Equatable {
                 suggestion: suggestions.first { $0.dayIndex == day.index }, items: items, overnightAfter: nil))
         }
         // Where you sleep: the most recent stop of this or an earlier day (a day with no stops keeps you where you were).
+        // Before an evening-before transfer into the next day, you sleep near that day's first stop, the destination.
         var lastStop: TripStopEntry?
         for position in groups.indices.dropLast() {
             if let last = days[position].stops.last { lastStop = last }
-            if let lastStop {
+            var sleeping = lastStop
+            let next = days[position + 1]
+            if lastStop != nil, next.transferTiming == .eveningBefore, let destination = next.stops.first {
+                sleeping = destination
+            }
+            if let sleeping {
                 groups[position].overnightAfter = OvernightBoundary(afterDay: groups[position].index,
-                                                                    spotName: lastStop.stop.spot.name,
-                                                                    locality: lastStop.stop.spot.locality,
-                                                                    coordinate: lastStop.stop.spot.coordinate)
+                                                                    spotName: sleeping.stop.spot.name,
+                                                                    locality: sleeping.stop.spot.locality,
+                                                                    coordinate: sleeping.stop.spot.coordinate)
             }
         }
         return TripDayLayout(groups: groups)
@@ -194,6 +204,7 @@ public struct TripDayLayout: Sendable, Equatable {
     private static func driveItem(into entry: TripStopEntry, from previous: TripStopPlan) -> TripDriveItem {
         TripDriveItem(toStopID: entry.id, fromName: previous.spot.name, fromLocality: previous.spot.locality,
                       leg: entry.schedule?.legFromPrevious, leaveBy: entry.schedule?.leaveBy,
-                      leaveZone: previous.spot.timeZone, shortBySeconds: entry.driveShortBySeconds)
+                      leaveZone: previous.spot.timeZone, shortBySeconds: entry.driveShortBySeconds,
+                      transferTiming: entry.schedule?.transferTiming, note: entry.stop.driveNote)
     }
 }

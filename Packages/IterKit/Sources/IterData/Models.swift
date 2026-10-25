@@ -167,6 +167,9 @@ public final class TripRecord {
     public var isPinned: Bool = false
     /// When the trip was pinned; orders the pinned group.
     public var pinnedAt: Date?
+    /// Timing of the transfer into each arriving day, as "1:eveningBefore,3:eveningBefore". Morning is the default and is
+    /// not stored; entries that do not parse are ignored.
+    public var transferTimingsRaw: String = ""
 
     @Relationship(deleteRule: .cascade, inverse: \StopRecord.trip)
     public var stops: [StopRecord]?
@@ -191,9 +194,33 @@ public final class TripRecord {
         orderedStops.filter { $0.dayIndex == day }
     }
 
+    /// The stored non-morning transfer timings, keyed by arriving day (a day after the first, within `dayCount`).
+    public var transferTimings: [Int: TransferTiming] {
+        get {
+            var out: [Int: TransferTiming] = [:]
+            for entry in transferTimingsRaw.split(separator: ",") {
+                let parts = entry.split(separator: ":", maxSplits: 1)
+                guard parts.count == 2, let day = Int(parts[0]), day > 0, day < dayCount,
+                      let timing = TransferTiming(rawValue: String(parts[1])), timing != .morning else { continue }
+                out[day] = timing
+            }
+            return out
+        }
+        set {
+            transferTimingsRaw = newValue.filter { $0.key > 0 && $0.value != .morning }
+                .sorted { $0.key < $1.key }
+                .map { "\($0.key):\($0.value.rawValue)" }
+                .joined(separator: ",")
+        }
+    }
+
+    public func transferTiming(intoDay day: Int) -> TransferTiming {
+        transferTimings[day] ?? .morning
+    }
+
     public var plan: TripPlan {
         TripPlan(id: id, name: name, startDay: startDay, dayCount: dayCount,
-                 stops: orderedStops.compactMap(\.plan), notes: notes)
+                 stops: orderedStops.compactMap(\.plan), notes: notes, transferTimings: transferTimings)
     }
 }
 
@@ -205,6 +232,8 @@ public final class StopRecord {
     public var sessionRaw: String = LightWindowKind.goldenEvening.rawValue
     public var setUpBufferMinutes: Int = 20
     public var note: String = ""
+    /// A note about the drive into this stop; see `TripStopPlan.driveNote`.
+    public var driveNote: String = ""
 
     public var trip: TripRecord?
     public var place: PlaceRecord?
@@ -222,6 +251,6 @@ public final class StopRecord {
     public var plan: TripStopPlan? {
         guard let place else { return nil }
         return TripStopPlan(id: id, spot: place.spot, dayIndex: dayIndex, session: session,
-                            setUpBufferMinutes: setUpBufferMinutes, note: note)
+                            setUpBufferMinutes: setUpBufferMinutes, note: note, driveNote: driveNote)
     }
 }

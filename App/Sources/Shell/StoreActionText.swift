@@ -19,6 +19,8 @@ enum StoreActionText {
         case .reorderStops: String(localized: "Reorder Stops", comment: "Undo action name")
         case .setSession: String(localized: "Change Session", comment: "Undo action name")
         case .setNote: String(localized: "Edit Note", comment: "Undo action name")
+        case .setTransferTiming: String(localized: "Change Transfer Timing", comment: "Undo action name")
+        case .setDriveNote: String(localized: "Edit Drive Note", comment: "Undo action name")
         case .setBuffer: String(localized: "Change Set-up Time", comment: "Undo action name")
         case .setSaved: String(localized: "Save Spot", comment: "Undo action name")
         case .createUserSpot: String(localized: "Add Spot", comment: "Undo action name")

@@ -88,6 +88,22 @@ import IterData
         #expect(layout.groups[1].overnightAfter == nil)
     }
 
+    @Test func driveItemsCarryTheTimingAndTheNote() async throws {
+        let h = TripHarness()
+        let (_, model) = await layout(h.makeTrip(), in: h)
+        let inner = model.days[0].stops[1].id
+        let arriving = model.days[1].stops[0].id
+        model.setDriveNote(inner, to: "Coffee")
+        model.setDriveNote(arriving, to: "Sleep near Page")
+        model.setTransferTiming(intoDay: 1, to: .eveningBefore)
+        guard case .drive(let same)? = model.layout.groups[0].items.dropFirst().first else { Issue.record("drive"); return }
+        #expect(same.note == "Coffee")
+        #expect(same.transferTiming == nil)
+        guard case .driveIn(let transfer)? = model.layout.groups[1].items.first else { Issue.record("driveIn"); return }
+        #expect(transfer.note == "Sleep near Page")
+        #expect(transfer.transferTiming == .eveningBefore)
+    }
+
     @Test func theBestWindowIsTheHighestScoreThenTheFirstStop() async throws {
         let h = TripHarness()
         let (_, model) = await layout(h.makeTrip(), in: h)

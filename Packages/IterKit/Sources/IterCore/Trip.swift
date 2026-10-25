@@ -11,15 +11,41 @@ public struct TripStopPlan: Codable, Hashable, Sendable, Identifiable {
     /// Minutes before the window starts that you want to be set up (default 20).
     public var setUpBufferMinutes: Int
     public var note: String
+    /// A note about the drive INTO this stop (the drive row above it, or the transfer card when it is the first stop of a
+    /// day after an earlier stop). It is stored on the arriving stop, so when stops are reordered the note travels with
+    /// the stop it was written for, not with the drive.
+    public var driveNote: String
 
-    public init(id: UUID = UUID(), spot: Spot, dayIndex: Int, session: LightWindowKind, setUpBufferMinutes: Int = 20, note: String = "") {
+    public init(id: UUID = UUID(), spot: Spot, dayIndex: Int, session: LightWindowKind, setUpBufferMinutes: Int = 20, note: String = "",
+                driveNote: String = "") {
         self.id = id
         self.spot = spot
         self.dayIndex = dayIndex
         self.session = session
         self.setUpBufferMinutes = setUpBufferMinutes
         self.note = note
+        self.driveNote = driveNote
     }
+
+    // Files written before drive notes existed have no `driveNote` key.
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(UUID.self, forKey: .id)
+        spot = try c.decode(Spot.self, forKey: .spot)
+        dayIndex = try c.decode(Int.self, forKey: .dayIndex)
+        session = try c.decode(LightWindowKind.self, forKey: .session)
+        setUpBufferMinutes = try c.decode(Int.self, forKey: .setUpBufferMinutes)
+        note = try c.decode(String.self, forKey: .note)
+        driveNote = try c.decodeIfPresent(String.self, forKey: .driveNote) ?? ""
+    }
+}
+
+/// When the overnight drive into a new area happens, chosen per transfer (keyed by the arriving day).
+public enum TransferTiming: String, Codable, Sendable, CaseIterable {
+    /// Drive on the day of the shoot; leave-by is worked backward from the first stop's arrival.
+    case morning
+    /// Drive after the previous stop's session ends, and sleep near the destination.
+    case eveningBefore
 }
 
 /// A trip as a value: what the scheduler, the exporter and tests work on. The SwiftData `TripRecord` converts to this.
@@ -31,14 +57,35 @@ public struct TripPlan: Codable, Hashable, Sendable, Identifiable {
     /// Ordered within each day; the array order across days is day-major.
     public var stops: [TripStopPlan]
     public var notes: String
+    /// Timing of the transfer into each arriving day (a day after the first). Only non-morning entries need be stored.
+    public var transferTimings: [Int: TransferTiming]
 
-    public init(id: UUID = UUID(), name: String, startDay: LocalDay, dayCount: Int, stops: [TripStopPlan] = [], notes: String = "") {
+    public init(id: UUID = UUID(), name: String, startDay: LocalDay, dayCount: Int, stops: [TripStopPlan] = [], notes: String = "",
+                transferTimings: [Int: TransferTiming] = [:]) {
         self.id = id
         self.name = name
         self.startDay = startDay
         self.dayCount = max(1, dayCount)
         self.stops = stops
         self.notes = notes
+        self.transferTimings = transferTimings
+    }
+
+    // Files written before transfer timings existed have no `transferTimings` key.
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(UUID.self, forKey: .id)
+        name = try c.decode(String.self, forKey: .name)
+        startDay = try c.decode(LocalDay.self, forKey: .startDay)
+        dayCount = max(1, try c.decode(Int.self, forKey: .dayCount))
+        stops = try c.decode([TripStopPlan].self, forKey: .stops)
+        notes = try c.decode(String.self, forKey: .notes)
+        transferTimings = try c.decodeIfPresent([Int: TransferTiming].self, forKey: .transferTimings) ?? [:]
+    }
+
+    /// The timing of the transfer into `day`: morning when absent, and always morning for the first day.
+    public func transferTiming(intoDay day: Int) -> TransferTiming {
+        day > 0 ? (transferTimings[day] ?? .morning) : .morning
     }
 
     public func stops(onDay index: Int) -> [TripStopPlan] { stops.filter { $0.dayIndex == index } }
@@ -103,11 +150,15 @@ public struct StopSchedule: Codable, Hashable, Sendable, Identifiable {
     public var legFromPrevious: DriveLeg?
     public var walkInKnown: Bool
     public var issues: [ScheduleIssue]
+    /// Which timing applied to the drive from the previous stop when that stop is on an earlier day; nil for a same-day
+    /// drive and for the first stop. For `.eveningBefore`, `leaveBy` is the previous stop's window end.
+    public var transferTiming: TransferTiming?
 
     public var id: UUID { stopID }
 
     public init(stopID: UUID, window: TimeSpan?, setUpBy: Date?, arriveBy: Date?, leaveBy: Date?, legFromPrevious: DriveLeg?,
-                walkInKnown: Bool, issues: [ScheduleIssue]) {
+                walkInKnown: Bool, issues: [ScheduleIssue], transferTiming: TransferTiming? = nil) {
+        self.transferTiming = transferTiming
         self.stopID = stopID
         self.window = window
         self.setUpBy = setUpBy

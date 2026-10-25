@@ -52,6 +52,7 @@ struct StopSnapshot: Sendable {
     var sessionRaw: String
     var setUpBufferMinutes: Int
     var note: String
+    var driveNote: String
     var placeID: UUID?
 
     init(_ record: StopRecord) {
@@ -61,6 +62,7 @@ struct StopSnapshot: Sendable {
         sessionRaw = record.sessionRaw
         setUpBufferMinutes = record.setUpBufferMinutes
         note = record.note
+        driveNote = record.driveNote
         placeID = record.place?.id
     }
 
@@ -70,6 +72,7 @@ struct StopSnapshot: Sendable {
         record.sessionRaw = sessionRaw
         record.setUpBufferMinutes = setUpBufferMinutes
         record.note = note
+        record.driveNote = driveNote
     }
 }
 
@@ -85,6 +88,7 @@ struct TripSnapshot: Sendable {
     var sortOrder: Double
     var isPinned: Bool
     var pinnedAt: Date?
+    var transferTimingsRaw: String
     var stops: [StopSnapshot]
 
     init(_ record: TripRecord) {
@@ -99,6 +103,7 @@ struct TripSnapshot: Sendable {
         sortOrder = record.sortOrder
         isPinned = record.isPinned
         pinnedAt = record.pinnedAt
+        transferTimingsRaw = record.transferTimingsRaw
         stops = (record.stops ?? []).map(StopSnapshot.init)
     }
 
@@ -112,6 +117,7 @@ struct TripSnapshot: Sendable {
         record.sortOrder = sortOrder
         record.isPinned = isPinned
         record.pinnedAt = pinnedAt
+        record.transferTimingsRaw = transferTimingsRaw
     }
 }
 
