@@ -182,6 +182,25 @@ struct TripPlanList: View {
             .background(IterColor.backgroundWindow.ignoresSafeArea())
             .task { if DebugScripts.dragScript == "stop-reorder" { await runReorderScript() } }
             .onDeleteCommand(perform: removeSelected)
+            #if os(macOS)
+            // The List has no selection of its own, so its arrow keys do nothing: handle them here. A click on a row
+            // makes the table view the first responder (so the keys arrive); `.focusable()` lets Tab reach it too. A
+            // focused text field (trip name, a note) takes the arrows before they get here.
+            .focusable()
+            .focusEffectDisabled()
+            .onMoveCommand { direction in
+                let step: Int
+                switch direction {
+                case .down: step = 1
+                case .up: step = -1
+                default: return
+                }
+                let ids = builder.days.flatMap(\.stops).map(\.id)
+                guard let id = Self.adjacentStop(in: ids, from: state.selection, step: step) else { return }
+                state.select(id, from: .list)
+                proxy.scrollTo("stop-\(id)")
+            }
+            #endif
             .onChange(of: state.scrollRequest) {
                 if let request = state.scrollRequest { withAnimation { proxy.scrollTo("header-\(request.day)", anchor: .top) } }
             }
@@ -240,6 +259,14 @@ struct TripPlanList: View {
         } else {
             Color.clear
         }
+    }
+
+    /// The stop an arrow key selects: `step` +1 (down) or -1 (up) from `current` in trip order. With no (or an unknown)
+    /// selection down gives the first stop and up the last; at either end it stays on the same stop (no wrap).
+    static func adjacentStop(in ids: [UUID], from current: UUID?, step: Int) -> UUID? {
+        guard !ids.isEmpty else { return nil }
+        guard let current, let index = ids.firstIndex(of: current) else { return step > 0 ? ids.first : ids.last }
+        return ids[min(max(index + step, 0), ids.count - 1)]
     }
 
     private func removeSelected() {
