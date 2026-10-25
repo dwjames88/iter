@@ -179,7 +179,9 @@ struct TripPlanList: View {
             .listStyle(.plain)
             .environment(\.defaultMinListRowHeight, 1)
             .scrollContentBackground(.hidden)
-            .background(IterColor.backgroundWindow.ignoresSafeArea())
+            // No fill of its own: the system inspector's material shows, as the sidebar's does. Snapshots stand in a flat
+            // system window colour, since an offscreen render has no backdrop for the material.
+            .snapshotOpaqueBackground()
             .task { if DebugScripts.dragScript == "stop-reorder" { await runReorderScript() } }
             .onDeleteCommand(perform: removeSelected)
             #if os(macOS)

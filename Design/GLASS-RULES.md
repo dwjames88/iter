@@ -27,7 +27,7 @@ Measured from Apple Maps. The latest values (b15548c) supersede earlier ones suc
 ## Components
 
 - System components for everything: `List`, `NavigationStack`, toolbars, `Toggle`, `Menu`, `Picker`. Do not rebuild them. `RoundGlassButton` is gone; do not bring it back.
-- Mac: full-bleed map under the toolbar, list on a floating glass card (`FloatingPanelLayout`, `FloatingPanelHeader`) in Explore and Locations. Search lives in the sidebar, not over the card. The trip view has no floating card: sidebar, map, and the Trip Builder in the system `.inspector`; its cards (header, day selector, days, stops) are solid content, and only the Share and More buttons in the header card are glass.
+- Mac: full-bleed map under the toolbar, list on a floating glass card (`FloatingPanelLayout`, `FloatingPanelHeader`) in Explore and Locations. Search lives in the sidebar, not over the card. The trip view has no floating card: sidebar, map, and the Trip Builder in the system `.inspector`; the panel itself has no fill (the inspector's own material shows, as the sidebar's does), its cards (header, day selector, days, stops) are solid content, and only the Share and More buttons in the header card are glass.
 - iOS: large-title navigation bars; title, count and More/Share in the bar's toolbar glass group; an opened place is pushed in the sheet with the system Close and previous/next in the toolbar.
 - iPhone: the map fills the screen and one floating system sheet (peek, half, full) holds the tab bar at its foot. Use system detents, no hand-built sheet or drag gesture.
 - iPad: one glass column; header and close are system glass buttons.

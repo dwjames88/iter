@@ -63,18 +63,23 @@ private struct TripBuilderContent: View {
             }
         }
         .inspector(isPresented: $showsBuilder) { panel }
+        // One toggle, at the trailing end of the toolbar as in Xcode and Mail. Without the flexible spacer the item (with
+        // `.primaryAction` or `.automatic`) sat at the map's leading edge, beside the sidebar toggle.
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button { showsBuilder.toggle() } label: {
-                    Label(String(localized: "Trip Builder", comment: "Toolbar button: shows or hides the trip builder panel"), systemImage: "sidebar.trailing")
-                }
-                .keyboardShortcut("0", modifiers: [.command, .option])
-                .help(Text("Show or hide the Trip Builder", comment: "Tooltip"))
-            }
+            ToolbarSpacer(.flexible)
+            ToolbarItem(placement: .automatic) { builderToggle }
         }
         .onAppear(perform: makeBuilderIfNeeded)
         .onDisappear { builder?.viewDisappeared() }
         .tripFlows()
+    }
+
+    private var builderToggle: some View {
+        Button { showsBuilder.toggle() } label: {
+            Label(String(localized: "Trip Builder", comment: "Toolbar button: shows or hides the trip builder panel"), systemImage: "sidebar.trailing")
+        }
+        .keyboardShortcut("0", modifiers: [.command, .option])
+        .help(Text("Show or hide the Trip Builder", comment: "Tooltip"))
     }
 
     /// The Trip Builder panel, in the system inspector on the trailing edge. The design's panel is 639 pt; at 560 the map keeps
