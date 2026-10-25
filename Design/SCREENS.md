@@ -101,6 +101,7 @@ Screen-level shortcuts:
 | Spot page | ⌘E | Edit (your own spots only) |
 | Trip builder | ⇧⌘D | Change Dates… (Trip Actions menu) |
 | Trip builder | ⇧⌘E | Export… (Trip Actions menu) |
+| Trip builder (list focused) | ↓ / ↑ | Select the next / previous stop in trip order across days (no selection: first / last; stops at the ends; a focused text field keeps its arrows) |
 | Trip builder, Locations | Delete | Remove the selected stop; in Locations, delete your own spot or unsave a saved one |
 | Sheets (New Trip, Change Dates, Spot editor) | Return / Esc | The default button (Create, Change Dates, Add Spot or Save: `.defaultAction`) / Cancel (`.cancelAction`) |
 | Sidebar rename field | Return / Esc | Save the name / leave it unchanged |
@@ -214,7 +215,7 @@ The snapshot draws the sheet on a regular-material panel with 12 pt corners, cen
 
 **Route map camera.** The route map fits the whole trip when the builder first opens, never wider than a 40 degree span. Once you move the map, the camera is yours: it is saved for that trip and restored on relaunch, and changing stops refits only while you have not touched it. Selecting a stop pans to it with the zoom kept.
 
-The Trip Builder panel is one list on `background/window`, top to bottom (panel inset 16, 24 between sections):
+The Trip Builder panel is one list on the system inspector's material (no solid panel fill; the cards keep their content fills), top to bottom (panel inset 16, 24 between sections):
 
 | Region | Contents |
 |---|---|
@@ -229,16 +230,16 @@ Each day card (`background/content`, corner 27.5, no stroke, no shadow), top to 
 1. [DayCardHeader](COMPONENTS.md#daycardheader-suntimesrow): "Day 2", "Thursday, Oct 8", the totals ("2 stops • 5 hr, 27 min of driving" or no stops), and the sunrise and sunset times with their symbols.
 2. [SuggestionBanner](COMPONENTS.md#suggestionbanner), only when the stops are out of light order.
 3. A conflict line ("2 conflicts on this day"), only when the day has conflicts.
-4. The stops: each a [StopCard](COMPONENTS.md#stopcard) (drag handle, set-up time, numbered badge, place, light window, walk-in and set-up line, note, score chip), with an inline [DriveSegmentRow](COMPONENTS.md#drivesegmentrow) between two stops (leave-by time, blue car badge, drive time and distance).
+4. The stops: each a [StopCard](COMPONENTS.md#stopcard) (drag handle, set-up time, numbered badge, place, light window, walk-in and set-up line, note, score chip), with an inline [DriveSegmentRow](COMPONENTS.md#drivesegmentrow) between two stops (leave-by time, blue car badge, drive time and distance, "Add a note…").
 5. The footer: [AddStopButton](COMPONENTS.md#addstopbutton-overnightnote-findhotelsbutton) and, when the overnight is not already in a transfer card, the [OvernightNote](COMPONENTS.md#addstopbutton-overnightnote-findhotelsbutton) ("Overnight near Page, AZ").
 
-The drive from the previous day's last stop is the transfer card before the day: a sentence about the move ("Drive to the next area in the morning, before the shoot."), the time and distance with where it starts, the overnight with Find hotels.
+The drive from the previous day's last stop is the transfer card before the day: a sentence about the move with a timing picker ("Drive to the next area the [Morning] before the shoot." or "Drive to the next area the [Evening Before]"), the time ("Leave by" for Morning, "Leave at" for Evening Before) and distance with where it starts, an "Add a note…" field, and the overnight with Find hotels.
 
-Day selection has one source of truth. The selector, the map's switcher, the list's selected card and the map's highlighted day all read it. Choosing a day in the selector or the switcher scrolls the list to that day and frames it on the map; selecting a stop (list or pin) selects its day. With no day selected (All Days) the selector shows no highlight and the map shows every day at full strength; with a day selected, the other days' pins and routes are dimmed. Stop numbers count across the whole trip and match the map pins.
+Day selection has one source of truth. The selector, the list's selected card and the map's highlighted day all read it. Choosing a day in the selector scrolls the list to that day and frames it on the map; selecting a stop (list or pin) selects its day. With no day selected (All Days) the selector shows no highlight and the map shows every day at full strength; with a day selected, the other days' pins and routes are dimmed. Stop numbers count across the whole trip and match the map pins.
 
-Map: [TripRouteMap](COMPONENTS.md#triproutemap) (with the user's location dot when permitted), full height. A day switcher floats at its top edge: "‹ Day 2 · Thu, Oct 8 ›" with previous and next buttons, and a menu with All Days.
+Map: [TripRouteMap](COMPONENTS.md#triproutemap) (with the user's location dot when permitted), full height. Nothing floats over it; the day control is the selector in the panel.
 
-Toolbar: the **Trip Builder** toggle (`sidebar.trailing`, ⌥⌘0). Share and More (Change Dates… ⇧⌘D, Export… ⇧⌘E, Duplicate, divider, Delete Trip) live in the header card, not the toolbar. The window title is removed because the trip name is the header.
+Toolbar: the **Trip Builder** toggle (`sidebar.trailing`, ⌥⌘0) at the trailing edge. Share and More (Change Dates… ⇧⌘D, Export… ⇧⌘E, Duplicate, divider, Delete Trip) live in the header card, not the toolbar. The window title is removed because the trip name is the header.
 
 Launch switches for captures: `-IterSeedTrip conflict` seeds the sample trip with day 2 reversed (a conflict and a Reorder-by-light suggestion); `-IterTripDay <n>` opens the builder with day n (1-based) selected.
 
@@ -247,16 +248,17 @@ Launch switches for captures: `-IterSeedTrip conflict` seeds the sample trip wit
 **Actions.**
 
 - Rename the trip in place. Change dates (the header's dates button).
-- Click a stop to select it (a 1.5 pt accent stroke; selection is shared with the map pin and selects the stop's day; the map frames that day, or recentres on the stop keeping zoom when the day is already framed). Click the stop's name to open its spot page for that day. There is no arrow-key stop selection in the Mac list.
+- Click a stop to select it (a 1.5 pt accent stroke; selection is shared with the map pin and selects the stop's day; the map frames that day, or recentres on the stop keeping zoom when the day is already framed). Click the stop's name to open its spot page for that day. With the list focused (click a stop, or Tab into it), ↓ and ↑ select the next and previous stop in trip order across days (↓ with nothing selected picks the first stop, ↑ the last; the ends stop); the map follows as for a click and the row scrolls into view. A focused text field keeps its arrows.
 - Change a stop's **session** with the light-window menu on the card; the closed menu names the window ("Sunset"); each item in the open menu has the window's symbol and reads "Sunset · 6:12–6:48 PM · 64" (window, time range, score for that day; no score when there is no forecast). A stop shows its own session on its assigned day.
 - Edit the **set-up time** by clicking "20 min setup" (popover with a stepper 0 to 120 in steps of 5).
-- Type a **note** under the stop ("Add a note…", saved a second after you stop typing, and on leaving the field). Drives have no notes.
+- Type a **note** under the stop ("Add a note…", saved a second after you stop typing, and on leaving the field; undo is Edit Drive Note for drives and Edit Note for stops). Every drive row and the transfer card has the same field ("Add a note…", VoiceOver "Drive note"). A drive note belongs to the stop the drive arrives at, so it moves with that stop when stops are reordered.
+- Change when to drive to the next area with the picker on the transfer card: **Morning** (default) or **Evening Before** (undo: Change Transfer Timing). Evening Before leaves at the end of the previous stop's session, moves the overnight near the next day's first stop, and counts the drive toward the previous day's driving total. Change Dates drops the choice for any day that no longer exists.
 - **Reorder:** drag a stop onto another stop or a drive row (goes before the stop), onto a day header or the Add Stop row (goes to the end of that day). A 2 pt accent line shows the drop spot. Keyboard and VoiceOver: stop context menu Move Up, Move Down, Move to Day ▸.
 - **Remove:** Delete key, or context menu Remove from Trip.
 - Stop context menu: Open Spot Page, Open in Maps, Move Up, Move Down, Move to Day ▸ (only on multi-day trips), Remove from Trip.
 - Suggestion banner: **Apply** reorders that day by light order; **Dismiss** hides it. Iter never reorders by itself.
 - Add Stop opens the [AddStopPopover](COMPONENTS.md#addstoppopover). Find hotels opens Apple Maps searching Hotels near the overnight.
-- Click a card in the day selector, or use the map's day switcher, to select a day.
+- Click a card in the day selector to select a day.
 
 **States.**
 
@@ -267,6 +269,8 @@ Launch switches for captures: `-IterSeedTrip conflict` seeds the sample trip wit
 | Conflict and suggestion | Sample trip with day 2 reversed (`-IterSeedTrip conflict`), day 2 selected | The suggestion banner "Reorder by light: fixes 2 conflicts" with Dismiss and Apply, then "2 conflicts on this day". Warning lines "Drive doesn't fit: …" on drives that cannot be made; a warning "Out of order" line on the stop. | `snapshots/trip-builder-conflict-{light,dark}-{1280x820,960x640}.png`; `snapshots/trip-builder-panel-conflict-{light,dark}-640x1400.png` |
 | Missing trip | The trip was deleted or its creation undone | Empty-state: map icon, "Trip Not Found", "This trip was deleted or its creation was undone.", prominent button **Back to All Trips**. | `snapshots/trip-builder-missing-{light,dark}-{1280x820,960x640}.png` |
 | Components | Component study | Header card, day selector, day header, stop cards, drive segments, badges and footer, each alone at 672 pt wide. | `snapshots/tbc-{header-card,day-selector,day-header,stop-card,drive-segments,badges,footer}-{light,dark}-*.png` |
+| Evening Before | A transfer card's picker set to Evening Before | Sentence "Drive to the next area the Evening Before"; the time label reads "Leave at" with the previous stop's session end; the overnight is near the next day's first stop; the drive counts in the previous day's totals. Undo: Change Transfer Timing. | not rendered |
+| Drive note | Text typed in "Add a note…" on a drive or transfer card | Saved a second after typing stops and on leaving the field; stays with the arriving stop. Undo: Edit Drive Note. | not rendered |
 | Panel hidden | The Trip Builder toggle (⌥⌘0) | The inspector closes; the map takes the whole detail area. | not rendered |
 | Dragging | A stop is dragged over a drop target | A 2 pt accent line appears at the top of the target. | not rendered |
 | Fetching drives | Drive times being fetched | A spinner beside Share and More in the header card; drive rows for new legs fill in as MapKit answers. | not rendered |
