@@ -315,7 +315,7 @@ private struct PlanRowView: View, Equatable {
                 .draggable(StopDragItem(tripID: builder.tripID, stopID: entry.id))
                 .stopDrop(into: row.day, before: entry.id, indicator: entry.previous == nil, coordinator: drops)
         case .drive(let drive):
-            DriveRowAdapter(drive: drive, style: .inline)
+            DriveRowAdapter(drive: drive, style: .inline, builder: builder, day: row.day)
                 .padding(.horizontal, BuilderMetrics.bodyInset)
                 .padding(.vertical, 2)
                 .stopDrop(into: row.day, before: drive.toStopID, coordinator: drops)
@@ -324,7 +324,7 @@ private struct PlanRowView: View, Equatable {
                 .stopDrop(into: row.day, before: nil, coordinator: drops)
         case .transfer(let drive, let overnight):
             if let drive {
-                DriveRowAdapter(drive: drive, style: .transfer(overnight))
+                DriveRowAdapter(drive: drive, style: .transfer(overnight), builder: builder, day: row.day)
                     .stopDrop(into: row.day, before: drive.toStopID, coordinator: drops)
             } else if let overnight {
                 OvernightNote(text: ConnectorText.overnightNear(overnight.place))

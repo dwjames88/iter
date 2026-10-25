@@ -263,14 +263,11 @@ extension ConnectorText {
         String(localized: "Overnight near \(place)", comment: "Where you sleep between two trip days, e.g. Overnight near Page, AZ")
     }
 
-    /// The transfer card's sentence, by the part of the day you leave in.
-    static func transferHeadline(_ part: DayPart) -> String {
-        switch part {
-        case .earlyMorning: String(localized: "Drive to the next area early in the morning, before the shoot.", comment: "Transfer card between two days, leaving between midnight and 5 am")
-        case .morning: String(localized: "Drive to the next area in the morning, before the shoot.", comment: "Transfer card between two days")
-        case .afternoon: String(localized: "Drive to the next area in the afternoon, before the shoot.", comment: "Transfer card between two days")
-        case .evening: String(localized: "Drive to the next area in the evening, before the shoot.", comment: "Transfer card between two days")
-        case .night: String(localized: "Drive to the next area at night, before the shoot.", comment: "Transfer card between two days")
+    /// The transfer card's picker items: "Morning", "Evening Before".
+    static func transferTimingName(_ timing: TransferTiming) -> String {
+        switch timing {
+        case .morning: String(localized: "Morning", comment: "Transfer card picker item: drive on the morning of the shoot")
+        case .eveningBefore: String(localized: "Evening Before", comment: "Transfer card picker item: drive the evening before, after the last session")
         }
     }
 }

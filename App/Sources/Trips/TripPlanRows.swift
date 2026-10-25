@@ -11,20 +11,26 @@ struct DriveRowAdapter: View {
 
     let drive: TripDriveItem
     let style: Style
+    let builder: TripBuilderModel
+    /// The day of the stop the drive arrives at.
+    let day: Int
 
     var body: some View {
         let leaveBy = drive.leaveBy.map { TimeText.time($0, in: drive.leaveZone) }
         let summary = drive.leg.map(ConnectorText.driveLine)
         let warning = drive.shortBySeconds.map { ScheduleText.driveDoesNotFit(shortBy: $0) }
+        let onNote: (String) -> Void = { [builder, id = drive.toStopID] in builder.setDriveNote(id, to: $0) }
         switch style {
         case .inline:
-            DriveSegmentRow(style: .inline, leaveBy: leaveBy, summary: summary, isEstimate: drive.isEstimate, warning: warning)
+            DriveSegmentRow(style: .inline, leaveBy: leaveBy, summary: summary, isEstimate: drive.isEstimate, warning: warning,
+                            note: drive.note, onNote: onNote)
         case .transfer(let overnight):
-            let part = drive.leaveBy.map { DayPart.of($0, in: drive.leaveZone) } ?? .morning
-            DriveSegmentRow(style: .transfer(headline: ConnectorText.transferHeadline(part), from: drive.fromName,
+            DriveSegmentRow(style: .transfer(timing: drive.transferTiming ?? .morning, from: drive.fromName,
                                              overnight: overnight.map { ConnectorText.overnightNear($0.place) },
                                              hotels: overnight?.coordinate),
-                            leaveBy: leaveBy, summary: summary, isEstimate: drive.isEstimate, warning: warning)
+                            leaveBy: leaveBy, summary: summary, isEstimate: drive.isEstimate, warning: warning,
+                            note: drive.note, onNote: onNote,
+                            onTiming: { [builder, day] in builder.setTransferTiming(intoDay: day, to: $0) })
         }
     }
 }

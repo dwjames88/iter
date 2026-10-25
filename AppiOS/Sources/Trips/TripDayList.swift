@@ -160,7 +160,7 @@ struct TripDayList: View {
                 .padding(.horizontal, BuilderMetrics.bodyInset)
                 .padding(.vertical, 2)
         case .drive(let drive):
-            DriveRowAdapter(drive: drive, style: .inline)
+            DriveRowAdapter(drive: drive, style: .inline, builder: builder, day: row.day)
                 .padding(.horizontal, BuilderMetrics.bodyInset)
                 .padding(.vertical, 2)
         case .footer(let day, let overnight):
@@ -174,7 +174,7 @@ struct TripDayList: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         case .transfer(let drive, let overnight):
             if let drive {
-                DriveRowAdapter(drive: drive, style: .transfer(overnight))
+                DriveRowAdapter(drive: drive, style: .transfer(overnight), builder: builder, day: row.day)
             } else if let overnight {
                 OvernightNote(text: ConnectorText.overnightNear(overnight.place))
                     .padding(.horizontal, 24)

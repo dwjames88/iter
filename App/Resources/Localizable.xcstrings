@@ -503,7 +503,7 @@
       "comment" : "Button: drop a pin on the Explore map"
     },
     "Add a note…" : {
-      "comment" : "Placeholder for a stop's note"
+      "comment" : "Placeholder for a drive's note\nPlaceholder for a stop's note"
     },
     "Add a stop to this day, nearest spots first" : {
       "comment" : "Tooltip"
@@ -765,6 +765,9 @@
       "comment" : "Undo action name"
     },
     "Change Set-up Time" : {
+      "comment" : "Undo action name"
+    },
+    "Change Transfer Timing" : {
       "comment" : "Undo action name"
     },
     "Change dates, export, duplicate or delete this trip" : {
@@ -1081,23 +1084,20 @@
     "Drive doesn't fit: %@ short" : {
       "comment" : "Schedule issue: the drive takes longer than the time available"
     },
+    "Drive note" : {
+      "comment" : "Accessibility label of a drive's note field"
+    },
+    "Drive on the morning of the shoot, or the evening before after the last session" : {
+      "comment" : "Tooltip of the transfer card's timing picker"
+    },
     "Drive time estimated" : {
       "comment" : "Explains an estimated drive"
     },
-    "Drive to the next area at night, before the shoot." : {
-      "comment" : "Transfer card between two days"
+    "Drive timing" : {
+      "comment" : "Accessibility label of the transfer card's timing picker"
     },
-    "Drive to the next area early in the morning, before the shoot." : {
-      "comment" : "Transfer card between two days, leaving between midnight and 5 am"
-    },
-    "Drive to the next area in the afternoon, before the shoot." : {
-      "comment" : "Transfer card between two days"
-    },
-    "Drive to the next area in the evening, before the shoot." : {
-      "comment" : "Transfer card between two days"
-    },
-    "Drive to the next area in the morning, before the shoot." : {
-      "comment" : "Transfer card between two days"
+    "Drive to the next area the" : {
+      "comment" : "Transfer card sentence, before the timing picker"
     },
     "Duplicate" : {
       "comment" : "Context menu\nMenu item"
@@ -1110,6 +1110,9 @@
     },
     "Edit" : {
       "comment" : "Button"
+    },
+    "Edit Drive Note" : {
+      "comment" : "Undo action name"
     },
     "Edit Location" : {
       "comment" : "Place editor title\nUndo action name"
@@ -1143,6 +1146,9 @@
     },
     "Estimated from the map position until the lookup finishes." : {
       "comment" : "Time zone fallback while looking up"
+    },
+    "Evening Before" : {
+      "comment" : "Transfer card picker item: drive the evening before, after the last session"
     },
     "Evening blue hour" : {
       "comment" : "Light window: civil twilight after sunset"
@@ -1501,6 +1507,9 @@
     "Leave Add Spot (Esc)" : {
       "comment" : "Tooltip"
     },
+    "Leave at" : {
+      "comment" : "Label under a transfer's time when you drive the evening before: when the last session ends"
+    },
     "Leave by" : {
       "comment" : "Label under a drive's leave-by time"
     },
@@ -1688,6 +1697,9 @@
     },
     "More Places" : {
       "comment" : "List section: every other spot beyond the near-you radius"
+    },
+    "Morning" : {
+      "comment" : "Transfer card picker item: drive on the morning of the shoot"
     },
     "Morning blue hour" : {
       "comment" : "Light window: civil twilight before sunrise"
@@ -3143,6 +3155,9 @@
     },
     "^[%lld trip](inflect: true)" : {
       "comment" : "Number of trips in a folder tile"
+    },
+    "before the shoot." : {
+      "comment" : "Transfer card sentence, after the Morning timing picker"
     },
     "below the horizon" : {
       "comment" : "Sun or moon is below the horizon"

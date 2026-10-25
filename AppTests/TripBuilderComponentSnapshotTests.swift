@@ -41,7 +41,7 @@ import IterDesign
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func driveSegments() async throws {
-        try await render("drive-segments", width: 672, height: 330) { DriveSegmentsPreview() }
+        try await render("drive-segments", width: 672, height: 460) { DriveSegmentsPreview() }
     }
 
     @Test(.enabled(if: Snapshot.enabled)) func footer() async throws {

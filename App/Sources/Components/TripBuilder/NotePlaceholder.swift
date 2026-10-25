@@ -5,13 +5,17 @@ import IterDesign
 /// note is never lost and typing does not write on every key.
 struct NotePlaceholder: View {
     let note: String
+    /// The placeholder; a stop's note by default, a drive's note when given.
+    var prompt: LocalizedStringResource = LocalizedStringResource("Add a note…", comment: "Placeholder for a stop's note")
+    /// The VoiceOver label; "Note" by default, "Drive note" for a drive.
+    var accessibilityName: LocalizedStringResource = LocalizedStringResource("Note", comment: "Accessibility label of a stop's note field")
     let onCommit: (String) -> Void
     @State private var text = ""
     @FocusState private var focused: Bool
 
     var body: some View {
-        TextField(text: $text, prompt: Text("Add a note…", comment: "Placeholder for a stop's note").foregroundStyle(IterColor.textTertiary), axis: .vertical) {
-            Text("Note", comment: "Accessibility label of a stop's note field")
+        TextField(text: $text, prompt: Text(prompt).foregroundStyle(IterColor.textTertiary), axis: .vertical) {
+            Text(accessibilityName)
         }
         .textFieldStyle(.plain)
         .font(BuilderType.control)
@@ -26,7 +30,7 @@ struct NotePlaceholder: View {
             try? await Task.sleep(for: .seconds(1))
             if !Task.isCancelled { commit() }
         }
-        .accessibilityLabel(Text("Note", comment: "Accessibility label of a stop's note field"))
+        .accessibilityLabel(Text(accessibilityName))
     }
 
     private func commit() {
@@ -42,6 +46,8 @@ private struct NotePreview: View {
         VStack(alignment: .leading, spacing: IterSpace.lg) {
             NotePlaceholder(note: "") { _ in }
             NotePlaceholder(note: "Park in the lower lot") { _ in }
+            NotePlaceholder(note: "", prompt: LocalizedStringResource("Add a note…", comment: "Placeholder for a drive's note"),
+                            accessibilityName: LocalizedStringResource("Drive note", comment: "Accessibility label of a drive's note field")) { _ in }
         }
         .frame(width: 260, alignment: .leading)
         .padding(IterSpace.xl)
