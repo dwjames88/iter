@@ -74,7 +74,7 @@ public struct SourceLine: View {
                 Text(verbatim: content.tier)
                 if let url {
                     Text(verbatim: "·")
-                    Link(destination: url) { Text("View Source", bundle: .module) }
+                    Link(destination: url) { Text("View Source", bundle: .module, comment: "Link to the data source's page") }
                         .foregroundStyle(IterColor.accentText)
                 }
             }

@@ -75,7 +75,7 @@ public struct LeaveByCard: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.sm) {
             HStack {
-                Text("Next Stop", bundle: .module).font(IterFont.captionStrong).foregroundStyle(IterColor.textSecondary)
+                Text("Next Stop", bundle: .module, comment: "Trip mode card heading").font(IterFont.captionStrong).foregroundStyle(IterColor.textSecondary)
                 Spacer(minLength: IterSpace.sm)
                 Label { Text(verbatim: status.word(locale: locale)) } icon: { Image(systemName: status.symbol) }
                     .font(IterFont.captionStrong)

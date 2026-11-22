@@ -1,5 +1,7 @@
 # Iter components
 
+> **Status (Phase 5).** The rebuilt components live in `Packages/Iter/Sources/IterUI/`. [FIGMA-MAP.md](FIGMA-MAP.md) maps each one to its Figma part, Swift file and snapshot images. The per-component sections below still describe the old app's files (paths under `App/Sources/`) until Phase 6 updates them.
+
 Hand-off for rebuilding Iter's components in a design tool. Companion files: [SCREENS.md](SCREENS.md) (every screen and state), [TOKENS.md](TOKENS.md) and `tokens.json`.
 
 ## How to read this

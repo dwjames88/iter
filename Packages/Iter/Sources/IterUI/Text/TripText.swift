@@ -27,15 +27,25 @@ public enum TripText {
 
     /// "Late by 6 min". Rounds up to whole minutes, minimum one.
     public static func lateBy(_ seconds: TimeInterval, locale: Locale = .current) -> String {
-        let minutes = max(1, Int((seconds / 60).rounded(.up)))
-        let d = Duration.seconds(minutes * 60).formatted(.units(allowed: [.hours, .minutes], width: .abbreviated, maximumUnitCount: 2).locale(locale))
+        let d = wholeMinutes(seconds, locale: locale)
         return String(localized: "Late by \(d)", bundle: .module, locale: locale, comment: "Trip mode: how late you are, e.g. Late by 6 min")
     }
 
-    /// "Arrive 18:05", or "Late by 6 min" when the arrival falls after `deadline` (for example the window's start).
+    /// Seconds rounded up to whole minutes (minimum one), abbreviated: "6 min", "1 hr, 20 min".
+    private static func wholeMinutes(_ seconds: TimeInterval, locale: Locale) -> String {
+        let minutes = max(1, Int((seconds / 60).rounded(.up)))
+        return Duration.seconds(minutes * 60).formatted(.units(allowed: [.hours, .minutes], width: .abbreviated, maximumUnitCount: 2).locale(locale))
+    }
+
+    /// "Arrive 18:05", or "Arrive 18:05 · 6 min after the light starts" when the arrival falls after `deadline`
+    /// (for example the window's start). The leave-by line already says how late you are leaving; this line says
+    /// what the lateness means for the arrival.
     public static func eta(arrival: Date, deadline: Date?, in zone: TimeZone, locale: Locale = .current) -> String {
         if let deadline, arrival.timeIntervalSince(deadline) > nowTolerance {
-            return lateBy(arrival.timeIntervalSince(deadline), locale: locale)
+            let t = TimeText.time(arrival, in: zone, locale: locale)
+            let d = wholeMinutes(arrival.timeIntervalSince(deadline), locale: locale)
+            return String(localized: "Arrive \(t) · \(d) after the light starts", bundle: .module, locale: locale,
+                          comment: "Trip mode: estimated arrival time when it falls after the light window starts, e.g. Arrive 18:05 · 6 min after the light starts")
         }
         return arrive(arrival, in: zone, locale: locale)
     }

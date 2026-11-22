@@ -26,12 +26,12 @@ public enum DataText {
         return .days(Int(s / 86_400))
     }
 
-    /// "Updated Just Now", "Updated 12 min ago", "3 hr old", "2 days old", "Stale".
+    /// "Updated just now", "Updated 12 min ago", "3 hr old", "2 days old", "Stale".
     public static func ageText(of fetchedAt: Date, now: Date, staleAfter: TimeInterval = defaultStaleAfter,
                                locale: Locale = .current) -> String {
         switch age(of: fetchedAt, now: now, staleAfter: staleAfter) {
         case .justNow:
-            return String(localized: "Updated Just Now", bundle: .module, locale: locale, comment: "Data age under a minute")
+            return String(localized: "Updated just now", bundle: .module, locale: locale, comment: "Data age under a minute")
         case .minutes(let m):
             let d = unit(m, .minutes, locale)
             return String(localized: "Updated \(d) ago", bundle: .module, locale: locale, comment: "Data age in minutes, e.g. Updated 12 min ago")

@@ -1,7 +1,1590 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-
+    "%@ at %@" : {
+      "comment" : "Day card: sunrise or sunset and its time, e.g. Sunset at 18:14",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ at %@"
+          }
+        }
+      }
+    },
+    "%@ away" : {
+      "comment" : "Station or grid-point distance, e.g. 12 km away",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ away"
+          }
+        }
+      }
+    },
+    "%@ old" : {
+      "comment" : "Data age in hours, e.g. 3 hr old / Data age in days, e.g. 2 days old",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ old"
+          }
+        }
+      }
+    },
+    "%@ old. Check again before you rely on it." : {
+      "comment" : "Data state detail: stale, with age",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ old. Check again before you rely on it."
+          }
+        }
+      }
+    },
+    "%@ starts %@" : {
+      "comment" : "Trip mode: the light window and its start time",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ starts %@"
+          }
+        }
+      }
+    },
+    "%@ · %@" : {
+      "comment" : "Provenance line: model, then data age, e.g. GFS · Updated 12 min ago / Window name and Light Index score, e.g. Sunset · 38 / Trip mode drive summary: duration and distance",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · %@"
+          }
+        }
+      }
+    },
+    "%@ · %@ hr ahead of you" : {
+      "comment" : "Spot time zone note, ahead",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · %@ hr ahead of you"
+          }
+        }
+      }
+    },
+    "%@ · %@ hr behind you" : {
+      "comment" : "Spot time zone note, behind",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · %@ hr behind you"
+          }
+        }
+      }
+    },
+    "%@ • %@" : {
+      "comment" : "Trip size in the builder header, e.g. 4 days • 6 stops / Drive time and distance between two stops",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ • %@"
+          }
+        }
+      }
+    },
+    "%@ • %@ of driving" : {
+      "comment" : "Day card total: stops and driving time",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ • %@ of driving"
+          }
+        }
+      }
+    },
+    "%@, %@" : {
+      "comment" : "VoiceOver: a window with its time",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %@"
+          }
+        }
+      }
+    },
+    "%@, Light Index %@" : {
+      "comment" : "VoiceOver: window and score, e.g. Sunset, Light Index 38",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, Light Index %@"
+          }
+        }
+      }
+    },
+    "%@, tomorrow at %@" : {
+      "comment" : "VoiceOver: a window tomorrow, with its time",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, tomorrow at %@"
+          }
+        }
+      }
+    },
+    "%@–%@" : {
+      "comment" : "Plausible score range, e.g. 55–75 / A time range, e.g. 6:12 PM–6:48 PM",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@–%@"
+          }
+        }
+      }
+    },
+    "%lld min setup" : {
+      "comment" : "Minutes to be set up before the window starts",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min setup"
+          }
+        }
+      }
+    },
+    "%lld min walk in" : {
+      "comment" : "Walk from parking to the shooting spot",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min walk in"
+          }
+        }
+      }
+    },
+    "%lld out of 100" : {
+      "comment" : "Score for VoiceOver",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld out of 100"
+          }
+        }
+      }
+    },
+    ", low confidence" : {
+      "comment" : "VoiceOver: appended confidence",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ", low confidence"
+          }
+        }
+      }
+    },
+    ", score %@" : {
+      "comment" : "VoiceOver: appended score",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ", score %@"
+          }
+        }
+      }
+    },
+    "Add Stop" : {
+      "comment" : "Button at the end of a day",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Stop"
+          }
+        }
+      }
+    },
+    "Add a note…" : {
+      "comment" : "Placeholder for a stop's note / Placeholder for a drive's note",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a note…"
+          }
+        }
+      }
+    },
+    "Add a stop to this day, nearest spots first" : {
+      "comment" : "Tooltip",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a stop to this day, nearest spots first"
+          }
+        }
+      }
+    },
+    "Added by You" : {
+      "comment" : "Place provenance",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Added by You"
+          }
+        }
+      }
+    },
+    "Apple Maps" : {
+      "comment" : "Place provenance",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Maps"
+          }
+        }
+      }
+    },
+    "Architecture" : {
+      "comment" : "Place category",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Architecture"
+          }
+        }
+      }
+    },
+    "Arrive %@" : {
+      "comment" : "Trip mode: estimated arrival time, e.g. Arrive 18:05",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrive %@"
+          }
+        }
+      }
+    },
+    "Arrive %@ · %@ after the light starts" : {
+      "comment" : "Trip mode: estimated arrival time when it falls after the light window starts, e.g. Arrive 18:05 · 6 min after the light starts",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrive %@ · %@ after the light starts"
+          }
+        }
+      }
+    },
+    "Astro" : {
+      "comment" : "Place category",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Astro"
+          }
+        }
+      }
+    },
+    "Blue AM" : {
+      "comment" : "Short light window name for pins",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blue AM"
+          }
+        }
+      }
+    },
+    "Blue Hour" : {
+      "comment" : "Light intent / Best light a spot is known for",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blue Hour"
+          }
+        }
+      }
+    },
+    "Blue PM" : {
+      "comment" : "Short light window name for pins",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blue PM"
+          }
+        }
+      }
+    },
+    "Change how long before the window you want to be set up" : {
+      "comment" : "Tooltip",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change how long before the window you want to be set up"
+          }
+        }
+      }
+    },
+    "Clear" : {
+      "comment" : "VoiceOver: clear the search field",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear"
+          }
+        }
+      }
+    },
+    "Clear the search" : {
+      "comment" : "Tooltip",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear the search"
+          }
+        }
+      }
+    },
+    "Click to rename" : {
+      "comment" : "Tooltip",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click to rename"
+          }
+        }
+      }
+    },
+    "Coast" : {
+      "comment" : "Place category",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coast"
+          }
+        }
+      }
+    },
+    "Curated" : {
+      "comment" : "Place provenance",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Curated"
+          }
+        }
+      }
+    },
+    "Day %lld" : {
+      "comment" : "A trip day's name, e.g. Day 2",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day %lld"
+          }
+        }
+      }
+    },
+    "Desert" : {
+      "comment" : "Place category",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desert"
+          }
+        }
+      }
+    },
+    "Drive doesn't fit: %@ short" : {
+      "comment" : "Warning on a drive that arrives after the window starts",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive doesn't fit: %@ short"
+          }
+        }
+      }
+    },
+    "Drive note" : {
+      "comment" : "Accessibility label of a drive's note field",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive note"
+          }
+        }
+      }
+    },
+    "Drive on the morning of the shoot, or the evening before after the last session" : {
+      "comment" : "Tooltip of the transfer card's timing picker",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive on the morning of the shoot, or the evening before after the last session"
+          }
+        }
+      }
+    },
+    "Drive time estimated" : {
+      "comment" : "Explains an estimated drive",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive time estimated"
+          }
+        }
+      }
+    },
+    "Drive timing" : {
+      "comment" : "Accessibility label of the transfer card's timing picker",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive timing"
+          }
+        }
+      }
+    },
+    "Drive to the next area the" : {
+      "comment" : "Transfer card sentence, before the timing picker",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive to the next area the"
+          }
+        }
+      }
+    },
+    "Evening Before" : {
+      "comment" : "Transfer card picker item: drive the evening before, after the last session",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evening Before"
+          }
+        }
+      }
+    },
+    "Evening Blue Hour" : {
+      "comment" : "Light window: civil twilight after sunset",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evening Blue Hour"
+          }
+        }
+      }
+    },
+    "Find hotels" : {
+      "comment" : "Button on an overnight: opens Apple Maps searching for hotels there",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find hotels"
+          }
+        }
+      }
+    },
+    "Forest" : {
+      "comment" : "Place category",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forest"
+          }
+        }
+      }
+    },
+    "Getting the latest conditions." : {
+      "comment" : "Data state detail: loading",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Getting the latest conditions."
+          }
+        }
+      }
+    },
+    "Government" : {
+      "comment" : "Source tier label",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Government"
+          }
+        }
+      }
+    },
+    "Government data" : {
+      "comment" : "Source tier phrase",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Government data"
+          }
+        }
+      }
+    },
+    "High" : {
+      "comment" : "Confidence level",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High"
+          }
+        }
+      }
+    },
+    "High Confidence" : {
+      "comment" : "Confidence phrase",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High Confidence"
+          }
+        }
+      }
+    },
+    "Iter has nothing for this yet." : {
+      "comment" : "Data state detail: no data",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iter has nothing for this yet."
+          }
+        }
+      }
+    },
+    "Landscape" : {
+      "comment" : "Place category",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Landscape"
+          }
+        }
+      }
+    },
+    "Last updated at %@." : {
+      "comment" : "Data state detail: offline with last update time",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last updated at %@."
+          }
+        }
+      }
+    },
+    "Late by %@" : {
+      "comment" : "Trip mode: how late you are, e.g. Late by 6 min",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Late by %@"
+          }
+        }
+      }
+    },
+    "Leave Now" : {
+      "comment" : "Trip mode status / Trip mode: the departure time is now",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leave Now"
+          }
+        }
+      }
+    },
+    "Leave at" : {
+      "comment" : "Label under a transfer's time when you drive the evening before: when the last session ends",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leave at"
+          }
+        }
+      }
+    },
+    "Leave by" : {
+      "comment" : "Label under a drive's leave-by time",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leave by"
+          }
+        }
+      }
+    },
+    "Leave by %@" : {
+      "comment" : "Trip mode: latest departure time, e.g. Leave by 17:40",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leave by %@"
+          }
+        }
+      }
+    },
+    "Live Sky Index" : {
+      "comment" : "Trip mode: the real-time sky index",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live Sky Index"
+          }
+        }
+      }
+    },
+    "Loading" : {
+      "comment" : "Data state title",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading"
+          }
+        }
+      }
+    },
+    "Low" : {
+      "comment" : "Confidence level",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Low"
+          }
+        }
+      }
+    },
+    "Low Confidence" : {
+      "comment" : "Confidence phrase",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Low Confidence"
+          }
+        }
+      }
+    },
+    "Medium" : {
+      "comment" : "Confidence level",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medium"
+          }
+        }
+      }
+    },
+    "Medium Confidence" : {
+      "comment" : "Confidence phrase",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medium Confidence"
+          }
+        }
+      }
+    },
+    "Midday" : {
+      "comment" : "Best light a spot is known for",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Midday"
+          }
+        }
+      }
+    },
+    "Military Origin" : {
+      "comment" : "Source tier label",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Military Origin"
+          }
+        }
+      }
+    },
+    "Military-origin data" : {
+      "comment" : "Source tier phrase",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Military-origin data"
+          }
+        }
+      }
+    },
+    "Morning" : {
+      "comment" : "Transfer card picker item: drive on the morning of the shoot",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morning"
+          }
+        }
+      }
+    },
+    "Morning Blue Hour" : {
+      "comment" : "Light window: civil twilight before sunrise",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morning Blue Hour"
+          }
+        }
+      }
+    },
+    "Next Stop" : {
+      "comment" : "Trip mode card heading",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next Stop"
+          }
+        }
+      }
+    },
+    "Night" : {
+      "comment" : "Light window: astronomical night / Short light window name for pins / Light intent",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Night"
+          }
+        }
+      }
+    },
+    "Night Sky" : {
+      "comment" : "Best light a spot is known for",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Night Sky"
+          }
+        }
+      }
+    },
+    "No Data" : {
+      "comment" : "Data state title",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Data"
+          }
+        }
+      }
+    },
+    "No Live Data" : {
+      "comment" : "Live sky index has no reading",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Live Data"
+          }
+        }
+      }
+    },
+    "No Stops" : {
+      "comment" : "Day selector card of a day with no stops",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Stops"
+          }
+        }
+      }
+    },
+    "No data" : {
+      "comment" : "Factor row: the factor has no reading",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No data"
+          }
+        }
+      }
+    },
+    "No live data" : {
+      "comment" : "Live index unavailable",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No live data"
+          }
+        }
+      }
+    },
+    "No stops yet" : {
+      "comment" : "Day header for a day with no stops",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No stops yet"
+          }
+        }
+      }
+    },
+    "Note" : {
+      "comment" : "Accessibility label of a stop's note field",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note"
+          }
+        }
+      }
+    },
+    "Offline" : {
+      "comment" : "Data state title",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offline"
+          }
+        }
+      }
+    },
+    "On Time" : {
+      "comment" : "Trip mode status",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On Time"
+          }
+        }
+      }
+    },
+    "Open Data" : {
+      "comment" : "Source tier label",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Data"
+          }
+        }
+      }
+    },
+    "Open data" : {
+      "comment" : "Source tier phrase",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open data"
+          }
+        }
+      }
+    },
+    "Open spot page" : {
+      "comment" : "Tooltip",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open spot page"
+          }
+        }
+      }
+    },
+    "Overcast" : {
+      "comment" : "Best light a spot is known for",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overcast"
+          }
+        }
+      }
+    },
+    "Overnight near %@" : {
+      "comment" : "Where you sleep between two trip days, e.g. Overnight near Page, AZ",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overnight near %@"
+          }
+        }
+      }
+    },
+    "Park at %@ • %@" : {
+      "comment" : "Park time, then the walk to the shooting spot",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Park at %@ • %@"
+          }
+        }
+      }
+    },
+    "Running Late" : {
+      "comment" : "Trip mode status",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Running Late"
+          }
+        }
+      }
+    },
+    "Scout" : {
+      "comment" : "Place provenance: found by Scout in Find",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scout"
+          }
+        }
+      }
+    },
+    "Search Apple Maps for hotels near this overnight" : {
+      "comment" : "Tooltip",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search Apple Maps for hotels near this overnight"
+          }
+        }
+      }
+    },
+    "Session" : {
+      "comment" : "Accessibility label of the session menu",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session"
+          }
+        }
+      }
+    },
+    "Show this day on the map" : {
+      "comment" : "Tooltip",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show this day on the map"
+          }
+        }
+      }
+    },
+    "Stale" : {
+      "comment" : "Data is too old to trust as current",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stale"
+          }
+        }
+      }
+    },
+    "Stale Data" : {
+      "comment" : "Data state title",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stale Data"
+          }
+        }
+      }
+    },
+    "Stale, as of %@" : {
+      "comment" : "Data too old to be current, with its time",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stale, as of %@"
+          }
+        }
+      }
+    },
+    "Stop %lld" : {
+      "comment" : "Stop number for VoiceOver",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop %lld"
+          }
+        }
+      }
+    },
+    "Street" : {
+      "comment" : "Place category",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Street"
+          }
+        }
+      }
+    },
+    "Sunrise" : {
+      "comment" : "Light window: golden hour after sunrise / Short light window name for pins / Light intent / Best light a spot is known for / Day card: sunrise",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunrise"
+          }
+        }
+      }
+    },
+    "Sunset" : {
+      "comment" : "Light window: golden hour before sunset / Short light window name for pins / Light intent / Best light a spot is known for / Day card: sunset",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunset"
+          }
+        }
+      }
+    },
+    "This Device" : {
+      "comment" : "Source tier label: data computed or sensed on this device",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Device"
+          }
+        }
+      }
+    },
+    "This appears when you're back online." : {
+      "comment" : "Data state detail: offline, nothing cached",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This appears when you're back online."
+          }
+        }
+      }
+    },
+    "This device" : {
+      "comment" : "Source tier phrase: computed or sensed on this device",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This device"
+          }
+        }
+      }
+    },
+    "Today" : {
+      "comment" : "Relative day",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        }
+      }
+    },
+    "Tomorrow" : {
+      "comment" : "Relative day",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tomorrow"
+          }
+        }
+      }
+    },
+    "Trip days" : {
+      "comment" : "Accessibility label of the day selector",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trip days"
+          }
+        }
+      }
+    },
+    "Trip name" : {
+      "comment" : "Placeholder / Accessibility label",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trip name"
+          }
+        }
+      }
+    },
+    "Unavailable" : {
+      "comment" : "Data state title",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unavailable"
+          }
+        }
+      }
+    },
+    "Updated %@ ago" : {
+      "comment" : "Data age in minutes, e.g. Updated 12 min ago",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updated %@ ago"
+          }
+        }
+      }
+    },
+    "Updated just now" : {
+      "comment" : "Data age under a minute",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updated just now"
+          }
+        }
+      }
+    },
+    "Urban" : {
+      "comment" : "Place category",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Urban"
+          }
+        }
+      }
+    },
+    "View Source" : {
+      "comment" : "Link to the data source's page",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View Source"
+          }
+        }
+      }
+    },
+    "Walk-in unknown" : {
+      "comment" : "Walk from parking to the shooting spot is not known",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walk-in unknown"
+          }
+        }
+      }
+    },
+    "Waterfall" : {
+      "comment" : "Place category",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waterfall"
+          }
+        }
+      }
+    },
+    "Which light to shoot here: each window with its time and score for this day" : {
+      "comment" : "Tooltip",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Which light to shoot here: each window with its time and score for this day"
+          }
+        }
+      }
+    },
+    "Wildlife" : {
+      "comment" : "Place category",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wildlife"
+          }
+        }
+      }
+    },
+    "Yesterday" : {
+      "comment" : "Relative day",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yesterday"
+          }
+        }
+      }
+    },
+    "Your Key" : {
+      "comment" : "Source tier label: data fetched with the user's own API key",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Key"
+          }
+        }
+      }
+    },
+    "Your key" : {
+      "comment" : "Source tier phrase: fetched with the user's own API key",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your key"
+          }
+        }
+      }
+    },
+    "^[%lld day](inflect: true)" : {
+      "comment" : "Number of days, e.g. 3 days",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "^[%lld day](inflect: true)"
+          }
+        }
+      }
+    },
+    "^[%lld place](inflect: true)" : {
+      "comment" : "Number of places, e.g. 4 places",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "^[%lld place](inflect: true)"
+          }
+        }
+      }
+    },
+    "^[%lld stop](inflect: true)" : {
+      "comment" : "Number of stops, e.g. 3 stops",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "^[%lld stop](inflect: true)"
+          }
+        }
+      }
+    },
+    "^[%lld trip](inflect: true)" : {
+      "comment" : "Number of trips, e.g. 2 trips",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "^[%lld trip](inflect: true)"
+          }
+        }
+      }
+    },
+    "before the shoot." : {
+      "comment" : "Transfer card sentence, after the Morning timing picker",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "before the shoot."
+          }
+        }
+      }
+    },
+    "estimated" : {
+      "comment" : "Marks a drive time that is a straight-line estimate, not a road route",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "estimated"
+          }
+        }
+      }
+    },
+    "from %@" : {
+      "comment" : "Transfer card: where the drive starts, after its time and distance",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "from %@"
+          }
+        }
+      }
+    },
+    "helps, %@" : {
+      "comment" : "Factor row VoiceOver: positive contribution",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "helps, %@"
+          }
+        }
+      }
+    },
+    "hurts, %@" : {
+      "comment" : "Factor row VoiceOver: negative contribution",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "hurts, %@"
+          }
+        }
+      }
+    },
+    "no effect" : {
+      "comment" : "Factor row VoiceOver: zero contribution",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "no effect"
+          }
+        }
+      }
+    }
   },
   "version" : "1.0"
 }

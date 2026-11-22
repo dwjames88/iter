@@ -43,7 +43,7 @@ public struct LiveSkyCard: View {
                 Text(verbatim: title).font(IterFont.captionStrong).foregroundStyle(IterColor.textSecondary)
                 Text(verbatim: LightText.name(kind)).font(IterFont.headline).foregroundStyle(IterColor.textPrimary)
                 if score == nil {
-                    Label { Text("No Live Data", bundle: .module) } icon: { Image(systemName: "circle.dashed") }
+                    Label { Text("No Live Data", bundle: .module, comment: "Live sky index has no reading") } icon: { Image(systemName: "circle.dashed") }
                         .font(IterFont.captionStrong)
                         .foregroundStyle(IterColor.textSecondary)
                 } else {

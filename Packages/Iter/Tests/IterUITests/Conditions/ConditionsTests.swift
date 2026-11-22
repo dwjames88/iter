@@ -108,7 +108,7 @@ struct ConditionsTests {
         let late = LeaveByCard(stopName: "Mesa Arch", departure: F.ago(6), arrival: F.ahead(60), deadline: F.ahead(50),
                                driveSeconds: 3600, driveMeters: 90_000, now: F.now, zone: F.zone, locale: F.locale)
         #expect(late.leaveByText == "Late by 6 min")
-        #expect(late.etaText == "Late by 10 min")
+        #expect(F.n(late.etaText) == "Arrive 4:00 PM · 10 min after the light starts")
     }
 
     @Test func nextStopWords() {

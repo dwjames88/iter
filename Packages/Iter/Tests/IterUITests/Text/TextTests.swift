@@ -122,8 +122,8 @@ struct DataTextTests {
     }
 
     @Test func ageBoundaries() {
-        #expect(age(0) == "Updated Just Now")
-        #expect(age(59) == "Updated Just Now")
+        #expect(age(0) == "Updated just now")
+        #expect(age(59) == "Updated just now")
         #expect(age(60) == "Updated 1 min ago")
         #expect(age(12 * 60 + 30) == "Updated 12 min ago")
         #expect(age(3599) == "Updated 59 min ago")
@@ -131,7 +131,7 @@ struct DataTextTests {
         #expect(age(3 * 3600 + 100) == "3 hr old")
         #expect(age(6 * 3600 - 1) == "5 hr old")
         #expect(age(6 * 3600) == "Stale")
-        #expect(age(-30) == "Updated Just Now")
+        #expect(age(-30) == "Updated just now")
     }
 
     @Test func days() {
@@ -178,7 +178,7 @@ struct TripTextTests {
         #expect(TripText.arrive(departure, in: denver, locale: de) == "Arrive 07:45")
         #expect(TripText.eta(arrival: departure, deadline: nil, in: denver, locale: gb) == "Arrive 07:45")
         #expect(TripText.eta(arrival: departure, deadline: departure.addingTimeInterval(60), in: denver, locale: gb) == "Arrive 07:45")
-        #expect(TripText.eta(arrival: departure, deadline: departure.addingTimeInterval(-6 * 60), in: denver, locale: gb) == "Late by 6 min")
+        #expect(TripText.eta(arrival: departure, deadline: departure.addingTimeInterval(-6 * 60), in: denver, locale: gb) == "Arrive 07:45 · 6 min after the light starts")
     }
 
     @Test func lateByLongHours() {
