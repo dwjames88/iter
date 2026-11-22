@@ -36,7 +36,6 @@ public enum FindIntent: Equatable, Sendable {
         for opener in requestOpeners where text == opener || text.hasPrefix(opener + " ") { return .ask }
         let padded = " " + text + " "
         for marker in constraintMarkers where padded.contains(" " + marker + " ") { return .ask }
-        // Several known feature words with no capitalised name read as a request ("lakes waterfalls").
         return .place
     }
 }

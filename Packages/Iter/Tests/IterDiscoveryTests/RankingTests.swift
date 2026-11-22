@@ -94,8 +94,6 @@ struct RankingTests {
         #expect(DiscoveryRanker.novelty(c, library: [sameKind]).value == 0.85)
         // An already-saved place sinks under .unique.
         let saved = scored(famous), fresh = scored(obscure)
-        let lib = [LibraryReference(name: "Quiet Falls")]
-        #expect(DiscoveryRanker.rank([saved, fresh], context: context(ordering: .unique, library: lib)).first?.name == "Famous Falls" || true)
         let unique = DiscoveryRanker.rank([fresh, saved], context: context(ordering: .unique, library: [LibraryReference(name: "Famous Falls")]))
         #expect(unique.first?.name == "Quiet Falls")
     }
