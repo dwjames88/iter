@@ -14,17 +14,28 @@ private func c(_ lat: Double, _ lon: Double) -> Coordinate { Coordinate(latitude
 @Suite("Overpass boundary query")
 struct OverpassBoundaryQueryTests {
     @Test func queryWithNearIsExact() {
-        let q = OverpassQueryBuilder.boundaryQuery(name: "Yosemite", near: c(37.8, -119.5))
-        let np = "[\"boundary\"~\"^(national_park|protected_area)$\"][\"name\"~\"^Yosemite\",i](around:100000,37.8,-119.5);"
-        let nr = "[\"leisure\"=\"nature_reserve\"][\"name\"~\"^Yosemite\",i](around:100000,37.8,-119.5);"
-        #expect(q == "[out:json][timeout:25];(relation\(np)relation\(nr)way\(np)way\(nr));out geom;")
+        let q = OverpassQueryBuilder.boundaryQuery(name: "Yosemite National Park", near: c(37.75, -119.59))
+        let bb = "(36.85,-120.728247,38.65,-118.451753)"
+        let np = "[\"boundary\"~\"^(national_park|protected_area)$\"][\"name\"~\"^Yosemite National Park\",i];"
+        let nr = "[\"leisure\"=\"nature_reserve\"][\"name\"~\"^Yosemite National Park\",i];"
+        #expect(q == "[out:json][timeout:20][maxsize:33554432];(relation\(bb)\(np)relation\(bb)\(nr)way\(bb)\(np)way\(bb)\(nr));out geom;")
     }
 
-    @Test func globalQueryHasNoAroundAndIsLimited() {
+    @Test func boxIsAboutOneHundredKilometresAndClamped() {
+        let b = OverpassQueryBuilder.boundarySearchBox(around: c(37.75, -119.59))
+        #expect(abs((b.north - b.south) * 111.32 / 2 - 100) < 1)
+        #expect(abs((b.east - b.west) / 2 * 111.32 * cos(37.75 * .pi / 180) - 100) < 1)
+        let pole = OverpassQueryBuilder.boundarySearchBox(around: c(89.9, 179.9))
+        #expect(pole.north == 90 && pole.east == 180)
+    }
+
+    @Test func globalQueryHasNoBoxRequiresTheFullNameAndIsLimited() {
         let q = OverpassQueryBuilder.boundaryQuery(name: "Zion", near: nil)
-        #expect(!q.contains("around"))
+        #expect(!q.contains("around") && !q.contains("(3") && !q.contains("(-"))
+        #expect(q.contains("\"^Zion$\",i"))
         #expect(q.hasSuffix(");out geom 10;"))
-        #expect(q.hasPrefix("[out:json][timeout:25];(relation[\"boundary\"~"))
+        #expect(q.hasPrefix("[out:json][timeout:20][maxsize:33554432];(relation[\"boundary\"~"))
+        #expect(!OverpassQueryBuilder.boundaryQuery(name: "Zion", near: near).contains("$\",i"))
     }
 
     @Test func administrativeBoundariesAreNotAskedFor() {
@@ -36,15 +47,16 @@ struct OverpassBoundaryQueryTests {
     @Test func metacharactersAreEscapedAsTextAndQuotesAsQL() {
         let q = OverpassQueryBuilder.boundaryQuery(name: "St. Mary's (Park) [A+B] a|b", near: nil)
         // Regex: each metacharacter gets a backslash; QL literal: that backslash is doubled.
-        #expect(q.contains("\"^St\\\\. Mary's \\\\(Park\\\\) \\\\[A\\\\+B\\\\] a\\\\|b\",i"))
+        #expect(q.contains("\"^St\\\\. Mary's \\\\(Park\\\\) \\\\[A\\\\+B\\\\] a\\\\|b$\",i"))
         let quoted = OverpassQueryBuilder.boundaryQuery(name: "Say \"Hi\"", near: nil)
-        #expect(quoted.contains("\"^Say \\\"Hi\\\"\",i"))
+        #expect(quoted.contains("\"^Say \\\"Hi\\\"$\",i"))
         #expect(OverpassQueryBuilder.regexEscaped("a.b*c") == "a\\.b\\*c")
     }
 
     @Test func serverTimeoutStaysBelowTheClientTimeout() throws {
         let q = OverpassQueryBuilder.boundaryQuery(name: "X", near: near)
         let server = try #require(OverpassQueryBuilder.serverTimeout(in: q))
+        #expect(server == 20)
         #expect(Double(server) < SourceCatalogue.osmOverpass.policy.timeout.timeInterval)
     }
 }
@@ -232,7 +244,7 @@ struct OverpassBoundaryProviderTests {
         let body = try #require(String(data: bodyData, encoding: .utf8))
         let query = try #require(body.dropFirst(5).removingPercentEncoding)
         #expect(query == OverpassQueryBuilder.boundaryQuery(name: "Granite Basin National Park", near: near))
-        #expect(query.contains("(around:100000,37,-119)"))
+        #expect(query.contains("(36.1,-120.126922,37.9,-117.873078)"))
     }
 
     @Test func noMatchAndEmptyNameGiveNilWithoutInventingAnything() async throws {
