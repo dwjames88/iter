@@ -17,6 +17,14 @@ public enum StorePlacement: Sendable, Equatable {
         case pathInsideRealStoreFolder(String)
     }
 
+    /// True only for the real app's bundle id outside any test host. The one definition of "the real app": the store
+    /// placement, the preferences suite and the Keychain all key off it.
+    public static func isRealProcess(bundleID: String?, environment: [String: String]) -> Bool {
+        let underTest = environment["XCTestConfigurationFilePath"] != nil || environment["XCTestBundlePath"] != nil
+            || environment["XCTestSessionIdentifier"] != nil
+        return bundleID == realBundleID && !underTest
+    }
+
     /// Decides the placement.
     /// - Parameters:
     ///   - bundleID: `Bundle.main.bundleIdentifier`.
@@ -26,9 +34,7 @@ public enum StorePlacement: Sendable, Equatable {
     ///   - realStoreURL: the owner's store (`StoreLocation.directStoreURL()` on the Mac).
     public static func resolve(bundleID: String?, options: LaunchOptions, environment: [String: String],
                                realStoreURL: URL) throws -> StorePlacement {
-        let underTest = environment["XCTestConfigurationFilePath"] != nil || environment["XCTestBundlePath"] != nil
-            || environment["XCTestSessionIdentifier"] != nil
-        let isReal = bundleID == realBundleID && !underTest
+        let isReal = isRealProcess(bundleID: bundleID, environment: environment)
         if isReal {
             // The real app ignores -IterStorePath (it can never be pointed elsewhere by an argument) but honours the
             // in-memory switch, which only ever makes it safer.
