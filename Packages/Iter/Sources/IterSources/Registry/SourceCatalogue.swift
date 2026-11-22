@@ -253,14 +253,14 @@ public enum SourceCatalogue {
     public static let osmOverpass = SourceDescriptor(
         id: .osmOverpass, name: "OpenStreetMap (Overpass)", operatorName: "OpenStreetMap contributors", tier: .openData,
         origin: SourceOrigin(tier: .openData, producer: "OpenStreetMap contributors"),
-        kinds: [.gazetteer], coverage: .global,
+        kinds: [.gazetteer, .boundary], coverage: .global,
         // Public instances are shared and return 502/504 when busy. The client timeout (60 s) is longer than the
         // server-side `[timeout:25]` we send, so the server always answers first.
         policy: RequestPolicy(spacing: .seconds(2), maxConcurrent: 1, timeout: .seconds(60), maxRetries: 2,
                               initialBackoff: .seconds(10), conditional: false),
         cacheTTL: .seconds(7 * 86_400), licence: LicenceTag(key: LicenceKey.osm, mayStore: true),
         termsURL: url("https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances"),
-        ranks: [.gazetteer: 20])
+        ranks: [.gazetteer: 20, .boundary: 10])
 
     public static let usgsGNIS = SourceDescriptor(
         id: .usgsGNIS, name: "USGS Geographic Names (GNIS)", operatorName: "USGS The National Map", tier: .government,

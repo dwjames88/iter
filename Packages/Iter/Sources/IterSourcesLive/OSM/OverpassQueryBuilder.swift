@@ -44,4 +44,51 @@ public enum OverpassQueryBuilder {
         let digits = query[r.upperBound...].prefix { $0.isNumber }
         return Int(digits)
     }
+
+    // MARK: Boundaries
+
+    /// How far from `near` a named area is searched, metres.
+    public static let boundarySearchRadiusM = 100_000
+    /// The most elements a search without `near` returns (a name like "Park" matches thousands worldwide).
+    public static let globalBoundaryLimit = 10
+
+    /// Escapes regex metacharacters, so a name is matched as text.
+    static func regexEscaped(_ s: String) -> String {
+        var out = ""
+        for ch in s {
+            if "\\.^$*+?()[]{}|".contains(ch) { out.append("\\") }
+            out.append(ch)
+        }
+        return out
+    }
+
+    /// A string for an Overpass QL literal: backslash and double quote escaped.
+    static func qlString(_ s: String) -> String {
+        s.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\"")
+    }
+
+    /// Relations and ways tagged as a national park, protected area or nature reserve whose name starts with `name`
+    /// (case-insensitive; "Yosemite" finds "Yosemite National Park"), within `boundarySearchRadiusM` of `near` when given.
+    /// `out geom` returns every member way's coordinates, so one request gives the whole outline. Administrative
+    /// boundaries are not asked for.
+    ///
+    ///     [out:json][timeout:25];(relation["boundary"~"^(national_park|protected_area)$"]["name"~"^Yosemite",i](around:100000,37.8,-119.5);...);out geom;
+    public static func boundaryQuery(name: String, near: Coordinate?) -> String {
+        let pattern = qlString("^" + regexEscaped(name))
+        let around = near.map { "(around:\(boundarySearchRadiusM),\(coordinateText($0.latitude)),\(coordinateText($0.longitude)))" } ?? ""
+        var statements: [String] = []
+        for type in ["relation", "way"] {
+            statements.append("\(type)[\"boundary\"~\"^(national_park|protected_area)$\"][\"name\"~\"\(pattern)\",i]\(around);")
+            statements.append("\(type)[\"leisure\"=\"nature_reserve\"][\"name\"~\"\(pattern)\",i]\(around);")
+        }
+        let out = near == nil ? "out geom \(globalBoundaryLimit);" : "out geom;"
+        return "[out:json][timeout:\(serverTimeoutSeconds)];(" + statements.joined() + ");" + out
+    }
+
+    private static func coordinateText(_ v: Double) -> String {
+        var s = String(format: "%.6f", v)
+        while s.hasSuffix("0") { s.removeLast() }
+        if s.hasSuffix(".") { s.removeLast() }
+        return s == "-0" ? "0" : s
+    }
 }
