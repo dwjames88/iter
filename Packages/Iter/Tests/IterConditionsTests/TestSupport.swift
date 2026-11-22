@@ -115,13 +115,15 @@ final class FakeForecast: ForecastProvider {
     let descriptor: SourceDescriptor
     let clock: any SourceClock
     let latency: Duration
+    let pacer: Pacer?
     private let state: Mutex<State>
 
     init(_ descriptor: SourceDescriptor, clock: any SourceClock, recipe: Recipe, latency: Duration = .zero, gate: HoldGate? = nil,
-         failure: SourceError? = nil) {
+         failure: SourceError? = nil, spacing: Duration = .zero) {
         self.descriptor = descriptor
         self.clock = clock
         self.latency = latency
+        pacer = spacing > .zero ? Pacer(clock: clock, spacing: spacing) : nil
         state = Mutex(State(failure: failure, gate: gate, recipe: recipe))
     }
 
@@ -139,6 +141,7 @@ final class FakeForecast: ForecastProvider {
         }
         do {
             if let gate { try await gate.wait() }
+            try await pacer?.turn()
             if latency > .zero { try await clock.sleep(for: latency) }
         } catch {
             state.withLock { $0.cancelled += 1 }
@@ -333,4 +336,93 @@ func eventuallyOnMain(_ condition: @MainActor () -> Bool) async -> Bool {
         try? await Task.sleep(for: .milliseconds(1))
     }
     return condition()
+}
+
+/// Keeps request starts at least `spacing` apart on the injected clock (a polite host).
+actor Pacer {
+    let clock: any SourceClock
+    let spacing: Duration
+    var next: Date?
+
+    init(clock: any SourceClock, spacing: Duration) {
+        self.clock = clock
+        self.spacing = spacing
+    }
+
+    func turn() async throws {
+        let now = clock.now
+        let start = max(now, next ?? now)
+        next = start.addingTimeInterval(spacing.timeInterval)
+        if start > now { try await clock.sleep(for: .interval(start.timeIntervalSince(now))) }
+    }
+}
+
+/// A clock with real timers on virtual time. `drive` runs a body and, whenever everything is waiting on a timer, jumps to
+/// the earliest one. "Everything is waiting" is judged by a short stretch of real time with no timer activity.
+final class VirtualClock: SourceClock {
+    private struct Timer { var id: Int; var wake: Date; var continuation: CheckedContinuation<Void, any Error> }
+    private struct State { var now: Date; var timers: [Timer] = []; var counter = 0; var activity = 0; var finished = false }
+    private let state: Mutex<State>
+
+    init(now: Date) { state = Mutex(State(now: now)) }
+
+    var now: Date { state.withLock { $0.now } }
+
+    func sleep(for duration: Duration) async throws {
+        try Task.checkCancellation()
+        let id = state.withLock { s -> Int in s.counter += 1; return s.counter }
+        try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { (c: CheckedContinuation<Void, any Error>) in
+                let wake = state.withLock { s -> Date in
+                    s.activity += 1
+                    let w = s.now.addingTimeInterval(max(0, duration.timeInterval))
+                    s.timers.append(Timer(id: id, wake: w, continuation: c))
+                    return w
+                }
+                _ = wake
+                if Task.isCancelled { cancelTimer(id) }
+            }
+        } onCancel: { cancelTimer(id) }
+    }
+
+    private func cancelTimer(_ id: Int) {
+        let t = state.withLock { s -> Timer? in
+            guard let i = s.timers.firstIndex(where: { $0.id == id }) else { return nil }
+            s.activity += 1
+            return s.timers.remove(at: i)
+        }
+        t?.continuation.resume(throwing: CancellationError())
+    }
+
+    func drive<T: Sendable>(limit: Duration = .seconds(3600), _ body: @escaping @Sendable () async -> T) async -> T {
+        let result = Mutex<T?>(nil)
+        let task = Task {
+            let v = await body()
+            result.withLock { $0 = v }
+        }
+        _ = task
+        let deadline = now.addingTimeInterval(limit.timeInterval)
+        var lastActivity = -1
+        var quiet = 0
+        while result.withLock({ $0 == nil }) {
+            try? await Task.sleep(for: .milliseconds(2))
+            let (activity, hasTimers) = state.withLock { ($0.activity, !$0.timers.isEmpty) }
+            if activity != lastActivity { lastActivity = activity; quiet = 0; continue }
+            quiet += 1
+            guard quiet >= 6, hasTimers else { continue }
+            quiet = 0
+            let due = state.withLock { s -> [Timer] in
+                guard let earliest = s.timers.map(\.wake).min() else { return [] }
+                s.now = max(s.now, earliest)
+                s.activity += 1
+                let due = s.timers.filter { $0.wake <= s.now }
+                s.timers.removeAll { $0.wake <= s.now }
+                return due
+            }
+            for t in due { t.continuation.resume() }
+            if now > deadline { task.cancel(); break }
+        }
+        while result.withLock({ $0 == nil }) { try? await Task.sleep(for: .milliseconds(2)) }
+        return result.withLock { $0! }
+    }
 }
