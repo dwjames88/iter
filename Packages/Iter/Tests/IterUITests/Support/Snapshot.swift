@@ -317,6 +317,7 @@ extension Snapshot {
                                           scale: CGFloat, settle: Duration) async throws -> CGImage {
         let style: UIUserInterfaceStyle = appearance == .dark ? .dark : .light
         let controller = UIHostingController(rootView: view)
+        controller.safeAreaRegions = []   // a scene-less window still reports a status-bar inset
         controller.view.backgroundColor = .systemBackground
         let window = UIWindow(frame: CGRect(origin: .zero, size: size))
         window.overrideUserInterfaceStyle = style
@@ -331,9 +332,21 @@ extension Snapshot {
         let format = UIGraphicsImageRendererFormat()
         format.scale = scale
         format.opaque = true
+        format.preferredRange = .standard
         let renderer = UIGraphicsImageRenderer(size: size, format: format)
-        let ui = renderer.image { _ in
-            controller.view.drawHierarchy(in: CGRect(origin: .zero, size: size), afterScreenUpdates: true)
+        let mode = ProcessInfo.processInfo.environment["ITER_SNAPSHOT_IOS_MODE"] ?? "layer"
+        let ui = renderer.image { ctx in
+            let bounds = CGRect(origin: .zero, size: size)
+            // Trait collection of the window so dynamic colours resolve in the requested appearance.
+            window.traitCollection.performAsCurrent {
+                UIColor.systemBackground.setFill()
+                ctx.fill(bounds)
+                if mode == "hierarchy" {
+                    controller.view.drawHierarchy(in: bounds, afterScreenUpdates: true)
+                } else {
+                    controller.view.layer.render(in: ctx.cgContext)
+                }
+            }
         }
         guard let cg = ui.cgImage else { throw SnapshotError.render }
         return cg
