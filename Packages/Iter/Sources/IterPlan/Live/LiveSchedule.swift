@@ -83,8 +83,35 @@ public struct LiveStop: Codable, Hashable, Sendable, Identifiable {
     public var projectedDeparture: Date?
     /// Set on the next stop only, when it is late or missed.
     public var alternative: LiveAlternative?
+    /// How the trip moves into this stop's day, set when the previous non-skipped stop in trip order is on an earlier day (nil on
+    /// same-day stops and for the first stop). After an overnight lodging the evening option has no meaning, so this is `.morning`.
+    public var transfer: TransferTiming?
+    /// For an `.eveningBefore` transfer only: when the plan has you set off (the previous stop's departure from its window).
+    /// `leaveBy` and `status` stay the hard latest departure for the morning arrival; this is when to suggest driving that evening.
+    public var plannedDeparture: Date?
 
     public var id: UUID { stopID }
+}
+
+/// The trade-off of staying at the current stop: its planned departure against the latest the next stop allows.
+public struct StayCost: Codable, Hashable, Sendable {
+    public var currentStopID: UUID
+    public var nextStopID: UUID
+    /// The current stop's projected departure (window end, or start + dwell); nil for an overnight lodging.
+    public var plannedDeparture: Date?
+    /// The next stop's leave-by.
+    public var latestDeparture: Date?
+    /// `plannedDeparture` minus `latestDeparture` when positive: how much of the current stop you give up to make the next. Else nil.
+    public var cutsShortBy: TimeInterval?
+    public var conflicts: Bool { cutsShortBy != nil }
+
+    public init(currentStopID: UUID, nextStopID: UUID, plannedDeparture: Date?, latestDeparture: Date?, cutsShortBy: TimeInterval?) {
+        self.currentStopID = currentStopID
+        self.nextStopID = nextStopID
+        self.plannedDeparture = plannedDeparture
+        self.latestDeparture = latestDeparture
+        self.cutsShortBy = cutsShortBy
+    }
 }
 
 /// The live view of the rest of the trip, recomputed whenever the clock, the position or an ETA changes. Pure.
@@ -99,6 +126,8 @@ public struct LiveSchedule: Codable, Hashable, Sendable {
     public var remaining: [LiveStop]
     /// Nothing left to do: no stop is waiting and you are not at one.
     public var finished: Bool
+    /// While at a stop with another to come: what leaving on time for the next costs the current one. Nil otherwise.
+    public var stay: StayCost?
 
     /// `next` followed by `remaining`.
     public var upcoming: [LiveStop] { (next.map { [$0] } ?? []) + remaining }
@@ -114,17 +143,22 @@ public struct LiveSchedule: Codable, Hashable, Sendable {
     /// - `windows`, `plannedLegs`, `start`: as for `Scheduler.schedule`.
     /// - `origin`: where you are now (nil when unknown). `liveETAs[stopID]` is a live ETA from `origin` to that stop; the caller
     ///   may supply it for any stops it asked about.
+    /// - `offlineETAs[stopID]`: an ETA computed without a network (see `OfflineETA`), used when there is no live one.
     ///
-    /// Drive time for the **next** stop: its live ETA if present; else, with no route but a known origin, a straight-line
-    /// estimate from the origin (`.offlineEstimate`); else the planned leg into it from the previous non-skipped stop (the start
+    /// Drive time for the **next** stop: its live ETA if present (`.live`); else its offline ETA (`.offlineEstimate`); else, with
+    /// no route but a known origin, a straight-line estimate from the origin (`.offlineEstimate`); else the planned leg into it from the previous non-skipped stop (the start
     /// place for the first stop; `.planned`). A skipped stop disappears from the chain, so the stop after it is driven from
     /// where you are, not from the skipped stop. Later stops use their planned leg from the previous remaining stop (`.planned`,
     /// an estimate if none was planned) and chain from that stop's projected departure.
     ///
+    /// While at a stop, the next stop's leave-by and status stay truthful (the latest departure that still makes set-up). The
+    /// trade-off is exposed as `stay`. When leaving at the current stop's planned departure still makes the next stop
+    /// (no conflict) and that is later than now, it becomes the next stop's `earliestDeparture`; on a conflict it stays nil.
+    ///
     /// Every stop's leave-by = arriveBy − drive − margin. The margin is applied to planned legs too, so a stop's leave-by does not
     /// jump when it becomes the next stop and a live ETA replaces the planned one.
     public static func make(trip: Trip, start: Place?, windows: SessionWindows, plannedLegs: [LegKey: Leg], progress: TripProgress,
-                            now: Date, origin: Coordinate?, liveETAs: [UUID: ETA]) -> LiveSchedule {
+                            now: Date, origin: Coordinate?, liveETAs: [UUID: ETA], offlineETAs: [UUID: ETA] = [:]) -> LiveSchedule {
         let ordered = Scheduler.ordered(trip.stops)
         let active = ordered.filter { !progress.visited.contains($0.id) && !progress.skipped.contains($0.id) }
         var currentStop: Stop?
@@ -180,6 +214,9 @@ public struct LiveSchedule: Codable, Hashable, Sendable {
             if isNext, let eta = liveETAs[stop.id] {
                 drive = eta.seconds
                 source = .live
+            } else if isNext, let eta = offlineETAs[stop.id] {
+                drive = eta.seconds
+                source = .offlineEstimate
             } else if isNext, let origin {
                 drive = Leg.estimate(from: origin, to: stop.place.coordinate).seconds
                 source = .offlineEstimate
@@ -189,7 +226,24 @@ public struct LiveSchedule: Codable, Hashable, Sendable {
             }
             let margin = safetyMargin(forDriveSeconds: drive)
             let setUpBy = times.setUpBy ?? times.arriveBy
-            let earliest: Date? = isNext ? nil : previousDeparture
+            var earliest: Date? = isNext ? nil : previousDeparture
+            if isNext, let planned = currentLive?.projectedDeparture, planned > now {
+                // Leaving when the shoot ends, but only when that still makes this stop.
+                let latest = times.arriveBy.map { $0.addingTimeInterval(-drive - margin) }
+                if latest.map({ $0 >= planned }) ?? true { earliest = planned }
+            }
+            let previousStop = ordered.last { $0.id != stop.id && ordered.firstIndex(of: $0)! < ordered.firstIndex(of: stop)! && !progress.skipped.contains($0.id) }
+            var transfer: TransferTiming?
+            var plannedDeparture: Date?
+            if let previousStop, previousStop.dayIndex < stop.dayIndex {
+                let prevWindow = window(previousStop)
+                let prevTimes = Scheduler.timing(for: previousStop, trip: trip, window: prevWindow)
+                let prevDepart = Scheduler.departAt(for: previousStop, window: prevWindow, arrival: prevTimes.arriveBy)
+                let overnight = previousStop.kind == .lodging && prevDepart == nil
+                let timing = trip.transferTiming(intoDay: stop.dayIndex)
+                transfer = overnight ? .morning : timing
+                if transfer == .eveningBefore { plannedDeparture = prevDepart }
+            }
 
             var leaveBy: Date?
             var projectedArrival: Date?
@@ -223,7 +277,7 @@ public struct LiveSchedule: Codable, Hashable, Sendable {
             live.append(LiveStop(stopID: stop.id, kind: stop.kind, window: w, setUpBy: setUpBy, arriveBy: times.arriveBy, leaveBy: leaveBy,
                                  driveSeconds: drive, etaSource: source, safetyMargin: margin, status: status,
                                  projectedArrival: projectedArrival, earliestDeparture: earliest, projectedDeparture: departure,
-                                 alternative: nil))
+                                 alternative: nil, transfer: transfer, plannedDeparture: plannedDeparture))
             previousRemaining = stop
             previousDeparture = departure
         }
@@ -233,20 +287,29 @@ public struct LiveSchedule: Codable, Hashable, Sendable {
             switch first.status {
             case .late, .missed:
                 live[0].alternative = alternative(after: first, upcoming: Array(upcoming.dropFirst()), windows: windows, now: now, origin: origin,
-                                                  liveETAs: liveETAs, plannedFrom: upcoming[0], plannedLegs: plannedLegs, trip: trip)
+                                                  liveETAs: liveETAs, offlineETAs: offlineETAs, plannedFrom: upcoming[0], plannedLegs: plannedLegs, trip: trip)
             default: break
             }
         }
 
+        var stay: StayCost?
+        if let currentLive, let first = live.first {
+            let planned = currentLive.projectedDeparture
+            var cuts: TimeInterval?
+            if let planned, let latest = first.leaveBy, planned > latest { cuts = planned.timeIntervalSince(latest) }
+            stay = StayCost(currentStopID: currentLive.stopID, nextStopID: first.stopID, plannedDeparture: planned,
+                            latestDeparture: first.leaveBy, cutsShortBy: cuts)
+        }
+
         return LiveSchedule(now: now, current: currentStop?.id, currentStop: currentLive, next: live.first,
-                            remaining: Array(live.dropFirst()), finished: currentStop == nil && live.isEmpty)
+                            remaining: Array(live.dropFirst()), finished: currentStop == nil && live.isEmpty, stay: stay)
     }
 
     /// The first later light stop whose window is still reachable leaving now. Drive time from here: a live ETA if the caller
     /// supplied one for it, else a straight line from `origin` (`.offlineEstimate`), else the planned leg from the stop you
     /// were heading for.
     private static func alternative(after first: LiveStop, upcoming: [Stop], windows: SessionWindows, now: Date, origin: Coordinate?,
-                                    liveETAs: [UUID: ETA], plannedFrom: Stop, plannedLegs: [LegKey: Leg], trip: Trip) -> LiveAlternative? {
+                                    liveETAs: [UUID: ETA], offlineETAs: [UUID: ETA], plannedFrom: Stop, plannedLegs: [LegKey: Leg], trip: Trip) -> LiveAlternative? {
         for stop in upcoming where stop.kind == .light {
             guard let window = windows[stop.id] else { continue }
             let drive: TimeInterval
@@ -254,6 +317,9 @@ public struct LiveSchedule: Codable, Hashable, Sendable {
             if let eta = liveETAs[stop.id] {
                 drive = eta.seconds
                 source = .live
+            } else if let eta = offlineETAs[stop.id] {
+                drive = eta.seconds
+                source = .offlineEstimate
             } else if let origin {
                 drive = Leg.estimate(from: origin, to: stop.place.coordinate).seconds
                 source = .offlineEstimate
