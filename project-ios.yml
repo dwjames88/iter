@@ -1,8 +1,6 @@
 # The iPhone and iPad app. Included from project.yml (`include: [project-ios.yml]`), so `xcodegen generate` makes one
-# Iter.xcodeproj with both apps. Shared code: the IterKit package, plus the views in App/Sources that compile on both
-# platforms (everything there except the Mac-only files excluded below). iOS-only UI is in AppiOS/Sources.
-# A file added to App/Sources is compiled into both apps; if it needs AppKit, add it to the excludes here
-# (or guard it with #if os(macOS)). scripts/test-ios.sh builds and tests the iOS app on the Simulator.
+# Iter.xcodeproj with both apps. All shared UI lives in the Packages/Iter package; iOS/ holds only the platform shell.
+# scripts/test-ios.sh builds and tests the iOS app on the iOS 27.2 Simulator.
 options:
   deploymentTarget:
     iOS: "26.0"
@@ -11,56 +9,20 @@ targets:
     type: application
     platform: iOS
     sources:
-      - path: AppiOS/Sources
-      - path: App/Sources
-        excludes:
-          # Mac-only: the window, menus, Settings scene, sidebar and the AppKit-backed Explore, Locations and builder.
-          - Shell/IterApp.swift
-          - Shell/AppCommands.swift
-          - Shell/RootView.swift
-          - Sidebar/SidebarView.swift
-          - Sidebar/SidebarTripsSection.swift
-          - Sidebar/SidebarLocationsSection.swift
-          - Components/Sidebar/SidebarSearchField.swift
-          - Components/Sidebar/SidebarBottomBar.swift
-          - Components/ResizableSplit.swift
-          - Components/FloatingPanelLayout.swift
-          - Components/MapControlStack.swift
-          - Explore/ExploreView.swift
-          - Explore/ExploreListPanel.swift
-          - Explore/ExploreMapPane.swift
-          - Explore/ExplorePerfScript.swift
-          - Explore/PinDragProbe.swift      # Mac-only: the -IterPinDragProbe report for scripts/pin-drag-test.sh
-          - Explore/ExplorePlaceCard.swift   # retired on the Mac (replaced by ExploreLightPanel); excluded until it is gone
-          - Locations/LocationsView.swift
-          - Locations/LocationsMap.swift
-          - Trips/TripBuilderView.swift
-          - Trips/TripPlanList.swift
-          - Trips/TripRouteMap.swift
-      - path: App/Resources/Assets.xcassets
-      - path: App/Resources/Localizable.xcstrings
+      - path: iOS/Sources
+      - path: iOS/Resources
     dependencies:
-      - package: IterKit
-        product: IterCore
-      - package: IterKit
-        product: IterAstro
-      - package: IterKit
-        product: IterLight
-      - package: IterKit
-        product: IterData
-      - package: IterKit
-        product: IterServices
-      - package: IterKit
-        product: IterDesign
-      - package: IterKit
-        product: IterFeatures
-      - package: IterKit
-        product: IterLicensing
+      - package: Iter
+        product: IterScreens
+      - package: Iter
+        product: IterGoActivity
+      - target: IterWidgets
+        embed: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.dwjames.iter.ios
         PRODUCT_NAME: Iter
-        INFOPLIST_FILE: AppiOS/Info.plist
+        INFOPLIST_FILE: iOS/Info.plist
         TARGETED_DEVICE_FAMILY: "1,2"
         IPHONEOS_DEPLOYMENT_TARGET: "26.0"
         SDKROOT: iphoneos
@@ -73,18 +35,42 @@ targets:
         ENABLE_HARDENED_RUNTIME: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
-        # MARKETING_VERSION and CURRENT_PROJECT_VERSION come from project.yml's shared settings (one version for both apps).
-        # ITER_LICENSING_ENFORCED (Info.plist IterLicensingEnforced, default NO) also comes from project.yml's shared settings.
         ENABLE_PREVIEWS: YES
         # Built with the iOS 27 SDK, the @Generable code references FoundationModels symbols that iOS 26 lacks
         # (Generable.promptRepresentation), and a strong link stops the app at launch on iOS 26. A weak link lets it start;
         # Ask checks availability before using the model. See TESTING-iOS.md, "iOS 26".
         OTHER_LDFLAGS: ["$(inherited)", "-weak_framework", "FoundationModels"]
+  IterWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widgets/Sources
+    dependencies:
+      - package: Iter
+        product: IterModel
+      - package: Iter
+        product: IterUI
+      - package: Iter
+        product: IterGoActivity
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dwjames.iter.ios.widgets
+        PRODUCT_NAME: IterWidgets
+        INFOPLIST_FILE: Widgets/Info.plist
+        TARGETED_DEVICE_FAMILY: "1,2"
+        IPHONEOS_DEPLOYMENT_TARGET: "26.0"
+        SDKROOT: iphoneos
+        SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
+        SUPPORTS_MACCATALYST: NO
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_IDENTITY: "Apple Development"
+        ENABLE_HARDENED_RUNTIME: NO
+        SKIP_INSTALL: YES
   IterAppTests iOS:
     type: bundle.unit-test
     platform: iOS
     sources:
-      - path: AppiOSTests
+      - path: Tests/Hosted/iOS
     dependencies:
       - target: Iter iOS
     settings:

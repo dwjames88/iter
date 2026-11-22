@@ -34,9 +34,6 @@ settings:
     # verifies each update's Ed25519 signature. scripts/release.sh writes the key the first time it runs.
     ITER_UPDATE_FEED_URL: "https://github.com/dwjames88/iter/releases/latest/download/appcast.json"
     ITER_UPDATE_PUBLIC_KEY: "LndqHR3Ss6ptV4nD6v+N3wOc+TigG1VTuE2T+AZY48c="
-    # Licensing (IterLicensing, docs/LICENSING.md). NO in 0.x: nothing is gated and Settings ▸ Licence is hidden unless
-    # launched with -IterShowLicensing YES. Fed into Info.plist as IterLicensingEnforced.
-    ITER_LICENSING_ENFORCED: "NO"
     # Keep the build machine's paths out of the binary: source paths are recorded relative to /Iter.
     OTHER_SWIFT_FLAGS: $(inherited) -file-prefix-map $(SRCROOT)=/Iter -debug-prefix-map $(SRCROOT)=/Iter
   configs:
@@ -46,8 +43,8 @@ settings:
       STRIP_INSTALLED_PRODUCT: YES
       COPY_PHASE_STRIP: YES
 packages:
-  IterKit:
-    path: Packages/IterKit
+  Iter:
+    path: Packages/Iter
   IterUpdater:
     path: Packages/IterUpdater
 targets:
@@ -55,36 +52,19 @@ targets:
     type: application
     platform: macOS
     sources:
-      - path: App/Sources
-      - path: App/Resources
+      - path: Mac/Sources
+      - path: Mac/Resources
     dependencies:
-      - package: IterKit
-        product: IterCore
-      - package: IterKit
-        product: IterAstro
-      - package: IterKit
-        product: IterLight
-      - package: IterKit
-        product: IterData
-      - package: IterKit
-        product: IterServices
-      - package: IterKit
-        product: IterDesign
-      - package: IterKit
-        product: IterFeatures
-      - package: IterKit
-        product: IterLicensing
+      - package: Iter
+        product: IterScreens
       - package: IterUpdater
         product: IterUpdater
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: $(ITER_BUNDLE_ID)
         PRODUCT_NAME: Iter
-        INFOPLIST_FILE: App/Info.plist
-        # Default build has no WeatherKit entitlement: the Personal Team cannot provision it.
-        # scripts/run.sh --weatherkit (or ITER_ENTITLEMENTS=App/Iter-WeatherKit.entitlements) switches it on.
-        ITER_ENTITLEMENTS: App/Iter.entitlements
-        CODE_SIGN_ENTITLEMENTS: $(ITER_ENTITLEMENTS)
+        INFOPLIST_FILE: Mac/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Mac/Iter.entitlements
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         COMBINE_HIDPI_IMAGES: YES
@@ -93,7 +73,7 @@ targets:
     type: bundle.unit-test
     platform: macOS
     sources:
-      - path: AppTests
+      - path: Tests/Hosted/Mac
     dependencies:
       - target: Iter
     settings:

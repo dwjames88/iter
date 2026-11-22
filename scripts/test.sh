@@ -1,23 +1,16 @@
 #!/bin/bash
-# Runs every test: the IterKit and IterUpdater packages (swift test) and the app's hosted tests (xcodebuild test).
-#   scripts/test.sh            all tests (snapshot rendering is skipped; use scripts/snapshots.sh)
-#   ITER_LIVE=1 scripts/test.sh   also run the live MapKit/WeatherKit checks (network)
+# Runs the Mac-side checks: the Packages/Iter and IterUpdater packages (swift test), then builds the Mac app.
+#   scripts/test.sh
+# The hosted Mac tests (IterAppTests) are built by the scheme but NOT run in this phase: running them launches the
+# app. Hosted snapshot tests return in a later phase, on the render copy. iOS: scripts/test-ios.sh.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
-echo "== IterKit package (swift test)"
-( cd Packages/IterKit && swift test 2>&1 | grep -E "Test run with|error:|failed|recorded an issue" )
+echo "== Packages/Iter (swift test)"
+( cd Packages/Iter && swift test 2>&1 | grep -E "Test run with|error:|failed|recorded an issue" )
 echo "== IterUpdater package (swift test)"
 ( cd Packages/IterUpdater && swift test 2>&1 | grep -E "Test run with|error:|failed|recorded an issue" )
-echo "== App hosted tests (xcodebuild test)"
+echo "== Mac app (xcodebuild build)"
 xcodegen generate --quiet
-VERSION_ARGS=($("$ROOT/scripts/version.sh"))   # build number and git hash (scripts/version.sh)
-# The hosted app is the render copy (com.dwjames.iter.render, ad hoc), never the real bundle id; see scripts/render.sh.
-RENDER=(ITER_BUNDLE_ID=com.dwjames.iter.render CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= ENABLE_HARDENED_RUNTIME=NO)
-xcodebuild build-for-testing -project Iter.xcodeproj -scheme Iter -destination 'platform=macOS' -derivedDataPath "${ITER_DD:-build/DD-render-tests}" \
-  "${RENDER[@]}" "${VERSION_ARGS[@]}" -quiet 2>&1 | { grep -E "error:" | grep -v "failed with exit code 0" || true; }
-HOST_ID="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "${ITER_DD:-build/DD-render-tests}/Build/Products/Debug/Iter.app/Contents/Info.plist" 2>/dev/null || true)"
-[ "$HOST_ID" = "com.dwjames.iter.render" ] || { echo "Refusing to run the hosted tests: host bundle id is '$HOST_ID'" >&2; exit 1; }
-xcodebuild test-without-building -project Iter.xcodeproj -scheme Iter -destination 'platform=macOS' -derivedDataPath "${ITER_DD:-build/DD-render-tests}" \
-  "${RENDER[@]}" 2>&1 \
-  | grep -E "error:|Test run with|failed|passed after|TEST (SUCCEEDED|FAILED)" | tail -20
+xcodebuild build -project Iter.xcodeproj -scheme Iter -destination 'platform=macOS' -derivedDataPath "${ITER_DD:-build/DerivedData-rebuild-mac}" \
+  2>&1 | grep -E "error:|BUILD (SUCCEEDED|FAILED)" | tail -20
