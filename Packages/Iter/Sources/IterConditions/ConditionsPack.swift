@@ -1,6 +1,7 @@
 import Foundation
 import IterModel
 import IterSources
+import IterSky
 
 /// A stop's place and the local days to collect for it.
 public struct PackStop: Hashable, Sendable {
@@ -84,6 +85,18 @@ extension SkyReport {
             r.forecast = .stale(s, age: age)
         }
         r.fieldProvenance = fieldProvenance.filter { keep($0.provenance) }
+        var scrubbedAnything = !blocked.isEmpty
+        if !keep(forecast.provenance), case .none = r.forecast {} else if !keep(forecast.provenance) {
+            scrubbedAnything = true
+            if let remaining = r.fieldProvenance.first?.provenance, let series = r.forecast.value {
+                var p = remaining
+                p.fetchedAt = r.fieldProvenance.map(\.provenance.fetchedAt).min() ?? remaining.fetchedAt
+                let sourced = Sourced(value: series, provenance: p)
+                if case .stale(_, let age) = r.forecast { r.forecast = .stale(sourced, age: age) } else { r.forecast = .fresh(sourced) }
+            } else {
+                r.forecast = .none([.notProvidedBySource])
+            }
+        }
         if !keep(comparison?.provenance) { r.comparison = nil }
         if !keep(smoke.opticalDepth?.provenance) { r.smoke.opticalDepth = nil }
         r.smoke.analysis = gate(smoke.analysis)
@@ -92,6 +105,11 @@ extension SkyReport {
         r.alerts = gate(alerts)
         r.aurora = gate(aurora)
         r.horizon = gate(horizon)
+        if scrubbedAnything {
+            // Scores and lines were built partly from what may not be stored; they are rebuilt when the pack is read.
+            r.daylight.windows = r.daylight.windows.map { LightWindow(kind: $0.kind, span: $0.span, assessment: .unavailable(.notLoaded)) }
+            r.provenanceLines = []
+        }
         return r
     }
 }

@@ -130,6 +130,7 @@ final class FakeForecast: ForecastProvider {
     var cancelledCount: Int { state.withLock { $0.cancelled } }
     func setFailure(_ e: SourceError?) { state.withLock { $0.failure = e } }
     func setRecipe(_ r: Recipe) { state.withLock { $0.recipe = r } }
+    func setGate(_ g: HoldGate?) { state.withLock { $0.gate = g } }
 
     func forecast(at coordinate: Coordinate, span: TimeSpan) async throws -> Sourced<HourlySeries> {
         let (gate, failure, recipe) = state.withLock { s -> (HoldGate?, SourceError?, Recipe) in
@@ -318,6 +319,15 @@ let metRecipe = Recipe(cloudTotal: 0.6, layers: (0.2, 0.3, 0.5), precip: 0.1, rh
 
 /// Polls (in real time) until `condition` holds or about two seconds pass.
 func eventually(_ condition: @Sendable () -> Bool) async -> Bool {
+    for _ in 0..<2000 {
+        if condition() { return true }
+        try? await Task.sleep(for: .milliseconds(1))
+    }
+    return condition()
+}
+
+@MainActor
+func eventuallyOnMain(_ condition: @MainActor () -> Bool) async -> Bool {
     for _ in 0..<2000 {
         if condition() { return true }
         try? await Task.sleep(for: .milliseconds(1))
