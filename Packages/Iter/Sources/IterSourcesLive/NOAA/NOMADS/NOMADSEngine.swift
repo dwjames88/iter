@@ -69,58 +69,84 @@ actor NOMADSEngine {
         NOMADSCyclePlanner.plan(span: span, now: clock.now, models: models) { self.isMissing($0) }
     }
 
-    /// Fetches every hour of the plan: the first hour of each model alone (finding the right cycle), then the rest two at
-    /// a time. Never throws: failures are collected.
-    func run(_ plan: NOMADSHourPlan, boxes: [NOMADSModel: NOMADSBox], descriptor: SourceDescriptor) async -> Run {
-        var run = Run()
-        run.requestedHours = plan.hours.count
-        var results: [Int: Outcome] = [:]
-        var pending = Array(plan.hours.indices)
+    typealias Boxes = [NOMADSModel: NOMADSBox]
 
-        var probeIndexes: [Int] = []
+    /// Fetches every hour of the plan for one set of boxes. Never throws: failures are collected.
+    func run(_ plan: NOMADSHourPlan, boxes: Boxes, descriptor: SourceDescriptor) async -> Run {
+        await runBatch(plan, groups: [boxes], descriptor: descriptor)[0]
+    }
+
+    /// One unit of work: a plan hour for one group of boxes (one tile set).
+    private struct Item: Hashable, Sendable { let hour: Int; let group: Int }
+
+    /// Fetches every hour of the plan for every group of boxes, one `Run` per group, in group order.
+    ///
+    /// Order: first the first hour of each model alone (finding the right cycle; for the first group that has a box for
+    /// the model), then near term first: hour by hour, every group's file for that hour before any group's next hour, two
+    /// at a time. A caller that stops after the first part therefore has the near hours of every tile. Identical files
+    /// (the same box, cycle and hour) are fetched once, also when requested at the same moment. Cancelling stops the rest.
+    func runBatch(_ plan: NOMADSHourPlan, groups: [Boxes], descriptor: SourceDescriptor) async -> [Run] {
+        var runs = Array(repeating: Run(), count: groups.count)
+        for g in runs.indices { runs[g].requestedHours = plan.hours.count }
+        var results: [Item: Outcome] = [:]
+
+        var probe: [Item] = []
         var seen = Set<NOMADSModel>()
         for i in plan.hours.indices {
-            if let m = plan.hours[i].primary?.model, seen.insert(m).inserted { probeIndexes.append(i) }
+            guard let m = plan.hours[i].primary?.model, seen.insert(m).inserted,
+                  let g = groups.indices.first(where: { groups[$0][m] != nil }) else { continue }
+            probe.append(Item(hour: i, group: g))
         }
+        var fatal: SourceError?
         var stop = false
-        for i in probeIndexes {
-            let o = await fetchHour(plan.hours[i], index: i, boxes: boxes, descriptor: descriptor)
-            results[i] = o
-            if o.isFatal { stop = true; break }
+        for item in probe {
+            let o = await fetchHour(plan.hours[item.hour], item: item, boxes: groups[item.group], descriptor: descriptor)
+            results[item] = o
+            if o.isFatal { stop = true; fatal = o.errors.last; break }
         }
-        pending.removeAll { results[$0] != nil }
+        let probed = Set(probe)
+        var pending: [Item] = []
+        for i in plan.hours.indices {
+            for g in groups.indices where !probed.contains(Item(hour: i, group: g)) { pending.append(Item(hour: i, group: g)) }
+        }
 
         if !stop {
-            await withTaskGroup(of: Outcome.self) { group in
+            await withTaskGroup(of: (Item, Outcome).self) { group in
                 var inFlight = 0
                 var next = 0
                 while next < pending.count || inFlight > 0 {
                     while inFlight < Self.maxConcurrent, next < pending.count, !stop, !Task.isCancelled {
-                        let i = pending[next]
+                        let item = pending[next]
                         next += 1
                         inFlight += 1
-                        group.addTask { await self.fetchHour(plan.hours[i], index: i, boxes: boxes, descriptor: descriptor) }
+                        group.addTask {
+                            (item, await self.fetchHour(plan.hours[item.hour], item: item, boxes: groups[item.group],
+                                                        descriptor: descriptor))
+                        }
                     }
-                    guard let o = await group.next() else { break }
+                    guard let (item, o) = await group.next() else { break }
                     inFlight -= 1
-                    results[o.index] = o
-                    if o.isFatal { stop = true }
+                    results[item] = o
+                    if o.isFatal { stop = true; fatal = fatal ?? o.errors.last }
                     if (stop || Task.isCancelled) && inFlight == 0 { break }
                 }
             }
         }
+        if fatal == nil, Task.isCancelled { fatal = .cancelled }
 
-        for i in plan.hours.indices.sorted() {
-            guard let o = results[i] else { continue }
-            if let f = o.fetched { run.fetched.append(Fetched(planIndex: i, ref: f.ref, file: f.file)) }
-            else if o.missing { run.missingHours += 1 }
-            run.errors += o.errors
+        for g in groups.indices {
+            for i in plan.hours.indices {
+                guard let o = results[Item(hour: i, group: g)] else { continue }
+                if let f = o.fetched { runs[g].fetched.append(Fetched(planIndex: i, ref: f.ref, file: f.file)) }
+                else if o.missing { runs[g].missingHours += 1 }
+                runs[g].errors += o.errors
+            }
+            if let fatal, !runs[g].errors.contains(fatal) { runs[g].errors.append(fatal) }
         }
-        return run
+        return runs
     }
 
     struct Outcome: Sendable {
-        var index: Int
         var fetched: (ref: NOMADSFileRef, file: GRIB2File)?
         var missing = false
         var errors: [SourceError] = []
@@ -128,9 +154,9 @@ actor NOMADSEngine {
         var isFatal = false
     }
 
-    private func fetchHour(_ hour: NOMADSPlannedHour, index: Int, boxes: [NOMADSModel: NOMADSBox],
+    private func fetchHour(_ hour: NOMADSPlannedHour, item: Item, boxes: Boxes,
                            descriptor: SourceDescriptor) async -> Outcome {
-        var outcome = Outcome(index: index)
+        var outcome = Outcome()
         for ref in hour.alternatives {
             if Task.isCancelled { outcome.errors.append(.cancelled); outcome.isFatal = true; return outcome }
             guard let box = boxes[ref.model] else { continue }
@@ -161,9 +187,21 @@ actor NOMADSEngine {
         return outcome
     }
 
-    /// One file: the cache first, then the network (and then the cache is filled). Throws `SourceError`.
+    /// Files being downloaded right now, so a second identical request joins the first instead of repeating it.
+    private var inFlight: [CacheKey: Task<GRIB2File, any Error>] = [:]
+
+    /// One file: the cache first, then the network (and then the cache is filled). Concurrent calls for the same box,
+    /// cycle and hour share one download. Throws `SourceError`.
     func fetchFile(_ ref: NOMADSFileRef, box: NOMADSBox, descriptor: SourceDescriptor) async throws -> GRIB2File {
         let key = CacheKey(source: .noaaNOMADS, kind: .forecast, cell: box.id, bucket: ref.cacheBucket)
+        if let running = inFlight[key] { return try await running.value }
+        let task = Task { try await self.loadFile(ref, box: box, key: key, descriptor: descriptor) }
+        inFlight[key] = task
+        defer { inFlight[key] = nil }
+        return try await task.value
+    }
+
+    private func loadFile(_ ref: NOMADSFileRef, box: NOMADSBox, key: CacheKey, descriptor: SourceDescriptor) async throws -> GRIB2File {
         if let cache, let blob = await cache.blob(for: key, maxAge: nil), let file = try? Self.decode(blob.data, ref: ref) {
             return file
         }
