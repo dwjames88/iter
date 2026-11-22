@@ -20,7 +20,7 @@ struct GoSnapshotTests {
             card("Dead Horse Point", departMin: -6, deadlineMin: 30)
         }
         .padding(16)
-        try await Snapshot.assertMatches(view, name: "go-leave-by-card", size: CGSize(width: Self.width, height: 560),
+        try await Snapshot.assertMatches(view, name: "go-leave-by-card", size: CGSize(width: Self.width, height: 600),
                                          background: IterColor.backgroundWindow)
     }
 

@@ -30,7 +30,7 @@ struct GoLine<Content: View>: View {
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
             Image(systemName: symbol).frame(width: IterSize.iconLarge, alignment: .center).accessibilityHidden(true)
-            content
+            content.fixedSize(horizontal: false, vertical: true)
         }
     }
 }
