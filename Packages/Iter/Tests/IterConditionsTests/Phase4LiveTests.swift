@@ -138,6 +138,23 @@ struct Phase4LiveTests {
 
     // MARK: The run
 
+    /// One boundary request on its own (the Find runs share Overpass with the gazetteer and can time out when the public
+    /// servers are busy). Checks the assembled outline holds Yosemite Valley and not Lone Pine.
+    @Test func yosemiteOutline() async throws {
+        let http = SourceHTTP(userAgent: UserAgent(version: "0.0-dev"))
+        let started = Date()
+        let b = try await OverpassBoundaryProvider(http: http).boundary(named: "Yosemite National Park",
+                                                                     near: Coordinate(latitude: 37.75, longitude: -119.59))
+        let elapsed = Date().timeIntervalSince(started)
+        guard let b else { Issue.record("no outline came back"); return }
+        let vertices = b.polygon.rings.map(\.count).reduce(0, +)
+        print("[live] boundary \(b.name) \(b.externalID ?? "-") kind=\(b.areaKind ?? "-") rings=\(b.polygon.rings.count) vertices=\(vertices) in \(String(format: "%.1f", elapsed)) s; \(b.citation.url?.absoluteString ?? "")")
+        #expect(b.polygon.contains(Coordinate(latitude: 37.7168, longitude: -119.6468)))   // Bridalveil Fall
+        #expect(b.polygon.contains(Coordinate(latitude: 37.8651, longitude: -119.5383)))   // Tuolumne side, Tenaya Lake
+        #expect(!b.polygon.contains(Coordinate(latitude: 36.6060, longitude: -118.0629)))  // Lone Pine
+        #expect(!b.polygon.contains(Coordinate(latitude: 37.6485, longitude: -118.9721))) // Mammoth Lakes
+    }
+
     @Test func findThenConditions() async throws {
         let transport = CountingTransport()
         let http = SourceHTTP(transport: transport, userAgent: UserAgent(version: "0.0-dev"))
