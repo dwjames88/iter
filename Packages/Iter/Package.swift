@@ -82,7 +82,11 @@ let package = Package(
                     swiftSettings: strict),
         .testTarget(name: "IterAITests", dependencies: ["IterAI"], swiftSettings: strict),
         .testTarget(name: "IterDiscoveryTests", dependencies: ["IterDiscovery", "IterModel", "IterSources", "IterAI"], swiftSettings: strict),
-        .testTarget(name: "IterConditionsTests", dependencies: ["IterConditions"], swiftSettings: strict),
+        // IterSourcesLive and IterDiscovery are test-only here: the request-budget measurement and the ITER_LIVE=1 run
+        // drive the real adapters (over stub HTTP, or live when the lead runs it).
+        .testTarget(name: "IterConditionsTests",
+                    dependencies: ["IterConditions", "IterModel", "IterSources", "IterSky", "IterAstro", "IterSourcesLive",
+                                   "IterDiscovery", "IterAI"], swiftSettings: strict),
         .testTarget(name: "IterGoTests", dependencies: ["IterGo"], swiftSettings: strict),
         .testTarget(name: "IterGoActivityTests", dependencies: ["IterGoActivity"], swiftSettings: strict),
         .testTarget(name: "IterSyncTests", dependencies: ["IterSync"], swiftSettings: strict),
