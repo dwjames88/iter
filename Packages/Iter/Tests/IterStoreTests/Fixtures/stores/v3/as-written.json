@@ -1,0 +1,487 @@
+{
+  "fixture" : "v3",
+  "flattenedFolderIDs" : [
+    "00000003-0000-4000-8000-000000000204"
+  ],
+  "folders" : [
+    {
+      "createdAt" : 789062400,
+      "id" : "00000003-0000-4000-8000-000000000201",
+      "isPinned" : true,
+      "kindRaw" : "trips",
+      "name" : "2026 trips",
+      "parentID" : null,
+      "pinnedAt" : 789098400.5,
+      "placeIDs" : [
+
+      ],
+      "sortOrder" : 0,
+      "tripIDs" : [
+        "00000003-0000-4000-8000-000000000301"
+      ],
+      "updatedAt" : 789066000
+    },
+    {
+      "createdAt" : 789069600,
+      "id" : "00000003-0000-4000-8000-000000000202",
+      "isPinned" : true,
+      "kindRaw" : "locations",
+      "name" : "Sierra",
+      "parentID" : null,
+      "pinnedAt" : 789094800,
+      "placeIDs" : [
+        "00000003-0000-4000-8000-000000000101",
+        "00000003-0000-4000-8000-000000000105"
+      ],
+      "sortOrder" : 5,
+      "tripIDs" : [
+
+      ],
+      "updatedAt" : 789073200
+    },
+    {
+      "createdAt" : 789076800,
+      "id" : "00000003-0000-4000-8000-000000000203",
+      "isPinned" : false,
+      "kindRaw" : "trips",
+      "name" : "Archive",
+      "parentID" : null,
+      "pinnedAt" : null,
+      "placeIDs" : [
+
+      ],
+      "sortOrder" : 2.5,
+      "tripIDs" : [
+        "00000003-0000-4000-8000-000000000303"
+      ],
+      "updatedAt" : 789080400.75
+    },
+    {
+      "createdAt" : 789084000,
+      "id" : "00000003-0000-4000-8000-000000000204",
+      "isPinned" : true,
+      "kindRaw" : "locations",
+      "name" : "Utah",
+      "parentID" : "00000003-0000-4000-8000-000000000202",
+      "pinnedAt" : null,
+      "placeIDs" : [
+        "00000003-0000-4000-8000-000000000103"
+      ],
+      "sortOrder" : 3,
+      "tripIDs" : [
+
+      ],
+      "updatedAt" : 789087600
+    }
+  ],
+  "generator" : [
+    "Written by IterFixtureGen (Legacy/IterKit) with the old IterData module.",
+    "expected.json: a copy of the fixture opened with IterSchema.makeContainer(url:) + IterStore(container:) (migrates to V4, runs flattenFolders), then read back.",
+    "as-written.json: the fixture read back before any migration (V1-V3 with the frozen schema and no migration plan; V4 with the live code).",
+    "Dates are timeIntervalSinceReferenceDate Doubles; UUIDs are uppercase; arrays are sorted by id except stopIDs of a trip (orderedStops order).",
+    "flattenFolders sets updatedAt to the time of generation on every flattened folder (listed in flattenedFolderIDs); those values change on regeneration."
+  ],
+  "places" : [
+    {
+      "bestLightRaw" : "sunrise",
+      "blurb" : "The underside of the arch glows orange for about ten minutes after sunrise. Bring a wide lens and patience.",
+      "categoryRaw" : "desert",
+      "createdAt" : 788954400,
+      "curatedID" : "mesa-arch",
+      "elevationMeters" : 1860,
+      "externalID" : null,
+      "facing" : 100,
+      "folderID" : "00000003-0000-4000-8000-000000000202",
+      "id" : "00000003-0000-4000-8000-000000000101",
+      "isPinned" : true,
+      "isSaved" : true,
+      "latitude" : 38.389,
+      "locality" : "Canyonlands National Park, UT",
+      "longitude" : -109.8677,
+      "name" : "Mesa Arch",
+      "notes" : "0.5 mi loop from the lot. 20+ photographers most mornings — be there 60 min before sunrise. Starburst at f/16 as the sun clears the La Sals.",
+      "originRaw" : "curated",
+      "pinnedAt" : 789026400.5,
+      "popularity" : 92,
+      "sortOrder" : 1,
+      "stopIDs" : [
+        "00000003-0000-4000-8000-000000000403",
+        "00000003-0000-4000-8000-000000000407"
+      ],
+      "tagsRaw" : "iconic,arch,sunrise,short-hike",
+      "timeZoneIdentifier" : "America/Denver",
+      "updatedAt" : 788990400.123456,
+      "walkInMinutes" : 10
+    },
+    {
+      "bestLightRaw" : "sunset,sunrise",
+      "blurb" : "The whole valley in one frame — El Capitan, Bridalveil and Half Dome lit from behind you at sunset.",
+      "categoryRaw" : "landscape",
+      "createdAt" : 788958000,
+      "curatedID" : "tunnel-view",
+      "elevationMeters" : null,
+      "externalID" : null,
+      "facing" : null,
+      "folderID" : null,
+      "id" : "00000003-0000-4000-8000-000000000102",
+      "isPinned" : false,
+      "isSaved" : false,
+      "latitude" : 37.7156,
+      "locality" : "Yosemite National Park, CA",
+      "longitude" : -119.6773,
+      "name" : "Tunnel View",
+      "notes" : "Park in the upper lot, walk 30 seconds. Crowds at sunset; arrive 45 min early for a tripod spot. Winter storms clearing = the shot.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 96,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "00000003-0000-4000-8000-000000000401"
+      ],
+      "tagsRaw" : "iconic,granite,valley,roadside",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 788994000,
+      "walkInMinutes" : null
+    },
+    {
+      "bestLightRaw" : "sunset,night",
+      "blurb" : "A freestanding 16 m arch on the lip of a slickrock bowl, burning red against the snow-capped La Sals at sunset.",
+      "categoryRaw" : "desert",
+      "createdAt" : 788961600,
+      "curatedID" : "delicate-arch",
+      "elevationMeters" : 1480,
+      "externalID" : null,
+      "facing" : 110,
+      "folderID" : "00000003-0000-4000-8000-000000000204",
+      "id" : "00000003-0000-4000-8000-000000000103",
+      "isPinned" : false,
+      "isSaved" : true,
+      "latitude" : 38.7436,
+      "locality" : "Arches National Park, UT",
+      "longitude" : -109.4993,
+      "name" : "Delicate Arch (my name) 🌄",
+      "notes" : "Café stop on the way: crème brûlée. 日の出 at 6:52.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 94,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "00000003-0000-4000-8000-000000000406"
+      ],
+      "tagsRaw" : "iconic,arch,hike,la-sal-mountains",
+      "timeZoneIdentifier" : "America/Denver",
+      "updatedAt" : 788997600,
+      "walkInMinutes" : 50
+    },
+    {
+      "bestLightRaw" : "night,sunrise",
+      "blurb" : "A natural arch framing Mount Whitney, with some of the darkest accessible skies in California.",
+      "categoryRaw" : "astro",
+      "createdAt" : 788965200,
+      "curatedID" : "alabama-hills",
+      "elevationMeters" : 1500,
+      "externalID" : null,
+      "facing" : 280,
+      "folderID" : null,
+      "id" : "00000003-0000-4000-8000-000000000104",
+      "isPinned" : false,
+      "isSaved" : false,
+      "latitude" : 36.6116,
+      "locality" : "Lone Pine, CA",
+      "longitude" : -118.1256,
+      "name" : "Mobius Arch, Alabama Hills",
+      "notes" : "Short loop from Movie Road. Frame Whitney through the arch at dawn alpenglow; Milky Way core rises to the south in spring/summer. Free BLM camping nearby.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 78,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "00000003-0000-4000-8000-000000000405"
+      ],
+      "tagsRaw" : "arch,milky-way,dispersed-camping,free",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 789001200,
+      "walkInMinutes" : null
+    },
+    {
+      "bestLightRaw" : "sunset,blueHour",
+      "blurb" : "",
+      "categoryRaw" : "landscape",
+      "createdAt" : 788968800.25,
+      "curatedID" : null,
+      "elevationMeters" : 1520.75,
+      "externalID" : null,
+      "facing" : 215.5,
+      "folderID" : "00000003-0000-4000-8000-000000000202",
+      "id" : "00000003-0000-4000-8000-000000000105",
+      "isPinned" : true,
+      "isSaved" : true,
+      "latitude" : 37.3601,
+      "locality" : "Near Bishop, CA",
+      "longitude" : -118.4012,
+      "name" : "Dad's overlook ⛰️",
+      "notes" : "Gate code 1234; \"quote\" and a / slash and \\ backslash",
+      "originRaw" : "user",
+      "pinnedAt" : 789134400,
+      "popularity" : 50,
+      "sortOrder" : 0.5,
+      "stopIDs" : [
+        "00000003-0000-4000-8000-000000000402"
+      ],
+      "tagsRaw" : "family,dirt road",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 789004800,
+      "walkInMinutes" : 25
+    },
+    {
+      "bestLightRaw" : "",
+      "blurb" : "",
+      "categoryRaw" : "landscape",
+      "createdAt" : 788972400,
+      "curatedID" : null,
+      "elevationMeters" : null,
+      "externalID" : null,
+      "facing" : null,
+      "folderID" : null,
+      "id" : "00000003-0000-4000-8000-000000000106",
+      "isPinned" : false,
+      "isSaved" : false,
+      "latitude" : 0,
+      "locality" : "",
+      "longitude" : 0,
+      "name" : "Unnamed pullout",
+      "notes" : "",
+      "originRaw" : "user",
+      "pinnedAt" : null,
+      "popularity" : 50,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "00000003-0000-4000-8000-000000000410"
+      ],
+      "tagsRaw" : "",
+      "timeZoneIdentifier" : "UTC",
+      "updatedAt" : 789008400,
+      "walkInMinutes" : null
+    },
+    {
+      "bestLightRaw" : "",
+      "blurb" : "",
+      "categoryRaw" : "urban",
+      "createdAt" : 788976000,
+      "curatedID" : null,
+      "elevationMeters" : null,
+      "externalID" : "I63802885E5FD6D13",
+      "facing" : null,
+      "folderID" : null,
+      "id" : "00000003-0000-4000-8000-000000000107",
+      "isPinned" : false,
+      "isSaved" : false,
+      "latitude" : 37.9577,
+      "locality" : "Lee Vining, CA",
+      "longitude" : -119.1157,
+      "name" : "Mono Lake Visitor Center",
+      "notes" : "",
+      "originRaw" : "appleMaps",
+      "pinnedAt" : null,
+      "popularity" : 50,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "00000003-0000-4000-8000-000000000404"
+      ],
+      "tagsRaw" : "",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 789012000,
+      "walkInMinutes" : null
+    },
+    {
+      "bestLightRaw" : "midday",
+      "blurb" : "Fish tacos",
+      "categoryRaw" : "street",
+      "createdAt" : 788979600,
+      "curatedID" : null,
+      "elevationMeters" : 2020,
+      "externalID" : "IA0B1C2D3E4F5A63",
+      "facing" : 90,
+      "folderID" : null,
+      "id" : "00000003-0000-4000-8000-000000000108",
+      "isPinned" : false,
+      "isSaved" : true,
+      "latitude" : 37.9366,
+      "locality" : "Lee Vining, CA",
+      "longitude" : -119.1214,
+      "name" : "Whoa Nellie Deli",
+      "notes" : "Closed in winter",
+      "originRaw" : "appleMaps",
+      "pinnedAt" : null,
+      "popularity" : 70,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "00000003-0000-4000-8000-000000000408"
+      ],
+      "tagsRaw" : "food",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 789015600,
+      "walkInMinutes" : 2
+    }
+  ],
+  "stops" : [
+    {
+      "dayIndex" : 0,
+      "id" : "00000003-0000-4000-8000-000000000401",
+      "note" : "Arrive 45 min early",
+      "placeID" : "00000003-0000-4000-8000-000000000102",
+      "sessionRaw" : "goldenEvening",
+      "setUpBufferMinutes" : 20,
+      "sortOrder" : 0,
+      "tripID" : "00000003-0000-4000-8000-000000000301"
+    },
+    {
+      "dayIndex" : 0,
+      "id" : "00000003-0000-4000-8000-000000000402",
+      "note" : "",
+      "placeID" : "00000003-0000-4000-8000-000000000105",
+      "sessionRaw" : "blueEvening",
+      "setUpBufferMinutes" : 10,
+      "sortOrder" : 1,
+      "tripID" : "00000003-0000-4000-8000-000000000301"
+    },
+    {
+      "dayIndex" : 1,
+      "id" : "00000003-0000-4000-8000-000000000403",
+      "note" : "Sunrise glow 🌅",
+      "placeID" : "00000003-0000-4000-8000-000000000101",
+      "sessionRaw" : "blueMorning",
+      "setUpBufferMinutes" : 35,
+      "sortOrder" : 0,
+      "tripID" : "00000003-0000-4000-8000-000000000301"
+    },
+    {
+      "dayIndex" : 1,
+      "id" : "00000003-0000-4000-8000-000000000404",
+      "note" : "Coffee first",
+      "placeID" : "00000003-0000-4000-8000-000000000107",
+      "sessionRaw" : "night",
+      "setUpBufferMinutes" : 0,
+      "sortOrder" : 2.5,
+      "tripID" : "00000003-0000-4000-8000-000000000301"
+    },
+    {
+      "dayIndex" : 3,
+      "id" : "00000003-0000-4000-8000-000000000405",
+      "note" : "",
+      "placeID" : "00000003-0000-4000-8000-000000000104",
+      "sessionRaw" : "goldenMorning",
+      "setUpBufferMinutes" : 20,
+      "sortOrder" : 0,
+      "tripID" : "00000003-0000-4000-8000-000000000301"
+    },
+    {
+      "dayIndex" : 0,
+      "id" : "00000003-0000-4000-8000-000000000406",
+      "note" : "Permit needed",
+      "placeID" : "00000003-0000-4000-8000-000000000103",
+      "sessionRaw" : "goldenEvening",
+      "setUpBufferMinutes" : 45,
+      "sortOrder" : 0,
+      "tripID" : "00000003-0000-4000-8000-000000000302"
+    },
+    {
+      "dayIndex" : 1,
+      "id" : "00000003-0000-4000-8000-000000000407",
+      "note" : "Same place as in the other trip",
+      "placeID" : "00000003-0000-4000-8000-000000000101",
+      "sessionRaw" : "goldenMorning",
+      "setUpBufferMinutes" : 20,
+      "sortOrder" : 0,
+      "tripID" : "00000003-0000-4000-8000-000000000302"
+    },
+    {
+      "dayIndex" : 1,
+      "id" : "00000003-0000-4000-8000-000000000408",
+      "note" : "",
+      "placeID" : "00000003-0000-4000-8000-000000000108",
+      "sessionRaw" : "goldenEvening",
+      "setUpBufferMinutes" : 20,
+      "sortOrder" : 1,
+      "tripID" : "00000003-0000-4000-8000-000000000302"
+    },
+    {
+      "dayIndex" : 2,
+      "id" : "00000003-0000-4000-8000-000000000409",
+      "note" : "Broken link: its place was lost",
+      "placeID" : null,
+      "sessionRaw" : "night",
+      "setUpBufferMinutes" : 15,
+      "sortOrder" : 0,
+      "tripID" : "00000003-0000-4000-8000-000000000302"
+    },
+    {
+      "dayIndex" : 0,
+      "id" : "00000003-0000-4000-8000-000000000410",
+      "note" : "Fog",
+      "placeID" : "00000003-0000-4000-8000-000000000106",
+      "sessionRaw" : "blueMorning",
+      "setUpBufferMinutes" : 5,
+      "sortOrder" : 0,
+      "tripID" : "00000003-0000-4000-8000-000000000303"
+    }
+  ],
+  "trips" : [
+    {
+      "createdAt" : 789170400,
+      "dayCount" : 4,
+      "folderID" : "00000003-0000-4000-8000-000000000201",
+      "id" : "00000003-0000-4000-8000-000000000301",
+      "isPinned" : false,
+      "name" : "Eastern Sierra 🍂",
+      "notes" : "Bring the 14mm and a tripod.\nSecond line with \"quotes\".",
+      "pinnedAt" : null,
+      "sortOrder" : 1.5,
+      "startDayISO" : "2026-10-10",
+      "stopIDs" : [
+        "00000003-0000-4000-8000-000000000401",
+        "00000003-0000-4000-8000-000000000402",
+        "00000003-0000-4000-8000-000000000403",
+        "00000003-0000-4000-8000-000000000404",
+        "00000003-0000-4000-8000-000000000405"
+      ],
+      "updatedAt" : 789174000.5
+    },
+    {
+      "createdAt" : 789177600,
+      "dayCount" : 3,
+      "folderID" : null,
+      "id" : "00000003-0000-4000-8000-000000000302",
+      "isPinned" : true,
+      "name" : "Utah — Arches & Canyonlands",
+      "notes" : "",
+      "pinnedAt" : 789206400.125,
+      "sortOrder" : 2,
+      "startDayISO" : "2026-11-02",
+      "stopIDs" : [
+        "00000003-0000-4000-8000-000000000406",
+        "00000003-0000-4000-8000-000000000407",
+        "00000003-0000-4000-8000-000000000408",
+        "00000003-0000-4000-8000-000000000409"
+      ],
+      "updatedAt" : 789181200
+    },
+    {
+      "createdAt" : 789184800,
+      "dayCount" : 1,
+      "folderID" : "00000003-0000-4000-8000-000000000203",
+      "id" : "00000003-0000-4000-8000-000000000303",
+      "isPinned" : false,
+      "name" : "Weekend near home",
+      "notes" : "Fog forecast.",
+      "pinnedAt" : null,
+      "sortOrder" : 0,
+      "startDayISO" : "2027-01-09",
+      "stopIDs" : [
+        "00000003-0000-4000-8000-000000000410"
+      ],
+      "updatedAt" : 789188400
+    }
+  ],
+  "writtenSchemaVersion" : "3.0.0"
+}

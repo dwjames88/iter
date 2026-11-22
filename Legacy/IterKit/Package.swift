@@ -42,6 +42,9 @@ let package = Package(
         // Exports/imports Design/tokens.json (DTCG) and the asset-catalog colour sets.
         .executableTarget(name: "IterTokensTool", dependencies: ["IterDesign"], swiftSettings: strict),
 
+        // Writes SwiftData store fixtures and .iter documents with the OLD code, for the rebuild's tests (@testable IterData).
+        .executableTarget(name: "IterFixtureGen", dependencies: ["IterData", "IterCore"], swiftSettings: strict),
+
         .testTarget(name: "IterCoreTests", dependencies: ["IterCore"]),
         .testTarget(name: "IterAstroTests", dependencies: ["IterAstro"]),
         .testTarget(name: "IterLightTests", dependencies: ["IterLight", "IterAstro"]),

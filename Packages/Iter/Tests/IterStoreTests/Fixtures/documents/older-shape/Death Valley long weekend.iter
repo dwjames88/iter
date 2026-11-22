@@ -1,0 +1,150 @@
+{
+  "exportedAt" : "2026-09-21T14:13:20Z",
+  "formatVersion" : 1,
+  "trip" : {
+    "dayCount" : 3,
+    "id" : "E90598C1-82E0-45E9-A606-F5E43167874F",
+    "name" : "Death Valley long weekend",
+    "notes" : "",
+    "startDay" : {
+      "day" : 4,
+      "month" : 12,
+      "year" : 2026
+    },
+    "stops" : [
+      {
+        "dayIndex" : 0,
+        "id" : "9F2EA062-FD71-4FA1-8114-B3D0B00F4825",
+        "note" : "",
+        "session" : "goldenMorning",
+        "setUpBufferMinutes" : 15,
+        "spot" : {
+          "bestLight" : [
+            "sunrise"
+          ],
+          "blurb" : "Folded mudstone badlands ripple toward Manly Beacon while the Panamints blush on the horizon. Pure sunrise theatre.",
+          "category" : "desert",
+          "coordinate" : {
+            "latitude" : 36.4205,
+            "longitude" : -116.8103
+          },
+          "elevationMeters" : 216,
+          "facing" : 255,
+          "id" : "zabriskie-point",
+          "locality" : "Death Valley National Park, CA",
+          "name" : "Zabriskie Point",
+          "notes" : "Paved 5 min uphill walk from the lot. Busy at dawn year-round; arrive 40 min early. Telephoto (70–200mm) picks out the light on the ridgelines. Avoid midday May–Sept — 45°C+.",
+          "origin" : "curated",
+          "popularity" : 85,
+          "tags" : [
+            "badlands",
+            "iconic",
+            "overlook",
+            "roadside"
+          ],
+          "timeZoneIdentifier" : "America\/Los_Angeles",
+          "walkInMinutes" : 5
+        }
+      },
+      {
+        "dayIndex" : 0,
+        "id" : "D05ADC9E-9817-42CF-B6F8-FABE4F4AEE87",
+        "note" : "Walk 1 mile out; footprints fade by sunrise",
+        "session" : "goldenEvening",
+        "setUpBufferMinutes" : 20,
+        "spot" : {
+          "bestLight" : [
+            "sunrise",
+            "sunset",
+            "night"
+          ],
+          "blurb" : "Knife-edge ridges and wind ripples lit from the side — the only hour of the day the dunes have texture.",
+          "category" : "desert",
+          "coordinate" : {
+            "latitude" : 36.6064,
+            "longitude" : -117.1156
+          },
+          "elevationMeters" : 0,
+          "id" : "mesquite-flat-dunes",
+          "locality" : "Death Valley National Park, CA",
+          "name" : "Mesquite Flat Sand Dunes",
+          "notes" : "Park at the Stovepipe Wells lot; walk 20–30 min out to escape footprints. Sidelight within 45 min of sunrise\/sunset. Carry water and a headlamp; dunes are easy to get turned around in after dark.",
+          "origin" : "curated",
+          "popularity" : 76,
+          "tags" : [
+            "dunes",
+            "ripples",
+            "footprint-free",
+            "astro"
+          ],
+          "timeZoneIdentifier" : "America\/Los_Angeles",
+          "walkInMinutes" : 30
+        }
+      },
+      {
+        "dayIndex" : 1,
+        "id" : "10125ADF-78DD-45C9-BB08-EADD751B6892",
+        "note" : "",
+        "session" : "blueMorning",
+        "setUpBufferMinutes" : 20,
+        "spot" : {
+          "bestLight" : [
+            "sunrise",
+            "sunset",
+            "night"
+          ],
+          "blurb" : "Hexagonal salt polygons to the horizon, 86 m below sea level, with Telescope Peak glowing pink above them at dawn.",
+          "category" : "desert",
+          "coordinate" : {
+            "latitude" : 36.2302,
+            "longitude" : -116.7675
+          },
+          "elevationMeters" : -86,
+          "facing" : 270,
+          "id" : "badwater-basin",
+          "locality" : "Death Valley National Park, CA",
+          "name" : "Badwater Basin",
+          "notes" : "Boardwalk from the lot; the crisp polygons start about 1.5 mi out on the flat. After rare winter rain, shallow water gives reflections of the Panamints. Wide lens low to the ground.",
+          "origin" : "curated",
+          "popularity" : 80,
+          "tags" : [
+            "salt-flat",
+            "polygons",
+            "lowest-point",
+            "reflection"
+          ],
+          "timeZoneIdentifier" : "America\/Los_Angeles",
+          "walkInMinutes" : 50
+        }
+      },
+      {
+        "dayIndex" : 2,
+        "id" : "6025D4C6-34AD-40C2-9424-98F775CD20FC",
+        "note" : "",
+        "session" : "night",
+        "setUpBufferMinutes" : 20,
+        "spot" : {
+          "bestLight" : [
+
+          ],
+          "blurb" : "",
+          "category" : "landscape",
+          "coordinate" : {
+            "latitude" : 36.1,
+            "longitude" : -117.2
+          },
+          "id" : "45669CE0-7CF7-4B4C-A55A-4B9674EF3076",
+          "locality" : "",
+          "name" : "Unnamed pullout",
+          "notes" : "",
+          "origin" : "user",
+          "popularity" : 50,
+          "tags" : [
+
+          ],
+          "timeZoneIdentifier" : "America\/Los_Angeles"
+        }
+      }
+    ]
+  }
+}

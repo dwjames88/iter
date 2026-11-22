@@ -1,0 +1,805 @@
+{
+  "generatedBy" : "IterFixtureGen; old module IterData. Entity data from NSManagedObjectModel.makeManagedObjectModel(for:) over each VersionedSchema's models.",
+  "schemas" : {
+    "IterSchemaV1" : {
+      "entities" : [
+        {
+          "attributes" : [
+            "bestLightRaw",
+            "blurb",
+            "categoryRaw",
+            "createdAt",
+            "curatedID",
+            "elevationMeters",
+            "externalID",
+            "facing",
+            "id",
+            "isSaved",
+            "latitude",
+            "locality",
+            "longitude",
+            "name",
+            "notes",
+            "originRaw",
+            "popularity",
+            "tagsRaw",
+            "timeZoneIdentifier",
+            "updatedAt",
+            "walkInMinutes"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "PlaceRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "StopRecord",
+              "inverse" : "place",
+              "name" : "stops",
+              "toMany" : true
+            }
+          ],
+          "versionHash" : "1uNmqkx4ANuiinbM83Uo+0Gqvf8a2T7r25bCdWltogk=",
+          "versionHashModifier" : null
+        },
+        {
+          "attributes" : [
+            "dayIndex",
+            "id",
+            "note",
+            "sessionRaw",
+            "setUpBufferMinutes",
+            "sortOrder"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "StopRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "PlaceRecord",
+              "inverse" : "stops",
+              "name" : "place",
+              "toMany" : false
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "TripRecord",
+              "inverse" : "stops",
+              "name" : "trip",
+              "toMany" : false
+            }
+          ],
+          "versionHash" : "ov7bJ06vTT7SGz2syAJzEU/jKGhLUyFQs2h+DCMTAC0=",
+          "versionHashModifier" : null
+        },
+        {
+          "attributes" : [
+            "createdAt",
+            "dayCount",
+            "id",
+            "name",
+            "notes",
+            "startDayISO",
+            "updatedAt"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "TripRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 2,
+              "destination" : "StopRecord",
+              "inverse" : "trip",
+              "name" : "stops",
+              "toMany" : true
+            }
+          ],
+          "versionHash" : "Xx0hxhasPMlFoK8mtHOvIM9Alln1ALO3Tf23aDh02Ao=",
+          "versionHashModifier" : null
+        }
+      ],
+      "modelVersionIdentifiers" : [
+        "1.0.0"
+      ],
+      "schemaVersion" : "1.0.0",
+      "swiftDataSchemaEntityNames" : [
+        "PlaceRecord",
+        "StopRecord",
+        "TripRecord"
+      ]
+    },
+    "IterSchemaV2" : {
+      "entities" : [
+        {
+          "attributes" : [
+            "createdAt",
+            "id",
+            "kindRaw",
+            "name",
+            "sortOrder",
+            "updatedAt"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "FolderRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "FolderRecord",
+              "inverse" : "parent",
+              "name" : "children",
+              "toMany" : true
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "FolderRecord",
+              "inverse" : "children",
+              "name" : "parent",
+              "toMany" : false
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "PlaceRecord",
+              "inverse" : "folder",
+              "name" : "places",
+              "toMany" : true
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "TripRecord",
+              "inverse" : "folder",
+              "name" : "trips",
+              "toMany" : true
+            }
+          ],
+          "versionHash" : "lVGojqwnahzqzLmn5X40f98PdoNRX+IsX4WGaDPSRRg=",
+          "versionHashModifier" : null
+        },
+        {
+          "attributes" : [
+            "bestLightRaw",
+            "blurb",
+            "categoryRaw",
+            "createdAt",
+            "curatedID",
+            "elevationMeters",
+            "externalID",
+            "facing",
+            "id",
+            "isSaved",
+            "latitude",
+            "locality",
+            "longitude",
+            "name",
+            "notes",
+            "originRaw",
+            "popularity",
+            "sortOrder",
+            "tagsRaw",
+            "timeZoneIdentifier",
+            "updatedAt",
+            "walkInMinutes"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "PlaceRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "FolderRecord",
+              "inverse" : "places",
+              "name" : "folder",
+              "toMany" : false
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "StopRecord",
+              "inverse" : "place",
+              "name" : "stops",
+              "toMany" : true
+            }
+          ],
+          "versionHash" : "9xxwD+rw2PY8ZZ12EHkF+hRVxGsDUFoJTCpoD0yYXGM=",
+          "versionHashModifier" : null
+        },
+        {
+          "attributes" : [
+            "dayIndex",
+            "id",
+            "note",
+            "sessionRaw",
+            "setUpBufferMinutes",
+            "sortOrder"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "StopRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "PlaceRecord",
+              "inverse" : "stops",
+              "name" : "place",
+              "toMany" : false
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "TripRecord",
+              "inverse" : "stops",
+              "name" : "trip",
+              "toMany" : false
+            }
+          ],
+          "versionHash" : "ov7bJ06vTT7SGz2syAJzEU/jKGhLUyFQs2h+DCMTAC0=",
+          "versionHashModifier" : null
+        },
+        {
+          "attributes" : [
+            "createdAt",
+            "dayCount",
+            "id",
+            "isPinned",
+            "name",
+            "notes",
+            "pinnedAt",
+            "sortOrder",
+            "startDayISO",
+            "updatedAt"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "TripRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "FolderRecord",
+              "inverse" : "trips",
+              "name" : "folder",
+              "toMany" : false
+            },
+            {
+              "deleteRule" : 2,
+              "destination" : "StopRecord",
+              "inverse" : "trip",
+              "name" : "stops",
+              "toMany" : true
+            }
+          ],
+          "versionHash" : "EGWcgvzP3sCutXk6Noqbdn2CN4fcjiIy+VIHAVtgd/E=",
+          "versionHashModifier" : null
+        }
+      ],
+      "modelVersionIdentifiers" : [
+        "1.0.0"
+      ],
+      "schemaVersion" : "2.0.0",
+      "swiftDataSchemaEntityNames" : [
+        "FolderRecord",
+        "PlaceRecord",
+        "StopRecord",
+        "TripRecord"
+      ]
+    },
+    "IterSchemaV3" : {
+      "entities" : [
+        {
+          "attributes" : [
+            "createdAt",
+            "id",
+            "isPinned",
+            "kindRaw",
+            "name",
+            "pinnedAt",
+            "sortOrder",
+            "updatedAt"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "FolderRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "FolderRecord",
+              "inverse" : "parent",
+              "name" : "children",
+              "toMany" : true
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "FolderRecord",
+              "inverse" : "children",
+              "name" : "parent",
+              "toMany" : false
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "PlaceRecord",
+              "inverse" : "folder",
+              "name" : "places",
+              "toMany" : true
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "TripRecord",
+              "inverse" : "folder",
+              "name" : "trips",
+              "toMany" : true
+            }
+          ],
+          "versionHash" : "eYwwp2noQJ+f2hi3Y+E9QAr+jcJvobzCKKh96kVKi44=",
+          "versionHashModifier" : null
+        },
+        {
+          "attributes" : [
+            "bestLightRaw",
+            "blurb",
+            "categoryRaw",
+            "createdAt",
+            "curatedID",
+            "elevationMeters",
+            "externalID",
+            "facing",
+            "id",
+            "isPinned",
+            "isSaved",
+            "latitude",
+            "locality",
+            "longitude",
+            "name",
+            "notes",
+            "originRaw",
+            "pinnedAt",
+            "popularity",
+            "sortOrder",
+            "tagsRaw",
+            "timeZoneIdentifier",
+            "updatedAt",
+            "walkInMinutes"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "PlaceRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "FolderRecord",
+              "inverse" : "places",
+              "name" : "folder",
+              "toMany" : false
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "StopRecord",
+              "inverse" : "place",
+              "name" : "stops",
+              "toMany" : true
+            }
+          ],
+          "versionHash" : "+HmijyGGQrsd2zSsSen/tAZvoC7tPZuhsPpPOZILgmI=",
+          "versionHashModifier" : null
+        },
+        {
+          "attributes" : [
+            "dayIndex",
+            "id",
+            "note",
+            "sessionRaw",
+            "setUpBufferMinutes",
+            "sortOrder"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "StopRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "PlaceRecord",
+              "inverse" : "stops",
+              "name" : "place",
+              "toMany" : false
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "TripRecord",
+              "inverse" : "stops",
+              "name" : "trip",
+              "toMany" : false
+            }
+          ],
+          "versionHash" : "ov7bJ06vTT7SGz2syAJzEU/jKGhLUyFQs2h+DCMTAC0=",
+          "versionHashModifier" : null
+        },
+        {
+          "attributes" : [
+            "createdAt",
+            "dayCount",
+            "id",
+            "isPinned",
+            "name",
+            "notes",
+            "pinnedAt",
+            "sortOrder",
+            "startDayISO",
+            "updatedAt"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "TripRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "FolderRecord",
+              "inverse" : "trips",
+              "name" : "folder",
+              "toMany" : false
+            },
+            {
+              "deleteRule" : 2,
+              "destination" : "StopRecord",
+              "inverse" : "trip",
+              "name" : "stops",
+              "toMany" : true
+            }
+          ],
+          "versionHash" : "EGWcgvzP3sCutXk6Noqbdn2CN4fcjiIy+VIHAVtgd/E=",
+          "versionHashModifier" : null
+        }
+      ],
+      "modelVersionIdentifiers" : [
+        "1.0.0"
+      ],
+      "schemaVersion" : "3.0.0",
+      "swiftDataSchemaEntityNames" : [
+        "FolderRecord",
+        "PlaceRecord",
+        "StopRecord",
+        "TripRecord"
+      ]
+    },
+    "IterSchemaV4" : {
+      "entities" : [
+        {
+          "attributes" : [
+            "createdAt",
+            "id",
+            "isPinned",
+            "kindRaw",
+            "name",
+            "pinnedAt",
+            "sortOrder",
+            "updatedAt"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "FolderRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "FolderRecord",
+              "inverse" : "parent",
+              "name" : "children",
+              "toMany" : true
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "FolderRecord",
+              "inverse" : "children",
+              "name" : "parent",
+              "toMany" : false
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "PlaceRecord",
+              "inverse" : "folder",
+              "name" : "places",
+              "toMany" : true
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "TripRecord",
+              "inverse" : "folder",
+              "name" : "trips",
+              "toMany" : true
+            }
+          ],
+          "versionHash" : "eYwwp2noQJ+f2hi3Y+E9QAr+jcJvobzCKKh96kVKi44=",
+          "versionHashModifier" : null
+        },
+        {
+          "attributes" : [
+            "bestLightRaw",
+            "blurb",
+            "categoryRaw",
+            "createdAt",
+            "curatedID",
+            "elevationMeters",
+            "externalID",
+            "facing",
+            "id",
+            "isPinned",
+            "isSaved",
+            "latitude",
+            "locality",
+            "longitude",
+            "name",
+            "notes",
+            "originRaw",
+            "pinnedAt",
+            "popularity",
+            "sortOrder",
+            "tagsRaw",
+            "timeZoneIdentifier",
+            "updatedAt",
+            "walkInMinutes"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "PlaceRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "FolderRecord",
+              "inverse" : "places",
+              "name" : "folder",
+              "toMany" : false
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "StopRecord",
+              "inverse" : "place",
+              "name" : "stops",
+              "toMany" : true
+            }
+          ],
+          "versionHash" : "+HmijyGGQrsd2zSsSen/tAZvoC7tPZuhsPpPOZILgmI=",
+          "versionHashModifier" : null
+        },
+        {
+          "attributes" : [
+            "dayIndex",
+            "driveNote",
+            "id",
+            "note",
+            "sessionRaw",
+            "setUpBufferMinutes",
+            "sortOrder"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "StopRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "PlaceRecord",
+              "inverse" : "stops",
+              "name" : "place",
+              "toMany" : false
+            },
+            {
+              "deleteRule" : 1,
+              "destination" : "TripRecord",
+              "inverse" : "stops",
+              "name" : "trip",
+              "toMany" : false
+            }
+          ],
+          "versionHash" : "3Un/ybIHbcBKAOVZ3GHk/duRZ89JVlp9X2WGCp57JKk=",
+          "versionHashModifier" : null
+        },
+        {
+          "attributes" : [
+            "createdAt",
+            "dayCount",
+            "id",
+            "isPinned",
+            "name",
+            "notes",
+            "pinnedAt",
+            "sortOrder",
+            "startDayISO",
+            "transferTimingsRaw",
+            "updatedAt"
+          ],
+          "managedObjectClassName" : "NSManagedObject",
+          "name" : "TripRecord",
+          "relationships" : [
+            {
+              "deleteRule" : 1,
+              "destination" : "FolderRecord",
+              "inverse" : "trips",
+              "name" : "folder",
+              "toMany" : false
+            },
+            {
+              "deleteRule" : 2,
+              "destination" : "StopRecord",
+              "inverse" : "trip",
+              "name" : "stops",
+              "toMany" : true
+            }
+          ],
+          "versionHash" : "3yVXxuupkKMxCNoAAeWtBzczSFhn9Q1dzyDinyupzXE=",
+          "versionHashModifier" : null
+        }
+      ],
+      "modelVersionIdentifiers" : [
+        "1.0.0"
+      ],
+      "schemaVersion" : "4.0.0",
+      "swiftDataSchemaEntityNames" : [
+        "FolderRecord",
+        "PlaceRecord",
+        "StopRecord",
+        "TripRecord"
+      ]
+    }
+  },
+  "stores" : {
+    "v1" : {
+      "afterOldOpen" : {
+        "NSStoreModelVersionHashes" : {
+          "FolderRecord" : "eYwwp2noQJ+f2hi3Y+E9QAr+jcJvobzCKKh96kVKi44=",
+          "PlaceRecord" : "+HmijyGGQrsd2zSsSen/tAZvoC7tPZuhsPpPOZILgmI=",
+          "StopRecord" : "3Un/ybIHbcBKAOVZ3GHk/duRZ89JVlp9X2WGCp57JKk=",
+          "TripRecord" : "3yVXxuupkKMxCNoAAeWtBzczSFhn9Q1dzyDinyupzXE="
+        },
+        "NSStoreModelVersionIdentifiers" : [
+          "4.0.0"
+        ],
+        "NSStoreType" : "SQLite",
+        "otherMetadataKeys" : [
+          "NSPersistenceFrameworkVersion",
+          "NSPersistenceMaximumFrameworkVersion",
+          "NSStoreModelVersionChecksumKey",
+          "NSStoreModelVersionHashesDigest",
+          "NSStoreModelVersionHashesVersion",
+          "NSStoreType",
+          "_NSAutoVacuumLevel"
+        ]
+      },
+      "beforeMigration" : {
+        "NSStoreModelVersionHashes" : {
+          "PlaceRecord" : "1uNmqkx4ANuiinbM83Uo+0Gqvf8a2T7r25bCdWltogk=",
+          "StopRecord" : "ov7bJ06vTT7SGz2syAJzEU/jKGhLUyFQs2h+DCMTAC0=",
+          "TripRecord" : "Xx0hxhasPMlFoK8mtHOvIM9Alln1ALO3Tf23aDh02Ao="
+        },
+        "NSStoreModelVersionIdentifiers" : [
+          "1.0.0"
+        ],
+        "NSStoreType" : "SQLite",
+        "otherMetadataKeys" : [
+          "NSPersistenceFrameworkVersion",
+          "NSPersistenceMaximumFrameworkVersion",
+          "NSStoreModelVersionChecksumKey",
+          "NSStoreModelVersionHashesDigest",
+          "NSStoreModelVersionHashesVersion",
+          "NSStoreType",
+          "_NSAutoVacuumLevel"
+        ]
+      },
+      "writtenSchemaVersion" : "1.0.0"
+    },
+    "v2" : {
+      "afterOldOpen" : {
+        "NSStoreModelVersionHashes" : {
+          "FolderRecord" : "eYwwp2noQJ+f2hi3Y+E9QAr+jcJvobzCKKh96kVKi44=",
+          "PlaceRecord" : "+HmijyGGQrsd2zSsSen/tAZvoC7tPZuhsPpPOZILgmI=",
+          "StopRecord" : "3Un/ybIHbcBKAOVZ3GHk/duRZ89JVlp9X2WGCp57JKk=",
+          "TripRecord" : "3yVXxuupkKMxCNoAAeWtBzczSFhn9Q1dzyDinyupzXE="
+        },
+        "NSStoreModelVersionIdentifiers" : [
+          "4.0.0"
+        ],
+        "NSStoreType" : "SQLite",
+        "otherMetadataKeys" : [
+          "NSPersistenceFrameworkVersion",
+          "NSPersistenceMaximumFrameworkVersion",
+          "NSStoreModelVersionChecksumKey",
+          "NSStoreModelVersionHashesDigest",
+          "NSStoreModelVersionHashesVersion",
+          "NSStoreType",
+          "_NSAutoVacuumLevel"
+        ]
+      },
+      "beforeMigration" : {
+        "NSStoreModelVersionHashes" : {
+          "FolderRecord" : "lVGojqwnahzqzLmn5X40f98PdoNRX+IsX4WGaDPSRRg=",
+          "PlaceRecord" : "9xxwD+rw2PY8ZZ12EHkF+hRVxGsDUFoJTCpoD0yYXGM=",
+          "StopRecord" : "ov7bJ06vTT7SGz2syAJzEU/jKGhLUyFQs2h+DCMTAC0=",
+          "TripRecord" : "EGWcgvzP3sCutXk6Noqbdn2CN4fcjiIy+VIHAVtgd/E="
+        },
+        "NSStoreModelVersionIdentifiers" : [
+          "2.0.0"
+        ],
+        "NSStoreType" : "SQLite",
+        "otherMetadataKeys" : [
+          "NSPersistenceFrameworkVersion",
+          "NSPersistenceMaximumFrameworkVersion",
+          "NSStoreModelVersionChecksumKey",
+          "NSStoreModelVersionHashesDigest",
+          "NSStoreModelVersionHashesVersion",
+          "NSStoreType",
+          "_NSAutoVacuumLevel"
+        ]
+      },
+      "writtenSchemaVersion" : "2.0.0"
+    },
+    "v3" : {
+      "afterOldOpen" : {
+        "NSStoreModelVersionHashes" : {
+          "FolderRecord" : "eYwwp2noQJ+f2hi3Y+E9QAr+jcJvobzCKKh96kVKi44=",
+          "PlaceRecord" : "+HmijyGGQrsd2zSsSen/tAZvoC7tPZuhsPpPOZILgmI=",
+          "StopRecord" : "3Un/ybIHbcBKAOVZ3GHk/duRZ89JVlp9X2WGCp57JKk=",
+          "TripRecord" : "3yVXxuupkKMxCNoAAeWtBzczSFhn9Q1dzyDinyupzXE="
+        },
+        "NSStoreModelVersionIdentifiers" : [
+          "4.0.0"
+        ],
+        "NSStoreType" : "SQLite",
+        "otherMetadataKeys" : [
+          "NSPersistenceFrameworkVersion",
+          "NSPersistenceMaximumFrameworkVersion",
+          "NSStoreModelVersionChecksumKey",
+          "NSStoreModelVersionHashesDigest",
+          "NSStoreModelVersionHashesVersion",
+          "NSStoreType",
+          "_NSAutoVacuumLevel"
+        ]
+      },
+      "beforeMigration" : {
+        "NSStoreModelVersionHashes" : {
+          "FolderRecord" : "eYwwp2noQJ+f2hi3Y+E9QAr+jcJvobzCKKh96kVKi44=",
+          "PlaceRecord" : "+HmijyGGQrsd2zSsSen/tAZvoC7tPZuhsPpPOZILgmI=",
+          "StopRecord" : "ov7bJ06vTT7SGz2syAJzEU/jKGhLUyFQs2h+DCMTAC0=",
+          "TripRecord" : "EGWcgvzP3sCutXk6Noqbdn2CN4fcjiIy+VIHAVtgd/E="
+        },
+        "NSStoreModelVersionIdentifiers" : [
+          "3.0.0"
+        ],
+        "NSStoreType" : "SQLite",
+        "otherMetadataKeys" : [
+          "NSPersistenceFrameworkVersion",
+          "NSPersistenceMaximumFrameworkVersion",
+          "NSStoreModelVersionChecksumKey",
+          "NSStoreModelVersionHashesDigest",
+          "NSStoreModelVersionHashesVersion",
+          "NSStoreType",
+          "_NSAutoVacuumLevel"
+        ]
+      },
+      "writtenSchemaVersion" : "3.0.0"
+    },
+    "v4-realistic" : {
+      "afterOldOpen" : {
+        "NSStoreModelVersionHashes" : {
+          "FolderRecord" : "eYwwp2noQJ+f2hi3Y+E9QAr+jcJvobzCKKh96kVKi44=",
+          "PlaceRecord" : "+HmijyGGQrsd2zSsSen/tAZvoC7tPZuhsPpPOZILgmI=",
+          "StopRecord" : "3Un/ybIHbcBKAOVZ3GHk/duRZ89JVlp9X2WGCp57JKk=",
+          "TripRecord" : "3yVXxuupkKMxCNoAAeWtBzczSFhn9Q1dzyDinyupzXE="
+        },
+        "NSStoreModelVersionIdentifiers" : [
+          "4.0.0"
+        ],
+        "NSStoreType" : "SQLite",
+        "otherMetadataKeys" : [
+          "NSPersistenceFrameworkVersion",
+          "NSPersistenceMaximumFrameworkVersion",
+          "NSStoreModelVersionChecksumKey",
+          "NSStoreModelVersionHashesDigest",
+          "NSStoreModelVersionHashesVersion",
+          "NSStoreType",
+          "_NSAutoVacuumLevel"
+        ]
+      },
+      "beforeMigration" : {
+        "NSStoreModelVersionHashes" : {
+          "FolderRecord" : "eYwwp2noQJ+f2hi3Y+E9QAr+jcJvobzCKKh96kVKi44=",
+          "PlaceRecord" : "+HmijyGGQrsd2zSsSen/tAZvoC7tPZuhsPpPOZILgmI=",
+          "StopRecord" : "3Un/ybIHbcBKAOVZ3GHk/duRZ89JVlp9X2WGCp57JKk=",
+          "TripRecord" : "3yVXxuupkKMxCNoAAeWtBzczSFhn9Q1dzyDinyupzXE="
+        },
+        "NSStoreModelVersionIdentifiers" : [
+          "4.0.0"
+        ],
+        "NSStoreType" : "SQLite",
+        "otherMetadataKeys" : [
+          "NSPersistenceFrameworkVersion",
+          "NSPersistenceMaximumFrameworkVersion",
+          "NSStoreModelVersionChecksumKey",
+          "NSStoreModelVersionHashesDigest",
+          "NSStoreModelVersionHashesVersion",
+          "NSStoreType",
+          "_NSAutoVacuumLevel"
+        ]
+      },
+      "writtenSchemaVersion" : "4.0.0"
+    }
+  }
+}

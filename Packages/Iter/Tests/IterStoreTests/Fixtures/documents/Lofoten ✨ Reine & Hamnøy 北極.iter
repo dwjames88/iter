@@ -1,0 +1,141 @@
+{
+  "exportedAt" : "2026-09-21T14:13:20Z",
+  "formatVersion" : 1,
+  "trip" : {
+    "dayCount" : 4,
+    "id" : "F2868860-FB28-4B59-88E9-9A7EA459490E",
+    "name" : "Lofoten ✨ Reine & Hamnøy 北極",
+    "notes" : "Aurora window Feb 21–24. Crampons for the ice. 🧤",
+    "startDay" : {
+      "day" : 20,
+      "month" : 2,
+      "year" : 2027
+    },
+    "stops" : [
+      {
+        "dayIndex" : 0,
+        "driveNote" : "",
+        "id" : "FE7B286D-6D7D-45DA-BD4E-76CEC8DE0E1B",
+        "note" : "Reflection in the harbour if calm",
+        "session" : "blueMorning",
+        "setUpBufferMinutes" : 20,
+        "spot" : {
+          "bestLight" : [
+            "blueHour",
+            "sunrise"
+          ],
+          "blurb" : "",
+          "category" : "coast",
+          "coordinate" : {
+            "latitude" : 67.9323,
+            "longitude" : 13.0887
+          },
+          "id" : "9AC90659-C94D-4C31-8925-C1F6A41B0607",
+          "locality" : "Reine, Lofoten, Norge",
+          "name" : "Reine rorbu 🏔️",
+          "notes" : "Fiskerhytte — bakeri 200 m. Åpent kl. 7.",
+          "origin" : "user",
+          "popularity" : 50,
+          "tags" : [
+
+          ],
+          "timeZoneIdentifier" : "Europe\/Oslo"
+        }
+      },
+      {
+        "dayIndex" : 0,
+        "driveNote" : "E10 south then the Hamnøy turnoff, 15 min",
+        "id" : "19492E60-DF50-44AB-941C-081F5B13F535",
+        "note" : "",
+        "session" : "night",
+        "setUpBufferMinutes" : 60,
+        "spot" : {
+          "bestLight" : [
+            "sunset",
+            "night"
+          ],
+          "blurb" : "",
+          "category" : "coast",
+          "coordinate" : {
+            "latitude" : 67.9439,
+            "longitude" : 13.1326
+          },
+          "id" : "28AAFF5C-C170-4C90-9611-CAFF11843CF4",
+          "locality" : "Hamnøy, Lofoten",
+          "name" : "Hamnøy bridge ✨",
+          "notes" : "北極光 chance in Sept–Mar. Wind!",
+          "origin" : "user",
+          "popularity" : 50,
+          "tags" : [
+
+          ],
+          "timeZoneIdentifier" : "Europe\/Oslo",
+          "walkInMinutes" : 10
+        }
+      },
+      {
+        "dayIndex" : 1,
+        "driveNote" : "",
+        "id" : "14582B26-FECE-4878-8BF7-88C4D1DFA384",
+        "note" : "Dinner stop — the Fjære & Brød",
+        "session" : "goldenEvening",
+        "setUpBufferMinutes" : 20,
+        "spot" : {
+          "bestLight" : [
+
+          ],
+          "blurb" : "",
+          "category" : "urban",
+          "coordinate" : {
+            "latitude" : 67.9331,
+            "longitude" : 13.0902
+          },
+          "id" : "4BA2BEED-EFC7-4679-B5D6-30FE74E52755",
+          "locality" : "Reine",
+          "name" : "Hotel Fjære & Brød",
+          "notes" : "",
+          "origin" : "appleMaps",
+          "popularity" : 50,
+          "tags" : [
+
+          ],
+          "timeZoneIdentifier" : "Europe\/Oslo"
+        }
+      },
+      {
+        "dayIndex" : 2,
+        "driveNote" : "",
+        "id" : "F2C2B278-4660-453C-8835-1017C66D5298",
+        "note" : "",
+        "session" : "goldenMorning",
+        "setUpBufferMinutes" : 5,
+        "spot" : {
+          "bestLight" : [
+            "sunset",
+            "night"
+          ],
+          "blurb" : "",
+          "category" : "coast",
+          "coordinate" : {
+            "latitude" : 67.9439,
+            "longitude" : 13.1326
+          },
+          "id" : "28AAFF5C-C170-4C90-9611-CAFF11843CF4",
+          "locality" : "Hamnøy, Lofoten",
+          "name" : "Hamnøy bridge ✨",
+          "notes" : "北極光 chance in Sept–Mar. Wind!",
+          "origin" : "user",
+          "popularity" : 50,
+          "tags" : [
+
+          ],
+          "timeZoneIdentifier" : "Europe\/Oslo",
+          "walkInMinutes" : 10
+        }
+      }
+    ],
+    "transferTimings" : {
+
+    }
+  }
+}

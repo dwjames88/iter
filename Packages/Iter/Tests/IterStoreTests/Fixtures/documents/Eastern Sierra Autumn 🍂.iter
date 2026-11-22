@@ -1,0 +1,326 @@
+{
+  "exportedAt" : "2026-09-21T14:13:20Z",
+  "formatVersion" : 1,
+  "trip" : {
+    "dayCount" : 5,
+    "id" : "D28E45D6-BA00-4AEC-8156-957F13F1C95F",
+    "name" : "Eastern Sierra Autumn 🍂",
+    "notes" : "Aspens peak around Oct 18. Chains in the car after Nov 1.\nGas in Lee Vining.",
+    "startDay" : {
+      "day" : 14,
+      "month" : 10,
+      "year" : 2026
+    },
+    "stops" : [
+      {
+        "dayIndex" : 0,
+        "driveNote" : "",
+        "id" : "1991781C-D143-4040-94BF-A945C28B8C10",
+        "note" : "Mobius Arch first, then the Whitney view",
+        "session" : "goldenEvening",
+        "setUpBufferMinutes" : 30,
+        "spot" : {
+          "bestLight" : [
+            "night",
+            "sunrise"
+          ],
+          "blurb" : "A natural arch framing Mount Whitney, with some of the darkest accessible skies in California.",
+          "category" : "astro",
+          "coordinate" : {
+            "latitude" : 36.6116,
+            "longitude" : -118.1256
+          },
+          "elevationMeters" : 1500,
+          "facing" : 280,
+          "id" : "alabama-hills",
+          "locality" : "Lone Pine, CA",
+          "name" : "Mobius Arch, Alabama Hills",
+          "notes" : "Short loop from Movie Road. Frame Whitney through the arch at dawn alpenglow; Milky Way core rises to the south in spring\/summer. Free BLM camping nearby.",
+          "origin" : "curated",
+          "popularity" : 78,
+          "tags" : [
+            "arch",
+            "milky-way",
+            "dispersed-camping",
+            "free"
+          ],
+          "timeZoneIdentifier" : "America\/Los_Angeles"
+        }
+      },
+      {
+        "dayIndex" : 0,
+        "driveNote" : "Gravel road, 4 minutes. Drive slow.",
+        "id" : "986C7EE9-B0C3-4675-99DF-7ADBF18505A9",
+        "note" : "Star tracker; 2 min subs",
+        "session" : "night",
+        "setUpBufferMinutes" : 45,
+        "spot" : {
+          "bestLight" : [
+            "night",
+            "sunrise"
+          ],
+          "blurb" : "",
+          "category" : "astro",
+          "coordinate" : {
+            "latitude" : 36.6128,
+            "longitude" : -118.1264
+          },
+          "id" : "A70DF1D8-B28F-487F-AAC1-5F8AE04540D4",
+          "locality" : "Lone Pine, CA",
+          "name" : "Mobius Arch pullout",
+          "notes" : "Dark sky, Bortle 2. Flat gravel, room for the star tracker.",
+          "origin" : "user",
+          "popularity" : 50,
+          "tags" : [
+
+          ],
+          "timeZoneIdentifier" : "America\/Los_Angeles",
+          "walkInMinutes" : 3
+        }
+      },
+      {
+        "dayIndex" : 1,
+        "driveNote" : "Highway 395 north from Lone Pine, about 2 h",
+        "id" : "6C3B17D1-4AC7-469C-988B-2732A05CBB2F",
+        "note" : "Aspen grove on the north shore",
+        "session" : "blueMorning",
+        "setUpBufferMinutes" : 35,
+        "spot" : {
+          "bestLight" : [
+            "sunrise",
+            "sunset"
+          ],
+          "blurb" : "Mount Morrison’s striped face catches first light and drops it straight into the lake. Aspens go gold here in early October.",
+          "category" : "landscape",
+          "coordinate" : {
+            "latitude" : 37.5905,
+            "longitude" : -118.852
+          },
+          "elevationMeters" : 2320,
+          "facing" : 200,
+          "id" : "convict-lake",
+          "locality" : "Mammoth Lakes, CA",
+          "name" : "Convict Lake",
+          "notes" : "5 min off US-395, paved lot at the shore. The 2.5 mi flat loop gives compositions from every side. Calm water is most likely in the first hour after sunrise.",
+          "origin" : "curated",
+          "popularity" : 62,
+          "tags" : [
+            "alpine-lake",
+            "fall-colour",
+            "reflection",
+            "easy"
+          ],
+          "timeZoneIdentifier" : "America\/Los_Angeles"
+        }
+      },
+      {
+        "dayIndex" : 1,
+        "driveNote" : "Twisty road to the lake; park at the dam",
+        "id" : "4AF82E77-8B2A-4BA1-B42B-B1D3CB231E71",
+        "note" : "",
+        "session" : "goldenMorning",
+        "setUpBufferMinutes" : 10,
+        "spot" : {
+          "bestLight" : [
+            "sunrise",
+            "sunset"
+          ],
+          "blurb" : "A granite-rimmed reservoir under the Sierra crest, ringed by aspens that turn gold and orange in October.",
+          "category" : "landscape",
+          "coordinate" : {
+            "latitude" : 37.213,
+            "longitude" : -118.609
+          },
+          "elevationMeters" : 2760,
+          "facing" : 200,
+          "id" : "lake-sabrina",
+          "locality" : "Bishop Creek, CA",
+          "name" : "Lake Sabrina",
+          "notes" : "30 min up CA-168 from Bishop. Fall colour usually peaks late Sept–mid Oct (check the Eastern Sierra fall colour report). Calm dawn water for reflections; the road can close with early snow.",
+          "origin" : "curated",
+          "popularity" : 40,
+          "tags" : [
+            "alpine-lake",
+            "fall-colour",
+            "aspens",
+            "easy"
+          ],
+          "timeZoneIdentifier" : "America\/Los_Angeles"
+        }
+      },
+      {
+        "dayIndex" : 1,
+        "driveNote" : "",
+        "id" : "A135AA40-D458-40A3-9022-A9B7EB79D2AE",
+        "note" : "Fish tacos before sunset",
+        "session" : "goldenEvening",
+        "setUpBufferMinutes" : 20,
+        "spot" : {
+          "bestLight" : [
+
+          ],
+          "blurb" : "",
+          "category" : "street",
+          "coordinate" : {
+            "latitude" : 37.9366,
+            "longitude" : -119.1214
+          },
+          "id" : "5D9855C8-D5D8-4DA1-BA59-38591E1ED7D8",
+          "locality" : "Lee Vining, CA",
+          "name" : "Whoa Nellie Deli",
+          "notes" : "",
+          "origin" : "appleMaps",
+          "popularity" : 50,
+          "tags" : [
+
+          ],
+          "timeZoneIdentifier" : "America\/Los_Angeles"
+        }
+      },
+      {
+        "dayIndex" : 1,
+        "driveNote" : "",
+        "id" : "556DB38F-EEFC-4E91-B94C-4BFFD0D891A7",
+        "note" : "",
+        "session" : "blueEvening",
+        "setUpBufferMinutes" : 0,
+        "spot" : {
+          "bestLight" : [
+            "sunrise",
+            "night",
+            "sunset"
+          ],
+          "blurb" : "Limestone towers standing in a salt lake twice as old as the Sierra, glassy and pink before the wind wakes up.",
+          "category" : "landscape",
+          "coordinate" : {
+            "latitude" : 37.9395,
+            "longitude" : -119.0271
+          },
+          "elevationMeters" : 1945,
+          "facing" : 70,
+          "id" : "mono-lake-south-tufa",
+          "locality" : "Lee Vining, CA",
+          "name" : "South Tufa, Mono Lake",
+          "notes" : "$3 day-use fee, 1 mi loop boardwalk. Do not climb or touch tufa. Mornings are usually calm for reflections; bring bug spray in June for alkali flies. Milky Way rises over the lake to the southeast.",
+          "origin" : "curated",
+          "popularity" : 74,
+          "tags" : [
+            "tufa",
+            "lake",
+            "reflection",
+            "milky-way"
+          ],
+          "timeZoneIdentifier" : "America\/Los_Angeles",
+          "walkInMinutes" : 20
+        }
+      },
+      {
+        "dayIndex" : 2,
+        "driveNote" : "Dirt road for the last 3 miles",
+        "id" : "C6EEF640-88B5-4BFD-8066-F33B73C0D014",
+        "note" : "Gate closes at 6; check the hours",
+        "session" : "goldenEvening",
+        "setUpBufferMinutes" : 60,
+        "spot" : {
+          "bestLight" : [
+            "sunset",
+            "overcast"
+          ],
+          "blurb" : "A gold-rush town left exactly where it fell — pews, pool tables and 1940s trucks bleaching in high-desert light.",
+          "category" : "architecture",
+          "coordinate" : {
+            "latitude" : 38.2122,
+            "longitude" : -119.0115
+          },
+          "elevationMeters" : 2550,
+          "id" : "bodie",
+          "locality" : "Bodie State Historic Park, CA",
+          "name" : "Bodie Ghost Town",
+          "notes" : "Last 3 mi are washboard gravel; road closes with snow. Park hours roughly 9am–6pm (shorter in winter), so golden hour means late-summer evenings. Shoot through the windows; night access only on ranger-led photo events.",
+          "origin" : "curated",
+          "popularity" : 60,
+          "tags" : [
+            "ghost-town",
+            "history",
+            "interiors",
+            "gold-rush"
+          ],
+          "timeZoneIdentifier" : "America\/Los_Angeles"
+        }
+      },
+      {
+        "dayIndex" : 3,
+        "driveNote" : "White Mountain Road, 40 min of switchbacks",
+        "id" : "6E362183-4135-4EC1-B72F-51EDB44EAFAA",
+        "note" : "",
+        "session" : "goldenMorning",
+        "setUpBufferMinutes" : 25,
+        "spot" : {
+          "bestLight" : [
+            "night",
+            "sunset"
+          ],
+          "blurb" : "Twisted pines more than 4,000 years old under a sky black enough to see the Milky Way cast shadows.",
+          "category" : "astro",
+          "coordinate" : {
+            "latitude" : 37.3855,
+            "longitude" : -118.178
+          },
+          "elevationMeters" : 3050,
+          "id" : "ancient-bristlecone-forest",
+          "locality" : "White Mountains, CA",
+          "name" : "Ancient Bristlecone Pine Forest",
+          "notes" : "Schulman Grove is about 1 hr from Bishop; road usually open May–Nov. At 3,000 m nights are cold — pack layers. Low-level light painting on the trunks, never bright lights.",
+          "origin" : "curated",
+          "popularity" : 45,
+          "tags" : [
+            "ancient-trees",
+            "milky-way",
+            "high-altitude",
+            "dark-sky"
+          ],
+          "timeZoneIdentifier" : "America\/Los_Angeles"
+        }
+      },
+      {
+        "dayIndex" : 4,
+        "driveNote" : "",
+        "id" : "954D0043-5C96-459F-A2F3-BE35E19DB69C",
+        "note" : "Last light on the way home",
+        "session" : "goldenEvening",
+        "setUpBufferMinutes" : 20,
+        "spot" : {
+          "bestLight" : [
+            "night",
+            "sunset"
+          ],
+          "blurb" : "A dry waterfall of polished black basalt, carved by a river that vanished 10,000 years ago. Empty after dark.",
+          "category" : "astro",
+          "coordinate" : {
+            "latitude" : 35.9707,
+            "longitude" : -117.9087
+          },
+          "elevationMeters" : 1000,
+          "id" : "fossil-falls",
+          "locality" : "Little Lake, CA",
+          "name" : "Fossil Falls",
+          "notes" : "Signed turn off US-395, then 0.5 mi walk on rough lava. No rails at the drop — scout the edges in daylight. Great paired with Alabama Hills on the same night.",
+          "origin" : "curated",
+          "popularity" : 28,
+          "tags" : [
+            "basalt",
+            "dry-falls",
+            "milky-way",
+            "short-walk"
+          ],
+          "timeZoneIdentifier" : "America\/Los_Angeles",
+          "walkInMinutes" : 20
+        }
+      }
+    ],
+    "transferTimings" : {
+      "1" : "eveningBefore",
+      "3" : "eveningBefore"
+    }
+  }
+}

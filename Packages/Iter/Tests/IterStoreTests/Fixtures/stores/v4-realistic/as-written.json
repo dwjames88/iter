@@ -1,0 +1,1579 @@
+{
+  "fixture" : "v4-realistic",
+  "flattenedFolderIDs" : [
+
+  ],
+  "folders" : [
+    {
+      "createdAt" : 817047887.615852,
+      "id" : "172D9622-A256-4868-AC3E-8705B939BD4E",
+      "isPinned" : true,
+      "kindRaw" : "trips",
+      "name" : "2026 Road Trips 🚘",
+      "parentID" : null,
+      "pinnedAt" : 817047887.621513,
+      "placeIDs" : [
+
+      ],
+      "sortOrder" : 0,
+      "tripIDs" : [
+        "D28E45D6-BA00-4AEC-8156-957F13F1C95F",
+        "F2868860-FB28-4B59-88E9-9A7EA459490E"
+      ],
+      "updatedAt" : 817047887.615853
+    },
+    {
+      "createdAt" : 817047887.62667,
+      "id" : "AB140740-DBC6-4C93-8DAC-45AD8661F8C9",
+      "isPinned" : true,
+      "kindRaw" : "locations",
+      "name" : "Night sky 🌌",
+      "parentID" : null,
+      "pinnedAt" : 817047887.63288,
+      "placeIDs" : [
+        "28AAFF5C-C170-4C90-9611-CAFF11843CF4",
+        "A70DF1D8-B28F-487F-AAC1-5F8AE04540D4"
+      ],
+      "sortOrder" : 1,
+      "tripIDs" : [
+
+      ],
+      "updatedAt" : 817047887.62667
+    },
+    {
+      "createdAt" : 817047887.616866,
+      "id" : "ABAF1729-0A54-49ED-87B4-D941D9AF525C",
+      "isPinned" : false,
+      "kindRaw" : "trips",
+      "name" : "Wishlist",
+      "parentID" : null,
+      "pinnedAt" : null,
+      "placeIDs" : [
+
+      ],
+      "sortOrder" : 1,
+      "tripIDs" : [
+
+      ],
+      "updatedAt" : 817047887.616867
+    },
+    {
+      "createdAt" : 817047887.624975,
+      "id" : "E8F74A98-422E-44E7-92E5-D48A33C8E0A7",
+      "isPinned" : false,
+      "kindRaw" : "locations",
+      "name" : "Sierra shoots",
+      "parentID" : null,
+      "pinnedAt" : null,
+      "placeIDs" : [
+        "4C6C9E2C-5D2C-4C62-B388-05F2F1FE164D",
+        "730BF3BF-485C-4B27-9B58-2512E4B8D8F4",
+        "7CA18617-E1A6-4DD8-8CD6-84A061A45E74"
+      ],
+      "sortOrder" : 0,
+      "tripIDs" : [
+
+      ],
+      "updatedAt" : 817047887.624976
+    }
+  ],
+  "generator" : [
+    "Written by IterFixtureGen (Legacy/IterKit) with the old IterData module.",
+    "expected.json: a copy of the fixture opened with IterSchema.makeContainer(url:) + IterStore(container:) (migrates to V4, runs flattenFolders), then read back.",
+    "as-written.json: the fixture read back before any migration (V1-V3 with the frozen schema and no migration plan; V4 with the live code).",
+    "Dates are timeIntervalSinceReferenceDate Doubles; UUIDs are uppercase; arrays are sorted by id except stopIDs of a trip (orderedStops order).",
+    "flattenFolders sets updatedAt to the time of generation on every flattened folder (listed in flattenedFolderIDs); those values change on regeneration."
+  ],
+  "places" : [
+    {
+      "bestLightRaw" : "sunset,night",
+      "blurb" : "",
+      "categoryRaw" : "coast",
+      "createdAt" : 817047887.528875,
+      "curatedID" : null,
+      "elevationMeters" : null,
+      "externalID" : null,
+      "facing" : null,
+      "folderID" : "AB140740-DBC6-4C93-8DAC-45AD8661F8C9",
+      "id" : "28AAFF5C-C170-4C90-9611-CAFF11843CF4",
+      "isPinned" : false,
+      "isSaved" : true,
+      "latitude" : 67.9439,
+      "locality" : "Hamnøy, Lofoten",
+      "longitude" : 13.1326,
+      "name" : "Hamnøy bridge ✨",
+      "notes" : "北極光 chance in Sept–Mar. Wind!",
+      "originRaw" : "user",
+      "pinnedAt" : null,
+      "popularity" : 50,
+      "sortOrder" : 1,
+      "stopIDs" : [
+        "19492E60-DF50-44AB-941C-081F5B13F535",
+        "F2C2B278-4660-453C-8835-1017C66D5298"
+      ],
+      "tagsRaw" : "",
+      "timeZoneIdentifier" : "Europe/Oslo",
+      "updatedAt" : 817047887.528875,
+      "walkInMinutes" : 10
+    },
+    {
+      "bestLightRaw" : "sunrise,sunset",
+      "blurb" : "A granite-rimmed reservoir under the Sierra crest, ringed by aspens that turn gold and orange in October.",
+      "categoryRaw" : "landscape",
+      "createdAt" : 817047887.547729,
+      "curatedID" : "lake-sabrina",
+      "elevationMeters" : 2760,
+      "externalID" : null,
+      "facing" : 200,
+      "folderID" : null,
+      "id" : "2B559481-A1DB-4AC6-B32F-C6AB2662871C",
+      "isPinned" : false,
+      "isSaved" : true,
+      "latitude" : 37.213,
+      "locality" : "Bishop Creek, CA",
+      "longitude" : -118.609,
+      "name" : "Lake Sabrina",
+      "notes" : "30 min up CA-168 from Bishop. Fall colour usually peaks late Sept–mid Oct (check the Eastern Sierra fall colour report). Calm dawn water for reflections; the road can close with early snow.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 40,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "4AF82E77-8B2A-4BA1-B42B-B1D3CB231E71"
+      ],
+      "tagsRaw" : "alpine-lake,fall-colour,aspens,easy",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 817047887.609028,
+      "walkInMinutes" : null
+    },
+    {
+      "bestLightRaw" : "sunrise",
+      "blurb" : "Folded mudstone badlands ripple toward Manly Beacon while the Panamints blush on the horizon. Pure sunrise theatre.",
+      "categoryRaw" : "desert",
+      "createdAt" : 817047887.574103,
+      "curatedID" : "zabriskie-point",
+      "elevationMeters" : 216,
+      "externalID" : null,
+      "facing" : 255,
+      "folderID" : null,
+      "id" : "3C5770BE-1A0C-4662-97A7-A421C5D8244B",
+      "isPinned" : false,
+      "isSaved" : true,
+      "latitude" : 36.4205,
+      "locality" : "Death Valley National Park, CA",
+      "longitude" : -116.8103,
+      "name" : "Zabriskie Point",
+      "notes" : "Paved 5 min uphill walk from the lot. Busy at dawn year-round; arrive 40 min early. Telephoto (70–200mm) picks out the light on the ridgelines. Avoid midday May–Sept — 45°C+.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 85,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "9F2EA062-FD71-4FA1-8114-B3D0B00F4825"
+      ],
+      "tagsRaw" : "badlands,iconic,overlook,roadside",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 817047887.607889,
+      "walkInMinutes" : 5
+    },
+    {
+      "bestLightRaw" : "",
+      "blurb" : "",
+      "categoryRaw" : "landscape",
+      "createdAt" : 817047887.529896,
+      "curatedID" : null,
+      "elevationMeters" : null,
+      "externalID" : null,
+      "facing" : null,
+      "folderID" : null,
+      "id" : "45669CE0-7CF7-4B4C-A55A-4B9674EF3076",
+      "isPinned" : false,
+      "isSaved" : true,
+      "latitude" : 36.1,
+      "locality" : "",
+      "longitude" : -117.2,
+      "name" : "Unnamed pullout",
+      "notes" : "",
+      "originRaw" : "user",
+      "pinnedAt" : null,
+      "popularity" : 50,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "6025D4C6-34AD-40C2-9424-98F775CD20FC"
+      ],
+      "tagsRaw" : "",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 817047887.529896,
+      "walkInMinutes" : null
+    },
+    {
+      "bestLightRaw" : "",
+      "blurb" : "",
+      "categoryRaw" : "urban",
+      "createdAt" : 817047887.591772,
+      "curatedID" : null,
+      "elevationMeters" : null,
+      "externalID" : "IC1A07E3B94D2F865",
+      "facing" : null,
+      "folderID" : null,
+      "id" : "4BA2BEED-EFC7-4679-B5D6-30FE74E52755",
+      "isPinned" : false,
+      "isSaved" : false,
+      "latitude" : 67.9331,
+      "locality" : "Reine",
+      "longitude" : 13.0902,
+      "name" : "Hotel Fjære & Brød",
+      "notes" : "",
+      "originRaw" : "appleMaps",
+      "pinnedAt" : null,
+      "popularity" : 50,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "14582B26-FECE-4878-8BF7-88C4D1DFA384"
+      ],
+      "tagsRaw" : "",
+      "timeZoneIdentifier" : "Europe/Oslo",
+      "updatedAt" : 817047887.591772,
+      "walkInMinutes" : null
+    },
+    {
+      "bestLightRaw" : "sunrise,night,sunset",
+      "blurb" : "Limestone towers standing in a salt lake twice as old as the Sierra, glassy and pink before the wind wakes up.",
+      "categoryRaw" : "landscape",
+      "createdAt" : 817047887.554642,
+      "curatedID" : "mono-lake-south-tufa",
+      "elevationMeters" : 1945,
+      "externalID" : null,
+      "facing" : 70,
+      "folderID" : "E8F74A98-422E-44E7-92E5-D48A33C8E0A7",
+      "id" : "4C6C9E2C-5D2C-4C62-B388-05F2F1FE164D",
+      "isPinned" : false,
+      "isSaved" : true,
+      "latitude" : 37.9395,
+      "locality" : "Lee Vining, CA",
+      "longitude" : -119.0271,
+      "name" : "South Tufa, Mono Lake",
+      "notes" : "$3 day-use fee, 1 mi loop boardwalk. Do not climb or touch tufa. Mornings are usually calm for reflections; bring bug spray in June for alkali flies. Milky Way rises over the lake to the southeast.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 74,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "556DB38F-EEFC-4E91-B94C-4BFFD0D891A7"
+      ],
+      "tagsRaw" : "tufa,lake,reflection,milky-way",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 817047887.60416,
+      "walkInMinutes" : 20
+    },
+    {
+      "bestLightRaw" : "",
+      "blurb" : "",
+      "categoryRaw" : "street",
+      "createdAt" : 817047887.551933,
+      "curatedID" : null,
+      "elevationMeters" : null,
+      "externalID" : "I5D9F0B2A7C3E1648",
+      "facing" : null,
+      "folderID" : null,
+      "id" : "5D9855C8-D5D8-4DA1-BA59-38591E1ED7D8",
+      "isPinned" : false,
+      "isSaved" : true,
+      "latitude" : 37.9366,
+      "locality" : "Lee Vining, CA",
+      "longitude" : -119.1214,
+      "name" : "Whoa Nellie Deli",
+      "notes" : "",
+      "originRaw" : "appleMaps",
+      "pinnedAt" : null,
+      "popularity" : 50,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "A135AA40-D458-40A3-9022-A9B7EB79D2AE"
+      ],
+      "tagsRaw" : "",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 817047887.611667,
+      "walkInMinutes" : null
+    },
+    {
+      "bestLightRaw" : "night,sunset",
+      "blurb" : "A dry waterfall of polished black basalt, carved by a river that vanished 10,000 years ago. Empty after dark.",
+      "categoryRaw" : "astro",
+      "createdAt" : 817047887.568295,
+      "curatedID" : "fossil-falls",
+      "elevationMeters" : 1000,
+      "externalID" : null,
+      "facing" : null,
+      "folderID" : null,
+      "id" : "69AA2181-91B1-470F-8277-289C81299115",
+      "isPinned" : false,
+      "isSaved" : false,
+      "latitude" : 35.9707,
+      "locality" : "Little Lake, CA",
+      "longitude" : -117.9087,
+      "name" : "Fossil Falls",
+      "notes" : "Signed turn off US-395, then 0.5 mi walk on rough lava. No rails at the drop — scout the edges in daylight. Great paired with Alabama Hills on the same night.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 28,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "954D0043-5C96-459F-A2F3-BE35E19DB69C"
+      ],
+      "tagsRaw" : "basalt,dry-falls,milky-way,short-walk",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 817047887.568295,
+      "walkInMinutes" : 20
+    },
+    {
+      "bestLightRaw" : "night,sunrise",
+      "blurb" : "A natural arch framing Mount Whitney, with some of the darkest accessible skies in California.",
+      "categoryRaw" : "astro",
+      "createdAt" : 817047887.533349,
+      "curatedID" : "alabama-hills",
+      "elevationMeters" : 1500,
+      "externalID" : null,
+      "facing" : 280,
+      "folderID" : "E8F74A98-422E-44E7-92E5-D48A33C8E0A7",
+      "id" : "730BF3BF-485C-4B27-9B58-2512E4B8D8F4",
+      "isPinned" : false,
+      "isSaved" : true,
+      "latitude" : 36.6116,
+      "locality" : "Lone Pine, CA",
+      "longitude" : -118.1256,
+      "name" : "Mobius Arch, Alabama Hills",
+      "notes" : "Short loop from Movie Road. Frame Whitney through the arch at dawn alpenglow; Milky Way core rises to the south in spring/summer. Free BLM camping nearby.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 78,
+      "sortOrder" : 1,
+      "stopIDs" : [
+        "1991781C-D143-4040-94BF-A945C28B8C10"
+      ],
+      "tagsRaw" : "arch,milky-way,dispersed-camping,free",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 817047887.60283,
+      "walkInMinutes" : null
+    },
+    {
+      "bestLightRaw" : "sunset,overcast",
+      "blurb" : "A gold-rush town left exactly where it fell — pews, pool tables and 1940s trucks bleaching in high-desert light.",
+      "categoryRaw" : "architecture",
+      "createdAt" : 817047887.557712,
+      "curatedID" : "bodie",
+      "elevationMeters" : 2550,
+      "externalID" : null,
+      "facing" : null,
+      "folderID" : "E8F74A98-422E-44E7-92E5-D48A33C8E0A7",
+      "id" : "7CA18617-E1A6-4DD8-8CD6-84A061A45E74",
+      "isPinned" : false,
+      "isSaved" : true,
+      "latitude" : 38.2122,
+      "locality" : "Bodie State Historic Park, CA",
+      "longitude" : -119.0115,
+      "name" : "Bodie Ghost Town",
+      "notes" : "Last 3 mi are washboard gravel; road closes with snow. Park hours roughly 9am–6pm (shorter in winter), so golden hour means late-summer evenings. Shoot through the windows; night access only on ranger-led photo events.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 60,
+      "sortOrder" : 2,
+      "stopIDs" : [
+        "C6EEF640-88B5-4BFD-8066-F33B73C0D014"
+      ],
+      "tagsRaw" : "ghost-town,history,interiors,gold-rush",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 817047887.606753,
+      "walkInMinutes" : null
+    },
+    {
+      "bestLightRaw" : "blueHour,sunrise",
+      "blurb" : "",
+      "categoryRaw" : "coast",
+      "createdAt" : 817047887.528205,
+      "curatedID" : null,
+      "elevationMeters" : null,
+      "externalID" : null,
+      "facing" : null,
+      "folderID" : null,
+      "id" : "9AC90659-C94D-4C31-8925-C1F6A41B0607",
+      "isPinned" : false,
+      "isSaved" : true,
+      "latitude" : 67.9323,
+      "locality" : "Reine, Lofoten, Norge",
+      "longitude" : 13.0887,
+      "name" : "Reine rorbu 🏔️",
+      "notes" : "Fiskerhytte — bakeri 200 m. Åpent kl. 7.",
+      "originRaw" : "user",
+      "pinnedAt" : null,
+      "popularity" : 50,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "FE7B286D-6D7D-45DA-BD4E-76CEC8DE0E1B"
+      ],
+      "tagsRaw" : "",
+      "timeZoneIdentifier" : "Europe/Oslo",
+      "updatedAt" : 817047887.528206,
+      "walkInMinutes" : null
+    },
+    {
+      "bestLightRaw" : "sunrise,sunset,night",
+      "blurb" : "Hexagonal salt polygons to the horizon, 86 m below sea level, with Telescope Peak glowing pink above them at dawn.",
+      "categoryRaw" : "desert",
+      "createdAt" : 817047887.580125,
+      "curatedID" : "badwater-basin",
+      "elevationMeters" : -86,
+      "externalID" : null,
+      "facing" : 270,
+      "folderID" : null,
+      "id" : "A1E709E2-C000-4EFF-BB4A-39D1332E67B4",
+      "isPinned" : false,
+      "isSaved" : false,
+      "latitude" : 36.2302,
+      "locality" : "Death Valley National Park, CA",
+      "longitude" : -116.7675,
+      "name" : "Badwater Basin",
+      "notes" : "Boardwalk from the lot; the crisp polygons start about 1.5 mi out on the flat. After rare winter rain, shallow water gives reflections of the Panamints. Wide lens low to the ground.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 80,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "10125ADF-78DD-45C9-BB08-EADD751B6892"
+      ],
+      "tagsRaw" : "salt-flat,polygons,lowest-point,reflection",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 817047887.580125,
+      "walkInMinutes" : 50
+    },
+    {
+      "bestLightRaw" : "sunrise,sunset",
+      "blurb" : "The Colorado River wraps a perfect 270° curve 300 m below the rim. The canyon is best just after sunrise, before the shadow and the tour buses arrive.",
+      "categoryRaw" : "landscape",
+      "createdAt" : 817047887.609816,
+      "curatedID" : "horseshoe-bend",
+      "elevationMeters" : 1300,
+      "externalID" : null,
+      "facing" : 250,
+      "folderID" : null,
+      "id" : "A507E4F5-05BD-44A8-BDBD-D6ABA007D6EC",
+      "isPinned" : false,
+      "isSaved" : true,
+      "latitude" : 36.8791,
+      "locality" : "Page, AZ",
+      "longitude" : -111.5104,
+      "name" : "Horseshoe Bend",
+      "notes" : "$10 parking fee; 1.5 mi round trip on a graded path. You need 14mm or wider (or a vertical pano) to fit the whole bend. Sunset brings a starburst but deep shadow in the bend. Arizona does not observe DST.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 95,
+      "sortOrder" : 0,
+      "stopIDs" : [
+
+      ],
+      "tagsRaw" : "iconic,colorado-river,overlook,crowded",
+      "timeZoneIdentifier" : "America/Phoenix",
+      "updatedAt" : 817047887.609858,
+      "walkInMinutes" : 25
+    },
+    {
+      "bestLightRaw" : "night,sunrise",
+      "blurb" : "",
+      "categoryRaw" : "astro",
+      "createdAt" : 817047887.525369,
+      "curatedID" : null,
+      "elevationMeters" : null,
+      "externalID" : null,
+      "facing" : null,
+      "folderID" : "AB140740-DBC6-4C93-8DAC-45AD8661F8C9",
+      "id" : "A70DF1D8-B28F-487F-AAC1-5F8AE04540D4",
+      "isPinned" : true,
+      "isSaved" : true,
+      "latitude" : 36.6128,
+      "locality" : "Lone Pine, CA",
+      "longitude" : -118.1264,
+      "name" : "Mobius Arch pullout",
+      "notes" : "Dark sky, Bortle 2. Flat gravel, room for the star tracker.",
+      "originRaw" : "user",
+      "pinnedAt" : 817047887.633464,
+      "popularity" : 50,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "986C7EE9-B0C3-4675-99DF-7ADBF18505A9"
+      ],
+      "tagsRaw" : "",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 817047887.52537,
+      "walkInMinutes" : 3
+    },
+    {
+      "bestLightRaw" : "sunset,night",
+      "blurb" : "A freestanding 16 m arch on the lip of a slickrock bowl, burning red against the snow-capped La Sals at sunset.",
+      "categoryRaw" : "desert",
+      "createdAt" : 817047887.598562,
+      "curatedID" : "delicate-arch",
+      "elevationMeters" : 1480,
+      "externalID" : null,
+      "facing" : 110,
+      "folderID" : null,
+      "id" : "CD2972A6-DCCC-40A6-916E-31276CE391D5",
+      "isPinned" : true,
+      "isSaved" : true,
+      "latitude" : 38.7436,
+      "locality" : "Arches National Park, UT",
+      "longitude" : -109.4993,
+      "name" : "Delicate Arch — golden hour 🌅",
+      "notes" : "Hike starts at the Wolfe Ranch lot.\nBring a headlamp for the walk down.",
+      "originRaw" : "curated",
+      "pinnedAt" : 817047887.632242,
+      "popularity" : 94,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "FD7EE328-A6B8-4570-927A-5D65F0718639"
+      ],
+      "tagsRaw" : "iconic,arch,hike,la-sal-mountains",
+      "timeZoneIdentifier" : "America/Denver",
+      "updatedAt" : 817047887.615247,
+      "walkInMinutes" : 50
+    },
+    {
+      "bestLightRaw" : "night,sunset",
+      "blurb" : "Twisted pines more than 4,000 years old under a sky black enough to see the Milky Way cast shadows.",
+      "categoryRaw" : "astro",
+      "createdAt" : 817047887.563181,
+      "curatedID" : "ancient-bristlecone-forest",
+      "elevationMeters" : 3050,
+      "externalID" : null,
+      "facing" : null,
+      "folderID" : null,
+      "id" : "D803B234-F04F-4758-9F26-988C47F80285",
+      "isPinned" : false,
+      "isSaved" : false,
+      "latitude" : 37.3855,
+      "locality" : "White Mountains, CA",
+      "longitude" : -118.178,
+      "name" : "Ancient Bristlecone Pine Forest",
+      "notes" : "Schulman Grove is about 1 hr from Bishop; road usually open May–Nov. At 3,000 m nights are cold — pack layers. Low-level light painting on the trunks, never bright lights.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 45,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "6E362183-4135-4EC1-B72F-51EDB44EAFAA"
+      ],
+      "tagsRaw" : "ancient-trees,milky-way,high-altitude,dark-sky",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 817047887.563181,
+      "walkInMinutes" : null
+    },
+    {
+      "bestLightRaw" : "sunrise,sunset",
+      "blurb" : "Mount Morrison’s striped face catches first light and drops it straight into the lake. Aspens go gold here in early October.",
+      "categoryRaw" : "landscape",
+      "createdAt" : 817047887.542246,
+      "curatedID" : "convict-lake",
+      "elevationMeters" : 2320,
+      "externalID" : null,
+      "facing" : 200,
+      "folderID" : null,
+      "id" : "EEB681B3-2DB9-4C7F-80F4-0467772754A8",
+      "isPinned" : false,
+      "isSaved" : false,
+      "latitude" : 37.5905,
+      "locality" : "Mammoth Lakes, CA",
+      "longitude" : -118.852,
+      "name" : "Convict Lake",
+      "notes" : "5 min off US-395, paved lot at the shore. The 2.5 mi flat loop gives compositions from every side. Calm water is most likely in the first hour after sunrise.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 62,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "6C3B17D1-4AC7-469C-988B-2732A05CBB2F"
+      ],
+      "tagsRaw" : "alpine-lake,fall-colour,reflection,easy",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 817047887.542246,
+      "walkInMinutes" : null
+    },
+    {
+      "bestLightRaw" : "sunrise,sunset,night",
+      "blurb" : "Knife-edge ridges and wind ripples lit from the side — the only hour of the day the dunes have texture.",
+      "categoryRaw" : "desert",
+      "createdAt" : 817047887.576704,
+      "curatedID" : "mesquite-flat-dunes",
+      "elevationMeters" : 0,
+      "externalID" : null,
+      "facing" : null,
+      "folderID" : null,
+      "id" : "F449E755-F679-4702-813C-364D24EABB1F",
+      "isPinned" : false,
+      "isSaved" : false,
+      "latitude" : 36.6064,
+      "locality" : "Death Valley National Park, CA",
+      "longitude" : -117.1156,
+      "name" : "Mesquite Flat Sand Dunes",
+      "notes" : "Park at the Stovepipe Wells lot; walk 20–30 min out to escape footprints. Sidelight within 45 min of sunrise/sunset. Carry water and a headlamp; dunes are easy to get turned around in after dark.",
+      "originRaw" : "curated",
+      "pinnedAt" : null,
+      "popularity" : 76,
+      "sortOrder" : 0,
+      "stopIDs" : [
+        "D05ADC9E-9817-42CF-B6F8-FABE4F4AEE87"
+      ],
+      "tagsRaw" : "dunes,ripples,footprint-free,astro",
+      "timeZoneIdentifier" : "America/Los_Angeles",
+      "updatedAt" : 817047887.576704,
+      "walkInMinutes" : 30
+    }
+  ],
+  "stops" : [
+    {
+      "dayIndex" : 1,
+      "driveNote" : "From Furnace Creek 30 min",
+      "id" : "10125ADF-78DD-45C9-BB08-EADD751B6892",
+      "note" : "",
+      "placeID" : "A1E709E2-C000-4EFF-BB4A-39D1332E67B4",
+      "sessionRaw" : "blueMorning",
+      "setUpBufferMinutes" : 20,
+      "sortOrder" : 0,
+      "tripID" : "E90598C1-82E0-45E9-A606-F5E43167874F"
+    },
+    {
+      "dayIndex" : 1,
+      "driveNote" : "",
+      "id" : "14582B26-FECE-4878-8BF7-88C4D1DFA384",
+      "note" : "Dinner stop — the Fjære & Brød",
+      "placeID" : "4BA2BEED-EFC7-4679-B5D6-30FE74E52755",
+      "sessionRaw" : "goldenEvening",
+      "setUpBufferMinutes" : 20,
+      "sortOrder" : 0,
+      "tripID" : "F2868860-FB28-4B59-88E9-9A7EA459490E"
+    },
+    {
+      "dayIndex" : 0,
+      "driveNote" : "E10 south then the Hamnøy turnoff, 15 min",
+      "id" : "19492E60-DF50-44AB-941C-081F5B13F535",
+      "note" : "",
+      "placeID" : "28AAFF5C-C170-4C90-9611-CAFF11843CF4",
+      "sessionRaw" : "night",
+      "setUpBufferMinutes" : 60,
+      "sortOrder" : 1,
+      "tripID" : "F2868860-FB28-4B59-88E9-9A7EA459490E"
+    },
+    {
+      "dayIndex" : 0,
+      "driveNote" : "",
+      "id" : "1991781C-D143-4040-94BF-A945C28B8C10",
+      "note" : "Mobius Arch first, then the Whitney view",
+      "placeID" : "730BF3BF-485C-4B27-9B58-2512E4B8D8F4",
+      "sessionRaw" : "goldenEvening",
+      "setUpBufferMinutes" : 30,
+      "sortOrder" : 0,
+      "tripID" : "D28E45D6-BA00-4AEC-8156-957F13F1C95F"
+    },
+    {
+      "dayIndex" : 1,
+      "driveNote" : "Twisty road to the lake; park at the dam",
+      "id" : "4AF82E77-8B2A-4BA1-B42B-B1D3CB231E71",
+      "note" : "",
+      "placeID" : "2B559481-A1DB-4AC6-B32F-C6AB2662871C",
+      "sessionRaw" : "goldenMorning",
+      "setUpBufferMinutes" : 10,
+      "sortOrder" : 1,
+      "tripID" : "D28E45D6-BA00-4AEC-8156-957F13F1C95F"
+    },
+    {
+      "dayIndex" : 1,
+      "driveNote" : "",
+      "id" : "556DB38F-EEFC-4E91-B94C-4BFFD0D891A7",
+      "note" : "",
+      "placeID" : "4C6C9E2C-5D2C-4C62-B388-05F2F1FE164D",
+      "sessionRaw" : "blueEvening",
+      "setUpBufferMinutes" : 0,
+      "sortOrder" : 3,
+      "tripID" : "D28E45D6-BA00-4AEC-8156-957F13F1C95F"
+    },
+    {
+      "dayIndex" : 2,
+      "driveNote" : "",
+      "id" : "6025D4C6-34AD-40C2-9424-98F775CD20FC",
+      "note" : "",
+      "placeID" : "45669CE0-7CF7-4B4C-A55A-4B9674EF3076",
+      "sessionRaw" : "night",
+      "setUpBufferMinutes" : 20,
+      "sortOrder" : 0,
+      "tripID" : "E90598C1-82E0-45E9-A606-F5E43167874F"
+    },
+    {
+      "dayIndex" : 1,
+      "driveNote" : "Highway 395 north from Lone Pine, about 2 h",
+      "id" : "6C3B17D1-4AC7-469C-988B-2732A05CBB2F",
+      "note" : "Aspen grove on the north shore",
+      "placeID" : "EEB681B3-2DB9-4C7F-80F4-0467772754A8",
+      "sessionRaw" : "blueMorning",
+      "setUpBufferMinutes" : 35,
+      "sortOrder" : 0,
+      "tripID" : "D28E45D6-BA00-4AEC-8156-957F13F1C95F"
+    },
+    {
+      "dayIndex" : 3,
+      "driveNote" : "White Mountain Road, 40 min of switchbacks",
+      "id" : "6E362183-4135-4EC1-B72F-51EDB44EAFAA",
+      "note" : "",
+      "placeID" : "D803B234-F04F-4758-9F26-988C47F80285",
+      "sessionRaw" : "goldenMorning",
+      "setUpBufferMinutes" : 25,
+      "sortOrder" : 0,
+      "tripID" : "D28E45D6-BA00-4AEC-8156-957F13F1C95F"
+    },
+    {
+      "dayIndex" : 4,
+      "driveNote" : "",
+      "id" : "954D0043-5C96-459F-A2F3-BE35E19DB69C",
+      "note" : "Last light on the way home",
+      "placeID" : "69AA2181-91B1-470F-8277-289C81299115",
+      "sessionRaw" : "goldenEvening",
+      "setUpBufferMinutes" : 20,
+      "sortOrder" : 0,
+      "tripID" : "D28E45D6-BA00-4AEC-8156-957F13F1C95F"
+    },
+    {
+      "dayIndex" : 0,
+      "driveNote" : "Gravel road, 4 minutes. Drive slow.",
+      "id" : "986C7EE9-B0C3-4675-99DF-7ADBF18505A9",
+      "note" : "Star tracker; 2 min subs",
+      "placeID" : "A70DF1D8-B28F-487F-AAC1-5F8AE04540D4",
+      "sessionRaw" : "night",
+      "setUpBufferMinutes" : 45,
+      "sortOrder" : 1,
+      "tripID" : "D28E45D6-BA00-4AEC-8156-957F13F1C95F"
+    },
+    {
+      "dayIndex" : 0,
+      "driveNote" : "",
+      "id" : "9F2EA062-FD71-4FA1-8114-B3D0B00F4825",
+      "note" : "",
+      "placeID" : "3C5770BE-1A0C-4662-97A7-A421C5D8244B",
+      "sessionRaw" : "goldenMorning",
+      "setUpBufferMinutes" : 15,
+      "sortOrder" : 0,
+      "tripID" : "E90598C1-82E0-45E9-A606-F5E43167874F"
+    },
+    {
+      "dayIndex" : 1,
+      "driveNote" : "",
+      "id" : "A135AA40-D458-40A3-9022-A9B7EB79D2AE",
+      "note" : "Fish tacos before sunset",
+      "placeID" : "5D9855C8-D5D8-4DA1-BA59-38591E1ED7D8",
+      "sessionRaw" : "goldenEvening",
+      "setUpBufferMinutes" : 20,
+      "sortOrder" : 2,
+      "tripID" : "D28E45D6-BA00-4AEC-8156-957F13F1C95F"
+    },
+    {
+      "dayIndex" : 2,
+      "driveNote" : "Dirt road for the last 3 miles",
+      "id" : "C6EEF640-88B5-4BFD-8066-F33B73C0D014",
+      "note" : "Gate closes at 6; check the hours",
+      "placeID" : "7CA18617-E1A6-4DD8-8CD6-84A061A45E74",
+      "sessionRaw" : "goldenEvening",
+      "setUpBufferMinutes" : 60,
+      "sortOrder" : 0,
+      "tripID" : "D28E45D6-BA00-4AEC-8156-957F13F1C95F"
+    },
+    {
+      "dayIndex" : 0,
+      "driveNote" : "",
+      "id" : "D05ADC9E-9817-42CF-B6F8-FABE4F4AEE87",
+      "note" : "Walk 1 mile out; footprints fade by sunrise",
+      "placeID" : "F449E755-F679-4702-813C-364D24EABB1F",
+      "sessionRaw" : "goldenEvening",
+      "setUpBufferMinutes" : 20,
+      "sortOrder" : 1,
+      "tripID" : "E90598C1-82E0-45E9-A606-F5E43167874F"
+    },
+    {
+      "dayIndex" : 2,
+      "driveNote" : "",
+      "id" : "F2C2B278-4660-453C-8835-1017C66D5298",
+      "note" : "",
+      "placeID" : "28AAFF5C-C170-4C90-9611-CAFF11843CF4",
+      "sessionRaw" : "goldenMorning",
+      "setUpBufferMinutes" : 5,
+      "sortOrder" : 0,
+      "tripID" : "F2868860-FB28-4B59-88E9-9A7EA459490E"
+    },
+    {
+      "dayIndex" : 0,
+      "driveNote" : "",
+      "id" : "FD7EE328-A6B8-4570-927A-5D65F0718639",
+      "note" : "1.5 mile hike up the slickrock",
+      "placeID" : "CD2972A6-DCCC-40A6-916E-31276CE391D5",
+      "sessionRaw" : "goldenEvening",
+      "setUpBufferMinutes" : 50,
+      "sortOrder" : 0,
+      "tripID" : "D4666267-DBEA-478B-B553-87EC995B9223"
+    },
+    {
+      "dayIndex" : 0,
+      "driveNote" : "",
+      "id" : "FE7B286D-6D7D-45DA-BD4E-76CEC8DE0E1B",
+      "note" : "Reflection in the harbour if calm",
+      "placeID" : "9AC90659-C94D-4C31-8925-C1F6A41B0607",
+      "sessionRaw" : "blueMorning",
+      "setUpBufferMinutes" : 20,
+      "sortOrder" : 0,
+      "tripID" : "F2868860-FB28-4B59-88E9-9A7EA459490E"
+    }
+  ],
+  "trips" : [
+    {
+      "createdAt" : 817047887.531087,
+      "dayCount" : 5,
+      "folderID" : "172D9622-A256-4868-AC3E-8705B939BD4E",
+      "id" : "D28E45D6-BA00-4AEC-8156-957F13F1C95F",
+      "isPinned" : false,
+      "name" : "Eastern Sierra Autumn 🍂",
+      "notes" : "Aspens peak around Oct 18. Chains in the car after Nov 1.\nGas in Lee Vining.",
+      "pinnedAt" : null,
+      "plan" : {
+        "dayCount" : 5,
+        "id" : "D28E45D6-BA00-4AEC-8156-957F13F1C95F",
+        "name" : "Eastern Sierra Autumn 🍂",
+        "notes" : "Aspens peak around Oct 18. Chains in the car after Nov 1.\nGas in Lee Vining.",
+        "startDay" : {
+          "day" : 14,
+          "month" : 10,
+          "year" : 2026
+        },
+        "stops" : [
+          {
+            "dayIndex" : 0,
+            "driveNote" : "",
+            "id" : "1991781C-D143-4040-94BF-A945C28B8C10",
+            "note" : "Mobius Arch first, then the Whitney view",
+            "session" : "goldenEvening",
+            "setUpBufferMinutes" : 30,
+            "spot" : {
+              "bestLight" : [
+                "night",
+                "sunrise"
+              ],
+              "blurb" : "A natural arch framing Mount Whitney, with some of the darkest accessible skies in California.",
+              "category" : "astro",
+              "coordinate" : {
+                "latitude" : 36.6116,
+                "longitude" : -118.1256
+              },
+              "elevationMeters" : 1500,
+              "facing" : 280,
+              "id" : "alabama-hills",
+              "locality" : "Lone Pine, CA",
+              "name" : "Mobius Arch, Alabama Hills",
+              "notes" : "Short loop from Movie Road. Frame Whitney through the arch at dawn alpenglow; Milky Way core rises to the south in spring/summer. Free BLM camping nearby.",
+              "origin" : "curated",
+              "popularity" : 78,
+              "tags" : [
+                "arch",
+                "milky-way",
+                "dispersed-camping",
+                "free"
+              ],
+              "timeZoneIdentifier" : "America/Los_Angeles"
+            }
+          },
+          {
+            "dayIndex" : 0,
+            "driveNote" : "Gravel road, 4 minutes. Drive slow.",
+            "id" : "986C7EE9-B0C3-4675-99DF-7ADBF18505A9",
+            "note" : "Star tracker; 2 min subs",
+            "session" : "night",
+            "setUpBufferMinutes" : 45,
+            "spot" : {
+              "bestLight" : [
+                "night",
+                "sunrise"
+              ],
+              "blurb" : "",
+              "category" : "astro",
+              "coordinate" : {
+                "latitude" : 36.6128,
+                "longitude" : -118.1264
+              },
+              "id" : "A70DF1D8-B28F-487F-AAC1-5F8AE04540D4",
+              "locality" : "Lone Pine, CA",
+              "name" : "Mobius Arch pullout",
+              "notes" : "Dark sky, Bortle 2. Flat gravel, room for the star tracker.",
+              "origin" : "user",
+              "popularity" : 50,
+              "tags" : [
+
+              ],
+              "timeZoneIdentifier" : "America/Los_Angeles",
+              "walkInMinutes" : 3
+            }
+          },
+          {
+            "dayIndex" : 1,
+            "driveNote" : "Highway 395 north from Lone Pine, about 2 h",
+            "id" : "6C3B17D1-4AC7-469C-988B-2732A05CBB2F",
+            "note" : "Aspen grove on the north shore",
+            "session" : "blueMorning",
+            "setUpBufferMinutes" : 35,
+            "spot" : {
+              "bestLight" : [
+                "sunrise",
+                "sunset"
+              ],
+              "blurb" : "Mount Morrison’s striped face catches first light and drops it straight into the lake. Aspens go gold here in early October.",
+              "category" : "landscape",
+              "coordinate" : {
+                "latitude" : 37.5905,
+                "longitude" : -118.852
+              },
+              "elevationMeters" : 2320,
+              "facing" : 200,
+              "id" : "convict-lake",
+              "locality" : "Mammoth Lakes, CA",
+              "name" : "Convict Lake",
+              "notes" : "5 min off US-395, paved lot at the shore. The 2.5 mi flat loop gives compositions from every side. Calm water is most likely in the first hour after sunrise.",
+              "origin" : "curated",
+              "popularity" : 62,
+              "tags" : [
+                "alpine-lake",
+                "fall-colour",
+                "reflection",
+                "easy"
+              ],
+              "timeZoneIdentifier" : "America/Los_Angeles"
+            }
+          },
+          {
+            "dayIndex" : 1,
+            "driveNote" : "Twisty road to the lake; park at the dam",
+            "id" : "4AF82E77-8B2A-4BA1-B42B-B1D3CB231E71",
+            "note" : "",
+            "session" : "goldenMorning",
+            "setUpBufferMinutes" : 10,
+            "spot" : {
+              "bestLight" : [
+                "sunrise",
+                "sunset"
+              ],
+              "blurb" : "A granite-rimmed reservoir under the Sierra crest, ringed by aspens that turn gold and orange in October.",
+              "category" : "landscape",
+              "coordinate" : {
+                "latitude" : 37.213,
+                "longitude" : -118.609
+              },
+              "elevationMeters" : 2760,
+              "facing" : 200,
+              "id" : "lake-sabrina",
+              "locality" : "Bishop Creek, CA",
+              "name" : "Lake Sabrina",
+              "notes" : "30 min up CA-168 from Bishop. Fall colour usually peaks late Sept–mid Oct (check the Eastern Sierra fall colour report). Calm dawn water for reflections; the road can close with early snow.",
+              "origin" : "curated",
+              "popularity" : 40,
+              "tags" : [
+                "alpine-lake",
+                "fall-colour",
+                "aspens",
+                "easy"
+              ],
+              "timeZoneIdentifier" : "America/Los_Angeles"
+            }
+          },
+          {
+            "dayIndex" : 1,
+            "driveNote" : "",
+            "id" : "A135AA40-D458-40A3-9022-A9B7EB79D2AE",
+            "note" : "Fish tacos before sunset",
+            "session" : "goldenEvening",
+            "setUpBufferMinutes" : 20,
+            "spot" : {
+              "bestLight" : [
+
+              ],
+              "blurb" : "",
+              "category" : "street",
+              "coordinate" : {
+                "latitude" : 37.9366,
+                "longitude" : -119.1214
+              },
+              "id" : "5D9855C8-D5D8-4DA1-BA59-38591E1ED7D8",
+              "locality" : "Lee Vining, CA",
+              "name" : "Whoa Nellie Deli",
+              "notes" : "",
+              "origin" : "appleMaps",
+              "popularity" : 50,
+              "tags" : [
+
+              ],
+              "timeZoneIdentifier" : "America/Los_Angeles"
+            }
+          },
+          {
+            "dayIndex" : 1,
+            "driveNote" : "",
+            "id" : "556DB38F-EEFC-4E91-B94C-4BFFD0D891A7",
+            "note" : "",
+            "session" : "blueEvening",
+            "setUpBufferMinutes" : 0,
+            "spot" : {
+              "bestLight" : [
+                "sunrise",
+                "night",
+                "sunset"
+              ],
+              "blurb" : "Limestone towers standing in a salt lake twice as old as the Sierra, glassy and pink before the wind wakes up.",
+              "category" : "landscape",
+              "coordinate" : {
+                "latitude" : 37.9395,
+                "longitude" : -119.0271
+              },
+              "elevationMeters" : 1945,
+              "facing" : 70,
+              "id" : "mono-lake-south-tufa",
+              "locality" : "Lee Vining, CA",
+              "name" : "South Tufa, Mono Lake",
+              "notes" : "$3 day-use fee, 1 mi loop boardwalk. Do not climb or touch tufa. Mornings are usually calm for reflections; bring bug spray in June for alkali flies. Milky Way rises over the lake to the southeast.",
+              "origin" : "curated",
+              "popularity" : 74,
+              "tags" : [
+                "tufa",
+                "lake",
+                "reflection",
+                "milky-way"
+              ],
+              "timeZoneIdentifier" : "America/Los_Angeles",
+              "walkInMinutes" : 20
+            }
+          },
+          {
+            "dayIndex" : 2,
+            "driveNote" : "Dirt road for the last 3 miles",
+            "id" : "C6EEF640-88B5-4BFD-8066-F33B73C0D014",
+            "note" : "Gate closes at 6; check the hours",
+            "session" : "goldenEvening",
+            "setUpBufferMinutes" : 60,
+            "spot" : {
+              "bestLight" : [
+                "sunset",
+                "overcast"
+              ],
+              "blurb" : "A gold-rush town left exactly where it fell — pews, pool tables and 1940s trucks bleaching in high-desert light.",
+              "category" : "architecture",
+              "coordinate" : {
+                "latitude" : 38.2122,
+                "longitude" : -119.0115
+              },
+              "elevationMeters" : 2550,
+              "id" : "bodie",
+              "locality" : "Bodie State Historic Park, CA",
+              "name" : "Bodie Ghost Town",
+              "notes" : "Last 3 mi are washboard gravel; road closes with snow. Park hours roughly 9am–6pm (shorter in winter), so golden hour means late-summer evenings. Shoot through the windows; night access only on ranger-led photo events.",
+              "origin" : "curated",
+              "popularity" : 60,
+              "tags" : [
+                "ghost-town",
+                "history",
+                "interiors",
+                "gold-rush"
+              ],
+              "timeZoneIdentifier" : "America/Los_Angeles"
+            }
+          },
+          {
+            "dayIndex" : 3,
+            "driveNote" : "White Mountain Road, 40 min of switchbacks",
+            "id" : "6E362183-4135-4EC1-B72F-51EDB44EAFAA",
+            "note" : "",
+            "session" : "goldenMorning",
+            "setUpBufferMinutes" : 25,
+            "spot" : {
+              "bestLight" : [
+                "night",
+                "sunset"
+              ],
+              "blurb" : "Twisted pines more than 4,000 years old under a sky black enough to see the Milky Way cast shadows.",
+              "category" : "astro",
+              "coordinate" : {
+                "latitude" : 37.3855,
+                "longitude" : -118.178
+              },
+              "elevationMeters" : 3050,
+              "id" : "ancient-bristlecone-forest",
+              "locality" : "White Mountains, CA",
+              "name" : "Ancient Bristlecone Pine Forest",
+              "notes" : "Schulman Grove is about 1 hr from Bishop; road usually open May–Nov. At 3,000 m nights are cold — pack layers. Low-level light painting on the trunks, never bright lights.",
+              "origin" : "curated",
+              "popularity" : 45,
+              "tags" : [
+                "ancient-trees",
+                "milky-way",
+                "high-altitude",
+                "dark-sky"
+              ],
+              "timeZoneIdentifier" : "America/Los_Angeles"
+            }
+          },
+          {
+            "dayIndex" : 4,
+            "driveNote" : "",
+            "id" : "954D0043-5C96-459F-A2F3-BE35E19DB69C",
+            "note" : "Last light on the way home",
+            "session" : "goldenEvening",
+            "setUpBufferMinutes" : 20,
+            "spot" : {
+              "bestLight" : [
+                "night",
+                "sunset"
+              ],
+              "blurb" : "A dry waterfall of polished black basalt, carved by a river that vanished 10,000 years ago. Empty after dark.",
+              "category" : "astro",
+              "coordinate" : {
+                "latitude" : 35.9707,
+                "longitude" : -117.9087
+              },
+              "elevationMeters" : 1000,
+              "id" : "fossil-falls",
+              "locality" : "Little Lake, CA",
+              "name" : "Fossil Falls",
+              "notes" : "Signed turn off US-395, then 0.5 mi walk on rough lava. No rails at the drop — scout the edges in daylight. Great paired with Alabama Hills on the same night.",
+              "origin" : "curated",
+              "popularity" : 28,
+              "tags" : [
+                "basalt",
+                "dry-falls",
+                "milky-way",
+                "short-walk"
+              ],
+              "timeZoneIdentifier" : "America/Los_Angeles",
+              "walkInMinutes" : 20
+            }
+          }
+        ],
+        "transferTimings" : {
+          "1" : "eveningBefore",
+          "3" : "eveningBefore"
+        }
+      },
+      "sortOrder" : 1,
+      "startDayISO" : "2026-10-14",
+      "stopIDs" : [
+        "1991781C-D143-4040-94BF-A945C28B8C10",
+        "986C7EE9-B0C3-4675-99DF-7ADBF18505A9",
+        "6C3B17D1-4AC7-469C-988B-2732A05CBB2F",
+        "4AF82E77-8B2A-4BA1-B42B-B1D3CB231E71",
+        "A135AA40-D458-40A3-9022-A9B7EB79D2AE",
+        "556DB38F-EEFC-4E91-B94C-4BFFD0D891A7",
+        "C6EEF640-88B5-4BFD-8066-F33B73C0D014",
+        "6E362183-4135-4EC1-B72F-51EDB44EAFAA",
+        "954D0043-5C96-459F-A2F3-BE35E19DB69C"
+      ],
+      "transferTimingsRaw" : "1:eveningBefore,3:eveningBefore",
+      "updatedAt" : 817047887.572317
+    },
+    {
+      "createdAt" : 817047887.59658,
+      "dayCount" : 1,
+      "folderID" : null,
+      "id" : "D4666267-DBEA-478B-B553-87EC995B9223",
+      "isPinned" : false,
+      "name" : "Utah / Arches: Day trip?",
+      "notes" : "",
+      "pinnedAt" : null,
+      "plan" : {
+        "dayCount" : 1,
+        "id" : "D4666267-DBEA-478B-B553-87EC995B9223",
+        "name" : "Utah / Arches: Day trip?",
+        "notes" : "",
+        "startDay" : {
+          "day" : 21,
+          "month" : 11,
+          "year" : 2026
+        },
+        "stops" : [
+          {
+            "dayIndex" : 0,
+            "driveNote" : "",
+            "id" : "FD7EE328-A6B8-4570-927A-5D65F0718639",
+            "note" : "1.5 mile hike up the slickrock",
+            "session" : "goldenEvening",
+            "setUpBufferMinutes" : 50,
+            "spot" : {
+              "bestLight" : [
+                "sunset",
+                "night"
+              ],
+              "blurb" : "A freestanding 16 m arch on the lip of a slickrock bowl, burning red against the snow-capped La Sals at sunset.",
+              "category" : "desert",
+              "coordinate" : {
+                "latitude" : 38.7436,
+                "longitude" : -109.4993
+              },
+              "elevationMeters" : 1480,
+              "facing" : 110,
+              "id" : "delicate-arch",
+              "locality" : "Arches National Park, UT",
+              "name" : "Delicate Arch — golden hour 🌅",
+              "notes" : "Hike starts at the Wolfe Ranch lot.\nBring a headlamp for the walk down.",
+              "origin" : "curated",
+              "popularity" : 94,
+              "tags" : [
+                "iconic",
+                "arch",
+                "hike",
+                "la-sal-mountains"
+              ],
+              "timeZoneIdentifier" : "America/Denver",
+              "walkInMinutes" : 50
+            }
+          }
+        ],
+        "transferTimings" : {
+
+        }
+      },
+      "sortOrder" : -3,
+      "startDayISO" : "2026-11-21",
+      "stopIDs" : [
+        "FD7EE328-A6B8-4570-927A-5D65F0718639"
+      ],
+      "transferTimingsRaw" : "",
+      "updatedAt" : 817047887.601508
+    },
+    {
+      "createdAt" : 817047887.573114,
+      "dayCount" : 3,
+      "folderID" : null,
+      "id" : "E90598C1-82E0-45E9-A606-F5E43167874F",
+      "isPinned" : true,
+      "name" : "Death Valley long weekend",
+      "notes" : "",
+      "pinnedAt" : 817047887.620744,
+      "plan" : {
+        "dayCount" : 3,
+        "id" : "E90598C1-82E0-45E9-A606-F5E43167874F",
+        "name" : "Death Valley long weekend",
+        "notes" : "",
+        "startDay" : {
+          "day" : 4,
+          "month" : 12,
+          "year" : 2026
+        },
+        "stops" : [
+          {
+            "dayIndex" : 0,
+            "driveNote" : "",
+            "id" : "9F2EA062-FD71-4FA1-8114-B3D0B00F4825",
+            "note" : "",
+            "session" : "goldenMorning",
+            "setUpBufferMinutes" : 15,
+            "spot" : {
+              "bestLight" : [
+                "sunrise"
+              ],
+              "blurb" : "Folded mudstone badlands ripple toward Manly Beacon while the Panamints blush on the horizon. Pure sunrise theatre.",
+              "category" : "desert",
+              "coordinate" : {
+                "latitude" : 36.4205,
+                "longitude" : -116.8103
+              },
+              "elevationMeters" : 216,
+              "facing" : 255,
+              "id" : "zabriskie-point",
+              "locality" : "Death Valley National Park, CA",
+              "name" : "Zabriskie Point",
+              "notes" : "Paved 5 min uphill walk from the lot. Busy at dawn year-round; arrive 40 min early. Telephoto (70–200mm) picks out the light on the ridgelines. Avoid midday May–Sept — 45°C+.",
+              "origin" : "curated",
+              "popularity" : 85,
+              "tags" : [
+                "badlands",
+                "iconic",
+                "overlook",
+                "roadside"
+              ],
+              "timeZoneIdentifier" : "America/Los_Angeles",
+              "walkInMinutes" : 5
+            }
+          },
+          {
+            "dayIndex" : 0,
+            "driveNote" : "",
+            "id" : "D05ADC9E-9817-42CF-B6F8-FABE4F4AEE87",
+            "note" : "Walk 1 mile out; footprints fade by sunrise",
+            "session" : "goldenEvening",
+            "setUpBufferMinutes" : 20,
+            "spot" : {
+              "bestLight" : [
+                "sunrise",
+                "sunset",
+                "night"
+              ],
+              "blurb" : "Knife-edge ridges and wind ripples lit from the side — the only hour of the day the dunes have texture.",
+              "category" : "desert",
+              "coordinate" : {
+                "latitude" : 36.6064,
+                "longitude" : -117.1156
+              },
+              "elevationMeters" : 0,
+              "id" : "mesquite-flat-dunes",
+              "locality" : "Death Valley National Park, CA",
+              "name" : "Mesquite Flat Sand Dunes",
+              "notes" : "Park at the Stovepipe Wells lot; walk 20–30 min out to escape footprints. Sidelight within 45 min of sunrise/sunset. Carry water and a headlamp; dunes are easy to get turned around in after dark.",
+              "origin" : "curated",
+              "popularity" : 76,
+              "tags" : [
+                "dunes",
+                "ripples",
+                "footprint-free",
+                "astro"
+              ],
+              "timeZoneIdentifier" : "America/Los_Angeles",
+              "walkInMinutes" : 30
+            }
+          },
+          {
+            "dayIndex" : 1,
+            "driveNote" : "From Furnace Creek 30 min",
+            "id" : "10125ADF-78DD-45C9-BB08-EADD751B6892",
+            "note" : "",
+            "session" : "blueMorning",
+            "setUpBufferMinutes" : 20,
+            "spot" : {
+              "bestLight" : [
+                "sunrise",
+                "sunset",
+                "night"
+              ],
+              "blurb" : "Hexagonal salt polygons to the horizon, 86 m below sea level, with Telescope Peak glowing pink above them at dawn.",
+              "category" : "desert",
+              "coordinate" : {
+                "latitude" : 36.2302,
+                "longitude" : -116.7675
+              },
+              "elevationMeters" : -86,
+              "facing" : 270,
+              "id" : "badwater-basin",
+              "locality" : "Death Valley National Park, CA",
+              "name" : "Badwater Basin",
+              "notes" : "Boardwalk from the lot; the crisp polygons start about 1.5 mi out on the flat. After rare winter rain, shallow water gives reflections of the Panamints. Wide lens low to the ground.",
+              "origin" : "curated",
+              "popularity" : 80,
+              "tags" : [
+                "salt-flat",
+                "polygons",
+                "lowest-point",
+                "reflection"
+              ],
+              "timeZoneIdentifier" : "America/Los_Angeles",
+              "walkInMinutes" : 50
+            }
+          },
+          {
+            "dayIndex" : 2,
+            "driveNote" : "",
+            "id" : "6025D4C6-34AD-40C2-9424-98F775CD20FC",
+            "note" : "",
+            "session" : "night",
+            "setUpBufferMinutes" : 20,
+            "spot" : {
+              "bestLight" : [
+
+              ],
+              "blurb" : "",
+              "category" : "landscape",
+              "coordinate" : {
+                "latitude" : 36.1,
+                "longitude" : -117.2
+              },
+              "id" : "45669CE0-7CF7-4B4C-A55A-4B9674EF3076",
+              "locality" : "",
+              "name" : "Unnamed pullout",
+              "notes" : "",
+              "origin" : "user",
+              "popularity" : 50,
+              "tags" : [
+
+              ],
+              "timeZoneIdentifier" : "America/Los_Angeles"
+            }
+          }
+        ],
+        "transferTimings" : {
+          "2" : "eveningBefore"
+        }
+      },
+      "sortOrder" : -1,
+      "startDayISO" : "2026-12-04",
+      "stopIDs" : [
+        "9F2EA062-FD71-4FA1-8114-B3D0B00F4825",
+        "D05ADC9E-9817-42CF-B6F8-FABE4F4AEE87",
+        "10125ADF-78DD-45C9-BB08-EADD751B6892",
+        "6025D4C6-34AD-40C2-9424-98F775CD20FC"
+      ],
+      "transferTimingsRaw" : "2:eveningBefore",
+      "updatedAt" : 817047887.58434
+    },
+    {
+      "createdAt" : 817047887.58489,
+      "dayCount" : 4,
+      "folderID" : "172D9622-A256-4868-AC3E-8705B939BD4E",
+      "id" : "F2868860-FB28-4B59-88E9-9A7EA459490E",
+      "isPinned" : false,
+      "name" : "Lofoten ✨ Reine & Hamnøy 北極",
+      "notes" : "Aurora window Feb 21–24. Crampons for the ice. 🧤",
+      "pinnedAt" : null,
+      "plan" : {
+        "dayCount" : 4,
+        "id" : "F2868860-FB28-4B59-88E9-9A7EA459490E",
+        "name" : "Lofoten ✨ Reine & Hamnøy 北極",
+        "notes" : "Aurora window Feb 21–24. Crampons for the ice. 🧤",
+        "startDay" : {
+          "day" : 20,
+          "month" : 2,
+          "year" : 2027
+        },
+        "stops" : [
+          {
+            "dayIndex" : 0,
+            "driveNote" : "",
+            "id" : "FE7B286D-6D7D-45DA-BD4E-76CEC8DE0E1B",
+            "note" : "Reflection in the harbour if calm",
+            "session" : "blueMorning",
+            "setUpBufferMinutes" : 20,
+            "spot" : {
+              "bestLight" : [
+                "blueHour",
+                "sunrise"
+              ],
+              "blurb" : "",
+              "category" : "coast",
+              "coordinate" : {
+                "latitude" : 67.9323,
+                "longitude" : 13.0887
+              },
+              "id" : "9AC90659-C94D-4C31-8925-C1F6A41B0607",
+              "locality" : "Reine, Lofoten, Norge",
+              "name" : "Reine rorbu 🏔️",
+              "notes" : "Fiskerhytte — bakeri 200 m. Åpent kl. 7.",
+              "origin" : "user",
+              "popularity" : 50,
+              "tags" : [
+
+              ],
+              "timeZoneIdentifier" : "Europe/Oslo"
+            }
+          },
+          {
+            "dayIndex" : 0,
+            "driveNote" : "E10 south then the Hamnøy turnoff, 15 min",
+            "id" : "19492E60-DF50-44AB-941C-081F5B13F535",
+            "note" : "",
+            "session" : "night",
+            "setUpBufferMinutes" : 60,
+            "spot" : {
+              "bestLight" : [
+                "sunset",
+                "night"
+              ],
+              "blurb" : "",
+              "category" : "coast",
+              "coordinate" : {
+                "latitude" : 67.9439,
+                "longitude" : 13.1326
+              },
+              "id" : "28AAFF5C-C170-4C90-9611-CAFF11843CF4",
+              "locality" : "Hamnøy, Lofoten",
+              "name" : "Hamnøy bridge ✨",
+              "notes" : "北極光 chance in Sept–Mar. Wind!",
+              "origin" : "user",
+              "popularity" : 50,
+              "tags" : [
+
+              ],
+              "timeZoneIdentifier" : "Europe/Oslo",
+              "walkInMinutes" : 10
+            }
+          },
+          {
+            "dayIndex" : 1,
+            "driveNote" : "",
+            "id" : "14582B26-FECE-4878-8BF7-88C4D1DFA384",
+            "note" : "Dinner stop — the Fjære & Brød",
+            "session" : "goldenEvening",
+            "setUpBufferMinutes" : 20,
+            "spot" : {
+              "bestLight" : [
+
+              ],
+              "blurb" : "",
+              "category" : "urban",
+              "coordinate" : {
+                "latitude" : 67.9331,
+                "longitude" : 13.0902
+              },
+              "id" : "4BA2BEED-EFC7-4679-B5D6-30FE74E52755",
+              "locality" : "Reine",
+              "name" : "Hotel Fjære & Brød",
+              "notes" : "",
+              "origin" : "appleMaps",
+              "popularity" : 50,
+              "tags" : [
+
+              ],
+              "timeZoneIdentifier" : "Europe/Oslo"
+            }
+          },
+          {
+            "dayIndex" : 2,
+            "driveNote" : "",
+            "id" : "F2C2B278-4660-453C-8835-1017C66D5298",
+            "note" : "",
+            "session" : "goldenMorning",
+            "setUpBufferMinutes" : 5,
+            "spot" : {
+              "bestLight" : [
+                "sunset",
+                "night"
+              ],
+              "blurb" : "",
+              "category" : "coast",
+              "coordinate" : {
+                "latitude" : 67.9439,
+                "longitude" : 13.1326
+              },
+              "id" : "28AAFF5C-C170-4C90-9611-CAFF11843CF4",
+              "locality" : "Hamnøy, Lofoten",
+              "name" : "Hamnøy bridge ✨",
+              "notes" : "北極光 chance in Sept–Mar. Wind!",
+              "origin" : "user",
+              "popularity" : 50,
+              "tags" : [
+
+              ],
+              "timeZoneIdentifier" : "Europe/Oslo",
+              "walkInMinutes" : 10
+            }
+          }
+        ],
+        "transferTimings" : {
+
+        }
+      },
+      "sortOrder" : 0,
+      "startDayISO" : "2027-02-20",
+      "stopIDs" : [
+        "FE7B286D-6D7D-45DA-BD4E-76CEC8DE0E1B",
+        "19492E60-DF50-44AB-941C-081F5B13F535",
+        "14582B26-FECE-4878-8BF7-88C4D1DFA384",
+        "F2C2B278-4660-453C-8835-1017C66D5298"
+      ],
+      "transferTimingsRaw" : "",
+      "updatedAt" : 817047887.59563
+    }
+  ],
+  "writtenSchemaVersion" : "4.0.0"
+}

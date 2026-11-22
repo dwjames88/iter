@@ -1,0 +1,56 @@
+{
+  "exportedAt" : "2026-09-21T14:13:20Z",
+  "formatVersion" : 1,
+  "trip" : {
+    "dayCount" : 1,
+    "id" : "D4666267-DBEA-478B-B553-87EC995B9223",
+    "name" : "Utah \/ Arches: Day trip?",
+    "notes" : "",
+    "startDay" : {
+      "day" : 21,
+      "month" : 11,
+      "year" : 2026
+    },
+    "stops" : [
+      {
+        "dayIndex" : 0,
+        "driveNote" : "",
+        "id" : "FD7EE328-A6B8-4570-927A-5D65F0718639",
+        "note" : "1.5 mile hike up the slickrock",
+        "session" : "goldenEvening",
+        "setUpBufferMinutes" : 50,
+        "spot" : {
+          "bestLight" : [
+            "sunset",
+            "night"
+          ],
+          "blurb" : "A freestanding 16 m arch on the lip of a slickrock bowl, burning red against the snow-capped La Sals at sunset.",
+          "category" : "desert",
+          "coordinate" : {
+            "latitude" : 38.7436,
+            "longitude" : -109.4993
+          },
+          "elevationMeters" : 1480,
+          "facing" : 110,
+          "id" : "delicate-arch",
+          "locality" : "Arches National Park, UT",
+          "name" : "Delicate Arch — golden hour 🌅",
+          "notes" : "Hike starts at the Wolfe Ranch lot.\nBring a headlamp for the walk down.",
+          "origin" : "curated",
+          "popularity" : 94,
+          "tags" : [
+            "iconic",
+            "arch",
+            "hike",
+            "la-sal-mountains"
+          ],
+          "timeZoneIdentifier" : "America\/Denver",
+          "walkInMinutes" : 50
+        }
+      }
+    ],
+    "transferTimings" : {
+
+    }
+  }
+}
