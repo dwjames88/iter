@@ -28,8 +28,12 @@ public struct RankBreakdown: Sendable, Hashable {
     public var reachability: RankPart
     /// How new it is against the owner's library.
     public var novelty: RankPart
+    /// Strict matches always list before related ones, whatever the scores.
+    public var matchTier: MatchTier
 
-    public init(featureMatch: RankPart, evidence: RankPart, preference: RankPart, lightSuit: RankPart, reachability: RankPart, novelty: RankPart) {
+    public init(featureMatch: RankPart, evidence: RankPart, preference: RankPart, lightSuit: RankPart, reachability: RankPart, novelty: RankPart,
+                matchTier: MatchTier = .strict) {
+        self.matchTier = matchTier
         self.featureMatch = featureMatch
         self.evidence = evidence
         self.preference = preference
@@ -95,6 +99,7 @@ enum DiscoveryRanker {
     /// Ranked, best first; ties by name then id so the order never depends on arrival order.
     static func rank(_ items: [Scored], context: Context) -> [DiscoveredPlace] {
         items.map { place(from: $0, context: context) }.sorted { a, b in
+            if a.rank.matchTier != b.rank.matchTier { return a.rank.matchTier < b.rank.matchTier }
             let sa = a.rank.score(for: context.ordering), sb = b.rank.score(for: context.ordering)
             if abs(sa - sb) > 1e-9 { return sa > sb }
             let na = DiscoveryNames.normalise(a.name), nb = DiscoveryNames.normalise(b.name)
@@ -110,7 +115,8 @@ enum DiscoveryRanker {
                       preference: preference(s.candidate, text: context.preferenceText),
                       lightSuit: RankPart(value: nil, note: "No facing is known for this place, so light suit is not scored."),
                       reachability: reachability(distanceKm: distanceKm, anchorIsUser: context.anchorIsUser),
-                      novelty: novelty(s.candidate, library: context.library))
+                      novelty: novelty(s.candidate, library: context.library),
+                      matchTier: FeatureRelatedness.tier(of: s.candidate.featureKinds, plan: context.plan))
     }
 
     static func featureMatch(_ c: VerifiedCandidate, plan: QueryPlan) -> RankPart {
@@ -127,6 +133,8 @@ enum DiscoveryRanker {
         let hit = c.featureKinds.first(where: plan.features.contains)
         if let hit { return RankPart(value: 0.8 + keywordPart, note: "A \(hit.singularName), as asked.") }
         if c.featureKinds.isEmpty { return RankPart(value: 0.3 + keywordPart, note: "Its kind is not known.") }
+        let relatedKinds = Set(FeatureRelatedness.related(to: plan.features))
+        if let r = c.featureKinds.first(where: relatedKinds.contains) { return RankPart(value: 0.4 + keywordPart, note: "related: \(r.singularName)") }
         return RankPart(value: keywordPart, note: "Not one of the requested kinds.")
     }
 
@@ -137,8 +145,8 @@ enum DiscoveryRanker {
         let wiki = c.sources.contains { $0.family == "wikipedia" } ? 0.20 : 0
         let agreeing = min(1, Double(c.independentSourceCount - 1) / 3) * 0.25
         var notes: [String] = []
-        if s.photoCount > 0 { notes.append("\(s.photoCount) geotagged photos") }
-        if c.mentionCount > 0 { notes.append("\(c.mentionCount) mentions") }
+        if s.photoCount > 0 { notes.append("\(s.photoCount) geotagged \(s.photoCount == 1 ? "photo" : "photos")") }
+        if c.mentionCount > 0 { notes.append("\(c.mentionCount) \(c.mentionCount == 1 ? "mention" : "mentions")") }
         if wiki > 0 { notes.append("on Wikipedia") }
         notes.append("\(c.independentSourceCount) source\(c.independentSourceCount == 1 ? "" : "s")")
         return RankPart(value: photos + mentions + wiki + agreeing, note: notes.joined(separator: ", "))

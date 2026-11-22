@@ -32,7 +32,8 @@ public struct SourceStatus: Sendable, Hashable, Identifiable {
     public var role: SourceRole
     public var state: SourceState
 
-    public var id: SourceID { source }
+    /// One row per source and role: a source that serves two roles (Overpass: gazetteer and boundary) has two rows.
+    public var id: String { "\(source.rawValue)#\(role.rawValue)" }
 
     public init(source: SourceID, name: String, role: SourceRole, state: SourceState) {
         self.source = source
@@ -92,7 +93,7 @@ public enum FixedSources {
     static func aiStatus(origin: PlanOrigin) -> SourceStatus {
         switch origin {
         case .ai: SourceStatus(source: ai, name: "Apple Intelligence", role: .ai, state: .found(1))
-        case .basic: SourceStatus(source: ai, name: "Apple Intelligence", role: .ai, state: .unavailable(origin.label ?? "Basic search"))
+        case .basic, .basicNoModel: SourceStatus(source: ai, name: "Apple Intelligence", role: .ai, state: .unavailable(origin.label ?? "Basic search"))
         }
     }
 }

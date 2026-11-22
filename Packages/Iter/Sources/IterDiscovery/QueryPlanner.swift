@@ -96,7 +96,7 @@ struct QueryPlanner: Sendable {
 
     func plan(for text: String, hasMapRegion: Bool) async -> (QueryPlan, PlanOrigin) {
         let basic = BasicQueryParser.parse(text, hasMapRegion: hasMapRegion)
-        guard let model else { return (basic, .basic(reason: .frameworkUnavailable)) }
+        guard let model else { return (basic, .basicNoModel) }
         switch await model.availability() {
         case .unavailable(let reason): return (basic, .basic(reason: reason))
         case .available: break
