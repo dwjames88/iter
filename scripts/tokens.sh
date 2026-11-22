@@ -2,10 +2,10 @@
 # Round trip between the Swift token registry and the design-tool files.
 #   scripts/tokens.sh            export: TokenValues.swift -> Design/tokens.json + Assets.xcassets/Tokens
 #   scripts/tokens.sh import     import: Design/tokens.json -> TokenValues.swift
-# Set ITER_SCRATCH to build somewhere other than Packages/IterKit/.build.
+# Set ITER_SCRATCH to build somewhere other than Legacy/IterKit/.build.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-PKG="$ROOT/Packages/IterKit"
+PKG="$ROOT/Legacy/IterKit"
 JSON="$ROOT/Design/tokens.json"
 ASSETS="$ROOT/App/Resources/Assets.xcassets"
 SWIFT="$PKG/Sources/IterDesign/TokenValues.swift"
