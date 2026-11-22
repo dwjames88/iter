@@ -105,6 +105,14 @@ public enum SkyNote: Codable, Hashable, Sendable {
     case clampedLow
     /// The raw score rose above 100 and was lowered to 100.
     case clampedHigh
+    /// Live index: an observation is older than 90 minutes at the time it is read, so it carries no weight.
+    case observationTooOld
+    /// Live index: the nearest observation is 50 km or more away, so it carries no weight.
+    case observationTooFar
+    /// Live index: an observation has no station distance, so it is treated as 50 km away (zero weight).
+    case observationDistanceUnknown
+    /// Live index: no observation was supplied.
+    case noObservation
 
     /// Stable display order and de-duplication key.
     var sortKey: Int {
@@ -118,6 +126,10 @@ public enum SkyNote: Codable, Hashable, Sendable {
         case .transparencyFromProxy: 43
         case .clampedLow: 50
         case .clampedHigh: 51
+        case .noObservation: 60
+        case .observationTooOld: 61
+        case .observationTooFar: 62
+        case .observationDistanceUnknown: 63
         }
     }
 }
