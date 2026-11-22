@@ -30,6 +30,8 @@ public enum DataKind: String, Codable, Sendable, CaseIterable {
     case places, gazetteer, textEvidence, photoEvidence, geocode
     case forecast, observation, nowcast, aerosol, smoke, airQuality, satelliteCloud, lightPollution, aurora
     case astronomy, elevation, horizon, routing, eta, imagery
+    // Added in Phase 2 (sources layer): official alerts, astronomical seeing, magnetic field, grid references.
+    case alerts, seeing, magnetic, gridReference
 }
 
 /// The licence terms that travel with a datum.
@@ -59,9 +61,11 @@ public struct Provenance: Codable, Sendable, Hashable {
     /// Human link for citation.
     public var url: URL?
     public var licence: LicenceTag
+    /// Who produced the datum and who served it (added in Phase 2; nil in data recorded before it).
+    public var origin: SourceOrigin?
 
     public init(source: SourceID, model: String? = nil, issuedAt: Date? = nil, fetchedAt: Date, validFor: TimeSpan? = nil,
-                distanceKm: Double? = nil, url: URL? = nil, licence: LicenceTag) {
+                distanceKm: Double? = nil, url: URL? = nil, licence: LicenceTag, origin: SourceOrigin? = nil) {
         self.source = source
         self.model = model
         self.issuedAt = issuedAt
@@ -70,6 +74,7 @@ public struct Provenance: Codable, Sendable, Hashable {
         self.distanceKm = distanceKm
         self.url = url
         self.licence = licence
+        self.origin = origin
     }
 }
 
