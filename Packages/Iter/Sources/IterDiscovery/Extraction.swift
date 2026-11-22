@@ -102,7 +102,6 @@ enum ExtractionFilter {
             guard let name = CandidateVerifier.cleanName(item.name) else { continue }
             let haystack = item.document.title + " " + item.document.text
             guard DiscoveryNames.occursLiterally(name, in: haystack) else { continue }
-            if !plan.features.isEmpty, let hint = item.hint, !plan.features.contains(hint) { continue }
             let key = DiscoveryNames.key(name).description
             guard seen.insert(key).inserted else { continue }
             out.append(ExtractedName(name: name, featureHint: item.hint, source: item.document.citation.source, citation: item.document.citation,
@@ -128,8 +127,9 @@ enum DocumentCandidates {
         docs.compactMap { d in
             guard let c = d.coordinate else { return nil }
             if let areaName, DiscoveryNames.matches(areaName, d.title) { return nil }
-            let kinds = plan.features.isEmpty ? FeatureKind.allCases.filter { matches(d.title, $0) } : plan.features.filter { matches(d.title, $0) }
-            guard !kinds.isEmpty else { return nil }
+            // Any kind the title names, not only the requested ones: widening ranks related kinds below strict ones.
+            let kinds = FeatureKind.allCases.filter { matches(d.title, $0) }
+            guard !kinds.isEmpty || FeatureRelatedness.looksLikeNaturalFeature(title: d.title) else { return nil }
             let snippet = ExtractionFilter.snippet(for: d.title, in: d.text) ?? String(d.text.prefix(240))
             return PlaceCandidate(name: d.title, coordinate: c, featureKinds: kinds, source: d.citation.source,
                                   externalID: d.url?.absoluteString ?? d.title, citations: [d.citation], mentionCount: 1,
@@ -177,7 +177,6 @@ enum DeterministicExtractor {
         var seen = Set<String>()
         for n in found where seen.insert(DiscoveryNames.normalise(n)).inserted {
             let hint = hint(for: n)
-            if !plan.features.isEmpty, let hint, !plan.features.contains(hint) { continue }
             out.append((n, doc, hint))
             if out.count >= limit { break }
         }

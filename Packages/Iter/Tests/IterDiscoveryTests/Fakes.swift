@@ -74,11 +74,14 @@ struct FakeBoundary: BoundaryProvider {
 struct FakeGazetteer: GazetteerProvider {
     var descriptor: SourceDescriptor
     var places: [PlaceCandidate]
+    /// When set, only candidates whose kinds meet the requested features come back (a real gazetteer filters like this).
+    var filtersByFeature = false
     var script = Script()
     var log = CallLog()
     func candidates(in area: DiscoveryArea, features: Set<FeatureKind>, limit: Int) async throws -> [PlaceCandidate] {
-        log.record("gazetteer")
+        log.record("gazetteer:" + features.map(\.rawValue).sorted().joined(separator: ","))
         try await play(script, log)
+        if filtersByFeature { return places.filter { !features.isDisjoint(with: $0.featureKinds) } }
         return places
     }
 }

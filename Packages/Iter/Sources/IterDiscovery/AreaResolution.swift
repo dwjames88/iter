@@ -14,6 +14,21 @@ public enum AreaBasis: Sendable, Hashable {
     case box(radiusKm: Double, reason: String)
     /// The geocoder's own region for a large place with no outline.
     case geocodedRegion
+    /// A park, forest, monument or similar whose outline was asked for and not found: the geocoder's region, or a box
+    /// of `radiusKm`. Shown as "area box, no outline found".
+    case parkBox(radiusKm: Double?)
+
+    /// Plain words for the UI.
+    public var label: String {
+        switch self {
+        case .currentLocation(let r): "around you, \(Int(r)) km"
+        case .visibleMap: "the visible map"
+        case .boundary(let name, _): "outline of \(name)"
+        case .box(let r, let reason): "\(Int(r)) km box (\(reason))"
+        case .geocodedRegion: "the place's own region (no outline)"
+        case .parkBox: "area box, no outline found"
+        }
+    }
 }
 
 /// The area a run searches, with how it was found and what to cite for it.
@@ -82,6 +97,8 @@ struct AreaResolver: Sendable {
     static let nearPhrasingRadiusKm = 40.0
     static let pointOfInterestRadiusKm = 10.0
     static let defaultNearMeRadiusKm = 25.0
+    /// A named park, forest or monument with no outline and no geocoder region.
+    static let parkFallbackRadiusKm = 50.0
     /// A geocoder region at least this big (degrees) counts as "a large place".
     static let largeRegionDegrees = 0.3
 
@@ -178,6 +195,13 @@ struct AreaResolver: Sendable {
 
         // 3. Otherwise a box sized by the type of place.
         let centre = hit.coordinate
+        let namedArea = Self.looksLikeArea(text) || Self.looksLikeArea(hit.name)
+        if namedArea, driveRadius == nil {
+            // A park we could not outline: say so, and size it like a park rather than a town.
+            let region = hit.region ?? Self.box(around: centre, radiusKm: Self.parkFallbackRadiusKm)
+            let basis = AreaBasis.parkBox(radiusKm: hit.region == nil ? Self.parkFallbackRadiusKm : nil)
+            return .success(ResolvedArea(area: DiscoveryArea(name: text, region: region), basis: basis, centre: centre, geocodedName: hit.name))
+        }
         let radius: Double
         let reason: String
         if let driveRadius {

@@ -31,13 +31,14 @@ struct RankingTests {
 
     @Test func featureMatchPartIsVisible() {
         let waterfall = scored(famous)
-        let lake = scored(candidate("Some Lake", 36.6, -118.0, kinds: [.lake], source: osmID, externalID: "9"))
+        let lake = scored(candidate("Some Castle", 36.6, -118.0, kinds: [.castle], source: osmID, externalID: "9"))
         let unknown = scored(candidate("Mystery", 36.6, -118.0, kinds: [], source: mapkitSearchID))
         let ranked = DiscoveryRanker.rank([lake, unknown, waterfall], context: context())
         #expect(ranked[0].name == "Famous Falls")
         #expect(ranked[0].rank.featureMatch.value! > ranked[1].rank.featureMatch.value!)
         #expect(ranked[1].name == "Mystery")                                   // unknown kind scores above a known mismatch
         #expect(ranked[2].rank.featureMatch.value! < 0.3)
+        #expect(ranked[2].rank.matchTier == .other && ranked[0].rank.matchTier == .strict)
         #expect(!ranked[0].rank.featureMatch.note.isEmpty)
     }
 

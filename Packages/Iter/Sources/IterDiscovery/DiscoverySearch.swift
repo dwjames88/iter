@@ -80,7 +80,7 @@ public final class DiscoverySearch {
             area = a
             phase = .searching
         case .statusChanged(let s):
-            if let i = statuses.firstIndex(where: { $0.source == s.source }) { statuses[i] = s } else { statuses.append(s) }
+            if let i = statuses.firstIndex(where: { $0.id == s.id }) { statuses[i] = s } else { statuses.append(s) }
         case .partial(let list):
             places = list
         case .finished(let r):

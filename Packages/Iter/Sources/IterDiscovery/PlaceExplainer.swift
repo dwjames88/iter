@@ -40,7 +40,7 @@ struct PlaceExplainer: Sendable {
         let kind = place.featureKinds.first.map { $0.singularName.prefix(1).uppercased() + $0.singularName.dropFirst() } ?? "Place"
         var s = kind + (areaName.map { " in \($0)" } ?? "")
         s += place.verification == .confirmed ? ", confirmed by \(max(2, Set(place.sources.map(\.family)).count)) sources" : ", reported by one source"
-        if place.photoCount > 0 { s += "; \(place.photoCount) geotagged photos nearby" }
+        if place.photoCount > 0 { s += "; \(place.photoCount) geotagged \(place.photoCount == 1 ? "photo" : "photos") nearby" }
         return s + "."
     }
 

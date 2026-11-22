@@ -54,15 +54,18 @@ public struct QueryPlan: Codable, Sendable, Hashable {
 /// Where a plan came from. `.basic` is the deterministic parser, shown as "Basic search".
 public enum PlanOrigin: Sendable, Hashable {
     case ai
+    /// No model was given to the engine at all (not the same as a model that reports itself unavailable).
+    case basicNoModel
     /// `reason` is why the model was not used, when it was unavailable (nil when it failed or timed out).
     case basic(reason: AIUnavailableReason?)
 
-    public var isBasic: Bool { if case .basic = self { return true }; return false }
+    public var isBasic: Bool { if case .ai = self { return false }; return true }
 
     /// "Basic search: AI unavailable (Apple Intelligence is turned off)"; nil for `.ai`.
     public var label: String? {
         switch self {
         case .ai: nil
+        case .basicNoModel: "Basic search: AI not set up"
         case .basic(let reason?): "Basic search: AI unavailable (\(reason.plainText))"
         case .basic(nil): "Basic search: AI did not answer"
         }
