@@ -1,0 +1,2833 @@
+{
+ "generator": "mgrs (NGA GEOTRANS C code wrapper) 1.7.1, pyproj 3.8.0 (PROJ 9.8.1) in a throwaway venv; script not committed; mgrs strings are 1 m precision; swLatLon is toLatLon(mgrs) i.e. the south-west corner of the 1 m cell; easting/northing are pyproj EPSG:326xx/327xx (UTM, zone chosen by the standard rules incl. Norway/Svalbard) or EPSG:32661/32761 (UPS), rounded to 0.1 mm.",
+ "points": [
+  {
+   "name": "Norway 32V SW corner",
+   "lat": 56.0,
+   "lon": 3.0,
+   "zone": 32,
+   "north": true,
+   "easting": 126049.9707,
+   "northing": 6222336.3353,
+   "mgrs": "32VJH2604922336",
+   "swLatLon": [
+    56.000001105052434,
+    2.999992265183962
+   ]
+  },
+  {
+   "name": "Norway just west of 32V (31V)",
+   "lat": 60.0,
+   "lon": 2.9999,
+   "zone": 31,
+   "north": true,
+   "easting": 499994.4222,
+   "northing": 6651411.1904,
+   "mgrs": "31VDG9999451411",
+   "swLatLon": [
+    60.000002780277626,
+    2.9999013942439614
+   ]
+  },
+  {
+   "name": "Norway 32V east edge",
+   "lat": 60.0,
+   "lon": 11.9999,
+   "zone": 32,
+   "north": true,
+   "easting": 667289.2472,
+   "northing": 6655205.2307,
+   "mgrs": "32VPM6728955205",
+   "swLatLon": [
+    60.00000231229819,
+    11.999904745276345
+   ]
+  },
+  {
+   "name": "Norway east of 32V (33V)",
+   "lat": 60.0,
+   "lon": 12.0,
+   "zone": 33,
+   "north": true,
+   "easting": 332705.1789,
+   "northing": 6655205.4836,
+   "mgrs": "33VUG3270555205",
+   "swLatLon": [
+    60.00000027743876,
+    12.000005736029502
+   ]
+  },
+  {
+   "name": "Norway south of 32V (31U)",
+   "lat": 55.9999,
+   "lon": 5.0,
+   "zone": 31,
+   "north": true,
+   "easting": 624726.4739,
+   "northing": 6207873.4758,
+   "mgrs": "31UFC2472607873",
+   "swLatLon": [
+    55.999900210690484,
+    5.0000004297502505
+   ]
+  },
+  {
+   "name": "Norway north of 32V (31W/32W)",
+   "lat": 64.0,
+   "lon": 5.0,
+   "zone": 31,
+   "north": true,
+   "easting": 597812.1101,
+   "northing": 7098548.7489,
+   "mgrs": "31WEL9781298548",
+   "swLatLon": [
+    63.999997658339595,
+    5.000007807317455
+   ]
+  },
+  {
+   "name": "Bergen",
+   "lat": 60.39,
+   "lon": 5.32,
+   "zone": 32,
+   "north": true,
+   "easting": 297230.2202,
+   "northing": 6700510.1753,
+   "mgrs": "32VKN9723000510",
+   "swLatLon": [
+    60.390003049979704,
+    5.320004736797516
+   ]
+  },
+  {
+   "name": "Svalbard 31X",
+   "lat": 78.0,
+   "lon": 5.0,
+   "zone": 31,
+   "north": true,
+   "easting": 546411.0175,
+   "northing": 8659161.9973,
+   "mgrs": "31XEG4641159161",
+   "swLatLon": [
+    77.99999539882158,
+    5.000020045691383
+   ]
+  },
+  {
+   "name": "Svalbard 33X",
+   "lat": 78.0,
+   "lon": 15.0,
+   "zone": 33,
+   "north": true,
+   "easting": 500000.0,
+   "northing": 8658369.5858,
+   "mgrs": "33XWG0000058369",
+   "swLatLon": [
+    77.99999923093948,
+    15.00002154260938
+   ]
+  },
+  {
+   "name": "Svalbard 35X",
+   "lat": 78.0,
+   "lon": 27.0,
+   "zone": 35,
+   "north": true,
+   "easting": 500000.0,
+   "northing": 8658369.5858,
+   "mgrs": "35XNG0000058369",
+   "swLatLon": [
+    77.99999923093948,
+    27.00002154260938
+   ]
+  },
+  {
+   "name": "Svalbard 37X",
+   "lat": 78.0,
+   "lon": 38.0,
+   "zone": 37,
+   "north": true,
+   "easting": 476791.2619,
+   "northing": 8658567.6999,
+   "mgrs": "37XDG7679158567",
+   "swLatLon": [
+    77.99999824569942,
+    38.0000104031011
+   ]
+  },
+  {
+   "name": "Svalbard boundary lon 0.0",
+   "lat": 78.0,
+   "lon": 0.0,
+   "zone": 31,
+   "north": true,
+   "easting": 430399.6201,
+   "northing": 8660152.3441,
+   "mgrs": "31XDG3039960152",
+   "swLatLon": [
+    78.00000134024195,
+    -5.512038439504547e-06
+   ]
+  },
+  {
+   "name": "Svalbard boundary lon 8.9999",
+   "lat": 78.0,
+   "lon": 8.9999,
+   "zone": 31,
+   "north": true,
+   "easting": 639024.087,
+   "northing": 8665496.7584,
+   "mgrs": "31XFG3902465496",
+   "swLatLon": [
+    77.99999731928277,
+    8.9999165582847
+   ]
+  },
+  {
+   "name": "Svalbard boundary lon 9.0",
+   "lat": 78.0,
+   "lon": 9.0,
+   "zone": 33,
+   "north": true,
+   "easting": 360973.6036,
+   "northing": 8665496.9958,
+   "mgrs": "33XUG6097365496",
+   "swLatLon": [
+    77.99999548696927,
+    8.999997743347858
+   ]
+  },
+  {
+   "name": "Svalbard boundary lon 20.9999",
+   "lat": 78.0,
+   "lon": 20.9999,
+   "zone": 33,
+   "north": true,
+   "easting": 639024.087,
+   "northing": 8665496.7584,
+   "mgrs": "33XXG3902465496",
+   "swLatLon": [
+    77.99999731928277,
+    20.999916558284696
+   ]
+  },
+  {
+   "name": "Svalbard boundary lon 21.0",
+   "lat": 78.0,
+   "lon": 21.0,
+   "zone": 35,
+   "north": true,
+   "easting": 360973.6036,
+   "northing": 8665496.9958,
+   "mgrs": "35XLG6097365496",
+   "swLatLon": [
+    77.99999548696927,
+    20.99999774334786
+   ]
+  },
+  {
+   "name": "Svalbard boundary lon 32.9999",
+   "lat": 78.0,
+   "lon": 32.9999,
+   "zone": 35,
+   "north": true,
+   "easting": 639024.087,
+   "northing": 8665496.7584,
+   "mgrs": "35XPG3902465496",
+   "swLatLon": [
+    77.99999731928277,
+    32.9999165582847
+   ]
+  },
+  {
+   "name": "Svalbard boundary lon 33.0",
+   "lat": 78.0,
+   "lon": 33.0,
+   "zone": 37,
+   "north": true,
+   "easting": 360973.6036,
+   "northing": 8665496.9958,
+   "mgrs": "37XCG6097365496",
+   "swLatLon": [
+    77.99999548696927,
+    32.999997743347855
+   ]
+  },
+  {
+   "name": "Svalbard boundary lon 41.9999",
+   "lat": 78.0,
+   "lon": 41.9999,
+   "zone": 37,
+   "north": true,
+   "easting": 569598.0618,
+   "northing": 8660152.2252,
+   "mgrs": "37XEG6959860152",
+   "swLatLon": [
+    78.00000225765065,
+    41.999919459674885
+   ]
+  },
+  {
+   "name": "Svalbard boundary lon 42.0",
+   "lat": 78.0,
+   "lon": 42.0,
+   "zone": 38,
+   "north": true,
+   "easting": 430399.6201,
+   "northing": 8660152.3441,
+   "mgrs": "38XMM3039960152",
+   "swLatLon": [
+    78.00000134024195,
+    41.999994487961565
+   ]
+  },
+  {
+   "name": "Svalbard band X south edge",
+   "lat": 72.0,
+   "lon": 7.0,
+   "zone": 31,
+   "north": true,
+   "easting": 637871.0633,
+   "northing": 7993511.7812,
+   "mgrs": "31XFV3787193511",
+   "swLatLon": [
+    71.99999722561532,
+    7.000012089850559
+   ]
+  },
+  {
+   "name": "Svalbard just below band X",
+   "lat": 71.9999,
+   "lon": 7.0,
+   "zone": 32,
+   "north": true,
+   "easting": 431030.0924,
+   "northing": 7990066.323,
+   "mgrs": "32WME3103090066",
+   "swLatLon": [
+    71.99990170704986,
+    7.000011639798143
+   ]
+  },
+  {
+   "name": "band lat -80.0",
+   "lat": -80.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": false,
+   "easting": 470924.5291,
+   "northing": 1118039.3464,
+   "mgrs": "19CDM7092418039",
+   "swLatLon": [
+    -79.99999861768893,
+    -70.50000129638305
+   ]
+  },
+  {
+   "name": "band lat -79.9999",
+   "lat": -79.9999,
+   "lon": -70.5,
+   "zone": 19,
+   "north": false,
+   "easting": 470924.2414,
+   "northing": 1118050.5043,
+   "mgrs": "19CDM7092418050",
+   "swLatLon": [
+    -79.99990009864234,
+    -70.49998666864897
+   ]
+  },
+  {
+   "name": "band lat -72.0",
+   "lat": -72.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": false,
+   "easting": 448269.1283,
+   "northing": 2010423.4398,
+   "mgrs": "19DDA4826910423",
+   "swLatLon": [
+    -71.99999954381816,
+    -70.49998918352233
+   ]
+  },
+  {
+   "name": "band lat -71.9999",
+   "lat": -71.9999,
+   "lon": -70.5,
+   "zone": 19,
+   "north": false,
+   "easting": 448268.8506,
+   "northing": 2010434.5909,
+   "mgrs": "19DDA4826810434",
+   "swLatLon": [
+    -71.99990073650923,
+    -70.5000102271002
+   ]
+  },
+  {
+   "name": "band lat -8.0",
+   "lat": -8.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": false,
+   "easting": 334682.9427,
+   "northing": 9115400.9271,
+   "mgrs": "19MCM3468215400",
+   "swLatLon": [
+    -8.000003847842367,
+    -70.50000403019966
+   ]
+  },
+  {
+   "name": "band lat -0.0001",
+   "lat": -0.0001,
+   "lon": -70.5,
+   "zone": 19,
+   "north": false,
+   "easting": 333068.357,
+   "northing": 9999988.9432,
+   "mgrs": "19MCV3306899988",
+   "swLatLon": [
+    -0.00010400821371154111,
+    -70.49999871543785
+   ]
+  },
+  {
+   "name": "band lat 0.0",
+   "lat": 0.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": true,
+   "easting": 333068.357,
+   "northing": 0.0,
+   "mgrs": "19NCA3306800000",
+   "swLatLon": [
+    4.522096244775614e-06,
+    -70.49999871543541
+   ]
+  },
+  {
+   "name": "band lat 0.0001",
+   "lat": 0.0001,
+   "lon": -70.5,
+   "zone": 19,
+   "north": true,
+   "easting": 333068.357,
+   "northing": 11.0568,
+   "mgrs": "19NCA3306800011",
+   "swLatLon": [
+    0.0001040082137090424,
+    -70.49999871543785
+   ]
+  },
+  {
+   "name": "band lat 8.0",
+   "lat": 8.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": true,
+   "easting": 334682.9427,
+   "northing": 884599.0729,
+   "mgrs": "19PCJ3468284599",
+   "swLatLon": [
+    8.00000384784237,
+    -70.50000403019966
+   ]
+  },
+  {
+   "name": "band lat 16.0",
+   "lat": 16.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": true,
+   "easting": 339496.988,
+   "northing": 1769514.58,
+   "mgrs": "19QCT3949669514",
+   "swLatLon": [
+    15.999999245408818,
+    -70.50000455423617
+   ]
+  },
+  {
+   "name": "band lat 24.0",
+   "lat": 24.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": true,
+   "easting": 347421.6447,
+   "northing": 2655039.017,
+   "mgrs": "19RCG4742155039",
+   "swLatLon": [
+    24.000004347435922,
+    -70.50000147255265
+   ]
+  },
+  {
+   "name": "band lat 32.0",
+   "lat": 32.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": true,
+   "easting": 358309.8324,
+   "northing": 3541418.6834,
+   "mgrs": "19SCR5830941418",
+   "swLatLon": [
+    31.99999830441249,
+    -70.50000349086363
+   ]
+  },
+  {
+   "name": "band lat 40.0",
+   "lat": 40.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": true,
+   "easting": 371957.8784,
+   "northing": 4428834.7089,
+   "mgrs": "19TCE7195728834",
+   "swLatLon": [
+    39.99999806110806,
+    -70.50000439011725
+   ]
+  },
+  {
+   "name": "band lat 48.0",
+   "lat": 48.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": true,
+   "easting": 388108.065,
+   "northing": 5317388.7989,
+   "mgrs": "19UCP8810817388",
+   "swLatLon": [
+    47.9999973879764,
+    -70.49999409324552
+   ]
+  },
+  {
+   "name": "band lat 56.0",
+   "lat": 56.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": true,
+   "easting": 406452.2757,
+   "northing": 6207094.8688,
+   "mgrs": "19VDC0645207094",
+   "swLatLon": [
+    55.99999673096644,
+    -70.4999962766296
+   ]
+  },
+  {
+   "name": "band lat 64.0",
+   "lat": 64.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": true,
+   "easting": 426636.9046,
+   "northing": 7097877.3614,
+   "mgrs": "19WDL2663697877",
+   "swLatLon": [
+    64.00000115770433,
+    -70.50000833641391
+   ]
+  },
+  {
+   "name": "band lat 72.0",
+   "lat": 72.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": true,
+   "easting": 448269.1283,
+   "northing": 7989576.5602,
+   "mgrs": "19XDV4826989576",
+   "swLatLon": [
+    71.99999954381818,
+    -70.49998918352233
+   ]
+  },
+  {
+   "name": "band lat 83.9999",
+   "lat": 83.9999,
+   "lon": -70.5,
+   "zone": 19,
+   "north": true,
+   "easting": 482496.5148,
+   "northing": 9328310.5451,
+   "mgrs": "19XDP8249628310",
+   "swLatLon": [
+    83.99989959302478,
+    -70.50000116876194
+   ]
+  },
+  {
+   "name": "band lat 84.0",
+   "lat": 84.0,
+   "lon": -70.5,
+   "zone": 19,
+   "north": true,
+   "easting": 482496.8055,
+   "northing": 9328321.705,
+   "mgrs": "19XDP8249628321",
+   "swLatLon": [
+    83.99999809292541,
+    -70.50002570746591
+   ]
+  },
+  {
+   "name": "equator lon -180.0",
+   "lat": 0.0,
+   "lon": -180.0,
+   "zone": 1,
+   "north": true,
+   "easting": 166021.4431,
+   "northing": 0.0,
+   "mgrs": "01NAA6602100000",
+   "swLatLon": [
+    4.517415511511379e-06,
+    -179.99999948918494
+   ]
+  },
+  {
+   "name": "mid-north lon -180.0",
+   "lat": 45.0,
+   "lon": -180.0,
+   "zone": 1,
+   "north": true,
+   "easting": 263553.9739,
+   "northing": 4987329.5047,
+   "mgrs": "01TBK6355387329",
+   "swLatLon": [
+    44.99999979988576,
+    179.99999399768367
+   ]
+  },
+  {
+   "name": "mid-south lon -180.0",
+   "lat": -45.0,
+   "lon": -180.0,
+   "zone": 1,
+   "north": false,
+   "easting": 263553.9739,
+   "northing": 5012670.4953,
+   "mgrs": "01GBL6355312670",
+   "swLatLon": [
+    -44.99999979988576,
+    179.99999399768367
+   ]
+  },
+  {
+   "name": "equator lon -179.9999",
+   "lat": 0.0,
+   "lon": -179.9999,
+   "zone": 1,
+   "north": true,
+   "easting": 166032.586,
+   "northing": 0.0,
+   "mgrs": "01NAA6603200000",
+   "swLatLon": [
+    4.5174159186223774e-06,
+    -179.99990077134743
+   ]
+  },
+  {
+   "name": "mid-north lon -179.9999",
+   "lat": 45.0,
+   "lon": -179.9999,
+   "zone": 1,
+   "north": true,
+   "easting": 263561.8554,
+   "northing": 4987329.2126,
+   "mgrs": "01TBK6356187329",
+   "swLatLon": [
+    45.00000246493476,
+    -179.9999046385117
+   ]
+  },
+  {
+   "name": "mid-south lon -179.9999",
+   "lat": -45.0,
+   "lon": -179.9999,
+   "zone": 1,
+   "north": false,
+   "easting": 263561.8554,
+   "northing": 5012670.7874,
+   "mgrs": "01GBL6356112670",
+   "swLatLon": [
+    -45.00000246493476,
+    -179.9999046385117
+   ]
+  },
+  {
+   "name": "equator lon -177.0",
+   "lat": 0.0,
+   "lon": -177.0,
+   "zone": 1,
+   "north": true,
+   "easting": 500000.0,
+   "northing": 0.0,
+   "mgrs": "01NEA0000000000",
+   "swLatLon": [
+    4.5236568316367445e-06,
+    -176.99999550662625
+   ]
+  },
+  {
+   "name": "mid-north lon -177.0",
+   "lat": 45.0,
+   "lon": -177.0,
+   "zone": 1,
+   "north": true,
+   "easting": 500000.0,
+   "northing": 4982950.4002,
+   "mgrs": "01TEK0000082950",
+   "swLatLon": [
+    45.000000898153054,
+    -176.9999936560537
+   ]
+  },
+  {
+   "name": "mid-south lon -177.0",
+   "lat": -45.0,
+   "lon": -177.0,
+   "zone": 1,
+   "north": false,
+   "easting": 500000.0,
+   "northing": 5017049.5998,
+   "mgrs": "01GEL0000017049",
+   "swLatLon": [
+    -45.000000898153054,
+    -176.9999936560537
+   ]
+  },
+  {
+   "name": "equator lon -174.0",
+   "lat": 0.0,
+   "lon": -174.0,
+   "zone": 2,
+   "north": true,
+   "easting": 166021.4431,
+   "northing": 0.0,
+   "mgrs": "02NJF6602100000",
+   "swLatLon": [
+    4.517415511511379e-06,
+    -173.99999948918494
+   ]
+  },
+  {
+   "name": "mid-north lon -174.0",
+   "lat": 45.0,
+   "lon": -174.0,
+   "zone": 2,
+   "north": true,
+   "easting": 263553.9739,
+   "northing": 4987329.5047,
+   "mgrs": "02TKQ6355387329",
+   "swLatLon": [
+    44.99999979988576,
+    -174.00000600231633
+   ]
+  },
+  {
+   "name": "mid-south lon -174.0",
+   "lat": -45.0,
+   "lon": -174.0,
+   "zone": 2,
+   "north": false,
+   "easting": 263553.9739,
+   "northing": 5012670.4953,
+   "mgrs": "02GKR6355312670",
+   "swLatLon": [
+    -44.99999979988576,
+    -174.00000600231633
+   ]
+  },
+  {
+   "name": "equator lon -3.0",
+   "lat": 0.0,
+   "lon": -3.0,
+   "zone": 30,
+   "north": true,
+   "easting": 500000.0,
+   "northing": 0.0,
+   "mgrs": "30NWF0000000000",
+   "swLatLon": [
+    4.5236568316367445e-06,
+    -2.9999955066262465
+   ]
+  },
+  {
+   "name": "mid-north lon -3.0",
+   "lat": 45.0,
+   "lon": -3.0,
+   "zone": 30,
+   "north": true,
+   "easting": 500000.0,
+   "northing": 4982950.4002,
+   "mgrs": "30TWQ0000082950",
+   "swLatLon": [
+    45.000000898153054,
+    -2.9999936560537157
+   ]
+  },
+  {
+   "name": "mid-south lon -3.0",
+   "lat": -45.0,
+   "lon": -3.0,
+   "zone": 30,
+   "north": false,
+   "easting": 500000.0,
+   "northing": 5017049.5998,
+   "mgrs": "30GWR0000017049",
+   "swLatLon": [
+    -45.000000898153054,
+    -2.9999936560537157
+   ]
+  },
+  {
+   "name": "equator lon -0.0001",
+   "lat": 0.0,
+   "lon": -0.0001,
+   "zone": 30,
+   "north": true,
+   "easting": 833967.414,
+   "northing": 0.0,
+   "mgrs": "30NZF3396700000",
+   "swLatLon": [
+    4.5174159186223774e-06,
+    -9.922865259926352e-05
+   ]
+  },
+  {
+   "name": "mid-north lon -0.0001",
+   "lat": 45.0,
+   "lon": -0.0001,
+   "zone": 30,
+   "north": true,
+   "easting": 736438.1446,
+   "northing": 4987329.2126,
+   "mgrs": "30TYQ3643887329",
+   "swLatLon": [
+    45.00000246493476,
+    -9.536148832090637e-05
+   ]
+  },
+  {
+   "name": "mid-south lon -0.0001",
+   "lat": -45.0,
+   "lon": -0.0001,
+   "zone": 30,
+   "north": false,
+   "easting": 736438.1446,
+   "northing": 5012670.7874,
+   "mgrs": "30GYR3643812670",
+   "swLatLon": [
+    -45.00000246493476,
+    -9.536148832090637e-05
+   ]
+  },
+  {
+   "name": "equator lon 0.0",
+   "lat": 0.0,
+   "lon": 0.0,
+   "zone": 31,
+   "north": true,
+   "easting": 166021.4431,
+   "northing": 0.0,
+   "mgrs": "31NAA6602100000",
+   "swLatLon": [
+    4.517415511511379e-06,
+    5.108150623137938e-07
+   ]
+  },
+  {
+   "name": "mid-north lon 0.0",
+   "lat": 45.0,
+   "lon": 0.0,
+   "zone": 31,
+   "north": true,
+   "easting": 263553.9739,
+   "northing": 4987329.5047,
+   "mgrs": "31TBK6355387329",
+   "swLatLon": [
+    44.99999979988576,
+    -6.002316334630846e-06
+   ]
+  },
+  {
+   "name": "mid-south lon 0.0",
+   "lat": -45.0,
+   "lon": 0.0,
+   "zone": 31,
+   "north": false,
+   "easting": 263553.9739,
+   "northing": 5012670.4953,
+   "mgrs": "31GBL6355312670",
+   "swLatLon": [
+    -44.99999979988576,
+    -6.002316334630846e-06
+   ]
+  },
+  {
+   "name": "equator lon 6.0",
+   "lat": 0.0,
+   "lon": 6.0,
+   "zone": 32,
+   "north": true,
+   "easting": 166021.4431,
+   "northing": 0.0,
+   "mgrs": "32NJF6602100000",
+   "swLatLon": [
+    4.517415511511379e-06,
+    6.000000510815062
+   ]
+  },
+  {
+   "name": "mid-north lon 6.0",
+   "lat": 45.0,
+   "lon": 6.0,
+   "zone": 32,
+   "north": true,
+   "easting": 263553.9739,
+   "northing": 4987329.5047,
+   "mgrs": "32TKQ6355387329",
+   "swLatLon": [
+    44.99999979988576,
+    5.999993997683665
+   ]
+  },
+  {
+   "name": "mid-south lon 6.0",
+   "lat": -45.0,
+   "lon": 6.0,
+   "zone": 32,
+   "north": false,
+   "easting": 263553.9739,
+   "northing": 5012670.4953,
+   "mgrs": "32GKR6355312670",
+   "swLatLon": [
+    -44.99999979988576,
+    5.999993997683665
+   ]
+  },
+  {
+   "name": "equator lon 177.0",
+   "lat": 0.0,
+   "lon": 177.0,
+   "zone": 60,
+   "north": true,
+   "easting": 500000.0,
+   "northing": 0.0,
+   "mgrs": "60NWF0000000000",
+   "swLatLon": [
+    4.5236568316367445e-06,
+    177.00000449337378
+   ]
+  },
+  {
+   "name": "mid-north lon 177.0",
+   "lat": 45.0,
+   "lon": 177.0,
+   "zone": 60,
+   "north": true,
+   "easting": 500000.0,
+   "northing": 4982950.4002,
+   "mgrs": "60TWQ0000082950",
+   "swLatLon": [
+    45.000000898153054,
+    177.0000063439463
+   ]
+  },
+  {
+   "name": "mid-south lon 177.0",
+   "lat": -45.0,
+   "lon": 177.0,
+   "zone": 60,
+   "north": false,
+   "easting": 500000.0,
+   "northing": 5017049.5998,
+   "mgrs": "60GWR0000017049",
+   "swLatLon": [
+    -45.000000898153054,
+    177.0000063439463
+   ]
+  },
+  {
+   "name": "equator lon 179.9999",
+   "lat": 0.0,
+   "lon": 179.9999,
+   "zone": 60,
+   "north": true,
+   "easting": 833967.414,
+   "northing": 0.0,
+   "mgrs": "60NZF3396700000",
+   "swLatLon": [
+    4.5174159186223774e-06,
+    179.99990077134743
+   ]
+  },
+  {
+   "name": "mid-north lon 179.9999",
+   "lat": 45.0,
+   "lon": 179.9999,
+   "zone": 60,
+   "north": true,
+   "easting": 736438.1446,
+   "northing": 4987329.2126,
+   "mgrs": "60TYQ3643887329",
+   "swLatLon": [
+    45.00000246493476,
+    179.9999046385117
+   ]
+  },
+  {
+   "name": "mid-south lon 179.9999",
+   "lat": -45.0,
+   "lon": 179.9999,
+   "zone": 60,
+   "north": false,
+   "easting": 736438.1446,
+   "northing": 5012670.7874,
+   "mgrs": "60GYR3643812670",
+   "swLatLon": [
+    -45.00000246493476,
+    179.9999046385117
+   ]
+  },
+  {
+   "name": "equator lon 180.0",
+   "lat": 0.0,
+   "lon": 180.0,
+   "zone": 1,
+   "north": true,
+   "easting": 166021.4431,
+   "northing": 0.0,
+   "mgrs": "01NAA6602100000",
+   "swLatLon": [
+    4.517415511511379e-06,
+    -179.99999948918494
+   ]
+  },
+  {
+   "name": "mid-north lon 180.0",
+   "lat": 45.0,
+   "lon": 180.0,
+   "zone": 1,
+   "north": true,
+   "easting": 263553.9739,
+   "northing": 4987329.5047,
+   "mgrs": "01TBK6355387329",
+   "swLatLon": [
+    44.99999979988576,
+    179.99999399768367
+   ]
+  },
+  {
+   "name": "mid-south lon 180.0",
+   "lat": -45.0,
+   "lon": 180.0,
+   "zone": 1,
+   "north": false,
+   "easting": 263553.9739,
+   "northing": 5012670.4953,
+   "mgrs": "01GBL6355312670",
+   "swLatLon": [
+    -44.99999979988576,
+    179.99999399768367
+   ]
+  },
+  {
+   "name": "W Whitney area",
+   "lat": 36.5785,
+   "lon": -118.2923,
+   "zone": 11,
+   "north": true,
+   "easting": 384381.7954,
+   "northing": 4048892.7545,
+   "mgrs": "11SLA8438148892",
+   "swLatLon": [
+    36.57849767025916,
+    -118.29230326252693
+   ]
+  },
+  {
+   "name": "S Sedrun area",
+   "lat": 46.5586,
+   "lon": 8.561,
+   "zone": 32,
+   "north": true,
+   "easting": 466350.9256,
+   "northing": 5156208.4283,
+   "mgrs": "32TMS6635056208",
+   "swLatLon": [
+    46.55860062370696,
+    8.560994442346328
+   ]
+  },
+  {
+   "name": "Washington DC",
+   "lat": 38.8977,
+   "lon": -77.0365,
+   "zone": 18,
+   "north": true,
+   "easting": 323394.2964,
+   "northing": 4307395.6338,
+   "mgrs": "18SUJ2339407395",
+   "swLatLon": [
+    38.897698835602505,
+    -77.03649761929738
+   ]
+  },
+  {
+   "name": "Sydney",
+   "lat": -33.8568,
+   "lon": 151.2153,
+   "zone": 56,
+   "north": false,
+   "easting": 334900.5697,
+   "northing": 6252288.7529,
+   "mgrs": "56HLH3490052288",
+   "swLatLon": [
+    -33.85680226882268,
+    151.21529919995467
+   ]
+  },
+  {
+   "name": "Cape Town",
+   "lat": -33.9249,
+   "lon": 18.4241,
+   "zone": 34,
+   "north": false,
+   "easting": 261881.5985,
+   "northing": 6243182.3545,
+   "mgrs": "34HBH6188143182",
+   "swLatLon": [
+    -33.924898666933295,
+    18.42409897461854
+   ]
+  },
+  {
+   "name": "polar lat 84.0001 lon 0.0",
+   "lat": 84.0001,
+   "lon": 0.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2000000.0,
+   "northing": 1333283.428,
+   "mgrs": "ZAA0000033283",
+   "swLatLon": [
+    84.00010064716305,
+    4.2968622730254596e-05
+   ]
+  },
+  {
+   "name": "polar lat 84.0001 lon 45.0",
+   "lat": 84.0001,
+   "lon": 45.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2471439.8092,
+   "northing": 1528560.1908,
+   "mgrs": "ZGC7143928560",
+   "swLatLon": [
+    84.0001039284557,
+    45.0
+   ]
+  },
+  {
+   "name": "polar lat 84.0001 lon 90.0",
+   "lat": 84.0001,
+   "lon": 90.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2666716.572,
+   "northing": 2000000.0,
+   "mgrs": "ZJH6671600000",
+   "swLatLon": [
+    84.00010064716305,
+    90.00004296862274
+   ]
+  },
+  {
+   "name": "polar lat 84.0001 lon 135.0",
+   "lat": 84.0001,
+   "lon": 135.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2471439.8092,
+   "northing": 2471439.8092,
+   "mgrs": "ZGM7143971439",
+   "swLatLon": [
+    84.0001039284557,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat 84.0001 lon 179.9999",
+   "lat": 84.0001,
+   "lon": 179.9999,
+   "zone": 0,
+   "north": true,
+   "easting": 2000001.1636,
+   "northing": 2666716.572,
+   "mgrs": "ZAP0000166716",
+   "swLatLon": [
+    84.00010064714957,
+    179.99987109413183
+   ]
+  },
+  {
+   "name": "polar lat 84.0001 lon -90.0",
+   "lat": 84.0001,
+   "lon": -90.0,
+   "zone": 0,
+   "north": true,
+   "easting": 1333283.428,
+   "northing": 2000000.0,
+   "mgrs": "YRH3328300000",
+   "swLatLon": [
+    84.00010064716305,
+    -90.00004296862274
+   ]
+  },
+  {
+   "name": "polar lat 84.0001 lon -135.0",
+   "lat": 84.0001,
+   "lon": -135.0,
+   "zone": 0,
+   "north": true,
+   "easting": 1528560.1908,
+   "northing": 2471439.8092,
+   "mgrs": "YTM2856071439",
+   "swLatLon": [
+    84.0001039284557,
+    -135.0
+   ]
+  },
+  {
+   "name": "polar lat 84.0001 lon -0.0001",
+   "lat": 84.0001,
+   "lon": -0.0001,
+   "zone": 0,
+   "north": true,
+   "easting": 1999998.8364,
+   "northing": 1333283.428,
+   "mgrs": "YZA9999833283",
+   "swLatLon": [
+    84.00010064714957,
+    -0.00012890586819057047
+   ]
+  },
+  {
+   "name": "polar lat 85.0 lon 0.0",
+   "lat": 85.0,
+   "lon": 0.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2000000.0,
+   "northing": 1444542.6086,
+   "mgrs": "ZAB0000044542",
+   "swLatLon": [
+    84.99999902345982,
+    5.1575304603022594e-05
+   ]
+  },
+  {
+   "name": "polar lat 85.0 lon 45.0",
+   "lat": 85.0,
+   "lon": 45.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2392767.6881,
+   "northing": 1607232.3119,
+   "mgrs": "ZFD9276707232",
+   "swLatLon": [
+    85.00000239171709,
+    45.0
+   ]
+  },
+  {
+   "name": "polar lat 85.0 lon 90.0",
+   "lat": 85.0,
+   "lon": 90.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2555457.3914,
+   "northing": 2000000.0,
+   "mgrs": "ZHH5545700000",
+   "swLatLon": [
+    84.99999902345982,
+    90.0000515753046
+   ]
+  },
+  {
+   "name": "polar lat 85.0 lon 135.0",
+   "lat": 85.0,
+   "lon": 135.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2392767.6881,
+   "northing": 2392767.6881,
+   "mgrs": "ZFL9276792767",
+   "swLatLon": [
+    85.00000239171709,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat 85.0 lon 179.9999",
+   "lat": 85.0,
+   "lon": 179.9999,
+   "zone": 0,
+   "north": true,
+   "easting": 2000000.9695,
+   "northing": 2555457.3914,
+   "mgrs": "ZAN0000055457",
+   "swLatLon": [
+    84.99999902345982,
+    179.9999484246954
+   ]
+  },
+  {
+   "name": "polar lat 85.0 lon -90.0",
+   "lat": 85.0,
+   "lon": -90.0,
+   "zone": 0,
+   "north": true,
+   "easting": 1444542.6086,
+   "northing": 2000000.0,
+   "mgrs": "YSH4454200000",
+   "swLatLon": [
+    84.99999902345982,
+    -90.0000515753046
+   ]
+  },
+  {
+   "name": "polar lat 85.0 lon -135.0",
+   "lat": 85.0,
+   "lon": -135.0,
+   "zone": 0,
+   "north": true,
+   "easting": 1607232.3119,
+   "northing": 2392767.6881,
+   "mgrs": "YUL0723292767",
+   "swLatLon": [
+    85.00000239171709,
+    -135.0
+   ]
+  },
+  {
+   "name": "polar lat 85.0 lon -0.0001",
+   "lat": 85.0,
+   "lon": -0.0001,
+   "zone": 0,
+   "north": true,
+   "easting": 1999999.0305,
+   "northing": 1444542.6086,
+   "mgrs": "YZB9999944542",
+   "swLatLon": [
+    84.99999902345982,
+    -5.1575304603022594e-05
+   ]
+  },
+  {
+   "name": "polar lat 89.9 lon 0.0",
+   "lat": 89.9,
+   "lon": 0.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2000000.0,
+   "northing": 1988897.6157,
+   "mgrs": "ZAG0000088897",
+   "swLatLon": [
+    89.89999895753319,
+    0.002580309816453396
+   ]
+  },
+  {
+   "name": "polar lat 89.9 lon 45.0",
+   "lat": 89.9,
+   "lon": 45.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2007850.5712,
+   "northing": 1992149.4288,
+   "mgrs": "ZAG0785092149",
+   "swLatLon": [
+    89.90000090702203,
+    45.0
+   ]
+  },
+  {
+   "name": "polar lat 89.9 lon 90.0",
+   "lat": 89.9,
+   "lon": 90.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2011102.3843,
+   "northing": 2000000.0,
+   "mgrs": "ZAH1110200000",
+   "swLatLon": [
+    89.89999895753319,
+    90.00258030981647
+   ]
+  },
+  {
+   "name": "polar lat 89.9 lon 135.0",
+   "lat": 89.9,
+   "lon": 135.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2007850.5712,
+   "northing": 2007850.5712,
+   "mgrs": "ZAH0785007850",
+   "swLatLon": [
+    89.90000090702203,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat 89.9 lon 179.9999",
+   "lat": 89.9,
+   "lon": 179.9999,
+   "zone": 0,
+   "north": true,
+   "easting": 2000000.0194,
+   "northing": 2011102.3843,
+   "mgrs": "ZAH0000011102",
+   "swLatLon": [
+    89.89999895753319,
+    179.99741969018353
+   ]
+  },
+  {
+   "name": "polar lat 89.9 lon -90.0",
+   "lat": 89.9,
+   "lon": -90.0,
+   "zone": 0,
+   "north": true,
+   "easting": 1988897.6157,
+   "northing": 2000000.0,
+   "mgrs": "YZH8889700000",
+   "swLatLon": [
+    89.89999895753319,
+    -90.00258030981647
+   ]
+  },
+  {
+   "name": "polar lat 89.9 lon -135.0",
+   "lat": 89.9,
+   "lon": -135.0,
+   "zone": 0,
+   "north": true,
+   "easting": 1992149.4288,
+   "northing": 2007850.5712,
+   "mgrs": "YZH9214907850",
+   "swLatLon": [
+    89.90000090702203,
+    -135.0
+   ]
+  },
+  {
+   "name": "polar lat 89.9 lon -0.0001",
+   "lat": 89.9,
+   "lon": -0.0001,
+   "zone": 0,
+   "north": true,
+   "easting": 1999999.9806,
+   "northing": 1988897.6157,
+   "mgrs": "YZG9999988897",
+   "swLatLon": [
+    89.89999895753319,
+    -0.002580309816453396
+   ]
+  },
+  {
+   "name": "polar lat 90.0 lon 0.0",
+   "lat": 90.0,
+   "lon": 0.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "ZAH0000000000",
+   "swLatLon": [
+    89.99999363103514,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat 90.0 lon 45.0",
+   "lat": 90.0,
+   "lon": 45.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "ZAH0000000000",
+   "swLatLon": [
+    89.99999363103514,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat 90.0 lon 90.0",
+   "lat": 90.0,
+   "lon": 90.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "ZAH0000000000",
+   "swLatLon": [
+    89.99999363103514,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat 90.0 lon 135.0",
+   "lat": 90.0,
+   "lon": 135.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "ZAH0000000000",
+   "swLatLon": [
+    89.99999363103514,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat 90.0 lon 179.9999",
+   "lat": 90.0,
+   "lon": 179.9999,
+   "zone": 0,
+   "north": true,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "ZAH0000000000",
+   "swLatLon": [
+    89.99999363103514,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat 90.0 lon -90.0",
+   "lat": 90.0,
+   "lon": -90.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "ZAH0000000000",
+   "swLatLon": [
+    89.99999363103514,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat 90.0 lon -135.0",
+   "lat": 90.0,
+   "lon": -135.0,
+   "zone": 0,
+   "north": true,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "ZAH0000000000",
+   "swLatLon": [
+    89.99999363103514,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat 90.0 lon -0.0001",
+   "lat": 90.0,
+   "lon": -0.0001,
+   "zone": 0,
+   "north": true,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "ZAH0000000000",
+   "swLatLon": [
+    89.99999363103514,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat -80.0001 lon 0.0",
+   "lat": -80.0001,
+   "lon": 0.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2000000.0,
+   "northing": 3112939.953,
+   "mgrs": "BAZ0000012939",
+   "swLatLon": [
+    -80.00010405055272,
+    2.5740743101075337e-05
+   ]
+  },
+  {
+   "name": "polar lat -80.0001 lon 45.0",
+   "lat": -80.0001,
+   "lon": 45.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2786967.3878,
+   "northing": 2786967.3878,
+   "mgrs": "BKV8696786967",
+   "swLatLon": [
+    -80.00009858158022,
+    45.0
+   ]
+  },
+  {
+   "name": "polar lat -80.0001 lon 90.0",
+   "lat": -80.0001,
+   "lon": 90.0,
+   "zone": 0,
+   "north": false,
+   "easting": 3112939.953,
+   "northing": 2000000.0,
+   "mgrs": "BRN1293900000",
+   "swLatLon": [
+    -80.00010405055272,
+    89.99997425925689
+   ]
+  },
+  {
+   "name": "polar lat -80.0001 lon 135.0",
+   "lat": -80.0001,
+   "lon": 135.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2786967.3878,
+   "northing": 1213032.6122,
+   "mgrs": "BKE8696713032",
+   "swLatLon": [
+    -80.00009858158022,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat -80.0001 lon 179.9999",
+   "lat": -80.0001,
+   "lon": 179.9999,
+   "zone": 0,
+   "north": false,
+   "easting": 2000001.9424,
+   "northing": 887060.047,
+   "mgrs": "BAA0000187060",
+   "swLatLon": [
+    -80.0001040505447,
+    179.9999227777707
+   ]
+  },
+  {
+   "name": "polar lat -80.0001 lon -90.0",
+   "lat": -80.0001,
+   "lon": -90.0,
+   "zone": 0,
+   "north": false,
+   "easting": 887060.047,
+   "northing": 2000000.0,
+   "mgrs": "AJN8706000000",
+   "swLatLon": [
+    -80.00010405055272,
+    -89.99997425925689
+   ]
+  },
+  {
+   "name": "polar lat -80.0001 lon -135.0",
+   "lat": -80.0001,
+   "lon": -135.0,
+   "zone": 0,
+   "north": false,
+   "easting": 1213032.6122,
+   "northing": 1213032.6122,
+   "mgrs": "AQE1303213032",
+   "swLatLon": [
+    -80.00009858158022,
+    -135.0
+   ]
+  },
+  {
+   "name": "polar lat -80.0001 lon -0.0001",
+   "lat": -80.0001,
+   "lon": -0.0001,
+   "zone": 0,
+   "north": false,
+   "easting": 1999998.0576,
+   "northing": 3112939.953,
+   "mgrs": "AZZ9999812939",
+   "swLatLon": [
+    -80.0001040505447,
+    -7.722222930318445e-05
+   ]
+  },
+  {
+   "name": "polar lat -85.0 lon 0.0",
+   "lat": -85.0,
+   "lon": 0.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2000000.0,
+   "northing": 2555457.3914,
+   "mgrs": "BAT0000055457",
+   "swLatLon": [
+    -84.99999902345982,
+    5.1575304603022594e-05
+   ]
+  },
+  {
+   "name": "polar lat -85.0 lon 45.0",
+   "lat": -85.0,
+   "lon": 45.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2392767.6881,
+   "northing": 2392767.6881,
+   "mgrs": "BFR9276792767",
+   "swLatLon": [
+    -85.00000239171709,
+    45.0
+   ]
+  },
+  {
+   "name": "polar lat -85.0 lon 90.0",
+   "lat": -85.0,
+   "lon": 90.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2555457.3914,
+   "northing": 2000000.0,
+   "mgrs": "BHN5545700000",
+   "swLatLon": [
+    -84.99999902345982,
+    89.9999484246954
+   ]
+  },
+  {
+   "name": "polar lat -85.0 lon 135.0",
+   "lat": -85.0,
+   "lon": 135.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2392767.6881,
+   "northing": 1607232.3119,
+   "mgrs": "BFJ9276707232",
+   "swLatLon": [
+    -85.00000239171709,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat -85.0 lon 179.9999",
+   "lat": -85.0,
+   "lon": 179.9999,
+   "zone": 0,
+   "north": false,
+   "easting": 2000000.9695,
+   "northing": 1444542.6086,
+   "mgrs": "BAG0000044542",
+   "swLatLon": [
+    -84.99999902345982,
+    179.9999484246954
+   ]
+  },
+  {
+   "name": "polar lat -85.0 lon -90.0",
+   "lat": -85.0,
+   "lon": -90.0,
+   "zone": 0,
+   "north": false,
+   "easting": 1444542.6086,
+   "northing": 2000000.0,
+   "mgrs": "ASN4454200000",
+   "swLatLon": [
+    -84.99999902345982,
+    -89.9999484246954
+   ]
+  },
+  {
+   "name": "polar lat -85.0 lon -135.0",
+   "lat": -85.0,
+   "lon": -135.0,
+   "zone": 0,
+   "north": false,
+   "easting": 1607232.3119,
+   "northing": 1607232.3119,
+   "mgrs": "AUJ0723207232",
+   "swLatLon": [
+    -85.00000239171709,
+    -135.0
+   ]
+  },
+  {
+   "name": "polar lat -85.0 lon -0.0001",
+   "lat": -85.0,
+   "lon": -0.0001,
+   "zone": 0,
+   "north": false,
+   "easting": 1999999.0305,
+   "northing": 2555457.3914,
+   "mgrs": "AZT9999955457",
+   "swLatLon": [
+    -84.99999902345982,
+    -5.1575304603022594e-05
+   ]
+  },
+  {
+   "name": "polar lat -89.9 lon 0.0",
+   "lat": -89.9,
+   "lon": 0.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2000000.0,
+   "northing": 2011102.3843,
+   "mgrs": "BAN0000011102",
+   "swLatLon": [
+    -89.89999895753319,
+    0.002580309816453396
+   ]
+  },
+  {
+   "name": "polar lat -89.9 lon 45.0",
+   "lat": -89.9,
+   "lon": 45.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2007850.5712,
+   "northing": 2007850.5712,
+   "mgrs": "BAN0785007850",
+   "swLatLon": [
+    -89.90000090702203,
+    45.0
+   ]
+  },
+  {
+   "name": "polar lat -89.9 lon 90.0",
+   "lat": -89.9,
+   "lon": 90.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2011102.3843,
+   "northing": 2000000.0,
+   "mgrs": "BAN1110200000",
+   "swLatLon": [
+    -89.89999895753319,
+    89.99741969018355
+   ]
+  },
+  {
+   "name": "polar lat -89.9 lon 135.0",
+   "lat": -89.9,
+   "lon": 135.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2007850.5712,
+   "northing": 1992149.4288,
+   "mgrs": "BAM0785092149",
+   "swLatLon": [
+    -89.90000090702203,
+    135.0
+   ]
+  },
+  {
+   "name": "polar lat -89.9 lon 179.9999",
+   "lat": -89.9,
+   "lon": 179.9999,
+   "zone": 0,
+   "north": false,
+   "easting": 2000000.0194,
+   "northing": 1988897.6157,
+   "mgrs": "BAM0000088897",
+   "swLatLon": [
+    -89.89999895753319,
+    179.99741969018353
+   ]
+  },
+  {
+   "name": "polar lat -89.9 lon -90.0",
+   "lat": -89.9,
+   "lon": -90.0,
+   "zone": 0,
+   "north": false,
+   "easting": 1988897.6157,
+   "northing": 2000000.0,
+   "mgrs": "AZN8889700000",
+   "swLatLon": [
+    -89.89999895753319,
+    -89.99741969018355
+   ]
+  },
+  {
+   "name": "polar lat -89.9 lon -135.0",
+   "lat": -89.9,
+   "lon": -135.0,
+   "zone": 0,
+   "north": false,
+   "easting": 1992149.4288,
+   "northing": 1992149.4288,
+   "mgrs": "AZM9214992149",
+   "swLatLon": [
+    -89.90000090702203,
+    -135.0
+   ]
+  },
+  {
+   "name": "polar lat -89.9 lon -0.0001",
+   "lat": -89.9,
+   "lon": -0.0001,
+   "zone": 0,
+   "north": false,
+   "easting": 1999999.9806,
+   "northing": 2011102.3843,
+   "mgrs": "AZN9999911102",
+   "swLatLon": [
+    -89.89999895753319,
+    -0.002580309816453396
+   ]
+  },
+  {
+   "name": "polar lat -90.0 lon 0.0",
+   "lat": -90.0,
+   "lon": 0.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "BAN0000000000",
+   "swLatLon": [
+    -89.99999363103514,
+    45.0
+   ]
+  },
+  {
+   "name": "polar lat -90.0 lon 45.0",
+   "lat": -90.0,
+   "lon": 45.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "BAN0000000000",
+   "swLatLon": [
+    -89.99999363103514,
+    45.0
+   ]
+  },
+  {
+   "name": "polar lat -90.0 lon 90.0",
+   "lat": -90.0,
+   "lon": 90.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "BAN0000000000",
+   "swLatLon": [
+    -89.99999363103514,
+    45.0
+   ]
+  },
+  {
+   "name": "polar lat -90.0 lon 135.0",
+   "lat": -90.0,
+   "lon": 135.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "BAN0000000000",
+   "swLatLon": [
+    -89.99999363103514,
+    45.0
+   ]
+  },
+  {
+   "name": "polar lat -90.0 lon 179.9999",
+   "lat": -90.0,
+   "lon": 179.9999,
+   "zone": 0,
+   "north": false,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "BAN0000000000",
+   "swLatLon": [
+    -89.99999363103514,
+    45.0
+   ]
+  },
+  {
+   "name": "polar lat -90.0 lon -90.0",
+   "lat": -90.0,
+   "lon": -90.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "BAN0000000000",
+   "swLatLon": [
+    -89.99999363103514,
+    45.0
+   ]
+  },
+  {
+   "name": "polar lat -90.0 lon -135.0",
+   "lat": -90.0,
+   "lon": -135.0,
+   "zone": 0,
+   "north": false,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "BAN0000000000",
+   "swLatLon": [
+    -89.99999363103514,
+    45.0
+   ]
+  },
+  {
+   "name": "polar lat -90.0 lon -0.0001",
+   "lat": -90.0,
+   "lon": -0.0001,
+   "zone": 0,
+   "north": false,
+   "easting": 2000000.0,
+   "northing": 2000000.0,
+   "mgrs": "BAN0000000000",
+   "swLatLon": [
+    -89.99999363103514,
+    45.0
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 79.966631,
+   "lon": 1.77311,
+   "zone": 31,
+   "north": true,
+   "easting": 476139.0191,
+   "northing": 8878112.9035,
+   "mgrs": "31XDJ7613978112",
+   "swLatLon": [
+    79.96662747622446,
+    1.7731351553373953
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 22.737899,
+   "lon": 60.57792,
+   "zone": 41,
+   "north": true,
+   "easting": 251252.5793,
+   "northing": 2516538.745,
+   "mgrs": "41QKF5125216538",
+   "swLatLon": [
+    22.73789677714327,
+    60.57791926738641
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -74.061726,
+   "lon": 46.08261,
+   "zone": 38,
+   "north": false,
+   "easting": 533181.7167,
+   "northing": 1780774.0666,
+   "mgrs": "38CNC3318180774",
+   "swLatLon": [
+    -74.0617221509459,
+    46.082602673454346
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 51.885048,
+   "lon": -118.341252,
+   "zone": 11,
+   "north": true,
+   "easting": 407688.659,
+   "northing": 5749103.204,
+   "mgrs": "11UMT0768849103",
+   "swLatLon": [
+    51.88505063409162,
+    -118.34125438861744
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 1.656129,
+   "lon": -2.796041,
+   "zone": 30,
+   "north": true,
+   "easting": 522686.1614,
+   "northing": 183053.6935,
+   "mgrs": "30NWG2268683053",
+   "swLatLon": [
+    1.6561272486145757,
+    -2.7960379563355127
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 23.557876,
+   "lon": -72.296371,
+   "zone": 18,
+   "north": true,
+   "easting": 775990.4877,
+   "northing": 2607882.5051,
+   "mgrs": "18QYM7599007882",
+   "swLatLon": [
+    23.55787595149863,
+    -72.29637088098912
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 6.643552,
+   "lon": 158.532239,
+   "zone": 57,
+   "north": true,
+   "easting": 448296.5434,
+   "northing": 734369.4858,
+   "mgrs": "57NVH4829634369",
+   "swLatLon": [
+    6.64355212850188,
+    158.5322386071424
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 35.463513,
+   "lon": 6.279994,
+   "zone": 32,
+   "north": true,
+   "easting": 253172.1703,
+   "northing": 3927847.569,
+   "mgrs": "32SKE5317227847",
+   "swLatLon": [
+    35.46351246042125,
+    6.279997650286356
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 68.722655,
+   "lon": -58.826881,
+   "zone": 21,
+   "north": true,
+   "easting": 426024.8545,
+   "northing": 7624536.5106,
+   "mgrs": "21WVS2602424536",
+   "swLatLon": [
+    68.72265481061152,
+    -58.826889741506385
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 62.086654,
+   "lon": -39.17542,
+   "zone": 24,
+   "north": true,
+   "easting": 490838.0909,
+   "northing": 6883845.9443,
+   "mgrs": "24VVP9083883845",
+   "swLatLon": [
+    62.086650021328865,
+    -39.17541214420919
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 5.073676,
+   "lon": -47.151833,
+   "zone": 23,
+   "north": true,
+   "easting": 261431.2275,
+   "northing": 561204.6687,
+   "mgrs": "23NKF6143161204",
+   "swLatLon": [
+    5.073674483400937,
+    -47.15183053815352
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 33.507292,
+   "lon": -22.879233,
+   "zone": 27,
+   "north": true,
+   "easting": 325449.0557,
+   "northing": 3709108.2604,
+   "mgrs": "27SUT2544909108",
+   "swLatLon": [
+    33.507294232507284,
+    -22.879228265341006
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -43.184958,
+   "lon": 48.068652,
+   "zone": 39,
+   "north": false,
+   "easting": 261781.8296,
+   "northing": 5214473.3689,
+   "mgrs": "39GTN6178114473",
+   "swLatLon": [
+    -43.18495671686446,
+    48.06864800531975
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -34.370253,
+   "lon": -101.083403,
+   "zone": 14,
+   "north": false,
+   "easting": 308425.5832,
+   "northing": 6194823.0384,
+   "mgrs": "14HLG0842594823",
+   "swLatLon": [
+    -34.37024882483323,
+    -101.08340380176183
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 1.360385,
+   "lon": -103.666212,
+   "zone": 13,
+   "north": true,
+   "easting": 648389.136,
+   "northing": 150404.7109,
+   "mgrs": "13NFB4838950404",
+   "swLatLon": [
+    1.3603830904947058,
+    -103.66620872940098
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 19.518913,
+   "lon": -85.50239,
+   "zone": 16,
+   "north": true,
+   "easting": 657142.2494,
+   "northing": 2158931.9426,
+   "mgrs": "16QFG5714258931",
+   "swLatLon": [
+    19.518908981831526,
+    -85.50238764940903
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -70.126258,
+   "lon": -18.086734,
+   "zone": 27,
+   "north": false,
+   "easting": 610493.4229,
+   "northing": 2217404.3173,
+   "mgrs": "27DXC1049317404",
+   "swLatLon": [
+    -70.12625633121841,
+    -18.086732201802644
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -23.521671,
+   "lon": -112.617947,
+   "zone": 12,
+   "north": false,
+   "easting": 334819.2845,
+   "northing": 7397798.5445,
+   "mgrs": "12KUU3481997798",
+   "swLatLon": [
+    -23.52167142410025,
+    -112.61794489492698
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 10.758452,
+   "lon": 93.611564,
+   "zone": 46,
+   "north": true,
+   "easting": 566864.5951,
+   "northing": 1189338.1831,
+   "mgrs": "46PES6686489338",
+   "swLatLon": [
+    10.75845486759384,
+    93.61156313619858
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 70.14372,
+   "lon": -84.701591,
+   "zone": 16,
+   "north": true,
+   "easting": 587110.7693,
+   "northing": 7783544.1575,
+   "mgrs": "16WEC8711083544",
+   "swLatLon": [
+    70.14372316027323,
+    -84.70159775682166
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 8.244126,
+   "lon": -133.913355,
+   "zone": 8,
+   "north": true,
+   "easting": 619682.0063,
+   "northing": 911449.2706,
+   "mgrs": "08PPQ1968211449",
+   "swLatLon": [
+    8.244128062226855,
+    -133.91335051218869
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -10.403275,
+   "lon": 26.82713,
+   "zone": 35,
+   "north": false,
+   "easting": 481078.0242,
+   "northing": 8849994.3038,
+   "mgrs": "35LMJ8107849994",
+   "swLatLon": [
+    -10.403273228085341,
+    26.827134347795532
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -44.244415,
+   "lon": -150.181304,
+   "zone": 5,
+   "north": false,
+   "easting": 725059.1897,
+   "northing": 5097115.8033,
+   "mgrs": "05GQL2505997115",
+   "swLatLon": [
+    -44.24441763150415,
+    -150.18129998834735
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 60.014724,
+   "lon": -63.987858,
+   "zone": 20,
+   "north": true,
+   "easting": 444925.4217,
+   "northing": 6653462.219,
+   "mgrs": "20VMM4492553462",
+   "swLatLon": [
+    60.0147265331773,
+    -63.98785667096664
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -58.05077,
+   "lon": -14.978838,
+   "zone": 28,
+   "north": false,
+   "easting": 501249.0981,
+   "northing": 3565637.2413,
+   "mgrs": "28EEA0124965637",
+   "swLatLon": [
+    -58.05076767489141,
+    -14.978831192613741
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 12.252525,
+   "lon": -49.413914,
+   "zone": 22,
+   "north": true,
+   "easting": 672517.682,
+   "northing": 1354984.4564,
+   "mgrs": "22PFU7251754984",
+   "swLatLon": [
+    12.25252540387849,
+    -49.41391567047416
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 50.45876,
+   "lon": -47.404921,
+   "zone": 23,
+   "north": true,
+   "easting": 329301.4245,
+   "northing": 5592403.153,
+   "mgrs": "23ULR2930192403",
+   "swLatLon": [
+    50.45876313975901,
+    -47.404920094876886
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 70.438202,
+   "lon": -36.069719,
+   "zone": 24,
+   "north": true,
+   "easting": 609463.7054,
+   "northing": 7817379.7829,
+   "mgrs": "24WXD0946317379",
+   "swLatLon": [
+    70.43819955491068,
+    -36.06972485448824
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -8.883746,
+   "lon": -121.723537,
+   "zone": 10,
+   "north": false,
+   "easting": 640356.7757,
+   "northing": 9017759.0242,
+   "mgrs": "10LFR4035617759",
+   "swLatLon": [
+    -8.883741705604951,
+    -121.72353952190652
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -34.281729,
+   "lon": -145.703049,
+   "zone": 6,
+   "north": false,
+   "easting": 619377.5193,
+   "northing": 6205844.6399,
+   "mgrs": "06HXH1937705844",
+   "swLatLon": [
+    -34.28173026333579,
+    -145.70304918982126
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 45.844832,
+   "lon": -136.237766,
+   "zone": 8,
+   "north": true,
+   "easting": 403889.5656,
+   "northing": 5077552.3762,
+   "mgrs": "08TMR0388977552",
+   "swLatLon": [
+    45.84483310455121,
+    -136.2377668689866
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -49.96977,
+   "lon": -4.178496,
+   "zone": 30,
+   "north": false,
+   "easting": 415488.7131,
+   "northing": 4464064.8492,
+   "mgrs": "30FVK1548864064",
+   "swLatLon": [
+    -49.96977310956244,
+    -4.178499047785217
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -33.509234,
+   "lon": 125.831912,
+   "zone": 51,
+   "north": false,
+   "easting": 763057.4179,
+   "northing": 6288666.2545,
+   "mgrs": "51HYC6305788666",
+   "swLatLon": [
+    -33.50923176814918,
+    125.83191281067796
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -3.459431,
+   "lon": -94.377851,
+   "zone": 15,
+   "north": false,
+   "easting": 346942.4556,
+   "northing": 9617513.2023,
+   "mgrs": "15MUS4694217513",
+   "swLatLon": [
+    -3.4594283076445462,
+    -94.37785059613302
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -51.964907,
+   "lon": -35.102965,
+   "zone": 25,
+   "north": false,
+   "easting": 355525.2289,
+   "northing": 4240776.1918,
+   "mgrs": "25FCC5552540776",
+   "swLatLon": [
+    -51.964904301286204,
+    -35.1029609275538
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -49.986711,
+   "lon": -130.546893,
+   "zone": 9,
+   "north": false,
+   "easting": 389110.4669,
+   "northing": 4461700.2164,
+   "mgrs": "09FUE8911061700",
+   "swLatLon": [
+    -49.98670845637366,
+    -130.5468924562236
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -1.462271,
+   "lon": 58.413468,
+   "zone": 40,
+   "north": false,
+   "easting": 657248.7595,
+   "northing": 9838325.262,
+   "mgrs": "40MFD5724838325",
+   "swLatLon": [
+    -1.462268848830094,
+    58.413465666454044
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -66.999499,
+   "lon": 57.399057,
+   "zone": 40,
+   "north": false,
+   "easting": 517400.116,
+   "northing": 2568619.9678,
+   "mgrs": "40DEL1740068619",
+   "swLatLon": [
+    -66.99950317431477,
+    57.39906587621215
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -9.66288,
+   "lon": -78.906641,
+   "zone": 17,
+   "north": false,
+   "easting": 729703.8255,
+   "northing": 8931155.736,
+   "mgrs": "17LQK2970331155",
+   "swLatLon": [
+    -9.662882151325334,
+    -78.90664395167343
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -43.427114,
+   "lon": -148.980282,
+   "zone": 6,
+   "north": false,
+   "easting": 339711.1781,
+   "northing": 5189848.5762,
+   "mgrs": "06GUS3971189848",
+   "swLatLon": [
+    -43.427114754692965,
+    -148.9802780476426
+   ]
+  },
+  {
+   "name": "random",
+   "lat": -16.200568,
+   "lon": -102.439493,
+   "zone": 13,
+   "north": false,
+   "easting": 773755.1764,
+   "northing": 8207171.2468,
+   "mgrs": "13KGC7375507171",
+   "swLatLon": [
+    -16.20056567726399,
+    -102.4394900049382
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 16.440433,
+   "lon": -101.891174,
+   "zone": 14,
+   "north": true,
+   "easting": 191244.6572,
+   "northing": 1819860.6786,
+   "mgrs": "14QJD9124419860",
+   "swLatLon": [
+    16.44043136763837,
+    -101.89117544704737
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 34.623489,
+   "lon": -54.664955,
+   "zone": 21,
+   "north": true,
+   "easting": 714069.2921,
+   "northing": 3833770.0075,
+   "mgrs": "21SYU1406933770",
+   "swLatLon": [
+    34.623493393970534,
+    -54.664952609973746
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 20.063134,
+   "lon": 94.468727,
+   "zone": 46,
+   "north": true,
+   "easting": 653588.1263,
+   "northing": 2219143.1661,
+   "mgrs": "46QFH5358819143",
+   "swLatLon": [
+    20.063136986369035,
+    94.46873060092356
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 25.101312,
+   "lon": 65.911676,
+   "zone": 41,
+   "north": true,
+   "easting": 793656.4585,
+   "northing": 2779333.1256,
+   "mgrs": "41RQH9365679333",
+   "swLatLon": [
+    25.10131536861761,
+    65.91167649139993
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 64.58765,
+   "lon": -33.309386,
+   "zone": 25,
+   "north": true,
+   "easting": 485185.919,
+   "northing": 7162536.4041,
+   "mgrs": "25WDM8518562536",
+   "swLatLon": [
+    64.58765084235898,
+    -33.309394760756625
+   ]
+  },
+  {
+   "name": "random",
+   "lat": 36.284663,
+   "lon": -160.118012,
+   "zone": 4,
+   "north": true,
+   "easting": 399597.6838,
+   "northing": 4016102.245,
+   "mgrs": "04SCF9959716102",
+   "swLatLon": [
+    36.2846652790026,
+    -160.11801407858255
+   ]
+  },
+  {
+   "name": "random polar",
+   "lat": 86.896797,
+   "lon": 121.688332,
+   "zone": 0,
+   "north": true,
+   "easting": 2293235.1235,
+   "northing": 2181023.2196,
+   "mgrs": "ZCJ9323581023",
+   "swLatLon": [
+    86.8967927906796,
+    121.68833878176254
+   ]
+  },
+  {
+   "name": "random polar",
+   "lat": -85.730971,
+   "lon": -173.836679,
+   "zone": 0,
+   "north": false,
+   "easting": 1949091.2558,
+   "northing": 1528566.3632,
+   "mgrs": "AZH4909128566",
+   "swLatLon": [
+    -85.73097245886291,
+    -173.83670656479674
+   ]
+  },
+  {
+   "name": "random polar",
+   "lat": -80.229372,
+   "lon": -173.407747,
+   "zone": 0,
+   "north": false,
+   "easting": 1875174.5813,
+   "northing": 919886.3404,
+   "mgrs": "AYB7517419886",
+   "swLatLon": [
+    -80.22937333436973,
+    -173.4077417763385
+   ]
+  },
+  {
+   "name": "random polar",
+   "lat": -85.828847,
+   "lon": 174.066647,
+   "zone": 0,
+   "north": false,
+   "easting": 2047891.3894,
+   "northing": 1539188.2615,
+   "mgrs": "BAH4789139188",
+   "swLatLon": [
+    -85.82884903154576,
+    174.06663034417937
+   ]
+  },
+  {
+   "name": "random polar",
+   "lat": 87.540028,
+   "lon": 152.57494,
+   "zone": 0,
+   "north": true,
+   "easting": 2125812.2722,
+   "northing": 2242456.8674,
+   "mgrs": "ZBK2581242456",
+   "swLatLon": [
+    87.54002999107921,
+    152.5748620973382
+   ]
+  },
+  {
+   "name": "random polar",
+   "lat": 88.915831,
+   "lon": 70.92472,
+   "zone": 0,
+   "north": true,
+   "easting": 2113762.3978,
+   "northing": 1960661.1973,
+   "mgrs": "ZBG1376260661",
+   "swLatLon": [
+    88.91583102144317,
+    70.9248720779125
+   ]
+  },
+  {
+   "name": "random polar",
+   "lat": -80.311168,
+   "lon": -145.72353,
+   "zone": 0,
+   "north": false,
+   "easting": 1392795.6306,
+   "northing": 1109085.9623,
+   "mgrs": "ARD9279509085",
+   "swLatLon": [
+    -80.3111639244976,
+    -145.72353810150372
+   ]
+  },
+  {
+   "name": "random polar",
+   "lat": 85.199475,
+   "lon": -63.590962,
+   "zone": 0,
+   "north": true,
+   "easting": 1522379.4067,
+   "northing": 1762813.1645,
+   "mgrs": "YTE2237962813",
+   "swLatLon": [
+    85.19947709270708,
+    -63.590989826624224
+   ]
+  },
+  {
+   "name": "random polar",
+   "lat": 85.63522,
+   "lon": -178.195072,
+   "zone": 0,
+   "north": true,
+   "easting": 1984729.7714,
+   "northing": 2484579.0055,
+   "mgrs": "YZM8472984579",
+   "swLatLon": [
+    85.63521547730699,
+    -178.19504177990322
+   ]
+  },
+  {
+   "name": "random polar",
+   "lat": -84.814409,
+   "lon": 132.619447,
+   "zone": 0,
+   "north": false,
+   "easting": 2423934.2745,
+   "northing": 1609906.8109,
+   "mgrs": "BGJ2393409906",
+   "swLatLon": [
+    -84.81440561596214,
+    132.61945457194264
+   ]
+  },
+  {
+   "name": "random polar",
+   "lat": -85.375331,
+   "lon": 16.579131,
+   "zone": 0,
+   "north": false,
+   "easting": 2146583.3815,
+   "northing": 2492359.1291,
+   "mgrs": "BBS4658392359",
+   "swLatLon": [
+    -85.37532749957155,
+    16.579131861360374
+   ]
+  },
+  {
+   "name": "random polar",
+   "lat": -82.397956,
+   "lon": 84.004581,
+   "zone": 0,
+   "north": false,
+   "easting": 2840575.2,
+   "northing": 2088280.0648,
+   "mgrs": "BLN4057588280",
+   "swLatLon": [
+    -82.39795291641117,
+    84.00455378106193
+   ]
+  }
+ ]
+}
