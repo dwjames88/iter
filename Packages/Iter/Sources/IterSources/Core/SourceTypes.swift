@@ -27,6 +27,26 @@ public struct GeocodeResult: Codable, Hashable, Sendable {
     }
 }
 
+/// A named area's real outline (an OSM boundary relation), with what is needed to cite it.
+public struct NamedBoundary: Codable, Hashable, Sendable {
+    /// The name as the source gives it, e.g. "Yosemite National Park".
+    public var name: String
+    public var polygon: GeoPolygon
+    /// The source's stable id, e.g. "relation/1643367".
+    public var externalID: String?
+    /// What kind of area, as the source tags it, e.g. "national_park", "protected_area", "nature_reserve".
+    public var areaKind: String?
+    public var citation: Citation
+
+    public init(name: String, polygon: GeoPolygon, externalID: String? = nil, areaKind: String? = nil, citation: Citation) {
+        self.name = name
+        self.polygon = polygon
+        self.externalID = externalID
+        self.areaKind = areaKind
+        self.citation = citation
+    }
+}
+
 /// What a text-evidence source is asked for. IterDiscovery's `QueryPlan` maps onto this.
 public struct TextQuery: Hashable, Sendable {
     public var terms: [String]

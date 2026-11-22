@@ -34,11 +34,25 @@ public protocol Geocoder: SourceDescribing {
     func boundary(of name: String, near coordinate: Coordinate?) async throws -> GeoPolygon?
 }
 
+/// Real outlines of named areas (a national park, a protected area) from open map data. MapKit gives no outlines, so
+/// this is how a feature search like "waterfalls in Yosemite" is held inside the park's real boundary.
+public protocol BoundaryProvider: SourceDescribing {
+    /// The best-matching named area near `near` (when given), or nil when none matches. Never invents an outline.
+    func boundary(named name: String, near: Coordinate?) async throws -> NamedBoundary?
+}
+
 // MARK: Weather
 
 /// Hourly rows across `span`. Rows are at the model's native valid times (UTC instants; never shifted to local time).
 public protocol ForecastProvider: SourceDescribing {
     func forecast(at coordinate: Coordinate, span: TimeSpan) async throws -> Sourced<HourlySeries>
+}
+
+/// A forecast source that can serve many points in one pass, sharing downloads between nearby points (NOMADS tiles).
+/// The answer has one entry per distinct input coordinate: a series, or the error for that point. Points the source
+/// does not cover get `.outsideCoverage` without a request. Cancellation stops the remaining downloads.
+public protocol BatchForecastProvider: ForecastProvider {
+    func forecasts(at coordinates: [Coordinate], span: TimeSpan) async -> [Coordinate: Result<Sourced<HourlySeries>, SourceError>]
 }
 
 /// Latest observations near a point, nearest first. Each carries its distance and origin in its provenance.

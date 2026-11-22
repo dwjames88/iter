@@ -1,7 +1,8 @@
 import Testing
 import IterAI
 
-// Smoke test: the target builds and links. Replace with real tests when the target is filled.
+// Smoke test: the contract links. The AI worker replaces this file with real tests.
 @Test func IterAILinks() {
-    #expect(IterAIModule.name == "IterAI")
+    #expect(AIAvailability.available.isAvailable)
+    #expect(AIError.timedOut.isRetryable)
 }

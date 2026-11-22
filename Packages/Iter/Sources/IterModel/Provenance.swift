@@ -32,6 +32,8 @@ public enum DataKind: String, Codable, Sendable, CaseIterable {
     case astronomy, elevation, horizon, routing, eta, imagery
     // Added in Phase 2 (sources layer): official alerts, astronomical seeing, magnetic field, grid references.
     case alerts, seeing, magnetic, gridReference
+    // Added in Phase 4 (discovery): real outlines of named areas (parks, protected areas).
+    case boundary
 }
 
 /// The licence terms that travel with a datum.
