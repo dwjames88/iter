@@ -81,55 +81,49 @@ actor NOMADSEngine {
 
     /// Fetches every hour of the plan for every group of boxes, one `Run` per group, in group order.
     ///
-    /// Order: first the first hour of each model alone (finding the right cycle; for the first group that has a box for
-    /// the model), then near term first: hour by hour, every group's file for that hour before any group's next hour, two
-    /// at a time. A caller that stops after the first part therefore has the near hours of every tile. Identical files
-    /// (the same box, cycle and hour) are fetched once, also when requested at the same moment. Cancelling stops the rest.
+    /// Order: near term first, hour by hour, every group's file for that hour before any group's next hour, two at a
+    /// time. A caller that stops after the first part therefore has the near hours of every tile. The first file of each
+    /// model is fetched alone (finding the right cycle) at the moment the plan first needs that model, so far-term GFS
+    /// probes never jump the queue. Identical files (the same box, cycle and hour) are fetched once, also when requested
+    /// at the same moment. Cancelling stops the rest.
     func runBatch(_ plan: NOMADSHourPlan, groups: [Boxes], descriptor: SourceDescriptor) async -> [Run] {
         var runs = Array(repeating: Run(), count: groups.count)
         for g in runs.indices { runs[g].requestedHours = plan.hours.count }
         var results: [Item: Outcome] = [:]
+        var items: [Item] = []
+        for i in plan.hours.indices { for g in groups.indices { items.append(Item(hour: i, group: g)) } }
 
-        var probe: [Item] = []
-        var seen = Set<NOMADSModel>()
-        for i in plan.hours.indices {
-            guard let m = plan.hours[i].primary?.model, seen.insert(m).inserted,
-                  let g = groups.indices.first(where: { groups[$0][m] != nil }) else { continue }
-            probe.append(Item(hour: i, group: g))
-        }
         var fatal: SourceError?
         var stop = false
-        for item in probe {
-            let o = await fetchHour(plan.hours[item.hour], item: item, boxes: groups[item.group], descriptor: descriptor)
-            results[item] = o
-            if o.isFatal { stop = true; fatal = o.errors.last; break }
-        }
-        let probed = Set(probe)
-        var pending: [Item] = []
-        for i in plan.hours.indices {
-            for g in groups.indices where !probed.contains(Item(hour: i, group: g)) { pending.append(Item(hour: i, group: g)) }
-        }
-
-        if !stop {
-            await withTaskGroup(of: (Item, Outcome).self) { group in
-                var inFlight = 0
-                var next = 0
-                while next < pending.count || inFlight > 0 {
-                    while inFlight < Self.maxConcurrent, next < pending.count, !stop, !Task.isCancelled {
-                        let item = pending[next]
+        var probed = Set<NOMADSModel>()
+        await withTaskGroup(of: (Item, Outcome).self) { group in
+            var inFlight = 0
+            var next = 0
+            while next < items.count || inFlight > 0 {
+                while inFlight < Self.maxConcurrent, next < items.count, !stop, !Task.isCancelled {
+                    let item = items[next]
+                    if let m = plan.hours[item.hour].primary?.model, !probed.contains(m), groups[item.group][m] != nil {
+                        // The first file of this model goes alone: wait for the others, then fetch it here.
+                        if inFlight > 0 { break }
+                        probed.insert(m)
                         next += 1
-                        inFlight += 1
-                        group.addTask {
-                            (item, await self.fetchHour(plan.hours[item.hour], item: item, boxes: groups[item.group],
-                                                        descriptor: descriptor))
-                        }
+                        let o = await fetchHour(plan.hours[item.hour], item: item, boxes: groups[item.group], descriptor: descriptor)
+                        results[item] = o
+                        if o.isFatal { stop = true; fatal = fatal ?? o.errors.last }
+                        continue
                     }
-                    guard let (item, o) = await group.next() else { break }
-                    inFlight -= 1
-                    results[item] = o
-                    if o.isFatal { stop = true; fatal = fatal ?? o.errors.last }
-                    if (stop || Task.isCancelled) && inFlight == 0 { break }
+                    next += 1
+                    inFlight += 1
+                    group.addTask {
+                        (item, await self.fetchHour(plan.hours[item.hour], item: item, boxes: groups[item.group],
+                                                    descriptor: descriptor))
+                    }
                 }
+                guard let (item, o) = await group.next() else { break }
+                inFlight -= 1
+                results[item] = o
+                if o.isFatal { stop = true; fatal = fatal ?? o.errors.last }
+                if (stop || Task.isCancelled) && inFlight == 0 { break }
             }
         }
         if fatal == nil, Task.isCancelled { fatal = .cancelled }
