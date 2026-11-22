@@ -1,0 +1,112 @@
+{
+    "@context": [
+        "https://geojson.org/geojson-ld/geojson-context.jsonld",
+        {
+            "@version": "1.1",
+            "wx": "https://api.weather.gov/ontology#",
+            "s": "https://schema.org/",
+            "geo": "http://www.opengis.net/ont/geosparql#",
+            "unit": "http://codes.wmo.int/common/unit/",
+            "@vocab": "https://api.weather.gov/ontology#",
+            "geometry": {
+                "@id": "s:GeoCoordinates",
+                "@type": "geo:wktLiteral"
+            },
+            "city": "s:addressLocality",
+            "state": "s:addressRegion",
+            "distance": {
+                "@id": "s:Distance",
+                "@type": "s:QuantitativeValue"
+            },
+            "bearing": {
+                "@type": "s:QuantitativeValue"
+            },
+            "value": {
+                "@id": "s:value"
+            },
+            "unitCode": {
+                "@id": "s:unitCode",
+                "@type": "@id"
+            },
+            "forecastOffice": {
+                "@type": "@id"
+            },
+            "forecastGridData": {
+                "@type": "@id"
+            },
+            "publicZone": {
+                "@type": "@id"
+            },
+            "county": {
+                "@type": "@id"
+            }
+        }
+    ],
+    "id": "https://api.weather.gov/points/36.5785,-118.2923",
+    "type": "Feature",
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -118.2923,
+            36.5785
+        ]
+    },
+    "properties": {
+        "@id": "https://api.weather.gov/points/36.5785,-118.2923",
+        "@type": "wx:Point",
+        "cwa": "VEF",
+        "type": "land",
+        "forecastOffice": "https://api.weather.gov/offices/VEF",
+        "gridId": "VEF",
+        "gridX": 14,
+        "gridY": 134,
+        "forecast": "https://api.weather.gov/gridpoints/VEF/14,134/forecast",
+        "forecastHourly": "https://api.weather.gov/gridpoints/VEF/14,134/forecast/hourly",
+        "forecastGridData": "https://api.weather.gov/gridpoints/VEF/14,134",
+        "observationStations": "https://api.weather.gov/gridpoints/VEF/14,134/stations",
+        "relativeLocation": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -118.0806101,
+                    36.5744471
+                ]
+            },
+            "properties": {
+                "city": "Lone Pine",
+                "state": "CA",
+                "distance": {
+                    "unitCode": "wmoUnit:m",
+                    "value": 15765.454899326
+                },
+                "bearing": {
+                    "unitCode": "wmoUnit:degree_(angle)",
+                    "value": 271
+                }
+            }
+        },
+        "forecastZone": "https://api.weather.gov/zones/forecast/CAZ519",
+        "county": "https://api.weather.gov/zones/county/CAC027",
+        "fireWeatherZone": "https://api.weather.gov/zones/fire/CAZ226",
+        "timeZone": "America/Los_Angeles",
+        "radarStation": "KHNX",
+        "astronomicalData": {
+            "sunrise": "2026-11-22T06:38:15-08:00",
+            "sunset": "2026-11-22T16:40:29-08:00",
+            "transit": "2026-11-22T11:39:22-08:00",
+            "civilTwilightBegin": "2026-11-22T06:10:26-08:00",
+            "civilTwilightEnd": "2026-11-22T17:08:18-08:00",
+            "nauticalTwilightBegin": "2026-11-22T05:38:53-08:00",
+            "nauticalTwilightEnd": "2026-11-22T17:39:51-08:00",
+            "astronomicalTwilightBegin": "2026-11-22T05:08:02-08:00",
+            "astronomicalTwilightEnd": "2026-11-22T18:10:42-08:00"
+        },
+        "nwr": {
+            "transmitter": "WZ2524",
+            "sameCode": "006027",
+            "areaBroadcast": "https://api.weather.gov/radio/WZ2524/broadcast",
+            "pointBroadcast": "https://api.weather.gov/points/36.5785,-118.2923/radio"
+        }
+    }
+}

@@ -1,0 +1,547 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-22T13:49:02Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 539186454,
+  "lat": 46.5389057,
+  "lon": 8.5195359,
+  "tags": {
+    "ele": "2963",
+    "name": "Pizzo Lucendro",
+    "natural": "peak",
+    "summit:cross": "yes",
+    "wikidata": "Q2250387",
+    "wikipedia": "it:Pizzo Lucendro"
+  }
+},
+{
+  "type": "node",
+  "id": 815571199,
+  "lat": 46.5351638,
+  "lon": 8.5012997,
+  "tags": {
+    "ele": "2725",
+    "name": "Ronggergrat",
+    "natural": "peak",
+    "wikidata": "Q22461163"
+  }
+},
+{
+  "type": "node",
+  "id": 1372361217,
+  "lat": 46.5827200,
+  "lon": 8.6115600,
+  "tags": {
+    "ele": "2950",
+    "name": "Rotstock",
+    "natural": "peak",
+    "wikidata": "Q22467686"
+  }
+},
+{
+  "type": "node",
+  "id": 1458176574,
+  "lat": 46.5643835,
+  "lon": 8.6346847,
+  "tags": {
+    "ele": "2776",
+    "name": "Giübin",
+    "natural": "peak",
+    "wikidata": "Q1528882"
+  }
+},
+{
+  "type": "node",
+  "id": 2338288336,
+  "lat": 46.5426878,
+  "lon": 8.5477032,
+  "tags": {
+    "ele": "2738",
+    "name": "Fibbia",
+    "natural": "peak",
+    "wikidata": "Q3652702"
+  }
+},
+{
+  "type": "node",
+  "id": 2418151061,
+  "lat": 46.5868300,
+  "lon": 8.5392991,
+  "tags": {
+    "ele": "2660.8",
+    "name": "Winterhorn",
+    "natural": "peak",
+    "wikidata": "Q22627917"
+  }
+},
+{
+  "type": "node",
+  "id": 2470511836,
+  "lat": 46.5781560,
+  "lon": 8.6149390,
+  "tags": {
+    "ele": "2999",
+    "name": "Pizzo Centrale",
+    "natural": "peak",
+    "wikidata": "Q691668",
+    "wikipedia": "it:Pizzo Centrale"
+  }
+},
+{
+  "type": "node",
+  "id": 3908187809,
+  "lat": 46.5355116,
+  "lon": 8.5749641,
+  "tags": {
+    "tourism": "viewpoint"
+  }
+},
+{
+  "type": "node",
+  "id": 4250148382,
+  "lat": 46.5624124,
+  "lon": 8.4981367,
+  "tags": {
+    "ele": "2079",
+    "name": "Sunnsbiel",
+    "natural": "peak",
+    "wikidata": "Q22445141"
+  }
+},
+{
+  "type": "node",
+  "id": 5337203948,
+  "lat": 46.5399897,
+  "lon": 8.5656291,
+  "tags": {
+    "tourism": "viewpoint"
+  }
+},
+{
+  "type": "node",
+  "id": 5951744776,
+  "lat": 46.5526538,
+  "lon": 8.5690867,
+  "tags": {
+    "description": "Goethe's Scheideblick",
+    "direction": "180",
+    "tourism": "viewpoint",
+    "website": "https://www.srf.ch/sendungen/schweiz-aktuell/goethe-am-gotthard"
+  }
+},
+{
+  "type": "node",
+  "id": 6205739240,
+  "lat": 46.5476178,
+  "lon": 8.5385115,
+  "tags": {
+    "ele": "2726",
+    "name": "Pizzo della Valletta",
+    "natural": "peak",
+    "wikidata": "Q22392345"
+  }
+},
+{
+  "type": "node",
+  "id": 6488310706,
+  "lat": 46.5269300,
+  "lon": 8.5570432,
+  "tags": {
+    "name": "Punto Panoramico della Val Bedretto",
+    "name:zh": "瑞士2号公路观景点1",
+    "tourism": "viewpoint"
+  }
+},
+{
+  "type": "node",
+  "id": 7881555785,
+  "lat": 46.5345029,
+  "lon": 8.5755343,
+  "tags": {
+    "tourism": "viewpoint"
+  }
+},
+{
+  "type": "node",
+  "id": 8617957511,
+  "lat": 46.5806519,
+  "lon": 8.5777372,
+  "tags": {
+    "ele": "2729",
+    "name": "Blauberg",
+    "natural": "peak",
+    "wikidata": "Q22565649"
+  }
+},
+{
+  "type": "node",
+  "id": 8856998554,
+  "lat": 46.5545565,
+  "lon": 8.5778108,
+  "tags": {
+    "tourism": "viewpoint"
+  }
+},
+{
+  "type": "node",
+  "id": 9464494676,
+  "lat": 46.5716200,
+  "lon": 8.4938300,
+  "tags": {
+    "ele": "1986",
+    "name": "Höhenbiel",
+    "natural": "peak",
+    "wikidata": "Q22444343"
+  }
+},
+{
+  "type": "node",
+  "id": 9544412639,
+  "lat": 46.5486684,
+  "lon": 8.5157812,
+  "tags": {
+    "ele": "2822",
+    "name": "Stägenhorn",
+    "natural": "peak"
+  }
+},
+{
+  "type": "node",
+  "id": 9544412643,
+  "lat": 46.5596409,
+  "lon": 8.5138811,
+  "tags": {
+    "ele": "2765",
+    "name": "Siwerbenhorn",
+    "natural": "peak"
+  }
+},
+{
+  "type": "node",
+  "id": 9544412645,
+  "lat": 46.5669294,
+  "lon": 8.5210549,
+  "tags": {
+    "ele": "2686",
+    "name": "Pizzo dell'Uomo",
+    "natural": "peak",
+    "wikidata": "Q22392185",
+    "wikipedia": "de:Pizzo dell’Uomo (2685 m)"
+  }
+},
+{
+  "type": "node",
+  "id": 9544412648,
+  "lat": 46.5772701,
+  "lon": 8.5211502,
+  "tags": {
+    "ele": "2591",
+    "name": "Pizzo d'Orsirora",
+    "natural": "peak",
+    "wikidata": "Q22391680"
+  }
+},
+{
+  "type": "node",
+  "id": 9982557409,
+  "lat": 46.5066397,
+  "lon": 8.5781500,
+  "tags": {
+    "ele": "2170",
+    "name": "Motto di Pian Pizzo",
+    "natural": "peak",
+    "wikidata": "Q22408510"
+  }
+},
+{
+  "type": "node",
+  "id": 9982557410,
+  "lat": 46.5091553,
+  "lon": 8.5766094,
+  "tags": {
+    "ele": "2050",
+    "name": "Motto del Toro",
+    "natural": "peak",
+    "wikidata": "Q22408360"
+  }
+},
+{
+  "type": "node",
+  "id": 10007219006,
+  "lat": 46.5367086,
+  "lon": 8.5356864,
+  "tags": {
+    "ele": "2544",
+    "name": "Poncionetto",
+    "natural": "peak"
+  }
+},
+{
+  "type": "node",
+  "id": 10061126216,
+  "lat": 46.5252155,
+  "lon": 8.5018987,
+  "tags": {
+    "ele": "2474",
+    "name": "Poncionetto",
+    "natural": "peak",
+    "wikidata": "Q22548742"
+  }
+},
+{
+  "type": "node",
+  "id": 10061169272,
+  "lat": 46.5302694,
+  "lon": 8.5239254,
+  "tags": {
+    "ele": "2454",
+    "name": "Motto di Vinei",
+    "natural": "peak",
+    "wikidata": "Q22408552"
+  }
+},
+{
+  "type": "node",
+  "id": 10687863329,
+  "lat": 46.5737495,
+  "lon": 8.6295658,
+  "tags": {
+    "ele": "2876",
+    "name": "Pizzo Prevat",
+    "natural": "peak",
+    "wikidata": "Q2097648"
+  }
+},
+{
+  "type": "node",
+  "id": 10687863330,
+  "lat": 46.5748908,
+  "lon": 8.6322633,
+  "tags": {
+    "ele": "2858",
+    "name": "Rotstock",
+    "natural": "peak"
+  }
+},
+{
+  "type": "node",
+  "id": 10687863333,
+  "lat": 46.5750371,
+  "lon": 8.6112119,
+  "tags": {
+    "ele": "2924",
+    "name": "Tritthorn",
+    "natural": "peak",
+    "wikidata": "Q22526120"
+  }
+},
+{
+  "type": "node",
+  "id": 10687863334,
+  "lat": 46.5741466,
+  "lon": 8.6043190,
+  "tags": {
+    "ele": "2828",
+    "name": "Sellabödeli",
+    "natural": "peak"
+  }
+},
+{
+  "type": "node",
+  "id": 10687863335,
+  "lat": 46.5737963,
+  "lon": 8.5957372,
+  "tags": {
+    "name": "Gloggentürmli",
+    "natural": "peak"
+  }
+},
+{
+  "type": "node",
+  "id": 10687863349,
+  "lat": 46.5770338,
+  "lon": 8.5813815,
+  "tags": {
+    "ele": "2744",
+    "name": "Schwarzlochhorn",
+    "natural": "peak"
+  }
+},
+{
+  "type": "node",
+  "id": 10687863350,
+  "lat": 46.5812318,
+  "lon": 8.5600195,
+  "tags": {
+    "ele": "1953",
+    "name": "Brigghubel",
+    "natural": "peak"
+  }
+},
+{
+  "type": "node",
+  "id": 10687927364,
+  "lat": 46.5620476,
+  "lon": 8.5813239,
+  "tags": {
+    "ele": "2737",
+    "name": "Monte Prosa",
+    "natural": "peak",
+    "wikidata": "Q22365990",
+    "wikipedia": "en:Monte Prosa"
+  }
+},
+{
+  "type": "node",
+  "id": 10688158426,
+  "lat": 46.5552846,
+  "lon": 8.6169751,
+  "tags": {
+    "ele": "2616",
+    "name": "Posmeda",
+    "natural": "peak",
+    "wikidata": "Q22557526"
+  }
+},
+{
+  "type": "node",
+  "id": 10688204864,
+  "lat": 46.5492314,
+  "lon": 8.6108628,
+  "tags": {
+    "name": "Poncione di Löita del Pizzo",
+    "natural": "peak",
+    "wikidata": "Q22548639"
+  }
+},
+{
+  "type": "node",
+  "id": 10688204901,
+  "lat": 46.5512235,
+  "lon": 8.6064280,
+  "tags": {
+    "ele": "2526",
+    "name": "Pizzo Canariscio",
+    "natural": "peak",
+    "wikidata": "Q22391223"
+  }
+},
+{
+  "type": "node",
+  "id": 10965235338,
+  "lat": 46.5525154,
+  "lon": 8.5756146,
+  "tags": {
+    "direction": "0-360",
+    "tourism": "viewpoint"
+  }
+},
+{
+  "type": "node",
+  "id": 11034923172,
+  "lat": 46.5496804,
+  "lon": 8.5685495,
+  "tags": {
+    "tourism": "viewpoint"
+  }
+},
+{
+  "type": "node",
+  "id": 12040710391,
+  "lat": 46.6058114,
+  "lon": 8.5948951,
+  "tags": {
+    "ele": "2455",
+    "name": "Firnstock",
+    "natural": "peak",
+    "wikidata": "Q22469789"
+  }
+},
+{
+  "type": "node",
+  "id": 12040710461,
+  "lat": 46.5985024,
+  "lon": 8.6084694,
+  "tags": {
+    "ele": "2937",
+    "name": "St. Annahorn",
+    "natural": "peak"
+  }
+},
+{
+  "type": "node",
+  "id": 12040710565,
+  "lat": 46.5939193,
+  "lon": 8.5338117,
+  "tags": {
+    "ele": "2262",
+    "name": "Hochstock",
+    "natural": "peak",
+    "wikidata": "Q22629674"
+  }
+},
+{
+  "type": "node",
+  "id": 12040710917,
+  "lat": 46.5943766,
+  "lon": 8.6116168,
+  "tags": {
+    "ele": "2932",
+    "name": "Rothorn",
+    "natural": "peak",
+    "wikidata": "Q22467242"
+  }
+},
+{
+  "type": "node",
+  "id": 12040710984,
+  "lat": 46.5536917,
+  "lon": 8.6214027,
+  "tags": {
+    "ele": "2510",
+    "name": "Poncioni di Pontino",
+    "natural": "peak"
+  }
+},
+{
+  "type": "node",
+  "id": 12040711126,
+  "lat": 46.5335176,
+  "lon": 8.5586883,
+  "tags": {
+    "ele": "2235",
+    "name": "Pizzo di Fieud",
+    "natural": "peak"
+  }
+},
+{
+  "type": "node",
+  "id": 12040711143,
+  "lat": 46.5950927,
+  "lon": 8.5979157,
+  "tags": {
+    "ele": "2973",
+    "name": "Chastelhorn",
+    "natural": "peak",
+    "wikidata": "Q5087443"
+  }
+},
+{
+  "type": "node",
+  "id": 12944628310,
+  "lat": 46.5524823,
+  "lon": 8.5866945,
+  "tags": {
+    "tourism": "viewpoint"
+  }
+}
+
+  ]
+}

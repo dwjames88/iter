@@ -1,0 +1,33 @@
+file	fetched_utc	status	bytes	method	url	body	headers
+MetNo/locationforecast-W.json	2026-11-22T13:44:46Z	200	65122	GET	https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=36.5785&lon=-118.2923		
+MetNo/locationforecast-S.json	2026-11-22T13:44:50Z	200	64165	GET	https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=46.5586&lon=8.5610		
+AviationWeather/metar-W.json	2026-11-22T13:44:54Z	200	1610	GET	https://aviationweather.gov/api/data/metar?ids=KO26,KBIH,KNID,KEDW&format=json		
+AviationWeather/metar-W.txt	2026-11-22T13:44:58Z	200	278	GET	https://aviationweather.gov/api/data/metar?ids=KO26,KBIH,KNID,KEDW&format=raw		
+AviationWeather/taf-W.json	2026-11-22T13:45:01Z	200	4871	GET	https://aviationweather.gov/api/data/taf?ids=KO26,KBIH,KNID,KEDW&format=json		
+AviationWeather/taf-W.txt	2026-11-22T13:45:05Z	200	571	GET	https://aviationweather.gov/api/data/taf?ids=KO26,KBIH,KNID,KEDW&format=raw		
+AviationWeather/stationinfo-W.json	2026-11-22T13:45:08Z	200	816	GET	https://aviationweather.gov/api/data/stationinfo?ids=KO26,KBIH,KNID,KEDW&format=json		
+AviationWeather/metar-S.json	2026-11-22T13:45:12Z	200	3706	GET	https://aviationweather.gov/api/data/metar?ids=LSMM,LSMA,LSZC,LSZA,LSZL,LSME,LSZH,LIMC&format=json		
+AviationWeather/metar-S.txt	2026-11-22T13:45:20Z	200	590	GET	https://aviationweather.gov/api/data/metar?ids=LSMM,LSMA,LSZC,LSZA,LSZL,LSME,LSZH,LIMC&format=raw		
+AviationWeather/taf-S.json	2026-11-22T13:45:24Z	200	14200	GET	https://aviationweather.gov/api/data/taf?ids=LSMM,LSMA,LSZC,LSZA,LSZL,LSME,LSZH,LIMC&format=json		
+AviationWeather/taf-S.txt	2026-11-22T13:45:27Z	200	1284	GET	https://aviationweather.gov/api/data/taf?ids=LSMM,LSMA,LSZC,LSZA,LSZL,LSME,LSZH,LIMC&format=raw		
+AviationWeather/stationinfo-S.json	2026-11-22T13:45:31Z	200	1599	GET	https://aviationweather.gov/api/data/stationinfo?ids=LSMM,LSMA,LSZC,LSZA,LSZL,LSME,LSZH,LIMC&format=json		
+AviationWeather/metar-bbox-W.json	2026-11-22T13:45:34Z	200	409	GET	https://aviationweather.gov/api/data/metar?bbox=36,-119,37,-117.5&format=json		
+NWS/points-W.json	2026-11-22T13:45:40Z	200	3949	GET	https://api.weather.gov/points/36.5785,-118.2923		Accept: application/geo+json; 
+NWS/alerts-active-W.json	2026-11-22T13:45:43Z	200	234	GET	https://api.weather.gov/alerts/active?point=36.5785,-118.2923		Accept: application/geo+json; 
+NWS/stations-KBIH-observations-latest.json	2026-11-22T13:45:47Z	200	4666	GET	https://api.weather.gov/stations/KBIH/observations/latest		Accept: application/geo+json; 
+SWPC/ovation_aurora_latest.json	2026-11-22T13:45:50Z	200	918526	GET	https://services.swpc.noaa.gov/json/ovation_aurora_latest.json		
+SWPC/planetary_k_index_1m.json	2026-11-22T13:45:54Z	200	27925	GET	https://services.swpc.noaa.gov/json/planetary_k_index_1m.json		
+SWPC/noaa-planetary-k-index-forecast.json	2026-11-22T13:45:57Z	200	6907	GET	https://services.swpc.noaa.gov/products/noaa-planetary-k-index-forecast.json		
+USNO/oneday-W.json	2026-11-22T13:46:00Z	200	1269	GET	https://aa.usno.navy.mil/api/rstt/oneday?date=2026-11-22&coords=36.5785,-118.2923&tz=-8		
+USNO/oneday-S.json	2026-11-22T13:46:04Z	200	1264	GET	https://aa.usno.navy.mil/api/rstt/oneday?date=2026-11-22&coords=46.5586,8.5610&tz=1		
+USGS/epqs-W.json	2026-11-22T13:46:08Z	200	164	GET	https://epqs.nationalmap.gov/v1/json?x=-118.2923&y=36.5785&units=Meters&wkid=4326		
+Terrarium/terrarium-12-702-1600-W.png	2026-11-22T13:46:12Z	200	142602	GET	https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/702/1600.png		
+Terrarium/terrarium-12-2145-1448-S.png	2026-11-22T13:46:16Z	200	135638	GET	https://s3.amazonaws.com/elevation-tiles-prod/terrarium/12/2145/1448.png		
+Wikimedia/wikipedia-geosearch-W.json	2026-11-22T13:47:47Z	200	1269	GET	https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gscoord=36.5785%7C-118.2923&gsradius=10000&gslimit=10&format=json		
+Wikimedia/commons-geosearch-W.json	2026-11-22T13:47:51Z	200	1687	GET	https://commons.wikimedia.org/w/api.php?action=query&list=geosearch&gscoord=36.5785%7C-118.2923&gsradius=10000&gsnamespace=6&gslimit=10&format=json		
+Wikimedia/commons-imageinfo-W.json	2026-11-22T13:47:55Z	200	12614	GET	https://commons.wikimedia.org/w/api.php?action=query&generator=geosearch&ggscoord=36.5785%7C-118.2923&ggsradius=10000&ggsnamespace=6&ggslimit=3&prop=imageinfo&iiprop=url%7Cextmetadata&format=json		
+Wikimedia/wikipedia-geosearch-S.json	2026-11-22T13:47:59Z	200	1242	GET	https://en.wikipedia.org/w/api.php?action=query&list=geosearch&gscoord=46.5586%7C8.5610&gsradius=10000&gslimit=10&format=json		
+Wikimedia/commons-geosearch-S.json	2026-11-22T13:48:02Z	200	1434	GET	https://commons.wikimedia.org/w/api.php?action=query&list=geosearch&gscoord=46.5586%7C8.5610&gsradius=10000&gsnamespace=6&gslimit=10&format=json		
+Wikimedia/commons-imageinfo-S.json	2026-11-22T13:48:06Z	200	25728	GET	https://commons.wikimedia.org/w/api.php?action=query&generator=geosearch&ggscoord=46.5586%7C8.5610&ggsradius=10000&ggsnamespace=6&ggslimit=3&prop=imageinfo&iiprop=url%7Cextmetadata&format=json		
+Overpass/overpass-W.json	2026-11-22T13:48:57Z	200	8610	POST	https://overpass-api.de/api/interpreter	[out:json][timeout:25];(nwr[tourism=viewpoint](around:6000,36.5785,-118.2923);node[natural=peak][name](around:6000,36.5785,-118.2923);node[waterway=waterfall](around:6000,36.5785,-118.2923););out center;	
+Overpass/overpass-S.json	2026-11-22T13:49:41Z	200	9079	POST	https://overpass-api.de/api/interpreter	[out:json][timeout:25];(nwr[tourism=viewpoint](around:6000,46.5586,8.5610);node[natural=peak][name](around:6000,46.5586,8.5610);node[waterway=waterfall](around:6000,46.5586,8.5610););out center;	

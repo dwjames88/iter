@@ -1,0 +1,472 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-22T13:48:02Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 358797162,
+  "lat": 36.5924429,
+  "lon": -118.2779054,
+  "tags": {
+    "ele": "4135.4",
+    "gnis:feature_id": "257978",
+    "name": "Mount Carillon",
+    "natural": "peak",
+    "wikidata": "Q49052226"
+  }
+},
+{
+  "type": "node",
+  "id": 358797232,
+  "lat": 36.5335470,
+  "lon": -118.3106454,
+  "tags": {
+    "ele": "4011",
+    "gnis:feature_id": "258188",
+    "name": "Mount Chamberlin",
+    "natural": "peak",
+    "wikidata": "Q49052278"
+  }
+},
+{
+  "type": "node",
+  "id": 358797388,
+  "lat": 36.5385900,
+  "lon": -118.2505000,
+  "tags": {
+    "ele": "4194",
+    "gnis:feature_id": "258716",
+    "name": "Mount Corcoran",
+    "natural": "peak",
+    "wikidata": "Q49052363"
+  }
+},
+{
+  "type": "node",
+  "id": 358798151,
+  "lat": 36.5549317,
+  "lon": -118.3117143,
+  "tags": {
+    "ele": "4018.5",
+    "gnis:feature_id": "261373",
+    "name": "Mount Hitchcock",
+    "natural": "peak",
+    "wikidata": "Q49053041"
+  }
+},
+{
+  "type": "node",
+  "id": 358798311,
+  "lat": 36.5558500,
+  "lon": -118.2635650,
+  "tags": {
+    "ele": "4222",
+    "gnis:feature_id": "261821",
+    "name": "Mount Irvine",
+    "natural": "peak",
+    "wikidata": "Q16892722"
+  }
+},
+{
+  "type": "node",
+  "id": 358798481,
+  "lat": 36.5416217,
+  "lon": -118.2522244,
+  "tags": {
+    "alt_name": "Mount Le Conte",
+    "ele": "4245.9",
+    "gnis:feature_id": "262382",
+    "name": "Mount LeConte",
+    "natural": "peak",
+    "wikidata": "Q6921791"
+  }
+},
+{
+  "type": "node",
+  "id": 358798695,
+  "lat": 36.5490826,
+  "lon": -118.2620842,
+  "tags": {
+    "ele": "4221.5",
+    "gnis:feature_id": "263134",
+    "name": "Mount Mallory",
+    "natural": "peak",
+    "wikidata": "Q6921982"
+  }
+},
+{
+  "type": "node",
+  "id": 358798932,
+  "lat": 36.5399356,
+  "lon": -118.2934232,
+  "tags": {
+    "ele": "4090",
+    "gnis:feature_id": "264073",
+    "name": "Mount Newcomb",
+    "natural": "peak",
+    "wikidata": "Q49053781"
+  }
+},
+{
+  "type": "node",
+  "id": 358799074,
+  "lat": 36.5272614,
+  "lon": -118.2910085,
+  "tags": {
+    "ele": "4105",
+    "gnis:feature_id": "264700",
+    "name": "Mount Pickering",
+    "natural": "peak",
+    "wikidata": "Q49054020"
+  }
+},
+{
+  "type": "node",
+  "id": 358799507,
+  "lat": 36.5900240,
+  "lon": -118.2910351,
+  "tags": {
+    "ele": "4296",
+    "gnis:feature_id": "265692",
+    "name": "Mount Russell",
+    "natural": "peak",
+    "wikidata": "Q4390381"
+  }
+},
+{
+  "type": "node",
+  "id": 358800347,
+  "lat": 36.5351077,
+  "lon": -118.2646140,
+  "tags": {
+    "ele": "3892",
+    "gnis:feature_id": "268199",
+    "name": "The Miter",
+    "natural": "peak",
+    "wikidata": "Q49082686"
+  }
+},
+{
+  "type": "node",
+  "id": 358800368,
+  "lat": 36.5767136,
+  "lon": -118.2655769,
+  "tags": {
+    "ele": "3751",
+    "gnis:feature_id": "268245",
+    "name": "Thor Peak",
+    "natural": "peak",
+    "wikidata": "Q49083267"
+  }
+},
+{
+  "type": "node",
+  "id": 358800445,
+  "lat": 36.6051322,
+  "lon": -118.2824365,
+  "tags": {
+    "ele": "4135.9",
+    "gnis:feature_id": "268469",
+    "name": "Tunnabora Peak",
+    "natural": "peak",
+    "wikidata": "Q49085201"
+  }
+},
+{
+  "type": "node",
+  "id": 358800708,
+  "lat": 36.5810467,
+  "lon": -118.3273138,
+  "tags": {
+    "ele": "4010",
+    "gnis:feature_id": "269373",
+    "name": "Mount Young",
+    "natural": "peak",
+    "wikidata": "Q49055318"
+  }
+},
+{
+  "type": "node",
+  "id": 358803107,
+  "lat": 36.5647519,
+  "lon": -118.2913985,
+  "tags": {
+    "ele": "4274.5",
+    "gnis:feature_id": "1654926",
+    "name": "Mount Muir",
+    "natural": "peak",
+    "wikidata": "Q831100",
+    "wikipedia": "en:Mount Muir"
+  }
+},
+{
+  "type": "node",
+  "id": 358806356,
+  "lat": 36.5584021,
+  "lon": -118.2905658,
+  "tags": {
+    "ele": "4192.0",
+    "gnis:feature_id": "1658423",
+    "name": "Discovery Pinnacle",
+    "natural": "peak",
+    "wikidata": "Q49024996"
+  }
+},
+{
+  "type": "node",
+  "id": 358806550,
+  "lat": 36.5879909,
+  "lon": -118.3142582,
+  "tags": {
+    "ele": "4109",
+    "gnis:feature_id": "1658696",
+    "name": "Mount Hale",
+    "natural": "peak",
+    "wikidata": "Q49052893"
+  }
+},
+{
+  "type": "node",
+  "id": 358806827,
+  "lat": 36.5517900,
+  "lon": -118.2762900,
+  "tags": {
+    "ele": "4205.9",
+    "gnis:feature_id": "1659080",
+    "name": "Mount McAdie",
+    "natural": "peak",
+    "wikidata": "Q6922077"
+  }
+},
+{
+  "type": "node",
+  "id": 358807731,
+  "lat": 36.5668560,
+  "lon": -118.2796700,
+  "tags": {
+    "alt_name": "Wotans Throne",
+    "ele": "3876",
+    "gnis:feature_id": "1660204",
+    "name": "Wotan's Throne",
+    "natural": "peak",
+    "wikidata": "Q49091034"
+  }
+},
+{
+  "type": "node",
+  "id": 358851308,
+  "lat": 36.5547330,
+  "lon": -118.2782200,
+  "tags": {
+    "ele": "4118",
+    "gnis:feature_id": "1947615",
+    "name": "Mount Marsh",
+    "natural": "peak",
+    "wikidata": "Q49053549"
+  }
+},
+{
+  "type": "node",
+  "id": 505772937,
+  "lat": 36.5847181,
+  "lon": -118.2421361,
+  "tags": {
+    "waterway": "waterfall"
+  }
+},
+{
+  "type": "node",
+  "id": 944865772,
+  "lat": 36.5785905,
+  "lon": -118.2921377,
+  "tags": {
+    "ele": "4419.6",
+    "gnis:feature_id": "269051",
+    "highest_point": "4",
+    "isolation": "2651",
+    "landmark": "20",
+    "man_made": "survey_point",
+    "name": "Mount Whitney",
+    "natural": "peak",
+    "prominence": "3121",
+    "source:prominence": "4421-1300 (Lordsburg)",
+    "survey_point:structure": "landmark",
+    "wikidata": "Q235539",
+    "wikipedia": "en:Mount Whitney"
+  }
+},
+{
+  "type": "node",
+  "id": 3754704529,
+  "lat": 36.5634403,
+  "lon": -118.2926440,
+  "tags": {
+    "direction": "180",
+    "tourism": "viewpoint"
+  }
+},
+{
+  "type": "node",
+  "id": 5222006075,
+  "lat": 36.5681991,
+  "lon": -118.2919185,
+  "tags": {
+    "ele": "4243",
+    "name": "Aiguille Junior",
+    "natural": "peak",
+    "wikidata": "Q119892982"
+  }
+},
+{
+  "type": "node",
+  "id": 5222012924,
+  "lat": 36.5700179,
+  "lon": -118.2584783,
+  "tags": {
+    "waterway": "waterfall"
+  }
+},
+{
+  "type": "node",
+  "id": 5419407652,
+  "lat": 36.5916020,
+  "lon": -118.2998500,
+  "tags": {
+    "alt_name": "Mount Randy Morgenson",
+    "ele": "4244",
+    "name": "Mount Morgenson",
+    "natural": "peak",
+    "wikidata": "Q107366258"
+  }
+},
+{
+  "type": "node",
+  "id": 7601225720,
+  "lat": 36.5708250,
+  "lon": -118.2912648,
+  "tags": {
+    "ele": "4270",
+    "name": "Aiguille du Paquoir",
+    "natural": "peak",
+    "wikidata": "Q119893042"
+  }
+},
+{
+  "type": "node",
+  "id": 7601225725,
+  "lat": 36.5722074,
+  "lon": -118.2900748,
+  "tags": {
+    "ele": "4289.0",
+    "name": "Aiguille Extra",
+    "natural": "peak",
+    "wikidata": "Q119893075"
+  }
+},
+{
+  "type": "node",
+  "id": 7601225729,
+  "lat": 36.5734364,
+  "lon": -118.2899537,
+  "tags": {
+    "alt_name": "Third Needle",
+    "ele": "4306.7",
+    "gnis:feature_id": "2831548",
+    "name": "Lewis Peak",
+    "natural": "peak",
+    "wikidata": "Q119892744"
+  }
+},
+{
+  "type": "node",
+  "id": 7601225732,
+  "lat": 36.5746002,
+  "lon": -118.2906977,
+  "tags": {
+    "alt_name": "Day Needle",
+    "ele": "4341.7",
+    "gnis:feature_id": "277451",
+    "name": "Crooks Peak",
+    "natural": "peak",
+    "wikidata": "Q35736516"
+  }
+},
+{
+  "type": "node",
+  "id": 7601225737,
+  "lat": 36.5755518,
+  "lon": -118.2915107,
+  "tags": {
+    "ele": "4361.2",
+    "gnis:feature_id": "262093",
+    "name": "Keeler Needle",
+    "natural": "peak",
+    "wikidata": "Q30148337"
+  }
+},
+{
+  "type": "node",
+  "id": 7601227319,
+  "lat": 36.5853942,
+  "lon": -118.2416359,
+  "tags": {
+    "waterway": "waterfall"
+  }
+},
+{
+  "type": "node",
+  "id": 8739662843,
+  "lat": 36.5712510,
+  "lon": -118.2445190,
+  "tags": {
+    "ele": "3681",
+    "name": "Candlelight Peak",
+    "natural": "peak",
+    "wikidata": "Q119893145"
+  }
+},
+{
+  "type": "node",
+  "id": 9537801888,
+  "lat": 36.5975123,
+  "lon": -118.2747906,
+  "tags": {
+    "ele": "4076.6",
+    "name": "The Cleaver",
+    "natural": "peak",
+    "wikidata": "Q119892411"
+  }
+},
+{
+  "type": "node",
+  "id": 9537801889,
+  "lat": 36.6113154,
+  "lon": -118.2986294,
+  "tags": {
+    "alt_name": "Vacation Peak",
+    "ele": "4033.0",
+    "name": "Mount Carl Heller",
+    "natural": "peak",
+    "wikidata": "Q112740818"
+  }
+},
+{
+  "type": "node",
+  "id": 11003290678,
+  "lat": 36.5666844,
+  "lon": -118.2921880,
+  "tags": {
+    "ele": "4226",
+    "name": "S'brutal Tower",
+    "natural": "peak",
+    "wikidata": "Q119892950"
+  }
+}
+
+  ]
+}
