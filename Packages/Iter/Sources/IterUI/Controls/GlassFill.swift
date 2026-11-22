@@ -1,0 +1,32 @@
+import SwiftUI
+
+extension EnvironmentValues {
+    /// True for content on a Liquid Glass panel: the Mac's floating map card, the iPad's Explore column and the phone's
+    /// sheet. Cards and cells there take a translucent system fill instead of an opaque paper colour, so the glass reads
+    /// through them, as Maps' and Find My's cells do. Set it on every glass surface.
+    @Entry public var isOnGlass = false
+}
+
+/// The module fill (`background/module`) on paper; a translucent system fill on glass.
+public struct ModuleFill: ShapeStyle {
+    public init() {}
+    public func resolve(in environment: EnvironmentValues) -> AnyShapeStyle {
+        environment.isOnGlass ? AnyShapeStyle(.fill.tertiary) : AnyShapeStyle(IterColor.backgroundModule)
+    }
+}
+
+/// The control fill (`background/control`) on paper; a translucent system fill on glass.
+public struct ControlFill: ShapeStyle {
+    public init() {}
+    public func resolve(in environment: EnvironmentValues) -> AnyShapeStyle {
+        environment.isOnGlass ? AnyShapeStyle(.fill.tertiary) : AnyShapeStyle(IterColor.backgroundControl)
+    }
+}
+
+/// The content fill (`background/content`) on paper; a lighter translucent system fill on glass.
+public struct ContentFill: ShapeStyle {
+    public init() {}
+    public func resolve(in environment: EnvironmentValues) -> AnyShapeStyle {
+        environment.isOnGlass ? AnyShapeStyle(.fill.quaternary) : AnyShapeStyle(IterColor.backgroundContent)
+    }
+}
