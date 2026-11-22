@@ -470,12 +470,12 @@ public final class BuildModel {
 
     // MARK: Selection
 
-    /// Chooses a day (nil: the whole trip). A selected stop on another day is deselected.
+    /// Chooses a day (nil: the whole trip; a day the trip does not have is ignored). A selected stop on another day is deselected.
     public func selectDay(_ day: Int?) {
-        let clamped = day.flatMap { (0..<(trip?.dayCount ?? 0)).contains($0) ? $0 : nil }
-        guard clamped != selectedDay else { return }
-        selectedDay = clamped
-        if let id = selectedStopID, let clamped, trip?.stops.first(where: { $0.id == id })?.dayIndex != clamped { selectedStopID = nil }
+        if let day, !(0..<(trip?.dayCount ?? 0)).contains(day) { return }
+        guard day != selectedDay else { return }
+        selectedDay = day
+        if let id = selectedStopID, let day, trip?.stops.first(where: { $0.id == id })?.dayIndex != day { selectedStopID = nil }
         if let trip { publish(\.cameraRegion, fitRegion(trip: trip)) }
         if isOpen { conditions.setVisible(visiblePlaceIDs()) }
     }
