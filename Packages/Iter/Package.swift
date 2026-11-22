@@ -81,7 +81,7 @@ let package = Package(
         .testTarget(name: "IterSourcesLiveTests", dependencies: ["IterSourcesLive"], resources: [.copy("Fixtures")],
                     swiftSettings: strict),
         .testTarget(name: "IterAITests", dependencies: ["IterAI"], swiftSettings: strict),
-        .testTarget(name: "IterDiscoveryTests", dependencies: ["IterDiscovery"], swiftSettings: strict),
+        .testTarget(name: "IterDiscoveryTests", dependencies: ["IterDiscovery", "IterModel", "IterSources", "IterAI"], swiftSettings: strict),
         .testTarget(name: "IterConditionsTests", dependencies: ["IterConditions"], swiftSettings: strict),
         .testTarget(name: "IterGoTests", dependencies: ["IterGo"], swiftSettings: strict),
         .testTarget(name: "IterGoActivityTests", dependencies: ["IterGoActivity"], swiftSettings: strict),
