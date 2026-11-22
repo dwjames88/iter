@@ -2,8 +2,8 @@ import Foundation
 import IterModel
 import IterSources
 
-/// A lat/lon box cut out of a model grid by the NOMADS filter. Boxes are snapped to a cell of the model's coarse grid,
-/// so every point in the cell shares one box (one request, one cache entry).
+/// A lat/lon box cut out of a model grid by the NOMADS filter. Boxes are snapped to a tile of `NOMADSTiling`, so every
+/// point in the tile shares one box (one request, one cache entry).
 public struct NOMADSBox: Sendable, Hashable, CustomStringConvertible {
     public let south: Double, north: Double, west: Double, east: Double
 
@@ -38,16 +38,14 @@ public enum NOMADSRequestBuilder {
     static let gfsLevels = ["low_cloud_layer", "middle_cloud_layer", "high_cloud_layer", "entire_atmosphere", "surface",
                             "2_m_above_ground", "10_m_above_ground"]
 
-    /// Cell size and margin in degrees: HRRR 0.25 and 0.25, GFS 0.5 and 0.5.
-    static func cell(_ model: NOMADSModel) -> Double { model == .hrrr ? 0.25 : 0.5 }
-    static func margin(_ model: NOMADSModel) -> Double { model == .hrrr ? 0.25 : 0.5 }
-
-    /// The box for a point: its cell plus a margin on every side, so it holds the bilinear neighbours of every point in
-    /// the cell. About 0.75 degrees square for HRRR (about 12 KB, 17 messages) and 1.5 for GFS (about 5 KB).
-    /// Latitudes are clamped to ±90 and longitudes to ±180; near the antimeridian the box is cut at the edge, where a
-    /// bilinear read can come back empty (that field is then nil).
-    public static func box(for c: Coordinate, model: NOMADSModel) -> NOMADSBox {
-        let size = cell(model), pad = margin(model)
+    /// The box for a point: its tile plus the tiling's margin on every side, so every point of the tile finds its
+    /// bilinear neighbours inside. With `.standard` that is 1.2 degrees square for HRRR (about 27 KB) and 2.6 for GFS
+    /// (about 13 KB); see `NOMADSTiling` for the estimates. Every point in a tile shares this box, so one download serves a
+    /// whole area. Latitudes are clamped to ±90 and longitudes to ±180; near the antimeridian the box is cut at the
+    /// edge, where a bilinear read can come back empty (that field is then nil).
+    public static func box(for c: Coordinate, model: NOMADSModel, tiling: NOMADSTiling = .standard) -> NOMADSBox {
+        let spec = tiling.spec(model)
+        let size = spec.tile, pad = spec.margin
         var lon = c.longitude
         lon = ((lon + 180).truncatingRemainder(dividingBy: 360) + 360).truncatingRemainder(dividingBy: 360) - 180
         let lat0 = (min(max(c.latitude, -90), 90) / size).rounded(.down) * size

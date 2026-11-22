@@ -14,6 +14,7 @@ extension SourceID {
     // Discovery
     public static let osmOverpass: SourceID = "osm.overpass"
     public static let wikipedia: SourceID = "wikipedia.geosearch"
+    public static let wikivoyage: SourceID = "wikivoyage.geosearch"
     public static let wikimediaCommons: SourceID = "wikimedia.commons"
     public static let usgsGNIS: SourceID = "usgs.gnis"
     // Weather
@@ -50,6 +51,7 @@ public enum LicenceKey {
     public static let metNorway = "metno.cc-by-4.0"
     public static let osm = "osm.odbl"
     public static let wikipedia = "wikipedia.cc-by-sa-4.0"
+    public static let wikivoyage = "wikivoyage.cc-by-sa-4.0"
     public static let commons = "wikimedia.commons.per-file"
     public static let terrainTiles = "tilezen.terrain-tiles"
     public static let nasaGIBS = "nasa.gibs"
@@ -253,14 +255,14 @@ public enum SourceCatalogue {
     public static let osmOverpass = SourceDescriptor(
         id: .osmOverpass, name: "OpenStreetMap (Overpass)", operatorName: "OpenStreetMap contributors", tier: .openData,
         origin: SourceOrigin(tier: .openData, producer: "OpenStreetMap contributors"),
-        kinds: [.gazetteer], coverage: .global,
+        kinds: [.gazetteer, .boundary], coverage: .global,
         // Public instances are shared and return 502/504 when busy. The client timeout (60 s) is longer than the
         // server-side `[timeout:25]` we send, so the server always answers first.
         policy: RequestPolicy(spacing: .seconds(2), maxConcurrent: 1, timeout: .seconds(60), maxRetries: 2,
                               initialBackoff: .seconds(10), conditional: false),
         cacheTTL: .seconds(7 * 86_400), licence: LicenceTag(key: LicenceKey.osm, mayStore: true),
         termsURL: url("https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances"),
-        ranks: [.gazetteer: 20])
+        ranks: [.gazetteer: 20, .boundary: 10])
 
     public static let usgsGNIS = SourceDescriptor(
         id: .usgsGNIS, name: "USGS Geographic Names (GNIS)", operatorName: "USGS The National Map", tier: .government,
@@ -278,6 +280,16 @@ public enum SourceCatalogue {
         policy: RequestPolicy(spacing: .seconds(1), maxConcurrent: 1, timeout: .seconds(15), maxRetries: 2),
         cacheTTL: .seconds(7 * 86_400), licence: LicenceTag(key: LicenceKey.wikipedia, mayStore: true),
         termsURL: url("https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use"), ranks: [.textEvidence: 10])
+
+    /// Wikivoyage travel guides (same MediaWiki API and etiquette as Wikipedia). Destination articles carry See and Do
+    /// sections that name photo spots; ranked below Wikipedia's neutral prose.
+    public static let wikivoyage = SourceDescriptor(
+        id: .wikivoyage, name: "Wikivoyage", operatorName: "Wikimedia Foundation", tier: .openData,
+        origin: SourceOrigin(tier: .openData, producer: "Wikivoyage contributors"),
+        kinds: [.textEvidence], coverage: .global,
+        policy: RequestPolicy(spacing: .seconds(1), maxConcurrent: 1, timeout: .seconds(15), maxRetries: 2),
+        cacheTTL: .seconds(7 * 86_400), licence: LicenceTag(key: LicenceKey.wikivoyage, mayStore: true),
+        termsURL: url("https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use"), ranks: [.textEvidence: 20])
 
     public static let wikimediaCommons = SourceDescriptor(
         id: .wikimediaCommons, name: "Wikimedia Commons", operatorName: "Wikimedia Foundation", tier: .openData,
@@ -340,7 +352,7 @@ public enum SourceCatalogue {
     /// Every descriptor, in no particular order.
     public static let all: [SourceDescriptor] = [
         noaaNOMADS, noaaHRRRSmoke, metNorway, aviationWeather, nwsAPI, swpc, hmsSmoke, noSkyBrightness, noSeeing,
-        usgsEPQS, terrariumTiles, nasaGIBS, eumetsatView, iemNEXRAD, osmOverpass, usgsGNIS, wikipedia, wikimediaCommons,
+        usgsEPQS, terrariumTiles, nasaGIBS, eumetsatView, iemNEXRAD, osmOverpass, usgsGNIS, wikipedia, wikivoyage, wikimediaCommons,
         appleSearch, applePOI, appleGeocoder, appleDirections, appleLookAround, worldMagneticModel, mgrs,
     ]
 
