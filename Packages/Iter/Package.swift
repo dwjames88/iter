@@ -60,7 +60,7 @@ let package = Package(
         // .iter v2 merge and Bonjour peer sync.
         .target(name: "IterSync", dependencies: ["IterModel", "IterStore"], swiftSettings: strict),
         // Tokens, colours, fonts, the score ramp and the Figma components. SwiftUI.
-        .target(name: "IterUI", dependencies: ["IterModel"], swiftSettings: strict),
+        .target(name: "IterUI", dependencies: ["IterModel"], resources: [.process("Resources")], swiftSettings: strict),
         // One @MainActor @Observable model per stage, plus the composition root. Not IterUI.
         .target(name: "IterFeatures", dependencies: [
             "IterModel", "IterAstro", "IterSky", "IterPlan", "IterStore", "IterSources", "IterSourcesLive",
