@@ -1,16 +1,16 @@
 # Iter design tokens
 
-The single source is `Packages/IterKit/Sources/IterDesign/TokenValues.swift`. Everything else is derived from it:
+`Design/tokens.json` is the single source (Design Tokens Community Group format). Everything else is derived from it:
 
-- the Swift API (`IterColor`, `IterSpace`, `IterRadius`, `IterSize`, `IterStroke`, `IterFont`), which reads the registry at run time and contains no literals;
-- `Design/tokens.json`, in the Design Tokens Community Group (DTCG) format, for design tools;
-- `App/Resources/Assets.xcassets/Tokens/*.colorset` and `AccentColor.colorset`, so colours are also available as named asset colours.
+- `Packages/Iter/Sources/IterUI/Tokens/TokenValues.swift`, **generated** by `scripts/tokens.sh` (the `iter-tokens` tool, target `IterTokensTool`). It is marked GENERATED and is never edited by hand; a test in `IterUITests` fails when it differs from what the generator writes from `tokens.json`;
+- the Swift API in `IterUI` (`IterColor`, `IterFont`, `IterSpace`, `IterGrid`, `IterRadius`, `IterSize`, `IterStroke`, `IterEvent` (also `IterChip`), `IterRamp`, `GlassGeometry`), which reads the registry at run time and contains no literals;
+- optionally, `scripts/tokens.sh assets` writes `Tokens/*.colorset` and `AccentColor.colorset` for an asset catalogue (nothing reads them yet).
 
-Do not edit the generated files by hand. Edit `TokenValues.swift` (or `tokens.json`, see "Round trip") and run `scripts/tokens.sh`.
+To change a token: edit `Design/tokens.json`, run `scripts/tokens.sh` (generate), then `scripts/tokens.sh check` (exit 0 when in sync) and `swift test --filter IterUITests`. `scripts/tokens.sh format` rewrites `tokens.json` in its canonical layout.
 
 ## The identity, in one paragraph
 
-Everything is First Light. The palette is warm espresso ink, cream paper and a coral accent, used throughout: the interface accent, selection, focus, links, route lines, map pins, the sun marker, the logo dot and the app icon. The coral is used with restraint: it marks the one thing that acts or is selected, the route and the sun. The Light Index is a continuous ramp from white (no light) to the accent orange (score 100), with ink on top. Status colours have their own hues and always come with an icon: warning is violet, danger is raspberry. Text, separators and the app's own backgrounds are our First Light inks and paper, not system colours. The system colours in the registry are `background/systemWindow`, for snapshot stand-ins, and `map/userLocation` (system blue), for the simulated location dot.
+Everything is First Light. The palette is warm espresso ink, cream paper and a coral accent, used throughout: the interface accent, selection, focus, links, route lines, map pins, the sun marker, the logo dot and the app icon. The coral is used with restraint: it marks the one thing that acts or is selected, the route and the sun. The Light Index is a continuous ramp from white (no light) to a deep orange of its own (score 100), with ink on top. Status colours have their own hues and always come with an icon: warning is violet, danger is raspberry. Text, separators and the app's own backgrounds are our First Light inks and paper, not system colours. The system colours in the registry are `background/systemWindow`, for snapshot stand-ins, and `map/userLocation` (system blue), for the simulated location dot.
 
 ## Colour role rules (what each colour must never be used for)
 
@@ -43,21 +43,19 @@ Green is not used anywhere, and in particular never for "good". Success is ink w
 
 ## Light Index ramp
 
-The Light Index fill is a **continuous ramp by score**, not five flat bands: **score 0 is "no light"** (white in light appearance; the dark surface, just above the window, in dark appearance) and **score 100 is the First Light accent orange** (`accent/primary`: `#D9431A` light, `#FF8A5C` dark). The more vibrant the orange, the better the light. `IterColor.ramp(score:)` interpolates linearly in sRGB between five stop tokens, `light/ramp/0`, `/25`, `/50`, `/75` and `/100`; `IterRamp.fill(score:dark:)` is the same arithmetic as plain numbers, for tests. `IterColor.ramp(_ band:)` still works and returns the ramp at the band's midpoint (Poor 20, Fair 49, Good 66, Great 81, Epic 94). Used by the event unit, the map pin dots, the cluster dot and the legend.
+The Light Index fill is a **continuous ramp by score** (0 to 100), not five flat bands: **score 0 is "no light"** (white in light appearance; the dark surface, just above the window, in dark appearance) and **score 100 is the ramp's own deepest orange** (`#C9502A` light, `#E68A62` dark), which is not `accent/primary`. The more vibrant the orange, the better the light. `IterColor.ramp(score:)` (Int or Double, clamped to 0...100, a dynamic light/dark colour on macOS and iOS) interpolates linearly in sRGB between five stop tokens, `light/ramp/0`, `/25`, `/50`, `/75` and `/100`; `IterRamp.fill(score:dark:)` is the same arithmetic as plain numbers, for tests. There is no band API: the score is the only input. Used by the score chip, the map pin dots, the cluster dot and the legend.
 
 | Stop | Light | Dark | Reads as |
 |---|---|---|---|
-| 0 | `#FFFFFF` | `#1F1512` | no light: white / dark surface |
-| 25 | `#FFEED9` | `#4A291D` | cream-peach / deep ember |
-| 50 | `#FFCFA1` | `#8E462C` | apricot / burnt orange |
-| 75 | `#FF975C` | `#D96B3E` | bright orange |
-| 100 | `#D9431A` | `#FF8A5C` | the accent |
+| 0 | `#FFFFFF` | `#1E1410` | no light: white / dark surface |
+| 25 | `#FFEED9` | `#4A2E22` | cream / deep ember |
+| 50 | `#FFCFA1` | `#8A4A32` | peach / burnt orange |
+| 75 | `#E98A5A` | `#C4663F` | orange |
+| 100 | `#C9502A` | `#E68A62` | deep orange / bright terracotta |
 
-The mid stops are OKLCH-derived (light: L 0.96, 0.89, 0.78 at chroma 0.035, 0.085, 0.15 and hue 70, 62, 48; dark: L 0.32, 0.48, 0.65 at chroma 0.055, 0.105, 0.15, hue 40), so the middle reads as peach and apricot, not tan. Luminance moves one way along the ramp (down in light, up in dark), so order survives greyscale.
+Luminance moves one way along the ramp (down in light, up in dark), so order survives greyscale (tested every 0.25 points).
 
-**Text is ink across the ramp** (`light/rampText/ink` = `text/primary`: `#1E0F0A` light, `#FFF4E8` dark). It switches to `light/rampText/inverse` (`#FFFFFF` light, `#150C0A` dark) only from the **switch score**: `light/rampText/switchScore/light` = **100** and `/dark` = **65**. The switch is where the inverse becomes the better of the two, which is after ink falls below 4.5:1 for the time. Ink on the full orange is 4.23:1, white 4.40:1, so at the light end the switch only fires at 100. In dark appearance cream ink holds 4.5:1 up to score 61, and the dark surface takes over at 65.
-
-Contrast of the chosen text on the fill at every integer score (`ContrastTests.rampTextContrast`): worst case **4.22:1** (dark, score 64; light 4.35:1 at 99), every score outside light 98 to 99 and dark 62 to 65 is **4.5:1 or better**, and the large heavy score numeral clears the 3:1 large-text rule everywhere. The time and symbol fall short of 4.5:1 only in those few scores, because the fill's luminance sits where neither a dark nor a light text can reach 4.5:1 (a continuous ramp has to cross that band); the floor of 4.2:1 is tested.
+**Text.** `light/rampText/ink` is `text/primary` (`#1E0F0A` light, `#FFF4E8` dark); `light/rampText/inverse` is white in both appearances. The text switches to inverse from the **switch score**: `light/rampText/switchScore/light` = **100** and `/dark` = **0**, so in light appearance the chip text is ink at every score below 100 and white at 100, and in dark appearance it is white on every chip, as designed. Measured (WCAG 2.x relative luminance, `IterRampTests`): light, ink on the fill is 4.5:1 or better through score 96 and 4.14:1 at 100, where white is 4.50:1; dark, white on the five stops is 18.06, 12.32, 6.76, 3.95 and 2.57:1, so the brightest dark fills are under 4.5:1, a design-mandated exception.
 
 **Hairline.** Fills below score `event/hairlineBelowScore` (45) are too close to the ground (white and pale peach on paper, the dark surface on the dark window) to read as a shape, so the unit and its legend swatch get a `separator/default` hairline. Higher scores have no stroke.
 
@@ -142,13 +140,13 @@ Every token, its values and its one job. Generated from the registry.
 | `cloud/low` | `#8A94A3` | `#9AA3B2` |  | Low cloud layer fill in the cloud-by-altitude chart. |
 | `cloud/mid` | `#B4BCC8` | `#6F7888` |  | Mid cloud layer fill. |
 | `cloud/high` | `#DCE1E8` | `#4A5160` |  | High cloud layer fill. |
-| `light/ramp/0` | `#FFFFFF` | `#1F1512` |  | Light Index fill at score 0: no light. White in light mode (paper-coloured, always with a hairline); the dark surface in dark mode, just above the window. The fill is a continuous ramp by score: linear RGB between the stops 0, 25, 50, 75 and 100 (IterColor.ramp(score:)). |
-| `light/ramp/25` | `#FFEED9` | `#4A291D` |  | Light Index fill at score 25: a pale cream-peach in light mode, a deep ember in dark mode. |
-| `light/ramp/50` | `#FFCFA1` | `#8E462C` |  | Light Index fill at score 50: apricot in light mode, burnt orange in dark mode. |
-| `light/ramp/75` | `#FF975C` | `#D96B3E` |  | Light Index fill at score 75: bright orange. |
-| `light/ramp/100` | `#D9431A` | `#FF8A5C` |  | Light Index fill at score 100: the First Light accent (accent/primary), full orange. More vibrant is better light; white or the dark surface is no light. |
-| `light/rampText/ink` | `#1E0F0A` | `#FFF4E8` |  | Score, symbol and time on the ramp fill below the switch score: First Light ink (text/primary). 4.5:1 or better on the fill up to the switch score, except scores 98 to 99 (4.35 and 4.47) in light mode and 62 to 65 (4.12 to 4.46) in dark mode, where the fill is near the luminance at which neither colour reaches 4.5:1. |
-| `light/rampText/inverse` | `#FFFFFF` | `#150C0A` |  | Score, symbol and time on the ramp fill from the switch score up: white on the full orange in light mode (4.40:1 at 100), the dark surface on the bright orange in dark mode (8.30:1 at 100). |
+| `light/ramp/0` | `#FFFFFF` | `#1E1410` |  | Light Index fill at score 0: no light. White in light mode (always with a hairline); the dark surface in dark mode. The fill is a continuous ramp by score: linear RGB between the stops 0, 25, 50, 75 and 100 (IterColor.ramp(score:)). |
+| `light/ramp/25` | `#FFEED9` | `#4A2E22` |  | Light Index fill at score 25: a pale cream-peach in light mode, a deep ember in dark mode. |
+| `light/ramp/50` | `#FFCFA1` | `#8A4A32` |  | Light Index fill at score 50: peach in light mode, burnt orange in dark mode. |
+| `light/ramp/75` | `#E98A5A` | `#C4663F` |  | Light Index fill at score 75: bright orange. |
+| `light/ramp/100` | `#C9502A` | `#E68A62` |  | Light Index fill at score 100: the ramp's own deepest orange (not accent/primary). More vibrant is better light; white or the dark brown is no light. |
+| `light/rampText/ink` | `#1E0F0A` | `#FFF4E8` |  | Score, symbol and time on a score chip below the switch score in light mode: First Light ink (text/primary), 4.5:1 or better on the fill up to score 96 (4.14:1 at 100). Dark mode never uses it: dark text is always light/rampText/inverse. |
+| `light/rampText/inverse` | `#FFFFFF` | `#FFFFFF` |  | Score, symbol and time on the ramp fill from the switch score up: white. Light mode: on the deepest orange (4.50:1 at 100). Dark mode: white on every chip, as in the design (switch score 0); white contrast on the dark stops: 0 18.06, 25 12.32, 50 6.76, 75 3.95, 100 2.57, so the brightest fills are under 4.5:1, design-mandated. |
 | `light/blueHour` | `#3A4FA0` | `#8FA4E8` |  | Blue-hour window symbol when it stands alone, outside a chip (3:1 graphic on background/window). Inside the event unit the symbol is white. |
 | `text/primary` | `#1E0F0A` | `#FFF4E8` |  | Primary text: First Light ink (espresso / warm cream). |
 | `text/secondary` | `#6B5A51` | `#BBA99D` |  | Secondary text, 4.5:1 or better on paper, cards and the system window. |
@@ -306,13 +304,12 @@ No view may contain a literal point value or colour; add a token instead.
 
 ## Round trip with a design tool
 
-1. `scripts/tokens.sh` (export) writes `Design/tokens.json` and the colour sets from `TokenValues.swift`.
-2. Import `tokens.json` into the design tool (Figma reads DTCG as variables; dark values and system aliases are under `$extensions["com.dwjames.iter"]`, so map `dark` to a Dark mode). Colours use `{ colorSpace, components, hex }`; dimensions are `{ value, unit: "px" }`; type styles are composite tokens, with the SwiftUI text style, design and monospaced-digits flag in the extension.
-3. Edit values in the tool, export them back to the same JSON shape, and replace `Design/tokens.json`.
-4. `scripts/tokens.sh import` regenerates `TokenValues.swift` from the JSON.
-5. Review the diff of `TokenValues.swift`, run `scripts/tokens.sh` to refresh the colour sets, then `swift test` (contrast and round-trip tests catch an edit that breaks 4.5:1 or monotonic order). Commit all of it together.
+1. `Design/tokens.json` is the source. Import it into the design tool (Figma reads DTCG as variables; dark values and system aliases are under `$extensions["com.dwjames.iter"]`, so map `dark` to a Dark mode). Colours use `{ colorSpace, components, hex }`; dimensions are `{ value, unit: "px" }`; type styles are composite tokens, with the SwiftUI text style, design and monospaced-digits flag in the extension.
+2. Edit values in the tool (or in the file), export them back to the same JSON shape, and replace `Design/tokens.json`. `scripts/tokens.sh format` normalises its layout.
+3. `scripts/tokens.sh` regenerates `TokenValues.swift` from the JSON; `scripts/tokens.sh check` exits 1 with a diff summary if it is stale.
+4. Run `swift test --filter IterUITests` (contrast, ramp and drift tests catch an edit that breaks 4.5:1 or monotonic order) and commit the JSON and the generated file together.
 
-The tests also check that the committed `tokens.json` and `TokenValues.swift` are exactly what the generator writes, so they cannot drift apart. `iter-tokens` takes its paths as arguments: `iter-tokens export --json <file> --assets <catalog>` and `iter-tokens import --json <file> --swift <file>`.
+The tests check that the committed `tokens.json` is in canonical layout and that `TokenValues.swift` is exactly what the generator writes, so they cannot drift apart. `iter-tokens` takes its paths as arguments: `generate|check --json <file> --swift <file>`, `format --json <file>`, `assets --json <file> --out <dir>`. Set `ITER_SCRATCH` to build in another scratch path.
 
 ## NightModeReady
 
