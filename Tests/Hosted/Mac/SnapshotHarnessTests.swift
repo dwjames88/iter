@@ -12,6 +12,20 @@ import Testing
         #expect(ProcessInfo.processInfo.arguments.contains("-IterInMemoryStore"))
     }
 
+    @Test func accentColourIsFirstLight() throws {
+        #expect(Bundle.main.object(forInfoDictionaryKey: "NSAccentColorName") as? String == "AccentColor")
+        func rgb(_ appearance: NSAppearance.Name) throws -> [Int] {
+            var color: NSColor?
+            NSAppearance(named: appearance)!.performAsCurrentDrawingAppearance {
+                color = NSColor(named: "AccentColor", bundle: .main)?.usingColorSpace(.sRGB)
+            }
+            let c = try #require(color)
+            return [c.redComponent, c.greenComponent, c.blueComponent].map { Int(($0 * 255).rounded()) }
+        }
+        #expect(try rgb(.aqua) == [0xD9, 0x43, 0x1A])      // accent/primary, Design/tokens.json
+        #expect(try rgb(.darkAqua) == [0xFF, 0x8A, 0x5C])  // accent/primary dark
+    }
+
     @Test func simpleViewRendersLightAndDark() async throws {
         let view = VStack(spacing: 12) {
             Text("Iter").font(.largeTitle.bold())

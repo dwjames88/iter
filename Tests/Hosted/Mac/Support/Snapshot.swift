@@ -141,14 +141,29 @@ enum Snapshot {
         pass()
         try await Task.sleep(for: settle)
         pass()
-        var last = -1
-        for _ in 0..<20 {
+        // Stable pixels, not just a stable layer tree: AppKit text moves after frames stop changing, late under load
+        // (the cause of the package harness flake). Wait for three identical renders in a row, at most ~6 s.
+        var last = -1, stableRuns = 0
+        for _ in 0..<60 {
             try await Task.sleep(for: .milliseconds(100))
             pass()
-            let signature = layerSignature(host.layer)
-            if signature == last { break }
+            let signature = layerSignature(host.layer) &* 31 &+ pixelSignature(of: window.contentView?.superview ?? host, appearance: appearance)
+            if signature == last { stableRuns += 1; if stableRuns >= 3 { break } } else { stableRuns = 0 }
             last = signature
         }
+    }
+
+    private static func pixelSignature(of view: NSView, appearance: NSAppearance) -> Int {
+        let pw = Int(view.bounds.width), ph = Int(view.bounds.height)
+        guard pw > 0, ph > 0, let layer = view.layer,
+              let ctx = CGContext(data: nil, width: pw, height: ph, bitsPerComponent: 8, bytesPerRow: pw * 4,
+                                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue),
+              let data = ctx.data else { return 0 }
+        appearance.performAsCurrentDrawingAppearance { layer.render(in: ctx) }
+        var h = Hasher()
+        h.combine(bytes: UnsafeRawBufferPointer(start: data, count: pw * 4 * ph))
+        return h.finalize()
     }
 
     private static func layerSignature(_ layer: CALayer?) -> Int {
