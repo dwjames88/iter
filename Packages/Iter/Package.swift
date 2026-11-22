@@ -54,7 +54,9 @@ let package = Package(
         // Composite forecasts with per-field provenance, observations, nowcast, sky inputs, offline packs.
         .target(name: "IterConditions", dependencies: ["IterModel", "IterSources", "IterSky", "IterAstro"], swiftSettings: strict),
         // The trip-mode engine: run state machine, live location, ETA refresh, notification plan, Go snapshot.
-        .target(name: "IterGo", dependencies: ["IterModel", "IterPlan", "IterConditions", "IterSources"], swiftSettings: strict),
+        // IterGoActivity holds GoSnapshot (the App Group value the widget reads), so the engine builds on it.
+        .target(name: "IterGo", dependencies: ["IterModel", "IterPlan", "IterConditions", "IterSources", "IterSky", "IterGoActivity"],
+                swiftSettings: strict),
         // ActivityKit attributes and content state shared by the iOS app and the widget extension. iOS only in effect.
         .target(name: "IterGoActivity", dependencies: ["IterModel"], swiftSettings: strict),
         // .iter v2 merge and Bonjour peer sync.
@@ -87,8 +89,9 @@ let package = Package(
         .testTarget(name: "IterConditionsTests",
                     dependencies: ["IterConditions", "IterModel", "IterSources", "IterSky", "IterAstro", "IterSourcesLive",
                                    "IterDiscovery", "IterAI"], swiftSettings: strict),
-        .testTarget(name: "IterGoTests", dependencies: ["IterGo"], swiftSettings: strict),
-        .testTarget(name: "IterGoActivityTests", dependencies: ["IterGoActivity"], swiftSettings: strict),
+        .testTarget(name: "IterGoTests", dependencies: ["IterGo", "IterGoActivity", "IterModel", "IterPlan", "IterSky", "IterAstro",
+                                                      "IterSources", "IterConditions"], swiftSettings: strict),
+        .testTarget(name: "IterGoActivityTests", dependencies: ["IterGoActivity", "IterModel"], swiftSettings: strict),
         .testTarget(name: "IterSyncTests", dependencies: ["IterSync"], swiftSettings: strict),
         .testTarget(name: "IterUITests", dependencies: ["IterUI"], swiftSettings: strict),
         .testTarget(name: "IterFeaturesTests", dependencies: ["IterFeatures"], swiftSettings: strict),
