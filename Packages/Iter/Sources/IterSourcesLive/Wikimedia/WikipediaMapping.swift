@@ -47,13 +47,14 @@ public enum WikipediaMapping {
     /// Documents for `hits`: inside the area, titles containing a term first (otherwise API order), capped to `limit`.
     /// A hit without an extract gets its title as text.
     public static func documents(hits: [Hit], extracts: [Int: String], area: DiscoveryArea, terms: [String], limit: Int,
-                                 descriptor: SourceDescriptor, retrievedAt: Date) -> [EvidenceDocument] {
+                                 descriptor: SourceDescriptor, retrievedAt: Date,
+                                 articleBase: String = "https://en.wikipedia.org/?curid=") -> [EvidenceDocument] {
         let needles = terms.map { $0.lowercased() }.filter { !$0.isEmpty }
         let inside = hits.filter { hit in hit.coordinate.map(area.contains) ?? true }
         let matching = inside.filter { h in needles.contains { h.title.lowercased().contains($0) } }
         let rest = inside.filter { h in !needles.contains { h.title.lowercased().contains($0) } }
         return (matching + rest).prefix(max(0, limit)).map { hit in
-            let url = URL(string: "https://en.wikipedia.org/?curid=\(hit.pageID)")
+            let url = URL(string: "\(articleBase)\(hit.pageID)")
             return EvidenceDocument(
                 title: hit.title, text: extracts[hit.pageID] ?? hit.title, url: url, coordinate: hit.coordinate,
                 citation: Citation(source: descriptor.id, url: url, title: hit.title, retrievedAt: retrievedAt,

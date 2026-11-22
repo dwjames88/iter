@@ -77,6 +77,10 @@ public enum Attribution {
             full: "Text from Wikipedia, licensed CC BY-SA 4.0; follow each article link for its authors. Titles and coordinates are facts.",
             url: u("https://creativecommons.org/licenses/by-sa/4.0/")),
         AttributionText(
+            key: LicenceKey.wikivoyage, short: "Text from Wikivoyage (CC BY-SA 4.0)",
+            full: "Text from Wikivoyage, the free travel guide, licensed CC BY-SA 4.0; follow each article link for its authors. Titles and coordinates are facts.",
+            url: u("https://creativecommons.org/licenses/by-sa/4.0/")),
+        AttributionText(
             key: LicenceKey.commons, short: "Photos from Wikimedia Commons; licence per photo",
             full: "Photos from Wikimedia Commons. Each file has its own licence (for example CC0, CC BY, CC BY-SA); credit the author named with each photo.",
             url: u("https://commons.wikimedia.org/wiki/Commons:Reusing_content_outside_Wikimedia")),
