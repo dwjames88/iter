@@ -54,6 +54,8 @@ public enum PendingPart: Codable, Hashable, Sendable {
     case aurora
     case smokeAnalysis
     case horizon
+    /// Light pollution and seeing (answered at once while no source exists).
+    case lightAndSeeing
 }
 
 /// What a named gap is about.

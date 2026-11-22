@@ -89,6 +89,11 @@ public final class ConditionsStore {
     /// How many loads are running (tests and diagnostics).
     public var activeLoadCount: Int { loads.count }
 
+    /// The priority a slot's running load was started with, nil when nothing is loading.
+    public func loadPriority(for placeID: UUID, day: LocalDay) -> ConditionsPriority? {
+        loads[SlotKey(placeID: placeID, day: day)]?.priority
+    }
+
     // MARK: Requesting
 
     /// Loads `place` on `day`. An equal or more urgent load already running is left alone.

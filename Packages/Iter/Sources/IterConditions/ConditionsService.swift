@@ -60,6 +60,7 @@ final class JobBox: @unchecked Sendable {
     var parts = JobParts()
     var expected: [PendingPart] = []
     var emitted = false
+    var emittedComplete = false
 }
 
 enum JobPart: Sendable {
@@ -98,6 +99,8 @@ public actor ConditionsService {
     // Forecast downloads (ConditionsFetching.swift).
     var tickets: [Int: FetchTicket] = [:]
     var inflightByKey: [FetchKey: Int] = [:]
+    /// Results of tickets that finished before every awaiter arrived.
+    var finished: [Int: FinishedTicket] = [:]
     var laneRunning: [SourceID: Int] = [:]
     var batchRuns: [Int: BatchRun] = [:]
     var batchTimer: Task<Void, Never>?
@@ -263,19 +266,28 @@ public actor ConditionsService {
         box.parts.candidates = providers.map(\.descriptor)
 
         // Plan the downloads: incremental sources near term first, the rest in one request for the longest horizon.
-        struct Plan { var provider: any ForecastProvider; var tiers: [Int]; var index = 0 }
+        struct Plan { var provider: any ForecastProvider; var tiers: [Int]; var steps: [ForecastStep] = []; var index = 0 }
         let neededHours = max(1, Int((windowEnd.timeIntervalSince(floorHour(now)) / 3600).rounded(.up)))
         var plans: [SourceID: Plan] = [:]
         for p in providers { plans[p.descriptor.id] = Plan(provider: p, tiers: tiers(for: p, needed: neededHours)) }
 
-        // Register every first download synchronously, best priority first, then let the queues move.
+        // Register every download of the plan up front (the long range waits behind the near term), best priority first,
+        // then let the queues move. Registering all of it together is what lets places share one batch call per horizon.
         var firstSteps: [ForecastStep] = []
         for p in providers {
-            guard let hours = plans[p.descriptor.id]?.tiers.first else { continue }
-            firstSteps.append(await makeStep(p, hours: hours, priority: request.priority, coordinate: place.coordinate))
+            guard var plan = plans[p.descriptor.id] else { continue }
+            var previous: Int?
+            for hours in plan.tiers {
+                let step = await makeStep(p, hours: hours, priority: request.priority, coordinate: place.coordinate, after: previous)
+                plan.steps.append(step)
+                previous = step.ticket ?? previous
+            }
+            plans[p.descriptor.id] = plan
+            if let first = plan.steps.first { firstSteps.append(first) }
         }
         settle(key, generation: generation)
 
+        box.expected.append(.lightAndSeeing)
         if live { box.expected += [.observations, .alerts, .smokeAnalysis, .aurora] }
         if place.horizon == nil, configuration.fetchesHorizon { box.expected.append(.horizon) }
         if live { box.parts.observations = nil } else {
@@ -292,8 +304,11 @@ public actor ConditionsService {
             let usable = box.parts.forecasts.values.contains { $0.value != nil }
             let nearDone = box.parts.candidates.allSatisfy { box.parts.nearDone.contains($0.id) }
             guard force || box.emitted || usable || nearDone else { return }
+            let report = assembler.assemble(place: place, day: day, parts: box.parts, pack: pack, now: clock.now)
+            if report.tier == .complete, box.emittedComplete { return }
             box.emitted = true
-            emit(key, generation, assembler.assemble(place: place, day: day, parts: box.parts, pack: pack, now: clock.now))
+            box.emittedComplete = report.tier == .complete
+            emit(key, generation, report)
         }
         refreshPending()
 
@@ -330,8 +345,7 @@ public actor ConditionsService {
                         if plan.index + 1 < plan.tiers.count {
                             plan.index += 1
                             plans[id] = plan
-                            let next = await makeStep(plan.provider, hours: plan.tiers[plan.index], priority: request.priority,
-                                                      coordinate: place.coordinate)
+                            let next = plan.steps[plan.index]
                             group.addTask { await self.runStep(next) }
                         } else {
                             box.parts.fullDone.insert(id)
@@ -349,6 +363,7 @@ public actor ConditionsService {
                     box.parts.horizon = h; box.expected.removeAll { $0 == .horizon }
                 case .optionalInputs(let b, let br, let s, let sr):
                     box.parts.bortle = b; box.parts.bortleReasons = br; box.parts.seeing = s; box.parts.seeingReasons = sr
+                    box.expected.removeAll { $0 == .lightAndSeeing }
                 }
                 publish()
             }
@@ -397,11 +412,12 @@ public actor ConditionsService {
         return .none
     }
 
-    func makeStep(_ provider: any ForecastProvider, hours: Int, priority: ConditionsPriority, coordinate: Coordinate) async -> ForecastStep {
+    func makeStep(_ provider: any ForecastProvider, hours: Int, priority: ConditionsPriority, coordinate: Coordinate,
+                  after: Int? = nil) async -> ForecastStep {
         let lookup = await lookupForecast(provider, coordinate: coordinate, hours: hours)
         var ticket: Int?
         if case .fresh = lookup {} else {
-            ticket = registerFetch(provider: provider, coordinate: coordinate, hours: hours, priority: priority)
+            ticket = registerFetch(provider: provider, coordinate: coordinate, hours: hours, priority: priority, after: after)
         }
         return ForecastStep(provider: provider, coordinate: coordinate, hours: hours, priority: priority, lookup: lookup, ticket: ticket, refresh: false)
     }

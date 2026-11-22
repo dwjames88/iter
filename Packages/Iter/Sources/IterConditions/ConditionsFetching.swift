@@ -37,6 +37,8 @@ final class FetchTicket {
     var waiters: [Int: CheckedContinuation<ForecastResult, Never>] = [:]
     var task: Task<Void, Never>?
     var runID: Int?
+    /// A ticket that may not start until another has finished (the long range after the near term).
+    var after: Int?
 
     init(id: Int, key: FetchKey, provider: any ForecastProvider, coordinate: Coordinate, span: TimeSpan, priority: ConditionsPriority) {
         self.id = id
@@ -50,6 +52,11 @@ final class FetchTicket {
     }
 }
 
+struct FinishedTicket {
+    var result: ForecastResult
+    var remaining: Int
+}
+
 final class BatchRun {
     var ticketIDs: [Int]
     var task: Task<Void, Never>?
@@ -59,7 +66,8 @@ final class BatchRun {
 
 extension ConditionsService {
     /// Registers (or joins) the download of `hours` of forecast for `coordinate`. Call `awaitTicket` to get the result.
-    func registerFetch(provider: any ForecastProvider, coordinate: Coordinate, hours: Int, priority: ConditionsPriority) -> Int {
+    func registerFetch(provider: any ForecastProvider, coordinate: Coordinate, hours: Int, priority: ConditionsPriority,
+                       after prerequisite: Int? = nil) -> Int {
         let key = FetchKey(source: provider.descriptor.id, cell: GeoCell.key(coordinate, degrees: configuration.forecastCellDegrees), hours: hours)
         if let id = inflightByKey[key], let t = tickets[id] {
             t.refs += 1
@@ -71,6 +79,7 @@ extension ConditionsService {
         let t = FetchTicket(id: ticketCounter, key: key, provider: provider, coordinate: coordinate,
                             span: TimeSpan(start: start, end: start.addingTimeInterval(Double(hours) * 3600)), priority: priority)
         t.refs = 1
+        if let prerequisite, tickets[prerequisite] != nil { t.after = prerequisite }
         tickets[t.id] = t
         inflightByKey[key] = t.id
         pump()
@@ -82,6 +91,13 @@ extension ConditionsService {
         let wid = waiterCounter
         return await withTaskCancellationHandler {
             await withCheckedContinuation { (c: CheckedContinuation<ForecastResult, Never>) in
+                if var f = finished[id] {
+                    // The download finished before this awaiter got here (a cache hit on the provider's side, a fast answer).
+                    f.remaining -= 1
+                    finished[id] = f.remaining > 0 ? f : nil
+                    c.resume(returning: f.result)
+                    return
+                }
                 guard let t = tickets[id] else { c.resume(returning: .failure(.cancelled)); return }
                 if Task.isCancelled { c.resume(returning: .failure(.cancelled)); dropRef(id); return }
                 t.waiters[wid] = c
@@ -115,8 +131,14 @@ extension ConditionsService {
         guard let t = tickets.removeValue(forKey: id) else { return }
         if inflightByKey[t.key] == id { inflightByKey[t.key] = nil }
         if t.state == .running, t.batchProvider == nil { laneRunning[t.key.source] = max(0, laneRunning[t.key.source, default: 0] - 1) }
+        let unclaimed = t.refs - t.waiters.count
+        if unclaimed > 0 { finished[id] = FinishedTicket(result: result, remaining: unclaimed) }
         for (_, c) in t.waiters { c.resume(returning: result) }
         t.waiters.removeAll()
+        for dependent in tickets.values where dependent.after == id {
+            // A failed near term skips the long range behind it: it would fail the same way.
+            if case .failure = result { complete(dependent.id, result) } else { dependent.after = nil }
+        }
         pump()
     }
 
@@ -131,7 +153,7 @@ extension ConditionsService {
 
     func pump() {
         guard unsettled == 0 else { return }
-        let queued = tickets.values.filter { $0.state == .queued }
+        let queued = tickets.values.filter { $0.state == .queued && $0.after == nil }
         for t in queued.filter({ $0.batchProvider == nil }).sorted(by: { ($0.priority, $0.id) < ($1.priority, $1.id) }) {
             let source = t.key.source
             guard laneRunning[source, default: 0] < t.maxConcurrent else { continue }
@@ -167,7 +189,7 @@ extension ConditionsService {
 
     private func flushBatches() {
         struct Group { var source: SourceID; var hours: Int }
-        let queued = tickets.values.filter { $0.state == .queued && $0.batchProvider != nil }
+        let queued = tickets.values.filter { $0.state == .queued && $0.after == nil && $0.batchProvider != nil }
         var groups: [Group] = []
         for t in queued.sorted(by: { ($0.priority, $0.id) < ($1.priority, $1.id) }) {
             let g = Group(source: t.key.source, hours: t.key.hours)
