@@ -30,7 +30,7 @@ import Testing
         let fake = FakeLanguageModel()
         fake.enqueue(json: json)
         do { _ = try await fake.generate(Toy.self, prompt: prompt, options: .default); Issue.record("should throw") }
-        catch let AIError.decoding(_) {} catch { Issue.record("wrong error \(error)") }
+        catch AIError.decoding {} catch { Issue.record("wrong error \(error)") }
     }
 
     @Test func unscriptedAndErrorsAndAvailability() async {
