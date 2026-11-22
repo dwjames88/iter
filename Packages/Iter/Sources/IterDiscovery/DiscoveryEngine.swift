@@ -92,6 +92,15 @@ public struct DiscoveryEngine: Sendable {
 
         // 3. Fan-out, 4. extraction, 5. verification: one task group, results collected as they arrive.
         var verified: [VerifiedCandidate] = []
+        var dropped: [DroppedCandidate] = []
+        func ingest(_ candidates: [PlaceCandidate]) {
+            for c in candidates {
+                switch CandidateVerifier.check(c, in: area) {
+                case .success(let v): verified.append(v)
+                case .failure(let reason): dropped.append(DroppedCandidate(name: c.name, source: c.source, reason: reason))
+                }
+            }
+        }
         var documents: [EvidenceDocument] = []
         var textPending = providers.textEvidence.count
         let center = resolved.centre
@@ -144,11 +153,10 @@ public struct DiscoveryEngine: Sendable {
                 switch out {
                 case .source(let status, let candidates, let docs, let isText):
                     log.set(status)
-                    verified += candidates.compactMap { CandidateVerifier.verifyStructured($0, in: area) }
+                    ingest(candidates)
                     if isText {
                         documents += docs
-                        verified += DocumentCandidates.candidates(from: docs, plan: plan, areaName: area.name)
-                            .compactMap { CandidateVerifier.verifyStructured($0, in: area) }
+                        ingest(DocumentCandidates.candidates(from: docs, plan: plan, areaName: area.name))
                         textPending -= 1
                         if textPending == 0, !documents.isEmpty {
                             let known = DiscoveryMerger.merge(verified)
@@ -160,6 +168,45 @@ public struct DiscoveryEngine: Sendable {
                 case .extraction(let found):
                     verified += found
                 }
+                emit(.partial(Array(DiscoveryRanker.rank(Self.scored(DiscoveryMerger.merge(verified), photos: [:]), context: context).prefix(request.maxResults))))
+            }
+        }
+        guard !Task.isCancelled else { return cancelled(request, plan, origin, log, area: resolved) }
+
+        // 5b. Widening: when the strict pass came back short, ask the gazetteers once more for related subjects. Everything
+        // already fetched (text, place search, articles) is reused; related places rank below strict ones.
+        var widened = false
+        let strictCount = DiscoveryMerger.merge(verified).filter { FeatureRelatedness.tier(of: $0.featureKinds, plan: plan) == .strict }.count
+        let relatedKinds = FeatureRelatedness.related(to: plan.features)
+        if strictCount < config.widenBelow, !relatedKinds.isEmpty, !providers.gazetteers.isEmpty {
+            widened = true
+            let relatedSet = Set(relatedKinds)
+            let extra = await withTaskGroup(of: (SourceStatus, [PlaceCandidate]).self) { group -> [(SourceStatus, [PlaceCandidate])] in
+                for g in providers.gazetteers {
+                    let d = g.descriptor
+                    // Only sources that answered the first time are asked again; a failed or slow one is not hammered.
+                    guard let first = log.statuses.first(where: { $0.source == d.id && $0.role == .gazetteer }) else { continue }
+                    var before = 0
+                    switch first.state {
+                    case .found(let n): before = n
+                    case .empty: before = 0
+                    default: continue
+                    }
+                    let beforeCount = before
+                    group.addTask {
+                        let (value, state) = await self.guarded(d, center: center) { try await g.candidates(in: area, features: relatedSet, limit: limit) }
+                        let items = value ?? []
+                        let total = beforeCount + items.count
+                        return (SourceStatus(source: d.id, name: d.name, role: .gazetteer, state: state == nil ? (total == 0 ? .empty : .found(total)) : first.state),
+                                items)
+                    }
+                }
+                var out: [(SourceStatus, [PlaceCandidate])] = []
+                while let r = await group.next() { out.append(r) }
+                return out
+            }
+            for (status, items) in extra { log.set(status); ingest(items) }
+            if !Task.isCancelled {
                 emit(.partial(Array(DiscoveryRanker.rank(Self.scored(DiscoveryMerger.merge(verified), photos: [:]), context: context).prefix(request.maxResults))))
             }
         }
@@ -188,7 +235,8 @@ public struct DiscoveryEngine: Sendable {
         guard !Task.isCancelled else { return cancelled(request, plan, origin, log, area: resolved) }
         for i in ranked.indices { ranked[i].why = i < lines.count ? lines[i] : PlaceExplanation(text: explainer.template(for: ranked[i]), isModelWritten: false) }
 
-        return DiscoveryResult(request: request, plan: plan, planOrigin: origin, area: resolved, places: ranked, statuses: log.statuses)
+        return DiscoveryResult(request: request, plan: plan, planOrigin: origin, area: resolved, places: ranked, statuses: log.statuses,
+                               widened: widened, dropped: dropped)
     }
 
     // MARK: Pieces
@@ -250,7 +298,10 @@ public struct DiscoveryEngine: Sendable {
         guard !Task.isCancelled else { return [] }
         // Documents that are about the area itself are not places in it.
         if let areaName = area.name { names.removeAll { DiscoveryNames.matches($0.name, areaName) } }
-        names = Array(names.prefix(configuration.maxNamedCandidates))
+        // Requested kinds first, then related or unknown ones, so the cap never costs a strict match.
+        func rank(_ n: ExtractedName) -> Int { FeatureRelatedness.tier(of: n.featureHint.map { [$0] } ?? [], plan: plan).rawValue }
+        names = Array(names.enumerated().sorted { rank($0.element) != rank($1.element) ? rank($0.element) < rank($1.element) : $0.offset < $1.offset }
+            .map(\.element).prefix(configuration.maxNamedCandidates))
 
         var out: [VerifiedCandidate] = []
         var toLocate: [ExtractedName] = []
@@ -318,7 +369,7 @@ final class StatusLog: Sendable {
 
     func set(_ status: SourceStatus) {
         let changed = state.withLock { list -> Bool in
-            if let i = list.firstIndex(where: { $0.source == status.source }) {
+            if let i = list.firstIndex(where: { $0.id == status.id }) {
                 if list[i] == status { return false }
                 list[i] = status
             } else {

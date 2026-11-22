@@ -96,7 +96,8 @@ struct EngineTests {
         for p in result.places { #expect(YosemiteScenario.triangle.contains(p.coordinate.value)) }
         assertGrounded(result.places, supplied: s.supplied)
         let osm = result.statuses.first { $0.source == osmID }
-        #expect(osm?.state == .found(4))
+        #expect(osm?.state == .found(8))   // 4 strict, and the widening pass asked once more (the fake repeats itself)
+        #expect(result.widened)
         #expect(result.statuses.contains { $0.source == FakeBoundary().descriptor.id && $0.state == .found(1) })
     }
 

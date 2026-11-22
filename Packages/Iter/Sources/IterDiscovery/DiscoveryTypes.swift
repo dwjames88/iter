@@ -75,9 +75,15 @@ public struct DiscoveryResult: Sendable {
     public var statuses: [SourceStatus]
     /// Set when the run could not search at all (no area); `places` is empty then.
     public var failure: DiscoveryFailure?
+    /// True when the strict pass found fewer than `DiscoveryConfiguration.widenBelow` places and related subjects were added.
+    public var widened: Bool
+    /// What sources offered and verification dropped, and why.
+    public var dropped: [DroppedCandidate]
 
     public init(request: DiscoveryRequest, plan: QueryPlan, planOrigin: PlanOrigin, area: ResolvedArea?, places: [DiscoveredPlace],
-                statuses: [SourceStatus], failure: DiscoveryFailure? = nil) {
+                statuses: [SourceStatus], failure: DiscoveryFailure? = nil, widened: Bool = false, dropped: [DroppedCandidate] = []) {
+        self.widened = widened
+        self.dropped = dropped
         self.request = request
         self.plan = plan
         self.planOrigin = planOrigin
@@ -116,11 +122,14 @@ public struct DiscoveryConfiguration: Sendable {
     /// Most names geocoded after extraction.
     public var maxNamedCandidates: Int
     public var gazetteerLimit: Int
+    /// Fewer strict matches than this widens the search to related subjects.
+    public var widenBelow: Int
 
     public init(sourceTimeoutOverride: Duration? = nil, planTimeout: Duration = .seconds(10), extractionTimeout: Duration = .seconds(20),
                 explanationTimeout: Duration = .seconds(10), photoLookupCount: Int = 12, photoRadiusMeters: Double = 500,
                 explanationCount: Int = 10, explanationConcurrency: Int = 2, maxDocuments: Int = 24, maxNamedCandidates: Int = 15,
-                gazetteerLimit: Int = 60) {
+                gazetteerLimit: Int = 60, widenBelow: Int = 5) {
+        self.widenBelow = widenBelow
         self.sourceTimeoutOverride = sourceTimeoutOverride
         self.planTimeout = planTimeout
         self.extractionTimeout = extractionTimeout

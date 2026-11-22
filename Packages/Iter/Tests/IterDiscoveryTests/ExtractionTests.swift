@@ -40,17 +40,17 @@ struct ExtractionTests {
         #expect(names.contains("Mount Whitney"))
         #expect(names.contains("Bad Bridge Overlook"))
         #expect(!names.contains { $0.hasPrefix("Visit") })
-        // Filtered to the plan's feature kinds.
+        // Other kinds are kept (they widen the search); the hint is what ranks them.
         let arches = DeterministicExtractor.extract(from: [d], plan: QueryPlan(features: [.arch]))
-        #expect(arches.map(\.name) == ["Mobius Arch"])
-        #expect(arches[0].featureHint == .arch)
+        #expect(arches.first { $0.name == "Mobius Arch" }?.featureHint == .arch)
+        #expect(arches.first { $0.name == "Mount Whitney" }?.featureHint == .peak)
     }
 
     @Test func documentsAboutAPlaceBecomeStructuredCandidatesOnlyWhenGeotaggedAndTitledLikeOne() {
         let c = Coordinate(latitude: 37.71, longitude: -119.65)
         let docs = [doc("Bridalveil Fall", "A waterfall.", at: c), doc("Yosemite Valley", "A valley.", at: c), doc("Vernal Fall", "No tag."), doc("Yosemite", "Park", at: c)]
         let out = DocumentCandidates.candidates(from: docs, plan: plan, areaName: "Yosemite")
-        #expect(out.map(\.name) == ["Bridalveil Fall"])
+        #expect(out.map(\.name) == ["Bridalveil Fall", "Yosemite Valley"])   // a valley is a natural feature, ranked later as related
         #expect(out[0].coordinate == c && out[0].source == .wikipedia)
     }
 

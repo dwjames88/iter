@@ -41,7 +41,7 @@ struct SearchControllerTests {
         #expect(search.places.map(\.name) == ["Fast Place"])
         #expect(search.plan?.features == [.viewpoint])
         #expect(search.planOrigin?.isBasic == true)
-        #expect(search.basicSearchLabel == "Basic search: AI unavailable (not available on this system)")
+        #expect(search.basicSearchLabel == "Basic search: AI not set up")
         #expect(search.area?.basis == .box(radiusKm: 30, reason: "town"))
         #expect(search.statuses.contains { $0.source == FixedSources.reddit })
     }

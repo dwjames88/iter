@@ -95,12 +95,21 @@ enum CandidateVerifier {
 
     /// Structured candidates keep their own coordinate if the area contains it. Nil: no coordinate, no name, or outside.
     static func verifyStructured(_ c: PlaceCandidate, in area: DiscoveryArea) -> VerifiedCandidate? {
-        guard let name = cleanName(c.name), let provided = c.coordinate, valid(provided), area.contains(provided) else { return nil }
+        try? check(c, in: area).get()
+    }
+
+    /// As `verifyStructured`, saying why a candidate was dropped. Dropping is deliberate: no usable name, no coordinate from
+    /// the source, a nonsense coordinate, or a coordinate outside the area (its outline when it has one).
+    static func check(_ c: PlaceCandidate, in area: DiscoveryArea) -> Result<VerifiedCandidate, DropReason> {
+        guard let name = cleanName(c.name) else { return .failure(.noName) }
+        guard let provided = c.coordinate else { return .failure(.noCoordinate) }
+        guard valid(provided) else { return .failure(.invalidCoordinate) }
+        guard area.contains(provided) else { return .failure(.outsideArea) }
         let grounded = GroundedCoordinate(value: provided, source: c.source, basis: .structuredSource)
         let stable = stableSources.contains(c.source) && c.externalID != nil
-        return VerifiedCandidate(name: name, coordinate: grounded, elevationMeters: c.elevationMeters, featureKinds: unique(c.featureKinds),
+        return .success(VerifiedCandidate(name: name, coordinate: grounded, elevationMeters: c.elevationMeters, featureKinds: unique(c.featureKinds),
                                  sources: [c.source], stableSources: stable ? [c.source] : [], citations: c.citations,
-                                 mentionCount: c.mentionCount, snippet: c.snippet, externalIDs: c.externalID.map { ["\(c.source.rawValue):\($0)"] } ?? [])
+                                 mentionCount: c.mentionCount, snippet: c.snippet, externalIDs: c.externalID.map { ["\(c.source.rawValue):\($0)"] } ?? []))
     }
 
     /// A name from a document is located by a geocoder, then by place search, inside the area, and accepted only when the
@@ -162,4 +171,16 @@ enum CandidateVerifier {
         for k in kinds where !out.contains(k) { out.append(k) }
         return out
     }
+}
+
+/// Why a structured candidate was not kept.
+public enum DropReason: String, Error, Sendable, Hashable {
+    case noName, noCoordinate, invalidCoordinate, outsideArea
+}
+
+/// A candidate a source offered that verification dropped, for diagnostics.
+public struct DroppedCandidate: Sendable, Hashable {
+    public var name: String
+    public var source: SourceID
+    public var reason: DropReason
 }
