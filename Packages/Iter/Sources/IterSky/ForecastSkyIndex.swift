@@ -113,6 +113,22 @@ public enum ForecastSkyIndex {
             if let low = totals.min(), let high = totals.max(), high - low > ConfidenceModel.spreadLimit {
                 spread = true
                 notes.append(.sourceSpread(low: low, high: high))
+            } else if conditions.hasLayers {
+                // Two models can agree on total cover and still disagree on where it sits (low cloud blocks the light,
+                // high cloud colours it), which is what moves a golden-hour score most. Compare the low and high layers
+                // too; the note carries the pair of values for the layer that disagrees most.
+                var worst: (low: Double, high: Double)?
+                for other in inputs.spreadSeries {
+                    guard case .conditions(let c) = LightEngine.aggregate(other, over: scoringSpan), c.hasLayers else { continue }
+                    for (a, b) in [(conditions.low, c.low), (conditions.high, c.high)] {
+                        guard let a, let b, abs(a - b) > ConfidenceModel.spreadLimit else { continue }
+                        if worst.map({ abs(a - b) > $0.high - $0.low }) ?? true { worst = (min(a, b), max(a, b)) }
+                    }
+                }
+                if let worst {
+                    spread = true
+                    notes.append(.sourceSpread(low: worst.low, high: worst.high))
+                }
             }
         }
 

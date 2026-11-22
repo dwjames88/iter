@@ -154,6 +154,19 @@ private func points(_ s: SkyScore, _ f: LightContributor.Factor) -> Int? { s.con
         #expect(apart.confidence == .medium && agree.confidence == .high)
     }
 
+    @Test func sameTotalButLayersApartAlsoCountsAsSpread() {
+        // Both say 50 % cover, but one puts it low (blocks the light) and the other high (colours it).
+        let lowDeck = Wx(total: 0.5, low: 0.5, mid: 0.0, high: 0.0)
+        let highDeck = Wx(total: 0.5, low: 0.0, mid: 0.0, high: 0.5)
+        let apart = sky(.goldenEvening, lowDeck) { $0.spreadSeries = [forecast(fetchedAt: now0) { _ in highDeck }.hourly!] }
+        #expect(apart.notes.contains(.sourceSpread(low: 0.0, high: 0.5)))
+        #expect(apart.confidenceCauses.contains(.sourceSpread))
+        let close = sky(.goldenEvening, lowDeck) {
+            $0.spreadSeries = [forecast(fetchedAt: now0) { _ in Wx(total: 0.5, low: 0.4, mid: 0.0, high: 0.1) }.hourly!]
+        }
+        #expect(!close.confidenceCauses.contains(.sourceSpread))
+    }
+
     @Test func leadTimeUsesTheModelRunWhenKnown() {
         // Fetched at the window but the run was 40 hours before: past the 36-hour limit.
         let mid = LightEngine(ephemeris: FixedEphemeris()).windows(for: makePlace(), on: testDay).first { $0.kind == .goldenEvening }!.span.midpoint
