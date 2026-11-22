@@ -100,12 +100,17 @@ public struct GoLeaveInfo: Codable, Hashable, Sendable {
     public var lateBySeconds: TimeInterval?
     /// When the chain (or the current stop's window) frees you, if later than now.
     public var earliestDeparture: Date?
+    /// An Evening Before transfer: when the plan has you set off (the previous stop's session end), earlier than `leaveBy`,
+    /// which stays the hard latest departure for the morning arrival. "Drive to X tonight".
+    public var suggestedDeparture: Date?
 
-    public init(leaveBy: Date?, status: GoLeaveStatus, lateBySeconds: TimeInterval? = nil, earliestDeparture: Date? = nil) {
+    public init(leaveBy: Date?, status: GoLeaveStatus, lateBySeconds: TimeInterval? = nil, earliestDeparture: Date? = nil,
+                suggestedDeparture: Date? = nil) {
         self.leaveBy = leaveBy
         self.status = status
         self.lateBySeconds = lateBySeconds
         self.earliestDeparture = earliestDeparture
+        self.suggestedDeparture = suggestedDeparture
     }
 }
 
