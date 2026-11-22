@@ -171,3 +171,15 @@ enum LiveServices {
     /// Apple Intelligence through the resilient wrapper; the engine falls back to Basic search when it is unavailable.
     static func languageModel() -> (any LanguageModeling)? { ResilientLanguageModel(FoundationModelsLanguageModel()) }
 }
+
+extension AppContainer {
+    /// The Settings model over this container's preferences, keys and source list (the model never sees the container).
+    public func settingsModel() -> SettingsModel {
+        SettingsModel(preferences: preferences, keyVault: keyVault, sources: sources, dataMode: dataMode)
+    }
+
+    /// The library model over this container's store and clock.
+    public func libraryModel(timeZone: TimeZone = .current) -> LibraryModel {
+        LibraryModel(library: library, now: now, timeZone: timeZone)
+    }
+}

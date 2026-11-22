@@ -43,7 +43,7 @@ public final class AppContainer {
     // Library
     public let library: LibraryStore
     /// What the store open produced. `markRecoveryNoticeShown()` updates `recovered.noticeShown`.
-    public private(set) var store: StoreStatus
+    public internal(set) var store: StoreStatus
     /// Rewrites the recovery manifest (set by the live composition; nil in memory and in tests).
     public var recoveryNoticeWriter: (@MainActor () throws -> Void)?
 

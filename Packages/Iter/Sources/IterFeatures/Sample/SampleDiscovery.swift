@@ -106,8 +106,13 @@ public enum SampleDiscovery {
         }()
 
         public func geocode(_ text: String, near region: GeoRegion?) async throws -> [GeocodeResult] {
-            let lower = text.lowercased()
-            let hits = Self.areas.filter { lower.contains($0.name.lowercased()) }
+            let lower = text.lowercased().trimmingCharacters(in: .whitespaces)
+            // "Yosemite" finds "Yosemite National Park", and a query that spells the whole name finds it too.
+            let hits = Self.areas.filter { area in
+                let name = area.name.lowercased()
+                return lower.contains(name) || (lower.count >= 4 && name.contains(lower))
+                    || (name.split(separator: " ").first.map { $0.count >= 4 && lower.contains($0) } ?? false)
+            }
             // A spot's own name resolves to the spot.
             let spots = CuratedSpots.all.filter { lower.contains($0.name.lowercased()) }.map {
                 GeocodeResult(name: $0.name, coordinate: $0.coordinate, formattedAddress: $0.locality, countryCode: "US", timeZoneIdentifier: $0.timeZoneIdentifier)
