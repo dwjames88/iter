@@ -59,7 +59,11 @@ struct QueryPlanTests {
         let plan = QueryPlanValidator.plan(from: dto, userText: "waterfalls in Yosemite", basic: basic)
         #expect(plan.features == [.waterfall])
         #expect(plan.windows == [.night])
-        #expect(plan.maxDriveMinutes == 720)
+        // The user did not mention a drive, so the model's limit is not used at all.
+        #expect(plan.maxDriveMinutes == nil)
+        let spoken = QueryPlanValidator.plan(from: dto, userText: "waterfalls in Yosemite, a short drive", basic: BasicQueryParser.parse("waterfalls in Yosemite, a short drive"))
+        #expect(spoken.maxDriveMinutes == 720)
+        #expect(QueryPlanner.mentionsDriveTime("within 2 hours of Bishop") && !QueryPlanner.mentionsDriveTime("waterfalls in Yosemite"))
         #expect(plan.keywords.count <= QueryPlan.maximumKeywords)
         #expect(!plan.keywords.contains { $0.contains("37") && $0.contains(".") })
         #expect(plan.keywords.first == "moody")

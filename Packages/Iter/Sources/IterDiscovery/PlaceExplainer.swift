@@ -15,7 +15,8 @@ struct PlaceExplainer: Sendable {
 
     static let instructions = """
     Write one short sentence (at most 25 words) saying why this place fits the search. Use only the facts given. \
-    Do not add any number, name, distance or weather that is not in the facts. No hype, no exclamation marks.
+    Do not add any number, name, distance or weather that is not in the facts. Describe the place only by its Kind; \
+    never say it has or offers what the user searched for unless its Kind says so. No hype, no exclamation marks.
     """
 
     func facts(for place: DiscoveredPlace) -> String {
@@ -29,7 +30,7 @@ struct PlaceExplainer: Sendable {
         if place.mentionCount > 0 { lines.append("Mentions: \(place.mentionCount)") }
         if let e = place.elevationMeters { lines.append("Elevation: \(Int(e.rounded())) metres") }
         if let d = place.distanceKm { lines.append("Distance: \(Int(d.rounded())) km") }
-        if !plan.features.isEmpty { lines.append("Wanted: " + plan.features.map(\.pluralName).joined(separator: ", ")) }
+        if !plan.features.isEmpty { lines.append("The user searched for (not a fact about this place): " + plan.features.map(\.pluralName).joined(separator: ", ")) }
         if !plan.windows.isEmpty { lines.append("Light wanted: " + plan.windows.map(\.rawValue).joined(separator: ", ")) }
         if let s = place.snippet { lines.append("Note: \(s)") }
         return lines.joined(separator: "\n")

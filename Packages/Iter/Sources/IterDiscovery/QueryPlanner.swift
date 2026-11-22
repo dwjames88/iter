@@ -54,7 +54,10 @@ enum QueryPlanValidator {
         }
         let features = unique(dto.features.compactMap(FeatureKind.init(rawValue:)))
         let windows = unique(dto.windows.compactMap(LightWindowKind.init(rawValue:)))
-        let drive = basic.maxDriveMinutes ?? dto.maxDriveMinutes.map { min(720, max(5, $0)) }
+        // A drive limit only when the user spoke of one: the model must not invent a radius (live run 2026-11-22: it
+        // added 60 minutes to "waterfalls in Yosemite National Park", which replaced the park's own area).
+        let drive = basic.maxDriveMinutes
+            ?? (QueryPlanner.mentionsDriveTime(userText) ? dto.maxDriveMinutes.map { min(720, max(5, $0)) } : nil)
         return QueryPlan(areaText: mode == .named ? areaText : nil, areaMode: mode, features: features.isEmpty ? basic.features : features,
                          windows: windows, dateHint: dto.dateHint?.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty.map { String($0.prefix(40)) },
                          maxDriveMinutes: drive, keywords: cleanWords(dto.keywords), exclude: cleanWords(dto.exclude))
@@ -85,6 +88,14 @@ extension String {
 struct QueryPlanner: Sendable {
     var model: (any LanguageModeling)?
     var timeout: Duration
+
+    /// True when the words talk about travel time or distance ("within 2 hours", "a short drive", "45 min").
+    static func mentionsDriveTime(_ text: String) -> Bool {
+        let t = text.lowercased()
+        let words = ["hour", "hours", "hr", "hrs", "minute", "minutes", "min", "mins", "drive", "driving", "miles", "km"]
+        let tokens = Set(t.split(whereSeparator: { !$0.isLetter }).map(String.init))
+        return !tokens.isDisjoint(with: words)
+    }
 
     static let instructions = """
     You turn a photographer's search into a plan. Fields: areaMode, areaText, features, windows, dateHint, maxDriveMinutes, \
