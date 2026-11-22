@@ -1,0 +1,2797 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+<name>HMS Smoke Mapping-20250815</name>
+<description><![CDATA[NOAA Hazard Mapping System multisatellite smoke mapping data.<br>  For product information please visit: <a href="https://www.ospo.noaa.gov/Products/land/hms.html#about">https://www.ospo.noaa.gov/Products/land/hms.html#about</a> ]]></description>
+ <Style id="Smoke_Light_hl">
+   <IconStyle>
+     <scale>1.3</scale>
+     <Icon>
+       <href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+     </Icon>
+     <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+   </IconStyle>
+   <LineStyle>
+     <color>FFFFFFFF</color>
+     <width>1</width>
+   </LineStyle>
+   <PolyStyle>
+     <color>4400FF00</color>
+   </PolyStyle>
+ </Style>
+ <Style id="Smoke_Light">
+   <IconStyle>
+     <scale>1.1</scale>
+     <Icon>
+       <href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+     </Icon>
+     <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+   </IconStyle>
+   <LineStyle>
+     <color>FFFFFFFF</color>
+     <width>1</width>
+   </LineStyle>
+   <PolyStyle>
+     <color>4400FF00</color>
+   </PolyStyle>
+ </Style>
+ <StyleMap id="Smoke_Light_style">
+   <Pair>
+     <key>normal</key>
+     <styleUrl>#Smoke_Light</styleUrl>
+   </Pair>
+   <Pair>
+     <key>highlight</key>
+     <styleUrl>#Smoke_Light_hl</styleUrl>
+   </Pair>
+ </StyleMap>
+ <Style id="Smoke_Medium_hl">
+   <IconStyle>
+     <scale>1.3</scale>
+     <Icon>
+       <href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+     </Icon>
+     <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+   </IconStyle>
+   <LineStyle>
+     <color>FFFFFFFF</color>
+     <width>1</width>
+   </LineStyle>
+   <PolyStyle>
+     <color>4400FFFF</color>
+   </PolyStyle>
+ </Style>
+ <Style id="Smoke_Medium">
+   <IconStyle>
+     <scale>1.1</scale>
+     <Icon>
+       <href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+     </Icon>
+     <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+   </IconStyle>
+   <LineStyle>
+     <color>FFFFFFFF</color>
+     <width>1</width>
+   </LineStyle>
+   <PolyStyle>
+     <color>4400FFFF</color>
+   </PolyStyle>
+ </Style>
+ <StyleMap id="Smoke_Medium_style">
+   <Pair>
+     <key>normal</key>
+     <styleUrl>#Smoke_Medium</styleUrl>
+   </Pair>
+   <Pair>
+     <key>highlight</key>
+     <styleUrl>#Smoke_Medium_hl</styleUrl>
+   </Pair>
+ </StyleMap>
+ <Style id="Smoke_Heavy_hl">
+   <IconStyle>
+     <scale>1.3</scale>
+     <Icon>
+       <href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+     </Icon>
+     <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+   </IconStyle>
+   <LineStyle>
+     <color>FFFFFFFF</color>
+     <width>1</width>
+   </LineStyle>
+   <PolyStyle>
+     <color>440000FF</color>
+   </PolyStyle>
+ </Style>
+ <Style id="Smoke_Heavy">
+   <IconStyle>
+     <scale>1.1</scale>
+     <Icon>
+       <href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+     </Icon>
+     <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+   </IconStyle>
+   <LineStyle>
+     <color>FFFFFFFF</color>
+     <width>1</width>
+   </LineStyle>
+   <PolyStyle>
+     <color>440000FF</color>
+   </PolyStyle>
+ </Style>
+ <StyleMap id="Smoke_Heavy_style">
+   <Pair>
+     <key>normal</key>
+     <styleUrl>#Smoke_Heavy</styleUrl>
+   </Pair>
+   <Pair>
+     <key>highlight</key>
+     <styleUrl>#Smoke_Heavy_hl</styleUrl>
+   </Pair>
+ </StyleMap>
+ <Folder>
+   <name>Overlay</name>
+   <open>0</open>
+   <Style>
+     <ListStyle>
+     <listItemType>check</listItemType>
+     <bgColor>00ffffff</bgColor>
+     <maxSnippetLines>2</maxSnippetLines>
+   </ListStyle>
+   </Style>
+   <ScreenOverlay>
+    <name>NOAA logo</name>
+    <color>ffffffff</color>
+    <visibility>1</visibility>
+    <Icon>
+      <href>https://www.ospo.noaa.gov/graphics/Products/land/fire/hms/png_logo/noaa_logo.png</href>
+    </Icon>
+    <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+    <screenXY x="1" y="1" xunits="pixels" yunits="insetPixels"/>
+    <size x="100" y="100" xunits="pixels" yunits="pixels"/>
+   </ScreenOverlay>
+   <ScreenOverlay>
+    <name>Analysis Date</name>
+    <color>ffffffff</color>
+    <visibility>1</visibility>
+    <Icon>
+      <href><![CDATA[http://chart.apis.google.com/chart?chst=d_text_outline&chld=FFBBBB|16|h|BB0000|b|Analysis%20for:%2020250815]]></href>
+    </Icon>
+     <overlayXY x="1" y="1" xunits="fraction" yunits="fraction"/>
+    <screenXY x="2" y="92" xunits="insetPixels" yunits="insetPixels"/>
+   </ScreenOverlay>
+   <ScreenOverlay>
+    <name>Generated DateTime</name>
+    <color>ffffffff</color>
+    <visibility>1</visibility>
+    <Icon>
+      <href><![CDATA[http://chart.apis.google.com/chart?chst=d_text_outline&chld=FFBBBB|16|h|BB0000|b|Generated:%201012GMT%2020250816]]></href>
+    </Icon>
+    <overlayXY x="1" y="1" xunits="fraction" yunits="fraction"/>
+    <screenXY x="2" y="130" xunits="insetPixels" yunits="insetPixels"/>
+   </ScreenOverlay>
+   <ScreenOverlay>
+     <name>Legend</name>
+     <color>ffffffff</color>
+     <visibility>1</visibility>
+     <Icon>
+        <href>https://www.ospo.noaa.gov/graphics/Products/land/fire/hms/png_logo/kml_legend.png</href>
+     </Icon>
+     <overlayXY x="1" y="1" xunits="fraction" yunits="fraction"/>
+     <screenXY x="1" y="1" xunits="insetPixels" yunits="insetPixels"/>
+     <size x="300" y="90" xunits="pixels" yunits="pixels"/>
+   </ScreenOverlay>
+ </Folder>
+  <Folder>
+    <name>Smoke (Light)</name>
+    <open>0</open>
+    <Style>
+      <ListStyle>
+      <listItemType>check</listItemType>
+      <bgColor>00ffffff</bgColor>
+      <maxSnippetLines>2</maxSnippetLines>
+    </ListStyle>
+    </Style>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -110.844560,58.743676,0
+        -112.354320,58.143410,0
+        -114.209690,57.670473,0
+        -116.483430,57.324865,0
+        -119.193720,57.652283,0
+        -122.376950,57.997891,0
+        -126.178640,58.452638,0
+        -132.335920,59.652946,0
+        -135.155350,60.539703,0
+        -136.883390,61.471935,0
+        -138.111210,63.040813,0
+        -138.043000,64.859802,0
+        -137.451820,66.474155,0
+        -136.701490,67.747448,0
+        -135.905680,68.702417,0
+        -134.095200,70.009914,0
+        -132.063070,70.794254,0
+        -129.880280,71.317214,0
+        -127.652020,71.158052,0
+        -124.969010,71.044365,0
+        -121.244630,70.221048,0
+        -119.986320,69.902758,0
+        -119.116410,69.620781,0
+        -118.300050,69.257498,0
+        -114.837160,67.847680,0
+        -113.818530,67.338363,0
+        -112.220380,66.731761,0
+        -110.417020,66.210589,0
+        -108.669200,66.227954,0
+        -106.859490,66.209393,0
+        -105.272510,66.497090,0
+        -103.973230,66.691982,0
+        -101.987200,66.988960,0
+        -100.411130,67.001130,0
+        -100.031000,66.934227,0
+        -99.842455,66.736558,0
+        -99.718268,66.452226,0
+        -99.799759,66.231037,0
+        -100.218850,65.811942,0
+        -100.556460,65.567470,0
+        -101.301520,65.101808,0
+        -102.558800,64.414958,0
+        -103.688030,63.821240,0
+        -104.572790,63.169314,0
+        -105.506250,62.342127,0
+        -106.597640,61.672739,0
+        -109.013260,59.941062,0
+        -109.828160,59.286225,0
+        -110.584860,58.893324,0
+        -110.844560,58.743676,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -116.209790,44.753586,0
+        -115.942760,44.972931,0
+        -115.566050,45.259033,0
+        -115.122600,45.626198,0
+        -114.846030,45.926605,0
+        -114.631450,46.126877,0
+        -114.471640,46.235424,0
+        -114.402890,46.229174,0
+        -114.368520,46.166674,0
+        -114.393040,46.069656,0
+        -114.488400,45.945679,0
+        -114.674370,45.716797,0
+        -114.927090,45.397316,0
+        -115.127360,45.249496,0
+        -115.470690,45.025383,0
+        -115.742480,44.777428,0
+        -116.095650,44.575538,0
+        -116.222600,44.546241,0
+        -116.251900,44.553565,0
+        -116.295840,44.580420,0
+        -116.288520,44.612159,0
+        -116.254340,44.685401,0
+        -116.229930,44.734229,0
+        -116.209790,44.753586,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -107.325840,43.575907,0
+        -106.985820,43.673510,0
+        -106.584400,43.761092,0
+        -106.114860,43.851108,0
+        -105.540710,44.011675,0
+        -105.051710,44.235497,0
+        -104.806560,44.503508,0
+        -104.591980,44.794379,0
+        -104.310650,45.147239,0
+        -104.191440,45.314132,0
+        -104.055470,45.578534,0
+        -104.055470,45.754964,0
+        -104.117450,45.874173,0
+        -104.341570,45.955235,0
+        -104.767830,45.938429,0
+        -105.214180,45.840794,0
+        -105.753010,45.535619,0
+        -106.339520,45.311505,0
+        -106.949870,45.120770,0
+        -107.431470,44.968183,0
+        -107.870160,44.786984,0
+        -108.313620,44.601018,0
+        -108.580650,44.496114,0
+        -108.804760,44.357831,0
+        -108.871520,44.243390,0
+        -108.876290,44.095571,0
+        -108.837000,44.002857,0
+        -108.714930,43.895435,0
+        -108.566000,43.783131,0
+        -108.380450,43.675709,0
+        -108.150960,43.587818,0
+        -107.989830,43.512135,0
+        -107.818930,43.475514,0
+        -107.680840,43.498678,0
+        -107.477810,43.544766,0
+        -107.325840,43.575907,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -112.841730,46.761895,0
+        -112.756280,46.793633,0
+        -112.683040,46.810722,0
+        -112.622010,46.820488,0
+        -112.592710,46.815605,0
+        -112.575620,46.781426,0
+        -112.570740,46.757011,0
+        -112.602480,46.727715,0
+        -112.665950,46.705742,0
+        -112.739200,46.695976,0
+        -112.829530,46.698418,0
+        -112.856380,46.713066,0
+        -112.858820,46.730156,0
+        -112.856380,46.742363,0
+        -112.841730,46.761895,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -90.422788,47.733115,0
+        -89.547345,47.956632,0
+        -88.252807,48.114957,0
+        -86.939642,48.114957,0
+        -85.542658,47.872813,0
+        -85.011804,47.621356,0
+        -84.574083,47.155695,0
+        -83.782459,46.578275,0
+        -82.228082,46.101729,0
+        -81.296759,45.915465,0
+        -80.849724,45.975069,0
+        -80.529350,46.094279,0
+        -80.052512,46.138982,0
+        -79.292553,45.885662,0
+        -78.800815,45.721750,0
+        -78.368681,45.483331,0
+        -78.003603,45.230011,0
+        -77.690679,45.043747,0
+        -77.392656,44.835131,0
+        -76.399400,44.249773,0
+        -75.083907,43.819036,0
+        -73.523942,43.236960,0
+        -72.464563,42.969204,0
+        -70.339984,42.811755,0
+        -68.861509,42.858322,0
+        -66.914948,43.332911,0
+        -65.176227,43.871584,0
+        -62.586103,45.035241,0
+        -61.056667,45.889053,0
+        -59.393591,47.062115,0
+        -58.562351,47.716534,0
+        -57.062315,48.858831,0
+        -54.886953,50.351145,0
+        -52.654275,51.849277,0
+        -50.789925,52.731435,0
+        -48.729351,53.193287,0
+        -47.024049,53.299869,0
+        -45.887181,52.980125,0
+        -45.034530,52.163001,0
+        -43.968716,51.559040,0
+        -42.961622,50.930982,0
+        -41.433671,50.217938,0
+        -40.313173,49.461239,0
+        -39.192676,48.384397,0
+        -38.275906,47.511283,0
+        -37.068097,46.652720,0
+        -35.481938,46.128851,0
+        -33.721157,45.706845,0
+        -32.062239,45.517671,0
+        -29.850348,45.372151,0
+        -28.686195,45.735949,0
+        -28.031359,46.579960,0
+        -27.519996,47.588493,0
+        -27.264201,49.151687,0
+        -26.411549,50.828567,0
+        -25.996593,51.325551,0
+        -25.018886,51.803036,0
+        -23.495483,52.212308,0
+        -22.313140,52.621581,0
+        -21.176272,52.780742,0
+        -19.880242,52.644318,0
+        -18.766111,52.576106,0
+        -17.219971,51.984934,0
+        -16.583324,51.416500,0
+        -15.787517,50.484269,0
+        -14.946234,48.801704,0
+        -14.446012,47.005452,0
+        -13.741154,45.845847,0
+        -12.808922,44.527079,0
+        -11.785741,43.572110,0
+        -11.103620,42.639878,0
+        -10.808034,40.889101,0
+        -10.967196,40.184243,0
+        -11.240044,39.911395,0
+        -11.964002,38.925934,0
+        -12.153177,37.994611,0
+        -12.429663,36.743147,0
+        -12.633390,36.379349,0
+        -12.895324,36.117414,0
+        -13.579264,35.826376,0
+        -14.932592,35.811824,0
+        -15.776603,35.884584,0
+        -17.217242,36.161070,0
+        -18.585122,35.899136,0
+        -21.982084,35.102370,0
+        -23.771969,34.229256,0
+        -25.299920,33.239726,0
+        -27.642778,32.279299,0
+        -28.384926,31.813638,0
+        -29.505423,31.275217,0
+        -30.588842,30.832554,0
+        -31.460560,30.750598,0
+        -32.801664,30.758049,0
+        -33.732987,30.810203,0
+        -34.589803,30.847456,0
+        -35.088992,30.989017,0
+        -35.405067,31.046409,0
+        -35.521844,31.001645,0
+        -35.551038,30.869298,0
+        -35.528576,30.683543,0
+        -35.446620,30.482377,0
+        -35.372114,30.191805,0
+        -35.275257,29.878880,0
+        -35.238004,29.528703,0
+        -35.208201,29.312636,0
+        -35.200751,28.992261,0
+        -35.223102,28.776194,0
+        -35.282707,28.649535,0
+        -35.446620,28.545226,0
+        -35.744643,28.522875,0
+        -35.960710,28.567578,0
+        -36.310887,28.686787,0
+        -36.772823,29.014613,0
+        -37.286913,29.528703,0
+        -37.564447,30.197300,0
+        -37.685519,30.802660,0
+        -37.732085,31.463899,0
+        -37.834531,32.190330,0
+        -38.318818,33.093713,0
+        -39.455032,34.695588,0
+        -40.605215,35.741999,0
+        -41.687877,36.871227,0
+        -41.955632,37.348530,0
+        -41.815934,37.558078,0
+        -41.431763,37.755984,0
+        -40.942819,37.965531,0
+        -40.709989,38.605815,0
+        -40.675064,39.374156,0
+        -40.768196,40.072648,0
+        -41.233857,40.840989,0
+        -41.594163,41.175233,0
+        -42.246089,41.808532,0
+        -43.214664,42.609469,0
+        -43.698952,42.935432,0
+        -44.173926,43.112383,0
+        -44.714093,43.131010,0
+        -45.235634,43.093757,0
+        -45.617476,42.926119,0
+        -45.785114,42.683975,0
+        -45.859620,42.246253,0
+        -45.943439,41.845785,0
+        -45.999318,41.324244,0
+        -46.101763,40.756137,0
+        -46.390473,40.271850,0
+        -46.688497,40.011080,0
+        -47.126218,39.601298,0
+        -47.992348,39.461599,0
+        -48.850192,39.306606,0
+        -49.679651,39.510333,0
+        -50.640078,39.917786,0
+        -51.163946,40.368895,0
+        -51.513192,41.154699,0
+        -52.022509,42.086021,0
+        -52.444515,42.537130,0
+        -53.841498,43.484570,0
+        -55.333651,43.839043,0
+        -57.036522,43.929339,0
+        -59.053892,43.604175,0
+        -60.750823,42.917766,0
+        -62.300544,42.312183,0
+        -62.920432,42.011775,0
+        -64.012962,41.509347,0
+        -65.890158,41.029134,0
+        -68.062127,40.664548,0
+        -69.924772,40.455001,0
+        -71.740851,40.187245,0
+        -72.926881,40.116574,0
+        -74.644007,40.669547,0
+        -78.325641,41.851018,0
+        -78.977567,42.083849,0
+        -79.932172,42.083849,0
+        -80.979910,42.037283,0
+        -81.701685,42.037283,0
+        -82.283761,42.153698,0
+        -83.677578,42.866686,0
+        -84.249783,43.516376,0
+        -85.802484,44.664407,0
+        -86.934972,45.260453,0
+        -87.933349,45.826697,0
+        -88.700759,46.139622,0
+        -89.550125,46.370590,0
+        -90.086567,46.609008,0
+        -90.473997,46.765470,0
+        -90.623009,47.003889,0
+        -90.690064,47.272110,0
+        -90.585756,47.577584,0
+        -90.526151,47.666991,0
+        -90.422788,47.733115,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -65.179820,44.710023,0
+        -65.238821,44.691023,0
+        -65.295821,44.654023,0
+        -65.422821,44.567023,0
+        -65.487821,44.515511,0
+        -65.562821,44.454261,0
+        -65.644071,44.378011,0
+        -65.709071,44.290511,0
+        -65.767196,44.219298,0
+        -65.831649,44.148986,0
+        -65.843367,44.121642,0
+        -65.841414,44.074767,0
+        -65.817977,44.074767,0
+        -65.784774,44.072814,0
+        -65.689071,44.129454,0
+        -65.632430,44.176329,0
+        -65.571883,44.260314,0
+        -65.558211,44.299376,0
+        -65.491805,44.367736,0
+        -65.423446,44.422423,0
+        -65.316024,44.512267,0
+        -65.182024,44.638043,0
+        -65.161784,44.666822,0
+        -65.157304,44.678982,0
+        -65.157304,44.696902,0
+        -65.163704,44.704582,0
+        -65.170104,44.707782,0
+        -65.173304,44.707782,0
+        -65.179820,44.710023,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -66.174698,47.324241,0
+        -66.195257,47.278167,0
+        -66.234666,47.191413,0
+        -66.245930,47.128949,0
+        -66.236202,47.069557,0
+        -66.204970,47.034741,0
+        -66.148138,47.050101,0
+        -66.115690,47.101811,0
+        -66.080554,47.178613,0
+        -66.061450,47.266002,0
+        -66.070573,47.314659,0
+        -66.090858,47.343441,0
+        -66.120938,47.353041,0
+        -66.149738,47.342161,0
+        -66.174698,47.324241,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -123.758300,65.647555,0
+        -124.307620,65.773440,0
+        -125.040040,65.899325,0
+        -125.909790,66.070986,0
+        -126.092890,66.185427,0
+        -126.077640,66.273165,0
+        -126.012790,66.349459,0
+        -125.944120,66.410494,0
+        -125.841120,66.456271,0
+        -125.612240,66.460085,0
+        -125.364290,66.418124,0
+        -125.127780,66.387606,0
+        -124.715790,66.299868,0
+        -124.341950,66.185427,0
+        -123.975740,66.029024,0
+        -123.720150,65.884066,0
+        -123.575190,65.788699,0
+        -123.552310,65.758181,0
+        -123.544680,65.720034,0
+        -123.548490,65.674258,0
+        -123.571380,65.651369,0
+        -123.640040,65.632296,0
+        -123.708710,65.628481,0
+        -123.708710,65.632296,0
+        -123.758300,65.647555,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -116.232700,44.698645,0
+        -116.077060,44.774939,0
+        -115.787150,44.945837,0
+        -115.485020,45.080115,0
+        -115.127970,45.281531,0
+        -114.902140,45.388342,0
+        -114.709880,45.406653,0
+        -114.651890,45.360876,0
+        -114.648840,45.302893,0
+        -114.731240,45.241858,0
+        -114.892980,45.144201,0
+        -115.201210,45.031286,0
+        -115.494180,44.878699,0
+        -115.741370,44.753576,0
+        -115.985510,44.665075,0
+        -116.162510,44.604040,0
+        -116.223550,44.594885,0
+        -116.235750,44.597937,0
+        -116.247960,44.649817,0
+        -116.244910,44.680334,0
+        -116.232700,44.698645,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -115.052040,45.514911,0
+        -114.987040,45.544911,0
+        -114.925790,45.547411,0
+        -114.805790,45.511161,0
+        -114.720790,45.454911,0
+        -114.693290,45.411161,0
+        -114.719540,45.387411,0
+        -114.782040,45.383661,0
+        -114.860790,45.394911,0
+        -114.949540,45.399911,0
+        -115.017040,45.397411,0
+        -115.063290,45.407411,0
+        -115.095790,45.428661,0
+        -115.099540,45.461161,0
+        -115.097040,45.486161,0
+        -115.068290,45.509911,0
+        -115.065790,45.509911,0
+        -115.052040,45.514911,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -112.867460,46.723588,0
+        -112.842650,46.794788,0
+        -112.803450,46.862788,0
+        -112.724250,46.905188,0
+        -112.647450,46.926788,0
+        -112.570650,46.937188,0
+        -112.466330,46.948909,0
+        -112.422810,46.938029,0
+        -112.408090,46.907949,0
+        -112.406990,46.872495,0
+        -112.475740,46.834995,0
+        -112.608550,46.811557,0
+        -112.746050,46.755307,0
+        -112.802300,46.699057,0
+        -112.826010,46.683949,0
+        -112.850970,46.689069,0
+        -112.867930,46.703745,0
+        -112.867930,46.713120,0
+        -112.867460,46.723588,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -117.004850,42.644451,0
+        -116.958850,42.662452,0
+        -116.880850,42.646452,0
+        -116.855850,42.628452,0
+        -116.833850,42.595452,0
+        -116.832850,42.562452,0
+        -116.828850,42.529452,0
+        -116.837850,42.482452,0
+        -116.852850,42.442452,0
+        -116.878850,42.398452,0
+        -116.914850,42.376452,0
+        -116.944850,42.372452,0
+        -116.969850,42.381452,0
+        -116.997850,42.414452,0
+        -117.033850,42.493452,0
+        -117.047850,42.535452,0
+        -117.041850,42.593452,0
+        -117.024850,42.624452,0
+        -117.011850,42.642452,0
+        -117.004850,42.644451,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -90.845284,33.158531,0
+        -90.837471,33.203454,0
+        -90.792549,33.221032,0
+        -90.763253,33.209313,0
+        -90.753487,33.191735,0
+        -90.757393,33.166344,0
+        -90.786690,33.144860,0
+        -90.808174,33.144860,0
+        -90.835518,33.150719,0
+        -90.839424,33.152673,0
+        -90.845284,33.158531,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -90.862862,33.023766,0
+        -90.845284,33.055016,0
+        -90.812081,33.068688,0
+        -90.788643,33.070641,0
+        -90.771065,33.053063,0
+        -90.771065,33.027673,0
+        -90.810128,32.998376,0
+        -90.835518,32.996423,0
+        -90.851143,33.004235,0
+        -90.858956,33.017907,0
+        -90.862862,33.023766,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -92.409627,17.870812,0
+        -92.650716,17.760950,0
+        -92.900960,17.724329,0
+        -93.026082,17.733484,0
+        -93.267171,17.776209,0
+        -93.499104,17.846399,0
+        -93.636433,17.901331,0
+        -93.792073,17.995935,0
+        -93.911092,18.099695,0
+        -93.959920,18.221765,0
+        -93.926350,18.298059,0
+        -93.819539,18.374353,0
+        -93.700520,18.410974,0
+        -93.602864,18.398767,0
+        -93.312947,18.352991,0
+        -93.108479,18.331629,0
+        -93.019978,18.319422,0
+        -92.791096,18.288904,0
+        -92.736165,18.304163,0
+        -92.675130,18.392664,0
+        -92.601887,18.407922,0
+        -92.394368,18.346887,0
+        -92.305867,18.270593,0
+        -92.244832,18.154627,0
+        -92.238728,18.078333,0
+        -92.238728,18.020349,0
+        -92.253987,17.959314,0
+        -92.284505,17.904382,0
+        -92.342488,17.873865,0
+        -92.373006,17.867761,0
+        -92.409627,17.870812,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Light<br>Satellite: GOES-EAST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -66.163797,47.355525,0
+        -66.182741,47.325317,0
+        -66.188002,47.234648,0
+        -66.190444,47.156523,0
+        -66.205092,47.090605,0
+        -66.241713,47.017362,0
+        -66.298837,46.918655,0
+        -66.349135,46.836698,0
+        -66.361342,46.765898,0
+        -66.356459,46.709745,0
+        -66.305877,46.662655,0
+        -66.241237,46.644735,0
+        -66.170197,46.649855,0
+        -66.107477,46.706815,0
+        -66.063490,46.787870,0
+        -66.025557,46.937733,0
+        -66.012221,47.032011,0
+        -66.012221,47.112577,0
+        -66.021987,47.224882,0
+        -66.032693,47.296674,0
+        -66.048842,47.337187,0
+        -66.074709,47.361669,0
+        -66.105941,47.373957,0
+        -66.133589,47.372421,0
+        -66.163797,47.355525,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Light<br>Satellite: GOES-EAST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -65.181525,44.709145,0
+        -65.214338,44.704457,0
+        -65.261213,44.679457,0
+        -65.364338,44.574769,0
+        -65.487776,44.460707,0
+        -65.623323,44.347015,0
+        -65.723319,44.261254,0
+        -65.798839,44.135174,0
+        -65.834260,44.018890,0
+        -65.831479,43.909254,0
+        -65.780279,43.858694,0
+        -65.690039,43.869574,0
+        -65.620279,43.941254,0
+        -65.577399,44.066694,0
+        -65.531526,44.171234,0
+        -65.474885,44.247406,0
+        -65.375276,44.362640,0
+        -65.279159,44.488528,0
+        -65.220979,44.557953,0
+        -65.170198,44.645844,0
+        -65.156526,44.682953,0
+        -65.164338,44.708344,0
+        -65.181525,44.709145,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Light<br>Satellite: GOES-EAST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -53.249238,47.786467,0
+        -53.261444,47.890227,0
+        -53.166840,48.006194,0
+        -53.099701,48.100798,0
+        -52.907440,48.332732,0
+        -52.623627,48.543303,0
+        -52.242157,48.698943,0
+        -51.909515,48.814909,0
+        -51.485321,48.933928,0
+        -51.320526,48.964446,0
+        -51.250496,48.945483,0
+        -51.225696,48.905483,0
+        -51.228096,48.851883,0
+        -51.271296,48.814283,0
+        -51.375458,48.744719,0
+        -51.656219,48.610442,0
+        -51.812071,48.537273,0
+        -51.928071,48.451273,0
+        -52.005071,48.389273,0
+        -52.049896,48.335783,0
+        -52.114071,48.280273,0
+        -52.202071,48.226273,0
+        -52.345917,48.158781,0
+        -52.583954,48.097746,0
+        -52.831146,47.990935,0
+        -52.965424,47.896330,0
+        -53.096649,47.807829,0
+        -53.160736,47.755949,0
+        -53.206513,47.749846,0
+        -53.230927,47.755949,0
+        -53.243134,47.759001,0
+        -53.249238,47.786467,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1510UTC<br>End Time: 2025227 1800UTC<br>Density: Light<br>Satellite: GOES-EAST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -116.185440,44.656638,0
+        -116.237890,44.675711,0
+        -116.237890,44.718626,0
+        -116.156830,44.761542,0
+        -115.985160,44.809225,0
+        -115.780120,44.914130,0
+        -115.551240,45.019034,0
+        -115.327130,45.119170,0
+        -115.103020,45.205000,0
+        -114.945660,45.243147,0
+        -114.878900,45.257452,0
+        -114.850290,45.233610,0
+        -114.859830,45.176390,0
+        -114.979040,45.123938,0
+        -115.107780,45.042876,0
+        -115.346200,44.928435,0
+        -115.551240,44.861678,0
+        -115.703830,44.785384,0
+        -115.875490,44.723395,0
+        -115.989930,44.675711,0
+        -116.061460,44.666174,0
+        -116.128220,44.637564,0
+        -116.185440,44.656638,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 2000UTC<br>End Time: 2025227 2340UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -117.620670,61.473684,0
+        -118.453340,61.196128,0
+        -119.286010,61.140617,0
+        -120.562760,61.196128,0
+        -121.617470,61.307151,0
+        -123.005250,62.195329,0
+        -124.393030,63.139019,0
+        -126.224900,64.193731,0
+        -127.834720,65.137420,0
+        -129.500060,65.970088,0
+        -130.166190,66.747244,0
+        -130.388240,67.968489,0
+        -129.389040,70.355469,0
+        -128.667390,71.021603,0
+        -126.391430,71.354670,0
+        -124.170990,71.132625,0
+        -121.117870,70.522002,0
+        -118.508850,69.744846,0
+        -116.343910,68.634623,0
+        -114.456540,67.191333,0
+        -113.013250,65.970088,0
+        -112.125070,65.026398,0
+        -111.569960,63.749642,0
+        -111.514440,62.861463,0
+        -111.792000,61.917773,0
+        -112.513650,61.307151,0
+        -113.346310,61.085106,0
+        -114.567560,60.863062,0
+        -116.454940,61.085106,0
+        -116.899030,61.307151,0
+        -117.232090,61.307151,0
+        -117.620670,61.473684,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 2000UTC<br>End Time: 2025227 2340UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -123.837550,65.689208,0
+        -124.259550,65.776520,0
+        -124.492380,65.849280,0
+        -124.841630,66.009351,0
+        -125.118120,66.227629,0
+        -125.292740,66.445908,0
+        -125.336400,66.664187,0
+        -125.263640,66.911569,0
+        -125.103560,67.042537,0
+        -124.754320,67.027985,0
+        -124.245000,66.736946,0
+        -124.012170,66.562323,0
+        -123.793890,66.198526,0
+        -123.706580,65.951143,0
+        -123.677480,65.791072,0
+        -123.837550,65.689208,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 2000UTC<br>End Time: 2025227 2340UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -121.567450,65.223547,0
+        -121.931250,65.631001,0
+        -122.091320,65.747416,0
+        -122.222290,65.863831,0
+        -122.396910,66.053006,0
+        -122.542430,66.213077,0
+        -122.746150,66.445908,0
+        -122.906230,66.635083,0
+        -122.906230,66.795154,0
+        -122.891670,66.940673,0
+        -122.731600,67.013433,0
+        -122.440560,67.071640,0
+        -122.164080,67.042537,0
+        -121.873040,66.940673,0
+        -121.683860,66.722394,0
+        -121.552900,66.358597,0
+        -121.451030,65.922039,0
+        -121.407380,65.616449,0
+        -121.436480,65.398170,0
+        -121.465590,65.354514,0
+        -121.567450,65.223547,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 2000UTC<br>End Time: 2025227 2340UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -120.446950,64.321328,0
+        -120.592470,64.539607,0
+        -120.767090,64.699678,0
+        -120.970820,64.903405,0
+        -121.130890,65.005268,0
+        -121.232750,65.194443,0
+        -121.232750,65.339962,0
+        -121.174550,65.543689,0
+        -120.970820,65.631001,0
+        -120.810750,65.660105,0
+        -120.563370,65.529137,0
+        -120.374190,65.165339,0
+        -120.315980,64.786990,0
+        -120.301430,64.525055,0
+        -120.359640,64.335880,0
+        -120.446950,64.321328,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 2000UTC<br>End Time: 2025227 2340UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -120.825300,61.701983,0
+        -121.261860,61.978470,0
+        -121.494690,62.196748,0
+        -121.596550,62.371371,0
+        -121.640210,62.604202,0
+        -121.654760,62.778825,0
+        -121.596550,62.866137,0
+        -121.451030,62.866137,0
+        -121.334620,62.822481,0
+        -121.145440,62.676962,0
+        -120.985370,62.458683,0
+        -120.839850,62.167645,0
+        -120.781650,61.963918,0
+        -120.781650,61.920262,0
+        -120.825300,61.701983,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 2000UTC<br>End Time: 2025227 2340UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -113.054580,62.254956,0
+        -113.593000,62.094885,0
+        -113.884040,61.978470,0
+        -114.102320,61.760191,0
+        -114.262390,61.236322,0
+        -114.262390,60.872524,0
+        -114.015000,60.610590,0
+        -113.665760,60.479622,0
+        -113.272860,60.596038,0
+        -113.098230,60.770661,0
+        -112.981820,61.018043,0
+        -112.894510,61.512808,0
+        -112.763540,61.905710,0
+        -112.705330,62.182197,0
+        -112.792640,62.298612,0
+        -113.054580,62.254956,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 2000UTC<br>End Time: 2025227 2340UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -116.198340,44.652086,0
+        -116.126820,44.756990,0
+        -116.098210,44.804674,0
+        -116.045750,44.895273,0
+        -115.907470,45.019251,0
+        -115.759650,45.114618,0
+        -115.659520,45.195680,0
+        -115.502160,45.286279,0
+        -115.430630,45.333963,0
+        -115.297120,45.415026,0
+        -115.187450,45.467478,0
+        -115.115920,45.472246,0
+        -115.068240,45.472246,0
+        -115.049160,45.434099,0
+        -115.068240,45.376879,0
+        -115.173140,45.305353,0
+        -115.344800,45.186144,0
+        -115.516460,45.062166,0
+        -115.669050,44.947725,0
+        -115.878860,44.795137,0
+        -115.974230,44.714075,0
+        -116.122050,44.628244,0
+        -116.198340,44.652086,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 2000UTC<br>End Time: 2025227 2340UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -115.454480,46.044450,0
+        -115.306660,46.173197,0
+        -115.273280,46.192270,0
+        -115.220830,46.206575,0
+        -115.130230,46.201807,0
+        -115.073010,46.158891,0
+        -115.039630,46.058756,0
+        -115.049160,45.887094,0
+        -115.115920,45.796495,0
+        -115.182680,45.791727,0
+        -115.220830,45.829874,0
+        -115.235130,45.891863,0
+        -115.263740,45.944315,0
+        -115.349570,45.982462,0
+        -115.454480,46.044450,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 2000UTC<br>End Time: 2025227 2340UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -115.111150,45.472246,0
+        -114.815510,45.672518,0
+        -114.724920,45.748812,0
+        -114.534180,45.891863,0
+        -114.424510,45.977693,0
+        -114.152710,46.139818,0
+        -114.071650,46.158891,0
+        -114.004890,46.154123,0
+        -113.985820,46.130281,0
+        -114.033500,46.001535,0
+        -114.229000,45.748812,0
+        -114.524640,45.620065,0
+        -114.686770,45.539003,0
+        -114.825050,45.477014,0
+        -114.910880,45.448404,0
+        -115.111150,45.472246,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 2000UTC<br>End Time: 2025227 2340UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -112.933790,46.751255,0
+        -112.658120,46.885365,0
+        -112.479310,46.959871,0
+        -112.173840,47.071630,0
+        -111.913070,47.183388,0
+        -111.525640,47.295147,0
+        -111.384070,47.354752,0
+        -111.115850,47.444159,0
+        -110.840180,47.518664,0
+        -110.452750,47.600621,0
+        -110.244140,47.682577,0
+        -109.893960,47.734731,0
+        -109.528880,47.749632,0
+        -109.394770,47.690028,0
+        -109.372420,47.660225,0
+        -109.364970,47.578269,0
+        -109.409670,47.488862,0
+        -109.581030,47.421807,0
+        -109.834350,47.369653,0
+        -110.199430,47.310048,0
+        -110.691170,47.198289,0
+        -111.242510,47.093981,0
+        -111.629940,46.989673,0
+        -111.987570,46.863013,0
+        -112.434610,46.699101,0
+        -112.695380,46.676749,0
+        -112.851840,46.669298,0
+        -112.933790,46.751255,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 2000UTC<br>End Time: 2025227 2340UTC<br>Density: Light<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -112.129130,45.484656,0
+        -111.860910,45.693272,0
+        -111.697000,45.752877,0
+        -111.324470,46.006197,0
+        -111.078600,46.125406,0
+        -110.788030,46.199912,0
+        -110.430400,46.274417,0
+        -110.147280,46.363824,0
+        -109.782200,46.460682,0
+        -109.372420,46.512836,0
+        -108.970090,46.535188,0
+        -108.642260,46.535188,0
+        -108.321890,46.468133,0
+        -108.046210,46.348923,0
+        -107.949360,46.021098,0
+        -107.971710,45.909339,0
+        -108.008960,45.842284,0
+        -108.187780,45.752877,0
+        -108.366590,45.730525,0
+        -108.873230,45.745426,0
+        -109.223410,45.790130,0
+        -109.715140,45.849734,0
+        -110.154730,45.849734,0
+        -110.624120,45.782679,0
+        -111.182910,45.603865,0
+        -111.555440,45.521909,0
+        -111.846010,45.454854,0
+        -112.129130,45.484656,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1750UTC<br>End Time: 2025227 2330UTC<br>Density: Light<br>Satellite: GOES-EAST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -53.398512,48.470675,0
+        -53.940615,48.145414,0
+        -54.049035,47.494892,0
+        -53.290094,46.519110,0
+        -48.628023,45.760169,0
+        -46.025938,44.567546,0
+        -42.339649,42.290721,0
+        -39.954404,38.929693,0
+        -37.243898,34.918145,0
+        -34.641812,32.207639,0
+        -30.521843,29.713973,0
+        -26.727135,29.063452,0
+        -22.281905,29.497133,0
+        -19.354559,31.990798,0
+        -16.318792,35.134985,0
+        -12.415664,39.146534,0
+        -11.439881,42.290721,0
+        -11.656722,47.169632,0
+        -15.343010,57.469554,0
+        -18.053516,60.722161,0
+        -22.281905,62.998986,0
+        -27.269236,64.083189,0
+        -32.581828,64.408450,0
+        -35.292334,63.541088,0
+        -39.087042,60.939002,0
+        -42.448070,58.228496,0
+        -44.182793,54.975889,0
+        -45.266996,53.674846,0
+        -48.194342,52.156963,0
+        -50.471167,51.614861,0
+        -51.555370,51.181180,0
+        -53.940615,49.446457,0
+        -53.398512,48.470675,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1750UTC<br>End Time: 2025227 2330UTC<br>Density: Light<br>Satellite: GOES-EAST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -91.803164,18.664773,0
+        -92.399793,18.824843,0
+        -92.676279,18.868499,0
+        -93.025525,18.868499,0
+        -93.374771,18.824843,0
+        -94.015056,18.766635,0
+        -94.524373,18.824843,0
+        -95.077345,19.014018,0
+        -95.513903,19.174089,0
+        -95.906805,19.406920,0
+        -96.226947,19.596095,0
+        -96.517985,19.639750,0
+        -96.736264,19.508783,0
+        -96.852679,19.290504,0
+        -96.809024,18.679324,0
+        -96.343362,17.995384,0
+        -95.703078,17.602482,0
+        -95.048242,17.471515,0
+        -94.320646,17.427859,0
+        -93.549394,17.413307,0
+        -92.865454,17.500619,0
+        -92.152410,17.704345,0
+        -91.948683,17.864417,0
+        -91.774060,18.140903,0
+        -91.730405,18.344630,0
+        -91.803164,18.664773,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1750UTC<br>End Time: 2025227 2330UTC<br>Density: Light<br>Satellite: GOES-EAST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -120.416510,35.286799,0
+        -120.374550,35.340204,0
+        -120.328770,35.340204,0
+        -120.157110,35.290613,0
+        -120.096080,35.271539,0
+        -120.057930,35.218133,0
+        -119.985450,35.088434,0
+        -119.974000,35.038843,0
+        -119.981630,34.973993,0
+        -120.023600,34.951105,0
+        -120.088450,34.954919,0
+        -120.145670,34.996881,0
+        -120.221960,35.054101,0
+        -120.305880,35.130395,0
+        -120.378360,35.202875,0
+        -120.393620,35.241022,0
+        -120.416510,35.286799,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1750UTC<br>End Time: 2025227 2330UTC<br>Density: Light<br>Satellite: GOES-EAST</div>]]></description>
+<styleUrl>#Smoke_Light_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>0</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -108.033010,43.634936,0
+        -108.070270,43.776496,0
+        -107.928710,43.865903,0
+        -107.660490,43.977662,0
+        -107.377360,44.081970,0
+        -107.071890,44.245883,0
+        -106.602500,44.409796,0
+        -106.155470,44.558807,0
+        -105.872350,44.685467,0
+        -105.745690,44.715270,0
+        -105.604120,44.692918,0
+        -105.551970,44.566258,0
+        -105.633930,44.379993,0
+        -105.849990,44.223531,0
+        -106.148020,44.096871,0
+        -106.513100,43.925508,0
+        -106.885620,43.769046,0
+        -107.265600,43.620034,0
+        -107.526370,43.538078,0
+        -107.779690,43.508275,0
+        -107.988310,43.590232,0
+        -108.033010,43.634936,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+  </Folder>
+  <Folder>
+    <name>Smoke (Medium)</name>
+    <open>0</open>
+    <Style>
+      <ListStyle>
+      <listItemType>check</listItemType>
+      <bgColor>00ffffff</bgColor>
+      <maxSnippetLines>2</maxSnippetLines>
+    </ListStyle>
+    </Style>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Medium<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Medium_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>1</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -113.131190,59.573663,0
+        -113.831540,59.603465,0
+        -114.516990,59.722675,0
+        -115.135390,59.961093,0
+        -115.902800,60.110105,0
+        -116.409440,60.393227,0
+        -116.972710,60.854717,0
+        -117.373170,61.096861,0
+        -118.053040,61.432137,0
+        -118.388320,61.739474,0
+        -118.518700,62.056123,0
+        -118.760840,62.531098,0
+        -119.049550,62.875687,0
+        -119.319640,63.071265,0
+        -119.980880,63.387914,0
+        -120.306840,63.536926,0
+        -120.561080,63.538482,0
+        -120.777150,63.441625,0
+        -120.792050,63.255360,0
+        -120.769690,62.920084,0
+        -120.739890,62.458148,0
+        -120.836750,61.899355,0
+        -120.948510,61.422517,0
+        -121.219540,60.966476,0
+        -121.461680,60.575320,0
+        -121.958190,60.372623,0
+        -122.645040,60.302774,0
+        -123.390100,60.384265,0
+        -123.669500,60.523963,0
+        -123.750990,60.826643,0
+        -123.720120,61.236253,0
+        -123.615820,61.705639,0
+        -123.451900,62.234631,0
+        -123.377400,62.674215,0
+        -123.340140,63.158503,0
+        -123.414650,63.665142,0
+        -123.675420,64.015319,0
+        -124.442830,64.462354,0
+        -125.247490,64.849784,0
+        -125.696290,65.471145,0
+        -125.769050,66.067774,0
+        -125.550770,66.693506,0
+        -125.038270,67.254215,0
+        -124.430270,67.610276,0
+        -123.382530,67.974074,0
+        -122.145620,68.148697,0
+        -121.228850,67.915867,0
+        -120.224770,67.697588,0
+        -119.642690,67.522965,0
+        -118.289360,67.217375,0
+        -117.590870,66.911785,0
+        -117.485400,66.718253,0
+        -117.448150,66.517087,0
+        -117.425790,66.286119,0
+        -117.388540,66.032800,0
+        -117.321490,65.704974,0
+        -117.291680,65.660271,0
+        -117.261880,65.317544,0
+        -117.127770,64.997169,0
+        -117.135220,64.818355,0
+        -117.023460,64.714047,0
+        -116.867000,64.609739,0
+        -116.680740,64.229759,0
+        -116.583880,64.103099,0
+        -116.427420,64.058396,0
+        -116.263500,64.058396,0
+        -116.107040,64.155253,0
+        -116.054890,64.274463,0
+        -116.069790,64.468178,0
+        -116.203900,64.624640,0
+        -116.382710,64.855608,0
+        -116.516820,65.116378,0
+        -116.613680,65.511259,0
+        -116.568980,65.794381,0
+        -116.300760,66.077503,0
+        -115.950580,66.308471,0
+        -115.682360,66.368076,0
+        -115.198070,66.137108,0
+        -114.818090,65.943393,0
+        -114.482810,65.608116,0
+        -114.348700,65.243038,0
+        -114.073030,65.101477,0
+        -113.968720,64.989718,0
+        -113.886770,64.766201,0
+        -113.782460,64.483079,0
+        -113.760110,64.222309,0
+        -113.707950,63.909384,0
+        -113.648350,63.685867,0
+        -113.573840,63.529405,0
+        -113.372680,63.261184,0
+        -113.059750,63.097271,0
+        -112.843690,63.015315,0
+        -112.568020,62.881204,0
+        -112.076280,62.717291,0
+        -111.711200,62.575730,0
+        -111.442980,62.486323,0
+        -111.286520,62.210652,0
+        -111.271610,61.972233,0
+        -111.316320,61.748716,0
+        -111.450430,61.480495,0
+        -111.659040,61.063262,0
+        -112.016670,60.720536,0
+        -112.314700,60.437414,0
+        -112.590370,60.064885,0
+        -112.925640,59.744510,0
+        -113.067200,59.602949,0
+        -113.131190,59.573663,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Medium<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Medium_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>1</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -116.196530,44.707789,0
+        -115.891350,44.917597,0
+        -115.643400,45.104517,0
+        -115.521330,45.184626,0
+        -115.475550,45.196070,0
+        -115.448850,45.180811,0
+        -115.445030,45.135035,0
+        -115.498440,45.066370,0
+        -115.635770,44.940485,0
+        -115.784540,44.822230,0
+        -115.994350,44.700159,0
+        -116.172810,44.578381,0
+        -116.196250,44.582288,0
+        -116.245080,44.599866,0
+        -116.245080,44.631116,0
+        -116.231410,44.654553,0
+        -116.207970,44.693616,0
+        -116.196530,44.707789,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Medium<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Medium_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>1</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -20.677449,51.692140,0
+        -20.595052,51.829469,0
+        -20.439910,51.966486,0
+        -20.112492,52.039246,0
+        -19.403086,52.093815,0
+        -18.875579,52.057435,0
+        -18.602731,51.911916,0
+        -18.440893,51.632877,0
+        -18.366262,51.384410,0
+        -18.257123,51.129751,0
+        -18.147983,50.856903,0
+        -18.002464,50.565864,0
+        -17.656856,50.293016,0
+        -17.347628,50.111117,0
+        -16.965641,49.820079,0
+        -16.547273,49.547231,0
+        -16.219855,49.256192,0
+        -16.074336,48.946964,0
+        -16.074336,48.765065,0
+        -16.074336,48.455837,0
+        -16.238045,48.182989,0
+        -16.656412,47.873761,0
+        -16.929261,47.600912,0
+        -17.027486,47.282336,0
+        -16.998382,46.874882,0
+        -16.896519,46.336461,0
+        -16.765552,45.783489,0
+        -16.503617,45.172308,0
+        -16.270787,44.793959,0
+        -15.936093,44.240986,0
+        -15.674158,43.993604,0
+        -15.223049,43.440631,0
+        -14.984947,43.004927,0
+        -14.859251,42.596620,0
+        -14.761430,42.297122,0
+        -14.575165,41.924593,0
+        -14.376128,41.652175,0
+        -13.762219,41.220165,0
+        -13.307472,40.879105,0
+        -13.125573,40.719943,0
+        -13.080098,40.583519,0
+        -13.011886,40.447095,0
+        -13.034623,39.992348,0
+        -13.284734,39.423914,0
+        -13.603057,38.764530,0
+        -13.926965,38.499273,0
+        -14.141541,38.546957,0
+        -14.439564,38.833059,0
+        -14.600497,39.041675,0
+        -14.826995,39.041675,0
+        -14.952164,38.827099,0
+        -14.910441,38.570799,0
+        -14.808138,38.287046,0
+        -14.785400,37.900510,0
+        -14.876350,37.468501,0
+        -15.240148,37.218390,0
+        -15.535733,37.150178,0
+        -15.672157,37.195652,0
+        -15.945006,37.536713,0
+        -16.035955,37.832298,0
+        -16.263329,38.355258,0
+        -16.467965,38.741793,0
+        -16.829710,38.916506,0
+        -17.270685,38.975288,0
+        -17.736346,38.835590,0
+        -18.143800,38.719174,0
+        -18.446480,38.695891,0
+        -18.923782,38.858873,0
+        -18.981990,39.138269,0
+        -18.935424,39.615572,0
+        -18.844620,39.717902,0
+        -18.665533,39.876140,0
+        -18.611789,39.978672,0
+        -18.639729,40.826176,0
+        -18.639729,41.561921,0
+        -18.667669,42.102088,0
+        -18.872560,42.735387,0
+        -19.198522,44.083361,0
+        -19.338221,45.072891,0
+        -19.466278,45.957647,0
+        -19.640901,46.656139,0
+        -19.931939,47.424480,0
+        -20.246260,48.004672,0
+        -20.447426,48.697576,0
+        -20.514481,49.509689,0
+        -20.574086,50.373956,0
+        -20.633690,50.932750,0
+        -20.648591,51.364883,0
+        -20.674398,51.579225,0
+        -20.677449,51.692140,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Medium<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Medium_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>1</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -115.091560,45.512218,0
+        -115.073980,45.568858,0
+        -115.007580,45.639171,0
+        -114.935310,45.711436,0
+        -114.873790,45.783424,0
+        -114.781010,45.842017,0
+        -114.719980,45.868873,0
+        -114.668710,45.844459,0
+        -114.651620,45.798072,0
+        -114.666270,45.739478,0
+        -114.695560,45.693092,0
+        -114.768810,45.622291,0
+        -114.866460,45.519752,0
+        -114.954350,45.446510,0
+        -114.993420,45.434303,0
+        -115.034920,45.419654,0
+        -115.066660,45.429420,0
+        -115.083750,45.461158,0
+        -115.088630,45.500221,0
+        -115.088630,45.500221,0
+        -115.091560,45.512218,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Medium<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Medium_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>1</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -65.187023,44.697971,0
+        -65.228274,44.685471,0
+        -65.322024,44.622971,0
+        -65.444524,44.537971,0
+        -65.463274,44.517971,0
+        -65.462024,44.499221,0
+        -65.449524,44.477971,0
+        -65.400774,44.482971,0
+        -65.287024,44.566721,0
+        -65.219524,44.616721,0
+        -65.184524,44.655471,0
+        -65.167024,44.679221,0
+        -65.165774,44.686721,0
+        -65.170774,44.699221,0
+        -65.179524,44.699221,0
+        -65.187023,44.697971,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Medium<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Medium_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>1</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -119.547120,58.188763,0
+        -122.171770,58.449779,0
+        -125.289460,59.044315,0
+        -129.088690,59.827362,0
+        -130.854170,60.349213,0
+        -132.956790,61.128635,0
+        -134.533760,61.835553,0
+        -135.349440,62.578722,0
+        -135.639460,63.412522,0
+        -135.566950,64.228196,0
+        -135.240680,64.844483,0
+        -134.841910,65.152627,0
+        -134.225620,65.406392,0
+        -133.174310,65.080122,0
+        -131.977990,64.626970,0
+        -131.506710,64.246322,0
+        -130.887470,63.903832,0
+        -130.386320,63.773904,0
+        -129.940860,63.653257,0
+        -129.504670,63.541890,0
+        -129.281940,63.393402,0
+        -129.068480,63.291315,0
+        -128.836470,63.198510,0
+        -128.326040,63.096424,0
+        -128.019780,62.966496,0
+        -127.824890,62.827288,0
+        -127.657840,62.706640,0
+        -127.546470,62.567432,0
+        -127.602150,62.381821,0
+        -127.899130,62.279735,0
+        -128.409560,62.186929,0
+        -129.105610,62.140526,0
+        -129.411860,62.112685,0
+        -129.476830,61.917793,0
+        -129.356180,61.537290,0
+        -129.096320,61.101104,0
+        -128.855030,61.017579,0
+        -128.242510,61.305276,0
+        -128.056900,61.555851,0
+        -127.713520,61.917793,0
+        -127.388700,61.992037,0
+        -126.906110,61.862110,0
+        -126.599850,61.713621,0
+        -126.228630,61.463046,0
+        -125.885250,61.008298,0
+        -125.718200,60.859809,0
+        -124.753020,60.748443,0
+        -124.131230,60.516429,0
+        -123.509430,60.340098,0
+        -122.980440,60.219451,0
+        -122.033820,59.922473,0
+        -121.634760,59.922473,0
+        -121.040800,59.894631,0
+        -120.567490,59.662618,0
+        -120.075620,59.430604,0
+        -119.806490,59.226431,0
+        -119.546630,58.966576,0
+        -119.472390,58.836648,0
+        -119.258930,58.558231,0
+        -119.212530,58.381901,0
+        -119.203250,58.251973,0
+        -119.277500,58.224131,0
+        -119.361020,58.187009,0
+        -119.435260,58.187009,0
+        -119.547120,58.188763,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Medium<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Medium_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>1</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -53.208484,47.888500,0
+        -52.991808,48.120433,0
+        -52.698840,48.431713,0
+        -52.509631,48.553783,0
+        -52.363146,48.581249,0
+        -52.253283,48.559886,0
+        -52.183093,48.517162,0
+        -52.192248,48.471386,0
+        -52.277697,48.376781,0
+        -52.393664,48.276073,0
+        -52.521838,48.202831,0
+        -52.622546,48.154003,0
+        -52.808703,48.065502,0
+        -52.952136,47.977001,0
+        -53.074206,47.903759,0
+        -53.138293,47.836620,0
+        -53.168810,47.815258,0
+        -53.229845,47.809154,0
+        -53.260363,47.842723,0
+        -53.239001,47.870189,0
+        -53.232897,47.888500,0
+        -53.208484,47.888500,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Medium<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Medium_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>1</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -116.871740,65.675997,0
+        -116.834630,65.769747,0
+        -116.777990,65.843966,0
+        -116.674480,65.896700,0
+        -116.619790,65.898653,0
+        -116.588540,65.871310,0
+        -116.588540,65.836153,0
+        -116.629560,65.781466,0
+        -116.688150,65.732638,0
+        -116.750650,65.687716,0
+        -116.797530,65.648653,0
+        -116.830730,65.621310,0
+        -116.850260,65.623263,0
+        -116.865880,65.636935,0
+        -116.863930,65.664278,0
+        -116.871740,65.675997,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Medium<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Medium_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>1</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -123.701080,65.665042,0
+        -123.854890,65.701663,0
+        -124.199130,65.762698,0
+        -124.611720,65.855472,0
+        -124.890040,65.936038,0
+        -124.977940,65.989749,0
+        -125.017000,66.033694,0
+        -124.997470,66.104495,0
+        -124.926670,66.143558,0
+        -124.804600,66.138675,0
+        -124.597080,66.082522,0
+        -124.445710,66.043460,0
+        -124.194240,65.948245,0
+        -123.818270,65.875003,0
+        -123.630280,65.789554,0
+        -123.579010,65.745608,0
+        -123.569240,65.708987,0
+        -123.571690,65.662601,0
+        -123.613190,65.628421,0
+        -123.686430,65.640628,0
+        -123.710850,65.650393,0
+        -123.701080,65.665042,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Medium<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Medium_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>1</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -116.180820,44.692541,0
+        -116.052650,44.774939,0
+        -115.811560,44.884802,0
+        -115.625400,44.994665,0
+        -115.417880,45.064856,0
+        -115.393470,45.052649,0
+        -115.378210,45.037390,0
+        -115.396520,44.988562,0
+        -115.512490,44.927527,0
+        -115.759680,44.811560,0
+        -115.961100,44.716955,0
+        -116.086220,44.643713,0
+        -116.199130,44.597937,0
+        -116.211340,44.619299,0
+        -116.214390,44.640661,0
+        -116.208290,44.683386,0
+        -116.205240,44.689490,0
+        -116.180820,44.692541,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Medium<br>Satellite: GOES-EAST</div>]]></description>
+<styleUrl>#Smoke_Medium_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>1</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -65.195588,44.710707,0
+        -65.283088,44.649769,0
+        -65.409651,44.520082,0
+        -65.525276,44.402894,0
+        -65.595588,44.337269,0
+        -65.608088,44.301332,0
+        -65.608088,44.291957,0
+        -65.600276,44.273207,0
+        -65.564338,44.245082,0
+        -65.525276,44.256019,0
+        -65.465901,44.281019,0
+        -65.376838,44.373207,0
+        -65.281526,44.516957,0
+        -65.194026,44.620082,0
+        -65.164338,44.671644,0
+        -65.158088,44.706019,0
+        -65.164338,44.712269,0
+        -65.189338,44.712269,0
+        -65.195588,44.710707,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Medium<br>Satellite: GOES-EAST</div>]]></description>
+<styleUrl>#Smoke_Medium_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>1</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -53.255340,47.851354,0
+        -53.041718,48.049719,0
+        -52.908203,48.263342,0
+        -52.736542,48.393042,0
+        -52.477142,48.457892,0
+        -52.267334,48.438818,0
+        -52.122376,48.427374,0
+        -52.088043,48.389227,0
+        -52.088043,48.343451,0
+        -52.149078,48.297674,0
+        -52.301666,48.244268,0
+        -52.614472,48.156530,0
+        -52.824280,48.053534,0
+        -52.969238,47.946722,0
+        -53.110382,47.832281,0
+        -53.167603,47.790319,0
+        -53.224823,47.786505,0
+        -53.251526,47.805578,0
+        -53.259155,47.839911,0
+        -53.255340,47.851354,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 2000UTC<br>End Time: 2025227 2340UTC<br>Density: Medium<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Medium_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>1</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -117.507460,61.569631,0
+        -118.107730,61.951619,0
+        -118.289630,62.097138,0
+        -118.380580,62.224467,0
+        -118.526100,62.515505,0
+        -118.944470,62.788354,0
+        -119.435590,63.024822,0
+        -119.981290,63.224911,0
+        -120.654320,63.697849,0
+        -120.672510,63.770608,0
+        -120.690700,64.025267,0
+        -120.908970,64.534584,0
+        -120.945350,64.752862,0
+        -120.945350,65.007521,0
+        -120.799840,65.225800,0
+        -120.308710,65.407699,0
+        -120.035860,65.571408,0
+        -119.653870,65.589598,0
+        -119.144550,65.589598,0
+        -118.253250,65.444078,0
+        -117.671170,65.298559,0
+        -116.961770,65.007521,0
+        -116.270550,64.698293,0
+        -115.652090,64.425444,0
+        -115.051830,64.152596,0
+        -114.087760,63.661469,0
+        -113.578450,63.334051,0
+        -113.123700,63.006632,0
+        -112.723520,62.751974,0
+        -112.668950,62.551885,0
+        -112.632570,62.260847,0
+        -112.723520,61.733340,0
+        -112.850850,61.424112,0
+        -113.742160,60.696516,0
+        -114.451560,60.514617,0
+        -115.106400,60.514617,0
+        -116.070460,60.569187,0
+        -116.907200,60.969364,0
+        -117.325570,61.260403,0
+        -117.525650,61.424112,0
+        -117.507460,61.569631,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+  </Folder>
+  <Folder>
+    <name>Smoke (Heavy)</name>
+    <open>0</open>
+    <Style>
+      <ListStyle>
+      <listItemType>check</listItemType>
+      <bgColor>00ffffff</bgColor>
+      <maxSnippetLines>2</maxSnippetLines>
+    </ListStyle>
+    </Style>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Heavy<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Heavy_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>2</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -119.212740,63.825719,0
+        -118.902800,63.831679,0
+        -118.270990,63.795916,0
+        -117.519970,63.646905,0
+        -116.900080,63.444249,0
+        -116.804710,63.503853,0
+        -116.387480,63.593260,0
+        -116.041730,63.656077,0
+        -115.915730,63.751077,0
+        -115.892730,63.866077,0
+        -115.886730,63.903077,0
+        -115.868730,63.918077,0
+        -115.753590,63.889602,0
+        -115.615300,63.837149,0
+        -115.529470,63.784697,0
+        -115.472250,63.765624,0
+        -115.419800,63.779929,0
+        -115.395960,63.827613,0
+        -115.381650,63.903907,0
+        -115.429340,64.032653,0
+        -115.515170,64.137557,0
+        -115.624840,64.299682,0
+        -115.696370,64.447502,0
+        -115.763120,64.538101,0
+        -115.786960,64.552406,0
+        -115.834650,64.709762,0
+        -115.872800,64.843277,0
+        -115.906170,65.038780,0
+        -115.915710,65.153221,0
+        -115.868030,65.243210,0
+        -115.696660,65.347519,0
+        -115.517850,65.533783,0
+        -115.406880,65.669178,0
+        -115.359780,65.678394,0
+        -115.317280,65.649210,0
+        -115.317280,65.593402,0
+        -115.331580,65.511432,0
+        -115.346490,65.399673,0
+        -115.368220,65.330216,0
+        -115.406090,65.250661,0
+        -115.460980,65.172259,0
+        -115.463380,65.079459,0
+        -115.384180,65.057859,0
+        -115.294330,65.079297,0
+        -115.137870,65.101649,0
+        -114.865960,65.092106,0
+        -114.741980,65.087338,0
+        -114.657550,65.060792,0
+        -114.560780,65.030117,0
+        -114.436800,64.968128,0
+        -114.422500,64.891834,0
+        -114.432030,64.796467,0
+        -114.522630,64.658184,0
+        -114.597780,64.611945,0
+        -114.689530,64.596195,0
+        -114.856420,64.534206,0
+        -114.913640,64.496059,0
+        -114.999470,64.395923,0
+        -115.051920,64.367313,0
+        -115.147290,64.343471,0
+        -115.304650,64.376850,0
+        -115.366640,64.405460,0
+        -115.409550,64.410228,0
+        -115.423860,64.381618,0
+        -115.395250,64.262409,0
+        -115.328490,64.152736,0
+        -115.247430,64.057368,0
+        -115.080530,63.904780,0
+        -115.018540,63.818950,0
+        -114.937480,63.747424,0
+        -114.780130,63.675898,0
+        -114.694290,63.637751,0
+        -114.603700,63.590068,0
+        -114.513100,63.547152,0
+        -114.432030,63.470858,0
+        -114.322360,63.423174,0
+        -114.241300,63.370722,0
+        -114.184080,63.327807,0
+        -114.138930,63.278166,0
+        -114.093480,63.222903,0
+        -113.988570,63.137072,0
+        -113.979180,63.100179,0
+        -114.002880,63.065546,0
+        -114.156430,63.068166,0
+        -114.293750,63.065546,0
+        -114.422500,63.075083,0
+        -114.578180,63.075852,0
+        -114.623960,63.091111,0
+        -114.784180,63.167405,0
+        -114.940580,63.251328,0
+        -115.096980,63.319993,0
+        -115.249570,63.342881,0
+        -115.344940,63.278031,0
+        -115.447940,63.163590,0
+        -115.546850,63.025896,0
+        -115.545850,62.907896,0
+        -115.453850,62.831896,0
+        -115.371640,62.793564,0
+        -115.241940,62.717270,0
+        -115.138950,62.629532,0
+        -114.955840,62.492203,0
+        -114.753660,62.431168,0
+        -114.559830,62.362616,0
+        -114.303530,62.231486,0
+        -114.166440,62.124197,0
+        -114.047230,62.058632,0
+        -113.868410,61.999027,0
+        -113.618070,62.010948,0
+        -113.391570,62.070553,0
+        -113.312230,62.110221,0
+        -113.194880,62.183802,0
+        -112.920700,62.261288,0
+        -112.801490,62.338774,0
+        -112.720150,62.369181,0
+        -112.665670,62.329859,0
+        -112.674270,62.282346,0
+        -112.771690,62.195723,0
+        -112.849170,62.124197,0
+        -112.844720,62.088436,0
+        -112.807450,62.070553,0
+        -112.718040,62.076513,0
+        -112.569030,62.076513,0
+        -112.425980,62.094395,0
+        -112.294850,62.094395,0
+        -112.193520,62.064592,0
+        -112.116030,61.999027,0
+        -112.044510,61.951344,0
+        -111.984900,61.903660,0
+        -111.937220,61.832134,0
+        -111.937220,61.772529,0
+        -112.015460,61.692550,0
+        -112.170980,61.603590,0
+        -112.336570,61.551992,0
+        -112.425700,61.581830,0
+        -112.473700,61.628550,0
+        -112.490980,61.680390,0
+        -112.510820,61.729670,0
+        -112.586910,61.796371,0
+        -112.718040,61.838095,0
+        -112.843210,61.838095,0
+        -112.897410,61.805282,0
+        -112.910210,61.754882,0
+        -112.890850,61.709757,0
+        -112.896950,61.642619,0
+        -112.945780,61.578532,0
+        -113.046490,61.529703,0
+        -113.110570,61.499186,0
+        -113.131940,61.486979,0
+        -113.131940,61.471720,0
+        -113.101420,61.450358,0
+        -113.064800,61.413737,0
+        -113.052590,61.377115,0
+        -113.061750,61.322184,0
+        -113.092260,61.285563,0
+        -113.150250,61.279459,0
+        -113.263160,61.273356,0
+        -113.363870,61.276407,0
+        -113.461530,61.261149,0
+        -113.546840,61.235303,0
+        -113.578040,61.204103,0
+        -113.546840,61.164903,0
+        -113.485940,61.145182,0
+        -113.360820,61.123819,0
+        -113.040380,61.096353,0
+        -112.991560,61.084146,0
+        -112.931130,61.050290,0
+        -112.912730,61.007890,0
+        -112.938330,60.967890,0
+        -113.012920,60.934610,0
+        -113.211280,60.885782,0
+        -113.394390,60.861368,0
+        -113.488990,60.864420,0
+        -113.574440,60.864420,0
+        -113.914330,60.863820,0
+        -114.150840,60.875264,0
+        -114.391170,60.875264,0
+        -114.620050,60.844746,0
+        -114.803160,60.825673,0
+        -114.991130,60.818408,0
+        -115.093070,60.810414,0
+        -115.230400,60.802785,0
+        -115.293130,60.777408,0
+        -115.294130,60.731408,0
+        -115.232130,60.689408,0
+        -115.131220,60.646382,0
+        -115.035850,60.596791,0
+        -114.974820,60.539570,0
+        -114.978630,60.489979,0
+        -115.032040,60.444203,0
+        -115.131220,60.436573,0
+        -115.363920,60.402241,0
+        -115.665280,60.348835,0
+        -115.856010,60.371723,0
+        -116.004790,60.409870,0
+        -116.309960,60.451832,0
+        -116.380540,60.488435,0
+        -116.437760,60.587617,0
+        -116.427510,60.642110,0
+        -116.388160,60.682985,0
+        -116.334760,60.740205,0
+        -116.334760,60.778352,0
+        -116.414870,60.858461,0
+        -116.487350,60.946199,0
+        -116.548380,61.022493,0
+        -116.608090,61.062136,0
+        -116.670450,61.102602,0
+        -116.720040,61.140749,0
+        -116.845930,61.205599,0
+        -116.933670,61.239931,0
+        -117.044290,61.270449,0
+        -117.112960,61.300966,0
+        -117.116770,61.346743,0
+        -117.051920,61.384890,0
+        -116.971810,61.381075,0
+        -116.868820,61.346743,0
+        -116.777260,61.323854,0
+        -116.464460,61.278078,0
+        -116.292800,61.293337,0
+        -116.147840,61.339113,0
+        -116.052470,61.461184,0
+        -116.041030,61.579439,0
+        -116.060100,61.720583,0
+        -116.185990,61.899874,0
+        -116.266090,62.006686,0
+        -116.433940,62.071536,0
+        -116.527970,62.075088,0
+        -116.704980,62.072036,0
+        -116.894180,62.130020,0
+        -117.083390,62.273453,0
+        -117.184100,62.291763,0
+        -117.324480,62.282608,0
+        -117.416040,62.242935,0
+        -117.492330,62.200210,0
+        -117.583880,62.169693,0
+        -117.654070,62.160538,0
+        -117.797510,62.191055,0
+        -117.941550,62.220213,0
+        -118.207660,62.308103,0
+        -118.357830,62.348628,0
+        -118.466450,62.400877,0
+        -118.479080,62.458628,0
+        -118.447830,62.501128,0
+        -118.356590,62.498533,0
+        -118.193010,62.471678,0
+        -118.073390,62.471678,0
+        -118.009910,62.483885,0
+        -117.985490,62.500975,0
+        -117.995260,62.522947,0
+        -118.039210,62.579100,0
+        -118.051410,62.620604,0
+        -118.066060,62.679197,0
+        -118.042440,62.713418,0
+        -117.976040,62.713418,0
+        -117.856900,62.682168,0
+        -117.796350,62.666543,0
+        -117.690080,62.649900,0
+        -117.536280,62.657225,0
+        -117.423970,62.708494,0
+        -117.419090,62.774412,0
+        -117.460590,62.845213,0
+        -117.614400,62.901366,0
+        -117.724090,62.961465,0
+        -117.797130,63.003703,0
+        -117.862760,63.061074,0
+        -117.897910,63.121621,0
+        -117.954550,63.172402,0
+        -118.016160,63.222732,0
+        -118.101610,63.317337,0
+        -118.269460,63.393631,0
+        -118.449510,63.433303,0
+        -118.571590,63.451614,0
+        -118.663540,63.459512,0
+        -118.724170,63.488235,0
+        -118.766900,63.543167,0
+        -118.892020,63.610306,0
+        -119.069020,63.665237,0
+        -119.230770,63.714065,0
+        -119.462700,63.735428,0
+        -119.740410,63.753738,0
+        -119.877740,63.802567,0
+        -119.889950,63.848343,0
+        -119.883840,63.866653,0
+        -119.844170,63.875809,0
+        -119.746510,63.872757,0
+        -119.658010,63.860550,0
+        -119.423030,63.842239,0
+        -119.319270,63.842239,0
+        -119.310110,63.836136,0
+        -119.212740,63.825719,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Heavy<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Heavy_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>2</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -123.713660,65.644701,0
+        -123.994420,65.669115,0
+        -124.367950,65.764330,0
+        -124.665810,65.849779,0
+        -124.880650,65.971850,0
+        -125.024690,66.047533,0
+        -125.036900,66.103686,0
+        -124.995400,66.132983,0
+        -124.900180,66.159838,0
+        -124.851350,66.179369,0
+        -124.761020,66.169604,0
+        -124.553500,66.137865,0
+        -124.448520,66.069506,0
+        -124.204380,65.942553,0
+        -123.991980,65.859545,0
+        -123.791780,65.798510,0
+        -123.681920,65.771654,0
+        -123.601350,65.742358,0
+        -123.574500,65.703295,0
+        -123.569610,65.671557,0
+        -123.594030,65.649584,0
+        -123.611120,65.644701,0
+        -123.684360,65.637377,0
+        -123.713660,65.644701,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Heavy<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Heavy_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>2</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -116.157190,44.705894,0
+        -116.016040,44.786003,0
+        -115.874900,44.896629,0
+        -115.779530,44.965293,0
+        -115.752830,44.957664,0
+        -115.764270,44.904258,0
+        -115.802420,44.839408,0
+        -115.920680,44.774559,0
+        -116.107600,44.660118,0
+        -116.172450,44.602897,0
+        -116.222040,44.625785,0
+        -116.210590,44.663932,0
+        -116.176260,44.694450,0
+        -116.157190,44.705894,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1200UTC<br>End Time: 2025227 1420UTC<br>Density: Heavy<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Heavy_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>2</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -65.196773,44.691613,0
+        -65.234774,44.671614,0
+        -65.283774,44.636614,0
+        -65.313774,44.615614,0
+        -65.331774,44.590614,0
+        -65.327774,44.577614,0
+        -65.318774,44.571614,0
+        -65.290774,44.581614,0
+        -65.249774,44.603614,0
+        -65.220774,44.633614,0
+        -65.186774,44.666614,0
+        -65.180774,44.683614,0
+        -65.181774,44.695614,0
+        -65.192774,44.693614,0
+        -65.196773,44.691613,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Heavy<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Heavy_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>2</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -115.950880,65.432971,0
+        -116.018440,65.456186,0
+        -116.080430,65.489564,0
+        -116.094730,65.508638,0
+        -116.061350,65.575395,0
+        -115.999360,65.608774,0
+        -115.951680,65.594469,0
+        -115.904000,65.546785,0
+        -115.880150,65.532480,0
+        -115.851540,65.484796,0
+        -115.851540,65.480028,0
+        -115.846780,65.422807,0
+        -115.865850,65.384660,0
+        -115.894240,65.383885,0
+        -115.906740,65.387635,0
+        -115.926740,65.400135,0
+        -115.939240,65.412635,0
+        -115.941740,65.422635,0
+        -115.950880,65.432971,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Heavy<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Heavy_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>2</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -123.736720,65.691807,0
+        -123.932040,65.743076,0
+        -124.268950,65.801670,0
+        -124.351960,65.850498,0
+        -124.354400,65.894443,0
+        -124.322660,65.938388,0
+        -124.271390,65.950595,0
+        -124.207920,65.928623,0
+        -124.017490,65.882236,0
+        -123.790440,65.799228,0
+        -123.700100,65.757724,0
+        -123.646390,65.733310,0
+        -123.621980,65.713779,0
+        -123.619540,65.677158,0
+        -123.663480,65.660068,0
+        -123.709870,65.660068,0
+        -123.736720,65.679599,0
+        -123.736720,65.691807,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Heavy<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Heavy_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>2</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -116.159460,44.710852,0
+        -116.034340,44.771887,0
+        -115.820720,44.872595,0
+        -115.707800,44.890906,0
+        -115.686440,44.860388,0
+        -115.704750,44.832922,0
+        -115.750530,44.808508,0
+        -115.842080,44.781042,0
+        -116.031290,44.720007,0
+        -116.119790,44.658972,0
+        -116.183870,44.625403,0
+        -116.211340,44.637610,0
+        -116.199130,44.662024,0
+        -116.174720,44.698645,0
+        -116.171670,44.701697,0
+        -116.159460,44.710852,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Heavy<br>Satellite: GOES-WEST</div>]]></description>
+<styleUrl>#Smoke_Heavy_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>2</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -121.495220,65.318474,0
+        -121.583970,65.414724,0
+        -121.747720,65.537224,0
+        -121.786470,65.572224,0
+        -121.806470,65.610974,0
+        -121.795220,65.622224,0
+        -121.781470,65.639724,0
+        -121.752720,65.640974,0
+        -121.717720,65.619724,0
+        -121.633970,65.573474,0
+        -121.551470,65.509724,0
+        -121.466470,65.465974,0
+        -121.437720,65.424724,0
+        -121.417720,65.367224,0
+        -121.421470,65.329724,0
+        -121.428970,65.308474,0
+        -121.448970,65.295974,0
+        -121.467720,65.297224,0
+        -121.487720,65.307224,0
+        -121.490220,65.308474,0
+        -121.495220,65.318474,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+<Placemark><description><![CDATA[<div style="width:170px;">Start Time: 2025227 1420UTC<br>End Time: 2025227 1700UTC<br>Density: Heavy<br>Satellite: GOES-EAST</div>]]></description>
+<styleUrl>#Smoke_Heavy_style</styleUrl>
+<Polygon>
+  <tessellate>1</tessellate>
+  <gx:drawOrder>2</gx:drawOrder>
+  <outerBoundaryIs>
+    <LinearRing>
+      <coordinates>
+        -65.229963,44.679457,0
+        -65.319026,44.602894,0
+        -65.361213,44.551332,0
+        -65.394026,44.507582,0
+        -65.409651,44.471644,0
+        -65.406526,44.449769,0
+        -65.392463,44.448207,0
+        -65.369026,44.449769,0
+        -65.339338,44.477894,0
+        -65.289338,44.520082,0
+        -65.239338,44.585707,0
+        -65.215901,44.620082,0
+        -65.204963,44.640394,0
+        -65.184651,44.673207,0
+        -65.181526,44.695082,0
+        -65.189338,44.707582,0
+        -65.200276,44.704457,0
+        -65.223713,44.682582,0
+        -65.229963,44.679457,0
+      </coordinates>
+    </LinearRing>
+  </outerBoundaryIs>
+</Polygon>
+</Placemark>
+  </Folder>
+</Document>
+</kml>

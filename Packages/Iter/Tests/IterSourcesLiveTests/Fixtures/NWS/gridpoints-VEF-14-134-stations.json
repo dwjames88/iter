@@ -1,0 +1,237 @@
+{
+    "@context": [
+        "https://geojson.org/geojson-ld/geojson-context.jsonld",
+        {
+            "@version": "1.1",
+            "wx": "https://api.weather.gov/ontology#",
+            "s": "https://schema.org/",
+            "geo": "http://www.opengis.net/ont/geosparql#",
+            "unit": "http://codes.wmo.int/common/unit/",
+            "@vocab": "https://api.weather.gov/ontology#",
+            "geometry": {
+                "@id": "s:GeoCoordinates",
+                "@type": "geo:wktLiteral"
+            },
+            "city": "s:addressLocality",
+            "state": "s:addressRegion",
+            "distance": {
+                "@id": "s:Distance",
+                "@type": "s:QuantitativeValue"
+            },
+            "bearing": {
+                "@type": "s:QuantitativeValue"
+            },
+            "value": {
+                "@id": "s:value"
+            },
+            "unitCode": {
+                "@id": "s:unitCode",
+                "@type": "@id"
+            },
+            "forecastOffice": {
+                "@type": "@id"
+            },
+            "forecastGridData": {
+                "@type": "@id"
+            },
+            "publicZone": {
+                "@type": "@id"
+            },
+            "county": {
+                "@type": "@id"
+            },
+            "observationStations": {
+                "@container": "@list",
+                "@type": "@id"
+            }
+        }
+    ],
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "id": "https://api.weather.gov/stations/KO26",
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -118.04939,
+                    36.58869
+                ]
+            },
+            "properties": {
+                "@id": "https://api.weather.gov/stations/KO26",
+                "@type": "wx:ObservationStation",
+                "elevation": {
+                    "unitCode": "wmoUnit:m",
+                    "value": 1130.808
+                },
+                "stationIdentifier": "KO26",
+                "name": "Lone Pine/Death Valley Airport",
+                "timeZone": "America/Los_Angeles",
+                "provider": "",
+                "subProvider": "",
+                "distance": {
+                    "unitCode": "wmoUnit:m",
+                    "value": 20585.468777468
+                },
+                "bearing": {
+                    "unitCode": "wmoUnit:degree_(angle)",
+                    "value": 86
+                },
+                "forecast": "https://api.weather.gov/zones/forecast/CAZ582",
+                "county": "https://api.weather.gov/zones/county/CAC027",
+                "fireWeatherZone": "https://api.weather.gov/zones/fire/CAZ226"
+            }
+        },
+        {
+            "id": "https://api.weather.gov/stations/KBIH",
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -118.35806,
+                    37.37111
+                ]
+            },
+            "properties": {
+                "@id": "https://api.weather.gov/stations/KBIH",
+                "@type": "wx:ObservationStation",
+                "elevation": {
+                    "unitCode": "wmoUnit:m",
+                    "value": 1256.0808
+                },
+                "stationIdentifier": "KBIH",
+                "name": "Bishop, Bishop Airport",
+                "timeZone": "America/Los_Angeles",
+                "provider": "ASOS-HFM",
+                "subProvider": "",
+                "distance": {
+                    "unitCode": "wmoUnit:m",
+                    "value": 88391.841514931
+                },
+                "bearing": {
+                    "unitCode": "wmoUnit:degree_(angle)",
+                    "value": 355
+                },
+                "forecast": "https://api.weather.gov/zones/forecast/CAZ582",
+                "county": "https://api.weather.gov/zones/county/CAC027",
+                "fireWeatherZone": "https://api.weather.gov/zones/fire/CAZ226"
+            }
+        },
+        {
+            "id": "https://api.weather.gov/stations/DYNN2",
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -118.01806,
+                    37.61472
+                ]
+            },
+            "properties": {
+                "@id": "https://api.weather.gov/stations/DYNN2",
+                "@type": "wx:ObservationStation",
+                "elevation": {
+                    "unitCode": "wmoUnit:m",
+                    "value": 1485.9
+                },
+                "stationIdentifier": "DYNN2",
+                "name": "NOAA WESTERN REGION CLIMATE STATION IN THE FISH LAKE VALLEY NEAR DYER 6SE",
+                "timeZone": "America/Los_Angeles",
+                "provider": "HADS",
+                "subProvider": "",
+                "distance": {
+                    "unitCode": "wmoUnit:m",
+                    "value": 117516.81473043
+                },
+                "bearing": {
+                    "unitCode": "wmoUnit:degree_(angle)",
+                    "value": 11
+                },
+                "forecast": "https://api.weather.gov/zones/forecast/NVZ014",
+                "county": "https://api.weather.gov/zones/county/NVC009",
+                "fireWeatherZone": "https://api.weather.gov/zones/fire/NVZ460"
+            }
+        },
+        {
+            "id": "https://api.weather.gov/stations/DEVC1",
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -116.86361,
+                    36.46222
+                ]
+            },
+            "properties": {
+                "@id": "https://api.weather.gov/stations/DEVC1",
+                "@type": "wx:ObservationStation",
+                "elevation": {
+                    "unitCode": "wmoUnit:m",
+                    "value": -58.8264
+                },
+                "stationIdentifier": "DEVC1",
+                "name": "VISITORS CENTER AT FURNACE CREEK DEATH VALLEY",
+                "timeZone": "America/Los_Angeles",
+                "provider": "HADS",
+                "subProvider": "",
+                "distance": {
+                    "unitCode": "wmoUnit:m",
+                    "value": 127194.43312916
+                },
+                "bearing": {
+                    "unitCode": "wmoUnit:degree_(angle)",
+                    "value": 95
+                },
+                "forecast": "https://api.weather.gov/zones/forecast/CAZ522",
+                "county": "https://api.weather.gov/zones/county/CAC027",
+                "fireWeatherZone": "https://api.weather.gov/zones/fire/CAZ227"
+            }
+        },
+        {
+            "id": "https://api.weather.gov/stations/CMP03",
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -116.75556,
+                    36.9125
+                ]
+            },
+            "properties": {
+                "@id": "https://api.weather.gov/stations/CMP03",
+                "@type": "wx:ObservationStation",
+                "elevation": {
+                    "unitCode": "wmoUnit:m",
+                    "value": 979.932
+                },
+                "stationIdentifier": "CMP03",
+                "name": "Beatty",
+                "timeZone": "America/Los_Angeles",
+                "provider": "MesoWest",
+                "subProvider": "CEMP",
+                "distance": {
+                    "unitCode": "wmoUnit:m",
+                    "value": 140773.71419624
+                },
+                "bearing": {
+                    "unitCode": "wmoUnit:degree_(angle)",
+                    "value": 74
+                },
+                "forecast": "https://api.weather.gov/zones/forecast/NVZ014",
+                "county": "https://api.weather.gov/zones/county/NVC023",
+                "fireWeatherZone": "https://api.weather.gov/zones/fire/NVZ460"
+            }
+        }
+    ],
+    "observationStations": [
+        "https://api.weather.gov/stations/KO26",
+        "https://api.weather.gov/stations/KBIH",
+        "https://api.weather.gov/stations/DYNN2",
+        "https://api.weather.gov/stations/DEVC1",
+        "https://api.weather.gov/stations/CMP03"
+    ],
+    "pagination": {
+        "next": "https://api.weather.gov/stations?id%5B0%5D=CMP01&id%5B1%5D=CMP03&id%5B2%5D=CMP05&id%5B3%5D=CMP09&id%5B4%5D=CMP10&id%5B5%5D=CMP16&id%5B6%5D=CMP17&id%5B7%5D=CMP18&id%5B8%5D=CMP19&id%5B9%5D=CMP27&id%5B10%5D=DEVC1&id%5B11%5D=DWRN2&id%5B12%5D=DYNN2&id%5B13%5D=E3443&id%5B14%5D=E5967&id%5B15%5D=EXCC1&id%5B16%5D=KAZC&id%5B17%5D=KBIH&id%5B18%5D=KBVU&id%5B19%5D=KBYS&id%5B20%5D=KDAG&id%5B21%5D=KEED&id%5B22%5D=KHII&id%5B23%5D=KHND&id%5B24%5D=KIFP&id%5B25%5D=KIGM&id%5B26%5D=KINS&id%5B27%5D=KLAS&id%5B28%5D=KLSV&id%5B29%5D=KO26&id%5B30%5D=KVGT&id%5B31%5D=KYCN2&id%5B32%5D=MDHC1&id%5B33%5D=MTSN2&id%5B34%5D=OVR&id%5B35%5D=RRKN2&id%5B36%5D=TCRA3&id%5B37%5D=UCCC1&cursor=eyJzIjo1MDB9"
+    }
+}

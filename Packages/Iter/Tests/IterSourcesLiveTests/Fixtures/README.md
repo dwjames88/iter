@@ -91,3 +91,24 @@ Decoded (ImageIO and pure Python, byte-identical): W pixel (nearest) 4412.371 m,
 - USGS EPQS: 4416.2339 m, unchanged from SOURCES.md (4416.2).
 - Terrarium z12: tile 702/1600 (W) and 2145/1448 (S); elevations 4412.4 and 2107.0 m as in SOURCES.md.
 - Wikipedia/Commons: no changes seen; titles at W start with Smithsonian Institution Shelter, Whitney Classic, Mount Whitney; at S with Swiss Alps, Gotthard Pass, Lago di Lucendro.
+
+## Phase 2 additions (sources lead, 2026-11-22)
+
+Recorded with `curl -A "Iter/0.0-dev"` (app name and version only, no contact), no key, no cookies, one request about every 3 s.
+They are not re-recorded by `record.sh` and are not in `manifest.tsv` (whose test requires HTTP 200 on every row; several of these are deliberate errors).
+
+| File | Request | Fetched (UTC) | HTTP | Bytes | Licence / attribution |
+|---|---|---|---|---|---|
+| `NOMADS/hrrr-not-posted.html` | `GET https://nomads.ncep.noaa.gov/cgi-bin/filter_hrrr_2d.pl?dir=%2Fhrrr.20261122%2Fconus&file=hrrr.t23z.wrfsfcf01.grib2&var_TCDC=on&lev_entire_atmosphere=on&subregion=&toplat=36.8&leftlon=-118.6&rightlon=-118.0&bottomlat=36.3` | 2026-11-22T14:17:30Z | 403 | 668 | NOAA error page. **Edited:** the client IP address in the page was replaced with `203.0.113.1` (documentation range); nothing else changed. |
+| `NOMADS/gfs-not-posted.html` | `GET https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?dir=%2Fgfs.20261123%2F00%2Fatmos&file=gfs.t00z.pgrb2.0p25.f003&var_TCDC=on&lev_entire_atmosphere=on&subregion=&toplat=37&leftlon=-119&rightlon=-118&bottomlat=36` | 2026-11-22T14:17:34Z | 403 | 668 | As above (IP redacted). A cycle time in the future gets the Akamai "Request for Future Data" page. |
+| `NOMADS/hrrr-dir-missing.html` | same HRRR filter, `dir=/hrrr.20261124/conus`, `file=hrrr.t00z.wrfsfcf01.grib2` | 2026-11-22T14:17:37Z | 403 | 668 | As above (IP redacted). |
+| `NOMADS/hrrr-cycle-running.html` | same HRRR filter, `file=hrrr.t14z.wrfsfcf01.grib2` (the 14Z run, 17 min after its nominal time) | 2026-11-22T14:17:50Z | 404 | 412 | NCEP page "Data file is not present". A cycle that has started but not posted this hour. |
+| `NOMADS/hrrr-f48-on-13z.html` | same HRRR filter, `file=hrrr.t13z.wrfsfcf48.grib2` (13Z is not a 48 h cycle) | 2026-11-22T14:17:53Z | 404 | 412 | "Data file is not present". |
+| `NOMADS/gfs-12z-f384-early.html` | same GFS filter, `dir=/gfs.20261122/12/atmos`, `file=gfs.t12z.pgrb2.0p25.f384` | 2026-11-22T14:17:57Z | 404 | 412 | "Data file is not present" (12Z GFS still running). |
+| `HMS/hms_smoke20250815.kml` | `GET https://satepsanone.nesdis.noaa.gov/pub/FIRE/web/HMS/Smoke_Polygons/KML/2025/08/hms_smoke20250815.kml` | 2026-11-22T14:18:13Z | 200 | 89264 | NOAA NESDIS Hazard Mapping System, US government work, public domain. 56 placemarks (a summer day chosen for real plumes). |
+| `HMS/hms_smoke20261122.kml` | same path for 2026/11/hms_smoke20261122.kml | 2026-11-22T14:18:17Z | 200 | 2540 | As above. 0 placemarks (an empty day). |
+| `GNIS/gnis-envelope-W.json` | `GET https://carto.nationalmap.gov/arcgis/rest/services/geonames/MapServer/5/query?geometry=-118.40,36.50,-118.20,36.65&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=true&outSR=4326&f=json` | 2026-11-22T14:18:20Z | 200 | 221359 | USGS GNIS via The National Map, public domain. 84 features (Summit 46, Range 22, Gap 6, ...); multipoint geometry. |
+| `NWS/points-S.json` | `GET https://api.weather.gov/points/46.5586,8.561`; `Accept: application/geo+json` | 2026-11-22T14:18:23Z | 404 | 303 | NWS problem document "Data Unavailable For Requested Point" (outside the US). |
+| `NWS/alerts-active-area-AK.json` | `GET https://api.weather.gov/alerts/active?area=AK`; `Accept: application/geo+json` | 2026-11-22T14:18:31Z | 200 | 41328 | NWS, public domain. 10 active alerts (Special Weather Statement, High Surf Advisory, High Wind Warning, ...), for the alert mapping. |
+| `NWS/gridpoints-VEF-14-134-stations.json` | `GET https://api.weather.gov/gridpoints/VEF/14,134/stations?limit=5`; `Accept: application/geo+json` | 2026-11-22T14:24:48Z | 200 | 9119 | NWS, public domain. The observation stations for W's grid cell, nearest first (KO26, KBIH, DYNN2, DEVC1, CMP03). |
+| `USGS/epqs-S.txt` | `GET https://epqs.nationalmap.gov/v1/json?x=8.5610&y=46.5586&units=Meters&wkid=4326` | 2026-11-22T14:18:27Z | 200 | 77 | Plain text "Call failed. ..." with HTTP 200: EPQS outside the US. |
