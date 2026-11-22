@@ -141,6 +141,8 @@ public final class BuildModel {
         fetcher.requests.map { ($0.from, $0.to, $0.departing) }
     }
     public var peakDirectionsInFlight: Int { fetcher.peakInFlight }
+    /// A drive lookup is queued or running right now (unlike `isLoadingDrives`, never stale between recomputes).
+    var drivesPending: Bool { fetcher.fetches.values.contains { $0 == .queued || $0 == .loading } }
 
     // MARK: Init
 
