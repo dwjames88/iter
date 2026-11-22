@@ -39,7 +39,7 @@ let package = Package(
         // Light-window geometry, the Forecast and Live Sky Index, confidence and staleness. Pure.
         .target(name: "IterSky", dependencies: ["IterModel", "IterAstro"], swiftSettings: strict),
         // Scheduler v2, live schedule, day layout and builder rows. Pure.
-        .target(name: "IterPlan", dependencies: ["IterModel", "IterSky"], swiftSettings: strict),
+        .target(name: "IterPlan", dependencies: ["IterModel", "IterSky", "IterAstro"], swiftSettings: strict),
         // SwiftData: frozen V1 to V4, V5, the migration plan, store location, backup before migration, repositories,
         // the .iter documents and the curated catalogue.
         .target(name: "IterStore", dependencies: ["IterModel"], resources: [.process("Resources")], swiftSettings: strict),
@@ -72,9 +72,9 @@ let package = Package(
         .executableTarget(name: "IterTokensTool", dependencies: ["IterUI"], swiftSettings: strict),
 
         .testTarget(name: "IterModelTests", dependencies: ["IterModel"], swiftSettings: strict),
-        .testTarget(name: "IterAstroTests", dependencies: ["IterAstro"], swiftSettings: strict),
-        .testTarget(name: "IterSkyTests", dependencies: ["IterSky"], swiftSettings: strict),
-        .testTarget(name: "IterPlanTests", dependencies: ["IterPlan"], swiftSettings: strict),
+        .testTarget(name: "IterAstroTests", dependencies: ["IterAstro", "IterModel"], swiftSettings: strict),
+        .testTarget(name: "IterSkyTests", dependencies: ["IterSky", "IterAstro", "IterModel"], swiftSettings: strict),
+        .testTarget(name: "IterPlanTests", dependencies: ["IterPlan", "IterSky", "IterAstro", "IterModel"], swiftSettings: strict),
         .testTarget(name: "IterStoreTests", dependencies: ["IterStore", "IterModel"], resources: [.copy("Fixtures")],
                     swiftSettings: strict),
         .testTarget(name: "IterSourcesTests", dependencies: ["IterSources", "IterModel"], swiftSettings: strict),
