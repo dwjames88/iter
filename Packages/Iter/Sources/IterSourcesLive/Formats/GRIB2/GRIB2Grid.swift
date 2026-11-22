@@ -33,6 +33,8 @@ public struct GRIB2Grid: Sendable, Equatable {
     public enum Projection: Sendable, Equatable { case latLon(LatLon), lambertConformal(Lambert) }
 
     public let templateNumber: Int
+    /// Section 3 "resolution and component flags" (octet 55 of template 3.0, octet 47 of template 3.30).
+    public let resolutionAndComponentFlags: Int
     public let nx: Int
     public let ny: Int
     public let scanning: GRIB2ScanningMode
@@ -41,12 +43,35 @@ public struct GRIB2Grid: Sendable, Equatable {
     public let earthRadius: Double
     public let projection: Projection
 
+    /// Flag bit 5 (0x08): vector components (u, v) are relative to the grid's x and y axes, not to east and north.
+    public var vectorComponentsAreGridRelative: Bool { resolutionAndComponentFlags & 0x08 != 0 }
+
+    /// The angle in radians by which the grid's x axis is turned counter-clockwise from true east at a longitude:
+    /// n · (lon − LoV) for a Lambert conformal grid (n the cone constant), 0 for a regular lat/lon grid.
+    public func gridRotation(atLongitude lon: Double) -> Double {
+        guard case .lambertConformal(let g) = projection else { return 0 }
+        var d = lon - g.loV
+        d -= 360 * (d / 360).rounded(.down)
+        if d > 180 { d -= 360 }
+        return g.coneConstant * d * .pi / 180
+    }
+
+    /// Turns a (u, v) pair read from this grid into eastward and northward components. When the grid's flags say the
+    /// components are already earth-relative (or the grid is regular lat/lon) the pair is returned unchanged.
+    public func earthRelativeVector(u: Double, v: Double, atLongitude lon: Double) -> (u: Double, v: Double) {
+        guard vectorComponentsAreGridRelative else { return (u, v) }
+        let a = gridRotation(atLongitude: lon)
+        guard a != 0 else { return (u, v) }
+        return (u * cos(a) + v * sin(a), -u * sin(a) + v * cos(a))
+    }
+
     public var pointCount: Int { nx * ny }  // nx, ny are validated so the product cannot overflow
 
     init(section s: GRIB2Section) throws(GRIB2Error) {
         let template = try s.int(13, 2)
         guard template == 0 || template == 30 else { throw .unsupportedGridTemplate(template) }
         templateNumber = template
+        resolutionAndComponentFlags = try s.int(template == 0 ? 55 : 47, 1)
         earthShape = try s.int(15, 1)
         let radiusScale = try s.int(16, 1)
         let radiusScaled = try s.int(17, 4)
@@ -206,6 +231,9 @@ public struct GRIB2Grid: Sendable, Equatable {
 // MARK: Lambert conformal on a sphere
 
 extension GRIB2Grid.Lambert {
+    /// The cone constant n (sin of the standard parallel for a tangent cone).
+    public var coneConstant: Double { n }
+
     private static func toRadians(_ d: Double) -> Double { d * .pi / 180 }
 
     /// Projected (x, y) in metres from the projection origin.
