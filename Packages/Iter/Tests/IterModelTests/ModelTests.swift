@@ -219,7 +219,7 @@ private func roundTrip<T: Codable & Equatable>(_ value: T) throws -> T {
     @Test func skyInputsRoundTrip() throws {
         let now = Date(timeIntervalSince1970: 500)
         let inputs = SkyInputs(coordinate: Coordinate(latitude: 1, longitude: 2), hourly: HourlySeries(hours: [HourlyConditions(time: now)]),
-                               observation: Observation(time: now, stationName: "KXYZ"), nowcast: [NowcastStep(time: now, precipMmPerHour: 1)],
+                               observation: WeatherObservation(time: now, stationName: "KXYZ"), nowcast: [NowcastStep(time: now, precipMmPerHour: 1)],
                                horizon: .flat, bortle: 3)
         #expect(try roundTrip(inputs) == inputs)
     }

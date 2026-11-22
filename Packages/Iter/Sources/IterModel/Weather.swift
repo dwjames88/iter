@@ -127,7 +127,8 @@ extension HourlySeries: Codable {
 }
 
 /// What a station or analysis measured at a time (as opposed to forecast).
-public struct Observation: Codable, Hashable, Sendable {
+/// Not named `Observation`: that would shadow the Observation module and break `@Observable` in any file importing IterModel.
+public struct WeatherObservation: Codable, Hashable, Sendable {
     public var time: Date
     public var stationName: String?
     public var conditions: HourlyConditions
@@ -160,13 +161,13 @@ public struct NowcastStep: Codable, Hashable, Sendable {
 public struct SkyInputs: Codable, Hashable, Sendable {
     public var coordinate: Coordinate
     public var hourly: HourlySeries?
-    public var observation: Observation?
+    public var observation: WeatherObservation?
     public var nowcast: [NowcastStep]
     public var horizon: HorizonProfile?
     /// Bortle class 1...9 (lower is darker), if known.
     public var bortle: Double?
 
-    public init(coordinate: Coordinate, hourly: HourlySeries? = nil, observation: Observation? = nil, nowcast: [NowcastStep] = [],
+    public init(coordinate: Coordinate, hourly: HourlySeries? = nil, observation: WeatherObservation? = nil, nowcast: [NowcastStep] = [],
                 horizon: HorizonProfile? = nil, bortle: Double? = nil) {
         self.coordinate = coordinate
         self.hourly = hourly
