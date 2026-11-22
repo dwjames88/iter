@@ -70,8 +70,8 @@ private func provider(_ stub: StubNOMADS, now: Date, cache: (any BlobCaching)? =
             let url = r.url.absoluteString
             #expect(url.hasPrefix("https://nomads.ncep.noaa.gov/cgi-bin/filter_hrrr_2d.pl?"))
             #expect(NOMADSTest.query(r, "dir") == "/hrrr.20261122/conus")
-            #expect(NOMADSTest.query(r, "toplat") == "37" && NOMADSTest.query(r, "bottomlat") == "36.25")
-            #expect(NOMADSTest.query(r, "leftlon") == "-118.75" && NOMADSTest.query(r, "rightlon") == "-118")
+            #expect(NOMADSTest.query(r, "toplat") == "37.1" && NOMADSTest.query(r, "bottomlat") == "35.9")
+            #expect(NOMADSTest.query(r, "leftlon") == "-119.1" && NOMADSTest.query(r, "rightlon") == "-117.9")
             #expect(url.contains("var_MASSDEN=on") && url.contains("var_AOTK=on") && url.contains("subregion=&"))
             #expect(r.source == .noaaNOMADS)
             #expect(r.headers["User-Agent"] == nil, "SourceHTTP sets the User-Agent, adapters do not")
@@ -123,8 +123,8 @@ private func provider(_ stub: StubNOMADS, now: Date, cache: (any BlobCaching)? =
         for r in requests {
             #expect(r.url.absoluteString.hasPrefix("https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?"))
             #expect(NOMADSTest.query(r, "dir") == "/gfs.20261122/06/atmos")
-            #expect(NOMADSTest.query(r, "toplat") == "47.5" && NOMADSTest.query(r, "bottomlat") == "46")
-            #expect(NOMADSTest.query(r, "leftlon") == "8" && NOMADSTest.query(r, "rightlon") == "9.5")
+            #expect(NOMADSTest.query(r, "toplat") == "48.3" && NOMADSTest.query(r, "bottomlat") == "45.7")
+            #expect(NOMADSTest.query(r, "leftlon") == "7.7" && NOMADSTest.query(r, "rightlon") == "10.3")
             #expect(!r.url.absoluteString.contains("MASSDEN"))
         }
         #expect(Set(requests.map { NOMADSTest.file($0) }) == Set((8...20).map { "gfs.t06z.pgrb2.0p25.f\(String(format: "%03d", $0))" }))
@@ -233,10 +233,12 @@ private func provider(_ stub: StubNOMADS, now: Date, cache: (any BlobCaching)? =
         #expect(stub.http.requests.count == 7)
         _ = try await p.forecast(at: W, span: TimeSpan(start: NOMADSTest.at(18), end: NOMADSTest.at(23)))  // 18...23: 4 are new
         #expect(stub.http.requests.count == 7 + 3)
-        // A different point in the same HRRR cell shares the boxes; one in another cell does not.
+        // A different point in the same HRRR tile shares the boxes (also one 40 km away); one in another tile does not.
+        // (The stub serves the W fixture for every tile, so points outside its grid read nothing; only requests are counted.)
         _ = try await p.forecast(at: Coordinate(latitude: 36.6, longitude: -118.3), span: TimeSpan(start: NOMADSTest.at(14), end: NOMADSTest.at(20)))
+        _ = try? await p.forecast(at: Coordinate(latitude: 36.95, longitude: -118.9), span: TimeSpan(start: NOMADSTest.at(14), end: NOMADSTest.at(20)))
         #expect(stub.http.requests.count == 10)
-        _ = try await p.forecast(at: Coordinate(latitude: 36.8, longitude: -118.3), span: TimeSpan(start: NOMADSTest.at(14), end: NOMADSTest.at(15)))
+        _ = try? await p.forecast(at: Coordinate(latitude: 37.2, longitude: -118.3), span: TimeSpan(start: NOMADSTest.at(14), end: NOMADSTest.at(15)))
         #expect(stub.http.requests.count == 12)
     }
 
@@ -246,7 +248,7 @@ private func provider(_ stub: StubNOMADS, now: Date, cache: (any BlobCaching)? =
         stub.finish()
         let cache = InMemoryBlobCache(clock: ManualSourceClock(now: now))
         _ = try await provider(stub, now: now, cache: cache).forecast(at: W, span: TimeSpan(start: NOMADSTest.at(14), end: NOMADSTest.at(15)))
-        let key = CacheKey(source: .noaaNOMADS, kind: .forecast, cell: "36.25,-118.75,37,-118", bucket: "hrrr 2026112213 f001")
+        let key = CacheKey(source: .noaaNOMADS, kind: .forecast, cell: "35.9,-119.1,37.1,-117.9", bucket: "hrrr 2026112213 f001")
         let blob = await cache.blob(for: key, maxAge: nil)
         #expect(blob != nil)
         #expect(blob.map { Data($0.data.prefix(4)) } == Data("GRIB".utf8))

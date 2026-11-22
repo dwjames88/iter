@@ -15,9 +15,6 @@ public struct OverpassProvider: GazetteerProvider {
         URL(string: "https://overpass.kumi.systems/api/interpreter")!,
     ]
 
-    /// The longest single backoff, even when a server asks for more.
-    static let maxBackoff: Duration = .seconds(120)
-
     public let descriptor: SourceDescriptor
     private let http: any HTTPClient
     private let clock: any SourceClock
@@ -44,37 +41,6 @@ public struct OverpassProvider: GazetteerProvider {
     }
 
     private func run(_ query: String) async throws -> Data {
-        var lastError: SourceError = .http(status: -1, excerpt: "no attempt made")
-        for attempt in 0..<maxAttempts {
-            let server = servers[attempt % servers.count]
-            var request = SourceRequest.postForm(server, fields: [("data", query)], from: descriptor)
-            request.policy.maxRetries = 0
-            var retryAfter: Date?
-            do {
-                let response = try await http.send(request)
-                if OverpassMapping.runtimeRemark(in: response.body) != nil { throw SourceError.timedOut }
-                return response.body
-            } catch {
-                let e = SourceError.wrap(error)
-                switch e {
-                case .http(let status, let excerpt) where status == 400:
-                    throw SourceError.invalidRequest("Overpass rejected the query" + (excerpt.map { ": \($0)" } ?? ""))
-                case .rateLimited(let at):
-                    retryAfter = at
-                case .timedOut:
-                    break
-                case .http(let status, _) where status == 502 || status == 503 || status == 504 || (500..<600).contains(status):
-                    break
-                default:
-                    throw e
-                }
-                lastError = e
-            }
-            guard attempt + 1 < maxAttempts else { break }
-            var wait = descriptor.policy.initialBackoff * Int(1 << attempt)
-            if let retryAfter { wait = max(wait, .interval(retryAfter.timeIntervalSince(clock.now))) }
-            try await clock.sleep(for: min(wait, Self.maxBackoff))
-        }
-        throw lastError
+        try await OverpassRunner(http: http, clock: clock, descriptor: descriptor, servers: servers, maxAttempts: maxAttempts).run(query)
     }
 }

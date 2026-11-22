@@ -1,0 +1,395 @@
+{
+ "version": 0.6,
+ "generator": "Overpass API (hand-built for tests)",
+ "osm3s": {
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+ },
+ "elements": [
+  {
+   "type": "relation",
+   "id": 9001,
+   "bounds": {
+    "minlat": 36.9,
+    "minlon": -119.2,
+    "maxlat": 37.1,
+    "maxlon": -118.8
+   },
+   "members": [
+    {
+     "type": "node",
+     "ref": 501,
+     "role": "label",
+     "lat": 37.0,
+     "lon": -119.0
+    },
+    {
+     "type": "way",
+     "ref": 8001,
+     "role": "outer",
+     "geometry": [
+      {
+       "lat": 36.9,
+       "lon": -119.2
+      },
+      {
+       "lat": 37.0,
+       "lon": -119.2
+      },
+      {
+       "lat": 37.1,
+       "lon": -119.2
+      }
+     ]
+    },
+    {
+     "type": "way",
+     "ref": 8002,
+     "role": "outer",
+     "geometry": [
+      {
+       "lat": 37.1,
+       "lon": -118.8
+      },
+      {
+       "lat": 37.1,
+       "lon": -119.0
+      },
+      {
+       "lat": 37.1,
+       "lon": -119.2
+      }
+     ]
+    },
+    {
+     "type": "way",
+     "ref": 8003,
+     "role": "outer",
+     "geometry": [
+      {
+       "lat": 37.1,
+       "lon": -118.8
+      },
+      {
+       "lat": 37.0,
+       "lon": -118.8
+      },
+      {
+       "lat": 36.9,
+       "lon": -118.8
+      },
+      {
+       "lat": 36.9,
+       "lon": -119.0
+      },
+      {
+       "lat": 36.9,
+       "lon": -119.2
+      }
+     ]
+    },
+    {
+     "type": "way",
+     "ref": 8004,
+     "role": "inner",
+     "geometry": [
+      {
+       "lat": 36.98,
+       "lon": -119.02
+      },
+      {
+       "lat": 36.98,
+       "lon": -118.98
+      },
+      {
+       "lat": 37.02,
+       "lon": -118.98
+      },
+      {
+       "lat": 37.02,
+       "lon": -119.02
+      },
+      {
+       "lat": 36.98,
+       "lon": -119.02
+      }
+     ]
+    }
+   ],
+   "tags": {
+    "boundary": "national_park",
+    "name": "Granite Basin National Park",
+    "protect_class": "2",
+    "type": "boundary",
+    "wikidata": "Q0"
+   }
+  },
+  {
+   "type": "relation",
+   "id": 9002,
+   "bounds": {
+    "minlat": 36.95,
+    "minlon": -119.05,
+    "maxlat": 37.05,
+    "maxlon": -118.95
+   },
+   "members": [
+    {
+     "type": "way",
+     "ref": 8005,
+     "role": "outer",
+     "geometry": [
+      {
+       "lat": 36.95,
+       "lon": -119.05
+      },
+      {
+       "lat": 36.95,
+       "lon": -118.95
+      },
+      {
+       "lat": 37.05,
+       "lon": -118.95
+      },
+      {
+       "lat": 37.05,
+       "lon": -119.05
+      },
+      {
+       "lat": 36.95,
+       "lon": -119.05
+      }
+     ]
+    }
+   ],
+   "tags": {
+    "boundary": "protected_area",
+    "name": "Granite Basin Wilderness",
+    "protect_class": "1b",
+    "type": "boundary"
+   }
+  },
+  {
+   "type": "way",
+   "id": 9003,
+   "bounds": {
+    "minlat": 37.04,
+    "minlon": -119.13000000000001,
+    "maxlat": 37.059999999999995,
+    "maxlon": -119.11
+   },
+   "nodes": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "geometry": [
+    {
+     "lat": 37.04,
+     "lon": -119.13000000000001
+    },
+    {
+     "lat": 37.04,
+     "lon": -119.11
+    },
+    {
+     "lat": 37.059999999999995,
+     "lon": -119.11
+    },
+    {
+     "lat": 37.059999999999995,
+     "lon": -119.13000000000001
+    },
+    {
+     "lat": 37.04,
+     "lon": -119.13000000000001
+    }
+   ],
+   "tags": {
+    "leisure": "nature_reserve",
+    "name": "Granite Basin Nature Reserve"
+   }
+  },
+  {
+   "type": "relation",
+   "id": 9004,
+   "bounds": {
+    "minlat": 36.96,
+    "minlon": -119.1,
+    "maxlat": 37.03,
+    "maxlon": -118.9
+   },
+   "members": [
+    {
+     "type": "way",
+     "ref": 8006,
+     "role": "outer",
+     "geometry": [
+      {
+       "lat": 37.02,
+       "lon": -119.1
+      },
+      {
+       "lat": 37.02,
+       "lon": -119.0
+      },
+      {
+       "lat": 37.03,
+       "lon": -118.95
+      }
+     ]
+    },
+    {
+     "type": "way",
+     "ref": 8007,
+     "role": "outer",
+     "geometry": [
+      {
+       "lat": 36.97,
+       "lon": -118.9
+      },
+      {
+       "lat": 36.96,
+       "lon": -119.05
+      }
+     ]
+    }
+   ],
+   "tags": {
+    "boundary": "protected_area",
+    "name": "Granite Basin Open Ring"
+   }
+  },
+  {
+   "type": "relation",
+   "id": 9005,
+   "bounds": {
+    "minlat": 36.95,
+    "minlon": -119.05,
+    "maxlat": 37.05,
+    "maxlon": -118.95
+   },
+   "members": [
+    {
+     "type": "way",
+     "ref": 8008,
+     "role": "outer",
+     "geometry": [
+      {
+       "lat": 36.95,
+       "lon": -119.05
+      },
+      {
+       "lat": 36.95,
+       "lon": -118.95
+      },
+      {
+       "lat": 37.05,
+       "lon": -118.95
+      },
+      {
+       "lat": 37.05,
+       "lon": -119.05
+      },
+      {
+       "lat": 36.95,
+       "lon": -119.05
+      }
+     ]
+    }
+   ],
+   "tags": {
+    "boundary": "administrative",
+    "admin_level": "6",
+    "name": "Granite Basin County"
+   }
+  },
+  {
+   "type": "relation",
+   "id": 9006,
+   "bounds": {
+    "minlat": 35.95,
+    "minlon": -118.05,
+    "maxlat": 36.05,
+    "maxlon": -117.95
+   },
+   "members": [
+    {
+     "type": "way",
+     "ref": 8009,
+     "role": "outer",
+     "geometry": [
+      {
+       "lat": 35.95,
+       "lon": -118.05
+      },
+      {
+       "lat": 35.95,
+       "lon": -117.95
+      },
+      {
+       "lat": 36.05,
+       "lon": -117.95
+      },
+      {
+       "lat": 36.05,
+       "lon": -118.05
+      },
+      {
+       "lat": 35.95,
+       "lon": -118.05
+      }
+     ]
+    }
+   ],
+   "tags": {
+    "boundary": "national_park",
+    "name": "Twin Lakes Regional Park"
+   }
+  },
+  {
+   "type": "relation",
+   "id": 9007,
+   "bounds": {
+    "minlat": 36.45,
+    "minlon": -118.05,
+    "maxlat": 36.55,
+    "maxlon": -117.95
+   },
+   "members": [
+    {
+     "type": "way",
+     "ref": 8010,
+     "role": "outer",
+     "geometry": [
+      {
+       "lat": 36.45,
+       "lon": -118.05
+      },
+      {
+       "lat": 36.45,
+       "lon": -117.95
+      },
+      {
+       "lat": 36.55,
+       "lon": -117.95
+      },
+      {
+       "lat": 36.55,
+       "lon": -118.05
+      },
+      {
+       "lat": 36.45,
+       "lon": -118.05
+      }
+     ]
+    }
+   ],
+   "tags": {
+    "boundary": "national_park",
+    "name": "Twin Lakes Regional Park"
+   }
+  }
+ ]
+}

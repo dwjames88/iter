@@ -160,7 +160,7 @@ struct SourceRegistryTests {
 struct AttributionTests {
     static let keys = [
         LicenceKey.noaaNCEP, LicenceKey.noaaNWS, LicenceKey.noaaAWC, LicenceKey.noaaSWPC, LicenceKey.noaaHMS, LicenceKey.usgs,
-        LicenceKey.metNorway, LicenceKey.osm, LicenceKey.wikipedia, LicenceKey.commons, LicenceKey.terrainTiles,
+        LicenceKey.metNorway, LicenceKey.osm, LicenceKey.wikipedia, LicenceKey.wikivoyage, LicenceKey.commons, LicenceKey.terrainTiles,
         LicenceKey.nasaGIBS, LicenceKey.eumetsat, LicenceKey.iem, LicenceKey.apple, LicenceKey.wmm, LicenceKey.mgrs, LicenceKey.none,
     ]
 
