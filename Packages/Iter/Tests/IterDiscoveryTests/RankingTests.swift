@@ -128,6 +128,16 @@ struct ExplainerTests {
         PlaceExplainer(model: model, timeout: .seconds(1), sourceNames: [osmID: "OpenStreetMap"], areaName: "Yosemite", plan: plan)
     }
 
+    @Test func statusNeverInventsASecondSource() {
+        // One OSM listing with a stable id is confirmed, but it is one source and the line must say so.
+        let p = place()
+        #expect(p.verification == .confirmed && Set(p.sources).count == 1)
+        let line = explainer(nil).template(for: p)
+        #expect(line.contains("listed by OpenStreetMap"))
+        #expect(!line.contains("2 sources"))
+        #expect(explainer(nil).facts(for: p).contains("Status: listed by OpenStreetMap"))
+    }
+
     @Test func numberGroundingCheck() {
         let facts = "Geotagged photos nearby: 12\nDistance: 14 km"
         #expect(PlaceExplainer.numbersAreGrounded(output: "Has 12 geotagged photos nearby.", facts: facts))

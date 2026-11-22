@@ -24,7 +24,7 @@ struct PlaceExplainer: Sendable {
         if let areaName { lines.append("Area: \(areaName)") }
         let names = place.sources.map { sourceNames[$0] ?? $0.rawValue }
         lines.append("Sources: " + names.joined(separator: ", "))
-        lines.append(place.verification == .confirmed ? "Status: confirmed by independent sources" : "Status: reported by one source")
+        lines.append("Status: " + status(for: place))
         if place.photoCount > 0 { lines.append("Geotagged photos nearby: \(place.photoCount)") }
         if place.mentionCount > 0 { lines.append("Mentions: \(place.mentionCount)") }
         if let e = place.elevationMeters { lines.append("Elevation: \(Int(e.rounded())) metres") }
@@ -39,9 +39,21 @@ struct PlaceExplainer: Sendable {
     func template(for place: DiscoveredPlace) -> String {
         let kind = place.featureKinds.first.map { $0.singularName.prefix(1).uppercased() + $0.singularName.dropFirst() } ?? "Place"
         var s = kind + (areaName.map { " in \($0)" } ?? "")
-        s += place.verification == .confirmed ? ", confirmed by \(max(2, Set(place.sources.map(\.family)).count)) sources" : ", reported by one source"
+        s += ", " + status(for: place)
         if place.photoCount > 0 { s += "; \(place.photoCount) geotagged \(place.photoCount == 1 ? "photo" : "photos") nearby" }
         return s + "."
+    }
+
+    /// What confirmed the place, counted honestly: independent source families, or one map source that lists it with a
+    /// stable id (OSM, GNIS, a geotagged Wikipedia page), which also counts as confirmed but is said as such.
+    func status(for place: DiscoveredPlace) -> String {
+        let families = Set(place.sources.map(\.family)).count
+        if families >= 2 { return "confirmed by \(families) sources" }
+        if place.verification == .confirmed {
+            let name = place.sources.first.map { sourceNames[$0] ?? $0.rawValue } ?? "one map source"
+            return "listed by \(name)"
+        }
+        return "reported by one source"
     }
 
     func explain(_ place: DiscoveredPlace) async -> PlaceExplanation {
