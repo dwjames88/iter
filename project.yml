@@ -69,6 +69,20 @@ targets:
     dependencies:
       - package: Iter
         product: IterScreens
+      - package: Iter
+        product: IterFeatures
+      - package: Iter
+        product: IterUI
+      - package: Iter
+        product: IterModel
+      - package: Iter
+        product: IterStore
+      - package: Iter
+        product: IterSources
+      - package: Iter
+        product: IterDiscovery
+      - package: Iter
+        product: IterSky
       - package: IterUpdater
         product: IterUpdater
     settings:
