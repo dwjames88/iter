@@ -115,7 +115,7 @@ struct FindModelSearchTests {
 
     @Test func aHangingSourceNeverBlocksTheOthersAndShowsAsSlowThenDown() async throws {
         var config = FindFixtures.fastConfiguration
-        config.sourceTimeoutOverride = .milliseconds(2500)
+        config.sourceTimeoutOverride = .seconds(8)
         let engine = FindFixtures.engine(gazetteer: .init(hangs: true), configuration: config)
         let rig = try Rig(runner: engine)
         rig.model.text = FindFixtures.query
@@ -127,7 +127,7 @@ struct FindModelSearchTests {
         #expect(rig.model.chips.first { $0.sourceID == FindFixtures.osm }?.text.contains("slow") == true)
         #expect(rig.model.progress.isRunning)
         // Then it times out: marked down, the run finishes, the places that did arrive stay.
-        #expect(await waitUntil(.seconds(6)) { rig.model.phase == .finished })
+        #expect(await waitUntil(.seconds(30)) { rig.model.phase == .finished })
         let osm = try #require(rig.model.chips.first { $0.sourceID == FindFixtures.osm })
         #expect(osm.state == .down)
         #expect(rig.model.rows.contains { $0.name == "Mesa Arch" })

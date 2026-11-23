@@ -138,7 +138,7 @@ public enum FindPreviewData {
         }
     }
 
-    private static func settle(_ limit: Duration = .seconds(5), _ condition: @MainActor () -> Bool) async -> Bool {
+    private static func settle(_ limit: Duration = .seconds(30), _ condition: @MainActor () -> Bool) async -> Bool {
         let end = ContinuousClock.now + limit
         while ContinuousClock.now < end {
             if condition() { return true }

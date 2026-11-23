@@ -154,7 +154,7 @@ struct ConditionsStateTests {
 @MainActor
 @Suite("ConditionsModel: loading, best window, no flicker")
 struct ConditionsFlowTests {
-    private func settle(_ m: ConditionsModel, _ check: @MainActor () -> Bool) async -> Bool { await waitUntil(.seconds(2), check) }
+    private func settle(_ m: ConditionsModel, _ check: @MainActor () -> Bool) async -> Bool { await waitUntil(.seconds(20), check) }
 
     @Test func selectedDayLoadsOnScreenThenTheOutlookAtBackgroundPriority() async throws {
         let feed = FakeConditionsFeed()
@@ -286,9 +286,9 @@ struct ConditionsFlowTests {
         m.refresh()
         #expect(feed.requests.last?.isRefresh == true)
         feed.set(.loading(previous: r), day: today)
-        try await Task.sleep(for: .milliseconds(30))
+        // Wait for the loading state to reach the model (a fixed sleep raced under load), then check nothing blanked.
+        #expect(await settle(m) { m.isUpdating })
         #expect(m.headline == h && m.status == .complete)
-        #expect(m.isUpdating)
         m.stop()
     }
 

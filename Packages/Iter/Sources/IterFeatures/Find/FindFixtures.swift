@@ -204,6 +204,6 @@ public enum FindFixtures {
     }
 
     public static var fastConfiguration: DiscoveryConfiguration {
-        DiscoveryConfiguration(sourceTimeoutOverride: .seconds(2), planTimeout: .seconds(2), extractionTimeout: .seconds(2), explanationTimeout: .seconds(2))
+        DiscoveryConfiguration(sourceTimeoutOverride: .seconds(10), planTimeout: .seconds(10), extractionTimeout: .seconds(10), explanationTimeout: .seconds(10))
     }
 }

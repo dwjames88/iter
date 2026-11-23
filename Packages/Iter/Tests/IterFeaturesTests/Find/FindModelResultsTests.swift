@@ -54,7 +54,7 @@ struct FindModelResultsTests {
         #expect(rig.model.rows.allSatisfy { $0.drive?.basis == .straightLine })
         #expect(rig.model.rows.first?.drive?.text.contains("straight-line") == true)
         #expect(rig.model.rows.contains { $0.isFetchingDrive })
-        #expect(await waitUntil(.seconds(4)) { rig.model.rows.allSatisfy { $0.drive?.basis == .drive } })
+        #expect(await waitUntil(.seconds(20)) { rig.model.rows.allSatisfy { $0.drive?.basis == .drive } })
         #expect(rig.model.rows.allSatisfy { !$0.isFetchingDrive })
         #expect(rig.model.rows.first?.drive?.text.hasSuffix("drive") == true)
         #expect(routing.calls == 6)

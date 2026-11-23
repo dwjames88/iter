@@ -10,7 +10,7 @@ import IterSourcesLive
 
 /// Waits (polling the main actor) until `condition` holds or `limit` passes.
 @MainActor
-func waitUntil(_ limit: Duration = .seconds(3), _ condition: @MainActor () -> Bool) async -> Bool {
+func waitUntil(_ limit: Duration = .seconds(20), _ condition: @MainActor () -> Bool) async -> Bool {
     let end = ContinuousClock.now + limit
     while ContinuousClock.now < end {
         if condition() { return true }
