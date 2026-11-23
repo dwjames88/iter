@@ -1,207 +1,123 @@
 # Data providers
 
-Where Iter's forecasts and place discoveries come from (place discovery is the last major section, "Place discovery sources"), what each source can and cannot give the Light Index, and what each one costs, permits and requires. Provider facts were read from the providers' own pages and checked 5 October 2026. Prices and terms change; check the linked pages before relying on them.
+Every place Iter gets data from, as built on this branch. The research behind the choices is in [docs/rebuild/SOURCES.md](rebuild/SOURCES.md). The code that defines each source is `Packages/Iter/Sources/IterSources/Registry/SourceCatalogue.swift` (tiers, rates, cache lifetimes, licence keys) and `Attribution.swift` (the credit text). If this page and that code disagree, the code is right and this page needs fixing.
 
-Iter has three forecast providers (plus Sample Data, which is for testing only). The user chooses a primary in Settings ▸ Weather and, optionally, a fallback ("If it fails, try"). `WeatherRouter` tries them in order. If the primary fails and the fallback answers, the forecast records which source failed, and every screen says so ("OpenWeather (Apple Weather unavailable)"; the reason is not claimed beyond that). If all fail, the primary's error is shown.
+## The rules Iter follows
 
-> **Note, 2026-10-06: attribution lives in Settings.** At the owner's instruction ("Take off the attribution, put that in settings."), provider attribution (the Apple Weather mark and legal link, "Weather data © OpenWeather", Windy's "Contains data from the Windy database" and windy.com link, and "Light Index modified from forecast data") is shown only in Settings ▸ Weather ("Data Sources and Attribution") and Settings ▸ About, no longer beside forecasts on Explore, Trip builder, Saved, Scout or the spot page. Screens keep a plain source line ("OpenWeather · updated 06:29"). The provider terms as documented below (OpenWeather's licence, Apple's WeatherKit rules and Windy's API terms) ask for attribution where the data is shown. The owner chose Settings-only for this test build. **This must be revisited before any release.**
+- **Free to run.** No source needs a key or an account. Settings has a Keys tab, but it says no source needs one.
+- **Order of trust.** When two sources can answer the same question, the more trusted one is asked first. The tiers, best first, are: military, government, open data, user key, device. A source that fails is skipped and named in the app; it never fails the whole search.
+- **Every number carries where it came from.** Each datum keeps its source, its model, when it was issued and fetched, its licence and its origin. The screens show a short source line with the data, and Settings ▸ Sources & Credits shows the full credits.
+- **Missing is missing.** If no source supplies something, Iter says so. It never fills a gap with a guess that looks like data.
+- **Polite to every host.** Each source has a minimum gap between requests, a cap on requests in flight, a timeout and a retry limit. A `Retry-After` header wins over our own backoff. Results are cached, and an old cached result is shown with its age, never as fresh.
+- **User-Agent.** Every request says only the app name and version, for example `Iter/0.2.0` (`UserAgent` in `IterSources/HTTP/HTTPClient.swift`). There is a single place a contact address could be added, and it is empty. No name, email or username is ever sent.
+- **Licence limits are honoured.** A source whose terms forbid keeping data on disk is marked "memory only" below. Apple Maps results are also memory only.
 
-## What the Light Index needs
+## What "military-origin" means here
 
-The Light Index scores five windows a day from hourly data: cloud cover (total, and low, mid and high layers where known), precipitation, visibility, and the sun and moon from Iter's own astronomy. Each provider fills some of these and leaves the rest unknown. Unknown is never guessed. A missing input drops its factor and adds a note to the score (`ScoreNote`), and some lower confidence.
+The code has an origin tier for each source: military, government, open data, user key or device. "Military-origin" means the data was produced by a military organisation, even when a civil agency serves it. Three things in Iter are military-origin:
 
-| | Apple Weather | OpenWeather One Call 3.0 | Windy Point Forecast v2 |
-|---|---|---|---|
-| Cloud layers (low, mid, high) | Yes (cloud cover by altitude) | No | Yes |
-| Total cloud | Yes | Yes (the only cloud field) | No: derived from the layers |
-| Precipitation chance | Yes | Yes (`pop`) | No |
-| Precipitation amount | Yes | Yes (mm/h, rain and snow) | Yes (3-hour accumulation) |
-| Visibility | Yes | Capped at 10 km | Yes |
-| Hourly steps | Hourly | Hourly for 48 h, then daily | The model's own step (3-hourly for GFS), interpolated to hours |
-| Reach | About ten days | 48 h hourly, then 8 days of daily summaries | Per model run (GFS reaches furthest) |
-| Needs | Paid Developer Program team (WeatherKit) | User's API key | User's API key (Professional for real scores) |
+- **METAR and TAF reports from military airfields**, served by the civil NOAA Aviation Weather Center. The feed is NOAA's. The reports from civil airports are government data. Each report is labelled by its own station: Iter marks a station military if it is on a built-in list of airfields or its name has a military marker (AFB, NAS, "air base" and so on). This is a best effort. A military field that is on neither list is shown as civil. In the catalogue the METAR source is listed at the military tier because it can supply military-origin reports.
+- **World Magnetic Model 2025**, made for the US National Geospatial-Intelligence Agency (NGA) and the UK Defence Geographic Centre. Iter computes it on the device.
+- **MGRS grid references**, an NGA standard, computed on the device.
 
-Apple Weather's column is from the app's own notes (`docs/ARCHITECTURE.md`, `AppleWeatherService`). This page is mostly about the two key-based providers.
+Everything else is civil government, an open-data community, a university, or Apple. The Navy's USNO sun and moon service was tested but is not used at run time (decision D10): Iter's own astronomy code runs on the device.
 
-## Apple Weather
+## The table
 
-* The best fit for the Light Index: cloud by altitude, visibility and precipitation chance, hourly.
-* Works only for an app signed by a paid Apple Developer Program team with WeatherKit on its App ID. See [TESTING.md](../TESTING.md).
-* Attribution: the Apple Weather mark and its legal page, required wherever its forecasts appear. This is WeatherKit's rule (currently shown in Settings only, see the 2026-10-06 note above).
-* Cache: `CachedWeatherService`, an actor keyed by rounded coordinate.
+Rates are from the catalogue. "Spacing" is the minimum gap between request starts to one host. "In flight" is the most requests at once. A blank per-minute cap means none beyond the spacing. "On by default" is whether a fresh install uses it.
 
-## OpenWeather One Call 3.0
+### Weather and sky
 
-Source: <https://openweathermap.org/api/one-call-3>
+| Source | Provides | Operator | Origin tier (as coded) | Licence and credit text | Key | Rates and limits | On by default |
+|---|---|---|---|---|---|---|---|
+| NOAA HRRR and GFS (`noaa.nomads`) | Hourly forecast by cloud layer, visibility; nowcast steps. HRRR in the US (3 km, to 48 h), GFS worldwide (0.25 degrees, to 16 days), through the NOMADS GRIB filter, decoded on the device | NOAA NCEP | Government. Civil, not military | US government work, public domain. "Data: NOAA/NCEP" | None | Spacing 600 ms, 2 in flight, 50 per minute, timeout 30 s, 2 retries, first backoff 5 s. Cache 1 h | Yes |
+| NOAA HRRR smoke (`noaa.nomads.hrrr-smoke`) | Near-surface smoke, column smoke, aerosol optical thickness. Continental US only | NOAA NCEP | Government | Same as above | None | Same host policy as HRRR and GFS. Cache 1 h | Yes |
+| MET Norway Locationforecast (`metno.locationforecast`) | Worldwide fallback forecast: cloud layers and fog, no visibility | Norwegian Meteorological Institute | Government | CC BY 4.0. "Data from MET Norway (CC BY 4.0)" | None | Spacing 1 s, 1 in flight, timeout 20 s, 2 retries. Honours the `Expires` header and sends `If-Modified-Since`. Cache 1 h | Yes |
+| Aviation weather reports (`noaa.awc.metar`) | Current observations: METAR and TAF from the nearest stations worldwide, the real-time sky input | NOAA Aviation Weather Center | Military in the catalogue (it can supply military-origin reports); each report is labelled military or government by its station. See above | US government work, public domain. "Data: NOAA Aviation Weather Center". The full text says it includes military airfields | None | Spacing 1 s, 2 in flight, 60 per minute (the host's published limit is 100), timeout 15 s, 2 retries. Cache 10 min | Yes |
+| National Weather Service (`noaa.nws.api`) | Official alerts and station observations. US only | NOAA National Weather Service | Government | US government work, public domain. "Data: NOAA/National Weather Service" | None | Spacing 1 s, 2 in flight, timeout 15 s, 2 retries, first backoff 5 s. Cache 5 min | Yes |
+| NOAA Space Weather (`noaa.swpc`) | Aurora probability and geomagnetic data (Kp) | NOAA SWPC | Government | US government work, public domain. "Data: NOAA Space Weather Prediction Center" | None | Spacing 1 s, 1 in flight, timeout 30 s, 2 retries. Cache 15 min | Yes |
+| NOAA Hazard Mapping System (`noaa.nesdis.hms`) | Smoke plume outlines. North America | NOAA NESDIS | Government | US government work, public domain. "Data: NOAA Hazard Mapping System" | None | Spacing 1 s, 1 in flight, timeout 30 s, 2 retries. Cache 1 h | Yes |
+| Sky brightness (`iter.none.sky-brightness`) | Nothing. A "no provider" stub: it always answers "no source" | none | Device (placeholder) | "No source" | None | None | Yes (it only reports that nothing exists) |
+| Seeing and transparency (`iter.none.seeing`) | Nothing. A "no provider" stub, same as above | none | Device (placeholder) | "No source" | None | None | Yes (same) |
 
-Request: `GET https://api.openweathermap.org/data/3.0/onecall` with `lat`, `lon`, `exclude=current,minutely,alerts`, `units=metric` and `appid`. One call returns everything for a spot.
+Why the two stubs exist: no commercial-safe light-pollution or seeing source was found (SOURCES.md section 1.2). The Falchi atlas is non-commercial, and no free point service exists. The sky index leaves those factors out and says so, instead of guessing. See [ROADMAP.md](ROADMAP.md) for the light-pollution plan.
 
-**What it gives.** Hourly data for 48 hours (cloud %, visibility, wind and gust, probability of precipitation, rain and snow mm/h, temperature, humidity, a condition code) and daily data for 8 days.
+### Terrain and elevation
 
-**What it cannot give, and what Iter does about it.**
+| Source | Provides | Operator | Origin tier | Licence and credit text | Key | Rates and limits | On by default |
+|---|---|---|---|---|---|---|---|
+| Terrain Tiles, Terrarium (`aws.terrain-tiles`) | Elevation tiles, decoded on the device into a 72-azimuth horizon profile per place (used for terrain-aware sunrise and sunset) | Tilezen on AWS Open Data. Underlying data from USGS, NASA/NGA (SRTM) and national mapping agencies | Government | Mixed public-domain and open government licences. The credit is the Tilezen list, in full, in Settings. Short form: "Terrain: Tilezen Terrain Tiles; USGS, NASA/NGA, and national agencies" | None | Spacing 100 ms, 4 in flight, timeout 20 s, 2 retries. Cache 90 days | Yes |
+| USGS 3DEP point elevation (`usgs.epqs`) | Elevation at a point, US only | USGS The National Map | Government | US government work, public domain, credit requested. "Data: USGS" | None | Spacing 500 ms, 2 in flight, timeout 15 s, 2 retries. Cache 30 days | Yes in the catalogue. Not used by the app yet: see "Built but not used" |
 
-* **Total cloud only.** There is no cloud by height. Iter scores golden hour and blue hour from total cloud with a lower ceiling than it allows with layers, adds the note "no cloud layers", and lowers confidence one step for those windows. Reasons talk about cloud cover, not "high cloud" or "low cloud".
-* **48 hours of hourly data.** After that, Iter fills the hours from the daily summaries (cloud, probability, wind and humidity from the day, temperature interpolated through the day). These hours are marked `dailySummary`. Any window that uses one is scored with low confidence and carries the note "daily summary only".
-* **Visibility is capped at 10 km.** The Light Index gives a small bonus above 12 km (up to 2 points at 20 km). OpenWeather can never earn it. A clear day still scores normally; it just cannot go past what 10 km earns.
-* **No visibility at all** in the daily summaries. Those hours drop the visibility factor and add the note "no visibility".
-* **Sunrise, sunset and moon phase.** The daily data has them. Iter keeps them as a cross-check and does not display them. All times and moon figures in the app come from Iter's own astronomy (`IterAstro`).
-* **Rain and snow** are optional in the response. Absent means none.
+### Imagery
 
-**Condition symbols.** The `weather[0].id` code is mapped to Iter's condition names and SF Symbols (`WeatherConditionMapping`). An icon ending in `n` is night.
+| Source | Provides | Operator | Origin tier | Licence and credit text | Key | Rates and limits | On by default |
+|---|---|---|---|---|---|---|---|
+| NASA GIBS (`nasa.gibs`) | Satellite cloud imagery tiles from GOES and Himawari | NASA ESDIS | Government (data from NOAA and JMA) | "Imagery: NASA GIBS / NOAA GOES / JMA Himawari" | None | Spacing 100 ms, 4 in flight, timeout 20 s, 1 retry. Cache 10 min | Yes in the catalogue. Not shown in the app yet: see "Built but not used" |
+| EUMETSAT Meteosat (`eumetsat.view`) | Meteosat imagery for Europe and Africa | EUMETSAT | Government | "Contains EUMETSAT data". Memory only, never stored on disk | None | Spacing 250 ms, 2 in flight, timeout 20 s, 1 retry. Cache 15 min | **No.** The licence for real-time imagery in an app has not been read. The user can switch it on in Settings |
+| IEM NEXRAD radar (`iem.nexrad`) | US radar tiles | Iowa Environmental Mesonet (Iowa State University), from NOAA NWS NEXRAD data | Open data (the data itself is government) | "Radar tiles: Iowa Environmental Mesonet (NEXRAD)". Memory only | None | Spacing 100 ms, 4 in flight, timeout 15 s, 1 retry. Cache 5 min | **No.** The service's terms have not been fully read. The user can switch it on in Settings |
 
-**Why some days score 5.** A score is a baseline of 60 plus signed points per factor, clamped to 5...100, and a golden-hour window with heavy low cloud falls below 5 on its own: 80% low cloud costs about 50 points, rain chance and short visibility cost another 10 to 35, and thick mid and high cloud about 10. The clamp then shows 5, and "Why this score" lists the raw factors (low cloud first, then precipitation, visibility), so their points can add up to more than the 55 lost. This is the intended floor, not a missing-data default. Missing data never lowers a score: a missing factor is dropped and noted ("no cloud layers", "no visibility", "daily summary only") with lower confidence, and days beyond the hourly range are filled from the daily summary. The sample data cycles through six sky regimes (clear, high cloud evening, overcast, rain, morning fog, partly cloudy), and overcast, rain and fog-at-sunrise days carry 78 to 100% low cloud, so they score 5 beside 66 to 87 for the others. OpenWeather has no cloud layers, so a real overcast day scores from total cloud: about 40 at 100% cloud before rain and visibility, and 5 only with heavy rain on top.
+### Discovery (Find)
 
-### Limits, licence and attribution (checked 5 October 2026)
+| Source | Provides | Operator | Origin tier | Licence and credit text | Key | Rates and limits | On by default |
+|---|---|---|---|---|---|---|---|
+| OpenStreetMap, Overpass (`osm.overpass`) | Named features (peaks, waterfalls, viewpoints, lakes, arches) and the real outlines of parks and protected areas | OpenStreetMap contributors | Open data | ODbL 1.0. "(c) OpenStreetMap contributors (ODbL)" | None | Spacing 2 s, 1 in flight, timeout 60 s (longer than the 25 s query limit we send, so the server answers first), 2 retries, first backoff 10 s. Cache 7 days | Yes |
+| USGS Geographic Names (`usgs.gnis`) | US place names | USGS The National Map | Government | Public domain, credit requested. "Data: USGS" | None | Spacing 1 s, 1 in flight, timeout 30 s, 2 retries. Cache 30 days | Yes |
+| Wikipedia (`wikipedia.geosearch`) | Article text and coordinates near a point, as evidence that a place is notable | Wikimedia Foundation | Open data | CC BY-SA 4.0. "Text from Wikipedia (CC BY-SA 4.0)". Links to each article | None | Spacing 1 s, 1 in flight, timeout 15 s, 2 retries. Cache 7 days | Yes |
+| Wikivoyage (`wikivoyage.geosearch`) | Travel-guide text, with See and Do sections that name photo spots | Wikimedia Foundation | Open data | CC BY-SA 4.0. "Text from Wikivoyage (CC BY-SA 4.0)" | None | Same as Wikipedia | Yes |
+| Wikimedia Commons (`wikimedia.commons`) | Geotagged, licensed photos as evidence | Wikimedia Foundation | Open data | Each photo has its own licence (CC0, CC BY, CC BY-SA and others). "Photos from Wikimedia Commons; licence per photo" | None | Spacing 1 s, 1 in flight, timeout 15 s, 2 retries. Cache 7 days | Yes |
 
-* **Plan:** "One Call by Call". 1,000 calls a day are free. Calls over that cost 0.0015 USD each. Price page: <https://openweathermap.org/price>.
-* **Daily cap:** set on the "Billing plan" tab of your OpenWeather account. Set it to 1,000 or below so the free allowance cannot be exceeded.
-* **Licence:** ODbL. Commercial use is allowed. Visible attribution is required wherever the data appears. OpenWeather's recommended line is "Weather data © OpenWeather". Licence page: <https://openweathermap.org/full-price#licenses>. Iter shows that line, linking openweathermap.org, in Settings ▸ Weather and About (see the 2026-10-06 note above). The ODbL also allows Iter to keep the data, so the cache persists on disk.
-* **One Call 4.0.** OpenWeather now recommends One Call 4.0 for new integrations. Its FAQ describes 4.0 with a default cap of 2,000 calls a day. Iter uses 3.0 because that is the version whose pages and schema were read for this work. Moving to 4.0 is on the [roadmap](ROADMAP.md).
-* **Payment card: not confirmed.** Whether a payment card is needed for the free 3.0 allowance was not confirmed from the pages read. The price page says "Complete the billing form and confirm payment" for subscriptions. Check at sign-up before assuming it is free of card details.
-* **Keys take up to two hours to activate** after creation. A 401 in that time is normal.
+### Apple
 
-### Errors
+All five are MapKit. None needs a key or a paid team. Results are kept in memory only (`mayStore` is false); a place you save is your own data, not a cache.
 
-HTTP 401 and 403 mean the key was rejected (wrong key, or no "One Call by Call" subscription). 429 means a limit was reached, and is shown like Iter's own cap. Any other status is shown as a provider failure with OpenWeather's own `message` (up to 200 characters, with the key removed). The same mapping applies to Windy.
+| Source | Provides | Operator | Origin tier | Credit text | Rates and limits | On by default |
+|---|---|---|---|---|---|---|
+| Apple Maps search (`apple.mapkit.search`) | Typed place search | Apple | Open data (as coded) | "Apple Maps" | Spacing 250 ms, 2 in flight, 50 per minute, timeout 20 s, 1 retry. Cache 1 day | Yes |
+| Apple Maps points of interest (`apple.mapkit.poi`) | Nearby points of interest by category | Apple | Open data (as coded) | "Apple Maps" | Same | Yes |
+| Apple Maps geocoder (`apple.mapkit.geocoder`) | Name to coordinate, coordinate to name | Apple | Open data (as coded) | "Apple Maps" | Same | Yes |
+| Apple Maps directions (`apple.mapkit.directions`) | Routes and travel times (drive legs, leave-by times, live ETA in Go) | Apple | Open data (as coded) | "Apple Maps" | Same. Cache 10 min | Yes |
+| Apple Look Around (`apple.lookaround`) | Street-level imagery where Apple has it | Apple | Open data (as coded) | "Apple Maps" | Same. Cache 7 days | Yes |
 
-## Windy Point Forecast v2
+Apple is a company, not an open-data project. The code puts it in the open-data tier because it is a free, keyless service and is not military or government. Treat that as a label for ordering, not a claim about Apple's licence.
 
-Source: <https://api.windy.com/point-forecast/docs>
+### On device (no network)
 
-Request: `POST https://api.windy.com/api/point-forecast/v2` with JSON `{lat, lon, model, parameters, levels: ["surface"], key}`. Parameters used: `temp`, `dewpoint`, `precip`, `wind`, `windGust`, `lclouds`, `mclouds`, `hclouds`, `rh`, `cbase`, `visibility`, `ptype`.
+| Source | Provides | Operator | Origin tier | Licence and credit text | On by default |
+|---|---|---|---|---|---|
+| World Magnetic Model 2025 (`nga.wmm2025`) | Magnetic declination for any place | NGA and the UK Defence Geographic Centre, built by NOAA NCEI and the British Geological Survey | **Military**, computed on the device | US government work, public domain. "World Magnetic Model 2025, NGA and UK DGC (US Government work)". Valid to the end of 2029 | Yes |
+| Military Grid Reference System (`nga.mgrs`) | MGRS grid references for any place | NGA | **Military** standard, computed on the device | "MGRS (NGA standard)" | Yes |
 
-**What it gives.** A model forecast at a point, with cloud in three layers. This is the only key-based provider with cloud by height, so it is the one that matches Apple Weather for golden hour.
+Sun, moon, twilight and Milky Way positions are also computed on the device by the Iter astronomy code. They are not network sources and have no catalogue entry.
 
-**What it cannot give, and what Iter does about it.**
+## Sources that are not in the app
 
-* **No total cloud.** Iter derives it: total = 1 − (1 − low)(1 − mid)(1 − high), which assumes the layers overlap at random. It is an estimate, and it is said to be one. If a layer is null for an hour, the total uses the layers present (a lower bound) and the missing layer stays unknown for that hour.
-* **No precipitation probability.** Windy gives `past3hprecip`, the accumulation over the preceding three hours. Iter spreads it evenly (value ÷ 3 mm for each of those hours). The Light Index then scores precipitation from the amount and adds the note "precipitation from amount".
-* **3-hourly steps.** GFS reports every three hours; other models may step more finely. Iter reads the step from each response's timestamps and interpolates linearly to hourly. It never extrapolates: an hour needs both neighbours. These hours are marked `interpolated`; the high-confidence limit falls from 36 hours to 24, and the score carries the note "three-hourly steps".
-* **No ECMWF.** The Point Forecast API does not offer it, although the Windy map does. Iter says "GFS" or "ICON-EU", never "Windy's ECMWF".
-* **Condition symbols** are derived, because Windy has no condition code: precipitation of 0.1 mm/h or more (drizzle under 0.5 mm/h, otherwise rain, or snow for precipitation types 5, 7 and 8), then visibility under 1,000 m foggy and under 5,000 m haze, then the sky from cloud cover.
-* **Units** come from the response's `units` object and are converted by name (`K`, `m*s-1`, `%`, `m`), never assumed. A field with an unknown unit is dropped. A missing field is unknown, not zero.
-
-### Models and region
-
-Settings ▸ Weather has "Best for the spot" (default) and "GFS".
-
-| Where | Model | Box (approximate) |
+| Source | State | Why |
 |---|---|---|
-| Europe | ICON-EU | 29.5–70.5 °N, 23.5 °W–62.5 °E |
-| Contiguous United States | NAM CONUS | 24–50 °N, 125–66 °W |
-| Everywhere else | GFS | global |
+| Reddit | **Off, not built.** Find shows it as "unavailable" with the reason | Reddit's open JSON no longer works for apps. The only free route needs the owner's own Reddit app credentials (OAuth). The code has an extension point for it (a text-evidence provider with the id `reddit.api`). See [ROADMAP.md](ROADMAP.md) |
+| Google Custom Search | **Off, not built.** Shown as "unavailable" | Google is closing the product to new users. The old optional key is copied into the new Keychain layout, but nothing reads it |
+| Light pollution, sky brightness | **No provider** (stub) | No commercial-safe free source. See the table above and the roadmap |
+| Seeing and transparency | **No provider** (stub) | No commercial-safe free source |
+| OpenWeather, Windy, WeatherKit | **Not carried over** | OpenWeather and Windy needed a key. WeatherKit needs a paid developer team (decision D1). The old keys are copied to the new Keychain layout once and left in place, and nothing uses them |
+| Open-Meteo | Not built | Its free tier is for non-commercial use only |
+| USNO sun and moon, CelesTrak satellites, JTWC cyclones, NAVGEM | Not built | Tested in the research. USNO would only be a test cross-check. The others are not needed for the flow, or carry no cloud data (NAVGEM) |
 
-If a regional model answers 204 (no data) or 400, or has no cloud layers, Iter retries once with GFS. That retry is a second call and counts against the budget. The model that answered is stored on the forecast and shown ("Windy · ICON-EU").
+## Built but not used
 
-### Limits, licence and attribution (checked 5 October 2026)
+Three adapters have code and tests but nothing in the apps calls them yet. They are listed in Settings ▸ Sources & Credits so the credits cover everything the app can show.
 
-* **Testing tier:** free, 500 requests a day, "randomly shuffled and slightly modified data", for development only. The API terms say a trial key returns "forecasts for random coordinates" and may not be integrated into a production app.
-* **Professional:** 990 € a year, 10,000 requests a day. Pricing: <https://api.windy.com/point-forecast/pricing>.
-* **Terms** (effective 1 September 2023): <https://account.windy.com/agreements/windy-api-map-and-point-forecast-terms-of-use>.
-  * You may not store or extract the weather data, or build databases from it. Hence Iter's Windy cache is memory only and is gone on quit.
-  * Attribution: the Windy logo, unscaled and clickable to windy.com, plus "Contains data from the Windy database". Iter shows the text and a link to windy.com. **The logo asset is not shipped yet. That is a gap to close before any release** (see the [roadmap](ROADMAP.md)).
-* **Testing keys are not used for scores.** In Settings you declare the key type (Testing is the default). With a Testing key, or if the response carries a top-level `warning`, Iter makes the call, reads it, and then refuses it with "Testing key: data is shuffled, not used for scores". Nothing is cached, so each request with a testing key costs one call.
-
-## The Windy map
-
-Iter does not embed the Windy map.
-
-* The embeddable widget is "not allowed to be used by weather apps and other commercial websites" (windy.com Terms of Use, section "Windy and Webcam embeddable widget").
-* The Map Forecast API trial is for development only, and its keys are bound to web domains, which a native app does not have.
-
-Instead the spot page (a "Windy" section after Hour by hour, button **Open in Windy**) and Explore (a **Windy** toolbar button) open windy.com in the browser: at the spot (`https://www.windy.com/?LAT,LON,ZOOM`, coordinates to 3 decimal places, zoom 9) or at the map's centre (zoom from the visible latitude span, about log2(360 / span), clamped to 3...11). `WindyLink` builds the URLs. An in-app map would need a Map Forecast Professional licence that permits a native app. It is on the roadmap as a question, not a plan.
-
-## Cache policy
-
-Both key-based providers use `ProviderCache`, one per provider, keyed by the coordinate rounded to two decimal places (about 1 km) and the UTC hour in which the forecast was fetched. Concurrent requests for one spot share one fetch. Errors are not cached.
-
-| | OpenWeather | Windy |
-|---|---|---|
-| Valid for | Through the end of the next clock hour: a forecast fetched at 14:05 is served until 16:00 (so 1 to 2 hours) | 3 hours from the fetch (GFS runs four times a day) |
-| Kept | On disk as JSON under `Application Support/Iter/ForecastCache/openweather/`, so a relaunch does not refetch | Memory only. The terms forbid storing the data |
-| Old entries | Pruned as the hours pass | Gone on quit |
-
-## Call budget
-
-`CallBudget` counts calls per UTC day, per provider, and refuses at a cap. It is checked before the network call, and a cache hit never reaches it. At the cap the provider throws "Daily cap reached (800)" without calling.
-
-| | Default cap | Free allowance |
-|---|---|---|
-| OpenWeather | 800 | 1,000 a day |
-| Windy | 400 | 500 a day (Testing tier) |
-
-Counts are kept in UserDefaults (they are counts, not secrets). The caps are adjustable. Settings shows "Calls today 12 / 800".
-
-### Expected daily calls
-
-Forecasts are not polled. A forecast for a place is held in memory for the session and is requested again only on launch, on a settings change (provider, key, model, cap), by Refresh Forecasts (⌘R), which retries places whose forecast failed, or by Retry on a spot page. The cache then answers any request made in the same or the next clock hour.
-
-For OpenWeather:
-
-* Opening Explore with the 45 curated spots costs at most 45 calls, once in an hour. Opening it again in that hour, or the next, costs none.
-* A day of normal use (Explore a few times, some spot pages, a trip with several stops) is roughly 50 to 200 calls.
-* The cap stops it at 800 whatever happens, below the 1,000 free.
-
-These are estimates from how the app asks for forecasts, not measurements. The live calls have not been exercised yet (see [TESTING.md](../TESTING.md)).
-
-For Windy, a spot in an uncovered region costs two calls (regional model, then GFS), and a Testing key is never cached. The 400 cap sits below the 500 Testing allowance.
+- **NASA GIBS imagery.** There is a "show cloud imagery" preference (off by default) but no map layer draws it yet.
+- **EUMETSAT** and **IEM radar.** Off by default as above, and not drawn anywhere yet.
+- **USGS 3DEP point elevation.** Terrain Tiles supply elevation worldwide, so the US-only point service is not called.
 
 ## Keys
 
-Keys are never in the repo, in UserDefaults or in logs. Order of lookup: environment variable (`ITER_OPENWEATHER_KEY`, `ITER_WINDY_KEY`), then launch argument (`-ITER_OPENWEATHER_KEY <key>`), then the login Keychain (service `com.dwjames.iter.weather`, account `openWeather` or `windy`). Settings says where the key in use came from ("From environment (ITER_WINDY_KEY)" or "From launch argument") and then shows no key field. See [TESTING.md](../TESTING.md) for steps.
+Nothing needs a key today. The key vault (`IterSources/KeyVault`) is kept so a keyed source can be added later. It stores keys in the Keychain under the service `com.dwjames.iter.keys`, one item per source id. On first run it copies the old app's items (OpenWeather, Windy, Google) into that layout and leaves the old items alone.
 
-## Place discovery sources
+## Adding or changing a source
 
-Explore's "Search Here", typed feature searches ("waterfalls in Glacier") and Ask can look beyond Apple Maps and the curated list. The code is `Packages/IterKit/Sources/IterServices/Discovery/`. The user chooses sources in Settings ▸ Search; the free ones are on by default, Google is off until the user adds their own key. These facts were read from the code and the providers' public documentation; terms change, so check the linked pages before a release.
-
-**Shared behaviour** (`DiscoveryHTTP`, `DiscoveryRateLimiter`, `DiscoveryCache`):
-
-* Every request has a 10 second timeout and the User-Agent `Iter/<version or dev> (photography trip planner; https://github.com/dwjames88)`. No email address, no user name, no device identifier.
-* Requests to one host are spaced (minimum time between starts) and run one at a time. Responses are cached on disk under the system Caches directory (`Caches/Iter/Discovery`) and in memory, so a repeated search inside the cache time makes no network call. Errors and, for Overpass, HTML error pages are not cached.
-* Nothing is sent but the area (a place name or a map box), the feature words ("waterfalls") and any words the user typed. The user's "What I Like to Shoot" text and library summary go only to the on-device model, never to these providers.
-* HTTP 403 and 429 show as "Rate limited", 502 to 504 as "Server busy". A failing source never blocks the others.
-
-| Source | Endpoint | What is sent | Spacing | Cache |
-|---|---|---|---|---|
-| Reddit | `https://www.reddit.com/search.json`, `/r/<multireddit>/search.json`, and the area's own subreddit if it exists | Search words (area and feature), 25 posts, relevance order | 2 s | 6 hours |
-| OpenStreetMap (Overpass) | `https://overpass-api.de/api/interpreter` (POST) | An Overpass QL query: a bounding box and the OSM tags for the feature | 1 s, one in flight | 7 days |
-| Wikipedia | `https://en.wikipedia.org/w/api.php` | Geosearch coordinates (up to 9 points, 10 km radius) and page ids for intro extracts | 0.2 s | 7 days |
-| Wikivoyage | `https://en.wikivoyage.org/w/api.php` | The area's name (page lookup, then a title search if there is no exact page) | 0.2 s | 7 days |
-| Google Programmable Search | `https://www.googleapis.com/customsearch/v1` | `key`, `cx`, and "best photography spots" plus the search words, 10 results | 0.2 s | 7 days |
-| Apple Maps | MapKit (on the system) | The search words and map region | Apple's own | Apple's own |
-
-### Reddit
-
-Public read-only JSON, no key and no login. Searches the site, a multireddit of photography and outdoors subreddits (EarthPorn, itookapicture, photography, landscapephotography, NationalPark, hiking) and, when the area name makes a plausible subreddit name, that one. Posts are text for the on-device extractor; NSFW posts are dropped. Reddit often refuses unfamiliar clients, so a 403 or 429 is common and is reported as "Rate limited" without retrying. After a limit the remaining Reddit requests for that search are skipped. Terms: <https://www.redditinc.com/policies/data-api-terms> (the Data API terms and the user agreement apply to Reddit content). Iter shows a link to the post, not a copy of it, and credits "Reddit public posts" in Settings ▸ About.
-
-### OpenStreetMap through Overpass
-
-Free, no key. Data is © OpenStreetMap contributors under the Open Database Licence (ODbL), which needs visible attribution: <https://www.openstreetmap.org/copyright>. Iter credits it in Settings ▸ About. The public Overpass server is shared and sometimes busy: Iter sends one request per search, with a server timeout of 20 seconds and a cap of 400 elements (100 per kind when no feature is named), and treats an HTML "too busy" page as "Server busy". Overpass usage policy: <https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances>.
-
-### Wikipedia and Wikivoyage
-
-Free, no key, MediaWiki API. Wikipedia text is CC BY-SA 4.0 (<https://creativecommons.org/licenses/by-sa/4.0/>); Wikivoyage listings are CC BY-SA too. Iter uses titles, coordinates and a two-sentence extract as a snippet and links to the page. Credited in Settings ▸ About. API etiquette (a descriptive User-Agent, serial requests): <https://api.wikimedia.org/wiki/Documentation/Getting_started/Etiquette>.
-
-### Google Programmable Search (optional)
-
-Google has no free places API. This source works only if the user makes their own Programmable Search Engine (<https://programmablesearchengine.google.com/>) and a Custom Search JSON API key (<https://developers.google.com/custom-search/v1/overview>), and pastes both in Settings ▸ Search. Google's free allowance is small and queries beyond it are billed to the user's own Google account; Iter does not proxy or share a key. The key and engine id are stored only in the login Keychain (service `com.dwjames.iter.discovery`), never in UserDefaults, logs or the repo. The API takes the key as a URL query parameter, so Iter strips the key and engine id from any error text before it can be shown. Results are titles and snippets, read by the on-device extractor. Terms: <https://developers.google.com/terms>. Without both values saved, no request is made. Removing the credentials switches Google off.
-
-### Apple Maps
-
-Used for every search and cannot be turned off. It goes through MapKit, so Apple's terms and attribution apply and Iter adds no network call of its own. Places and drive times are credited in Settings ▸ About.
-
-### Why this honesty matters
-
-Discovery sends place and search words to third parties, so Settings ▸ Search says which are used, that they are free public services with limits, and that nothing else is sent. Each source's credit is in Settings ▸ About ("Place discovery uses OpenStreetMap data © OpenStreetMap contributors (ODbL), Wikipedia and Wikivoyage (CC BY-SA), and Reddit public posts; Google only with your own key."). Fixtures for these providers are described in `Packages/IterKit/Tests/IterServicesTests/Fixtures/discovery/README.md`.
-
-## Fixtures
-
-The weather fixtures in `Packages/IterKit/Tests/IterServicesTests/Fixtures/` are **documented-schema, not recorded**. No live call was made to produce them. Each is built from the provider's published documentation, with synthetic values, and the file names say "documented". `Fixtures/README.md` lists each file and what is invented.
-
-To record real ones, with a key set (environment, launch argument or Keychain):
-
-```
-cd Packages/IterKit && ITER_LIVE=1 swift test --filter "Weather live"
-```
-
-The live tests call the real providers and check basic shape. Save the raw response bodies as new fixtures, replace the "documented" files, and update `Fixtures/README.md`. A Windy Testing key will answer with shuffled data, so record Windy only with a Professional key.
+1. Add its `SourceID` and `SourceDescriptor` to `SourceCatalogue.swift`, and its licence text to `Attribution.swift`. This is the only place tiers, rates and cache lifetimes live.
+2. Write the adapter in `Packages/Iter/Sources/IterSourcesLive/<operator>/`, with a pure `Mapping` file and fixture tests in `IterSourcesLiveTests`.
+3. Wire it in `AppContainer+Live.swift` (the only place concrete adapters are built).
+4. If its terms are not read, set `enabledByDefault: false` and `mayStore: false` until they are.
+5. Update this page.
