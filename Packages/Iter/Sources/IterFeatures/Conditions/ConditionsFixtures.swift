@@ -104,6 +104,7 @@ public enum ConditionsFixtures {
             FieldProvenance(field: $0, provenance: prov, contributors: [prov.source])
         }
         let live = day == LocalDay(now, in: p.timeZone) && !o.outOfCoverage && o.tier != .quick
+        var stationOrigin: (name: String, id: String, origin: SourceOrigin)?
         var stations: DataState<[Sourced<StationReport>]> = .none([])
         if live, o.withObservation {
             let reportTime = now.addingTimeInterval(-47 * 60)
@@ -121,6 +122,7 @@ public enum ConditionsFixtures {
             let origin = o.militaryStation
                 ? SourceOrigin(tier: .military, producer: "US Army", distributor: "NOAA Aviation Weather Center")
                 : SourceOrigin(tier: .government, producer: "FAA and NWS", distributor: "NOAA Aviation Weather Center")
+            stationOrigin = (station.stationName ?? station.stationID, station.stationID, origin)
             stations = .fresh(Sourced(value: [Sourced(value: station, provenance: provenance(.aviationWeather, model: nil, fetchedAt: now, licence: LicenceKey.noaaAWC, origin: origin))],
                                       provenance: provenance(.aviationWeather, model: nil, licence: LicenceKey.noaaAWC, origin: origin)))
         } else if live, o.tier == .quick { stations = .none([]) }
@@ -152,10 +154,23 @@ public enum ConditionsFixtures {
             aurora: aurora, horizon: horizonState, bortle: nil, seeing: nil,
             gaps: o.tier == .quick ? [] : [ConditionsGap(subject: .lightPollution, reasons: [.notProvidedBySource]),
                                             ConditionsGap(subject: .seeing, reasons: [.notProvidedBySource])],
-            provenanceLines: o.outOfCoverage ? [] : [ProvenanceLine(label: "Cloud layers", text: "\(prov.model ?? "forecast"), \(prov.source.rawValue)"),
-                                                     ProvenanceLine(label: "Terrain", text: "Terrain tiles, 5 degree steps")],
+            provenanceLines: o.outOfCoverage ? [] : provenanceLines(prov, tier: o.tier, station: stationOrigin),
             attributionKeys: o.outOfCoverage ? [] : [prov.licence.key, LicenceKey.terrainTiles], pack: nil,
             offlineNote: o.offline ? "Forecast from \(clock(o.fetchedAt)), offline" : nil)
+    }
+
+    /// The source lines the real assembler writes: display names (never ids), the model and run, and a military origin said plainly.
+    static func provenanceLines(_ prov: Provenance, tier: ForecastTier, station: (name: String, id: String, origin: SourceOrigin)?) -> [ProvenanceLine] {
+        var name = SourceCatalogue.descriptor(prov.source)?.name ?? prov.source.rawValue
+        if let m = prov.model, !name.localizedCaseInsensitiveContains(m) { name += " (\(m))" }
+        if tier != .quick { name += ", run 11Z, 2.1 km grid point" }
+        var lines = [ProvenanceLine(label: "Cloud layers", text: name), ProvenanceLine(label: "Terrain", text: "Terrain tiles, 5 degree steps")]
+        if let station {
+            var text = "\(SourceCatalogue.descriptor(.aviationWeather)?.name ?? "Aviation weather"), \(station.name) (\(station.id)), 47 min old"
+            if station.origin.tier == .military { text += ", " + station.origin.label.prefix(1).lowercased() + station.origin.label.dropFirst() }
+            lines.insert(ProvenanceLine(label: "Observed", text: text), at: 1)
+        }
+        return lines
     }
 
     static func clock(_ date: Date) -> String {

@@ -12,10 +12,13 @@ public struct PlacePageScreen: View {
     let conditions: ConditionsModel
     let library: LibraryModel
     @Environment(AppNavigator.self) private var navigator: AppNavigator?
+    /// MGRS and magnetic declination for the place, with where each came from. The shell passes
+    /// `{ find.spots.readout(for: $0.coordinate, elevationMeters: $0.elevationMeters) }`; nil leaves them out.
+    let readout: ((Place) -> PositionReadout)?
     @State private var isSaved = false
 
-    public init(place: Place, conditions: ConditionsModel, library: LibraryModel) {
-        self.place = place; self.conditions = conditions; self.library = library
+    public init(place: Place, conditions: ConditionsModel, library: LibraryModel, readout: ((Place) -> PositionReadout)? = nil) {
+        self.place = place; self.conditions = conditions; self.library = library; self.readout = readout
     }
 
     public var body: some View {
@@ -23,7 +26,7 @@ public struct PlacePageScreen: View {
             VStack(alignment: .leading, spacing: IterSpace.xl) {
                 header
                 actions
-                PlaceFacts(place: place)
+                PlaceFacts(place: place, readout: readout?(place))
                 ConditionsStack(model: conditions)
             }
             .padding(IterSpace.xl)
@@ -33,9 +36,9 @@ public struct PlacePageScreen: View {
         .navigationTitle(place.name)
         .onAppear {
             isSaved = library.isSaved(place)
-            conditions.start()
+            conditions.beginViewing()
         }
-        .onDisappear { conditions.stop() }
+        .onDisappear { conditions.endViewing() }
     }
 
     private var header: some View {
@@ -102,17 +105,29 @@ public struct PlacePageScreen: View {
 /// Coordinates, elevation, walk-in, facing, category, best light, notes and citations: what is known, and "unknown" for the rest.
 struct PlaceFacts: View {
     let place: Place
+    var readout: PositionReadout?
 
     var body: some View {
         ModuleCard(title: "Facts", symbol: "list.bullet") {
             VStack(alignment: .leading, spacing: IterSpace.sm) {
                 fact("Coordinates", PlaceFactsText.coordinates(place.coordinate))
+                if let readout {
+                    if let mgrs = readout.mgrs { fact("MGRS", mgrs) }
+                    if let declination = readout.declinationText { fact("Declination", declination) }
+                }
                 fact("Elevation", PlaceFactsText.elevation(place.elevationMeters))
                 fact("Walk-In", PlaceFactsText.walkIn(place.walkInMinutes))
                 fact("Facing", place.facing.map(ConditionsFormat.azimuth) ?? "Unknown")
                 fact("Category", LightText.name(place.category))
                 if !place.bestLight.isEmpty { fact("Best Light", place.bestLight.map(LightText.name).joined(separator: ", ")) }
                 fact("Time Zone", place.timeZoneIdentifier.replacingOccurrences(of: "_", with: " "))
+                if let readout {
+                    let sources = FindText.readoutSources(readout)
+                    if !sources.isEmpty {
+                        VStack(alignment: .leading, spacing: IterSpace.xxs) { ForEach(sources, id: \.self) { Text(verbatim: $0) } }
+                            .font(IterFont.caption).foregroundStyle(IterColor.textTertiary).fixedSize(horizontal: false, vertical: true)
+                    }
+                }
                 if !place.notes.isEmpty {
                     Text(verbatim: place.notes).font(IterFont.body).foregroundStyle(IterColor.textPrimary).fixedSize(horizontal: false, vertical: true)
                         .padding(.top, IterSpace.xs)
