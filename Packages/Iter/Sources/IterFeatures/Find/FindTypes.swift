@@ -138,7 +138,7 @@ public struct FindArea: Equatable, Sendable {
 }
 
 /// Where a result's time comes from. Never presented as a drive until a router has answered.
-public enum DriveBasis: Equatable, Sendable {
+public enum FindDriveBasis: Equatable, Sendable {
     /// A real drive time from the router, departing now.
     case drive
     /// Straight-line distance at a typical road speed. Labelled "straight-line".
@@ -146,9 +146,9 @@ public enum DriveBasis: Equatable, Sendable {
 }
 
 public struct DriveTime: Equatable, Sendable {
-    public var basis: DriveBasis
+    public var basis: FindDriveBasis
     public var minutes: Int
-    public init(basis: DriveBasis, minutes: Int) {
+    public init(basis: FindDriveBasis, minutes: Int) {
         self.basis = basis
         self.minutes = minutes
     }
