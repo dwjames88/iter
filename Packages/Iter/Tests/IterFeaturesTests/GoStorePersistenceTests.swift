@@ -30,9 +30,10 @@ struct GoStorePersistenceTests {
         #expect(loaded.visits.first { $0.stopID == s1 } == visit)
         #expect(loaded.visits.count == 2)
         #expect(p.loadSidecar(runID: runID) == sidecar)
-        // One record in the store, under its own id (not the engine's).
+        // One record in the store, under the engine's id.
         #expect(store.runs.runs(forTrip: tripID).count == 1)
-        #expect(store.runs.runs(forTrip: tripID)[0].id != runID)
+        #expect(store.runs.runs(forTrip: tripID)[0].id == runID)
+        #expect(store.runs.run(id: runID)?.startedAt == goH(8))
 
         p.saveVisit(runID: runID, PersistedVisit(stopID: s1, statusRaw: "done", departedForAt: goH(9), arrivedAt: goH(9.5), leftAt: goH(10.5)))
         p.saveSidecar(nil, runID: runID)
@@ -42,16 +43,43 @@ struct GoStorePersistenceTests {
         p.save(PersistedRun(id: runID, tripID: tripID, stateRaw: "finished", startedAt: goH(8), endedAt: goH(12), currentStopID: nil))
         #expect(p.activeRun(tripID: tripID) == nil)
         #expect(store.runs.runs(forTrip: tripID)[0].stateRaw == "finished")
+        #expect(store.runs.run(id: runID)?.endedAt == goH(12))
     }
 
-    @Test func aFreshInstanceFindsTheRunByItsFile() throws {
+    @Test func undoOfAnArrivalClearsTheDatesInTheStore() throws {
+        let rig = try GoRig()
+        let store = try #require(rig.store)
+        let p = rig.persistence
+        let runID = UUID(), tripID = goID(100), s1 = goID(1)
+        p.save(PersistedRun(id: runID, tripID: tripID, stateRaw: "active", startedAt: goH(8), currentStopID: s1,
+                            visits: [PersistedVisit(stopID: s1, statusRaw: "arrived", departedForAt: goH(9), arrivedAt: goH(9.5))]))
+        #expect(store.runs.visit(runID: runID, stopID: s1)?.arrivedAt == goH(9.5))
+        // "Not yet": back to en route, arrival gone.
+        p.saveVisit(runID: runID, PersistedVisit(stopID: s1, statusRaw: "enRoute", departedForAt: goH(9)))
+        let visit = try #require(store.runs.visit(runID: runID, stopID: s1))
+        #expect(visit.arrivedAt == nil && visit.leftAt == nil)
+        #expect(visit.departedForAt == goH(9) && visit.statusRaw == "enRoute")
+    }
+
+    @Test func aLeftoverFileFromAnEarlierBuildIsIgnored() throws {
+        let rig = try GoRig()
+        let runID = UUID()
+        let old = rig.directory.appendingPathComponent("go-run-\(runID.uuidString).json")
+        try FileManager.default.createDirectory(at: rig.directory, withIntermediateDirectories: true)
+        try Data("{\"engineRunID\":\"\(runID.uuidString)\"}".utf8).write(to: old)
+        rig.persistence.save(PersistedRun(id: runID, tripID: goID(100), stateRaw: "armed"))
+        #expect(rig.persistence.loadSidecar(runID: runID) == nil)
+        #expect(rig.persistence.activeRun(tripID: goID(100))?.id == runID)
+    }
+
+    @Test func aFreshInstanceFindsTheRunAndItsSidecar() throws {
         let rig = try GoRig()
         let store = try #require(rig.store)
         let runID = UUID()
         rig.persistence.save(PersistedRun(id: runID, tripID: goID(100), stateRaw: "armed"))
         rig.persistence.saveSidecar(RunSidecar(pausedFrom: .atStop), runID: runID)
         let again = StoreRunPersistence(store: store, directory: rig.directory)
-        // Sidecar and visit calls before any activeRun still resolve through the file.
+        // A relaunch needs no cache: the record has the run's id and the sidecar file is named by it.
         #expect(again.loadSidecar(runID: runID)?.pausedFrom == .atStop)
         #expect(again.activeRun(tripID: goID(100))?.id == runID)
     }

@@ -4,30 +4,16 @@ import IterStore
 
 /// Persists trip runs through `LibraryStore.runs` (`RunRepository`) and nothing else: no `ModelContext` is touched here.
 ///
-/// **Run id.** The engine creates its `TripRun` with its own id, but `RunRepository.createRun(forTrip:state:)` makes the record
-/// with a fresh id and `TripRunRecord.init(id:)` is not reachable through the repository. So the two ids differ and this class
-/// keeps the mapping in one small JSON file per run, `go-run-<recordID>.json`, in `directory` (Application Support in the app):
-/// the engine run id, the sidecar (`pausedFrom`, `pendingUndo`, `suppressions`, which the store has no column for) and the
-/// engine's `startedAt`/`endedAt` (the store sets its own from its clock). `activeRun` reads the file to give the engine back
-/// its own id; visits are stored under the record id. An additive `createRun(id:)` in IterStore would remove the mapping.
+/// The store record has the engine's run id, its start and end times and its visits' dates exactly as the engine holds them
+/// (a "Not yet" that undoes an arrival clears `arrivedAt` in the store), so there is no id mapping.
 ///
-/// **Lossy case.** `RunRepository.upsertVisit` cannot clear a date: when "Not yet" undoes a transition and a visit's `arrivedAt`
-/// or `leftAt` goes back to nil, the stored date stays. The status is always right and a restored run derives its phase from
-/// status alone, so only the history view could show a stale date.
+/// **The one file per run.** `pausedFrom`, `pendingUndo` and `suppressions` (`RunSidecar`) have no column in the store, so
+/// they sit in `go-sidecar-<run id>.json` in `directory` (Application Support in the app): the sidecar and nothing else.
+/// It lets a relaunch resume "Not yet" and the suppressions. A `go-run-*.json` file from an earlier build is never read.
 @MainActor
 public final class StoreRunPersistence: RunPersisting {
-    /// What sits beside a run in the store.
-    struct RunFile: Codable, Equatable {
-        var engineRunID: UUID
-        var startedAt: Date?
-        var endedAt: Date?
-        var sidecar: RunSidecar?
-    }
-
     private let store: LibraryStore
     private let directory: URL
-    /// Engine run id to record id.
-    private var recordIDs: [UUID: UUID] = [:]
 
     public init(store: LibraryStore, directory: URL) {
         self.store = store
@@ -38,100 +24,55 @@ public final class StoreRunPersistence: RunPersisting {
 
     public func activeRun(tripID: UUID) -> PersistedRun? {
         guard let record = store.runs.activeRun(forTrip: tripID) else { return nil }
-        let file = readFile(recordID: record.id)
-        let engineID = file?.engineRunID ?? record.id
-        recordIDs[engineID] = record.id
         let visits = store.runs.visits(forRun: record.id).map {
             PersistedVisit(stopID: $0.stopID, statusRaw: $0.statusRaw, departedForAt: $0.departedForAt, arrivedAt: $0.arrivedAt,
                            leftAt: $0.leftAt, plannedLeaveBy: $0.plannedLeaveBy, plannedArrival: $0.plannedArrival)
         }
-        return PersistedRun(id: engineID, tripID: record.tripID, stateRaw: record.stateRaw, startedAt: file?.startedAt ?? record.startedAt,
-                            endedAt: file?.endedAt ?? record.endedAt, currentStopID: record.currentStopID, visits: visits)
+        return PersistedRun(id: record.id, tripID: record.tripID, stateRaw: record.stateRaw, startedAt: record.startedAt,
+                            endedAt: record.endedAt, currentStopID: record.currentStopID, visits: visits)
     }
 
     public func save(_ run: PersistedRun) {
         let state = StoredRunState(rawValue: run.stateRaw) ?? .armed
-        let record: TripRunRecord
-        if let existing = existingRecord(engineRunID: run.id) {
-            record = existing
+        if let record = store.runs.run(id: run.id) {
+            store.runs.restore(record, state: state, currentStopID: run.currentStopID, startedAt: run.startedAt, endedAt: run.endedAt)
         } else {
-            record = store.runs.createRun(forTrip: run.tripID, state: state)
-            recordIDs[run.id] = record.id
+            let record = store.runs.createRun(id: run.id, forTrip: run.tripID, state: state, startedAt: run.startedAt, endedAt: run.endedAt)
+            record.currentStopID = run.currentStopID
         }
-        store.runs.setState(record, to: state, currentStopID: .some(run.currentStopID))
-        var file = readFile(recordID: record.id) ?? RunFile(engineRunID: run.id)
-        file.engineRunID = run.id
-        file.startedAt = run.startedAt
-        file.endedAt = run.endedAt
-        writeFile(file, recordID: record.id)
-        for visit in run.visits { upsert(visit, recordID: record.id) }
+        for visit in run.visits { upsert(visit, runID: run.id) }
         store.flush()
     }
 
     public func saveVisit(runID: UUID, _ visit: PersistedVisit) {
-        guard let record = existingRecord(engineRunID: runID) else { return }
-        upsert(visit, recordID: record.id)
+        guard store.runs.run(id: runID) != nil else { return }
+        upsert(visit, runID: runID)
     }
 
     public func loadSidecar(runID: UUID) -> RunSidecar? {
-        guard let record = existingRecord(engineRunID: runID) else { return nil }
-        return readFile(recordID: record.id)?.sidecar
+        guard let data = try? Data(contentsOf: fileURL(runID: runID)) else { return nil }
+        return try? JSONDecoder().decode(RunSidecar.self, from: data)
     }
 
     public func saveSidecar(_ sidecar: RunSidecar?, runID: UUID) {
-        guard let record = existingRecord(engineRunID: runID) else { return }
-        var file = readFile(recordID: record.id) ?? RunFile(engineRunID: runID)
-        file.sidecar = sidecar
-        writeFile(file, recordID: record.id)
-        store.flush()
+        guard store.runs.run(id: runID) != nil else { return }
+        guard let sidecar else {
+            try? FileManager.default.removeItem(at: fileURL(runID: runID))
+            return
+        }
+        guard let data = try? JSONEncoder().encode(sidecar) else { return }
+        try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        try? data.write(to: fileURL(runID: runID), options: .atomic)
     }
 
     // MARK: Mapping
 
-    private func upsert(_ visit: PersistedVisit, recordID: UUID) {
+    private func upsert(_ visit: PersistedVisit, runID: UUID) {
         let status = StoredVisitStatus(rawValue: visit.statusRaw) ?? .pending
-        store.runs.upsertVisit(runID: recordID, stopID: visit.stopID,
-                               StopVisitUpdate(status: status, departedForAt: visit.departedForAt, arrivedAt: visit.arrivedAt,
-                                               leftAt: visit.leftAt, plannedLeaveBy: visit.plannedLeaveBy, plannedArrival: visit.plannedArrival))
+        store.runs.upsertVisit(runID: runID, stopID: visit.stopID,
+                               .exact(status: status, departedForAt: visit.departedForAt, arrivedAt: visit.arrivedAt, leftAt: visit.leftAt,
+                                      plannedLeaveBy: visit.plannedLeaveBy, plannedArrival: visit.plannedArrival))
     }
 
-    private func existingRecord(engineRunID: UUID) -> TripRunRecord? {
-        if let id = recordIDs[engineRunID], let record = store.runs.run(id: id) { return record }
-        // After a relaunch the cache is empty until `activeRun`; a stray call finds the record by its file.
-        for url in files() {
-            guard let data = try? Data(contentsOf: url), let file = try? JSONDecoder().decode(RunFile.self, from: data),
-                  file.engineRunID == engineRunID, let recordID = Self.recordID(of: url), let record = store.runs.run(id: recordID) else { continue }
-            recordIDs[engineRunID] = recordID
-            return record
-        }
-        return nil
-    }
-
-    // MARK: Files
-
-    private static let prefix = "go-run-"
-
-    func fileURL(recordID: UUID) -> URL { directory.appendingPathComponent("\(Self.prefix)\(recordID.uuidString).json") }
-
-    private static func recordID(of url: URL) -> UUID? {
-        let name = url.deletingPathExtension().lastPathComponent
-        guard name.hasPrefix(prefix) else { return nil }
-        return UUID(uuidString: String(name.dropFirst(prefix.count)))
-    }
-
-    private func files() -> [URL] {
-        ((try? FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)) ?? [])
-            .filter { $0.lastPathComponent.hasPrefix(Self.prefix) && $0.pathExtension == "json" }
-    }
-
-    private func readFile(recordID: UUID) -> RunFile? {
-        guard let data = try? Data(contentsOf: fileURL(recordID: recordID)) else { return nil }
-        return try? JSONDecoder().decode(RunFile.self, from: data)
-    }
-
-    private func writeFile(_ file: RunFile, recordID: UUID) {
-        guard let data = try? JSONEncoder().encode(file) else { return }
-        try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        try? data.write(to: fileURL(recordID: recordID), options: .atomic)
-    }
+    func fileURL(runID: UUID) -> URL { directory.appendingPathComponent("go-sidecar-\(runID.uuidString).json") }
 }
