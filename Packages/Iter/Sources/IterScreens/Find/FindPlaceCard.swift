@@ -45,7 +45,8 @@ enum FindCardText {
 }
 
 /// The place card on the floating panel: Back, Share and Close glass circles, the place, one action row, the picture, why it
-/// is listed, where that comes from, the honest light note, then Conditions and a link to the place's page.
+/// the place's conditions (the headline window and best day), the picture, why it is listed, where that comes from, the honest
+/// light note, and a link to the place's page. The header carries the card's one score.
 struct FindPlaceCard: View {
     @Bindable var model: FindModel
     let card: PlaceCard
@@ -80,6 +81,8 @@ struct FindPlaceCard: View {
                         .padding(.horizontal, IterSpace.lg)
                 }
                 Group {
+                    // The point of the card first: the headline window and the best day. Then the place itself.
+                    if let conditions { ConditionsSummary(model: conditions, showsChip: model.cardScore == nil) }
                     if card.isOwn, let id = FindCardText.placeID(from: card.id) {
                         FindCoordinateSection(model: model, placeID: id, coordinate: card.coordinate, elevationMeters: card.place.elevationMeters)
                         Label("Drag the pin to move it, or choose Adjust Location.", systemImage: "hand.draw")
@@ -96,7 +99,6 @@ struct FindPlaceCard: View {
                     if !card.citations.isEmpty { citations }
                     if let photo = card.photo { FindPhotoView(photo: photo) }
                     lightNote
-                    if let conditions { ConditionsSummary(model: conditions) }
                     if canEdit {
                         Button { navigator?.open(.place(card.place.id)) } label: { Text("Open Place Page") }
                             .buttonStyle(.link)
@@ -136,6 +138,16 @@ struct FindPlaceCard: View {
     }
 
     private var title: some View {
+        HStack(alignment: .top, spacing: IterGrid.laneGap) {
+            titleText
+            Spacer(minLength: 0)
+            // The card's one score, in its header.
+            if let score = model.cardScore { FindScoreChip(score: score, size: .large).equatable() }
+        }
+        .padding(.horizontal, IterSpace.lg)
+    }
+
+    private var titleText: some View {
         VStack(alignment: .leading, spacing: IterSpace.xs) {
             Text(verbatim: card.name)
                 .font(IterFont.titleSpot)
@@ -152,7 +164,6 @@ struct FindPlaceCard: View {
             .font(IterFont.secondary)
             .foregroundStyle(IterColor.textSecondary)
         }
-        .padding(.horizontal, IterSpace.lg)
     }
 
     // MARK: Actions

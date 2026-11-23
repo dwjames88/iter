@@ -79,7 +79,8 @@ import IterUI
         let model = try await FindPreviewData.model(.results)
         let id = try #require(model.rows.first?.id)
         model.select(id)
-        let conditions = ConditionsPreviewData.model(.quick)
+        let conditions = ConditionsPreviewData.model(.complete)
+        #expect(model.cardScore?.value != nil)
         try await record(model, name: "find-place-card", size: CGSize(width: 400, height: 1100), conditions: conditions)
     }
 
@@ -89,5 +90,40 @@ import IterUI
         #expect(dropped != nil)
         #expect(model.card?.isOwn == true)
         try await record(model, name: "find-place-card-own-spot", size: CGSize(width: 400, height: 1200))
+    }
+
+    /// The map pins: rank plates, the score chip on the selected and top results, an unscored pin keeping its rank.
+    @Test func pins() async throws {
+        let model = try await FindPreviewData.model(.results)
+        let pins = model.mapContent.pins.filter { if case .result = $0.kind { true } else { false } }
+        #expect(pins.contains { $0.score?.value != nil })
+        var unscored = try #require(pins.last)
+        unscored.score = nil
+        let selected = pins[1]
+        let row = HStack(alignment: .bottom, spacing: 16) {
+            ForEach(Array(pins.prefix(3).enumerated()), id: \.offset) { _, pin in FindPinView(pin: pin) }
+            FindPinView(pin: selected, isSelected: true)
+            FindPinView(pin: unscored)
+        }
+        .padding(24)
+        _ = try await Snapshot.record(row, name: "find-pins", size: CGSize(width: 420, height: 110), background: IterColor.backgroundWindow)
+    }
+
+    @Test func aPinShowsItsChipOnlyForAKnownScoreNearTheTopOrSelected() async throws {
+        let model = try await FindPreviewData.model(.results)
+        var pin = try #require(model.mapContent.pins.first { if case .result = $0.kind { true } else { false } })
+        #expect(pin.showsChip(isSelected: false))
+        pin.score = nil
+        #expect(!pin.showsChip(isSelected: true))
+        pin.score = FindScore(kind: .goldenEvening, start: .now, value: 60, confidence: .high, isLoading: false, zoneIdentifier: "America/Denver")
+        pin.kind = .result(rank: 9)
+        #expect(!pin.showsChip(isSelected: false) && pin.showsChip(isSelected: true))
+    }
+
+    @Test func theWhyLineIsLabelledOnlyWhenTheModelWroteIt() async throws {
+        let model = try await FindPreviewData.model(.results)
+        let written = try #require(model.rows.first { $0.whyIsModelWritten })
+        #expect(written.why != nil)
+        #expect(model.rows.contains { !$0.whyIsModelWritten })
     }
 }

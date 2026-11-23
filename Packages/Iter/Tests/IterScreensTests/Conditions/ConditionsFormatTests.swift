@@ -121,4 +121,20 @@ import IterUI
         #expect(PlaceFactsText.walkIn(nil) == "Unknown")
         #expect(PlaceFactsText.walkIn(12) == "12 min")
     }
+
+    @Test func unitsFollowTheLocaleTogether() {
+        let us = Locale(identifier: "en_US"), gb = Locale(identifier: "en_GB"), de = Locale(identifier: "de_DE")
+        #expect(ConditionsFormat.visibility(24, locale: us).contains("mi") && ConditionsFormat.wind(3, locale: us).contains("mph"))
+        #expect(ConditionsFormat.visibility(24, locale: de).contains("km") && ConditionsFormat.wind(3, locale: de).contains("km/h"))
+        #expect(ConditionsFormat.temperature(10, locale: us).hasPrefix("50"))
+        #expect(ConditionsFormat.temperature(10, locale: gb).hasPrefix("10"))
+    }
+
+    @MainActor @Test func sourceLinesNameSourcesNotIds() {
+        let model = ConditionsPreviewData.model(.complete) { $0.militaryStation = true }
+        let lines = model.sourceLines.map(\.line)
+        #expect(!lines.contains { $0.contains("noaa.nomads") || $0.contains("aviation.weather") })
+        #expect(lines.contains { $0.contains("NOAA") })
+        #expect(lines.contains { $0.contains("ilitary-origin") })
+    }
 }

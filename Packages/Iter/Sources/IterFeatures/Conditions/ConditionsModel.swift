@@ -92,6 +92,7 @@ public final class ConditionsModel {
     @ObservationIgnored var trackTask: Task<Void, Never>?
     @ObservationIgnored var trackGeneration = 0
     @ObservationIgnored var isTracking = false
+    @ObservationIgnored var viewers = 0
     @ObservationIgnored var liveGeneration = 0
     @ObservationIgnored var outlookRequested = false
     @ObservationIgnored var shownDay: LocalDay?
@@ -130,6 +131,22 @@ public final class ConditionsModel {
         trackTask = nil
         liveGeneration += 1
     }
+
+    /// A view that shows this model appeared. Views share the model: it starts for the first one and stops when the last one goes
+    /// away, so a hidden summary stops tracking and two views never fight over it. Every call is balanced by `endViewing()`.
+    public func beginViewing() {
+        viewers += 1
+        if viewers == 1 { start() }
+    }
+
+    /// The matching call for `beginViewing()`: the last viewer leaving stops tracking.
+    public func endViewing() {
+        viewers = max(0, viewers - 1)
+        if viewers == 0 { stop() }
+    }
+
+    /// How many views are showing the model (tests).
+    public var viewerCount: Int { viewers }
 
     /// Reloads the selected day whatever is cached; the score on screen stays until the new one arrives.
     public func refresh() {

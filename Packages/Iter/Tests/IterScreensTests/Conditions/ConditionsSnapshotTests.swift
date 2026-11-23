@@ -61,7 +61,10 @@ import IterUI
         let container = try AppContainer.test(seed: true)
         let library = container.libraryModel()
         let model = ConditionsPreviewData.model(.complete) { $0.withComparison = true }
-        let page = PlacePageScreen(place: ConditionsFixtures.place, conditions: model, library: library).environment(AppNavigator())
+        let spots = try await FindPreviewData.model(.empty).spots
+        let page = PlacePageScreen(place: ConditionsFixtures.place, conditions: model, library: library,
+                                   readout: { spots.readout(for: $0.coordinate, elevationMeters: $0.elevationMeters) })
+            .environment(AppNavigator())
         try await Snapshot.record(page, name: "place-page", size: CGSize(width: 700, height: 3500), background: IterColor.backgroundWindow)
     }
 }

@@ -66,6 +66,8 @@ struct FindResultsCard: View {
     @Bindable var model: FindModel
     var showsSearchHere = false
     var initiallyShowsSources = false
+    /// The rows the list has on screen, reported to the model so their scores are asked for first.
+    @State private var inView: Set<String> = []
 
     private var selection: Binding<String?> {
         Binding(get: { model.selectedID }, set: { model.select($0) })
@@ -100,6 +102,8 @@ struct FindResultsCard: View {
                             .equatable()
                             .tag(row.id)
                             .listRowInsets(Self.rowInsets)
+                            .onAppear { inView.insert(row.id) }
+                            .onDisappear { inView.remove(row.id) }
                     }
                 }
                 footer
@@ -107,6 +111,7 @@ struct FindResultsCard: View {
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
         }
+        .onChange(of: inView) { _, ids in model.setVisibleResults(ids) }
     }
 
     /// The list adds its own 8 pt, so rows line up with the header's 16 pt.

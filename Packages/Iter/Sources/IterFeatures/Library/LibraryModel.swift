@@ -71,6 +71,12 @@ public final class LibraryModel {
         }
     }
 
+    /// The first `limit` names, each once (a trip that visits the same place on two days lists it once), in trip order.
+    static func distinctNames(_ names: [String], limit: Int) -> [String] {
+        var seen = Set<String>()
+        return Array(names.filter { seen.insert($0).inserted }.prefix(limit))
+    }
+
     private func rebuild() {
         let today = LocalDay(now(), in: timeZone)
         let tripRepo = store.trips, placeRepo = store.places, folderRepo = store.folders
@@ -78,7 +84,7 @@ public final class LibraryModel {
         func row(_ t: TripRecord) -> TripRow {
             let ordered = t.orderedStops
             return TripRow(id: t.id, name: t.name, startDay: t.startDay, dayCount: t.dayCount, stopCount: ordered.count,
-                           placeNames: ordered.prefix(3).compactMap { $0.place?.name }, folderID: t.folder?.id,
+                           placeNames: Self.distinctNames(ordered.compactMap { $0.place?.name }, limit: 3), folderID: t.folder?.id,
                            isPinned: t.isPinned, updatedAt: t.updatedAt)
         }
         func row(_ p: PlaceRecord) -> PlaceRow {

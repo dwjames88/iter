@@ -22,10 +22,24 @@ import IterDiscovery
         row.isSaved = saved
         row.sourceNames = ["OpenStreetMap"]
         row.photo = nil
+        row.score = nil
         return row
     }
 
     // MARK: Rows
+
+    @Test func aScoreChangesTheRowAndIsSpokenWithoutInventingANumber() async throws {
+        let base = FindRowView(row: try await Self.row(), locality: "Canyonlands")
+        var scored = try await Self.row()
+        scored.score = FindScore(kind: .goldenEvening, start: Date(timeIntervalSince1970: 1_791_850_000), value: 72, confidence: .high,
+                                 isLoading: false, zoneIdentifier: "America/Denver")
+        #expect(base != FindRowView(row: scored, locality: "Canyonlands"))
+        #expect(FindText.rowAccessibility(scored, locality: "Canyonlands").contains("score 72"))
+        scored.score?.value = nil
+        scored.score?.isLoading = true
+        let words = FindText.rowAccessibility(scored, locality: "Canyonlands")
+        #expect(words.contains("not available yet") && !words.contains("score 7"))
+    }
 
     @Test func equalRowsAreEqualViews() async throws {
         let a = FindRowView(row: try await Self.row(), locality: "Canyonlands")
