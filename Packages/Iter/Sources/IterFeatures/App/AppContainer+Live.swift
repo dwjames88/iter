@@ -62,6 +62,7 @@ extension AppContainer {
         let built = try StoreBuilder.build(placement: placement, isRealStore: isRealStore, bundleID: bundleID,
                                            backupsDirectory: isRealStore ? defaultBackupsDirectory : nil, clock: now)
         let keys = isRealProcess ? KeyVault.system() : KeyVault(keychain: InMemoryKeychain())
+        if isRealProcess { keys.carryOverLegacyKeys() }   // once; later launches see the marker and do nothing
         let preferences = isRealStore ? Preferences(defaults: .standard) : Preferences.ephemeral()
 
         let location: any LocationProviding
