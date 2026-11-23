@@ -166,8 +166,15 @@ public final class SettingsModel {
             isMilitaryOrigin: d.origin.tier == .military,
             kinds: d.kinds.map(Self.kindName).sorted(), coverage: Self.coverageName(d.coverage), status: status, toggleTiming: timing,
             attributionShort: isSample ? "Sample data" : (attribution?.short ?? ""),
-            attributionFull: isSample ? SampleConditions.attributionText : (attribution?.full ?? "No attribution text is registered for this source."),
+            attributionFull: isSample ? Self.sampleAttribution(for: d.id) : (attribution?.full ?? "No attribution text is registered for this source."),
             attributionURL: attribution?.url, termsURL: d.termsURL, dataKinds: d.kinds)
+    }
+
+    /// What each built-in sample source honestly is: weather numbers, a routing estimate, or places from the bundled catalogue.
+    static func sampleAttribution(for id: SourceID) -> String {
+        if id == SampleConditions.sourceID { return SampleConditions.attributionText }
+        if id == SampleRouting.sourceID { return "Sample routing: a straight-line estimate for previews and testing, not real drive times." }
+        return "Sample data for testing: places come from Iter's built-in catalogue, not from a live source."
     }
 
     /// "Military-origin via NOAA Aviation Weather Center (military airfields)", "Military-origin via NOAA NCEI, computed on

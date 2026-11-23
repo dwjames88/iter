@@ -125,5 +125,9 @@ import IterDiscovery
         #expect(sample.name == "Sample data" && sample.attributionShort == "Sample data")
         #expect(sample.attributionFull.contains("not real weather") && !sample.isToggleable)
         #expect(s.rows.contains { $0.id == SampleRouting.sourceID && $0.name.contains("estimate") })
+        let routing = try #require(s.rows.first { $0.id == SampleRouting.sourceID })
+        #expect(routing.attributionFull.hasPrefix("Sample routing:") && !routing.attributionFull.contains("weather"))
+        let places = try #require(s.rows.first { $0.name == "Sample place lookup" })
+        #expect(places.attributionFull.contains("built-in catalogue") && !places.attributionFull.contains("weather"))
     }
 }
