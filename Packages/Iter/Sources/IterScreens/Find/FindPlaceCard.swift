@@ -68,6 +68,12 @@ struct FindPlaceCard: View {
 
     private var canEdit: Bool { card.isOwn || card.isSaved }
 
+    #if os(iOS)
+    private static let moveHint: LocalizedStringKey = "Touch and hold the pin to move it, or choose Adjust Location."
+    #else
+    private static let moveHint: LocalizedStringKey = "Drag the pin to move it, or choose Adjust Location."
+    #endif
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: IterSpace.lg) {
@@ -85,7 +91,7 @@ struct FindPlaceCard: View {
                     if let conditions { ConditionsSummary(model: conditions, showsChip: model.cardScore == nil) }
                     if card.isOwn, let id = FindCardText.placeID(from: card.id) {
                         FindCoordinateSection(model: model, placeID: id, coordinate: card.coordinate, elevationMeters: card.place.elevationMeters)
-                        Label("Drag the pin to move it, or choose Adjust Location.", systemImage: "hand.draw")
+                        Label(Self.moveHint, systemImage: "hand.draw")
                             .font(IterFont.caption)
                             .foregroundStyle(IterColor.textTertiary)
                     }
