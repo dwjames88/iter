@@ -19,12 +19,13 @@ struct RecoveryNoticeView: View {
                     Text("Iter Rebuilt Your Library From a Backup").font(IterFont.titleSection)
                     Text("Iter couldn't open your library the way it was saved, so it made a new one from the latest backup. Your original files were left exactly as they were, and the backup is still on this Mac.")
                         .fixedSize(horizontal: false, vertical: true)
-                    LabeledContent("Backup Folder") {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Backup Folder").font(IterFont.captionStrong).foregroundStyle(IterColor.textSecondary)
                         Text(backupFolder.path(percentEncoded: false))
+                            .font(IterFont.secondary)
                             .textSelection(.enabled)
-                            .multilineTextAlignment(.trailing)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    .font(IterFont.secondary)
                     if !skippedFiles.isEmpty {
                         Text("These backup files couldn't be read, so they aren't in the new library: \(skippedFiles.joined(separator: ", ")).")
                             .font(IterFont.secondary)

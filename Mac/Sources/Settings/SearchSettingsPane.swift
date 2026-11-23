@@ -62,13 +62,12 @@ struct SourceToggleRow: View {
                 }
             }
         } else {
-            LabeledContent {
-                Text(SourceText.status(row.status)).foregroundStyle(.secondary).multilineTextAlignment(.trailing)
-            } label: {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(row.name)
-                    Text(row.originLabel).font(.caption).foregroundStyle(.secondary)
-                }
+            // Name, then its origin and its state as secondary lines (a long reason wraps under the name, not beside it).
+            VStack(alignment: .leading, spacing: 2) {
+                Text(row.name)
+                Text(row.originLabel).font(.caption).foregroundStyle(.secondary)
+                Text(SourceText.status(row.status)).font(.caption).foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
     }
@@ -82,7 +81,7 @@ enum SourceText {
         case .disabled: "Off"
         case .offByDefault: "Off Until You Turn It On"
         case .needsKey: "Needs a Key"
-        case .unavailable(let reason): "Unavailable. \(reason)"
+        case .unavailable(let reason): "Unavailable: \(reason.prefix(1).uppercased() + reason.dropFirst())"
         }
     }
 

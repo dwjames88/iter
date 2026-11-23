@@ -3,6 +3,7 @@ import Foundation
 import Observation
 import SwiftUI
 import UniformTypeIdentifiers
+import IterConditions
 import IterFeatures
 import IterModel
 import IterStore
@@ -41,10 +42,19 @@ final class WindowShell {
     var container: AppContainer { shell.container }
     var library: LibraryModel { shell.library }
 
-    init(shell: AppShell, initialRoute: AppRoute? = nil) {
+    /// Builds the Conditions model for the place on Find's card (the container's; tests swap in preview models).
+    @ObservationIgnored let makeConditions: @MainActor (Place) -> ConditionsModel
+
+    /// - Parameters:
+    ///   - find: a ready-made Find model (tests and captures); nil builds the container's.
+    ///   - makeConditions: nil uses the container's.
+    init(shell: AppShell, initialRoute: AppRoute? = nil, find: FindModel? = nil,
+         makeConditions: (@MainActor (Place) -> ConditionsModel)? = nil) {
         self.shell = shell
         navigator = AppNavigator(route: initialRoute ?? .find)
-        find = shell.container.makeFindModel()
+        self.find = find ?? shell.container.makeFindModel()
+        let container = shell.container
+        self.makeConditions = makeConditions ?? { container.makeConditionsModel(place: $0) }
         recovery = shell.takeRecoveryNotice()
     }
 
@@ -80,6 +90,25 @@ final class WindowShell {
         case .savedPlaces: "Saved Places"
         case .placeFolder(let id): library.placeFolders.first { $0.id == id }?.name ?? "Saved Places"
         case .place(let id): library.placeRow(id: id)?.name ?? "Place"
+        }
+    }
+
+    /// The window title is empty on a trip: the trip's name is the Trip Builder's header.
+    var windowTitle: String {
+        if case .trip = route { return "" }
+        return title
+    }
+
+    /// The score the All Trips hero chip shows for a stop's window: the report Conditions already has (shared store), else a
+    /// background request (deferred out of the view update) and nil until it lands. Cheap: one dictionary read.
+    var lightScore: @MainActor @Sendable (Place, LocalDay, LightWindowKind) -> Int? {
+        let store = container.conditions
+        return { place, day, kind in
+            if let report = store.report(for: place.id, day: day) {
+                return report.daylight.windows.first { $0.kind == kind }?.score
+            }
+            Task { @MainActor in store.request(place, day: day, priority: .background) }
+            return nil
         }
     }
 
@@ -166,8 +195,21 @@ final class WindowShell {
     func findSpots() { navigator.focusSearch() }
     func searchHere() { navigator.searchHere() }
 
-    func editPlace() {
-        if case .place(let id) = route { navigator.present(.editPlace(id)) }
+    /// The place Edit Place… acts on: the open place page, else the place selected in Saved Places, else the saved or own spot
+    /// on Find's card. nil when there is none (the command is disabled).
+    func editPlaceTarget(selectedSaved: UUID? = nil) -> UUID? {
+        switch route {
+        case .place(let id): return id
+        case .savedPlaces, .placeFolder: return selectedSaved.flatMap { library.place(id: $0) == nil ? nil : $0 }
+        case .find:
+            guard let card = find.card, card.kind == .saved || card.kind == .own, library.place(id: card.place.id) != nil else { return nil }
+            return card.place.id
+        default: return nil
+        }
+    }
+
+    func editPlace(selectedSaved: UUID? = nil) {
+        if let id = editPlaceTarget(selectedSaved: selectedSaved) { navigator.present(.editPlace(id)) }
     }
 
     func changeDates() {

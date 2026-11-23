@@ -1,6 +1,7 @@
 import SwiftUI
 import IterFeatures
 import IterModel
+import IterScreens
 import IterUI
 
 /// The system sidebar: a `List(selection:)` in the sidebar style whose rows are IterUI's sidebar parts. The glass search
@@ -21,9 +22,13 @@ struct SidebarView: View {
                 SidebarDisclosureRow("All Trips", systemImage: "map", tag: AppRoute.allTrips, storageKey: "iter.sidebar.allTrips",
                                      hasChildren: !library.pinnedTripFolders.isEmpty || !library.pinnedTrips.isEmpty) {
                     ForEach(library.pinnedTripFolders) { folder in
-                        folderRow(folder, route: .tripFolder(folder.id)) { library.setFolderPinned(folder.id, false) }
+                        folderRow(folder, route: .tripFolder(folder.id), drop: { library.moveTrips($0, to: folder.id) }, kind: .trips) { library.setFolderPinned(folder.id, false) }
                     }
                     ForEach(library.pinnedTrips) { trip in tripRow(trip) }
+                }
+                .dropDestination(for: TripDragItem.self) { items, _ in
+                    library.moveTrips(items.map(\.tripID), to: nil)
+                    return !items.isEmpty
                 }
             } header: { SidebarSectionHeader("Trips") }
 
@@ -32,15 +37,21 @@ struct SidebarView: View {
                                      storageKey: "iter.sidebar.savedPlaces",
                                      hasChildren: !library.pinnedPlaceFolders.isEmpty || !library.pinnedPlaces.isEmpty) {
                     ForEach(library.pinnedPlaceFolders) { folder in
-                        folderRow(folder, route: .placeFolder(folder.id)) { library.setFolderPinned(folder.id, false) }
+                        folderRow(folder, route: .placeFolder(folder.id), drop: { library.movePlaces($0, to: folder.id) }, kind: .places) { library.setFolderPinned(folder.id, false) }
                     }
                     ForEach(library.pinnedPlaces) { place in placeRow(place) }
+                }
+                .dropDestination(for: PlaceDragItem.self) { items, _ in
+                    library.movePlaces(items.map(\.placeID), to: nil)
+                    return !items.isEmpty
                 }
             } header: { SidebarSectionHeader("Saved Places") }
         }
         .listStyle(.sidebar)
         .safeAreaInset(edge: .top, spacing: 0) {
-            SidebarFindFieldPlaceholder(window: window)
+            FindSearchField(model: window.find)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
             SidebarFooter(window: window)
@@ -62,13 +73,24 @@ struct SidebarView: View {
         }
     }
 
-    private func folderRow(_ folder: FolderRow, route: AppRoute, unpin: @escaping () -> Void) -> some View {
-        SidebarRow(folder.name, systemImage: "folder")
+    private enum DropKind { case trips, places }
+
+    /// A folder row: dropping trips (or places, for a place folder) on it files them there, through `LibraryModel` (undoable).
+    @ViewBuilder
+    private func folderRow(_ folder: FolderRow, route: AppRoute, drop: @escaping ([UUID]) -> Void, kind: DropKind,
+                           unpin: @escaping () -> Void) -> some View {
+        let row = SidebarRow(folder.name, systemImage: "folder")
             .tag(route)
             .contextMenu {
                 Button("Open") { window.navigator.open(route) }
                 Button("Unpin from Sidebar", action: unpin)
             }
+        switch kind {
+        case .trips:
+            row.dropDestination(for: TripDragItem.self) { items, _ in drop(items.map(\.tripID)); return !items.isEmpty }
+        case .places:
+            row.dropDestination(for: PlaceDragItem.self) { items, _ in drop(items.map(\.placeID)); return !items.isEmpty }
+        }
     }
 
     private func placeRow(_ place: PlaceRow) -> some View {
@@ -78,22 +100,6 @@ struct SidebarView: View {
                 Button("Open") { window.navigator.open(.place(place.id)) }
                 Button("Unpin from Sidebar") { library.setPlacePinned(place.id, false) }
             }
-    }
-}
-
-/// The sidebar's search field. PLACEHOLDER: the Find worker's `FindSearchField(model:)` replaces this one view; until it
-/// lands this is IterUI's `SidebarSearchField` bound to the Find model's text, Return running the search.
-struct SidebarFindFieldPlaceholder: View {
-    let window: WindowShell
-
-    var body: some View {
-        @Bindable var find = window.find
-        SidebarSearchField(text: $find.text, prompt: "Find Spots", focusRequest: window.navigator.searchFocusRequest) {
-            window.navigator.open(.find)
-            window.find.submit()
-        }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
     }
 }
 

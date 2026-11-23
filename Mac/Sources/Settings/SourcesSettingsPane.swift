@@ -58,9 +58,16 @@ struct SourceCreditRow: View {
                         .labelsHidden()
                         .toggleStyle(.switch)
                         .accessibilityLabel(Text("Use \(row.name)"))
+                } else if case .unavailable = row.status {
+                    // Shown as its own line below, so a long reason wraps under the name.
+                    EmptyView()
                 } else {
                     Text(SourceText.status(row.status)).font(.callout).foregroundStyle(.secondary)
                 }
+            }
+            if case .unavailable = row.status {
+                Text(SourceText.status(row.status)).font(.callout).foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             Text(row.originLabel).font(.callout).foregroundStyle(row.isMilitaryOrigin ? IterColor.accentText : Color.secondary)
             Text("\(row.coverage). \(row.kinds.joined(separator: ", ")).")
