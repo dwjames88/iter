@@ -28,11 +28,18 @@ public struct GoActivityContent: Codable, Hashable, Sendable {
     public var isPowerSaving: Bool
     /// While an automatic transition can still be undone.
     public var undoExpiresAt: Date?
+    /// The stop `nextStopName` refers to.
+    public var stopID: UUID?
+    /// That stop's own zone, so times are shown where the stop is.
+    public var timeZoneIdentifier: String?
+    /// The window end of the stop you are at while at a stop, else of the sky's or next stop's window.
+    public var windowEnd: Date?
 
     public init(phase: GoPhase, nextStopName: String? = nil, status: GoLeaveStatus? = nil, leaveBy: Date? = nil, eta: Date? = nil,
                 windowKind: LightWindowKind? = nil, windowStart: Date? = nil, liveScore: Int? = nil, forecastScore: Int? = nil,
                 band: GoBand? = nil, confidence: GoConfidence? = nil, trend: GoTrend? = nil, dataAsOf: Date, lateMinutes: Int? = nil,
-                isOffline: Bool = false, isPowerSaving: Bool = false, undoExpiresAt: Date? = nil) {
+                isOffline: Bool = false, isPowerSaving: Bool = false, undoExpiresAt: Date? = nil, stopID: UUID? = nil,
+                timeZoneIdentifier: String? = nil, windowEnd: Date? = nil) {
         self.phase = phase
         self.nextStopName = nextStopName.map(Self.truncated)
         self.status = status
@@ -50,6 +57,9 @@ public struct GoActivityContent: Codable, Hashable, Sendable {
         self.isOffline = isOffline
         self.isPowerSaving = isPowerSaving
         self.undoExpiresAt = undoExpiresAt
+        self.stopID = stopID
+        self.timeZoneIdentifier = timeZoneIdentifier
+        self.windowEnd = windowEnd
     }
 
     public init(snapshot s: GoSnapshot) {
@@ -61,7 +71,9 @@ public struct GoActivityContent: Codable, Hashable, Sendable {
                   liveScore: sky?.liveScore, forecastScore: sky?.forecastScore, band: sky?.band,
                   confidence: sky.map(\.confidence), trend: sky.map(\.trend), dataAsOf: asOfs.max() ?? s.generatedAt,
                   lateMinutes: s.leave?.lateBySeconds.map { Int(($0 / 60).rounded()) }, isOffline: s.freshness.isOffline,
-                  isPowerSaving: s.freshness.isPowerSaving, undoExpiresAt: s.undo?.expiresAt)
+                  isPowerSaving: s.freshness.isPowerSaving, undoExpiresAt: s.undo?.expiresAt, stopID: stop?.id,
+                  timeZoneIdentifier: stop?.timeZoneIdentifier,
+                  windowEnd: s.phase == .atStop ? (s.current?.windowEnd ?? sky?.windowEnd ?? stop?.windowEnd) : (sky?.windowEnd ?? stop?.windowEnd))
     }
 
     static func truncated(_ name: String) -> String {

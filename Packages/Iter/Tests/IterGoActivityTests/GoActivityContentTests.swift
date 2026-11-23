@@ -60,8 +60,19 @@ private func fullSnapshot(name: String = "Mesa Arch") -> GoSnapshot {
                               windowKind: .goldenMorning, windowStart: Date(timeIntervalSince1970: 1_800_001_000.111111), liveScore: 100,
                               forecastScore: 100, band: .great, confidence: .medium, trend: .unknown,
                               dataAsOf: Date(timeIntervalSince1970: 1_800_000_000.987654), lateMinutes: 1439, isOffline: true, isPowerSaving: true,
-                              undoExpiresAt: Date(timeIntervalSince1970: 1_800_000_120.333333))
+                              undoExpiresAt: Date(timeIntervalSince1970: 1_800_000_120.333333),
+                              stopID: UUID(), timeZoneIdentifier: "America/Argentina/ComodRivadavia",
+                              windowEnd: Date(timeIntervalSince1970: 1_800_004_000.444444))
     let data = try JSONEncoder().encode(c)
     #expect(data.count < 2048)
     #expect(try JSONDecoder().decode(GoActivityContent.self, from: data) == c)
+}
+
+@Test func contentCarriesTheStopZoneAndWindowEnd() {
+    let at = GoSample.atStopShooting.snapshot(now: Date(timeIntervalSince1970: 1_800_000_000))
+    let c = GoActivityContent(snapshot: at)
+    #expect(c.stopID == at.next?.id && c.timeZoneIdentifier == "America/Denver")
+    #expect(c.windowEnd == at.current?.windowEnd)
+    let driving = GoSample.drivingOnTime.snapshot(now: Date(timeIntervalSince1970: 1_800_000_000))
+    #expect(GoActivityContent(snapshot: driving).windowEnd == driving.sky?.windowEnd)
 }
