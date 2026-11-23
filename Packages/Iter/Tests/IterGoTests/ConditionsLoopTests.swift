@@ -64,8 +64,10 @@ private struct Rig {
     #expect(await r.loop.refreshIfDue(context: r.context()).fetched.isEmpty)
     r.clock.advance(by: 5 * 60)
     let u = await r.loop.refreshIfDue(context: r.context())
-    #expect(u.fetched == [.hereLive, .nextLive])
-    r.clock.advance(by: 45 * 60)
+    #expect(u.fetched == [.nextLive])
+    r.clock.advance(by: 15 * 60)
+    #expect(await r.loop.refreshIfDue(context: r.context()).fetched == [.hereLive, .nextLive])
+    r.clock.advance(by: 30 * 60)
     #expect(await r.loop.refreshIfDue(context: r.context()).fetched == [.hereLive, .nextLive, .nextForecast, .todayForecast])
 }
 

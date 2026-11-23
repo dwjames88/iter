@@ -42,7 +42,9 @@ public enum ConditionsCadence {
     // Intervals tie to the source caches: the service keeps the nowcast 15 min and observations about as long, the composite
     // forecast an hour or more, so asking sooner only re-reads the cache.
     public static let nextLiveInterval: TimeInterval = 15 * 60
-    public static let hereLiveInterval: TimeInterval = 15 * 60
+    /// Weather where you are while driving: the car moves through it, so a half-hour read is enough and halves the requests.
+    public static let hereLiveInterval: TimeInterval = 30 * 60
+    public static let savingHereLiveInterval: TimeInterval = 60 * 60
     public static let nextForecastInterval: TimeInterval = 60 * 60
     public static let todayForecastInterval: TimeInterval = 60 * 60
     public static let packInterval: TimeInterval = 3 * 3600
@@ -66,7 +68,8 @@ public enum ConditionsCadence {
     public static func interval(for item: ConditionsItem, power: PowerState) -> TimeInterval {
         let saving = power.isSaving
         switch item {
-        case .hereLive, .nextLive: return saving ? savingLiveInterval : nextLiveInterval
+        case .hereLive: return saving ? savingHereLiveInterval : hereLiveInterval
+        case .nextLive: return saving ? savingLiveInterval : nextLiveInterval
         case .nextForecast, .todayForecast: return saving ? savingForecastInterval : nextForecastInterval
         case .pack: return saving ? savingPackInterval : packInterval
         }
