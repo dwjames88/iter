@@ -75,3 +75,15 @@ Apple Human Interface Guidelines (the pages are script-rendered and did not load
 - https://developer.apple.com/design/human-interface-guidelines/segmented-controls
 - https://developer.apple.com/design/human-interface-guidelines/menus
 - https://developer.apple.com/design/human-interface-guidelines/search-fields
+
+## D6: iPhone sheet and tab bar (decided 2026-11-23, iOS 27.2 Simulator)
+
+The old "custom sheet" assumption is replaced. The iPhone uses ONE system `.sheet` that is always presented (`interactiveDismissDisabled`, `presentationDetents` peek/half/full, `presentationBackgroundInteraction(.enabled(upThrough: .medium))`, drag indicator) and the `TabView` lives INSIDE it, so the tab bar is part of the sheet and sits at its foot. No hand-built sheet or drag gesture.
+
+Evidence (`Design/snapshots/rebuild/ios/sim/`, taken with `simctl io screenshot` on the "Iter Rebuild" iOS 27.2 simulator):
+- In-sheet tabs, half: `phone-find-half.png`. The tab bar (Find, Trips, Saved, Go) is inside the sheet card at its foot edge, fully visible, nothing clipped.
+- In-sheet tabs, full: `phone-find-full.png`. The tab bar is at the foot of the full-height sheet, visible.
+- In-sheet tabs, peek: `phone-find-peek.png`. The tab bar collapses to the selected tab's circle at the sheet's foot (the other tabs are hidden at this height), and the Settings gear is visible.
+- Alternative (`-IterD6Probe YES`, Debug only: `TabView` outside, sheet over it): `d6probe-half.png`, `d6probe-peek.png`. The system sheet covers the tab bar: only blurred tab icons show through the sheet's material and none can be tapped. So the outside layout is still wrong on iOS 27.2, and the in-sheet layout is the one to keep.
+
+Caveat: the "Iter Rebuild" simulator is an iPhone-Duo device type (two displays, wide, status bar on the trailing edge), not a 402 x 874 pt portrait phone, so the tab bar shows as a vertical capsule at the trailing foot of the sheet rather than a horizontal bar. The result (covered outside, visible inside) is the same structure on a phone; a check on a real iPhone-sized simulator or the device is still worth doing.

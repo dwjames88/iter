@@ -112,7 +112,7 @@ All names target iOS 26 / SwiftUI; "verify" marks API details to confirm in Xcod
 | Pattern | API |
 | --- | --- |
 | 1 Full-bleed map | `Map(position:)` with `.mapStyle(.standard(elevation: .realistic))` (verify exact parameters), `Annotation` / `Marker` for spots, `.ignoresSafeArea()` |
-| 2 Custom sheet, 3 detents | Custom `ZStack` overlay view with `DragGesture` and a `Detent` enum (peek/half/full); `.safeAreaInset(edge: .bottom)` or camera padding for map inset. Do not use `.presentationDetents` for Explore (covers tab bar). |
+| 2 Sheet, 3 detents | One always-presented system `.sheet` with `.presentationDetents` (peek/half/full) that contains the `TabView`, so the tab bar sits at the sheet's foot (D6, 2026-11-23: do NOT put the `TabView` outside and the sheet over it, the sheet covers the tab bar; see GLASS-RULES.md). Map inset from the sheet's measured height. |
 | 3 Title and glass buttons | `Text(...).font(.largeTitle.bold())`; `Button` with `.buttonStyle(.glass)` and `.buttonBorderShape(.circle)` (verify); `GlassEffectContainer` to group |
 | 4 Chip row | `ScrollView(.horizontal)` + `HStack`, `Capsule` backgrounds, `.scrollIndicators(.hidden)`, `.contentMargins` |
 | 5 Pill tab bar, search | `TabView` with `Tab(...)` and `Tab(role: .search)` (verify exact initialiser); `.tabBarMinimizeBehavior` optional (verify) |
