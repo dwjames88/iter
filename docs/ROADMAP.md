@@ -1,67 +1,56 @@
 # Roadmap
 
-Plan references are to `docs/reference/plan/` (P = phase item, numbers = sections).
+What is next, in rough order, and why. Items marked **owner** need something only the owner can do (a login, a decision, a device). The rebuild itself is described in [docs/rebuild/BLUEPRINT.md](rebuild/BLUEPRINT.md) and what is built is in [ARCHITECTURE.md](ARCHITECTURE.md).
 
-## Milestone 1 · A place to start testing (this build)
+## Do first: check the rebuild on real devices
 
-A coherent Mac app you can use end to end. Anything not listed here is absent from the UI, not present and dead.
+- **The first-look checklist** in [TESTING.md](../TESTING.md) and [TESTING-iOS.md](../TESTING-iOS.md). No headless run could check glass, map pins, drag and drop, menus, the Live Activity, background location, Lock Screen notification actions, real network sources, Apple Intelligence or the first real-store launch. Anything found goes here as a fix.
+- **A dry run of the iPhone store migration on a copy.** The cut-over plan tries the Mac store on a copy before the real launch. A copy of the iPhone store has not been tried by anything in this documentation. **Owner:** make an iPhone backup (Xcode ▸ Devices and Simulators ▸ Download Container) so a copy can be opened and the trips compared.
 
-**Shell (6.1-A, trip-first).** Sidebar: Trips (All Trips, pinned trips, trip folders, then unfiled trips, with a New menu for trip, folder and location), Locations (All Locations and location folders), Find (Explore). Toolbar, menu commands with shortcuts, Settings window, Debug menu, window state restoration, light and dark appearance.
+## Data
 
-**Light Index (2.3-C, 6.4-A with B one click away).** Intent picker (Sunrise, Sunset, Blue hour, Night), default from the spot's best light. Every score names its window ("Sunset · 38"), shows confidence and, for days 4 and later, a range. Reasons by factor one click away; a plain-language explanation from Apple Intelligence when available. "No forecast" with the specific reason; never a placeholder score. Single-hue light ramp with band words.
+- **Light pollution from NASA Black Marble.** Today there is no light-pollution source, and the sky index leaves Bortle out and says so. The plan is a coarse grid made from NASA Black Marble night-lights data, bundled in the app. Downloading it needs a free NASA Earthdata login, once. **Owner:** create the login. This also enables the Bortle factor for night scores. The Falchi atlas cannot be used because its licence is non-commercial.
+- **A seeing and transparency proxy.** No free commercial-safe seeing source exists. A rough proxy from aerosol, humidity and high cloud could fill the seeing factor. Lower priority than light pollution.
+- **Reddit through OAuth.** Reddit no longer allows keyless use. If the owner applies for free Reddit API credentials, Reddit can return as a text source. The extension point exists (Find already lists Reddit as unavailable and says why). **Owner:** apply for credentials, and decide where the key lives (Settings ▸ Keys, in the Keychain).
+- **Read the EUMETSAT and IEM licences.** Both imagery sources are built but off by default, and never stored on disk, until their terms are read. EUMETSAT covers Meteosat imagery for Europe and Africa. IEM covers US radar. If the terms allow it for this app, turn them on by default. **Owner:** read or approve.
+- **Draw the imagery.** NASA GIBS cloud imagery, EUMETSAT and IEM radar have adapters but no map layer. There is a "show cloud imagery" preference with nothing behind it yet. Either add the layer or remove the preference.
+- **Carry old keys forward only if needed.** The key vault can copy the old OpenWeather, Windy and Google keys, but nothing calls it and nothing uses those keys. Delete the code if no keyed source is planned.
+- **Satellite passes (ISS, Starlink).** Researched with CelesTrak, not built. A fun extra for night windows. CelesTrak blocks repeat downloads within two hours, so it must cache.
+- **Recheck the feeds.** Fixtures were recorded on one day in November 2026. Feed formats and limits change, so rerun the live suite (`ITER_LIVE=1`, see TESTING.md) before relying on a source, and after any NOAA change.
 
-**Explore (6.2-B on Mac).** Map with a list panel, one selection driving pin, row and card. Curated spots plus Apple Maps search results. Date control, intent, filters (category, best light, source), sort (light, name, distance, popularity). Click the map in Add Spot mode to drop a pin, name it (reverse geocoded), save it.
+## The sky index
 
-**Spot page (P3.3).** Leads with when to go: the best window for the intent over the next days, then a 10-day outlook (fading with confidence), the five windows with scores and reasons, the light timeline (labelled bands, cloud layers, rain), the sun and moon arc with a time scrubber, hourly weather with the provider's attribution, a Windy section with Open in Windy, Look Around where available, Add to Trip (day picker shows the light per day), Open in Maps, Save.
+- **Calibrate the new score factors against real shoots.** Every factor added in the rebuild (precipitation, visibility, moon, aerosol and smoke, terrain, humidity, wind, Milky Way core) is a first guess. They need real shoots with a note of how the light was, to adjust the points. A "How did it go?" check-in after a stop would collect that.
+- **Aurora thresholds.** The Kp-by-latitude table is rough. Replace it with a better geomagnetic latitude model if aurora matters.
 
-**Trips (6.3-A, P3.5, P4.1, P4.2).** List, create (blank or from a template), rename, change dates, duplicate, delete with undo. Builder: days and stops, one session per stop, drag to reorder within and across days, MapKit drive times, connectors that state feasibility, a backward schedule on every stop ("Leave 4:10 · set up by 5:52 · Sunrise 6:12"), warnings when a drive does not fit, a route map, and a light-first ordering suggestion you accept or ignore.
+## Sync and sharing
 
-**Ask inside Explore (P3.7).** The Scout screen is gone; its engine answers requests typed in Explore's search field. Apple Intelligence via Foundation Models with tool calling over MapKit and the curated set, working from the area the map shows; text that reads like a request (or the sparkles toggle, ⌘4) goes to Ask, a place name still searches Apple Maps. Results land first in the list as an Ask section with a note per place, as map objects with provenance and drive time, scored by the Light Index; progress and cancel; specific unavailable states with "Search Apple Maps Instead".
+- **Bonjour peer sync (blueprint phase 10b).** **Not built.** The `IterSync` target is a placeholder. File-based sync works today: **Send to iPhone** and **Send Library**, with a merge by id. Peer sync would add a Mac advertising on the local network, a six-digit pairing code, a pre-shared key in each Keychain, and change sets since the last sync. It needs the local-network and Bonjour keys in the iOS Info.plist and a runtime prompt. Build it when passing files around gets tiresome.
+- **Move the merge into `IterSync`, or delete the target.** The merge lives in `IterStore` today. When peer sync is built, `IterSync` becomes real. If it is not going to be, remove the placeholder.
+- **A share extension** (send a link or a place to Iter from Safari or Maps). Listed as later in the blueprint. Optional.
+- **No iCloud sync.** It needs CloudKit, which a free team does not have. See the paid-membership item below.
 
-**Locations with folders (P3.9).** One idea of saved: a Locations screen with a list and its own map, an "Added by you" tag, folders (one level) to sort spots into, and drag and drop; edit and delete your own spots with undo. Replaces Saved.
+## Look and use
 
-**Pinned trips offline (partial C2).** Pin a trip to keep its forecasts, drive times and route lines, spot images and spot details on this Mac, with a status badge, refreshed hourly while the app runs. The base map is not cached (see Milestone 3).
+- **A red night mode.** A dim red palette for use in the field at night. It was planned as a token mode from the start. The design tokens already separate colour from use, so this is mostly a palette and a setting.
+- **Calendar and GPX export** of a trip's sessions, and spots along the drive.
+- **A Mac widget.** Judged low value in the blueprint.
+- **Offline base map.** Still not possible: MapKit has no way to download tiles. Pinned and active trips already keep their conditions, drive times and images.
+- **CarPlay: not planned.** No CarPlay category fits. The Live Activity reaches the CarPlay Dashboard by itself.
 
-**Getting a trip out (P4.7, partly).** Share or export a trip as an `.iter` file (ShareLink and File > Export); open or import one back. Open any stop in Apple Maps.
+## If the developer team is paid (decision D1)
 
-**Weather providers.** OpenWeather and Windy beside Apple Weather, chosen in Settings ▸ Weather with an optional fallback. Keys in the Keychain, per-provider caches and daily call caps, honest unknowns when a provider lacks a field, and "Open in Windy" on the spot page and in Explore. See `docs/DATA-PROVIDERS.md`.
+Every provisioning profile on this Mac showed a 365-day life, which is unusual for a free Personal Team. **Owner:** check developer.apple.com ▸ Membership. If the membership is paid, these become possible:
 
-**Testing aids.** Debug menu: Sample Data mode (off by default, labelled on every screen), Seed Sample Trip, Reset All Data. Snapshot renderer for every screen and state.
+- **WeatherKit** as one more forecast provider (the provider protocols already allow it).
+- **Push updates for the Live Activity**, so Go can update while Iter is suspended.
+- **Time-sensitive notifications** that break through a Focus.
+- **CloudKit sync** between the Mac and the iPhone.
 
-**Not in milestone 1, deliberately:** Night mode (designed with the palette work, below), spot photos (the Wikipedia source is gone; the Explore place card's image strip shows Look Around where Apple has it, 4 of 45 curated spots, and a satellite image otherwise; user photos will be one more source in that strip), a per-day timeline strip (6.3-B), "How did it go?" check-ins, calendar and GPX export.
+If the team is free, none of these are possible and the app is already designed for that.
 
-## Milestone 2 · Foundation and field
+## Housekeeping
 
-* Night mode (red, dim) as a token mode (P2.4–P2.6). The palette decision is made: First Light throughout.
-* Now mode (E1): opens to the next three hours during a trip.
-* Weather swap (B3) inside 72 hours, once the confidence model has been tested.
-* Calendar export of sessions and GPX; along-the-drive spots (P4.6).
-* "How did it go?" check-in to calibrate the Light Index.
-
-## Before any release (weather providers)
-
-* Ship the Windy logo asset (unscaled, clickable to windy.com) beside "Contains data from the Windy database", and use a Windy Professional key (Testing data is shuffled and development-only).
-* Record real fixtures for OpenWeather and Windy with `ITER_LIVE=1` and replace the documented-schema ones.
-* Confirm whether OpenWeather's free allowance needs a payment card.
-* Consider One Call 4.0, which OpenWeather now recommends for new integrations.
-* An in-app Windy map only with a Map Forecast Professional licence that permits a native app. Until then the map opens windy.com.
-
-## Milestone 3 · Everywhere
-
-* iCloud sync of trips and spots (SwiftData + CloudKit), then shared trips with CloudKit sharing and the no-account guest link (P3.6, P5.5).
-* Offline trip packs (C2), never paywalled: area, legs, windows, last forecast with its age. Pinning already covers forecasts, legs, images and spot details; what is left is the base map. It is not cached because MapKit has no public API to download map tiles for offline use. A future option would need a different map source or Apple adding one.
-* **The iOS app, first cut (shipped, see [TESTING-iOS.md](../TESTING-iOS.md)).** An iPhone and iPad app over the same IterKit: Explore with a map and a bottom sheet, the light panel and spot page, search with Ask, Trips with the builder (days, reordering, share and import of `.iter` files), Locations with folders and Settings. iPad has the sidebar split view. No Now mode, Live Activity, widgets or CarPlay yet, and no iCloud sync, so a trip made on the Mac is not on the iPhone.
-* Widgets and the Live Activity: see "Next on iOS".
-
-## Next on iOS
-
-* **Now mode (E1, P4.5).** Opens to the next three hours during a trip. Needs a session within 3 hours, the trip's schedule from `TripScheduler`, the user's location and the drive time to the next stop, and a Night (red) token set. The shell shows it as the first tab or a banner.
-* **"Tonight" Live Activity (C1, P5.4).** Leave by, set up by, the window and the score. Needs an ActivityKit widget extension target in `project-ios.yml`, `NSSupportsLiveActivities`, an App Group for shared state, a start per session from the trip schedule, and push or scheduled updates for the forecast. The Lock Screen and Dynamic Island show it, and the CarPlay Dashboard and Apple Watch show a Live Activity automatically.
-* **Widgets (C7).** A WidgetKit extension and an App Group that shares the store or a snapshot of it, with a timeline from `LightEngine`.
-* **CarPlay: not planned.** There is no CarPlay app: no CarPlay app category fits a trip planner and eligibility is unconfirmed (`docs/reference/plan/08-not-doing.md`). The Live Activity is how Iter reaches the CarPlay Dashboard.
-* **Offline base map tiles** are still not possible with MapKit (see Milestone 3), and **iCloud sync** (Milestone 3) is what makes a Mac trip appear on the iPhone.
-
-## Milestone 4 · Business
-
-* The fair paywall (E5): one tier, price before trial, never locks a built trip.
-* Value-added data notice and a public method page for the Light Index.
+- **Fix or remove old scripts** that still point at `App/`, `AppiOS/` and `IterKit`: `scripts/test.sh`, `scripts/snapshots.sh`, `scripts/snapshots-ios.sh`, `scripts/strings.sh`, `scripts/pin-drag-test.sh`, `scripts/make-icon.sh`, the `--weatherkit` option of `scripts/run.sh`, and the default entitlements path in `scripts/release.sh`.
+- **The Mac window-capture option.** `scripts/render.sh --capture` passes `-IterCaptureWindow`, which the rebuilt app does not read. Add it or drop the option.
+- **Release notes and version.** The rebuild has not been given a version number or released. Cut it with `scripts/release.sh` ([DISTRIBUTION.md](DISTRIBUTION.md)) once the first-look checklist is done.
