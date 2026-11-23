@@ -5,7 +5,54 @@ and Iter uses [Semantic Versioning](https://semver.org/): 0.x.y until the first 
 
 ## [Unreleased]
 
-<!-- These are the release notes intended for v0.3.0. -->
+<!-- The rebuild. Written for the owner. Older Unreleased notes (for the planned v0.3.0, never shipped) follow below, under their own heading. -->
+
+Iter has been rebuilt from the ground up. It keeps your trips, places and folders, but almost everything under them is new. This is the plain list of what changed.
+
+### Read this first: your data
+- **The first launch of the new app on your real library changes the store to a new format (schema V5). The earlier Iter app cannot open it afterwards.**
+- Iter makes a backup before it touches anything. On the Mac it is `~/Library/Application Support/Iter/Backups/pre-v5-<date and time>/`, with the raw store files, every trip as an `.iter` file the earlier app can open, and `backup.json`. If the backup cannot be made, the store is not opened and nothing is changed.
+- If the new store fails to open, Iter leaves your original file alone, builds a new store beside it from the backup's `.iter` files, and tells you where the backup is.
+- The iPhone does the same in its own app folder. The iPhone's bundle id is unchanged, so its library carries over.
+- Migration was tested on fixture stores made by the old app's own code (schemas V1 to V4, including folders, pins, transfer timings and drive notes). It has not been tried on a copy of the iPhone store.
+
+### New
+- **One flow, Find, Conditions, Build, Go, on Mac and iPhone.** The Mac sidebar is Find, Trips and Saved Places ("Locations" is now "Saved Places"). The iPhone has Find, Trips, Saved and Go tabs. Go is iPhone only.
+- **Go, a trip mode for the iPhone.** Starts a run on a trip, and follows it: next stop, leave-by time, drive time with a live ETA, current weather, a short forecast and the sky now. It runs in the background on location, shows a Live Activity (Lock Screen and Dynamic Island) and a Home widget, and sends notifications: leave soon, leave now, late, stay check, conditions changed and arrival. Navigate opens Apple Maps. Arrival is automatic, with a two-minute "Not yet" undo. A run survives a relaunch. Old or offline data is never shown as live. There is no push, because a free developer team cannot use it, so the Live Activity updates only while Iter is running.
+- **Find reads requests.** With Apple Intelligence, a request such as "waterfalls near Yosemite for sunrise" is turned into a plan. Without it, a simple parser does the job and Find says "Basic search". The model never supplies a coordinate: every result gets its coordinate from a map source and must lie inside the area. Results show the sources that found them and links to them. A source that is down or off is named, not hidden.
+- **Real data sources, all free and keyless.** NOAA HRRR and GFS forecasts (decoded on the device), MET Norway, aviation weather reports (METAR and TAF, including military airfields), NWS alerts and observations, NOAA space weather and smoke, USGS names, OpenStreetMap, Wikipedia, Wikivoyage, Wikimedia Commons, Terrain Tiles, and Apple Maps. Each number carries its source, age and licence. Settings ▸ Sources & Credits lists them all with the credit text. See [docs/DATA-PROVIDERS.md](docs/DATA-PROVIDERS.md).
+- **On-device military-origin references.** World Magnetic Model 2025 (declination) and MGRS grid references, computed on the device.
+- **A new Sky Index.** The Forecast Sky Index now uses precipitation, visibility, moon, smoke and aerosol, terrain (the real horizon, computed per place), humidity, wind and the Milky Way core, as well as cloud. A missing input is dropped and the screen says so. The score runs from 0 to 100 (it was 5 to 100). The Live Sky Index blends the latest observation, the nowcast and the forecast for the sky now and the next few hours, and shows a trend. A forecast older than three hours is marked stale. The new factors are first guesses that still need calibrating.
+- **Better planning.** Stops can have a dwell time (shoot until), a fixed arrival, and a kind (light, lodging, waypoint). A trip has a start place, so the first stop gets a leave-by time. Leave-by and drive times use live routes, with an offline estimate when there is no signal.
+- **Pinned and active trips keep their conditions offline**, labelled with their age.
+- **`.iter` version 2.** Holds a trip or the whole library, with folders, pins, saved places, provenance, and deletion records. Importing merges by id: the newer edit wins, and a second import updates a trip instead of duplicating it. **Send to iPhone** and **Send Library to iPhone** (Mac, with AirDrop) use it. **Export for older Iter** writes version 1. Version 1 files stay readable.
+- **Recovery and backup**, as above.
+- **Location at launch.** Iter asks for your location as soon as it opens, and nothing is gated on the answer.
+- **Liquid Glass throughout**, using the system components, laid out for both platforms from one shared set of screens.
+
+### Changed
+- **Ask Iter is gone as a separate screen.** Its job is Find.
+- **Data sources.** The forecast now comes from NOAA and MET Norway, not OpenWeather or WeatherKit.
+- **The app is built in a package.** 16 targets with strict concurrency, no third-party code, and no shared-folder exclude lists. The old `App/`, `AppiOS/` and `IterKit` folders are removed.
+- **Bundle ids are unchanged** (`com.dwjames.iter` on the Mac, `com.dwjames.iter.ios` on iPhone), so your data and Keychain items still match. Tests and renders run as `com.dwjames.iter.render` and can never open the real store.
+
+### Removed, or not carried over
+- **OpenWeather, Windy and WeatherKit.** No source needs a key now. Settings ▸ Keys says so. The old OpenWeather, Windy and Google keys stay in your Keychain where they were, and nothing reads them. The Windy layer and the "Open in Windy" links are gone.
+- **The licensing module.** Dropped. Iter has no licence check.
+- **Reddit and Google search.** Not available. Reddit needs your own API credentials, and Google is closing its search product to new users. Find lists both as "unavailable" with the reason.
+- **Light pollution and seeing.** There is no source. The sky index leaves Bortle and seeing out and says so.
+- **Satellite and radar maps.** The NASA, EUMETSAT and IEM imagery adapters exist but no map layer uses them yet. EUMETSAT and IEM radar are off until their licences are read.
+
+### Known gaps
+- **Bonjour sync is not built.** Only file sharing (AirDrop and Files) with merge. There is no iCloud sync.
+- **Not checked by a person yet:** Liquid Glass, map pins on the Mac, drag and drop, menus and keyboard shortcuts, the Live Activity and Dynamic Island, background location during Go, notification actions from the Lock Screen, real network sources, Apple Intelligence on a device, and the first launch on the real store. The list is in [TESTING.md](TESTING.md).
+- **Calibration.** The new score factors have not been compared with real shoots.
+- **Free team.** Time-sensitive notifications are unlikely to work, and how long a sideloaded build stays installed is not confirmed ([docs/ROADMAP.md](docs/ROADMAP.md)).
+- **Offline base maps** are not possible with MapKit.
+
+## Older Unreleased notes (for the planned v0.3.0, never shipped)
+
+<!-- These were the release notes intended for v0.3.0 on the old app. The rebuild replaces that code, so some items may no longer be true. Kept for the record and to be pruned by the owner. -->
 
 ### New
 - **Search Here**: pan the Explore map and a Search Here button (also Edit ▸ Search Here, ⌘⇧F) lists the places in view in a new In View section, first from Apple Maps, then joined by Ask's suggestions (each confirmed on the map before it shows) and by web discovery as they arrive. It never moves the map. Each row names the sources that list it and, where known, the elevation.
