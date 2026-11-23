@@ -22,47 +22,56 @@ struct FindProgressSection: View {
 
     private var line: String { FindText.progressLine(progress, phase: phase) }
 
+    /// A quiet line, no slab: "3 sources searched · 1 s" with "Sources" at the trailing edge, which opens the per-source list
+    /// under it. Trouble (slow, down) shows beside the link in the warning colour so it is not hidden behind the tap.
     var body: some View {
-        VStack(alignment: .leading, spacing: IterSpace.sm) {
-            if !line.isEmpty || progress.isRunning {
+        VStack(alignment: .leading, spacing: IterSpace.xs) {
+            if !line.isEmpty || progress.isRunning || !chips.isEmpty {
                 HStack(spacing: IterSpace.sm) {
                     if progress.isRunning { ProgressView().controlSize(.small) }
                     Text(verbatim: line)
                         .font(IterFont.secondary)
                         .foregroundStyle(IterColor.textSecondary)
                         .monospacedDigit()
+                        .lineLimit(1)
                     Spacer(minLength: 0)
+                    if let trouble = FindText.sourceTrouble(chips) {
+                        Text(verbatim: trouble).font(IterFont.caption).foregroundStyle(IterColor.warning).lineLimit(1)
+                    }
                     if progress.isRunning {
                         Button("Cancel", action: onCancel)
                             .controlSize(.small)
                             .keyboardShortcut(.cancelAction)
                             .help("Stop the search; places already found stay")
                     }
+                    if !chips.isEmpty {
+                        Button { withAnimation(.snappy) { isExpanded.toggle() } } label: {
+                            HStack(spacing: IterSpace.xxs) {
+                                Text("Sources", comment: "Find: shows the list of sources searched")
+                                Image(systemName: "chevron.right")
+                                    .font(.caption2.weight(.semibold))
+                                    .rotationEffect(.degrees(isExpanded ? 90 : 0))
+                                    .accessibilityHidden(true)
+                            }
+                            .font(IterFont.secondary)
+                            .foregroundStyle(IterColor.accentText)
+                            .frame(minHeight: 32)
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityValue(isExpanded ? Text("Shown") : Text("Hidden"))
+                    }
                 }
                 if progress.isRunning, let fraction = progress.fraction {
                     ProgressView(value: fraction).progressViewStyle(.linear)
                 }
             }
-            if !chips.isEmpty {
-                DisclosureGroup(isExpanded: $isExpanded) {
-                    FindSourceList(chips: chips).padding(.top, IterSpace.xs)
-                } label: {
-                    HStack(spacing: IterSpace.xs) {
-                        Text("Sources")
-                            .font(IterFont.captionStrong)
-                            .foregroundStyle(IterColor.textSecondary)
-                        if let trouble = FindText.sourceTrouble(chips) {
-                            Text(verbatim: "· " + trouble)
-                                .font(IterFont.caption)
-                                .foregroundStyle(IterColor.warning)
-                        }
-                    }
-                }
-                .font(IterFont.caption)
+            if isExpanded, !chips.isEmpty {
+                FindSourceList(chips: chips)
+                    .padding(IterSpace.md)
+                    .background(ModuleFill(), in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
             }
         }
-        .padding(IterSpace.md)
-        .background(ModuleFill(), in: RoundedRectangle(cornerRadius: IterRadius.card, style: .continuous))
     }
 }
 

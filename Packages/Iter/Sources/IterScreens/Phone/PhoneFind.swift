@@ -57,6 +57,8 @@ public struct FindSheetContent: View {
                 FindCardContent(model: model, conditions: conditions, showsSearchHere: false, initiallyShowsSources: showsSources)
             }
         }
+        // Rows scroll under the floating tab bar: the system's hard bottom edge effect keeps them from showing through it.
+        .scrollEdgeEffectStyle(.hard, for: .bottom)
         .task(id: model.card?.place.id) { refreshConditions() }
         .onDisappear { conditions?.stop() }
     }
