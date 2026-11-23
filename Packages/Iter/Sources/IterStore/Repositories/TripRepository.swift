@@ -133,13 +133,15 @@ public struct TripRepository {
         }
     }
 
-    /// Pins or unpins a trip. A pinned trip keeps its folder. Not a content change: `updatedAt` stays.
+    /// Pins or unpins a trip. A pinned trip keeps its folder. Stamps `updatedAt` so a merge import carries the pin.
     public func setPinned(_ trip: TripRecord, _ pinned: Bool) {
         guard trip.isPinned != pinned else { return }
         store.perform(pinned ? .pinTrip : .unpinTrip) {
             store.touch(trip)
+            let now = store.clock()
             trip.isPinned = pinned
-            trip.pinnedAt = pinned ? store.clock() : nil
+            trip.pinnedAt = pinned ? now : nil
+            trip.updatedAt = now
         }
     }
 

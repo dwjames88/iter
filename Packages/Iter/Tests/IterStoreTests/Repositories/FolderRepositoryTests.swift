@@ -125,17 +125,6 @@ private func dump(_ f: StoreFixture) -> [String] {
         _ = d
     }
 
-    @Test func movesDoNotChangeATripsUpdatedAt() throws {
-        let f = try StoreFixture()
-        let folder = f.store.folders.create(name: "F", kind: .trips)
-        let a = f.ownTrip("a"), b = f.ownTrip("b")
-        let stamps = [a.updatedAt, b.updatedAt]
-        f.store.folders.moveTrips([a, b], to: folder, index: nil)
-        f.store.folders.move(folder, index: 0)
-        f.store.trips.setPinned(a, true)
-        #expect([a.updatedAt, b.updatedAt] == stamps)
-    }
-
     @Test func moveTripsRejectsLocationFolder() throws {
         let f = try StoreFixture()
         let loc = f.store.folders.create(name: "L", kind: .locations)

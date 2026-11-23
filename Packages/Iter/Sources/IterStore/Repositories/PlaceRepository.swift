@@ -210,8 +210,10 @@ public struct PlaceRepository {
         guard place.isPinned != pinned else { return }
         store.perform(pinned ? .pinPlace : .unpinPlace) {
             store.touch(place)
+            let now = store.clock()
             place.isPinned = pinned
-            place.pinnedAt = pinned ? store.clock() : nil
+            place.pinnedAt = pinned ? now : nil
+            place.updatedAt = now
         }
     }
 

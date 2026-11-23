@@ -3,7 +3,8 @@ import IterModel
 import SwiftData
 
 /// Folders and filing. Trips and locations never share a folder; folders are one level deep (no subfolders).
-/// Invalid requests are silent no-ops. Moves only change order and membership; they do not change a trip's `updatedAt`.
+/// Invalid requests are silent no-ops. Every move, reorder and pin stamps `updatedAt` (from the store clock) on each record whose stored fields changed, and only those,
+/// so a `.iter` v2 merge import, which keeps the newer `updatedAt` per record, carries the change.
 @MainActor
 public struct FolderRepository {
     unowned let store: LibraryStore
@@ -57,11 +58,13 @@ public struct FolderRepository {
                 store.touch(trip)
                 trip.folder = folder
                 trip.sortOrder = Double(i)
+                trip.updatedAt = now
             }
             for (i, place) in places.enumerated() {
                 store.touch(place)
                 place.folder = folder
                 place.sortOrder = Double(i)
+                place.updatedAt = now
             }
             return folder
         }
@@ -86,6 +89,7 @@ public struct FolderRepository {
                 for trip in store.tripsSorted(in: folder) {
                     store.touch(trip)
                     trip.folder = nil
+                    trip.updatedAt = store.clock()
                     trip.sortOrder = order
                     order += 1
                 }
@@ -94,6 +98,7 @@ public struct FolderRepository {
                     store.touch(place)
                     place.folder = nil
                     place.sortOrder = 0
+                    place.updatedAt = store.clock()
                 }
             }
             store.writeTombstone(.folder, id: folder.id)
@@ -110,9 +115,11 @@ public struct FolderRepository {
         store.perform(.moveFolder) {
             store.touch(folder)
             folder.updatedAt = store.clock()
+            let now = store.clock()
             for (i, item) in ordered.enumerated() where item.sortOrder != Double(i) {
                 store.touch(item)
                 item.sortOrder = Double(i)
+                item.updatedAt = now
             }
         }
     }
@@ -128,10 +135,12 @@ public struct FolderRepository {
         let ordered = Self.inserting(moving, into: target, at: index) { $0.id }
         guard moving.contains(where: { $0.folder?.id != folder?.id }) || ordered.map(\.id) != target.map(\.id) else { return }
         store.perform(.moveTrips) {
+            let now = store.clock()
             for (i, trip) in ordered.enumerated() where trip.folder?.id != folder?.id || trip.sortOrder != Double(i) {
                 store.touch(trip)
                 trip.folder = folder
                 trip.sortOrder = Double(i)
+                trip.updatedAt = now
             }
         }
     }
@@ -145,10 +154,12 @@ public struct FolderRepository {
         guard let folder else {
             guard moving.contains(where: { $0.folder != nil }) else { return }
             store.perform(.movePlaces) {
+                let now = store.clock()
                 for place in moving where place.folder != nil {
                     store.touch(place)
                     place.folder = nil
                     place.sortOrder = 0
+                    place.updatedAt = now
                 }
             }
             return
@@ -157,10 +168,12 @@ public struct FolderRepository {
         let ordered = Self.inserting(moving, into: target, at: index) { $0.id }
         guard moving.contains(where: { $0.folder?.id != folder.id }) || ordered.map(\.id) != target.map(\.id) else { return }
         store.perform(.movePlaces) {
+            let now = store.clock()
             for (i, place) in ordered.enumerated() where place.folder?.id != folder.id || place.sortOrder != Double(i) {
                 store.touch(place)
                 place.folder = folder
                 place.sortOrder = Double(i)
+                place.updatedAt = now
             }
         }
     }
@@ -170,8 +183,10 @@ public struct FolderRepository {
         guard folder.isPinned != pinned else { return }
         store.perform(pinned ? .pinFolder : .unpinFolder) {
             store.touch(folder)
+            let now = store.clock()
             folder.isPinned = pinned
-            folder.pinnedAt = pinned ? store.clock() : nil
+            folder.pinnedAt = pinned ? now : nil
+            folder.updatedAt = now
         }
     }
 

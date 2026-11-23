@@ -11,7 +11,14 @@ public enum StoredVisitStatus: String, Sendable, CaseIterable {
     case pending, enRoute, arrived, done, skipped
 }
 
-/// What to change on a visit; nil fields are left as they are.
+/// The dates of a visit, for `StopVisitUpdate.clearing`.
+public enum StopVisitDate: Sendable, CaseIterable {
+    case departedForAt, arrivedAt, leftAt, plannedLeaveBy, plannedArrival
+}
+
+/// What to change on a visit; nil fields are left as they are, except the dates named in `clearing`, which are set to nil
+/// (a date that has a value is set, whatever `clearing` says). That is the "leave / set / clear" choice per date, and it keeps
+/// every existing call site source-compatible.
 public struct StopVisitUpdate: Sendable {
     public var status: StoredVisitStatus?
     public var departedForAt: Date?
@@ -19,9 +26,24 @@ public struct StopVisitUpdate: Sendable {
     public var leftAt: Date?
     public var plannedLeaveBy: Date?
     public var plannedArrival: Date?
+    public var clearing: Set<StopVisitDate>
+
+    /// Writes exactly the given dates: each nil date is cleared, not left. Used to mirror a run engine's visit.
+    public static func exact(status: StoredVisitStatus, departedForAt: Date?, arrivedAt: Date?, leftAt: Date?,
+                             plannedLeaveBy: Date?, plannedArrival: Date?) -> StopVisitUpdate {
+        var clearing = Set<StopVisitDate>()
+        if departedForAt == nil { clearing.insert(.departedForAt) }
+        if arrivedAt == nil { clearing.insert(.arrivedAt) }
+        if leftAt == nil { clearing.insert(.leftAt) }
+        if plannedLeaveBy == nil { clearing.insert(.plannedLeaveBy) }
+        if plannedArrival == nil { clearing.insert(.plannedArrival) }
+        return StopVisitUpdate(status: status, departedForAt: departedForAt, arrivedAt: arrivedAt, leftAt: leftAt,
+                               plannedLeaveBy: plannedLeaveBy, plannedArrival: plannedArrival, clearing: clearing)
+    }
 
     public init(status: StoredVisitStatus? = nil, departedForAt: Date? = nil, arrivedAt: Date? = nil, leftAt: Date? = nil,
-                plannedLeaveBy: Date? = nil, plannedArrival: Date? = nil) {
+                plannedLeaveBy: Date? = nil, plannedArrival: Date? = nil, clearing: Set<StopVisitDate> = []) {
+        self.clearing = clearing
         self.status = status
         self.departedForAt = departedForAt
         self.arrivedAt = arrivedAt
@@ -55,15 +77,36 @@ public struct RunRepository {
 
     @discardableResult
     public func createRun(forTrip tripID: UUID, state: StoredRunState = .armed) -> TripRunRecord {
-        let run = TripRunRecord()
+        createRun(id: UUID(), forTrip: tripID, state: state)
+    }
+
+    /// Creates the run with the caller's id (the run engine's), so the record and the engine agree. `startedAt` and
+    /// `endedAt`, when given, are the engine's times and replace the store's own stamps.
+    @discardableResult
+    public func createRun(id: UUID, forTrip tripID: UUID, state: StoredRunState = .armed, startedAt: Date? = nil,
+                          endedAt: Date? = nil) -> TripRunRecord {
+        let run = TripRunRecord(id: id)
         store.context.insert(run)
         run.tripID = tripID
         run.stateRaw = state.rawValue
         let now = store.clock()
         if state == .active { run.startedAt = now }
+        if let startedAt { run.startedAt = startedAt }
+        run.endedAt = endedAt
         run.updatedAt = now
         store.didChange()
         return run
+    }
+
+    /// Sets state, current stop and the start and end times to exactly the given values (nil clears). For mirroring a run
+    /// engine, whose times are the truth; `setState` stamps the store's own clock instead.
+    public func restore(_ run: TripRunRecord, state: StoredRunState, currentStopID: UUID?, startedAt: Date?, endedAt: Date?) {
+        run.stateRaw = state.rawValue
+        run.currentStopID = currentStopID
+        run.startedAt = startedAt
+        run.endedAt = endedAt
+        run.updatedAt = store.clock()
+        store.didChange()
     }
 
     /// Sets the state. The first time a run goes active it gets `startedAt`; finishing sets `endedAt`.
@@ -104,6 +147,15 @@ public struct RunRepository {
         if let date = update.leftAt { visit.leftAt = date }
         if let date = update.plannedLeaveBy { visit.plannedLeaveBy = date }
         if let date = update.plannedArrival { visit.plannedArrival = date }
+        for date in update.clearing {
+            switch date {
+            case .departedForAt: if update.departedForAt == nil { visit.departedForAt = nil }
+            case .arrivedAt: if update.arrivedAt == nil { visit.arrivedAt = nil }
+            case .leftAt: if update.leftAt == nil { visit.leftAt = nil }
+            case .plannedLeaveBy: if update.plannedLeaveBy == nil { visit.plannedLeaveBy = nil }
+            case .plannedArrival: if update.plannedArrival == nil { visit.plannedArrival = nil }
+            }
+        }
         visit.updatedAt = store.clock()
         store.didChange()
         return visit

@@ -55,6 +55,7 @@ extension LibraryStore {
         for (i, trip) in trips.enumerated() where trip.sortOrder != Double(i) {
             touch(trip)
             trip.sortOrder = Double(i)
+            trip.updatedAt = clock()
         }
     }
 
