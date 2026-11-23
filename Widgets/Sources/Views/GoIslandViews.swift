@@ -32,7 +32,7 @@ struct GoIslandCompactLeading: View {
                 }
                 Text(verbatim: p.shortLabel)
                     .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(p.status?.tone == .warning ? IterColor.warning : IterColor.textPrimary.color)
+                    .foregroundStyle(p.isHistorical || p.status?.tone == .warning ? IterColor.warning : IterColor.textPrimary.color)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
             }
@@ -55,7 +55,14 @@ struct GoIslandCompactTrailing: View {
         let p = GoPresentation(content, clock: clock, zone: zone, isStale: isStale)
         IslandSurface {
             Group {
-                if let countdown = p.countdown {
+                if p.isHistorical, !p.isIdle, !p.isFinished {
+                    // Old data: the age marker (clock and the time it was taken), not a status or a countdown.
+                    VStack(alignment: .trailing, spacing: 0) {
+                        Image(systemName: "clock.arrow.circlepath").font(.system(size: 11, weight: .semibold))
+                        Text(verbatim: TimeText.time(content.dataAsOf, in: p.zone)).font(.system(size: 11, weight: .semibold)).monospacedDigit()
+                    }
+                    .foregroundStyle(IterColor.warning)
+                } else if let countdown = p.countdown {
                     GoCountdownText(target: countdown.target, clock: clock, font: .system(size: 10.5, weight: .semibold),
                                     alignment: .trailing, lineLimit: 2)
                         .foregroundStyle(p.isDim ? IterColor.textSecondary : IterColor.textPrimary)

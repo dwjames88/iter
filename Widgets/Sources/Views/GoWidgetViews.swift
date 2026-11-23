@@ -222,7 +222,7 @@ private struct GoCircularWidget: View {
             .gaugeStyle(.accessoryCircularCapacity)
         } else if let countdown = p.countdown {
             VStack(spacing: 0) {
-                Image(systemName: marker ?? (p.phase == .driving ? "car.fill" : "figure.walk.departure")).font(.system(size: 12, weight: .semibold))
+                Image(systemName: marker ?? (p.phase == .driving ? "car.fill" : (p.phase == .atStop ? p.content.windowKind.map { LightText.symbol($0) } ?? "clock" : "figure.walk.departure"))).font(.system(size: 12, weight: .semibold))
                     .widgetAccentable()
                 GoCountdownText(target: countdown.target, clock: p.clock, font: .system(size: 13, weight: .semibold), alignment: .center, lineLimit: 2)
                     .frame(width: 58)
@@ -248,12 +248,13 @@ private struct GoInlineWidget: View {
             Label { Text(verbatim: String(localized: "Trip complete")) } icon: { Image(systemName: "checkmark.circle.fill") }
         } else if let countdown = p.countdown {
             Label {
-                (Text(verbatim: "\(p.phase == .driving ? String(localized: "Arrive") : String(localized: "Leave")) ")
+                (Text(verbatim: "\(p.phase == .driving ? String(localized: "Arrive in") : (p.phase == .atStop && p.countdown?.target == p.content.windowEnd ? String(localized: "Ends in") : String(localized: "Leave in"))) ")
                  + GoCountdownText.text(target: countdown.target, clock: p.clock)
                  + Text(verbatim: p.score.map { " · \($0)" } ?? ""))
             } icon: {
                 Image(systemName: p.content.windowKind.map { LightText.symbol($0) } ?? "car.fill")
             }
+            .minimumScaleFactor(0.8)
         } else if let status = p.status {
             Label { Text(verbatim: status.text + (p.score.map { " · \($0)" } ?? "")) } icon: {
                 Image(systemName: GoHeadline.symbol(status.tone, phase: p.phase) ?? "car.fill")

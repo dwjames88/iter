@@ -5,7 +5,7 @@ import Testing
 
 @Suite struct GoPresentationTests {
     private func p(_ s: GoSample, minutesLater: Double = 0, stale: Bool = false) -> GoPresentation {
-        let now = GoRenderCase.now
+        let now = s.renderNow
         return GoPresentation(GoActivityContent(snapshot: s.snapshot(now: now)), clock: .frozen(now.addingTimeInterval(minutesLater * 60)),
                               zone: TimeZone(identifier: "America/Denver")!, isStale: stale)
     }
@@ -77,8 +77,8 @@ import Testing
 
     @Test func oldStatusIsHistoryNotFact() throws {
         var c = p(.drivingLate).content
-        c.dataAsOf = GoRenderCase.now.addingTimeInterval(-3 * 3600)
-        let x = GoPresentation(c, clock: .frozen(GoRenderCase.now), zone: p(.drivingLate).zone)
+        c.dataAsOf = GoSample.drivingLate.renderNow.addingTimeInterval(-3 * 3600)
+        let x = GoPresentation(c, clock: .frozen(GoSample.drivingLate.renderNow), zone: p(.drivingLate).zone)
         #expect(x.status?.text.hasPrefix("Was late") == true)
         #expect(x.scoreKindWord?.hasPrefix("As of") == true)
         #expect(x.liveColumnTitle == "Last reading")
@@ -113,7 +113,7 @@ import Testing
 
     @Test func contentFitsTheActivityBudget() throws {
         for s in GoSample.allCases {
-            let data = try JSONEncoder().encode(GoActivityContent(snapshot: s.snapshot(now: GoRenderCase.now)))
+            let data = try JSONEncoder().encode(GoActivityContent(snapshot: s.snapshot(now: s.renderNow)))
             #expect(data.count < 2048)
         }
     }

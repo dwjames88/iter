@@ -20,11 +20,12 @@ struct GoRenderCase: Sendable {
     static let now = ISO8601DateFormatter().date(from: "2026-10-24T22:30:00Z")!
 
     static func sample(_ s: GoSample) -> GoRenderCase {
-        GoRenderCase(name: s.rawValue, snapshot: s.snapshot(now: now), isStale: s == .stale, now: now)
+        GoRenderCase(name: s.rawValue, snapshot: s.snapshot(now: s.renderNow), isStale: s == .stale, now: s.renderNow)
     }
 
     /// The long-name case: a real stop name far past what the Live Activity can show on one line.
     static var longName: GoRenderCase {
+        let now = GoSample.drivingOnTime.renderNow
         var snap = GoSample.drivingOnTime.snapshot(now: now)
         snap.next?.name = "Mesa Arch at Sunrise, Canyonlands Island in the Sky District"
         return GoRenderCase(name: "longName", snapshot: snap, isStale: false, now: now)

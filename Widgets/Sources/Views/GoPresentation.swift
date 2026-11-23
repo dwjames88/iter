@@ -148,13 +148,14 @@ struct GoPresentation: Equatable {
 
     /// The short label beside the window symbol in the compact island.
     var shortLabel: String {
+        // Old data never sounds current: no "Late", no countdown word.
+        if isHistorical, !isIdle, !isFinished { return String(localized: "Old") }
         switch phase {
-        case .idle: String(localized: "Iter")
-        case .finished: String(localized: "Done")
-        case .paused: String(localized: "Paused")
-        case .driving: content.status == .late || content.status == .missed ? String(localized: "Late") : String(localized: "Arrive")
-        case .armed, .betweenStops, .atStop:
-            status?.tone == .warning ? String(localized: "Late") : String(localized: "Leave")
+        case .idle: return String(localized: "Iter")
+        case .finished: return String(localized: "Done")
+        case .paused: return String(localized: "Paused")
+        case .driving: return content.status == .late || content.status == .missed ? String(localized: "Late") : String(localized: "Arrive")
+        case .armed, .betweenStops, .atStop: return status?.tone == .warning ? String(localized: "Late") : String(localized: "Leave")
         }
     }
 
