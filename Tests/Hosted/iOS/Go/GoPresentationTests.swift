@@ -39,7 +39,9 @@ import Testing
         // The content says "early"; the clock has since passed leave-by by ten minutes.
         let base = p(.armedEarly)
         let leaveBy = try #require(base.content.leaveBy)
-        let later = GoPresentation(base.content, clock: .frozen(leaveBy.addingTimeInterval(10 * 60)), zone: base.zone)
+        var fresh = base.content
+        fresh.dataAsOf = leaveBy.addingTimeInterval(9 * 60)
+        let later = GoPresentation(fresh, clock: .frozen(leaveBy.addingTimeInterval(10 * 60)), zone: base.zone)
         #expect(later.countdown == nil)
         #expect(later.status?.tone == .warning)
         #expect(later.status?.text.contains("10") == true)
@@ -66,10 +68,40 @@ import Testing
         #expect(p(.idle).countdown == nil)
     }
 
-    @Test func frozenCountdownFormat() {
-        #expect(GoPresentation.frozen(5050) == "1:24:10")
-        #expect(GoPresentation.frozen(1450) == "24:10")
-        #expect(GoPresentation.frozen(-5) == "0:00")
+    @Test func countdownIsInWordsNotClockDigits() {
+        #expect(GoPresentation.durationWords(5050) == "1 hr, 24 min")
+        #expect(GoPresentation.durationWords(1450) == "24 min, 10 sec")
+        #expect(GoPresentation.durationWords(42) == "42 sec")
+        #expect(GoPresentation.durationWords(-5) == "0 sec")
+    }
+
+    @Test func oldStatusIsHistoryNotFact() throws {
+        var c = p(.drivingLate).content
+        c.dataAsOf = GoRenderCase.now.addingTimeInterval(-3 * 3600)
+        let x = GoPresentation(c, clock: .frozen(GoRenderCase.now), zone: p(.drivingLate).zone)
+        #expect(x.status?.text.hasPrefix("Was late") == true)
+        #expect(x.scoreKindWord?.hasPrefix("As of") == true)
+        #expect(x.liveColumnTitle == "Last reading")
+        #expect(x.chipOpacity < 0.7)
+        #expect(p(.drivingOnTime).scoreKindWord == "Live")
+        #expect(p(.drivingOnTime).liveColumnTitle == "Live")
+        #expect(p(.drivingOnTime).chipOpacity == 1)
+        // A leave-by that passed on an old plan is "was due", never "late by".
+        let stale = p(.stale)
+        #expect(stale.status?.text.hasPrefix("Leave was due") == true)
+    }
+
+    @Test func atStopCountsDownToTheWindowEnd() throws {
+        let x = p(.atStopShooting)
+        let countdown = try #require(x.countdown)
+        #expect(countdown.label.hasSuffix("ends in"))
+        #expect(countdown.target == x.content.windowEnd)
+    }
+
+    @Test func navigateCarriesTheStop() {
+        let c = p(.drivingOnTime).content
+        #expect(c.stopID != nil)
+        #expect(GoDeepLink.navigate(stop: c.stopID).absoluteString.contains("stop="))
     }
 
     @Test func deepLinks() {
