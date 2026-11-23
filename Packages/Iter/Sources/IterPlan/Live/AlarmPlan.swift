@@ -25,6 +25,20 @@ public struct PlannedAlarm: Codable, Hashable, Sendable, Identifiable {
     public var windowStart: Date?
     /// True for `.leaveNow`: the notification offers a Navigate action.
     public var includesNavigateAction: Bool
+
+    public init(id: String, kind: AlarmKind, fireAt: Date, stopID: UUID, stopName: String, leaveBy: Date, driveSeconds: TimeInterval,
+                windowKind: LightWindowKind, windowStart: Date?, includesNavigateAction: Bool) {
+        self.id = id
+        self.kind = kind
+        self.fireAt = fireAt
+        self.stopID = stopID
+        self.stopName = stopName
+        self.leaveBy = leaveBy
+        self.driveSeconds = driveSeconds
+        self.windowKind = windowKind
+        self.windowStart = windowStart
+        self.includesNavigateAction = includesNavigateAction
+    }
 }
 
 public enum AlarmPlan {
