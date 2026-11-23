@@ -74,3 +74,47 @@ func sampleActivityContentIsUnderTwoKilobytes(_ sample: GoSample) throws {
     #expect(s(.drivingOnTime).sourceDetails?.first?.isMilitary == true)
     #expect(s(.drivingOnTime).hours?.first?.basis == .observation && s(.drivingOnTime).hours?.last?.basis == .forecast)
 }
+
+/// 2026-10-24 22:30 UTC, 16:30 MDT in Moab: the `now` every render uses. Sunset there is about 18:20, sunrise about 07:35.
+@Test(arguments: GoSample.allCases)
+func sampleLightWindowsStartAtPlausibleLocalHours(_ sample: GoSample) throws {
+    let now = Date(timeIntervalSince1970: 1_792_881_000)
+    var calendar = Calendar(identifier: .gregorian)
+    calendar.timeZone = try #require(TimeZone(identifier: "America/Denver"))
+    #expect(calendar.component(.hour, from: now) == 16 && calendar.component(.minute, from: now) == 30)
+    let s = sample.snapshot(now: now)
+
+    func hour(_ d: Date) -> Double { Double(calendar.component(.hour, from: d)) + Double(calendar.component(.minute, from: d)) / 60 }
+    func check(_ kind: LightWindowKind?, _ start: Date?, _ what: String) {
+        guard let kind, let start else { return }
+        let h = hour(start)
+        let range: ClosedRange<Double>
+        switch kind {
+        case .blueMorning: range = 6.0...7.5
+        case .goldenMorning: range = 6.75...8.5
+        case .goldenEvening: range = 16.5...18.5
+        case .blueEvening: range = 18.0...19.5
+        case .night: range = 19.0...23.99
+        }
+        #expect(range.contains(h), "\(sample) \(what) \(kind) starts at \(h)")
+    }
+    for stop in [s.current, s.next].compactMap({ $0 }) + (s.schedule ?? []).map(\.stop) {
+        check(stop.windowKind, stop.windowStart, stop.name)
+    }
+    check(s.sky?.windowKind, s.sky?.windowStart, "sky")
+    check(s.alternative?.windowKind, s.alternative?.windowStart, "alternative")
+    // A golden evening ends at sunset, about 18:20 (or 18:19 the next day).
+    for stop in [s.current, s.next].compactMap({ $0 }) where stop.windowKind == .goldenEvening {
+        #expect((18.0...18.6).contains(hour(try #require(stop.windowEnd))), "\(sample) sunset")
+    }
+    // Overnight: the next stop is tomorrow's sunrise, leave-by in the early morning, the suggestion this evening.
+    if sample == .betweenOvernight {
+        let next = try #require(s.next)
+        #expect(next.dayIndex == 1 && next.windowKind == .goldenMorning)
+        #expect((7.4...7.8).contains(hour(try #require(next.windowStart))))
+        #expect((5.75...6.75).contains(hour(try #require(s.leave?.leaveBy))))
+        #expect((19.5...20.5).contains(hour(try #require(s.leave?.suggestedDeparture))))
+        #expect(s.leave?.earliestDeparture == nil)
+        #expect(try #require(s.leave?.leaveBy) > now.addingTimeInterval(12 * 3600))
+    }
+}
