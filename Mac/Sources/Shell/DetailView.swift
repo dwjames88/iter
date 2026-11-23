@@ -103,7 +103,8 @@ struct PlacePage: View {
 
     var body: some View {
         let conditions = box.value
-        PlacePageScreen(place: place, conditions: conditions, library: window.library)
+        PlacePageScreen(place: place, conditions: conditions, library: window.library,
+                        readout: { window.find.spots.readout(for: $0.coordinate, elevationMeters: $0.elevationMeters) })
             .onAppear {
                 window.currentConditions = conditions
                 conditions.start()
