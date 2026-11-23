@@ -199,6 +199,15 @@ public final class LibraryModel {
 
     public func isSaved(_ place: Place) -> Bool { store.places.isSaved(place) }
 
+    /// Adds a place as a stop on a day of an existing trip (`day` is zero-based; the store saves the place with the stop).
+    @discardableResult
+    public func addPlace(_ place: Place, toTrip tripID: UUID, day: Int = 0) -> Bool {
+        guard let record = store.trips.trip(id: tripID) else { return false }
+        act { store.trips.addStop(place, to: record, day: day) }
+        refresh()
+        return true
+    }
+
     /// Adds a place of your own (a pin you placed).
     @discardableResult
     public func createPlace(name: String, locality: String = "", coordinate: Coordinate, timeZoneIdentifier: String,
