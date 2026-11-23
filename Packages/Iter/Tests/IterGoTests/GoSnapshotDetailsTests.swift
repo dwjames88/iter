@@ -156,3 +156,62 @@ private func s1Conditions(_ rig: RunRig, now: Date) -> GoConditionsState {
     #expect(decoded.hours == nil && decoded.sourceDetails == nil && decoded.schedule == nil && decoded.here == nil && decoded.summary == nil)
     #expect(decoded.next == full.next && decoded.leave == full.leave && decoded.sky == full.sky)
 }
+
+private func atS1() -> RunRig {
+    var rig = RunRig.driving(to: RunFixture().s1, now: RunFixture.h(9))
+    rig.fix(near: rig.fx.s1, east: 0, speed: 0, at: RunFixture.h(9.5))
+    return rig
+}
+
+private func skyFor(_ id: UUID) -> GoSkyInfo {
+    GoSkyInfo(stopID: id, windowKind: .goldenMorning, windowStart: RunFixture.h(10), windowEnd: RunFixture.h(11), liveScore: 70, forecastScore: 60, band: .good,
+              confidence: .high, trend: .steady, basis: .blended, asOf: RunFixture.h(9.4), notice: nil, isStale: false)
+}
+
+@Test func atAStopWithItsWindowRunningConditionsAreAboutThatStop() throws {
+    let rig = atS1()
+    let now = RunFixture.h(10.5)
+    var c = s1Conditions(rig, now: now)
+    c.sky = skyFor(rig.fx.s1.id)
+    c.weather = [GoWeatherInfo(subject: .stop(rig.fx.s1.id), basis: .observation, tempC: 4, cloudTotal: 0.2, visibilityKm: 20, precipChance: nil, windMs: 2,
+                               stationName: "K", stationDistanceKm: 5, asOf: now)]
+    let s = GoSnapshotBuilder.build(input(rig, now: now, conditions: c))
+    #expect(s.phase == .atStop && s.current?.name == "S1" && s.next?.name == "S2")
+    #expect(s.sky?.stopID == rig.fx.s1.id && s.weather.first?.subject == .stop(rig.fx.s1.id))
+    #expect(s.hours?.count == 6 && s.hours?.contains { $0.isInWindow } == true)
+    #expect(s.sourceDetails?.contains { $0.role == "Observation" } == true && s.alerts.count == 1)
+    // Within the grace after the window, still this stop; after it, the next stop (nothing held about it, so nothing shown).
+    #expect(GoSnapshotBuilder.build(input(rig, now: RunFixture.h(11).addingTimeInterval(ConditionsSubject.windowGrace - 1), conditions: c)).sky != nil)
+    let after = GoSnapshotBuilder.build(input(rig, now: RunFixture.h(11).addingTimeInterval(ConditionsSubject.windowGrace + 1), conditions: c))
+    #expect(after.sky == nil)
+    #expect(after.hours == nil)
+    #expect(after.sourceDetails == nil)
+    #expect(after.weather.isEmpty)
+}
+
+@Test func conditionsSubjectIsCurrentOnlyAtALightStopInItsWindow() {
+    let end = RunFixture.h(11)
+    #expect(ConditionsSubject.isCurrent(phase: .atStop, kind: .light, windowEnd: end, now: RunFixture.h(10)))
+    #expect(!ConditionsSubject.isCurrent(phase: .atStop, kind: .lodging, windowEnd: end, now: RunFixture.h(10)))
+    #expect(!ConditionsSubject.isCurrent(phase: .atStop, kind: .light, windowEnd: nil, now: RunFixture.h(10)))
+    #expect(!ConditionsSubject.isCurrent(phase: .driving, kind: .light, windowEnd: end, now: RunFixture.h(10)))
+    #expect(!ConditionsSubject.isCurrent(phase: .atStop, kind: .light, windowEnd: end, now: RunFixture.h(12)))
+}
+
+@MainActor
+@Test func engineScoresTheStopYouAreAtWhileItsWindowRuns() async throws {
+    let w = simDay()
+    let h = SimHarness(w)
+    await h.start()
+    let leave = try #require(h.last.leave?.leaveBy)
+    h.feed(SimWorld.drive(from: w.home.coordinate, to: w.stop(0).place.coordinate, start: leave.addingTimeInterval(240), park: 1800))
+    h.step = 10
+    var guardCount = 0
+    while h.run?.phase != .atStop, guardCount < 600 { await h.advance(by: 10); guardCount += 1 }
+    #expect(h.run?.phase == .atStop)
+    await h.advance(by: 120)
+    let atStop = try #require(h.snapshots.last)
+    #expect(atStop.current?.id == w.stop(0).id && atStop.next?.id != atStop.current?.id)
+    if let sky = atStop.sky { #expect(sky.stopID == w.stop(0).id) }
+    #expect(atStop.weather.allSatisfy { $0.subject == .here || $0.subject == .stop(w.stop(0).id) })
+}

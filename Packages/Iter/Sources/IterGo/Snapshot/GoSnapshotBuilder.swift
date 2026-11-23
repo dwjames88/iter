@@ -81,6 +81,18 @@ public struct GoSnapshotInput: Sendable {
     }
 }
 
+/// Which stop the conditions are about. Usually the next stop; while you are at a light stop whose window has not ended (plus a
+/// short grace), the stop you are standing at.
+public enum ConditionsSubject {
+    /// How long after its window ends the current stop stays the subject.
+    public static let windowGrace: TimeInterval = 5 * 60
+
+    public static func isCurrent(phase: GoPhase, kind: StopKind?, windowEnd: Date?, now: Date) -> Bool {
+        guard phase == .atStop, kind == .light, let windowEnd else { return false }
+        return now < windowEnd.addingTimeInterval(windowGrace)
+    }
+}
+
 /// Builds the one value every Go surface renders. Pure.
 public enum GoSnapshotBuilder {
     /// Location is stale after this long without a fix while driving.
@@ -146,7 +158,11 @@ public enum GoSnapshotBuilder {
 
         // Conditions: only what is about the stop shown.
         let c = i.conditions
-        let nextID = nextStop?.id
+        let currentStop = stop(live?.currentStop?.stopID)
+        let atCurrent = ConditionsSubject.isCurrent(phase: phase, kind: currentStop?.kind, windowEnd: currentInfo?.windowEnd, now: i.now)
+        let subjectStop = atCurrent ? currentStop : nextStop
+        let subjectInfo = atCurrent ? currentInfo : nextInfo
+        let nextID = subjectStop?.id
         let sky = c.sky.flatMap { $0.stopID == nextID ? $0 : nil }
         let weather = c.weather.filter { w in
             switch w.subject { case .here: true; case .stop(let id): id == nextID }
@@ -176,8 +192,8 @@ public enum GoSnapshotBuilder {
         if let station = c.nextLive?.current?.stationName { add(station) }
 
         // Phase 9 detail fields.
-        let sameStop = nextStop.map { c.nextLive?.placeID == $0.place.id } ?? false
-        let hours = sameStop ? Self.hours(c.nextLive?.strip ?? [], window: nextInfo.flatMap { w in w.windowStart.flatMap { s in w.windowEnd.map { TimeSpan(start: s, end: $0) } } }) : nil
+        let sameStop = subjectStop.map { c.nextLive?.placeID == $0.place.id } ?? false
+        let hours = sameStop ? Self.hours(c.nextLive?.strip ?? [], window: subjectInfo.flatMap { w in w.windowStart.flatMap { s in w.windowEnd.map { TimeSpan(start: s, end: $0) } } }) : nil
         let schedule = phase == .finished ? nil : (live?.upcoming.compactMap { l in
             stop(l.stopID).map { GoScheduleItem(stop: info($0, l), leaveBy: l.leaveBy, arrival: l.projectedArrival, status: GoLeaveStatus(l.status)) }
         }).flatMap { $0.isEmpty ? nil : $0 }
@@ -260,7 +276,7 @@ public enum GoSnapshotBuilder {
                 entries[index].distanceKm = obs.distanceKm
             }
         }
-        if hasAlerts, let alerts = c.nextReport?.alerts.provenance {
+        if sameStop, hasAlerts, let alerts = c.nextReport?.alerts.provenance {
             add(alerts.source, role: "Alerts", provenance: alerts)
         }
         let out = entries.enumerated().map { offset, e -> (Int, SourceTier, GoSourceInfo) in

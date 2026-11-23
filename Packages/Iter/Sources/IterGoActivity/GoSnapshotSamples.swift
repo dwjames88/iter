@@ -394,12 +394,12 @@ private enum GoSampleFactory {
         s.drive = GoDriveInfo(arrival: f.at(l + 19), driveSeconds: 1140, driveMeters: nil, source: .planned, asOf: f.ago(42))
         s.stay = GoStayInfo(plannedDeparture: f.at(18), latestDeparture: f.at(l), cutsShortBySeconds: nil, nextStopName: "Mesa Arch",
                             nextWindowKind: .blueEvening)
-        s.sky = f.sky(.mesaArch, live: 68, forecast: 61, confidence: .high, trend: .rising, basis: .blended, asOfAgo: 3)
+        s.sky = f.sky(.deadHorse, live: 68, forecast: 61, confidence: .high, trend: .rising, basis: .blended, asOfAgo: 3)
         s.weather = [f.observed(.here, agoMin: 7, temp: 6.4, cloud: 0.22, vis: 40, wind: 3.0, distance: 38),
-                     f.forecastWx(.stop(Spot.mesaArch.id), agoMin: 3, temp: 6.8, cloud: 0.24, wind: 3.6)]
+                     f.forecastWx(.stop(Spot.deadHorse.id), agoMin: 3, temp: 6.8, cloud: 0.24, wind: 3.6)]
         s.freshness = GoFreshness(locationAsOf: f.ago(0.5), etaAsOf: f.ago(42), conditionsAsOf: f.ago(3), packBuiltAt: f.ago(260), nextRefreshAt: f.at(6))
         s.sources = ["NOAA HRRR", "KCNY METAR", "KHIF (Hill AFB) METAR"]
-        s.hours = f.hours(for: .mesaArch, bases: obsHours, cloud: [0.24, 0.2, 0.22, 0.28, 0.35, 0.4], temp: 6.5)
+        s.hours = f.hours(for: .deadHorse, bases: obsHours, cloud: [0.24, 0.2, 0.22, 0.28, 0.35, 0.4], temp: 6.5)
         s.sourceDetails = f.details(forecastAge: 3, obs: true, military: true, obsAge: 7)
         s.schedule = f.schedule([.mesaArch, .lodging, .fisherTowers, .delicateArch], first: (l, l + 19, .early))
         s.here = Coordinate(latitude: 38.4838, longitude: -109.7412)
@@ -414,12 +414,12 @@ private enum GoSampleFactory {
         s.drive = GoDriveInfo(arrival: f.at(l + 19), driveSeconds: 1140, driveMeters: nil, source: .planned, asOf: f.ago(25))
         s.stay = GoStayInfo(plannedDeparture: f.at(40), latestDeparture: f.at(l), cutsShortBySeconds: (40 - l) * 60, nextStopName: "Mesa Arch",
                             nextWindowKind: .blueEvening)
-        s.sky = f.sky(.mesaArch, live: 72, forecast: 66, confidence: .high, trend: .steady, basis: .blended, asOfAgo: 2)
+        s.sky = f.sky(.deadHorse, live: 72, forecast: 66, confidence: .high, trend: .steady, basis: .blended, asOfAgo: 2)
         s.weather = [f.observed(.here, agoMin: 5, temp: 6.0, cloud: 0.2, vis: 40, wind: 2.8, distance: 38),
-                     f.forecastWx(.stop(Spot.mesaArch.id), agoMin: 2, temp: 6.4, cloud: 0.2, wind: 3.4)]
+                     f.forecastWx(.stop(Spot.deadHorse.id), agoMin: 2, temp: 6.4, cloud: 0.2, wind: 3.4)]
         s.freshness = GoFreshness(locationAsOf: f.ago(0.5), etaAsOf: f.ago(25), conditionsAsOf: f.ago(2), packBuiltAt: f.ago(270), nextRefreshAt: f.at(6))
         s.sources = ["NOAA HRRR", "KCNY METAR"]
-        s.hours = f.hours(for: .mesaArch, bases: obsHours, cloud: [0.2, 0.18, 0.2, 0.26, 0.3, 0.35], temp: 6.2)
+        s.hours = f.hours(for: .deadHorse, bases: obsHours, cloud: [0.2, 0.18, 0.2, 0.26, 0.3, 0.35], temp: 6.2)
         s.sourceDetails = f.details(forecastAge: 2, obs: true, obsAge: 5)
         s.schedule = f.schedule([.mesaArch, .lodging, .fisherTowers, .delicateArch], first: (l, l + 19, .leaveSoon))
         s.here = Coordinate(latitude: 38.4838, longitude: -109.7412)
@@ -434,13 +434,13 @@ private enum GoSampleFactory {
         s.drive = GoDriveInfo(arrival: f.at(l + 19), driveSeconds: 1140, driveMeters: nil, source: .planned, asOf: f.ago(1))
         s.stay = GoStayInfo(plannedDeparture: f.at(40), latestDeparture: f.at(l), cutsShortBySeconds: nil, nextStopName: "Mesa Arch",
                             nextWindowKind: .blueEvening)
-        s.sky = f.sky(.mesaArch, live: 63, forecast: 60, confidence: .medium, trend: .steady, basis: .blended, asOfAgo: 2)
+        s.sky = f.sky(.deadHorse, live: 63, forecast: 60, confidence: .medium, trend: .steady, basis: .blended, asOfAgo: 2)
         s.weather = [f.observed(.here, agoMin: 4, temp: 7.1, cloud: 0.3, vis: 35, wind: 3.2, distance: 38),
-                     f.forecastWx(.stop(Spot.mesaArch.id), agoMin: 2, temp: 7.4, cloud: 0.3, wind: 3.8)]
+                     f.forecastWx(.stop(Spot.deadHorse.id), agoMin: 2, temp: 7.4, cloud: 0.3, wind: 3.8)]
         s.freshness = GoFreshness(locationAsOf: f.ago(0.3), etaAsOf: f.ago(1), conditionsAsOf: f.ago(2), packBuiltAt: f.ago(255), nextRefreshAt: f.at(5))
         s.undo = GoUndoInfo(toPhase: .atStop, stopID: Spot.deadHorse.id, stopName: "Dead Horse Point", expiresAt: f.at(80.0 / 60))
         s.sources = ["NOAA HRRR", "KCNY METAR"]
-        s.hours = f.hours(for: .mesaArch, bases: obsHours, cloud: [0.3, 0.28, 0.3, 0.34, 0.4, 0.45], temp: 7)
+        s.hours = f.hours(for: .deadHorse, bases: obsHours, cloud: [0.3, 0.28, 0.3, 0.34, 0.4, 0.45], temp: 7)
         s.sourceDetails = f.details(forecastAge: 2, obs: true, obsAge: 4)
         s.schedule = f.schedule([.mesaArch, .lodging, .fisherTowers, .delicateArch], first: (l, l + 19, .early))
         s.here = Coordinate(latitude: 38.4837, longitude: -109.7411)
