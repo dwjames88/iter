@@ -17,6 +17,11 @@ public enum ImageryURL {
         fill(layer.urlTemplate, ["time": time, "TileMatrix": String(matrix), "TileRow": String(row), "TileCol": String(col)])
     }
 
+    /// A GIBS Web Mercator tile for a daily layer: `{time}` (a UTC day), `{z}`, `{y}`, `{x}`.
+    public static func gibsMercatorTile(_ layer: ImageryLayer, day: String, z: Int, x: Int, y: Int) -> URL? {
+        fill(layer.urlTemplate, ["time": day, "z": String(z), "x": String(x), "y": String(y)])
+    }
+
     /// A slippy-map tile URL: `{z}`, `{x}`, `{y}`.
     public static func xyzTile(_ layer: ImageryLayer, z: Int, x: Int, y: Int) -> URL? {
         fill(layer.urlTemplate, ["z": String(z), "x": String(x), "y": String(y)])
@@ -63,6 +68,18 @@ public enum GIBSTime {
     /// `snapDate` formatted `yyyy-MM-dd'T'HH:mm:ss'Z'`, the form the GIBS `{time}` placeholder takes.
     public static func snap(_ now: Date, step: Duration, latency: Duration) -> String {
         SWPCUTC.iso(snapDate(now, step: step, latency: latency))
+    }
+}
+
+extension GIBSTime {
+    /// The UTC day (`yyyy-MM-dd`) of a daily layer to ask for: yesterday, because the current day's composite is still
+    /// being assembled and has holes.
+    public static func day(now: Date) -> String {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC") ?? .gmt
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: now) ?? now
+        let c = calendar.dateComponents([.year, .month, .day], from: yesterday)
+        return String(format: "%04d-%02d-%02d", c.year ?? 1970, c.month ?? 1, c.day ?? 1)
     }
 }
 

@@ -37,6 +37,20 @@ struct ImageryTests {
         #expect(iem.layers(at: Self.pacific).isEmpty)
     }
 
+    @Test func theVerifiedWebMercatorTrueColourTile() throws {
+        let layer = GIBSImagery.trueColorMercator
+        let url = try #require(ImageryURL.gibsMercatorTile(layer, day: "2026-11-21", z: 5, x: 5, y: 12))
+        // The exact URL that returned a 256 px JPEG of cloud over California on 2026-11-23.
+        #expect(url.absoluteString == "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2026-11-21/GoogleMapsCompatible_Level9/5/12/5.jpg")
+        #expect(layer.scheme == .xyz && layer.maxZoom == 9 && layer.tileSize == 256 && !layer.attribution.isEmpty)
+        #expect(layer.source == .nasaGIBS && layer.licence.key == "nasa.gibs")
+        // The day is yesterday in UTC, whatever the local zone.
+        #expect(GIBSTime.day(now: Date(timeIntervalSince1970: 1_795_392_000 + 3_600)) == "2026-11-22")   // 2026-11-23 01:00 UTC
+        #expect(GIBSTime.day(now: Date(timeIntervalSince1970: 1_795_392_000 - 3_600)) == "2026-11-21")   // 2026-11-22 23:00 UTC
+        // Not part of the geostationary list the conditions code reads.
+        #expect(gibs.allLayers.allSatisfy { $0.id != layer.id })
+    }
+
     @Test func theVerifiedGIBSTileURL() throws {
         let layer = try #require(gibs.layer(id: "gibs.goes-west.band13"))
         let url = ImageryURL.gibsTile(layer, time: "2026-11-22T12:00:00Z", matrix: 4, row: 4, col: 5)

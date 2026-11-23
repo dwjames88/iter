@@ -37,6 +37,21 @@ public struct GIBSImagery: ImageryProvider {
     /// The time string for `{time}` right now.
     public static func currentTime(now: Date) -> String { GIBSTime.snap(now, step: step, latency: latency) }
 
+    /// Daily true-colour cloud and land imagery in Web Mercator, the one GIBS layer a standard map tile overlay can draw.
+    ///
+    /// Verified 2026-11-23: `.../epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/2026-11-21/GoogleMapsCompatible_Level9/5/12/5.jpg`
+    /// returned a 256x256 JPEG (z 5, row 12, col 5: cloud over the Sierra Nevada and California). The capabilities document lists
+    /// the layer with `GoogleMapsCompatible_Level9` (zoom 0 to 9) and daily times. Kept out of `allLayers` because it is not a
+    /// geostationary layer and has no coverage shape: it is global, and not used by the conditions code.
+    /// `{time}` is a UTC day (`yyyy-MM-dd`), see `GIBSTime.day`; `{z}/{y}/{x}` are the Web Mercator tile (GIBS calls them
+    /// TileMatrix/TileRow/TileCol).
+    public static let trueColorMercator = ImageryLayer(
+        id: "gibs.modis-terra.truecolor", source: SourceCatalogue.nasaGIBS.id, title: "MODIS Terra true colour (clouds)",
+        kind: .satelliteVisible, scheme: .xyz,
+        urlTemplate: "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/{time}/GoogleMapsCompatible_Level9/{z}/{y}/{x}.jpg",
+        minZoom: 0, maxZoom: 9, tileSize: 256, timeStep: .seconds(86_400), typicalLatency: .seconds(86_400), coverage: .global,
+        attribution: "Imagery: NASA MODIS Terra via NASA GIBS (NASA ESDIS)", licence: SourceCatalogue.nasaGIBS.licence)
+
     private static func makeLayers(descriptor d: SourceDescriptor) -> [ImageryLayer] {
         struct Spec {
             let id: String, title: String, gibs: String, kind: ImageryLayer.Kind, matrixSet: String
