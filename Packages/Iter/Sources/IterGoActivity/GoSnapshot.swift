@@ -378,13 +378,17 @@ public struct GoSnapshot: Codable, Hashable, Sendable {
     public var here: Coordinate?
     /// When finished: what happened at each stop.
     public var summary: GoTripSummary?
+    /// True when the numbers come from the built-in sample services (`-IterSampleDataEnabled`): drive times and the sky index are
+    /// synthetic, so no surface calls them live. nil in the real app.
+    public var isSampleData: Bool?
 
     public init(version: Int = GoSnapshot.currentVersion, generatedAt: Date, tripID: UUID?, tripName: String, runID: UUID?, phase: GoPhase,
                 current: GoStopInfo? = nil, next: GoStopInfo? = nil, remainingCount: Int = 0, leave: GoLeaveInfo? = nil,
                 drive: GoDriveInfo? = nil, stay: GoStayInfo? = nil, alternative: GoAlternativeInfo? = nil, sky: GoSkyInfo? = nil,
                 weather: [GoWeatherInfo] = [], alerts: [GoAlertInfo] = [], freshness: GoFreshness = GoFreshness(),
                 undo: GoUndoInfo? = nil, sources: [String] = [], hours: [GoHourInfo]? = nil, sourceDetails: [GoSourceInfo]? = nil,
-                schedule: [GoScheduleItem]? = nil, here: Coordinate? = nil, summary: GoTripSummary? = nil) {
+                schedule: [GoScheduleItem]? = nil, here: Coordinate? = nil, summary: GoTripSummary? = nil,
+                isSampleData: Bool? = nil) {
         self.version = version
         self.generatedAt = generatedAt
         self.tripID = tripID
@@ -409,6 +413,7 @@ public struct GoSnapshot: Codable, Hashable, Sendable {
         self.schedule = schedule
         self.here = here
         self.summary = summary
+        self.isSampleData = isSampleData
     }
 
     /// No run.

@@ -66,7 +66,7 @@ public struct GoHeroCard: View {
         VStack(alignment: .leading, spacing: IterSpace.xs) {
             if let drive = snapshot.drive {
                 GoLine("road.lanes") { Text(verbatim: GoText.driveLine(drive, locale: locale)) }
-                GoLine(GoText.etaQualitySymbol(drive.source)) { Text(verbatim: GoText.etaQuality(drive.source, locale: locale)) }
+                GoLine(GoText.etaQualitySymbol(drive.source, sample: snapshot.isSampleData == true)) { Text(verbatim: GoText.etaQuality(drive.source, sample: snapshot.isSampleData == true, locale: locale)) }
             }
             if let line = GoText.arrivalAgainstLight(snapshot, locale: locale) {
                 GoLine("flag.checkered") { Text(verbatim: line) }
@@ -102,8 +102,8 @@ public struct GoHeroCard: View {
             GoLine(status.symbol) { Text(verbatim: status.text) }
                 .foregroundStyle(tint(status.tone))
             if let drive = snapshot.drive {
-                GoLine(GoText.etaQualitySymbol(drive.source)) {
-                    Text(verbatim: "\(GoText.etaQuality(drive.source, locale: locale)) · \(GoText.driveLine(drive, locale: locale))")
+                GoLine(GoText.etaQualitySymbol(drive.source, sample: snapshot.isSampleData == true)) {
+                    Text(verbatim: "\(GoText.etaQuality(drive.source, sample: snapshot.isSampleData == true, locale: locale)) · \(GoText.driveLine(drive, locale: locale))")
                 }
                 .foregroundStyle(IterColor.textSecondary)
             }

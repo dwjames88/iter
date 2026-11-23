@@ -65,9 +65,11 @@ public struct GoSnapshotInput: Sendable {
     public var lastFix: LocationFix?
     public var power: PowerState
     public var nextRefreshAt: Date?
+    public var isSampleData: Bool
 
     public init(now: Date, trip: Trip, run: TripRun?, live: LiveSchedule?, windows: SessionWindows = [:], conditions: GoConditionsState = GoConditionsState(),
-                eta: GoETAFacts = GoETAFacts(), lastFix: LocationFix? = nil, power: PowerState = .normal, nextRefreshAt: Date? = nil) {
+                eta: GoETAFacts = GoETAFacts(), lastFix: LocationFix? = nil, power: PowerState = .normal, nextRefreshAt: Date? = nil,
+                isSampleData: Bool = false) {
         self.now = now
         self.trip = trip
         self.run = run
@@ -78,6 +80,7 @@ public struct GoSnapshotInput: Sendable {
         self.lastFix = lastFix
         self.power = power
         self.nextRefreshAt = nextRefreshAt
+        self.isSampleData = isSampleData
     }
 }
 
@@ -187,7 +190,8 @@ public enum GoSnapshotBuilder {
 
         var sources: [String] = []
         func add(_ s: String) { if !s.isEmpty, !sources.contains(s) { sources.append(s) } }
-        if drive?.source == .live { add("Apple Maps") }
+        // Sample drive times come from the built-in straight-line router, not from Apple Maps.
+        if drive?.source == .live, !i.isSampleData { add("Apple Maps") }
         for line in c.nextReport?.provenanceLines ?? [] { add(line.label) }
         if let station = c.nextLive?.current?.stationName { add(station) }
 
@@ -197,14 +201,15 @@ public enum GoSnapshotBuilder {
         let schedule = phase == .finished ? nil : (live?.upcoming.compactMap { l in
             stop(l.stopID).map { GoScheduleItem(stop: info($0, l), leaveBy: l.leaveBy, arrival: l.projectedArrival, status: GoLeaveStatus(l.status)) }
         }).flatMap { $0.isEmpty ? nil : $0 }
-        let details = nextID == nil ? nil : Self.sourceDetails(conditions: c, sameStop: sameStop, drive: drive, etaStale: etaStale, hasAlerts: !c.alerts.isEmpty)
+        let details = nextID == nil ? nil : Self.sourceDetails(conditions: c, sameStop: sameStop, drive: drive, etaStale: etaStale, hasAlerts: !c.alerts.isEmpty, isSampleData: i.isSampleData)
 
         return GoSnapshot(generatedAt: i.now, tripID: i.trip.id, tripName: i.trip.name, runID: run.id, phase: phase, current: currentInfo,
                           next: nextInfo, remainingCount: live?.remaining.count ?? 0, leave: leave, drive: drive, stay: stayInfo,
                           alternative: alternative, sky: nextID == nil ? nil : sky, weather: nextID == nil ? [] : weather,
                           alerts: nextID == nil ? [] : c.alerts, freshness: freshness, undo: undo, sources: Array(sources.prefix(5)),
                           hours: hours, sourceDetails: details, schedule: schedule, here: i.lastFix?.coordinate,
-                          summary: phase == .finished ? Self.summary(i, run: run, ordered: ordered) : nil)
+                          summary: phase == .finished ? Self.summary(i, run: run, ordered: ordered) : nil,
+                          isSampleData: i.isSampleData ? true : nil)
     }
 
     // MARK: Phase 9 detail fields
@@ -239,7 +244,7 @@ public enum GoSnapshotBuilder {
     }
 
     /// One entry per distinct source, best tier first (ties keep the order the sources were met).
-    static func sourceDetails(conditions c: GoConditionsState, sameStop: Bool, drive: GoDriveInfo?, etaStale: Bool, hasAlerts: Bool) -> [GoSourceInfo]? {
+    static func sourceDetails(conditions c: GoConditionsState, sameStop: Bool, drive: GoDriveInfo?, etaStale: Bool, hasAlerts: Bool, isSampleData: Bool = false) -> [GoSourceInfo]? {
         struct Entry { var source: SourceID; var name: String?; var roles: [String]; var tier: SourceTier?; var producer: String?; var asOf: Date?; var distanceKm: Double? }
         var entries: [Entry] = []
         func add(_ source: SourceID, role: String, name: String? = nil, provenance: Provenance?) {
@@ -254,7 +259,7 @@ public enum GoSnapshotBuilder {
                                      producer: origin?.producer.isEmpty == false ? origin?.producer : nil, asOf: asOf, distanceKm: provenance?.distanceKm))
             }
         }
-        if drive?.source == .live {
+        if drive?.source == .live, !isSampleData {
             entries.append(Entry(source: SourceID.appleDirections, name: "Apple Maps", roles: ["Drive time"],
                                  tier: SourceCatalogue.appleDirections.tier,
                                  producer: SourceCatalogue.appleDirections.origin.producer, asOf: drive?.asOf, distanceKm: nil))

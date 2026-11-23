@@ -573,7 +573,8 @@ public final class GoEngine {
         let facts = GoETAFacts(fetchedAt: held?.fetchedAt, meters: held?.meters, isOffline: refresher.isOffline, cadence: cadence)
         let snap = GoSnapshotBuilder.build(GoSnapshotInput(
             now: now, trip: input.trip, run: run, live: live, windows: input.windows, conditions: conditions, eta: facts,
-            lastFix: lastFix, power: power, nextRefreshAt: (phase == .finished || phase == .paused) ? nil : nextRefresh))
+            lastFix: lastFix, power: power, nextRefreshAt: (phase == .finished || phase == .paused) ? nil : nextRefresh,
+            isSampleData: input.isSampleData))
 
         // Notifications.
         let plan = notificationInput(run: run, live: live, snap: snap, now: now)

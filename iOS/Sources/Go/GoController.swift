@@ -144,7 +144,9 @@ final class GoController {
         let startPlaces = trip.startPlaceID.flatMap { container.library.places.value(id: $0) }.map { [$0] } ?? []
         let start = GoTripInputBuilder.startPlace(for: trip, in: startPlaces)
         let legs = container.plannedLegStore.load(tripID: tripID)?.legs(for: trip, start: start) ?? [:]
-        return GoTripInputBuilder.make(trip: trip, start: start, engine: lightEngine, plannedLegs: legs)
+        var input = GoTripInputBuilder.make(trip: trip, start: start, engine: lightEngine, plannedLegs: legs)
+        input.isSampleData = container.dataMode == .sample
+        return input
     }
 
     /// Stops in day order, then trip order within the day (the numbers Go and the map use).

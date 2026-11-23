@@ -37,6 +37,18 @@ struct GoSectionTests {
         #expect(GoText.etaQuality(.offlineEstimate, locale: loc) == "Offline estimate")
     }
 
+    @Test func sampleDataNeverSaysLive() {
+        #expect(GoText.etaQuality(.live, sample: true, locale: loc) == "Sample drive times")
+        #expect(GoText.etaQuality(.planned, sample: true, locale: loc) == "Planned drive")
+        #expect(GoText.etaQualitySymbol(.live, sample: true) != GoText.etaQualitySymbol(.live))
+        var s = F.before()
+        #expect(GoText.skyTitle(s.sky!, now: now, sample: true, locale: loc) == "Sample Sky Index")
+        s.isSampleData = true
+        #expect(GoText.skyBasis(s, now: now, locale: loc) == "Sample data, not a real reading")
+        s.isSampleData = nil
+        #expect(GoText.skyBasis(s, now: now, locale: loc) != "Sample data, not a real reading")
+    }
+
     @Test func driveAndArrivalAgainstLight() {
         let s = F.before()
         #expect(GoText.driveLine(s.drive!, locale: Locale(identifier: "en_GB")).hasPrefix("48 min"))

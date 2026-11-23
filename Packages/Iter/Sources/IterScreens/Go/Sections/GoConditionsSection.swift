@@ -46,7 +46,7 @@ public struct GoConditionsSection: View {
                               locale: locale, size: .large, isLowConfidence: sky?.confidence == .low || old)
                 }
                 VStack(alignment: .leading, spacing: IterSpace.xs) {
-                    Text(verbatim: sky.map { GoText.skyTitle($0, now: now, locale: locale) } ?? String(localized: "Live Sky Index"))
+                    Text(verbatim: sky.map { GoText.skyTitle($0, now: now, sample: snapshot.isSampleData == true, locale: locale) } ?? String(localized: "Live Sky Index"))
                         .font(IterFont.captionStrong).foregroundStyle(IterColor.textSecondary)
                     if let score, let sky {
                         Text(verbatim: bandLine(sky, score: score)).font(IterFont.headline).foregroundStyle(IterColor.textPrimary)

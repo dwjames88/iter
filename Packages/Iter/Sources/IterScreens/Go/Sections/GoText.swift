@@ -114,17 +114,19 @@ public enum GoText {
         }
     }
 
-    /// "Live traffic", "Planned drive", "Offline estimate".
-    public static func etaQuality(_ source: GoETASource, locale: Locale = .current) -> String {
+    /// "Live traffic", "Planned drive", "Offline estimate". Sample data never says live: its drive times are straight-line stand-ins.
+    public static func etaQuality(_ source: GoETASource, sample: Bool = false, locale: Locale = .current) -> String {
         switch source {
+        case .live where sample: String(localized: "Sample drive times", locale: locale, comment: "ETA quality in sample data mode")
         case .live: String(localized: "Live traffic", locale: locale, comment: "ETA quality")
         case .planned: String(localized: "Planned drive", locale: locale, comment: "ETA quality")
         case .offlineEstimate: String(localized: "Offline estimate", locale: locale, comment: "ETA quality")
         }
     }
 
-    public static func etaQualitySymbol(_ source: GoETASource) -> String {
+    public static func etaQualitySymbol(_ source: GoETASource, sample: Bool = false) -> String {
         switch source {
+        case .live where sample: "testtube.2"
         case .live: "car.fill"
         case .planned: "map"
         case .offlineEstimate: "wifi.slash"
@@ -365,8 +367,10 @@ public enum GoText {
     }
 
     /// "Live Sky Index"; "Last Sky Reading" when old (never "Live" over old data); "Forecast Sky Index" beyond the live horizon.
-    public static func skyTitle(_ sky: GoSkyInfo, now: Date, locale: Locale = .current) -> String {
+    /// Sample data says "Sample Sky Index" where the real app says "Live".
+    public static func skyTitle(_ sky: GoSkyInfo, now: Date, sample: Bool = false, locale: Locale = .current) -> String {
         if sky.basis == .nextWindowForecast { return String(localized: "Forecast Sky Index", locale: locale) }
+        if sample { return String(localized: "Sample Sky Index", locale: locale, comment: "Trip mode: the sky index in sample data mode") }
         if skyIsOld(sky, now: now) { return String(localized: "Last Sky Reading", locale: locale) }
         return String(localized: "Live Sky Index", locale: locale)
     }
@@ -390,6 +394,8 @@ public enum GoText {
     public static func skyBasis(_ s: GoSnapshot, now: Date, locale: Locale = .current) -> String {
         guard let sky = s.sky else { return String(localized: "No live data", locale: locale) }
         switch sky.basis {
+        case .blended where s.isSampleData == true, .observationOnly where s.isSampleData == true:
+            return String(localized: "Sample data, not a real reading", locale: locale, comment: "Sky basis in sample data mode")
         case .blended, .observationOnly:
             if let o = observation(s) {
                 var parts = [String(localized: "Based on \(o.stationName ?? "nearby") observation", locale: locale, comment: "Sky basis")]

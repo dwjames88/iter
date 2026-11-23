@@ -168,6 +168,8 @@ struct GoPresentation: Equatable {
     var scoreKindWord: String? {
         guard score != nil else { return nil }
         if !scoreIsLive { return String(localized: "Forecast") }
+        // Sample data is never "Live".
+        if content.isSampleData == true { return String(localized: "Sample") }
         if isDim {
             let t = TimeText.time(content.dataAsOf, in: zone)
             return String(localized: "As of \(t)")
@@ -176,7 +178,7 @@ struct GoPresentation: Equatable {
     }
 
     /// The word above the live score in the expanded island.
-    var liveColumnTitle: String { isDim ? String(localized: "Last reading") : String(localized: "Live") }
+    var liveColumnTitle: String { content.isSampleData == true ? String(localized: "Sample") : isDim ? String(localized: "Last reading") : String(localized: "Live") }
 
     /// A chip for an old reading is visibly weaker (derived from the low-confidence token, twice over).
     var chipOpacity: Double {

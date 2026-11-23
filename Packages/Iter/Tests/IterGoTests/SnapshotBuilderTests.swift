@@ -148,3 +148,22 @@ private func input(_ rig: RunRig, now: Date, conditions: GoConditionsState = GoC
     s = GoSnapshotBuilder.build(input(rig, now: RunFixture.h(8.4)))
     #expect(s.phase == .finished && !s.freshness.etaIsStale && !s.freshness.conditionsAreStale)
 }
+
+@Test func sampleDataIsFlaggedAndNeverCreditsAppleMaps() throws {
+    let rig = RunRig()
+    let now = RunFixture.h(9)
+    let eta = ETA(seconds: 1200, arrival: now.addingTimeInterval(1200), departing: now)
+    let fix = LocationFix(coordinate: rig.fx.home.coordinate, accuracyM: 5, timestamp: now)
+    let facts = GoETAFacts(fetchedAt: now, meters: 9_000)
+    var sample = input(rig, now: now, eta: facts, fix: fix, etaLive: eta)
+    let real = GoSnapshotBuilder.build(sample)
+    #expect(real.drive?.source == .live && real.sources.contains("Apple Maps") && real.isSampleData == nil)
+    sample.isSampleData = true
+    let s = GoSnapshotBuilder.build(sample)
+    #expect(s.isSampleData == true)
+    #expect(!s.sources.contains("Apple Maps") && s.sourceDetails?.contains { $0.name == "Apple Maps" } != true)
+    #expect(GoActivityContent(snapshot: s).isSampleData == true && GoActivityContent(snapshot: real).isSampleData == nil)
+    // It survives the App Group file.
+    let again = try JSONDecoder().decode(GoSnapshot.self, from: JSONEncoder().encode(s))
+    #expect(again.isSampleData == true)
+}

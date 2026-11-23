@@ -34,12 +34,14 @@ public struct GoActivityContent: Codable, Hashable, Sendable {
     public var timeZoneIdentifier: String?
     /// The window end of the stop you are at while at a stop, else of the sky's or next stop's window.
     public var windowEnd: Date?
+    /// Sample data: the widget calls the score "Sample", never "Live". nil in the real app.
+    public var isSampleData: Bool?
 
     public init(phase: GoPhase, nextStopName: String? = nil, status: GoLeaveStatus? = nil, leaveBy: Date? = nil, eta: Date? = nil,
                 windowKind: LightWindowKind? = nil, windowStart: Date? = nil, liveScore: Int? = nil, forecastScore: Int? = nil,
                 band: GoBand? = nil, confidence: GoConfidence? = nil, trend: GoTrend? = nil, dataAsOf: Date, lateMinutes: Int? = nil,
                 isOffline: Bool = false, isPowerSaving: Bool = false, undoExpiresAt: Date? = nil, stopID: UUID? = nil,
-                timeZoneIdentifier: String? = nil, windowEnd: Date? = nil) {
+                timeZoneIdentifier: String? = nil, windowEnd: Date? = nil, isSampleData: Bool? = nil) {
         self.phase = phase
         self.nextStopName = nextStopName.map(Self.truncated)
         self.status = status
@@ -60,6 +62,7 @@ public struct GoActivityContent: Codable, Hashable, Sendable {
         self.stopID = stopID
         self.timeZoneIdentifier = timeZoneIdentifier
         self.windowEnd = windowEnd
+        self.isSampleData = isSampleData
     }
 
     public init(snapshot s: GoSnapshot) {
@@ -73,7 +76,8 @@ public struct GoActivityContent: Codable, Hashable, Sendable {
                   lateMinutes: s.leave?.lateBySeconds.map { Int(($0 / 60).rounded()) }, isOffline: s.freshness.isOffline,
                   isPowerSaving: s.freshness.isPowerSaving, undoExpiresAt: s.undo?.expiresAt, stopID: stop?.id,
                   timeZoneIdentifier: stop?.timeZoneIdentifier,
-                  windowEnd: s.phase == .atStop ? (s.current?.windowEnd ?? sky?.windowEnd ?? stop?.windowEnd) : (sky?.windowEnd ?? stop?.windowEnd))
+                  windowEnd: s.phase == .atStop ? (s.current?.windowEnd ?? sky?.windowEnd ?? stop?.windowEnd) : (sky?.windowEnd ?? stop?.windowEnd),
+                  isSampleData: s.isSampleData)
     }
 
     static func truncated(_ name: String) -> String {
