@@ -3,31 +3,31 @@ import IterModel
 import IterUI
 import SwiftUI
 
-/// A countdown: `Text(timerInterval:)` while live (ticks with no updates), a frozen string otherwise. Digits are monospaced.
+/// A countdown in words ("21 min, 4 sec", "2 hr, 54 min"). Live: `Text(date, style: .relative)`, which the system keeps current
+/// with no updates from the app (checked: it advanced across a minute boundary in a running hosting controller, where the
+/// `SystemFormatStyle` formats `.offset` and `.reference` did not). Frozen: the same words as a string.
 struct GoCountdownText: View {
     let target: Date
     let clock: GoClock
     var font: Font = .system(size: 32, weight: .semibold)
     var alignment: TextAlignment = .leading
+    /// Compact places let the words wrap after the comma ("21 min," over "4 sec") so the width can stay fixed.
+    var lineLimit = 1
 
     var body: some View {
-        timer
+        Self.text(target: target, clock: clock)
             .font(font)
             .monospacedDigit()
             .multilineTextAlignment(alignment)
-            .lineLimit(1)
+            .lineLimit(lineLimit)
             .minimumScaleFactor(0.6)
     }
 
-    private var timer: Text { Self.text(target: target, clock: clock) }
-
-    /// The countdown as a `Text`, so callers can concatenate it ("Leave " + 1:24:10).
+    /// The countdown as a `Text`, so callers can concatenate it ("Leave " + 2 hr, 54 min).
     static func text(target: Date, clock: GoClock) -> Text {
         let remaining = target.timeIntervalSince(clock.now)
-        if clock.isLive, remaining > 0 {
-            return Text(timerInterval: clock.now...target, pauseTime: nil, countsDown: true, showsHours: remaining >= 3600)
-        }
-        return Text(verbatim: GoPresentation.frozen(remaining))
+        if clock.isLive, remaining > 0 { return Text(target, style: .relative) }
+        return Text(verbatim: GoPresentation.durationWords(remaining))
     }
 }
 
@@ -39,8 +39,10 @@ struct GoChip: View {
 
     var body: some View {
         if let kind = p.content.windowKind, let start = p.content.windowStart {
+            // Low confidence is styled by the chip itself; an old reading is weakened on top of that.
             ScoreChip(kind: kind, start: start, score: p.score, zone: p.zone, size: size, timeStyle: timeStyle,
                       isLowConfidence: p.isLowConfidence)
+                .opacity(p.isDim ? p.chipOpacity / (p.isLowConfidence ? IterEvent.lowConfidenceOpacity : 1) : 1)
         }
     }
 }
@@ -99,7 +101,7 @@ struct GoHeadline: View {
         }
         .font(.system(size: size, weight: .semibold))
         .foregroundStyle(Self.color(status.tone))
-        .lineLimit(1)
+        .lineLimit(2)
         .minimumScaleFactor(0.6)
     }
 

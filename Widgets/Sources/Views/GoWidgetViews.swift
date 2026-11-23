@@ -206,7 +206,14 @@ private struct GoCircularWidget: View {
     var body: some View {
         // The icon says when the numbers are not current: offline, or old.
         let marker = p.content.isOffline ? "wifi.slash" : (p.isOld || p.isStale ? "clock.arrow.circlepath" : nil)
-        if let score = p.score, p.countdown == nil {
+        if let score = p.score, p.countdown == nil, let marker {
+            // Old or offline: no gauge (it would look current), a plain number with the hint beside it.
+            VStack(spacing: 0) {
+                Image(systemName: marker).font(.system(size: 13, weight: .semibold)).widgetAccentable()
+                Text(score, format: .number).font(.system(size: 24, weight: .semibold)).monospacedDigit()
+                Text(verbatim: String(localized: "Last")).font(.system(size: 9)).foregroundStyle(.secondary)
+            }
+        } else if let score = p.score, p.countdown == nil {
             Gauge(value: Double(score), in: 0...100) {
                 Image(systemName: marker ?? p.content.windowKind.map { LightText.symbol($0) } ?? "sun.max.fill")
             } currentValueLabel: {
@@ -217,7 +224,8 @@ private struct GoCircularWidget: View {
             VStack(spacing: 0) {
                 Image(systemName: marker ?? (p.phase == .driving ? "car.fill" : "figure.walk.departure")).font(.system(size: 12, weight: .semibold))
                     .widgetAccentable()
-                GoCountdownText(target: countdown.target, clock: p.clock, font: .system(size: 15, weight: .semibold), alignment: .center)
+                GoCountdownText(target: countdown.target, clock: p.clock, font: .system(size: 13, weight: .semibold), alignment: .center, lineLimit: 2)
+                    .frame(width: 58)
             }
         } else {
             VStack(spacing: 0) {

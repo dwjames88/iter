@@ -56,7 +56,8 @@ struct GoIslandCompactTrailing: View {
         IslandSurface {
             Group {
                 if let countdown = p.countdown {
-                    GoCountdownText(target: countdown.target, clock: clock, font: .system(size: 13, weight: .semibold), alignment: .trailing)
+                    GoCountdownText(target: countdown.target, clock: clock, font: .system(size: 10.5, weight: .semibold),
+                                    alignment: .trailing, lineLimit: 2)
                         .foregroundStyle(p.isDim ? IterColor.textSecondary : IterColor.textPrimary)
                 } else if let status = p.status {
                     Image(systemName: GoHeadline.symbol(status.tone, phase: p.phase) ?? "checkmark")
@@ -154,7 +155,7 @@ struct GoIslandExpandedTrailing: View {
         let p = GoPresentation(content, clock: clock, isStale: isStale)
         IslandSurface {
             HStack(alignment: .top, spacing: 10) {
-                if content.liveScore != nil { column(String(localized: "Live"), content.liveScore, p) }
+                if content.liveScore != nil { column(p.liveColumnTitle, content.liveScore, p) }
                 if content.forecastScore != nil { column(String(localized: "Forecast"), content.forecastScore, p) }
             }
         }
@@ -162,7 +163,7 @@ struct GoIslandExpandedTrailing: View {
 
     private func column(_ title: String, _ score: Int?, _ p: GoPresentation) -> some View {
         VStack(spacing: 2) {
-            Text(verbatim: title).font(IterFont.caption).foregroundStyle(IterColor.textSecondary).lineLimit(1)
+            Text(verbatim: title).font(IterFont.caption).foregroundStyle(IterColor.textSecondary).lineLimit(1).minimumScaleFactor(0.7)
             if let score {
                 // White numerals (legible on black) with the ramp colour as a bar beneath: colour is never the only signal.
                 Text(score, format: .number)
@@ -183,7 +184,7 @@ struct GoIslandExpandedBottom: View {
     let clock: GoClock
     var isStale = false
     var zone: TimeZone = .current
-    var navigateURL: URL = GoDeepLink.navigate()
+    private var navigateURL: URL { GoDeepLink.navigate(stop: content.stopID) }
 
     var body: some View {
         let p = GoPresentation(content, clock: clock, zone: zone, isStale: isStale)
@@ -227,7 +228,7 @@ struct GoIslandExpandedPreview: View {
         VStack(alignment: .leading, spacing: IterSpace.sm) {
             HStack(alignment: .top) {
                 GoIslandExpandedLeading(tripName: tripName, content: content, clock: clock, isStale: isStale, zone: zone)
-                Spacer(minLength: 96)
+                Spacer(minLength: 72)
                 GoIslandExpandedTrailing(content: content, clock: clock, isStale: isStale)
             }
             GoIslandExpandedBottom(content: content, clock: clock, isStale: isStale, zone: zone)

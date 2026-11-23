@@ -40,7 +40,8 @@ struct GoPresentation: Equatable {
     init(_ content: GoActivityContent, clock: GoClock, zone: TimeZone = .current, isStale: Bool = false) {
         self.content = content
         self.clock = clock
-        self.zone = zone
+        // The stop's own zone when the content carries it (every time about a stop is shown where the stop is); else `zone`.
+        self.zone = content.timeZoneIdentifier.flatMap { TimeZone(identifier: $0) } ?? zone
         self.isStale = isStale
     }
 
@@ -72,10 +73,10 @@ struct GoPresentation: Equatable {
         }
         switch content.status {
         case .missed:
-            return (String(localized: "Window missed"), .warning)
+            return (isHistorical ? String(localized: "Window was missed") : String(localized: "Window missed"), .warning)
         case .late:
             return (lateText, .warning)
-        case .leaveNow where phase != .driving:
+        case .leaveNow where phase != .driving && !isHistorical:
             return (String(localized: "Leave now"), .accent)
         default:
             break
@@ -88,13 +89,22 @@ struct GoPresentation: Equatable {
         return nil
     }
 
+    /// The content is old (or the system marked it stale), so a status taken from it is history, not a current fact:
+    /// "Was late by 26 min", with the age line saying "As of 13:10".
+    var isHistorical: Bool { isStale || isOld }
+
     private var lateText: String {
-        var seconds = content.lateMinutes.map { Double($0) * 60 }
+        // Leave-by already passed on the clock: late by the clock, which is current whatever the content's age.
         if phase != .driving, let leaveBy = content.leaveBy, now > leaveBy {
-            seconds = max(seconds ?? 0, now.timeIntervalSince(leaveBy))
+            // On an old plan this is not a claim about the present: say what was due, not how late you are.
+            if isHistorical { return String(localized: "Leave was due \(TimeText.time(leaveBy, in: zone))") }
+            return TripText.lateBy(max(Double(content.lateMinutes ?? 0) * 60, now.timeIntervalSince(leaveBy)))
         }
-        guard let seconds else { return String(localized: "Running late") }
-        return TripText.lateBy(seconds)
+        guard let minutes = content.lateMinutes else {
+            return isHistorical ? String(localized: "Was running late") : String(localized: "Running late")
+        }
+        let seconds = Double(minutes) * 60
+        return isHistorical ? String(localized: "Was late by \(TimeText.duration(seconds))") : TripText.lateBy(seconds)
     }
 
     /// The main countdown, only while its target is still ahead of the clock.
@@ -104,7 +114,15 @@ struct GoPresentation: Equatable {
         case .driving:
             guard let eta = content.eta, eta > now else { return nil }
             return Countdown(label: String(localized: "Arrive in"), target: eta)
-        case .armed, .betweenStops, .atStop:
+        case .atStop:
+            // At a stop the clock that matters is the light: how long the window has left. Leave-by stays in `clockLine`.
+            if let end = content.windowEnd, end.timeIntervalSince(now) > TripText.nowTolerance {
+                let label = content.windowKind.map { String(localized: "\(LightText.name($0)) ends in") } ?? String(localized: "Window ends in")
+                return Countdown(label: label, target: end)
+            }
+            guard let leaveBy = content.leaveBy, leaveBy.timeIntervalSince(now) > TripText.nowTolerance else { return nil }
+            return Countdown(label: String(localized: "Leave in"), target: leaveBy)
+        case .armed, .betweenStops:
             guard let leaveBy = content.leaveBy, leaveBy.timeIntervalSince(now) > TripText.nowTolerance else { return nil }
             return Countdown(label: String(localized: "Leave in"), target: leaveBy)
         }
@@ -145,9 +163,25 @@ struct GoPresentation: Equatable {
     var score: Int? { content.liveScore ?? content.forecastScore }
     var scoreIsLive: Bool { content.liveScore != nil }
     var isLowConfidence: Bool { content.confidence == .low }
+    /// "Live" only while the reading is current; an old or offline reading says when it was taken, never "Live".
     var scoreKindWord: String? {
         guard score != nil else { return nil }
-        return scoreIsLive ? String(localized: "Live") : String(localized: "Forecast")
+        if !scoreIsLive { return String(localized: "Forecast") }
+        if isDim {
+            let t = TimeText.time(content.dataAsOf, in: zone)
+            return String(localized: "As of \(t)")
+        }
+        return String(localized: "Live")
+    }
+
+    /// The word above the live score in the expanded island.
+    var liveColumnTitle: String { isDim ? String(localized: "Last reading") : String(localized: "Live") }
+
+    /// A chip for an old reading is visibly weaker (derived from the low-confidence token, twice over).
+    var chipOpacity: Double {
+        var o = isLowConfidence ? IterEvent.lowConfidenceOpacity : 1
+        if isDim { o *= IterEvent.lowConfidenceOpacity * IterEvent.lowConfidenceOpacity * 0.85 }
+        return o
     }
 
     // MARK: Age
@@ -164,7 +198,7 @@ struct GoPresentation: Equatable {
         var parts: [String] = []
         if content.isOffline { parts.append(String(localized: "Offline")) }
         if isOld || isStale {
-            if age <= Self.clockTimeUntil {
+            if age <= Self.clockTimeUntil || (isHistorical && status?.tone == .warning) {
                 let t = TimeText.time(content.dataAsOf, in: zone)
                 parts.append(parts.isEmpty ? String(localized: "As of \(t)") : String(localized: "as of \(t)"))
             } else {
@@ -175,11 +209,14 @@ struct GoPresentation: Equatable {
         return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 
-    /// A countdown frozen at `now`: "1:24:10", "24:10".
-    static func frozen(_ seconds: TimeInterval) -> String {
+    /// A duration in words, the same text `Text(date, style: .relative)` draws while it counts on its own:
+    /// "2 hr, 54 min" from an hour up (minutes rounded down), "21 min, 4 sec" below it, "58 sec" under a minute.
+    static func durationWords(_ seconds: TimeInterval) -> String {
         let s = max(0, Int(seconds.rounded(.down)))
-        let h = s / 3600, m = (s % 3600) / 60, sec = s % 60
-        return h > 0 ? String(format: "%d:%02d:%02d", h, m, sec) : String(format: "%d:%02d", m, sec)
+        let units: Set<Duration.UnitsFormatStyle.Unit> = s >= 3600 ? [.hours, .minutes] : [.minutes, .seconds]
+        let rounded = s >= 3600 ? s / 60 * 60 : s
+        if rounded == 0 { return Duration.seconds(0).formatted(.units(allowed: [.seconds], width: .abbreviated, zeroValueUnits: .show(length: 1))) }
+        return Duration.seconds(rounded).formatted(.units(allowed: units, width: .abbreviated, maximumUnitCount: 2, zeroValueUnits: .hide))
     }
 
     // MARK: Accessibility
@@ -187,7 +224,7 @@ struct GoPresentation: Equatable {
     var accessibilityText: String {
         var parts = [title]
         if let status { parts.append(status.text) }
-        if let countdown { parts.append("\(countdown.label) \(Self.frozen(countdown.target.timeIntervalSince(now)))") }
+        if let countdown { parts.append("\(countdown.label) \(Self.durationWords(countdown.target.timeIntervalSince(now)))") }
         if let clockLine { parts.append(clockLine) }
         if let windowLine { parts.append(windowLine) }
         if let score { parts.append(String(localized: "Score \(score)")) }
