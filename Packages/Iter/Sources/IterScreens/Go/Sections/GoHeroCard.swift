@@ -11,7 +11,7 @@ import IterUI
 /// Offscreen renders cannot draw system glass (it blanks the card), so tests set `goFlatButtons` to get the same layout with
 /// bordered buttons. Never set in the app.
 extension EnvironmentValues {
-    @Entry var goFlatButtons: Bool = false
+    @Entry public var goFlatButtons: Bool = false
 }
 
 /// The hero time uses `IterFont.titleSpot`, the largest token; there is no bigger one and none is invented here.
