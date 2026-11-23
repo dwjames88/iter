@@ -49,7 +49,7 @@ It runs as `com.dwjames.iter`. Opening it for the first time on your real librar
 
 ```
 scripts/render.sh                                  # builds build/render/Iter.app
-scripts/render.sh --run --wait 15 --capture build/cap -- -IterSection trips
+scripts/render.sh --run --wait 15 -- -IterSection trips
 scripts/smoke-mac.sh                               # a hidden launch that checks the app starts
 ```
 
