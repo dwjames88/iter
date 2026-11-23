@@ -29,7 +29,8 @@ final class TestSleeper: @unchecked Sendable {
 
     func sleep(_ duration: Duration) async throws {
         lock.withLock { recorded.append(duration) }
-        guard holds(duration) else { return }
+        // Long waits (retry backoff) always suspend until cancelled or fired, so a model left behind can never spin.
+        guard holds(duration) || duration >= .seconds(30) else { return }
         let id = UUID()
         try await withTaskCancellationHandler {
             try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
@@ -207,11 +208,18 @@ final class BuildHarness {
         if undoable { library.undoManager = undo }
     }
 
+    private var made: [BuildModel] = []
+
+    /// Every model the harness made is closed when the test ends, so nothing outlives it.
+    isolated deinit { for model in made { model.close() } }
+
     func model(timing: BuildTiming? = nil) -> BuildModel {
         let sleeper = self.sleeper
         let timing = timing ?? BuildTiming(sleep: { try await sleeper.sleep($0) })
-        return BuildModel(tripID: trip.id, library: library, conditions: conditions, packs: packs, routing: routing,
-                          now: { testNow }, timing: timing)
+        let model = BuildModel(tripID: trip.id, library: library, conditions: conditions, packs: packs, routing: routing,
+                               now: { testNow }, engine: LightEngine(ephemeris: MemoizedEphemeris.shared), timing: timing)
+        made.append(model)
+        return model
     }
 
     /// One user action is one undo group (the app gets this from the run loop).
@@ -244,11 +252,12 @@ extension BuildModel {
     func stop(named name: String) -> BuildStop? { stopRows.first { $0.name == name } }
 }
 
-/// Lets the main actor and the drive tasks run until `condition` holds (no real time is waited for except a 1 ms nap now and then).
+/// Lets the main actor and the drive tasks run until `condition` holds. A few yields first, then 1 ms naps (never a spin, so
+/// parallel suites keep the main actor), for up to five seconds.
 @MainActor func settle(_ condition: () -> Bool) async -> Bool {
-    for i in 0..<20_000 {
+    for i in 0..<5_000 {
         if condition() { return true }
-        if i % 200 == 199 { try? await Task.sleep(for: .milliseconds(1)) } else { await Task.yield() }
+        if i < 40 { await Task.yield() } else { try? await Task.sleep(for: .milliseconds(1)) }
     }
     return condition()
 }

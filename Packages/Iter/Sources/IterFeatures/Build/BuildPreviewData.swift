@@ -1,6 +1,7 @@
 import Foundation
 import IterModel
 import IterConditions
+import IterSky
 import IterSources
 import IterStore
 
@@ -104,7 +105,8 @@ public enum BuildPreviewData {
         let conditions = BuildPreviewConditions()
         let scale = variant == .driveDoesNotFit ? 30.0 : 1.0
         let model = BuildModel(tripID: record.id, library: library, conditions: conditions, packs: nil,
-                               routing: BuildPreviewRouting(scale: scale), now: { BuildPreviewData.now })
+                               routing: BuildPreviewRouting(scale: scale), now: { BuildPreviewData.now },
+                               engine: LightEngine(ephemeris: MemoizedEphemeris.shared))
         if variant == .backwardsDay,
            let delicate = model.stops.first(where: { $0.name == "Delicate Arch" }) {
             model.moveStop(delicate.id, toDay: 2, index: 0)
