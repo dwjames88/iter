@@ -59,6 +59,7 @@ enum Snapshot {
             .frame(width: size.width, height: size.height)
             .background { background }
             .environment(\.colorScheme, appearance == .dark ? .dark : .light)
+            .environment(\.rendersFieldsAsText, true)
         // One render at a time. Swift Testing runs the snapshot tests concurrently on the main actor and each render
         // suspends (settle sleeps), so renders interleaved: several off-screen windows at the same spot, shared
         // first-responder, display and CATransaction state. That moved text (the search placeholder) and layout between

@@ -106,7 +106,10 @@ enum Snapshot {
             window.titlebarAppearsTransparent = true
             window.toolbarStyle = .unified
         }
-        let host = NSHostingView(rootView: view.environment(\.colorScheme, appearance == .dark ? .dark : .light))
+        let host = NSHostingView(rootView: view.environment(\.colorScheme, appearance == .dark ? .dark : .light)
+            // Draw controls as in the key window (the offscreen window is never key, so prominent buttons came out grey).
+            .environment(\.controlActiveState, .key)
+            .environment(\.rendersFieldsAsText, true))
         host.appearance = nsAppearance
         window.contentView = host
         // Far outside every display, never key or main, so nothing is visible and focus is never taken.

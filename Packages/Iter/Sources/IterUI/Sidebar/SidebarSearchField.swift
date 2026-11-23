@@ -12,6 +12,7 @@ public struct SidebarSearchField: View {
     let onSubmit: () -> Void
 
     @FocusState private var isFocused: Bool
+    @Environment(\.rendersFieldsAsText) private var rendersFieldsAsText
 
     public static var height: CGFloat { 37 }
 
@@ -29,6 +30,13 @@ public struct SidebarSearchField: View {
                     .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(.secondary)
                     .accessibilityHidden(true)
+                if rendersFieldsAsText {
+                    Text(text.isEmpty ? prompt : text)
+                        .font(.system(size: 13))
+                        .foregroundStyle(text.isEmpty ? .secondary : .primary)
+                        .lineLimit(1)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                } else {
                 TextField(prompt, text: $text)
                     .textFieldStyle(.plain)
                     .font(.system(size: 13))
@@ -39,6 +47,7 @@ public struct SidebarSearchField: View {
                         text = ""
                         return .handled
                     }
+                }
                 if !text.isEmpty {
                     Button { text = "" } label: {
                         Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)

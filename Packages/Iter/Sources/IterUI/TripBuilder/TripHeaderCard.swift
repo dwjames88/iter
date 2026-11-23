@@ -13,6 +13,7 @@ public struct TripHeaderCard<Actions: View, Accessory: View>: View {
 
     @State private var name = ""
     @FocusState private var focused: Bool
+    @Environment(\.rendersFieldsAsText) private var rendersFieldsAsText
 
     public init(title: String, meta: [TripMetaItem], onRename: @escaping (String) -> Void,
                 @ViewBuilder actions: () -> Actions, @ViewBuilder accessory: () -> Accessory) {
@@ -26,6 +27,12 @@ public struct TripHeaderCard<Actions: View, Accessory: View>: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .center, spacing: 8) {
+                if rendersFieldsAsText {
+                    Text(title)
+                        .font(BuilderType.title)
+                        .foregroundStyle(IterColor.textPrimary)
+                        .lineLimit(1)
+                } else {
                 TextField(String(localized: "Trip name", bundle: .module, comment: "Placeholder"), text: $name)
                     .textFieldStyle(.plain)
                     .font(BuilderType.title)
@@ -39,6 +46,7 @@ public struct TripHeaderCard<Actions: View, Accessory: View>: View {
                     .help(Text("Click to rename", bundle: .module, comment: "Tooltip"))
                     .accessibilityLabel(Text("Trip name", bundle: .module, comment: "Accessibility label"))
                     .accessibilityAddTraits(.isHeader)
+                }
                 Spacer(minLength: 8)
                 actions
             }

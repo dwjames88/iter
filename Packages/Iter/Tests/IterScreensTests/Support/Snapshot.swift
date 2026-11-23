@@ -59,6 +59,7 @@ enum Snapshot {
             .frame(width: size.width, height: size.height)
             .background { background }
             .environment(\.colorScheme, appearance == .dark ? .dark : .light)
+            .environment(\.rendersFieldsAsText, true)
             #if os(macOS)
             // The offscreen window is never key, and an inactive window draws prominent buttons and selection grey. Render controls as
             // they look in the focused window.

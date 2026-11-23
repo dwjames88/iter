@@ -11,6 +11,7 @@ public struct NotePlaceholder: View {
     public var accessibilityName: LocalizedStringResource
     public var onCommit: () -> Void
     @FocusState private var focused: Bool
+    @Environment(\.rendersFieldsAsText) private var rendersFieldsAsText
 
     public init(text: Binding<String>,
                 prompt: LocalizedStringResource? = nil,
@@ -32,6 +33,18 @@ public struct NotePlaceholder: View {
     }
 
     public var body: some View {
+        if rendersFieldsAsText {
+            Text(text.isEmpty ? String(localized: prompt) : text)
+                .font(BuilderType.control)
+                .foregroundStyle(text.isEmpty ? IterColor.textTertiary : IterColor.textSecondary)
+                .lineLimit(1...4)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        } else {
+            field
+        }
+    }
+
+    private var field: some View {
         TextField(text: $text, prompt: Text(prompt).foregroundStyle(IterColor.textTertiary), axis: .vertical) {
             Text(accessibilityName)
         }
