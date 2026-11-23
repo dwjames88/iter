@@ -17,11 +17,17 @@ public final class PhoneUndoToast {
     @ObservationIgnored private let library: LibraryModel
     @ObservationIgnored private let lifetime: Duration
     @ObservationIgnored private var dismissTask: Task<Void, Never>?
+    /// Held here: the store keeps its undo manager weakly.
+    @ObservationIgnored private var ownManager: UndoManager?
 
     public init(library: LibraryModel, lifetime: Duration = .seconds(6)) {
         self.library = library
         self.lifetime = lifetime
-        if library.undoManager == nil { library.undoManager = UndoManager() }
+        if library.undoManager == nil {
+            let manager = UndoManager()
+            ownManager = manager
+            library.undoManager = manager
+        }
     }
 
     /// Run `action` (a library change) and offer to undo it.

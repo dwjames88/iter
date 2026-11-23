@@ -46,8 +46,10 @@ struct NewTripForm: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
+            #if os(macOS)
             Text("New Trip", comment: "Sheet title").font(IterFont.titleSection)
                 .padding([.horizontal, .top], IterSpace.sheet)
+            #endif
             Form {
                 Section {
                     TextField(text: $name, prompt: Text(template?.defaultName ?? String(localized: "New Trip", comment: "Default trip name"))) {
@@ -79,8 +81,11 @@ struct NewTripForm: View {
                 }
             }
             .formStyle(.grouped)
+            #if os(macOS)
             .scrollDisabled(true)
             .fixedSize(horizontal: false, vertical: true)
+            #endif
+            #if os(macOS)
             HStack {
                 Spacer()
                 Button(role: .cancel) { dismiss() } label: { Text("Cancel", comment: "Button") }
@@ -90,8 +95,13 @@ struct NewTripForm: View {
             }
             .padding(.top, IterSpace.sm)
             .padding([.horizontal, .bottom], IterSpace.sheet)
+            #endif
         }
+        #if os(macOS)
         .frame(width: 480)
+        #endif
+        .sheetChrome(title: String(localized: "New Trip", comment: "Sheet title"), confirm: String(localized: "Create", comment: "Button: create the trip"),
+                     dismiss: { dismiss() }, action: { create() })
         .tint(nil)
     }
 
@@ -131,8 +141,10 @@ struct ChangeDatesForm: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
+            #if os(macOS)
             Text("Change Dates", comment: "Sheet title").font(IterFont.titleSection)
                 .padding([.horizontal, .top], IterSpace.sheet)
+            #endif
             Form {
                 DatePicker(selection: Binding(get: { utcDate(startDay) }, set: { startDay = LocalDay($0, in: utc) }),
                            displayedComponents: .date) { Text("Starts", comment: "Change dates field") }
@@ -154,8 +166,11 @@ struct ChangeDatesForm: View {
                 }
             }
             .formStyle(.grouped)
+            #if os(macOS)
             .scrollDisabled(true)
             .fixedSize(horizontal: false, vertical: true)
+            #endif
+            #if os(macOS)
             HStack {
                 Spacer()
                 Button(role: .cancel) { dismiss() } label: { Text("Cancel", comment: "Button") }
@@ -168,8 +183,14 @@ struct ChangeDatesForm: View {
             }
             .padding(.top, IterSpace.sm)
             .padding([.horizontal, .bottom], IterSpace.sheet)
+            #endif
         }
+        #if os(macOS)
         .frame(width: 480)
+        #endif
+        .sheetChrome(title: String(localized: "Change Dates", comment: "Sheet title"),
+                     confirm: String(localized: "Change Dates", comment: "Button: apply the new dates"), dismiss: { dismiss() },
+                     action: { model.changeDates(startDay: startDay, dayCount: dayCount); dismiss() })
         .tint(nil)
     }
 }
@@ -370,5 +391,25 @@ struct PlaceEditorForm: View {
         }
         library.editPlace(id: placeID, edit)
         dismiss()
+    }
+}
+
+extension View {
+    /// On iPhone the sheet is a system navigation stack: the title in the bar, Cancel and the confirm action as toolbar buttons, full
+    /// width. The Mac keeps the form's own title and buttons.
+    @ViewBuilder fileprivate func sheetChrome(title: String, confirm: String, dismiss: @escaping () -> Void, action: @escaping () -> Void) -> some View {
+        #if os(iOS)
+        NavigationStack {
+            self
+                .navigationTitle(title)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) { Button(role: .cancel, action: dismiss) { Text("Cancel", comment: "Button") } }
+                    ToolbarItem(placement: .confirmationAction) { Button(action: action) { Text(verbatim: confirm) } }
+                }
+        }
+        #else
+        self
+        #endif
     }
 }
