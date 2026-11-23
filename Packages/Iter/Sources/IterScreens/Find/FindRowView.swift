@@ -12,10 +12,11 @@ import IterUI
 struct FindRowView: View, Equatable {
     let row: FindRow
     let locality: String
+    var reservesPhotoLane = false
 
     var body: some View {
         HStack(alignment: .top, spacing: IterSpace.md) {
-            if row.photo != nil { FindThumbnail(photo: row.photo) }
+            if row.photo != nil { FindThumbnail(photo: row.photo) } else if reservesPhotoLane { Color.clear.frame(width: FindThumbnail.size, height: 1) }
             VStack(alignment: .leading, spacing: IterSpace.xs) {
                 HStack(alignment: .firstTextBaseline, spacing: IterSpace.xs) {
                     Text(verbatim: row.name)

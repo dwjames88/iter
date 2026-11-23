@@ -81,7 +81,7 @@ struct FindPhotoView: View {
                         .foregroundStyle(IterColor.textTertiary)
                     if let page = photo.pageURL {
                         Text(verbatim: "·").font(IterFont.caption).foregroundStyle(IterColor.textTertiary)
-                        Link("View Photo", destination: page).font(IterFont.caption)
+                        Link("View Photo", destination: page).font(IterFont.caption).foregroundStyle(IterColor.accentText)
                     }
                 }
             }

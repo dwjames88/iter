@@ -71,6 +71,9 @@ struct FindResultsCard: View {
         Binding(get: { model.selectedID }, set: { model.select($0) })
     }
 
+    /// When some rows have a photo, the rest keep its lane (blank) so the text lines up down the list.
+    private var reservesPhotoLane: Bool { model.rows.contains { $0.photo != nil } }
+
     private var title: String {
         if model.phase == .discovering, model.rows.isEmpty { return "Searching" }
         return FindText.resultCount(model.rows.count)
@@ -89,14 +92,14 @@ struct FindResultsCard: View {
                     .padding(.horizontal, IterSpace.lg)
                     .padding(.bottom, IterSpace.sm)
             }
+            top
             List(selection: selection) {
-                top
                 if model.rows.isEmpty { empty } else {
                     ForEach(model.rows) { row in
-                        FindRowView(row: row, locality: model.area?.name ?? "")
+                        FindRowView(row: row, locality: model.area?.name ?? "", reservesPhotoLane: reservesPhotoLane)
                             .equatable()
                             .tag(row.id)
-                            .listRowSeparator(.visible)
+                            .listRowInsets(Self.rowInsets)
                     }
                 }
                 footer
@@ -106,8 +109,11 @@ struct FindResultsCard: View {
         }
     }
 
+    /// The list adds its own 8 pt, so rows line up with the header's 16 pt.
+    static let rowInsets = EdgeInsets(top: 0, leading: IterSpace.sm, bottom: 0, trailing: IterSpace.sm)
+
     @ViewBuilder private var top: some View {
-        Group {
+        VStack(alignment: .leading, spacing: IterSpace.sm) {
             if let plan = FindText.planLine(label: model.planLabel, isBasic: model.isBasicSearch) {
                 FindPlanLine(text: plan, isBasic: model.isBasicSearch)
             }
@@ -121,8 +127,8 @@ struct FindResultsCard: View {
                 Text(verbatim: notice).font(IterFont.caption).foregroundStyle(IterColor.textSecondary)
             }
         }
-        .listRowSeparator(.hidden)
-        .listRowBackground(Color.clear)
+        .padding(.horizontal, IterSpace.lg)
+        .padding(.bottom, IterSpace.sm)
     }
 
     @ViewBuilder private var empty: some View {
@@ -131,6 +137,7 @@ struct FindResultsCard: View {
                 .font(IterFont.secondary)
                 .foregroundStyle(IterColor.textSecondary)
                 .listRowSeparator(.hidden)
+                .listRowInsets(Self.rowInsets)
         } else {
             VStack(alignment: .leading, spacing: IterSpace.xs) {
                 if case .failed(let why) = model.phase {
@@ -144,6 +151,7 @@ struct FindResultsCard: View {
             }
             .padding(.vertical, IterSpace.sm)
             .listRowSeparator(.hidden)
+            .listRowInsets(Self.rowInsets)
         }
     }
 
@@ -157,6 +165,7 @@ struct FindResultsCard: View {
             .foregroundStyle(IterColor.textTertiary)
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
+            .listRowInsets(Self.rowInsets)
         }
     }
 
@@ -196,15 +205,17 @@ struct FindLookupCard: View {
                         Button("Cancel") { model.cancel() }.controlSize(.small)
                     }
                     .listRowSeparator(.hidden)
+                    .listRowInsets(FindResultsCard.rowInsets)
                 }
                 ForEach(model.matches) { match in
-                    FindMatchRowView(match: match).equatable().tag(match.id)
+                    FindMatchRowView(match: match).equatable().tag(match.id).listRowInsets(FindResultsCard.rowInsets)
                 }
                 if model.phase == .finished, model.matches.isEmpty, model.suggestions.lookup != nil {
                     Text("No matching places. Press Return to look again, or ask Iter to find spots.")
                         .font(IterFont.secondary)
                         .foregroundStyle(IterColor.textSecondary)
                         .listRowSeparator(.hidden)
+                        .listRowInsets(FindResultsCard.rowInsets)
                 }
             }
             .listStyle(.plain)
@@ -254,5 +265,6 @@ struct FindSuggestionRow: View {
         }
         .buttonStyle(.plain)
         .listRowSeparator(.hidden)
+        .listRowInsets(FindResultsCard.rowInsets)
     }
 }

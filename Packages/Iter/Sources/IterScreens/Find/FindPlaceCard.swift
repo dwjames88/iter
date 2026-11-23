@@ -6,9 +6,10 @@ import IterUI
 
 /// Words and values the place card derives; pure, so tests check them.
 enum FindCardText {
-    /// "Canyonlands · 23 km from you · Confirmed by 3 sources".
+    /// "Canyonlands · 23 km from you · 25 min drive · Confirmed by 3 sources".
     static func detailLine(_ card: PlaceCard) -> String {
-        [card.locality, card.distanceText, card.verificationLabel].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · ")
+        [card.locality, FindText.distanceLine(distanceText: card.distanceText, drive: card.drive), card.verificationLabel]
+            .compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · ")
     }
 
     /// The date a citation was retrieved, matched to the place's own citation list (the card's id is "source#index").
@@ -150,9 +151,6 @@ struct FindPlaceCard: View {
             }
             .font(IterFont.secondary)
             .foregroundStyle(IterColor.textSecondary)
-            if let drive = card.drive {
-                Text(verbatim: drive.text).font(IterFont.secondary).foregroundStyle(IterColor.textSecondary)
-            }
         }
         .padding(.horizontal, IterSpace.lg)
     }
@@ -230,6 +228,7 @@ struct FindPlaceCard: View {
                     if let url = c.url {
                         Link(destination: url) { Text(verbatim: c.title).multilineTextAlignment(.leading) }
                             .font(IterFont.secondary)
+                            .foregroundStyle(IterColor.accentText)
                     } else {
                         Text(verbatim: c.title).font(IterFont.secondary).foregroundStyle(IterColor.textPrimary)
                     }

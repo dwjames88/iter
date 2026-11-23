@@ -81,10 +81,10 @@ struct FindCoordinateSection: View {
     }
 
     private func fact(_ title: String, _ value: String) -> some View {
-        LabeledContent {
-            Text(verbatim: value).monospacedDigit().textSelection(.enabled)
-        } label: {
+        HStack(alignment: .firstTextBaseline) {
             Text(verbatim: title).foregroundStyle(IterColor.textSecondary)
+            Spacer(minLength: IterSpace.sm)
+            Text(verbatim: value).monospacedDigit().textSelection(.enabled)
         }
         .font(IterFont.body)
     }
