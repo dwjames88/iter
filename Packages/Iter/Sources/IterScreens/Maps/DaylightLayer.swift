@@ -61,11 +61,11 @@ public struct DaylightTerminator: MapContent {
     public var body: some MapContent {
         ForEach(Array(geometry.night.enumerated()), id: \.offset) { _, ring in
             MapPolygon(coordinates: ring.map(Self.location))
-                .foregroundStyle(IterColor.skyNight.opacity(0.28))
+                .foregroundStyle(IterColor.skyNight.opacity(0.38))
         }
         ForEach(Array(geometry.terminator.enumerated()), id: \.offset) { _, line in
             MapPolyline(coordinates: line.map(Self.location))
-                .stroke(IterColor.skyNight.opacity(0.45), lineWidth: 1)
+                .stroke(IterColor.skyNight.opacity(0.65), lineWidth: 1.5)
         }
     }
 

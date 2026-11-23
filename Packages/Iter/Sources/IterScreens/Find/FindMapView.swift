@@ -67,7 +67,8 @@ struct FindMapView: View {
     @Environment(\.findMapStyle) private var styleName
     @Environment(\.findShowsDaylight) private var showsDaylight
     @Namespace private var mapScope
-    @State private var position: MapCameraPosition = .userLocation(fallback: .automatic)
+    @State private var position: MapCameraPosition = FindMapDebug.current.region.map { .region(FindMapGeometry.region($0)) }
+        ?? .userLocation(fallback: .automatic)
     @State private var width: CGFloat = 0
     @State private var resize = FindDebouncer()
     @State private var rings: [[CLLocationCoordinate2D]] = []
@@ -149,7 +150,7 @@ struct FindMapView: View {
     private func updateDaylight(latitudeSpan: Double) {
         let step: TimeInterval = 15 * 60
         let date = showsDaylight && DaylightGeometry.isVisible(latitudeSpan: latitudeSpan)
-            ? Date(timeIntervalSince1970: (Date().timeIntervalSince1970 / step).rounded(.down) * step) : nil
+            ? Date(timeIntervalSince1970: ((FindMapDebug.current.time ?? Date()).timeIntervalSince1970 / step).rounded(.down) * step) : nil
         guard date != daylightDate else { return }
         // An automatic camera frames all map content, and the night side spans the globe: hold the camera where it is first.
         if date != nil, position.positionedByUser == false, let region = visibleRegion {
