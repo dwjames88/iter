@@ -1,6 +1,7 @@
 import Foundation
 import IterConditions
 import IterModel
+import IterPlan
 import IterSky
 import IterSources
 
@@ -103,6 +104,8 @@ extension BuildModel {
             if trip?.isPinned != true, packTask == nil { publish(\.packState, .none) }
             return
         }
+        // Sample data never builds a pack (nothing real to keep offline): a neutral line, not a failure.
+        guard !isSampleData else { publish(\.packState, .sampleData); return }
         let signature = packSignature(trip)
         if onOpen {
             packSignatureBuilt = nil
@@ -125,6 +128,10 @@ extension BuildModel {
                 let builtAt = try await packs.buildOfflinePack(for: latest)
                 guard let self, !Task.isCancelled else { return }
                 self.packFinished(.ready(builtAt: builtAt), signature: self.packSignature(latest))
+            } catch let error as ConditionsError where error == .packsDisabled {
+                // No folder to keep packs in (an in-memory library): not something that failed.
+                guard let self, !Task.isCancelled else { return }
+                self.packFinished(.unavailable, signature: nil)
             } catch {
                 guard let self, !Task.isCancelled else { return }
                 self.packFinished(.failed, signature: nil)
@@ -146,5 +153,34 @@ extension BuildModel {
     /// dates change.
     func packSignature(_ trip: Trip) -> [String] {
         trip.stops.map { "\($0.place.id.uuidString)|\(trip.day($0.dayIndex).iso)" }.sorted()
+    }
+}
+
+extension BuildModel {
+    // MARK: Planned legs for Go
+
+    /// Keeps the plan's real drives (never straight-line estimates) for Go. Written once the lookups have settled, and only when a
+    /// drive was added or changed, so a half-loaded plan never overwrites a complete one: a pair with no answer yet keeps its
+    /// old entry while that entry's ends are still where the stops are. Only the legs this trip still needs are kept. A drive
+    /// that did not change keeps the date it was first computed.
+    func keepLegs(_ effective: [LegKey: Leg], pairs: [LegKey], coordinates: [UUID: Coordinate], now instant: Date) {
+        guard let legStore else { return }
+        let old = Dictionary((savedLegs?.entries ?? []).map { ($0.key, $0) }, uniquingKeysWith: { a, _ in a })
+        var entries: [PlannedLegs.Entry] = []
+        for pair in pairs {
+            if let leg = effective[pair], !leg.isEstimate {
+                let at = old[pair].flatMap { $0.leg == leg ? $0.computedAt : nil } ?? instant
+                entries.append(PlannedLegs.Entry(from: pair.from, to: pair.to, computedAt: at, leg: leg))
+            } else if let kept = old[pair], let a = coordinates[pair.from], let b = coordinates[pair.to],
+                      a.distance(to: kept.leg.from) <= 1, b.distance(to: kept.leg.to) <= 1 {
+                entries.append(kept)
+            }
+        }
+        guard !entries.isEmpty else { return }
+        // Order is the pairs' order, which is the trip's, so equal plans compare equal.
+        if let saved = savedLegs, saved.entries == entries { return }
+        let legs = PlannedLegs(tripID: tripID, entries: entries)
+        savedLegs = legs
+        legStore.save(legs)
     }
 }

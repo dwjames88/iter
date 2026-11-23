@@ -64,6 +64,10 @@ public final class AppContainer {
 
     // Build
     public let routing: any RoutingProvider
+    /// The drives the builder worked out, for Go (`PlannedLegStore.swift`): beside the offline packs, or in memory when there is no
+    /// folder (an in-memory store has nothing to survive a relaunch, but Go still reads what Build just worked out).
+    public private(set) lazy var plannedLegStore: any PlannedLegStoring =
+        conditionsService.packsDirectory.map { PlannedLegFileStore(directory: $0) as any PlannedLegStoring } ?? InMemoryPlannedLegStore()
 
     // Place details
     public let streetLevel: (any StreetLevelImageryProvider)?

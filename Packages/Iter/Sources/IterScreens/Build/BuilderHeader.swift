@@ -187,12 +187,15 @@ struct PackBadge: View {
         case .ready(let builtAt):
             String(localized: "Available offline, updated \(builtAt.formatted(.relative(presentation: .named)))", comment: "A pinned trip's offline pack is ready")
         case .failed: String(localized: "The offline pack couldn't be built", comment: "A pinned trip's offline pack failed")
+        case .sampleData: String(localized: "Sample data — no offline pack", comment: "Sample data mode never builds an offline pack; not a failure")
+        case .unavailable: String(localized: "No offline pack in this library", comment: "The library has no folder to keep offline packs in; not a failure")
         }
     }
 
     static func symbol(_ state: BuildPackState) -> String {
         switch state {
         case .none, .building: "arrow.down.circle"
+        case .sampleData, .unavailable: "icloud.slash"
         case .ready: "checkmark.circle"
         case .failed: "exclamationmark.triangle.fill"
         }

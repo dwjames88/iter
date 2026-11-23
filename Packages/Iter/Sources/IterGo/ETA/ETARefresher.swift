@@ -62,6 +62,8 @@ public final class ETARefresher {
     /// True after an `.offline` failure until a request succeeds. The engine computes the offline estimate itself.
     public private(set) var isOffline = false
     public private(set) var backoffUntil: Date?
+    /// When the planned leg was taken as the first answer for the current target (`seedPlanned`), if it was.
+    public private(set) var seededAt: Date?
     public private(set) var requestLog: [ETARequestRecord] = []
     /// The most requests ever in flight at once. Cancelled requests stop counting when cancelled.
     public private(set) var maxConcurrentObserved = 0
@@ -130,6 +132,27 @@ public final class ETARefresher {
         return true
     }
 
+    /// Takes the trip's planned leg as the first answer for this target, so the first live request waits for its normal
+    /// cadence instead of firing at once (no routing call at start when Build already has the drive). Does nothing once any
+    /// request, or an earlier seed, exists for the target.
+    public func seedPlanned(from origin: Coordinate, to stop: (id: UUID, coordinate: Coordinate)) {
+        adoptTarget(stop.id)
+        guard current == nil, lastRequestAt == nil else { return }
+        let now = clock.now
+        lastRequestAt = now
+        lastRequestCoordinate = origin
+        seededAt = now
+    }
+
+    /// Takes back a planned-leg seed that no longer fits (the traveller is somewhere else, or the leave-by is close), so the next
+    /// live request is due at once. Does nothing once a real request has been made for the target.
+    public func unseed() {
+        guard let seeded = seededAt, current == nil, requestLog.last.map({ $0.startedAt < seeded }) ?? true else { return }
+        lastRequestAt = nil
+        lastRequestCoordinate = nil
+        seededAt = nil
+    }
+
     /// Drops the in-flight request, if any (its result will be ignored).
     public func cancel() { cancelInFlight() }
 
@@ -149,6 +172,7 @@ public final class ETARefresher {
         targetStop = id
         lastRequestAt = nil
         lastRequestCoordinate = nil
+        seededAt = nil
     }
 
     private func cancelInFlight() {

@@ -532,6 +532,10 @@ public enum BuildPackState: Equatable, Sendable {
     case building
     case ready(builtAt: Date)
     case failed
+    /// Sample data: no pack is built, by design.
+    case sampleData
+    /// This library has no folder for packs (in memory), so none can be built. Not a failure.
+    case unavailable
 }
 
 /// The `.iter` formats a trip can be shared in.

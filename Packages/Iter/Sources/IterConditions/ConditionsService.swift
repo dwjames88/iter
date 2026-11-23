@@ -87,6 +87,8 @@ public actor ConditionsService {
     let clock: any SourceClock
     let ephemeris: any Ephemeris
     let packDirectory: URL?
+    /// Where trip packs live; the planned-legs files sit beside them. nil when packs are off (in-memory stores).
+    public nonisolated var packsDirectory: URL? { packDirectory }
     let configuration: ConditionsConfiguration
     let assembler: ReportAssembler
 

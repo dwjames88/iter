@@ -32,6 +32,10 @@ public struct ConditionsFetchRecord: Hashable, Sendable {
 @MainActor
 public final class GoEngine {
     public static let liveETAMaxAge: TimeInterval = 15 * 60
+    /// A planned leg stands in for the first live ETA while the traveller is within this of where the leg starts.
+    static let plannedLegOriginM: Double = 5_000
+    /// ... and while the leave-by is more than this far off.
+    static let plannedLegMinLead: TimeInterval = 30 * 60
     public static let liveETAMaxMoveM: Double = 2_000
     public static let stationaryAfter: TimeInterval = 5 * 60
     public static let stationaryDistanceM: Double = 50
@@ -448,7 +452,7 @@ public final class GoEngine {
     private func etaDue(run: TripRun, live: LiveSchedule, now: Date) -> Date? {
         guard let next = live.next else { return nil }
         let moved = (refresher.requestLog.isEmpty ? nil : usableFix.flatMap { f in pendingOrigin.map { f.coordinate.distance(to: $0) } }) ?? 0
-        return ETARefreshPolicy.nextRefresh(lastRequestAt: refresher.requestLog.last?.startedAt, now: now, phase: run.phase,
+        return ETARefreshPolicy.nextRefresh(lastRequestAt: [refresher.requestLog.last?.startedAt, refresher.seededAt].compactMap { $0 }.max(), now: now, phase: run.phase,
                                             untilLeaveBy: next.leaveBy.map { $0.timeIntervalSince(now) }, remainingDriveSeconds: next.driveSeconds,
                                             movedSinceLastRequestM: moved, isStationary: isStationary(now: now), power: deps.power.current(),
                                             backoffUntil: refresher.backoffUntil)
@@ -464,6 +468,12 @@ public final class GoEngine {
         let context = ETARefreshContext(phase: run.phase, leaveBy: next.leaveBy, remainingDriveSeconds: next.driveSeconds,
                                         isStationary: isStationary(now: now), power: power)
         let before = refresher.requestLog.count
+        // Build's planned drive is the answer until the cadence says a live one is due: no routing call at start for a leg we have.
+        if holdsPlannedLeg(run: run, target: target, origin: origin.coordinate, leaveBy: next.leaveBy, force: force, now: now) {
+            refresher.seedPlanned(from: origin.coordinate, to: dest)
+        } else {
+            refresher.unseed()
+        }
         // While driving the cadence alone decides: the policy's "moved 2 km" trigger would fire every ~80 s at highway speed (45
         // requests an hour measured), and progress is already counted by rescaling the ETA. A deviation asks for a route below.
         var started = false
@@ -486,6 +496,17 @@ public final class GoEngine {
             pendingOrigin = origin.coordinate
             lastRequest = (target.id, now)
         }
+    }
+
+    /// True when the drive into `target` is already planned (a real routed leg, not a straight-line estimate), the traveller is
+    /// where that leg starts, nothing live is held, and the leave-by is far enough off that the planned time is good enough for
+    /// a first look. Never while driving or when the user pulled to refresh.
+    private func holdsPlannedLeg(run: TripRun, target: Stop, origin: Coordinate, leaveBy: Date?, force: Bool, now: Date) -> Bool {
+        guard !force, run.phase != .driving, lastETA?.stopID != target.id,
+              let leg = plannedLeg(into: target.id, run: run), !leg.isEstimate,
+              origin.distance(to: leg.from) <= Self.plannedLegOriginM else { return false }
+        if let leaveBy, leaveBy.timeIntervalSince(now) <= Self.plannedLegMinLead { return false }
+        return true
     }
 
     private func handleOutcome(_ outcome: ETAOutcome) async {

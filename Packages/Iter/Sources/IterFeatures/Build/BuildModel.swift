@@ -84,6 +84,11 @@ public final class BuildModel {
     @ObservationIgnored let engine: LightEngine
     @ObservationIgnored let scheduler = Scheduler()
     @ObservationIgnored let fetcher: DriveFetcher
+    /// Where the drives are kept for Go (nil: not kept). Written whenever the plan's real drives change.
+    @ObservationIgnored let legStore: (any PlannedLegStoring)?
+    /// Sample data: no offline pack is ever built, and the header says so plainly instead of reporting a failure.
+    @ObservationIgnored let isSampleData: Bool
+    @ObservationIgnored var savedLegs: PlannedLegs?
 
     @ObservationIgnored var seenRevision = -1
     @ObservationIgnored var legsDirty = false
@@ -151,7 +156,11 @@ public final class BuildModel {
 
     public init(tripID: UUID, library: LibraryStore, conditions: any BuildConditionsSource, packs: (any OfflinePackBuilding)?,
                 routing: any RoutingProvider, now: @escaping @Sendable () -> Date,
-                engine: LightEngine = LightEngine(ephemeris: Astronomy()), timing: BuildTiming = .live) {
+                engine: LightEngine = LightEngine(ephemeris: Astronomy()), timing: BuildTiming = .live,
+                legStore: (any PlannedLegStoring)? = nil, isSampleData: Bool = false) {
+        self.legStore = legStore
+        self.isSampleData = isSampleData
+        savedLegs = legStore?.load(tripID: tripID)
         self.tripID = tripID
         self.library = library
         self.conditions = conditions
@@ -339,6 +348,7 @@ public final class BuildModel {
             states[pair] = fetcher.state(of: .init(leg: pair, bucket: nil), from: a, to: b)
         }
         let loading = isOpen && fetcher.isLoading(wants)
+        if !loading { keepLegs(effective, pairs: pairs, coordinates: coordinates, now: instant) }
 
         // Plan values.
         let suggestions = scheduler.suggestOrdering(trip: trip, start: start, windows: windows, legs: effective).filter {

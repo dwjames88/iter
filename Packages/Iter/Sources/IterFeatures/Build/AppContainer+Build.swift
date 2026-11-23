@@ -5,6 +5,6 @@ extension AppContainer {
     /// by the screen that opens the trip and call `open()` and `close()` as it appears and goes.
     public func makeBuildModel(tripID: UUID) -> BuildModel {
         BuildModel(tripID: tripID, library: library, conditions: StoreConditions(conditions), packs: conditionsService,
-                   routing: routing, now: now)
+                   routing: routing, now: now, legStore: plannedLegStore, isSampleData: dataMode == .sample)
     }
 }

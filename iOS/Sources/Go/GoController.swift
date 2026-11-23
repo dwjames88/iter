@@ -136,13 +136,15 @@ final class GoController {
 
     // MARK: Inputs
 
-    /// The engine's input for a trip: its start place, session windows and whatever legs are known (Build keeps drive times in
-    /// memory only, so there are none to hand over; the engine routes and falls back to estimates).
+    /// The engine's input for a trip: its start place, session windows and the drives Build worked out for it (kept beside the
+    /// offline pack, see `PlannedLegStoring`), so Go starts from planned leave-by and arrival times and routes only a leg that is
+    /// missing or no longer fits the trip's places.
     func input(forTrip tripID: UUID) -> GoTripInput? {
         guard let trip = library.trip(id: tripID) else { return nil }
         let startPlaces = trip.startPlaceID.flatMap { container.library.places.value(id: $0) }.map { [$0] } ?? []
-        return GoTripInputBuilder.make(trip: trip, start: GoTripInputBuilder.startPlace(for: trip, in: startPlaces),
-                                       engine: lightEngine, plannedLegs: [:])
+        let start = GoTripInputBuilder.startPlace(for: trip, in: startPlaces)
+        let legs = container.plannedLegStore.load(tripID: tripID)?.legs(for: trip, start: start) ?? [:]
+        return GoTripInputBuilder.make(trip: trip, start: start, engine: lightEngine, plannedLegs: legs)
     }
 
     /// Stops in day order, then trip order within the day (the numbers Go and the map use).
