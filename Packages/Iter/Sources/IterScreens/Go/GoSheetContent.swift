@@ -66,17 +66,19 @@ public struct GoSheetContent: View {
     private var running: some View {
         let step = permissions.nextStep
         let placement = step.map(GoFlow.permissionPlacement)
+        let freshnessLeads = GoFlow.freshnessLeads(snapshot, now: now)
         return ScrollView {
             VStack(spacing: IterSpace.md) {
                 if let undo = snapshot.undo, GoFlow.undoIsVisible(undo, now: now) {
                     GoUndoBanner(undo: undo, now: now, actions: actions)
                 }
+                if freshnessLeads { GoSections.freshness(snapshot: snapshot, now: now) }
                 if let step, placement == .aboveHero { GoPermissionRow(step: step, actions: actions) }
                 GoSections.hero(snapshot: snapshot, now: now, actions: actions)
                 if let step, placement == .belowHero { GoPermissionRow(step: step, actions: actions) }
                 GoSections.alerts(snapshot: snapshot, now: now)
                 GoSections.conditions(snapshot: snapshot, now: now)
-                GoSections.freshness(snapshot: snapshot, now: now)
+                if !freshnessLeads { GoSections.freshness(snapshot: snapshot, now: now) }
                 GoScheduleSection(snapshot: snapshot, now: now)
             }
             .padding(.horizontal, IterSpace.lg)

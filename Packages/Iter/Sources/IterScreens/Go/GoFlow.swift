@@ -34,6 +34,12 @@ enum GoFlow {
         return .belowHero
     }
 
+    /// Old or missing data (offline, stale drive time, conditions or location, an old snapshot) is said above the hero card,
+    /// so it shows at the medium detent. A power-saving note alone stays below with the conditions.
+    static func freshnessLeads(_ snapshot: GoSnapshot, now: Date) -> Bool {
+        GoText.freshnessLines(snapshot, now: now).contains { $0.warns }
+    }
+
     /// The undo banner shows while the undo exists and has not expired.
     static func undoIsVisible(_ undo: GoUndoInfo?, now: Date) -> Bool {
         guard let undo else { return false }

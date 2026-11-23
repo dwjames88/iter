@@ -105,4 +105,18 @@ struct GoFlowTests {
         #expect(GoFlow.startStopID(selected: third, in: trip) == third)
         #expect(GoFlow.dateSpan(trip, locale: Locale(identifier: "en_US")) == "Wed, Oct 14 – Thu, Oct 15")
     }
+
+    @Test func freshnessLeadsOnlyForOldOrOfflineData() {
+        var s = GoSnapshot(generatedAt: Self.now, tripID: UUID(), tripName: "T", runID: UUID(), phase: .driving, next: Self.stop(2, day: 0))
+        #expect(!GoFlow.freshnessLeads(s, now: Self.now))
+        s.freshness.isOffline = true
+        #expect(GoFlow.freshnessLeads(s, now: Self.now))
+        s.freshness = GoFreshness(conditionsAsOf: Self.now.addingTimeInterval(-7200), conditionsAreStale: true)
+        #expect(GoFlow.freshnessLeads(s, now: Self.now))
+        s.freshness = GoFreshness(isPowerSaving: true)
+        #expect(!GoFlow.freshnessLeads(s, now: Self.now))
+        s.freshness = GoFreshness(isOffline: true)
+        s.phase = .idle
+        #expect(!GoFlow.freshnessLeads(s, now: Self.now))
+    }
 }
