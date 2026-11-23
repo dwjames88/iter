@@ -8,6 +8,12 @@ import IterUI
 /// (arrival), at a stop (the window and the cost of staying) and paused. Values in, `GoActions` out; never the model.
 /// Solid content card; the buttons are the system glass styles in one `GlassEffectContainer`, one prominent per card.
 ///
+/// Offscreen renders cannot draw system glass (it blanks the card), so tests set `goFlatButtons` to get the same layout with
+/// bordered buttons. Never set in the app.
+extension EnvironmentValues {
+    @Entry var goFlatButtons: Bool = false
+}
+
 /// The hero time uses `IterFont.titleSpot`, the largest token; there is no bigger one and none is invented here.
 public struct GoHeroCard: View {
     public let snapshot: GoSnapshot
@@ -16,6 +22,7 @@ public struct GoHeroCard: View {
 
     @Environment(\.goClockMode) private var clock
     @Environment(\.locale) private var locale
+    @Environment(\.goFlatButtons) private var flat
 
     public init(snapshot: GoSnapshot, now: Date, actions: GoActions) {
         self.snapshot = snapshot
@@ -53,7 +60,7 @@ public struct GoHeroCard: View {
         }
         VStack(alignment: .leading, spacing: IterSpace.xs) {
             if let drive = snapshot.drive {
-                GoLine("car") { Text(verbatim: GoText.driveLine(drive, locale: locale)) }
+                GoLine("road.lanes") { Text(verbatim: GoText.driveLine(drive, locale: locale)) }
                 GoLine(GoText.etaQualitySymbol(drive.source)) { Text(verbatim: GoText.etaQuality(drive.source, locale: locale)) }
             }
             if let line = GoText.arrivalAgainstLight(snapshot, locale: locale) {
@@ -141,7 +148,7 @@ public struct GoHeroCard: View {
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, minHeight: IterSize.hitTarget)
                 }
-                .buttonStyle(.glass)
+                .goButtonStyle(prominent: false, flat: flat)
             }
         }
     }
@@ -202,8 +209,14 @@ public struct GoHeroCard: View {
     }
 
     private func buttons(@ViewBuilder _ content: () -> some View) -> some View {
-        GlassEffectContainer(spacing: IterSpace.sm) {
-            HStack(spacing: IterSpace.sm) { content() }
+        Group {
+            if flat {
+                HStack(spacing: IterSpace.sm) { content() }
+            } else {
+                GlassEffectContainer(spacing: IterSpace.sm) {
+                    HStack(spacing: IterSpace.sm) { content() }
+                }
+            }
         }
         .controlSize(.large)
     }
@@ -215,7 +228,7 @@ public struct GoHeroCard: View {
             Label { Text("Navigate") } icon: { Image(systemName: "location.fill") }
                 .frame(maxWidth: .infinity, minHeight: IterSize.hitTarget)
         }
-        .buttonStyle(.glassProminent)
+        .goButtonStyle(prominent: true, flat: flat)
     }
 
     @ViewBuilder
@@ -224,9 +237,20 @@ public struct GoHeroCard: View {
         let label = Label { Text(title) } icon: { Image(systemName: symbol) }
             .frame(maxWidth: .infinity, minHeight: IterSize.hitTarget)
         if prominent {
-            Button { Task { await run() } } label: { label }.buttonStyle(.glassProminent)
+            Button { Task { await run() } } label: { label }.goButtonStyle(prominent: true, flat: flat)
         } else {
-            Button { Task { await run() } } label: { label }.buttonStyle(.glass)
+            Button { Task { await run() } } label: { label }.goButtonStyle(prominent: false, flat: flat)
+        }
+    }
+}
+
+private extension View {
+    /// The system glass styles (GLASS-RULES); `flat` swaps in bordered styles for offscreen renders only.
+    @ViewBuilder func goButtonStyle(prominent: Bool, flat: Bool) -> some View {
+        if flat {
+            if prominent { buttonStyle(.borderedProminent) } else { buttonStyle(.bordered) }
+        } else {
+            if prominent { buttonStyle(.glassProminent) } else { buttonStyle(.glass) }
         }
     }
 }
