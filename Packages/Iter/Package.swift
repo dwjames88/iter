@@ -95,6 +95,6 @@ let package = Package(
         .testTarget(name: "IterSyncTests", dependencies: ["IterSync"], swiftSettings: strict),
         .testTarget(name: "IterUITests", dependencies: ["IterUI"], swiftSettings: strict),
         .testTarget(name: "IterFeaturesTests", dependencies: ["IterFeatures"], swiftSettings: strict),
-        .testTarget(name: "IterScreensTests", dependencies: ["IterScreens"], swiftSettings: strict),
+        .testTarget(name: "IterScreensTests", dependencies: ["IterScreens", "IterFeatures", "IterGo", "IterGoActivity", "IterModel", "IterUI"], swiftSettings: strict),
     ]
 )

@@ -511,7 +511,10 @@ public final class GoEngine {
 
     private func startConditions(run: TripRun, live: LiveSchedule, now: Date, power: PowerState) {
         guard conditionsTask == nil, let input, ConditionsCadence.isActive(run.phase) else { return }
-        let nextStop = stop(live.next?.stopID)
+        // The conditions subject: the stop you are standing at while its window runs, else the next stop (`ConditionsSubject`).
+        let currentStop = stop(live.currentStop?.stopID)
+        let atCurrent = ConditionsSubject.isCurrent(phase: run.phase, kind: currentStop?.kind, windowEnd: live.currentStop?.window?.end, now: now)
+        let nextStop = atCurrent ? currentStop : stop(live.next?.stopID)
         let today = nextStop.map { n in live.upcoming.compactMap { stop($0.stopID) }.filter { $0.dayIndex == n.dayIndex } } ?? []
         let fix = usableFix
         let due = ConditionsCadence.due(now: now, phase: run.phase, power: power, memory: loop.state.memory.cadence, nextStopID: nextStop?.id,

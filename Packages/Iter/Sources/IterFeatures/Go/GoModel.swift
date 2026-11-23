@@ -2,6 +2,7 @@ import Foundation
 import Observation
 import IterGo
 import IterModel
+import IterPlan
 
 /// The view model the iPhone Go screen binds to: one engine, the permissions it needs, and the user's actions (BLUEPRINT §3, §10).
 /// It never touches the store (persistence is `StoreRunPersistence`, behind the engine) and imports no SwiftUI.
@@ -23,6 +24,14 @@ public final class GoModel {
     public var navigation: NavigationHandoff? {
         guard isRunning, let stop = snapshot.next ?? snapshot.current else { return nil }
         return NavigationHandoff(destination: stop.coordinate, name: stop.name)
+    }
+
+    /// The road still to drive, for the map: from where you are (or the stop you are at, or the trip's start) to the next stop along
+    /// its planned leg, then each remaining stop in order. A leg with no road path falls back to a straight segment between the
+    /// stops. Empty when no run is going.
+    public var routePath: [Coordinate] {
+        guard isRunning, let tripInput else { return [] }
+        return Self.routePath(snapshot: snapshot, input: tripInput)
     }
 
     // MARK: Internals
@@ -191,5 +200,48 @@ public final class GoModel {
     private func cancelLoop() {
         runTask?.cancel()
         runTask = nil
+    }
+
+    // MARK: Route
+
+    static func routePath(snapshot: GoSnapshot, input: GoTripInput) -> [Coordinate] {
+        guard let next = snapshot.next else { return [] }
+        let ordered = input.trip.stops.enumerated().sorted { a, b in
+            a.element.dayIndex != b.element.dayIndex ? a.element.dayIndex < b.element.dayIndex : a.offset < b.offset
+        }.map(\.element)
+        func coordinate(_ id: UUID) -> Coordinate? { input.trip.stops.first { $0.id == id }?.place.coordinate }
+
+        // The stops to reach, next first.
+        var ids = snapshot.schedule?.map(\.stop.id) ?? []
+        if ids.first != next.id { ids = Array(ordered.drop { $0.id != next.id }.map(\.id)) }
+
+        // The leg into `next`: from the stop you are at, else the stop before it in trip order, else the start.
+        let before = ordered.firstIndex { $0.id == next.id }.flatMap { $0 > 0 ? ordered[$0 - 1].id : nil }
+        let origins = [snapshot.current?.id, before, input.start?.id].compactMap { $0 }
+        let firstLeg = origins.lazy.compactMap { input.plannedLegs[LegKey($0, next.id)] }.first
+        let from = snapshot.here ?? snapshot.current?.coordinate ?? input.start?.coordinate ?? before.flatMap(coordinate)
+
+        var path: [Coordinate] = []
+        func append(_ points: [Coordinate]) {
+            for p in points where p != path.last { path.append(p) }
+        }
+        if let from { append([from]) }
+        if let leg = firstLeg, leg.path.count >= 2 {
+            var points = leg.path
+            if let from, let nearest = points.indices.min(by: { from.distance(to: points[$0]) < from.distance(to: points[$1]) }) {
+                points = Array(points[nearest...])
+            }
+            append(points)
+        }
+        append([next.coordinate])
+        for (a, b) in zip(ids, ids.dropFirst()) {
+            if let leg = input.plannedLegs[LegKey(a, b)], leg.path.count >= 2 {
+                append(leg.path)
+            } else if let from = coordinate(a), let to = coordinate(b) {
+                append([from, to])
+            }
+            if let to = coordinate(b) { append([to]) }
+        }
+        return path
     }
 }

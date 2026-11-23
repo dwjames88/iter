@@ -104,7 +104,9 @@ import IterPlan
         // Back online.
         h.routing.setMode(.ok)
         h.conditions.setOffline(false)
-        await h.advance(to: simH(9.45))
+        // The run arrives about 9.36 h. The conditions subject stays the same stop across the arrival (it is the stop you stand at
+        // while its window runs), so the offline flag clears at the next scheduled refresh (9.5 h), not at the arrival.
+        await h.advance(to: simH(9.55))
         #expect(!h.last.freshness.isOffline)
         #expect(h.last.drive?.source == .live || h.run?.phase == .atStop)
         await h.advance(to: simH(10))

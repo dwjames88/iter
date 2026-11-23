@@ -45,9 +45,31 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Iter uses your location to show photo spots within reach of you and how long the drive is, without asking each time you open it.</string>
+	<string>Iter uses your location to show photo spots within reach of you and, in trip mode, to notice when you arrive at a stop while your phone is locked.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Iter uses your location to show photo spots within reach of you and how long the drive is.</string>
+	<string>Iter uses your location to show photo spots within reach of you and, in trip mode, how long the drive to your next stop is.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>fetch</string>
+	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.dwjames.iter.go.refresh</string>
+	</array>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.dwjames.iter.ios</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>iter</string>
+			</array>
+		</dict>
+	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>

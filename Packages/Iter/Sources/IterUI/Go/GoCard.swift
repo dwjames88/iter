@@ -16,18 +16,19 @@ struct GoCardBackground: ViewModifier {
 }
 
 extension View {
-    func goCard() -> some View { modifier(GoCardBackground()) }
+    /// The solid content card every trip-mode card sits on (public so the Go screens use the same style).
+    public func goCard() -> some View { modifier(GoCardBackground()) }
 }
 
 /// An icon in a fixed-width lane beside a line of text, so stacked lines align.
-struct GoLine<Content: View>: View {
+public struct GoLine<Content: View>: View {
     let symbol: String
     let content: Content
-    init(_ symbol: String, @ViewBuilder content: () -> Content) {
+    public init(_ symbol: String, @ViewBuilder content: () -> Content) {
         self.symbol = symbol
         self.content = content()
     }
-    var body: some View {
+    public var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
             Image(systemName: symbol).frame(width: IterSize.iconLarge, alignment: .center).accessibilityHidden(true)
             content.fixedSize(horizontal: false, vertical: true)
