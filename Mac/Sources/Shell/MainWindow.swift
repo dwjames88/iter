@@ -16,10 +16,12 @@ struct MainWindow: View {
 
     /// - Parameter route: opens on this route and skips restoration (tests and captures); nil follows `-IterSection`, then
     ///   what the scene restores.
-    init(shell: AppShell, route: AppRoute? = nil) {
+    init(shell: AppShell, route: AppRoute? = nil, find: FindModel? = nil, makeConditions: (@MainActor (Place) -> ConditionsModel)? = nil) {
         self.shell = shell
         fixedRoute = route
-        _box = State(initialValue: Lazy { WindowShell(shell: shell, initialRoute: route ?? MainWindow.launchRoute(shell)) })
+        _box = State(initialValue: Lazy {
+            WindowShell(shell: shell, initialRoute: route ?? MainWindow.launchRoute(shell), find: find, makeConditions: makeConditions)
+        })
     }
 
     /// `-IterSection` (with `-IterSeedTrip` for `trip`) wins over what the scene restores.
@@ -37,12 +39,16 @@ struct MainWindow: View {
         } detail: {
             DetailView(window: window)
         }
-        .navigationTitle(window.title)
+        .navigationTitle(window.windowTitle)
         .frame(minWidth: 761, minHeight: 600)
         .focusedSceneValue(\.windowShell, window)
         .modifier(WindowSheets(shell: shell, window: window))
         .modifier(WindowFiles(window: window))
         .modifier(WindowAlerts(window: window))
+        // Screens and sheets read these from the environment (sheets inherit from here, so this sits outside them).
+        .environment(window.navigator)
+        .environment(window.library)
+        .environment(\.findMapStyle, shell.container.preferences.mapStyle)
         .onAppear { appear(window) }
         .onChange(of: undoManager) { window.library.undoManager = undoManager }
         .onChange(of: window.navigator.route) { storedRoute = window.route.stored }

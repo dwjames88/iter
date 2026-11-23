@@ -83,6 +83,8 @@ targets:
         product: IterDiscovery
       - package: Iter
         product: IterSky
+      - package: Iter
+        product: IterConditions
       - package: IterUpdater
         product: IterUpdater
     settings:

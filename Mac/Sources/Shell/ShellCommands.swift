@@ -1,5 +1,6 @@
 import SwiftUI
 import IterFeatures
+import IterScreens
 
 /// The menu bar, with the old shortcuts for every feature that still exists. Context comes from the focused window's
 /// `WindowShell` (a scene value), so a command is disabled when no main window is key. Undo and Redo are the system's: they
@@ -7,6 +8,7 @@ import IterFeatures
 struct ShellCommands: Commands {
     let shell: AppShell?
     @FocusedValue(\.windowShell) private var window
+    @FocusedValue(\.selectedSavedPlace) private var selectedSavedPlace
 
     var body: some Commands {
         CommandGroup(replacing: .newItem) {
@@ -27,9 +29,9 @@ struct ShellCommands: Commands {
                 .disabled(window == nil)
         }
         CommandGroup(after: .pasteboard) {
-            Button("Edit Place…") { window?.editPlace() }
+            Button("Edit Place…") { window?.editPlace(selectedSaved: selectedSavedPlace) }
                 .keyboardShortcut("e")
-                .disabled(!(window?.availability.editPlace ?? false))
+                .disabled(window?.editPlaceTarget(selectedSaved: selectedSavedPlace) == nil)
         }
         CommandGroup(after: .textEditing) {
             Button("Find Spots") { window?.findSpots() }
