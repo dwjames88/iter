@@ -12,8 +12,15 @@ public enum GoText {
         stop.flatMap { TimeZone(identifier: $0.timeZoneIdentifier) } ?? .current
     }
 
-    /// The stop the conditions are about: the one you are heading to, else the one you are at.
-    public static func subjectStop(_ s: GoSnapshot) -> GoStopInfo? { s.next ?? s.current }
+    /// The stop the conditions are about: the one `sky.stopID` names (the current stop while shooting, else the next), falling
+    /// back to the one you are heading to, then the one you are at.
+    public static func subjectStop(_ s: GoSnapshot) -> GoStopInfo? {
+        if let id = s.sky?.stopID {
+            if let c = s.current, c.id == id { return c }
+            if let n = s.next, n.id == id { return n }
+        }
+        return s.next ?? s.current
+    }
 
     static func time(_ d: Date, _ zone: TimeZone, _ locale: Locale) -> String { TimeText.time(d, in: zone, locale: locale) }
 

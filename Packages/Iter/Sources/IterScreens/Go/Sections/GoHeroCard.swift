@@ -248,7 +248,8 @@ private extension View {
     /// The system glass styles (GLASS-RULES); `flat` swaps in bordered styles for offscreen renders only.
     @ViewBuilder func goButtonStyle(prominent: Bool, flat: Bool) -> some View {
         if flat {
-            if prominent { buttonStyle(.borderedProminent) } else { buttonStyle(.bordered) }
+            // The package has no AccentColor asset, so tint with the token or renders show system blue.
+            if prominent { buttonStyle(.borderedProminent).tint(IterColor.accent) } else { buttonStyle(.bordered).tint(IterColor.accent) }
         } else {
             if prominent { buttonStyle(.glassProminent) } else { buttonStyle(.glass) }
         }
