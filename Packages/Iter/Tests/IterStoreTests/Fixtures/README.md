@@ -52,3 +52,17 @@ V1-V3 stores are written with fixed UUIDs and dates, so `as-written.json` and `e
 flattened folders' `updatedAt` above); the SQLite files themselves are not byte-identical between runs. **`v4-realistic` IDs and
 dates change on every regeneration** (the old API assigns random IDs and `.now`), as do its dump and the documents, which embed
 those IDs. Regenerate only on purpose, and commit the whole set together.
+
+### Dump mode (a store this repo has never seen)
+
+    swift run --package-path Legacy/IterKit --scratch-path <scratch> IterFixtureGen --dump <storeDir> <out.json>
+
+Used by the cut-over dry run on the owner's own store. `<storeDir>` is never opened: the whole folder (`Iter.store`, `-wal`, `-shm`) is
+copied into a fresh temp folder first, and every read happens on those copies. The tool finds the written schema version by comparing the
+store's `NSStoreModelVersionHashes` with the entity hashes of `IterSchemaV1...V4` (a full dictionary match; V2 and V3 share the Trip and Stop
+hashes but not Folder/Place), then writes three files next to `<out.json>` (its `.json` suffix is replaced by each of these):
+`<out>.as-written.json` (frozen-schema read, no migration; a V4 store is read with a plain container, so nothing is flattened),
+`<out>.expected.json` (a second copy opened with the old `IterSchema.makeContainer(url:)` + `IterStore(container:)`, with each trip's `plan`;
+the oracle for the new code) and `<out>.schema.json` (`writtenSchemaVersion`, the raw `NSStoreModelVersionIdentifiers` and hashes, how they matched).
+Both dumps use the format above and carry `flattenedFolderIDs`. Stdout shows counts only, never a name or note. It exits non-zero (and still writes
+`<out>.schema.json`) if no schema version matches.

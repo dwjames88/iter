@@ -5,8 +5,14 @@ import IterCore
 
 // IterFixtureGen: writes the rebuild's test fixtures with the OLD IterData code.
 // Usage: swift run --package-path Legacy/IterKit IterFixtureGen <outputDir>
+//        swift run --package-path Legacy/IterKit IterFixtureGen --dump <storeDir> <out.json>
 
 struct GenError: Error, CustomStringConvertible { var description: String }
+
+// Dump mode (see Dump.swift): reads a store folder the tool has never seen, through copies only.
+if CommandLine.arguments.count >= 2, CommandLine.arguments[1] == "--dump" {
+    exit(DumpMode.run(Array(CommandLine.arguments.dropFirst(2))))
+}
 
 guard CommandLine.arguments.count == 2 else {
     FileHandle.standardError.write(Data("usage: IterFixtureGen <outputDir>\n".utf8))
