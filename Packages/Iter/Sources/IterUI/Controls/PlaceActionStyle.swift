@@ -72,7 +72,6 @@ public enum PlaceActionMetrics {
     /// Four tiles share the 340 pt column, so the label gets all but 4 pt of each side ("Open in Maps" must not truncate).
     public static let horizontalPadding: CGFloat = 4
     public static let minimumScale: CGFloat = 0.7
-    public static let titleLines = 1
     #else
     public static let height: CGFloat = 52
     public static let cornerRadius: CGFloat = 14
@@ -94,8 +93,12 @@ private struct PlaceActionLabelStyle: LabelStyle {
         VStack(spacing: PlaceActionMetrics.labelSpacing) {
             configuration.icon.font(.system(size: PlaceActionMetrics.glyph, weight: .semibold))
                 .imageScale(.medium)
+            #if os(macOS)
+            configuration.title.font(PlaceActionMetrics.title).lineLimit(1).minimumScaleFactor(PlaceActionMetrics.minimumScale)
+            #else
             configuration.title.font(PlaceActionMetrics.title).lineLimit(PlaceActionMetrics.titleLines)
                 .multilineTextAlignment(.center).minimumScaleFactor(PlaceActionMetrics.minimumScale)
+            #endif
         }
         .padding(.vertical, PlaceActionMetrics.verticalPadding)
         .padding(.horizontal, PlaceActionMetrics.horizontalPadding)
