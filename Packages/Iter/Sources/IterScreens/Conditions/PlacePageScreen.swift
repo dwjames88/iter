@@ -63,7 +63,7 @@ public struct PlacePageScreen: View {
     }
 
     private var actions: some View {
-        HStack(spacing: IterSpace.sm) {
+        PlaceActionRow(spacing: IterSpace.sm) {
             Menu {
                 Button("New Trip with This Place", systemImage: "plus") {
                     navigator?.present(.newTrip(templateID: nil, firstPlace: place.id))

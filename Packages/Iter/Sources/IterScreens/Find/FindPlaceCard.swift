@@ -181,7 +181,7 @@ struct FindPlaceCard: View {
     // MARK: Actions
 
     private var actions: some View {
-        HStack(spacing: IterSpace.sm) {
+        PlaceActionRow(spacing: IterSpace.sm) {
             Menu {
                 ForEach(trips) { trip in
                     Button { add(to: trip) } label: { Text(verbatim: trip.name) }

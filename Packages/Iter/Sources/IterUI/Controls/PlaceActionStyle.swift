@@ -102,6 +102,40 @@ private struct PlaceActionLabelStyle: LabelStyle {
         }
         .padding(.vertical, PlaceActionMetrics.verticalPadding)
         .padding(.horizontal, PlaceActionMetrics.horizontalPadding)
-        .frame(maxWidth: .infinity, minHeight: PlaceActionMetrics.height)
+        // maxHeight lets the label (and so the button's fill) take the height `PlaceActionRow` proposes, the tallest tile's.
+        .frame(maxWidth: .infinity, minHeight: PlaceActionMetrics.height, maxHeight: .infinity)
+    }
+}
+
+/// The place card's row of actions: equal widths, and every tile as tall as the tallest. A tile whose title wraps to two lines
+/// (or grows with Dynamic Type) lifts its neighbours to the same height; nothing here is a fixed height, so the minimums in
+/// `PlaceActionMetrics` and the type size decide.
+public struct PlaceActionRow: Layout {
+    public var spacing: CGFloat
+
+    public init(spacing: CGFloat = 8) { self.spacing = spacing }
+
+    private func tileWidth(_ count: Int, in width: CGFloat) -> CGFloat {
+        guard count > 0 else { return 0 }
+        return max(0, (width - spacing * CGFloat(count - 1)) / CGFloat(count))
+    }
+
+    private func rowHeight(_ subviews: Subviews, width: CGFloat) -> CGFloat {
+        let proposal = ProposedViewSize(width: tileWidth(subviews.count, in: width), height: nil)
+        return subviews.map { $0.sizeThatFits(proposal).height }.max() ?? 0
+    }
+
+    public func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let width = proposal.width ?? 340
+        return CGSize(width: width, height: rowHeight(subviews, width: width))
+    }
+
+    public func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        let each = tileWidth(subviews.count, in: bounds.width)
+        let height = rowHeight(subviews, width: bounds.width)
+        for (i, subview) in subviews.enumerated() {
+            subview.place(at: CGPoint(x: bounds.minX + CGFloat(i) * (each + spacing), y: bounds.minY),
+                          anchor: .topLeading, proposal: ProposedViewSize(width: each, height: height))
+        }
     }
 }
