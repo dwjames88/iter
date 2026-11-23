@@ -2,6 +2,15 @@
 
 **The app:** `build/Iter.app` in this folder. `scripts/run.sh` builds it and opens it, and `scripts/test.sh` runs every test. Iter needs macOS 26 or later; this Mac runs 27.
 
+## Mac hosted tests and smoke launch (rebuild, headless)
+
+Everything here runs without showing a window, taking focus or touching the real app, store or Keychain.
+
+- `scripts/test-mac.sh [--only <TestClass>] [--timeout S] [--no-build]` builds the render copy for testing (`build-for-testing`), then runs `IterAppTests` with `test-without-building` and prints a pass/fail tally. The scheme's test action uses the `Test` configuration (bundle id `com.dwjames.iter.render`, ad hoc, no hardened runtime) and launches the host with `-IterInMemoryStore YES -IterLocation 38.39,-109.87`, so a plain `xcodebuild test -scheme Iter -destination 'platform=macOS,arch=arm64'` is also safe. The script refuses to run unless the built bundle id is the render id. Under XCTest the host app sets itself to activation policy `.prohibited` (a few lines in `IterApp.init`; the shell must keep them). About 15 s warm, 90 s cold.
+- Snapshots from `Tests/Hosted/Mac/Support/Snapshot.swift` land in `Design/snapshots/rebuild/mac/<name>-<light|dark>.png`. They draw offscreen (a window at -30000, never key): layout, text, colour and states are faithful; system Liquid Glass, MapKit, web views and Metal layers do not draw (glass becomes a faint flat fill), so never judge glass from them.
+- `scripts/smoke-mac.sh [--no-build] [--timeout S] [-- <app args>]` launches the render copy hidden (`open -g -j -n`) with `-IterSmokeQuitAfter N` (the shell logs `smoke: ready ...` and quits itself after N seconds), waits, stops only its own PID on timeout and reports. Until the shell implements `-IterSmokeQuitAfter` it reports "no ready line".
+- Package snapshot tests (`cd Packages/Iter && swift test --filter IterUITests --parallel`) wait for stable pixels before capturing, so they no longer flake under load.
+
 ## What changed (2026-10-25)
 
 - **Transfer timing picker (Mac).** Open a trip and find the card between two days: "Drive to the next area the [Morning ⌄] before the shoot." Choose **Evening Before**. The sentence becomes "Drive to the next area the [Evening Before]", the time label under the time changes from "Leave by" to "Leave at" and shows when the previous stop's session ends, the overnight ("Overnight near …") moves to the area of the next day's first stop, and the driving totals in the day headers move: the drive now counts toward the day before. The drive only turns violet ("Drive doesn't fit") if leaving at the session's end plus the drive is later than the next stop's arrival. Edit ▸ Undo Change Transfer Timing puts Morning back. Each transfer has its own choice. Change Dates on a shorter trip drops the choice for days that no longer exist.

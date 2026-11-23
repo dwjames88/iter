@@ -26,6 +26,21 @@ enum SnapshotAppearance: String, CaseIterable, Sendable {
     case light, dark
 }
 
+/// A FIFO async mutex on the main actor (see `Snapshot.image`).
+@MainActor
+final class RenderLock {
+    static let shared = RenderLock()
+    private var busy = false
+    private var waiters: [CheckedContinuation<Void, Never>] = []
+    func acquire() async {
+        if !busy { busy = true; return }
+        await withCheckedContinuation { waiters.append($0) }
+    }
+    func release() {
+        if waiters.isEmpty { busy = false } else { waiters.removeFirst().resume() }
+    }
+}
+
 enum SnapshotError: Error { case render, png, noRepoRoot }
 
 @MainActor
@@ -39,11 +54,17 @@ enum Snapshot {
     /// behind the view. Resolves in the given appearance. Settles layout before capturing.
     static func image(_ view: some View, appearance: SnapshotAppearance, size: CGSize,
                       scale: CGFloat = defaultScale, background: Color? = nil,
-                      settle: Duration = .milliseconds(300)) async throws -> CGImage {
+                      settle: Duration = .milliseconds(800)) async throws -> CGImage {
         let content = view
             .frame(width: size.width, height: size.height)
             .background { background }
             .environment(\.colorScheme, appearance == .dark ? .dark : .light)
+        // One render at a time. Swift Testing runs the snapshot tests concurrently on the main actor and each render
+        // suspends (settle sleeps), so renders interleaved: several off-screen windows at the same spot, shared
+        // first-responder, display and CATransaction state. That moved text (the search placeholder) and layout between
+        // runs: the cause of the flake. The lock makes each render run alone.
+        await RenderLock.shared.acquire()
+        defer { RenderLock.shared.release() }
         return try await renderBackend(AnyView(content), appearance: appearance, size: size, scale: scale, settle: settle)
     }
 
@@ -173,14 +194,33 @@ extension Snapshot {
         pass()
         try await Task.sleep(for: settle)
         pass()
-        var last = -1
-        for _ in 0..<20 {
+        // Stable pixels, not a stable layer tree: AppKit text fields (the search field's placeholder) and lists move
+        // their text after the layer frames stop changing, and under load (a full parallel run) that happens late, so a
+        // capture taken on an unchanged layer tree can still catch the earlier position. Wait until three consecutive
+        // renders of the (unrepaired) layer tree are byte-identical, for at most about 6 seconds.
+        var last = -1, stableRuns = 0
+        for _ in 0..<120 {
             try await Task.sleep(for: .milliseconds(50))
             pass()
-            let signature = layerSignature(host.layer)
-            if signature == last { break }
+            let signature = layerSignature(host.layer) &* 31 &+ pixelSignature(of: window.contentView?.superview ?? host, appearance: appearance)
+            if signature == last { stableRuns += 1; if stableRuns >= 6 { break } } else { stableRuns = 0 }
             last = signature
         }
+    }
+
+    /// A hash of what the layer tree draws right now (before `repair`, so it is only compared with itself).
+    private static func pixelSignature(of view: NSView, appearance: NSAppearance) -> Int {
+        let scale: CGFloat = 1
+        let pw = Int(view.bounds.width * scale), ph = Int(view.bounds.height * scale)
+        guard pw > 0, ph > 0, let layer = view.layer,
+              let ctx = CGContext(data: nil, width: pw, height: ph, bitsPerComponent: 8, bytesPerRow: pw * 4,
+                                  space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue),
+              let data = ctx.data else { return 0 }
+        appearance.performAsCurrentDrawingAppearance { layer.render(in: ctx) }
+        var h = Hasher()
+        h.combine(bytes: UnsafeRawBufferPointer(start: data, count: pw * 4 * ph))
+        return h.finalize()
     }
 
     private static func layerSignature(_ layer: CALayer?) -> Int {
