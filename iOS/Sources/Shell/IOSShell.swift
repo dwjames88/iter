@@ -142,7 +142,11 @@ final class IOSShell {
         }
         if let pane = switches.settingsPane {
             settingsLaunchPane = pane
-            showsSettings = true
+            // Settings is presented from inside the floating sheet, so it waits until that sheet is up.
+            Task { @MainActor [weak self] in
+                try? await Task.sleep(for: .seconds(2))
+                self?.showsSettings = true
+            }
         }
     }
 

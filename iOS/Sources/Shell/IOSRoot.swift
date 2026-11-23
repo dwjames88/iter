@@ -125,10 +125,20 @@ struct SettingsToolbarButton: ToolbarContent {
 struct SettingsSheet: View {
     let shell: IOSShell
 
+    /// `-IterSettings sources` opens Sources & Credits on top (simulator screenshots).
+    @State private var path: [String] = []
+
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             IOSSettingsScreen(shell: shell)
                 .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { shell.showsSettings = false } } }
+                .navigationDestination(for: String.self) { pane in
+                    if pane == "sources" { IOSSourcesSettings(model: shell.settings) }
+                }
+        }
+        .onAppear {
+            if let pane = shell.settingsLaunchPane, pane == "sources" { path = [pane] }
+            shell.settingsLaunchPane = nil
         }
     }
 }

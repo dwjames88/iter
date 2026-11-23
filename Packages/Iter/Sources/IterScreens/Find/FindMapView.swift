@@ -71,6 +71,10 @@ struct FindMapView: View {
     @State private var width: CGFloat = 0
     @State private var resize = FindDebouncer()
     @State private var rings: [[CLLocationCoordinate2D]] = []
+    /// The instant the night side is drawn for, or nil when it is not drawn. Changed only when the camera settles and then only
+    /// in 15-minute steps: a fresh `Date()` per body made MapKit redraw and report a camera change forever (a 100 % CPU loop on
+    /// the iOS simulator).
+    @State private var daylightDate: Date?
 
     private var spots: OwnSpotEditor { model.spots }
     private var adjustingID: String? { spots.adjusting.map { "place:\($0.placeID.uuidString)" } }
@@ -79,9 +83,7 @@ struct FindMapView: View {
         MapReader { proxy in
             Map(position: $position, selection: selection, scope: mapScope) {
                 UserAnnotation()
-                if showsDaylight, let span = visibleRegion?.latitudeDelta, DaylightGeometry.isVisible(latitudeSpan: span) {
-                    DaylightTerminator(date: Date())
-                }
+                if let daylightDate { DaylightTerminator(date: daylightDate) }
                 ForEach(rings.indices, id: \.self) { i in
                     MapPolygon(coordinates: rings[i])
                         .foregroundStyle(IterColor.accent.opacity(0.08))
@@ -109,7 +111,9 @@ struct FindMapView: View {
                 let region = FindMapGeometry.geoRegion(context.region)
                 visibleRegion = region
                 if width > 0 { model.setViewport(region: region, width: width) }
+                updateDaylight(latitudeSpan: region.latitudeDelta)
             }
+            .onChange(of: showsDaylight) { updateDaylight(latitudeSpan: visibleRegion?.latitudeDelta ?? 0) }
             .onMapCameraChange(frequency: .continuous) { context in
                 guard spots.adjusting != nil else { return }
                 spots.adjustCenterChanged(FindMapGeometry.coordinate(context.camera.centerCoordinate))
@@ -140,6 +144,18 @@ struct FindMapView: View {
         #if os(macOS)
         .onExitCommand { cancelModes() }
         #endif
+    }
+
+    private func updateDaylight(latitudeSpan: Double) {
+        let step: TimeInterval = 15 * 60
+        let date = showsDaylight && DaylightGeometry.isVisible(latitudeSpan: latitudeSpan)
+            ? Date(timeIntervalSince1970: (Date().timeIntervalSince1970 / step).rounded(.down) * step) : nil
+        guard date != daylightDate else { return }
+        // An automatic camera frames all map content, and the night side spans the globe: hold the camera where it is first.
+        if date != nil, position.positionedByUser == false, let region = visibleRegion {
+            position = .region(FindMapGeometry.region(region))
+        }
+        daylightDate = date
     }
 
     // MARK: Selection and camera
