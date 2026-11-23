@@ -59,6 +59,8 @@ final class IOSShell {
     /// The one-time "rebuilt from a backup" notice while it is showing.
     var recovery: RecoveryInfo?
     @ObservationIgnored private var recoveryTaken = false
+    /// The first-run guide while it is showing (`-IterFirstRun YES|NO`; otherwise once on a real launch).
+    var showsFirstRun = false
 
     init(container: AppContainer, find: FindModel? = nil, makeConditions: (@MainActor (Place) -> ConditionsModel)? = nil) {
         self.container = container
@@ -109,6 +111,12 @@ final class IOSShell {
         recovery = info
     }
 
+    /// The guide was closed, by its button or a swipe: it never shows again.
+    func dismissFirstRun() {
+        showsFirstRun = false
+        find.notices.markSeen(.firstRunGuide)
+    }
+
     func dismissRecoveryNotice() {
         guard recovery != nil else { return }
         recovery = nil
@@ -125,6 +133,8 @@ final class IOSShell {
             navigator.route = route
             show(route)
         }
+        showsFirstRun = OneTimeNotices.shouldShowFirstRun(forced: switches.firstRun, inMemoryStore: container.options.inMemoryStore,
+                                                           seen: find.notices.hasSeen(.firstRunGuide))
         if let tab = switches.tab { self.tab = tab }
         if let detent = switches.detent { self.detent = detent }
         if switches.openFirstPlace, let place = library.savedPlaces.first {
@@ -135,6 +145,10 @@ final class IOSShell {
             tab = .find
             find.text = query
             find.submit()
+        }
+        if let quick = switches.findQuick {
+            tab = .find
+            find.runQuickChoice(quick)
         }
         if switches.selectFirstSaved, let place = library.savedPlaces.first.flatMap({ library.place(id: $0.id) }) {
             tab = .find
@@ -204,6 +218,10 @@ struct IOSLaunchSwitches: Equatable {
     var findQuery: String?
     /// `-IterFindSelect saved`: shows the first saved place on Find's card.
     var selectFirstSaved = false
+    /// `-IterFirstRun YES` shows the first-run guide whatever was seen; `NO` never does (screenshots, tests). Nil: the default rule.
+    var firstRun: Bool?
+    /// `-IterFindQuick today|tomorrow|nearyou`: runs that quick choice at launch (screenshots).
+    var findQuick: FindQuickChoice?
     /// `-IterSettings root|sources`: opens Settings (and a pane).
     var settingsPane: String?
     /// DEBUG only: render the alternative sheet layout for the D6 decision.
@@ -230,6 +248,8 @@ struct IOSLaunchSwitches: Equatable {
         findQuery = arguments.firstIndex(of: "-IterFindQuery").flatMap { $0 + 1 < arguments.count ? arguments[$0 + 1] : nil }
         selectFirstSaved = value("-IterFindSelect") == "saved"
         settingsPane = value("-IterSettings")
+        findQuick = value("-IterFindQuick").flatMap { name in FindQuickChoice.allCases.first { $0.rawValue.lowercased() == name } }
+        firstRun = value("-IterFirstRun").map { ["yes", "true", "1"].contains($0) }
         #if DEBUG
         d6Probe = ["yes", "true", "1"].contains(value("-IterD6Probe") ?? "")
         #endif

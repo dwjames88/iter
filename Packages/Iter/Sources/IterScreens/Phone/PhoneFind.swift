@@ -80,6 +80,15 @@ struct FindSheetIdle: View {
 
     var body: some View {
         List {
+            if model.offersQuickChoices {
+                Section {
+                    FindQuickChoiceChips(model: model)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets(top: IterSpace.xs, leading: 0, bottom: IterSpace.xs, trailing: 0))
+                } header: {
+                    Text("Best light near you", comment: "Find idle header over the Today, Tomorrow and Near You choices")
+                }
+            }
             Section {
                 ForEach(Self.examples, id: \.self) { example in
                     Button {

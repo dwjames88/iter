@@ -61,6 +61,12 @@ public final class FindModel {
     @ObservationIgnored let configuration: FindConfiguration
     /// The shared Conditions stage, for each result's score. Nil: results carry no score.
     @ObservationIgnored let scoreSource: (any FindScoreSource)?
+    /// The once-only notices (the pin tip, the first-run guide). The container sets its own; tests and previews get a throwaway.
+    @ObservationIgnored public var notices: OneTimeNotices = .ephemeral()
+    /// Days after today that scores are asked for: 1 after the Tomorrow quick choice, 0 otherwise.
+    @ObservationIgnored var scoreDayOffset = 0
+    /// The quick choice the current results came from; nil for a typed or Search Here search.
+    public internal(set) var activeQuickChoice: FindQuickChoice?
     /// Your own spots: drop, drag, Adjust Location, coordinates and readouts.
     @ObservationIgnored public let spots: OwnSpotEditor
 
@@ -209,6 +215,8 @@ public final class FindModel {
         resetResults()
         phase = .idle
         notice = nil
+        activeQuickChoice = nil
+        scoreDayOffset = 0
         deselect()
     }
 
@@ -234,9 +242,11 @@ public final class FindModel {
         rebuildMapContent()
     }
 
-    func runDiscovery(_ query: String, region searchRegion: GeoRegion? = nil) {
+    func runDiscovery(_ query: String, region searchRegion: GeoRegion? = nil, quick: FindQuickChoice? = nil) {
         cancel()
         resetResults()
+        activeQuickChoice = quick
+        scoreDayOffset = quick?.dayOffset ?? 0
         notice = nil
         runGeneration += 1
         let mine = runGeneration

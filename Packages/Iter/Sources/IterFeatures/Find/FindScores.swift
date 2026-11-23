@@ -98,7 +98,8 @@ extension FindModel {
         if let d = raw.first(where: { $0.id == id }) { place = placeForRow(d) }
         else if let c = card, c.id == id { place = c.place }
         else { return nil }
-        return (place, LocalDay(now(), in: place.timeZone))
+        let day = scoreDayOffset == 0 ? now() : now().addingTimeInterval(TimeInterval(scoreDayOffset) * 86_400)
+        return (place, LocalDay(day, in: place.timeZone))
     }
 
     /// Asks the store for the places in view (and the selected one) at on-screen priority, once each per search, and tells it which
