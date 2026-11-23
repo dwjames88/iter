@@ -65,7 +65,6 @@ struct TripBuilderPanelContent: View {
                     if model.dayItems.count > 1 {
                         DaySelectorRow(model: model) { day in
                             model.selectDay(day)
-                            if let day { withAnimation { proxy.scrollTo("header-\(day)", anchor: .top) } }
                         }
                         .listRowInsets(EdgeInsets(top: 0, leading: -BuilderMetrics.listMargin, bottom: 0, trailing: -BuilderMetrics.listMargin))
                         .listRowSeparator(.hidden)
@@ -114,6 +113,14 @@ struct TripBuilderPanelContent: View {
                 }
             }
             #endif
+            // A selected day (chosen here, or already selected when the panel opens) scrolls its header to the top.
+            .onChange(of: model.selectedDay, initial: true) {
+                guard let day = model.selectedDay else { return }
+                Task { @MainActor in
+                    await Task.yield()
+                    withAnimation { proxy.scrollTo("header-\(day)", anchor: .top) }
+                }
+            }
             .onChange(of: model.selectedStopID) {
                 if let id = model.selectedStopID { proxy.scrollTo("stop-\(id)") }
             }
@@ -195,7 +202,7 @@ struct BuilderSourceLine: View {
 }
 
 extension EnvironmentValues {
-    /// Whether the panel opens its model when it appears and closes it when it goes (the default). Snapshots and previews of a
-    /// fixed state turn it off so nothing starts running.
-    @Entry var tripBuilderOpensModel = true
+    /// Whether the panel opens its model when it appears and closes it when it goes. Off by default: the shell owns the model's
+    /// lifetime (it opens on route appear and closes on route disappear), so hiding the inspector never stops the route map.
+    @Entry public var tripBuilderOpensModel = false
 }
