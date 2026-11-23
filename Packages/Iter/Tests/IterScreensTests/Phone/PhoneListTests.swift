@@ -79,7 +79,8 @@ import IterModel
         let toast = PhoneUndoToast(library: c.libraryModel(), lifetime: .milliseconds(30))
         toast.show("Place Removed")
         #expect(toast.current != nil)
-        try await Task.sleep(for: .milliseconds(300))
+        // Polled, not a fixed sleep: under a full parallel `swift test` the main actor can be busy for longer than 300 ms.
+        for _ in 0..<100 where toast.current != nil { try await Task.sleep(for: .milliseconds(50)) }
         #expect(toast.current == nil)
     }
 }

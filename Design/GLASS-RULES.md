@@ -87,3 +87,9 @@ Evidence (`Design/snapshots/rebuild/ios/sim/`, taken with `simctl io screenshot`
 - Alternative (`-IterD6Probe YES`, Debug only: `TabView` outside, sheet over it): `d6probe-half.png`, `d6probe-peek.png`. The system sheet covers the tab bar: only blurred tab icons show through the sheet's material and none can be tapped. So the outside layout is still wrong on iOS 27.2, and the in-sheet layout is the one to keep.
 
 Caveat: the "Iter Rebuild" simulator is an iPhone-Duo device type (two displays, wide, status bar on the trailing edge), not a 402 x 874 pt portrait phone, so the tab bar shows as a vertical capsule at the trailing foot of the sheet rather than a horizontal bar. The result (covered outside, visible inside) is the same structure on a phone; a check on a real iPhone-sized simulator or the device is still worth doing.
+
+Phone-sized check (lead, 2026-11-23): the iOS 27.2 runtime installed here supports only the iPhone Duo device type, so the
+portrait check ran on an iPhone 17 Pro simulator on iOS 26.5 (`p7-*.png` in the same folder). With the tabs inside the sheet
+the tab bar is a horizontal glass bar at the sheet's foot at peek, half and full, clear of the home indicator, on every tab
+(`p7-find-half.png`, `p7-trips-half.png`, `p7-saved-half.png`, `p7-go-half.png`, `p7-trip-builder-full.png`). Map controls
+and Search Here sit below the Dynamic Island because the maps get the top safe area back as padding (`IOSShell.mapTopInset`).
