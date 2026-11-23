@@ -149,6 +149,15 @@ public final class LibraryModel {
         return act { store.trips.create(from: template, startDay: startDay) }.id
     }
 
+    /// Adds a place (already in the library) as a stop on `day` of a trip: what New Trip does with a first place. One undo step.
+    /// Returns the stop's id; nil when the trip or place is unknown.
+    @discardableResult
+    public func addStop(placeID: UUID, toTrip tripID: UUID, day: Int = 0) -> UUID? {
+        guard let record = store.trips.trip(id: tripID), let place = store.places.value(id: placeID) else { return nil }
+        defer { refresh() }
+        return act { store.trips.addStop(place, to: record, day: day, session: nil, at: nil) }.id
+    }
+
     public func renameTrip(_ id: UUID, to name: String) {
         guard let record = store.trips.trip(id: id) else { return }
         act { store.trips.rename(record, to: name) }

@@ -34,12 +34,12 @@ import IterFeatures
 
     @Test func conflictBackwards() async throws {
         let model = BuildPreviewData.canyonCountry(.backwardsDay, selectedDay: 2)
-        try await Snapshot.record(panel(model), name: "builder-panel-conflict", size: CGSize(width: 560, height: 1400))
+        try await Snapshot.record(panel(model), name: "builder-panel-conflict", size: CGSize(width: 560, height: 2600))
     }
 
     @Test func conflictDriveDoesNotFit() async throws {
         let model = BuildPreviewData.canyonCountry(.driveDoesNotFit, selectedDay: 1)
-        try await Snapshot.record(panel(model), name: "builder-panel-conflict-drive", size: CGSize(width: 560, height: 1400))
+        try await Snapshot.record(panel(model), name: "builder-panel-conflict-drive", size: CGSize(width: 560, height: 2600))
     }
 
     @Test func scoresLoading() async throws {

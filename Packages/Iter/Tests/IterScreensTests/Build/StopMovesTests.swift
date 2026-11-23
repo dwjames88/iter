@@ -1,5 +1,6 @@
 import Foundation
 import Testing
+import IterModel
 @testable import IterScreens
 
 @Suite struct StopMovesTests {
