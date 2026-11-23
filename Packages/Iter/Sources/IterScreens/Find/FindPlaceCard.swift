@@ -101,7 +101,11 @@ struct FindPlaceCard: View {
                     lightNote
                     if canEdit {
                         Button { navigator?.open(.place(card.place.id)) } label: { Text("Open Place Page") }
+                            #if os(macOS)
                             .buttonStyle(.link)
+                            #else
+                            .buttonStyle(.borderless)
+                            #endif
                             .foregroundStyle(IterColor.accentText)
                     }
                 }
@@ -112,7 +116,9 @@ struct FindPlaceCard: View {
         .scrollIndicators(.automatic)
         .onAppear { trips = model.tripChoices() }
         .onChange(of: card.id) { addedTo = nil; trips = model.tripChoices() }
+        #if os(macOS)
         .onExitCommand(perform: onBack)
+        #endif
     }
 
     // MARK: Header

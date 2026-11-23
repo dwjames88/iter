@@ -131,7 +131,9 @@ struct FindMapView: View {
             let span = visibleRegion.map { ($0.latitudeDelta, $0.longitudeDelta) } ?? (0.02, 0.02)
             position = .region(FindMapGeometry.region(GeoRegion(center: session.original, latitudeDelta: span.0, longitudeDelta: span.1)))
         }
+        #if os(macOS)
         .onExitCommand { cancelModes() }
+        #endif
     }
 
     // MARK: Selection and camera

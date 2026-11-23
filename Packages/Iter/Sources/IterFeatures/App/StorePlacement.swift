@@ -9,8 +9,13 @@ public enum StorePlacement: Sendable, Equatable {
     case inMemory
     case file(URL)
 
-    /// The real Mac app's bundle id. The only id allowed to open the real store.
+    /// The real app's bundle id on this platform: the only id allowed to open the real store. The iPhone app keeps
+    /// `com.dwjames.iter.ios` (the owner's phone has its library under it); the Mac app is `com.dwjames.iter`.
+#if os(iOS)
+    public static let realBundleID = "com.dwjames.iter.ios"
+#else
     public static let realBundleID = "com.dwjames.iter"
+#endif
 
     public enum Refusal: Error, Equatable, Sendable {
         /// A non-real process asked for a path inside the real store's folder.
