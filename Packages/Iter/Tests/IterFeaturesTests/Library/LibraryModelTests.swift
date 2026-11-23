@@ -27,6 +27,11 @@ import IterStore
         #expect(m.trips(in: m.tripFolders[0].id).map(\.name) == [SampleLibrary.scoutingTripName])
     }
 
+    @Test func aTripThatRevisitsAPlaceListsItOnce() {
+        #expect(LibraryModel.distinctNames(["Mobius Arch", "Alabama Hills", "Mobius Arch", "Alabama Hills", "Lake Sabrina"], limit: 3)
+                == ["Mobius Arch", "Alabama Hills", "Lake Sabrina"])
+    }
+
     @Test func tripsSortUpcomingFirstThenPastNewestFirst() throws {
         let f = try LibraryFixture()
         let past = f.model.createTrip(name: "Old", startDay: LocalDay(year: 2026, month: 1, day: 1), dayCount: 2)
