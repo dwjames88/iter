@@ -8,7 +8,7 @@ import IterFeatures
 
 @Suite("Go flow logic")
 struct GoFlowTests {
-    static let now = Date(timeIntervalSince1970: 1_792_000_000)
+    static let now = ISO8601DateFormatter().date(from: "2026-10-24T22:30:00Z")!
     static let denver = "America/Denver"
 
     static func stop(_ n: Int, day: Int, name: String = "Stop") -> GoStopInfo {

@@ -11,7 +11,7 @@ import IterFeatures
 @MainActor
 @Suite("Go screen snapshots")
 struct GoScreenSnapshotTests {
-    static let now = Date(timeIntervalSince1970: 1_792_000_000)
+    static let now = ISO8601DateFormatter().date(from: "2026-10-24T22:30:00Z")!
     static let full = CGSize(width: 393, height: 852)
     static let half = CGSize(width: 393, height: 430)
 
