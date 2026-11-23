@@ -366,11 +366,25 @@ public struct GoSnapshot: Codable, Hashable, Sendable {
     /// Short names of the sources behind the numbers, for the quiet source line (D5).
     public var sources: [String]
 
+    // Added in Phase 9 (trip-mode UI). Optional, so snapshots written before them still decode (missing keys are nil).
+
+    /// The next stop's short-range strip (observation or nowcast first, then forecast), about six hours. nil = none.
+    public var hours: [GoHourInfo]?
+    /// The sources behind the numbers with their origin tier and age, best tier first; `sources` keeps the short names.
+    public var sourceDetails: [GoSourceInfo]?
+    /// `next` then the stops after it, in trip order, each with its live leave-by and projected arrival.
+    public var schedule: [GoScheduleItem]?
+    /// Your last known position (for the route map), and when it was taken is `freshness.locationAsOf`.
+    public var here: Coordinate?
+    /// When finished: what happened at each stop.
+    public var summary: GoTripSummary?
+
     public init(version: Int = GoSnapshot.currentVersion, generatedAt: Date, tripID: UUID?, tripName: String, runID: UUID?, phase: GoPhase,
                 current: GoStopInfo? = nil, next: GoStopInfo? = nil, remainingCount: Int = 0, leave: GoLeaveInfo? = nil,
                 drive: GoDriveInfo? = nil, stay: GoStayInfo? = nil, alternative: GoAlternativeInfo? = nil, sky: GoSkyInfo? = nil,
                 weather: [GoWeatherInfo] = [], alerts: [GoAlertInfo] = [], freshness: GoFreshness = GoFreshness(),
-                undo: GoUndoInfo? = nil, sources: [String] = []) {
+                undo: GoUndoInfo? = nil, sources: [String] = [], hours: [GoHourInfo]? = nil, sourceDetails: [GoSourceInfo]? = nil,
+                schedule: [GoScheduleItem]? = nil, here: Coordinate? = nil, summary: GoTripSummary? = nil) {
         self.version = version
         self.generatedAt = generatedAt
         self.tripID = tripID
@@ -390,6 +404,11 @@ public struct GoSnapshot: Codable, Hashable, Sendable {
         self.freshness = freshness
         self.undo = undo
         self.sources = sources
+        self.hours = hours
+        self.sourceDetails = sourceDetails
+        self.schedule = schedule
+        self.here = here
+        self.summary = summary
     }
 
     /// No run.
