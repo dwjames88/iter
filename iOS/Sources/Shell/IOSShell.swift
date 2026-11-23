@@ -54,6 +54,9 @@ final class IOSShell {
     var savedPath: [PhoneRoute] = []
     /// Settings shows (a sheet on iPhone, the detail on iPad).
     var showsSettings = false
+    /// The one-time "rebuilt from a backup" notice while it is showing.
+    var recovery: RecoveryInfo?
+    @ObservationIgnored private var recoveryTaken = false
 
     init(container: AppContainer, find: FindModel? = nil, makeConditions: (@MainActor (Place) -> ConditionsModel)? = nil) {
         self.container = container
@@ -85,6 +88,7 @@ final class IOSShell {
     /// CONTRACT: shows an app route on the right tab (phone) or as the detail (pad). Screens usually go through
     /// `navigator.open(_:)`; the shell observes the navigator and calls this.
     func show(_ route: AppRoute) {
+        showsSettings = false
         switch route {
         case .find: tab = .find
         case .allTrips: tab = .trips; tripsPath = []
@@ -94,5 +98,131 @@ final class IOSShell {
         case .placeFolder(let id): tab = .saved; savedPath = [.placeFolder(id)]
         case .place(let id): tab = .saved; savedPath = [.place(id)]
         }
+    }
+
+    /// The recovery notice, once: shows it while the store says it still needs showing.
+    func presentRecoveryNoticeIfNeeded() {
+        guard !recoveryTaken, let info = container.store.recovered, info.needsNotice else { return }
+        recoveryTaken = true
+        recovery = info
+    }
+
+    func dismissRecoveryNotice() {
+        guard recovery != nil else { return }
+        recovery = nil
+        container.markRecoveryNoticeShown()
+    }
+
+    // MARK: Launch switches
+
+    /// Applies the simulator and render switches (`-IterSection`, `-IterTab`, `-IterSheetDetent`, `-IterOpenPlace`).
+    /// Order: section first, then an explicit tab and place, so a render can say both.
+    func apply(_ switches: IOSLaunchSwitches) {
+        let firstTrip = library.trips.first { $0.name == SampleLibrary.tripName }?.id ?? library.trips.first?.id
+        if let route = IOSLaunchSwitches.route(forSection: switches.section, firstTripID: firstTrip) {
+            navigator.route = route
+            show(route)
+        }
+        if let tab = switches.tab { self.tab = tab }
+        if let detent = switches.detent { self.detent = detent }
+        if switches.openFirstPlace, let place = library.savedPlaces.first {
+            tab = .saved
+            savedPath = [.place(place.id)]
+        }
+    }
+
+    // MARK: Links and files
+
+    /// What `onOpenURL` did with a link.
+    enum OpenURLOutcome: Equatable { case sharing, go, unhandled }
+
+    /// The order links are tried in: a `.iter` file belongs to Sharing first, then `iter://go...` belongs to Go.
+    static func dispatch(_ url: URL, sharing: (URL) -> Bool, go: (URL) -> Bool) -> OpenURLOutcome {
+        if sharing(url) { return .sharing }
+        if go(url) { return .go }
+        return .unhandled
+    }
+
+    /// `onOpenURL`: Sharing, then Go (which also selects the Go tab / the Go row on iPad).
+    @discardableResult
+    func open(_ url: URL) -> OpenURLOutcome {
+        let outcome = Self.dispatch(url, sharing: { sharing.open($0) }, go: { go.handle(url: $0) })
+        if outcome == .go { showsSettings = false; tab = .go }
+        return outcome
+    }
+
+    // MARK: iPad sidebar selection
+
+    /// What the iPad sidebar selects.
+    enum PadSelection: Hashable { case app(AppRoute), go, settings }
+
+    var padSelection: PadSelection {
+        get {
+            if showsSettings { return .settings }
+            if tab == .go { return .go }
+            return .app(navigator.route ?? .find)
+        }
+        set {
+            switch newValue {
+            case .app(let route): showsSettings = false; navigator.open(route); show(route)
+            case .go: showsSettings = false; tab = .go
+            case .settings: showsSettings = true
+            }
+        }
+    }
+}
+
+/// The shell's own launch switches, parsed from the process arguments like `LaunchOptions`.
+struct IOSLaunchSwitches: Equatable {
+    var section: String?
+    var tab: PhoneTab?
+    var detent: PresentationDetent?
+    var openFirstPlace = false
+    /// DEBUG only: render the alternative sheet layout for the D6 decision.
+    var d6Probe = false
+
+    init(section: String? = nil, tab: PhoneTab? = nil, detent: PresentationDetent? = nil, openFirstPlace: Bool = false, d6Probe: Bool = false) {
+        self.section = section; self.tab = tab; self.detent = detent; self.openFirstPlace = openFirstPlace; self.d6Probe = d6Probe
+    }
+
+    init(arguments: [String]) {
+        func value(_ key: String) -> String? {
+            guard let i = arguments.firstIndex(of: key), i + 1 < arguments.count else { return nil }
+            return arguments[i + 1].lowercased()
+        }
+        section = value("-IterSection")
+        tab = value("-IterTab").flatMap(PhoneTab.init(rawValue:))
+        detent = switch value("-IterSheetDetent") {
+        case "peek": PhoneSheet.peek
+        case "half": PhoneSheet.half
+        case "full": PhoneSheet.full
+        default: nil
+        }
+        openFirstPlace = value("-IterOpenPlace") == "first"
+        #if DEBUG
+        d6Probe = ["yes", "true", "1"].contains(value("-IterD6Probe") ?? "")
+        #endif
+    }
+
+    static var current: IOSLaunchSwitches { IOSLaunchSwitches(arguments: ProcessInfo.processInfo.arguments) }
+
+    /// The route for `-IterSection find|trips|places|trip` (the Mac's `AppRoute.forSection`).
+    static func route(forSection section: String?, firstTripID: UUID?) -> AppRoute? {
+        switch section?.lowercased() {
+        case "find": .find
+        case "trips": .allTrips
+        case "places": .savedPlaces
+        case "trip": firstTripID.map { .trip($0) } ?? .allTrips
+        default: nil
+        }
+    }
+}
+
+/// Phone or pad shell: an iPad in a compact width (Slide Over, a narrow split) uses the phone shell.
+enum ShellLayout: Equatable {
+    case phone, pad
+
+    static func resolve(isPad: Bool, horizontalSizeClass: UserInterfaceSizeClass?) -> ShellLayout {
+        isPad && horizontalSizeClass == .regular ? .pad : .phone
     }
 }
