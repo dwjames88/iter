@@ -30,10 +30,14 @@ public struct RankBreakdown: Sendable, Hashable {
     public var novelty: RankPart
     /// Strict matches always list before related ones, whatever the scores.
     public var matchTier: MatchTier
+    /// How well the place's kind matches what the owner saves, 0...1 ("Learn From My Library"). 0 when the setting is off or
+    /// the library says too little; then the score is exactly what it would have been without the feature.
+    public var libraryAffinity: Double
 
     public init(featureMatch: RankPart, evidence: RankPart, preference: RankPart, lightSuit: RankPart, reachability: RankPart, novelty: RankPart,
-                matchTier: MatchTier = .strict) {
+                matchTier: MatchTier = .strict, libraryAffinity: Double = 0) {
         self.matchTier = matchTier
+        self.libraryAffinity = min(1, max(0, libraryAffinity))
         self.featureMatch = featureMatch
         self.evidence = evidence
         self.preference = preference
@@ -43,11 +47,18 @@ public struct RankBreakdown: Sendable, Hashable {
     }
 
     /// The weighted score for an ordering, 0...1. Parts without a value are left out and the rest renormalised.
+    /// A library match lifts it by at most `LibraryProfile.maximumBoost` (12%), and never past 1.
     public func score(for ordering: DiscoveryOrdering) -> Double {
+        let base = baseScore(for: ordering)
+        guard libraryAffinity > 0 else { return base }
+        return min(1, base * (1 + LibraryProfile.maximumBoost * libraryAffinity))
+    }
+
+    private func baseScore(for ordering: DiscoveryOrdering) -> Double {
         switch ordering {
         case .popular: weighted(evidenceWeight: 0.35, invertEvidence: false, noveltyWeight: 0.05)
         case .unique: weighted(evidenceWeight: 0.25, invertEvidence: true, noveltyWeight: 0.20)
-        case .mixed: 0.5 * score(for: .popular) + 0.5 * score(for: .unique)
+        case .mixed: 0.5 * baseScore(for: .popular) + 0.5 * baseScore(for: .unique)
         }
     }
 
@@ -78,6 +89,8 @@ enum DiscoveryRanker {
         /// The user's location, else the area centre.
         var anchor: Coordinate
         var anchorIsUser: Bool
+        /// Nil with "Learn From My Library" off: ranking is then unchanged.
+        var profile: LibraryProfile? = nil
     }
 
     struct Scored: Sendable {
@@ -116,7 +129,8 @@ enum DiscoveryRanker {
                       lightSuit: RankPart(value: nil, note: "No facing is known for this place, so light suit is not scored."),
                       reachability: reachability(distanceKm: distanceKm, anchorIsUser: context.anchorIsUser),
                       novelty: novelty(s.candidate, library: context.library),
-                      matchTier: FeatureRelatedness.tier(of: s.candidate.featureKinds, plan: context.plan))
+                      matchTier: FeatureRelatedness.tier(of: s.candidate.featureKinds, plan: context.plan),
+                      libraryAffinity: context.profile?.affinity(for: s.candidate.featureKinds) ?? 0)
     }
 
     static func featureMatch(_ c: VerifiedCandidate, plan: QueryPlan) -> RankPart {

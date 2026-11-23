@@ -131,3 +131,39 @@ import IterDiscovery
         #expect(places.attributionFull.contains("built-in catalogue") && !places.attributionFull.contains("weather"))
     }
 }
+
+@MainActor
+@Suite("Learn From My Library wiring") struct LearnFromLibraryWiringTests {
+    private func live() throws -> AppContainer {
+        let c = try AppContainer.live(options: LaunchOptions(inMemoryStore: true), bundleID: "com.dwjames.iter.render", environment: [:])
+        SampleLibrary.seed(into: c.library, now: Date(timeIntervalSince1970: 1_800_000_000))
+        return c
+    }
+
+    @Test func isOnByDefaultAsInTheOldAppAndWritesThrough() throws {
+        let c = try live()
+        #expect(c.preferences.learnFromLibrary)
+        let s = c.settingsModel()
+        #expect(s.learnFromLibrary)
+        s.learnFromLibrary = false
+        #expect(!c.preferences.learnFromLibrary)
+        #expect(!c.preferences.showCloudImagery)
+    }
+
+    @Test func theEngineGetsAProfileOnlyWhileTheToggleIsOn() throws {
+        let c = try live()
+        let profile = c.discovery.libraryProfile
+        #expect(profile != nil && profile?.isEmpty == false)
+        // Computed from the library alone: the same as building it directly.
+        #expect(profile == LibraryProfile(savedPlaces: c.library.places.savedValues(), trips: c.library.trips.values()))
+        c.preferences.learnFromLibrary = false
+        #expect(c.discovery.libraryProfile == nil)
+        c.preferences.learnFromLibrary = true
+        #expect(c.discovery.libraryProfile != nil)
+    }
+
+    @Test func anEmptyLibraryLearnsNothing() throws {
+        let c = try AppContainer.live(options: LaunchOptions(inMemoryStore: true), bundleID: "com.dwjames.iter.render", environment: [:])
+        #expect(c.discovery.libraryProfile?.isEmpty == true)
+    }
+}

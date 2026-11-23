@@ -101,6 +101,13 @@ struct IOSSearchSettings: View {
                 Text("Iter matches these words when it ranks places, on this iPhone. They are never sent to a source.")
             }
             Section {
+                Toggle("Use My Saved Places and Trips", isOn: $model.learnFromLibrary)
+            } header: {
+                Text("Learn From My Library")
+            } footer: {
+                Text("Places like the ones you save and plan get a small lift when Iter ranks results. It is worked out on this iPhone and never leaves it.")
+            }
+            Section {
                 Picker("Prefer", selection: $model.ordering) {
                     ForEach(DiscoveryOrdering.allCases, id: \.self) { Text(Self.title($0)).tag($0) }
                 }

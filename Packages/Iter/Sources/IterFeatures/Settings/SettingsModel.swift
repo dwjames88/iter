@@ -53,6 +53,12 @@ public final class SettingsModel {
         set { preferences.resultCap = min(Self.resultCapRange.upperBound, max(Self.resultCapRange.lowerBound, newValue)) }
     }
     public static let resultCapRange = 10...100
+    /// "Learn From My Library": a small ranking boost for the kinds of place the owner saves and plans. On by default. The
+    /// summary is built on this device and never sent anywhere.
+    public var learnFromLibrary: Bool {
+        get { preferences.learnFromLibrary }
+        set { preferences.learnFromLibrary = newValue }
+    }
 
     /// Every source Find can use, plus Reddit and Google as unavailable rows with their reasons.
     public var discoverySources: [SourceRow] {

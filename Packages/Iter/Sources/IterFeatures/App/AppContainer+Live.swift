@@ -96,7 +96,13 @@ extension AppContainer {
             routing: services.routing, streetLevel: services.streetLevel, magnetic: services.magnetic,
             gridReference: services.gridReference, location: location, keyVault: keys, preferences: preferences,
             sources: services.sources)
-        container.discoveryFactory = services.discoveryFactory
+        // "Learn From My Library": the profile is summed from the library at search time (cheap), only when the toggle is on.
+        let library = built.library
+        container.discoveryFactory = { [preferences] in
+            let engine = services.discoveryFactory()
+            guard preferences.learnFromLibrary else { return engine }
+            return engine.with(libraryProfile: LibraryProfile.current(in: library))
+        }
         container.recoveryNoticeWriter = built.recoveryWriter
         if seed { SampleLibrary.seed(into: built.library, now: now()) }
         return container

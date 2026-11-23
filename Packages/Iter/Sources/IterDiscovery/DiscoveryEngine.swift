@@ -18,13 +18,22 @@ public struct DiscoveryEngine: Sendable {
     public let model: (any LanguageModeling)?
     public let clock: any SourceClock
     public let configuration: DiscoveryConfiguration
+    /// "Learn From My Library": a small bounded ranking boost for kinds the owner saves. Used only by the ranker; it never
+    /// reaches a provider or the model. Nil (the default) leaves ranking unchanged.
+    public let libraryProfile: LibraryProfile?
 
     public init(providers: DiscoveryProviders, model: (any LanguageModeling)? = nil, clock: any SourceClock = SystemSourceClock(),
-                configuration: DiscoveryConfiguration = .default) {
+                configuration: DiscoveryConfiguration = .default, libraryProfile: LibraryProfile? = nil) {
+        self.libraryProfile = libraryProfile
         self.providers = providers
         self.model = model
         self.clock = clock
         self.configuration = configuration
+    }
+
+    /// The same engine with a library profile (or none) for ranking.
+    public func with(libraryProfile: LibraryProfile?) -> DiscoveryEngine {
+        DiscoveryEngine(providers: providers, model: model, clock: clock, configuration: configuration, libraryProfile: libraryProfile)
     }
 
     /// Streams events for one search. The stream ends after `.finished`. Terminating it early cancels the work.
@@ -88,7 +97,8 @@ public struct DiscoveryEngine: Sendable {
         let userNearby = request.currentLocation.map { $0.distance(to: resolved.centre) <= 400_000 } ?? false
         let anchor = (userNearby ? request.currentLocation : nil) ?? resolved.centre
         let context = DiscoveryRanker.Context(plan: plan, ordering: request.ordering, preferenceText: request.preferenceText,
-                                              library: request.library, anchor: anchor, anchorIsUser: userNearby)
+                                              library: request.library, anchor: anchor, anchorIsUser: userNearby,
+                                              profile: libraryProfile)
 
         // 3. Fan-out, 4. extraction, 5. verification: one task group, results collected as they arrive.
         var verified: [VerifiedCandidate] = []
