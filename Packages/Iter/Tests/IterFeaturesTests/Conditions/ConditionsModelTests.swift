@@ -389,3 +389,18 @@ struct ConditionsCompassTests {
         #expect(t.sunrise != nil && t.sunset != nil && t.sunrise! < t.sunset!)
     }
 }
+
+@MainActor @Suite struct ConditionsViewingTests {
+    @Test func viewsShareTheModelAndTheLastOneToLeaveStopsIt() {
+        let m = ConditionsPreviewData.model(.complete)
+        m.beginViewing()
+        m.beginViewing()
+        #expect(m.viewerCount == 2)
+        m.endViewing()
+        #expect(m.viewerCount == 1)
+        m.endViewing()
+        #expect(m.viewerCount == 0)
+        m.endViewing()
+        #expect(m.viewerCount == 0)
+    }
+}

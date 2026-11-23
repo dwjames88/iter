@@ -192,6 +192,7 @@ struct TripHero: View {
             Spacer(minLength: IterSpace.lg)
             Button { navigator.open(.trip(row.id)) } label: { Text("Open", comment: "Button: open the trip").frame(minWidth: 72) }
                 .buttonStyle(.borderedProminent)
+                .tint(IterColor.accent)
                 .controlSize(.large)
         }
         .padding(IterSpace.xl)
@@ -314,6 +315,7 @@ struct AllTripsEmptyState: View {
                     Text("New Trip", comment: "Button").frame(minWidth: 128)
                 }
                 .buttonStyle(.borderedProminent)
+                .tint(IterColor.accent)
                 .controlSize(.large)
                 Text("Or start from a template", comment: "Caption above the template rows")
                     .font(IterFont.captionStrong).foregroundStyle(IterColor.textSecondary)

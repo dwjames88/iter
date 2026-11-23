@@ -22,19 +22,24 @@ enum ConditionsFormat {
         return "\(Int(percent.rounded()))%"
     }
 
-    static func temperature(_ c: Double?) -> String {
+    /// "54\u{00B0}" in the locale's temperature unit (Fahrenheit for the US).
+    static func temperature(_ c: Double?, locale: Locale = .current) -> String {
         guard let c else { return "\u{2013}" }
-        return "\(Int(c.rounded()))\u{00B0}"
+        return Measurement(value: c, unit: UnitTemperature.celsius)
+            .formatted(.measurement(width: .narrow, usage: .weather, numberFormatStyle: .number.precision(.fractionLength(0))).locale(locale))
     }
 
-    static func wind(_ ms: Double?) -> String {
+    /// "7 mph" or "11 km/h": the locale's wind unit.
+    static func wind(_ ms: Double?, locale: Locale = .current) -> String {
         guard let ms else { return "\u{2013}" }
-        return String(format: "%.0f m/s", ms)
+        return Measurement(value: ms, unit: UnitSpeed.metersPerSecond)
+            .formatted(.measurement(width: .abbreviated, usage: .wind, numberFormatStyle: .number.precision(.fractionLength(0))).locale(locale))
     }
 
-    static func visibility(_ km: Double?) -> String {
+    /// "15 mi" or "24 km", from the same road convention as every other distance on screen.
+    static func visibility(_ km: Double?, locale: Locale = .current) -> String {
         guard let km else { return "\u{2013}" }
-        return "\(Int(km.rounded())) km"
+        return TimeText.distance(kilometers: km, locale: locale)
     }
 
     // MARK: Compass
@@ -297,10 +302,10 @@ enum ConditionsFormat {
         case .totalCloud: FactorText(name: "Cloud Cover", symbol: "cloud", value: percent(c.value))
         case .clearSky: FactorText(name: "Clear Sky", symbol: "sun.max", value: "\(percent(c.value)) cloud")
         case .precipitation: FactorText(name: "Rain", symbol: "cloud.rain", value: c.value > 1 ? String(format: "%.1f mm/h", c.value) : percent(c.value))
-        case .visibility: FactorText(name: "Visibility", symbol: "eye", value: String(format: "%.0f km", c.value))
+        case .visibility: FactorText(name: "Visibility", symbol: "eye", value: visibility(c.value))
         case .moonlight: FactorText(name: "Moonlight", symbol: "moon.fill", value: "\(percent(c.value)) lit")
         case .darkSky: FactorText(name: "Dark Sky", symbol: "moon.stars", value: "moon \(percent(c.value)) lit")
-        case .wind: FactorText(name: "Wind", symbol: "wind", value: String(format: "%.0f m/s", c.value))
+        case .wind: FactorText(name: "Wind", symbol: "wind", value: wind(c.value))
         case .aerosol: FactorText(name: "Haze and Smoke", symbol: "smoke", value: String(format: "%.2f", c.value))
         case .fog: FactorText(name: "Fog Risk", symbol: "cloud.fog", value: String(format: "%.1f\u{00B0} spread", c.value))
         case .humidity: FactorText(name: "Humidity", symbol: "humidity", value: "\(Int(c.value.rounded()))%")

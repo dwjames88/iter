@@ -24,8 +24,8 @@ struct ConditionsStack: View {
 }
 
 /// Every Conditions section for one place, stacked (when to go, outlook, windows, timeline, compass, hourly, now, alerts,
-/// smoke, aurora, horizon, comparison, gaps, source lines). Scrolls itself. Starts the model when it appears; the host calls
-/// `model.stop()` when the place goes away.
+/// smoke, aurora, horizon, comparison, gaps, source lines). Scrolls itself. Starts the model when it appears and lets go of it
+/// when it goes away (the model stops when no view shows it).
 public struct ConditionsSections: View {
     let model: ConditionsModel
     public init(model: ConditionsModel) { self.model = model }
@@ -34,14 +34,18 @@ public struct ConditionsSections: View {
             ConditionsStack(model: model)
                 .padding(IterSpace.lg)
         }
-        .onAppear { model.start() }
+        .onAppear { model.beginViewing() }
+        .onDisappear { model.endViewing() }
     }
 }
 
 /// A compact summary (headline window with its score chip, when to go) for cards and lists.
 public struct ConditionsSummary: View {
     let model: ConditionsModel
-    public init(model: ConditionsModel) { self.model = model }
+    /// False when the host already shows the place's one score (the place card's header).
+    var showsChip: Bool
+    public init(model: ConditionsModel) { self.model = model; self.showsChip = true }
+    init(model: ConditionsModel, showsChip: Bool) { self.model = model; self.showsChip = showsChip }
 
     public var body: some View {
         let zone = model.place.timeZone
@@ -66,9 +70,10 @@ public struct ConditionsSummary: View {
                 }
             }
             Spacer(minLength: 0)
-            HeadlineChip(model: model, size: .large)
+            if showsChip { HeadlineChip(model: model, size: .large) }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .onAppear { model.start() }
+        .onAppear { model.beginViewing() }
+        .onDisappear { model.endViewing() }
     }
 }

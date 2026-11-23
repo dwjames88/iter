@@ -13,13 +13,12 @@ struct SavedPlacesContent: View {
     @State private var selected: UUID?
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
+        // The card Find uses: the sidebar's glass surface, concentric with the window, over the full-bleed map.
+        FindCardLayout(showsCard: true) { insets in
             SavedPlacesMap(places: library.places(in: folderID), selected: $selected, mapStyle: mapStyle)
+                .safeAreaPadding(insets)
+        } card: {
             SavedPlacesList(library: library, folderID: folderID, selected: $selected)
-                .environment(\.isOnGlass, true)
-                .frame(width: IterSize.listIdeal)
-                .glassEffect(.regular, in: RoundedRectangle(cornerRadius: GlassGeometry.cardCorner, style: .continuous))
-                .padding(IterSpace.lg)
         }
         .focusedSceneValue(\.selectedSavedPlace, selected)
     }

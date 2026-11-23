@@ -5,7 +5,7 @@ import IterSources
 import IterUI
 
 /// One result in the list: photo thumbnail if any, name, locality and kinds, distance with its drive or straight-line label,
-/// the verification label and the sources. No score chip: a discovered place has no scored window until Conditions has run for it.
+/// the verification label and the sources, and the ONE score chip trailing (small) once Conditions has an answer for the place.
 ///
 /// `Equatable` and drawn with `.equatable()`: a row that did not change is not rebuilt when another row's drive time lands.
 /// It takes no hover state. The row sits on the glass card, so its fills are the `isOnGlass` ones.
@@ -47,6 +47,7 @@ struct FindRowView: View, Equatable {
                 FindVerificationLine(verification: row.verification, sources: row.sourceNames)
             }
             Spacer(minLength: 0)
+            if let score = row.score { FindScoreChip(score: score, size: .small).equatable() }
         }
         .padding(.vertical, IterSpace.sm)
         .frame(minHeight: IterGrid.rowDouble, alignment: .leading)

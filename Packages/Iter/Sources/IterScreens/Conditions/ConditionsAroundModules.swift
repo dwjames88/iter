@@ -51,19 +51,21 @@ struct HourlyModule: View {
                     .background(h.time == scrubHour ? IterColor.selection : .clear, in: RoundedRectangle(cornerRadius: IterRadius.badge, style: .continuous))
             }
         }
+        .frame(minWidth: full ? 440 : 0)
         .accessibilityElement(children: .contain)
     }
 
+    /// One row on fixed lanes: the time lane, then equal-width numeric lanes, all trailing-aligned so every column lines up.
     private func row(_ cells: [String], full: Bool, header: Bool) -> some View {
-        let widths: [CGFloat] = full ? [44, 36, 32, 32, 34, 36, 40, 34] : [44, 40, 40, 36]
-        return HStack(spacing: IterSpace.xs) {
+        HStack(spacing: IterSpace.xs) {
             ForEach(Array(cells.enumerated()), id: \.offset) { i, text in
                 Text(verbatim: text)
                     .font(header ? IterFont.secondary.weight(.semibold) : IterFont.secondary.monospacedDigit())
                     .foregroundStyle(header || i > 0 ? IterColor.textSecondary : IterColor.textPrimary)
                     .lineLimit(1)
-                    .frame(minWidth: i < widths.count ? widths[i] : 56, alignment: i == 0 ? .leading : .trailing)
-                    .frame(maxWidth: i == cells.count - 1 ? .infinity : nil, alignment: i == 0 ? .leading : .trailing)
+                    .minimumScaleFactor(0.8)
+                    .frame(width: i == 0 ? 48 : nil, alignment: i == 0 ? .leading : .trailing)
+                    .frame(maxWidth: i == 0 ? 48 : .infinity, alignment: i == 0 ? .leading : .trailing)
             }
         }
         .frame(minHeight: header ? 22 : 20)

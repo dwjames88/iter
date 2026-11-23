@@ -68,9 +68,8 @@ private struct FindScreenBody: View {
         conditions?.stop()
         conditions = nil
         guard let make = makeConditions, let place = model.card?.place else { return }
-        let made = make(place)
-        made.start()
-        conditions = made
+        // Not started here: the summary on the card starts it when it appears and stops it when it goes away.
+        conditions = make(place)
     }
 }
 

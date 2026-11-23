@@ -160,7 +160,7 @@ struct FindSearchHereButton: View {
 
     var body: some View {
         GlassEffectContainer {
-            Button(action: action) { Label("Search Here", systemImage: "magnifyingglass") }
+            Button(action: action) { Label("Search Here", systemImage: "magnifyingglass").foregroundStyle(.primary) }
                 .buttonStyle(.glass)
                 .buttonBorderShape(.capsule)
                 .help("Search the part of the map you can see")

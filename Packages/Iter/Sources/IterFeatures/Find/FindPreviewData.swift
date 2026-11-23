@@ -5,6 +5,8 @@ import IterModel
 import IterSources
 import IterStore
 import IterDiscovery
+import IterConditions
+import IterSky
 
 /// The named states a Find screen is drawn in. Deterministic: fixed places around Canyonlands, a fixed location (Moab), no network.
 public enum FindPreviewState: String, CaseIterable, Sendable {
@@ -65,11 +67,13 @@ public enum FindPreviewData {
         let clock = PreviewClock()
         let config = FindConfiguration(slowAfter: .seconds(6), tick: .seconds(3600), monotonic: { clock.now })
         let routing = FindFixtures.Routing(hangs: state == .driveTimesPending)
+        let scores = FakeFindScores()
+        scores.script = { place, day in previewScore(place: place, day: day, state: state) }
         func make(_ runner: any DiscoveryRunning) -> FindModel {
             FindModel(discovery: runner, placeSearch: FindFixtures.PlaceSearch(), geocoder: FindFixtures.FixtureGeocoder(), routing: routing,
                       streetLevel: FindFixtures.StreetLevel(), magnetic: PreviewMagnetic(), gridReference: PreviewGrid(), library: library,
                       preferences: Preferences.ephemeral(), location: FixedLocationProvider(FindFixtures.moab),
-                      now: { FindFixtures.retrievedAt }, configuration: config)
+                      now: { FindFixtures.retrievedAt }, configuration: config, scores: scores)
         }
         switch state {
         case .empty:
@@ -114,6 +118,19 @@ public enum FindPreviewData {
             await run(m)
             return m
         }
+    }
+
+    /// Deterministic Sky Index answers for the fixture places, from the real light engine: a spread of scores, one low-confidence
+    /// answer, and (while searching) one place still loading, so the screens draw every score state.
+    @MainActor private static func previewScore(place: Place, day: LocalDay, state: FindPreviewState) -> ConditionsLoadState? {
+        let table: [String: (morning: Int, evening: Int, confidence: Confidence)] = [
+            "Mesa Arch": (86, 41, .high), "Green River Overlook": (63, 78, .high), "Buck Canyon Overlook": (34, 71, .high),
+            "Whale Rock": (52, 58, .medium), "Aztec Butte Overlook": (22, 29, .low), "Grand View Point Overlook": (47, 66, .high),
+        ]
+        if state == .searching, place.name == "Green River Overlook" { return .loading(previous: nil) }
+        guard let row = table[place.name] else { return nil }
+        let report = ConditionsFixtures.report(day: day, options: ConditionsFixtures.Options(), place: place)
+        return .ready(ConditionsFixtures.report(report, scores: [.goldenMorning: row.morning, .goldenEvening: row.evening], confidence: row.confidence))
     }
 
     private static func run(_ m: FindModel) async {
