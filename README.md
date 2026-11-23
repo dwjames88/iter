@@ -1,88 +1,106 @@
 # Iter
 
-Iter is a road-trip planner for photographers, for the Mac. It shows when the light will be good (sunrise, sunset, golden hour and blue hour) at places near you and along your route, scores it from the weather forecast, and helps you plan a trip around it, day by day. *Be in the right place when the light is right.*
+Iter is a road-trip planner for photographers. It helps you be in the right place when the light is right. It has four stages, in one flow:
 
-![Iter's Explore screen](docs/images/explore-light-1280.png)
+1. **Find.** Search for photo spots by name or by a plain request ("waterfalls near Yosemite for sunrise"). With Apple Intelligence on the device, the request is understood by the model. Without it, a simple parser still finds places. Every place is checked against real map data and cites where it came from.
+2. **Conditions.** For a spot and a day, Iter shows the weather and the sky and scores each shooting window (sunrise, sunset, golden hour, blue hour, night) from 0 to 100. Each number says which source it came from, how old it is, and what could not be found.
+3. **Build.** Put spots into a trip, day by day. Iter orders the stops by light, works out drive times, set-up time and when to leave, and flags what does not fit.
+4. **Go.** On the iPhone, trip mode follows the trip: the next stop, when to leave, the drive time, current weather and the sky now. It uses a Live Activity, the Dynamic Island, the Lock Screen and notifications.
 
-## Requirements
+Everything is free to run. Iter uses free public data (NOAA, MET Norway, USGS, OpenStreetMap, Wikipedia, NASA and Apple Maps) and needs no account and no key. The full list is in [docs/DATA-PROVIDERS.md](docs/DATA-PROVIDERS.md).
 
-- A Mac with macOS 26 or later.
-- A free OpenWeather API key. The app walks you through getting one.
-- Optional: Apple Intelligence, for Ask Iter. It needs a Mac with Apple silicon, with Apple Intelligence turned on in System Settings.
+## Platforms
 
-## Install
+| | App | Needs |
+|---|---|---|
+| Mac | `Iter` (bundle id `com.dwjames.iter`) | macOS 26 or later. Find, Conditions and Build. No Go |
+| iPhone and iPad | `Iter iOS` (bundle id `com.dwjames.iter.ios`) | iOS 26 or later. Find, Conditions, Build and Go. Go is for the iPhone |
 
-1. Download `Iter-0.1.0.zip` from the [Releases page](https://github.com/dwjames88/iter/releases/latest).
-2. Unzip it (double-click the zip).
-3. Drag **Iter** into your **Applications** folder. It has to live there so that updates can install themselves.
-4. Open it. This build is not notarised by Apple, so macOS blocks it the first time:
-   - Open Iter once and click **Done** on the warning.
-   - Go to **System Settings ▸ Privacy & Security** and scroll down to "Iter was blocked…".
-   - Click **Open Anyway**, then confirm with your password.
+Apple Intelligence is optional. It needs a device that supports it, with it turned on. Without it, Find says it is using Basic search.
 
-   On macOS 15 and later, right-click ▸ Open no longer skips this step, so don't bother trying it. If you prefer Terminal, this does the same job: `xattr -dr com.apple.quarantine /Applications/Iter.app`
-5. The welcome guide appears. It sets up your location, your weather key and Ask. For the weather key it shows you these steps:
-   - Create a free OpenWeather account.
-   - Subscribe to **One Call by Call** (One Call API 3.0). The first 1,000 calls a day are free.
-   - On your account's **Billing plan** tab, set the daily limit to 1,000, so you are never charged.
-   - Copy your key from the API keys page and paste it into Iter. A new key can take up to two hours to start working, so "Key rejected" at first is normal.
+Trips move between the Mac and the iPhone as `.iter` files (AirDrop from the Mac's **Send to iPhone**). There is no live sync yet. See [docs/ROADMAP.md](docs/ROADMAP.md).
 
-   "Do This Later" is fine: a banner in the app brings you back. You can reopen the guide any time from **Help ▸ Welcome to Iter**, and change the key in **Settings ▸ Weather**.
+## Your data and the first launch of this version
 
-## Updates
+This version replaces the earlier Iter app and keeps its data. **The first time the new app opens the real store, it changes the store to schema V5, and the earlier Iter app cannot open it after that.** Iter makes a backup first. If the backup fails, the store is not opened and nothing is changed.
 
-Iter checks for updates once a day (turn that off in **Settings ▸ Updates**), and you can check yourself with **Iter ▸ Check for Updates…**. Updates are signed and install themselves. There is no Gatekeeper step after the first install.
+- **Mac.** The store is `~/Library/Application Support/Iter/Iter.store`. The backup goes in a new folder `~/Library/Application Support/Iter/Backups/pre-v5-<date and time>/`.
+- **iPhone.** The store is in the app's own Application Support folder, and the backup goes in `Iter/Backups/` there. On the iPhone you can reach it by copying the app container (Xcode ▸ Devices and Simulators ▸ Download Container).
+- **What is in a backup.** Copies of the raw store files, every trip as an `.iter` file the earlier app can open, and `backup.json` with the counts.
+- **If the new store fails to open.** Iter keeps the original file untouched, builds a new store beside it from the backup's `.iter` files, and shows a one-time notice with the backup folder.
+- **Going back.** Quit the new app and restore `Iter.store` (and its `-wal` and `-shm` files) from the backup folder, or import the `.iter` files into the earlier app.
 
-## A short tour
+Settings and keys: the Mac keeps its settings in the app's preferences and any keys in the Keychain. This version needs no keys.
 
-- **Explore** (⌘2) lists places near you with the next sunrise or sunset, and shows them on a map. Click a place and the list turns into its **light panel**: a timeline of the day's light, cloud and rain, today's and tomorrow's windows, and a few photos or a satellite view.
-- **Scores** show up as a small coloured capsule: a sunrise or sunset symbol, a score out of 100 and the time the window starts. The colour is the band (poor to great), and hovering the symbol tells you which window it is. Scores further out carry a range and lower confidence.
-- **When to go** is on every place. It picks the best sunrise or sunset in the days the forecast covers, so you can choose a day and not just a place.
-- **Save** a place to keep it in **Locations** (⌘3). You can add your own spots too (⇧⌘N, then click the map), and group places in folders.
-- **Build a trip by days.** Start from a template or a blank trip, add stops, and Iter lays out each day as a timeline with drive times and the light at each stop. If a drive can't fit between two stops' light, it tells you, and offers to reorder by light. Drag stops between days, and ⌘Z undoes anything. Pin a trip to keep it for offline use.
-- **Ask Iter.** Type something like "foggy forest within two hours of Portland for sunrise" into the search field and choose **Ask Iter**. It looks for real places and says why each might suit you.
+## Build and run
 
-## Reporting a problem
+You need a Mac with Xcode, and [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`). The Xcode project is generated from `project.yml` and `project-ios.yml` and is not committed. Each script below runs `xcodegen generate` for you.
 
-[Open an issue with the Bug report template](https://github.com/dwjames88/iter/issues/new?template=bug.md). Please include your macOS version, the build number from **Iter ▸ About Iter**, and what happened.
+**The real Mac app.** This is the one that opens your real store.
 
-## Known gaps
+```
+scripts/run.sh            # builds build/Iter.app (signed with your Apple Development certificate) and opens it
+scripts/run.sh --no-open  # build only
+```
 
-- There is no sync between your Mac and your iPhone yet. The iPhone and iPad app is not part of this release.
-- There is no Apple Weather, because it needs a paid developer membership. Iter uses OpenWeather's forecast instead: hourly for 48 hours, then daily, and it only knows total cloud cover, so scores are a little rougher. Beyond the forecast, Iter carries the last forecast day forward and says so, with low confidence.
-- Ask Iter's answers can be wrong or thin. It sometimes picks a weak match (a town when you wanted a forest), and a request can take 15 to 25 seconds. Check places before you drive.
-- Places have no photos of their own. Iter shows Apple's Look Around where it exists (not many places) and a satellite image otherwise.
-- Times follow your Mac's clock format, so a 24-hour Mac shows "17:25", not "5:25 PM".
-- Searching for a place sometimes doesn't move the map to the result, though the result is listed and scored.
-- Parts of the app, such as drag and drop and some map clicks, have had little hands-on testing. If something misbehaves, please report it.
-- This build is not notarised by Apple (see Install).
+It runs as `com.dwjames.iter`. Opening it for the first time on your real library triggers the migration above. If you want to look at the app without touching your data, use the render copy.
 
-## Licence
+**The render copy.** The same Mac app under another bundle id, `com.dwjames.iter.render`, signed ad hoc. It can never open the real store or the real Keychain, and it never asks for location. Use it to look at the app, take screenshots and run tests.
 
-Source available under the [PolyForm Noncommercial License 1.0.0](LICENSE). Not open source.
+```
+scripts/render.sh                                  # builds build/render/Iter.app
+scripts/render.sh --run --wait 15 --capture build/cap -- -IterSection trips
+scripts/smoke-mac.sh                               # a hidden launch that checks the app starts
+```
 
-## For developers
+The render copy runs on sample data with an in-memory store. See [TESTING.md](TESTING.md) for the launch switches.
 
-A native road-trip planner (Mac, iPhone and iPad) for photographers. *Be in the right place when the light is right.*
+**The iPhone and iPad app.**
 
-`scripts/run.sh` builds and opens the app (`build/Iter.app`), and `scripts/test.sh` runs every test.
-The iPhone and iPad app builds from the same project (scheme `Iter iOS`); `scripts/test-ios.sh` builds it and runs its tests on a Simulator, and [TESTING-iOS.md](TESTING-iOS.md) covers running it on a Simulator and on your iPhone.
-Start with [TESTING.md](TESTING.md) for the Mac app. It covers what is in this build, a guided tour, the Debug menu, and how to switch on real weather.
+```
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer scripts/test-ios.sh   # build and test on the iOS 27.2 simulator
+```
 
-- SwiftUI, MapKit, WeatherKit, Apple Intelligence (Foundation Models), SwiftData, Swift Charts. No third-party code.
-- macOS 26 or later; iOS 26 or later for the iPhone and iPad app. Swift 6 with complete concurrency checking. Tests use Swift Testing.
-- The Xcode project is generated from `project.yml` by XcodeGen (`brew install xcodegen`).
+To put it on your own iPhone, follow "Install on your iPhone" in [TESTING-iOS.md](TESTING-iOS.md). It uses a free Personal Team and Xcode.
 
-| Where | What |
+**The package.** Everything that is not a platform shell is in `Packages/Iter` and tests without Xcode projects:
+
+```
+cd Packages/Iter && swift test
+```
+
+## What is in the repository
+
+```
+Packages/Iter/         the package (16 library targets): model, sky index, planning, store, sources, discovery,
+                       conditions, Go engine, UI kit, features, screens
+Packages/IterUpdater/  the Mac updater and the release tool
+Mac/                   the Mac app shell
+iOS/                   the iPhone and iPad app shell
+Widgets/               the Live Activity, Dynamic Island, Lock Screen and Home widgets
+Tests/Hosted/          tests that run inside an app (Mac render copy, iOS simulator)
+Design/                design tokens, glass rules, Figma map, screen renders
+Brand/                 logo and palette
+docs/                  documentation (below)
+scripts/               build, test, render and release scripts
+project.yml            Mac project spec (XcodeGen), includes project-ios.yml
+project-ios.yml        iOS app, widget and iOS test targets
+```
+
+## Documentation
+
+| | |
 |---|---|
-| `docs/ARCHITECTURE.md`, `docs/ROADMAP.md` | How it is built; what milestone 1 contains and what comes next |
-| `docs/DATA-PROVIDERS.md` | Weather sources (Apple Weather, OpenWeather, Windy): what each gives the Light Index, limits, licences, attribution, caching |
-| `docs/LICENSING.md` | Licence keys (Lemon Squeezy): the flow, what is stored and sent, offline rules, the build switch, crediting early buyers, the store setup checklist |
-| `docs/reference/` | The approved improvement plan and the prototype's flow briefs |
-| `Design/` | Design tokens (`tokens.json`, DTCG), `TOKENS.md`, `SCREENS.md`, `COMPONENTS.md`, `snapshots/` |
-| `Brand/` | The Step logo (Geist 600) and the First Light palette (`palettes/` also keeps the Alpine study as history) |
-| `Packages/IterKit/` | Everything that is not Mac UI: domain, light engine, astronomy, data, services, view models |
-| `App/` | The macOS app's scenes, menus and settings, plus the views, assets and String Catalog that the iOS app compiles too |
-| `AppiOS/`, `AppiOSTests/` | The iPhone and iPad app: shell, Explore, Trips, Locations, Settings, Info.plist (target in `project-ios.yml`) and its tests |
-| `docs/DISTRIBUTION.md`, `CHANGELOG.md` | Versions, cutting a release, the signed update feed and keys, Gatekeeper; what changed in each version |
-| `scripts/` | `run.sh`, `test.sh`, `test-ios.sh`, `snapshots.sh`, `tokens.sh` (design tokens round trip), `make-icon.sh`, `strings.sh`, `release.sh`, `bump.sh`, `version.sh`, `updater-e2e.sh` |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | How the app is built: targets, store and migration, sources, discovery, sky index, Go, sync |
+| [docs/DATA-PROVIDERS.md](docs/DATA-PROVIDERS.md) | Every data source, who runs it, its licence, its credit text and its rate limits |
+| [docs/ROADMAP.md](docs/ROADMAP.md) | What is next and why |
+| [TESTING.md](TESTING.md) and [TESTING-iOS.md](TESTING-iOS.md) | How to test each layer, the launch switches, and the first-look checklist |
+| [CHANGELOG.md](CHANGELOG.md) | What changed |
+| [docs/DISTRIBUTION.md](docs/DISTRIBUTION.md) | Versions, releases and updates (Mac) |
+| [docs/PERFORMANCE.md](docs/PERFORMANCE.md) | Performance rules and measurements |
+| [Design/GLASS-RULES.md](Design/GLASS-RULES.md) | The rules for the Liquid Glass interface |
+| [docs/rebuild/](docs/rebuild/) | The record of the rebuild: the audit and blueprint, and the data-source research. Not edited |
+
+## Contributing and licence
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). The licence is in [LICENSE](LICENSE). Iter has no licensing or key check in the app.
