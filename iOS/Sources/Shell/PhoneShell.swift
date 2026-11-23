@@ -37,7 +37,13 @@ struct PhoneMap: View {
             case .go: GoTabMap(shell: shell)
             }
         }
+        // The map runs under the status bar, but its controls, framing and Search Here stay below the Dynamic Island: the top
+        // safe area is put back as padding (the tab maps themselves do not ignore the safe area).
+        .safeAreaPadding(.top, shell.mapTopInset)
         .ignoresSafeArea()
+        .background {
+            Color.clear.onGeometryChange(for: CGFloat.self) { $0.safeAreaInsets.top } action: { shell.mapTopInset = $0 }
+        }
     }
 }
 

@@ -72,6 +72,7 @@ public enum PlaceActionMetrics {
     /// Four tiles share the 340 pt column, so the label gets all but 4 pt of each side ("Open in Maps" must not truncate).
     public static let horizontalPadding: CGFloat = 4
     public static let minimumScale: CGFloat = 0.7
+    public static let titleLines = 1
     #else
     public static let height: CGFloat = 52
     public static let cornerRadius: CGFloat = 14
@@ -79,8 +80,12 @@ public enum PlaceActionMetrics {
     public static let title = Font.caption.weight(.semibold)
     public static let labelSpacing: CGFloat = 4
     public static let verticalPadding: CGFloat = 8
-    public static let horizontalPadding: CGFloat = 8
-    public static let minimumScale: CGFloat = 0.85
+    /// Four tiles share a 402 pt phone's card, so the label gets all but 4 pt of each side, as on the Mac ("Add to Trip…" and
+    /// "Open in Maps" truncated at 8 pt and 0.85 on the iPhone 17 Pro simulator).
+    public static let horizontalPadding: CGFloat = 4
+    public static let minimumScale: CGFloat = 0.7
+    /// "Open in Maps" still truncated on one line at a 402 pt phone's width; two lines, like Maps' own action tiles.
+    public static let titleLines = 2
     #endif
 }
 
@@ -89,7 +94,8 @@ private struct PlaceActionLabelStyle: LabelStyle {
         VStack(spacing: PlaceActionMetrics.labelSpacing) {
             configuration.icon.font(.system(size: PlaceActionMetrics.glyph, weight: .semibold))
                 .imageScale(.medium)
-            configuration.title.font(PlaceActionMetrics.title).lineLimit(1).minimumScaleFactor(PlaceActionMetrics.minimumScale)
+            configuration.title.font(PlaceActionMetrics.title).lineLimit(PlaceActionMetrics.titleLines)
+                .multilineTextAlignment(.center).minimumScaleFactor(PlaceActionMetrics.minimumScale)
         }
         .padding(.vertical, PlaceActionMetrics.verticalPadding)
         .padding(.horizontal, PlaceActionMetrics.horizontalPadding)

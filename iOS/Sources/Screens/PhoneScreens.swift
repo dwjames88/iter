@@ -32,7 +32,7 @@ struct PhoneTripScreen: View {
     let tripID: UUID
 
     var body: some View {
-        if let row = shell.library.tripRow(id: tripID) {
+        if shell.library.tripRow(id: tripID) != nil {
             let model = shell.buildModel(for: tripID)
             TripBuilderPanel(model: model)
                 .environment(\.tripBuilderOpensModel, true)
@@ -41,16 +41,10 @@ struct PhoneTripScreen: View {
                     shell.tab = .find
                     shell.detent = PhoneSheet.half
                 }
-                .navigationTitle(row.name)
+                // The builder's header card already carries the trip's name, Share, More and the dates (Change Dates), so the
+                // bar holds only Back.
+                .navigationTitle(Text(verbatim: ""))
                 .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItemGroup(placement: .primaryAction) {
-                        ShareTripButton(tripID: tripID, library: shell.library)
-                        Menu {
-                            Button { shell.navigator.present(.changeDates(tripID: tripID)) } label: { Label("Change Dates", systemImage: "calendar") }
-                        } label: { Label("More", systemImage: "ellipsis") }
-                    }
-                }
                 .safeAreaInset(edge: .bottom, spacing: 0) {
                     StartTripBar(model: model) { start() }
                 }

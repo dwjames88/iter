@@ -17,7 +17,6 @@ struct SavedTabMap: View {
             if shell.detent == PhoneSheet.peek { shell.detent = PhoneSheet.half }
         }
         .iterShellEnvironment(shell)
-        .ignoresSafeArea()
     }
 }
 

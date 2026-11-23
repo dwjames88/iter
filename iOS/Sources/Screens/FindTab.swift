@@ -13,7 +13,6 @@ struct FindTabMap: View {
     var body: some View {
         FindPhoneMap(model: shell.find, bottomInset: shell.mapBottomInset)
             .iterShellEnvironment(shell)
-            .ignoresSafeArea()
     }
 }
 

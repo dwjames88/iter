@@ -49,6 +49,8 @@ final class IOSShell {
     var detent: PresentationDetent = PhoneSheet.half
     /// The sheet's current height in points (the maps inset their content by it).
     var sheetHeight: CGFloat = 0
+    /// The screen's top safe area (status bar, Dynamic Island), kept clear by the maps' controls and framing.
+    var mapTopInset: CGFloat = 0
     var findPath: [PhoneRoute] = []
     var tripsPath: [PhoneRoute] = []
     var savedPath: [PhoneRoute] = []
@@ -129,7 +131,23 @@ final class IOSShell {
             tab = .saved
             savedPath = [.place(place.id)]
         }
+        if let query = switches.findQuery, !query.isEmpty {
+            tab = .find
+            find.text = query
+            find.submit()
+        }
+        if switches.selectFirstSaved, let place = library.savedPlaces.first.flatMap({ library.place(id: $0.id) }) {
+            tab = .find
+            find.selectPlace(place)
+        }
+        if let pane = switches.settingsPane {
+            settingsLaunchPane = pane
+            showsSettings = true
+        }
     }
+
+    /// The Settings pane a launch switch asked for (`-IterSettings root|sources`); Settings reads it once.
+    var settingsLaunchPane: String?
 
     // MARK: Links and files
 
@@ -178,6 +196,12 @@ struct IOSLaunchSwitches: Equatable {
     var tab: PhoneTab?
     var detent: PresentationDetent?
     var openFirstPlace = false
+    /// `-IterFindQuery <text>`: runs a Find search at launch (screenshots of results and discovery).
+    var findQuery: String?
+    /// `-IterFindSelect saved`: shows the first saved place on Find's card.
+    var selectFirstSaved = false
+    /// `-IterSettings root|sources`: opens Settings (and a pane).
+    var settingsPane: String?
     /// DEBUG only: render the alternative sheet layout for the D6 decision.
     var d6Probe = false
 
@@ -199,6 +223,9 @@ struct IOSLaunchSwitches: Equatable {
         default: nil
         }
         openFirstPlace = value("-IterOpenPlace") == "first"
+        findQuery = arguments.firstIndex(of: "-IterFindQuery").flatMap { $0 + 1 < arguments.count ? arguments[$0 + 1] : nil }
+        selectFirstSaved = value("-IterFindSelect") == "saved"
+        settingsPane = value("-IterSettings")
         #if DEBUG
         d6Probe = ["yes", "true", "1"].contains(value("-IterD6Probe") ?? "")
         #endif

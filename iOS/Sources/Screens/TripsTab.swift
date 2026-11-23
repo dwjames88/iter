@@ -21,7 +21,6 @@ struct TripsTabMap: View {
             }
         }
         .iterShellEnvironment(shell)
-        .ignoresSafeArea()
     }
 }
 

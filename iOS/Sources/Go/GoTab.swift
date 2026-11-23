@@ -14,7 +14,6 @@ struct GoTabMap: View {
     var body: some View {
         let model = shell.go.model
         GoMapLayer(snapshot: model.snapshot, routePath: model.routePath)
-            .ignoresSafeArea()
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 Color.clear.frame(height: Self.inset(forSheet: shell.sheetHeight)).allowsHitTesting(false)
             }
