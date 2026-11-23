@@ -21,21 +21,22 @@ struct GoIslandCompactLeading: View {
     var body: some View {
         let p = GoPresentation(content, clock: clock, zone: zone, isStale: isStale)
         IslandSurface {
-            HStack(spacing: 4) {
+            HStack(spacing: 3) {
                 if let kind = content.windowKind {
                     Image(systemName: LightText.symbol(kind))
                         .symbolRenderingMode(.monochrome)
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(p.isDim ? IterColor.textSecondary : IterColor.textPrimary)
                 } else {
                     Image(systemName: "car.fill").font(.system(size: 13, weight: .semibold)).foregroundStyle(IterColor.textPrimary)
                 }
                 Text(verbatim: p.shortLabel)
-                    .font(.system(size: 12, weight: .semibold))
+                    .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(p.status?.tone == .warning ? IterColor.warning : IterColor.textPrimary.color)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
             }
+            .frame(width: GoIslandCompactTrailing.width, alignment: .leading)
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(p.accessibilityText)
@@ -96,6 +97,9 @@ struct GoIslandMinimal: View {
                     }
                     .frame(width: 24, height: 24)
                     .opacity(p.isLowConfidence ? IterEvent.lowConfidenceOpacity : 1)
+                } else if let status = p.status, p.isFinished || p.isPaused {
+                    Image(systemName: GoHeadline.symbol(status.tone, phase: p.phase) ?? "car.fill")
+                        .font(.system(size: 17, weight: .semibold)).foregroundStyle(IterColor.textPrimary)
                 } else if let kind = content.windowKind {
                     Image(systemName: LightText.symbol(kind)).font(.system(size: 15, weight: .semibold)).foregroundStyle(IterColor.textPrimary)
                 } else {
@@ -110,6 +114,7 @@ struct GoIslandMinimal: View {
 
 /// Expanded, leading region: the next stop and its window.
 struct GoIslandExpandedLeading: View {
+    var tripName: String = ""
     let content: GoActivityContent
     let clock: GoClock
     var isStale = false
@@ -119,7 +124,7 @@ struct GoIslandExpandedLeading: View {
         let p = GoPresentation(content, clock: clock, zone: zone, isStale: isStale)
         IslandSurface {
             VStack(alignment: .leading, spacing: 2) {
-                Text(verbatim: p.title)
+                Text(verbatim: p.isFinished && !tripName.isEmpty ? tripName : p.title)
                     .font(IterFont.headline)
                     .foregroundStyle(IterColor.textPrimary)
                     .lineLimit(2)
@@ -159,13 +164,16 @@ struct GoIslandExpandedTrailing: View {
         VStack(spacing: 2) {
             Text(verbatim: title).font(IterFont.caption).foregroundStyle(IterColor.textSecondary).lineLimit(1)
             if let score {
+                // White numerals (legible on black) with the ramp colour as a bar beneath: colour is never the only signal.
                 Text(score, format: .number)
                     .font(.system(size: 22, weight: .semibold))
                     .monospacedDigit()
-                    .foregroundStyle(p.isDim ? IterColor.textSecondary.color : IterColor.ramp(score: score))
-                    .opacity(p.isLowConfidence ? IterEvent.lowConfidenceOpacity : 1)
+                    .foregroundStyle(p.isDim ? IterColor.textSecondary : IterColor.textPrimary)
+                Capsule().fill(IterColor.ramp(score: score)).frame(width: 26, height: 3)
+                    .opacity(p.isDim ? 0.5 : 1)
             }
         }
+        .opacity(p.isLowConfidence ? IterEvent.lowConfidenceOpacity : 1)
     }
 }
 
@@ -209,6 +217,7 @@ struct GoIslandExpandedBottom: View {
 /// All four expanded regions arranged as the island lays them out: leading and trailing beside the camera cut-out (here a
 /// gap), the bottom region below. Used by the hosted renders; the extension places the regions itself.
 struct GoIslandExpandedPreview: View {
+    var tripName: String = ""
     let content: GoActivityContent
     let clock: GoClock
     var isStale = false
@@ -217,7 +226,7 @@ struct GoIslandExpandedPreview: View {
     var body: some View {
         VStack(alignment: .leading, spacing: IterSpace.sm) {
             HStack(alignment: .top) {
-                GoIslandExpandedLeading(content: content, clock: clock, isStale: isStale, zone: zone)
+                GoIslandExpandedLeading(tripName: tripName, content: content, clock: clock, isStale: isStale, zone: zone)
                 Spacer(minLength: 96)
                 GoIslandExpandedTrailing(content: content, clock: clock, isStale: isStale)
             }

@@ -159,6 +159,8 @@ struct GoPresentation: Equatable {
 
     /// "As of 16:10", "Updated 3 hr ago", "Offline", "Offline · as of 16:10". nil when the data is fresh and online.
     var ageText: String? {
+        // A finished or idle run has nothing live to be old about.
+        if isIdle || isFinished { return nil }
         var parts: [String] = []
         if content.isOffline { parts.append(String(localized: "Offline")) }
         if isOld || isStale {

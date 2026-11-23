@@ -19,11 +19,14 @@ struct GoActivityView: View {
         VStack(alignment: .leading, spacing: IterSpace.sm) {
             HStack(alignment: .top, spacing: IterSpace.md) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(verbatim: tripName)
-                        .font(IterFont.caption)
-                        .foregroundStyle(IterColor.textSecondary)
-                        .lineLimit(1)
-                    Text(verbatim: p.title)
+                    if !p.isFinished {
+                        Text(verbatim: tripName)
+                            .font(IterFont.caption)
+                            .foregroundStyle(IterColor.textSecondary)
+                            .lineLimit(1)
+                    }
+                    // When the run is over the trip's name is the title; "Trip complete" is the headline below.
+                    Text(verbatim: p.isFinished && !tripName.isEmpty ? tripName : p.title)
                         .font(IterFont.headline)
                         .foregroundStyle(IterColor.textPrimary)
                         .lineLimit(2)

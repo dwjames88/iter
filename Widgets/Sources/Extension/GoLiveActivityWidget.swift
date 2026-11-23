@@ -17,7 +17,7 @@ struct GoLiveActivityWidget: Widget {
             let stale = context.isStale
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    GoIslandExpandedLeading(content: content, clock: .live(.now), isStale: stale)
+                    GoIslandExpandedLeading(tripName: context.attributes.tripName, content: content, clock: .live(.now), isStale: stale)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     GoIslandExpandedTrailing(content: content, clock: .live(.now), isStale: stale)
