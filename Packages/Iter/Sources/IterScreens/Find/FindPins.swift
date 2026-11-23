@@ -4,8 +4,8 @@ import IterModel
 import IterUI
 
 /// One map pin: a solid plate (never material) so live and snapshot renders match. Results show their rank, saved places a
-/// bookmark, typed matches a magnifier, and your own spots a pin with a tip. No score chip: a pin carries none until a place
-/// has been scored, and the map never draws a number it does not have.
+/// bookmark, typed matches a magnifier, and your own spots a pin with a tip. The selected result and the best few carry their
+/// score chip once it is known; a pin with no score shows its rank, and the map never draws a number it does not have.
 struct FindPinView: View, Equatable {
     let pin: FindPin
     var isSelected = false
@@ -13,19 +13,25 @@ struct FindPinView: View, Equatable {
     static let plate: CGFloat = 28
 
     /// Pins with a tip anchor at the bottom; round plates at the centre.
-    static func anchor(for pin: FindPin) -> UnitPoint { pin.kind == .own ? .bottom : .center }
+    static func anchor(for pin: FindPin, isSelected: Bool = false) -> UnitPoint {
+        pin.kind == .own || pin.showsChip(isSelected: isSelected) ? .bottom : .center
+    }
 
     var body: some View {
         Group {
             switch pin.kind {
-            case .result(let rank): plate { Text(rank, format: .number).font(IterFont.captionStrong).monospacedDigit() }
+            case .result(let rank):
+                if pin.showsChip(isSelected: isSelected), let score = pin.score {
+                    FindScoreChip(score: score, size: .pin, isSelected: isSelected)
+                } else {
+                    plate { Text(rank, format: .number).font(IterFont.captionStrong).monospacedDigit() }
+                }
             case .saved: plate { Image(systemName: "bookmark.fill").font(.system(size: 12, weight: .semibold)) }
             case .match: plate { Image(systemName: "magnifyingglass").font(.system(size: 12, weight: .semibold)) }
             case .own: ownPin
             }
         }
-        .scaleEffect(isSelected ? IterEvent.pinScaleSelected : 1, anchor: Self.anchor(for: pin))
-        .shadow(color: .black.opacity(0.25), radius: isSelected ? IterEvent.pinShadowRadiusSelected : IterEvent.pinShadowRadius, y: 1)
+        .modifier(PlateEffects(isSelected: isSelected, applies: !pin.showsChip(isSelected: isSelected), anchor: Self.anchor(for: pin, isSelected: isSelected)))
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(verbatim: pin.title))
         .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
@@ -48,6 +54,22 @@ struct FindPinView: View, Equatable {
                 .background(IterColor.mapPin, in: Circle())
                 .overlay(Circle().strokeBorder(IterColor.separator, lineWidth: IterStroke.hairline))
             FindPinTip().fill(IterColor.mapPin).frame(width: IterSpace.sm, height: IterSpace.xs)
+        }
+    }
+}
+
+/// Plates get a scale and shadow; a score chip pin brings its own.
+private struct PlateEffects: ViewModifier {
+    let isSelected: Bool
+    let applies: Bool
+    let anchor: UnitPoint
+    func body(content: Content) -> some View {
+        if applies {
+            content
+                .scaleEffect(isSelected ? IterEvent.pinScaleSelected : 1, anchor: anchor)
+                .shadow(color: .black.opacity(0.25), radius: isSelected ? IterEvent.pinShadowRadiusSelected : IterEvent.pinShadowRadius, y: 1)
+        } else {
+            content
         }
     }
 }

@@ -189,7 +189,7 @@ struct FindMapView: View {
             .tag(pin.id)
             .annotationTitles(.hidden)
         } else {
-            Annotation(pin.title, coordinate: FindMapGeometry.cl(pin.coordinate), anchor: FindPinView.anchor(for: pin)) {
+            Annotation(pin.title, coordinate: FindMapGeometry.cl(pin.coordinate), anchor: FindPinView.anchor(for: pin, isSelected: selected)) {
                 FindPinView(pin: pin, isSelected: selected).equatable()
             }
             .tag(pin.id)

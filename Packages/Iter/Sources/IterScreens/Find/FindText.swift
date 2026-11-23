@@ -1,5 +1,6 @@
 import Foundation
 import IterFeatures
+import IterUI
 import IterModel
 import IterDiscovery
 
@@ -71,6 +72,11 @@ enum FindText {
         if let line = distanceLine(distanceText: row.distanceText, drive: row.drive) { parts.append(line) }
         parts.append(verificationShort(row.verification))
         if row.isSaved { parts.append("Saved") }
+        if let score = row.score {
+            parts.append(score.value == nil ? "Light score not available yet"
+                         : ScoreChip.accessibilityText(kind: score.kind, start: score.start, zone: score.timeZone, score: score.value,
+                                                       isLowConfidence: score.isLowConfidence))
+        }
         return parts.joined(separator: ", ")
     }
 

@@ -41,6 +41,8 @@ public final class FindModel {
     public internal(set) var selectedID: String?
     public internal(set) var card: PlaceCard?
     public internal(set) var lookAround: LookAroundAvailability = .unknown
+    /// The selected place's Sky Index score for the card's header chip; nil when no scoring is wired or nothing is selected.
+    public internal(set) var cardScore: FindScore?
     /// Set when Search Here is asked with no map region to search.
     public internal(set) var notice: String?
 
@@ -57,6 +59,8 @@ public final class FindModel {
     @ObservationIgnored let location: any LocationProviding
     @ObservationIgnored let now: @Sendable () -> Date
     @ObservationIgnored let configuration: FindConfiguration
+    /// The shared Conditions stage, for each result's score. Nil: results carry no score.
+    @ObservationIgnored let scoreSource: (any FindScoreSource)?
     /// Your own spots: drop, drag, Adjust Location, coordinates and readouts.
     @ObservationIgnored public let spots: OwnSpotEditor
 
@@ -76,6 +80,11 @@ public final class FindModel {
     @ObservationIgnored var zoneResolved: Set<String> = []
     @ObservationIgnored var zoneTasks: [String: Task<Void, Never>] = [:]
 
+    @ObservationIgnored var scoreTargets: [String: ScoreTarget] = [:]
+    @ObservationIgnored var scoreValues: [String: FindScore] = [:]
+    @ObservationIgnored var visibleResultIDs: Set<String>?
+    @ObservationIgnored var scoreGeneration = 0
+
     @ObservationIgnored var runGeneration = 0
     @ObservationIgnored var lookupGeneration = 0
     @ObservationIgnored var driveGeneration = 0
@@ -89,16 +98,19 @@ public final class FindModel {
     public convenience init(discovery: any DiscoveryRunning, placeSearch: any PlaceSearchProvider, geocoder: any Geocoder, routing: any RoutingProvider,
                 streetLevel: (any StreetLevelImageryProvider)?, magnetic: any MagneticModelProvider, gridReference: any GridReferenceProvider,
                 library: LibraryStore, preferences: Preferences, location: any LocationProviding,
-                now: @escaping @Sendable () -> Date, configuration: FindConfiguration = FindConfiguration()) {
+                now: @escaping @Sendable () -> Date, configuration: FindConfiguration = FindConfiguration(),
+                scores: (any FindScoreSource)? = nil) {
         self.init(discoveryFactory: { discovery }, placeSearch: placeSearch, geocoder: geocoder, routing: routing, streetLevel: streetLevel,
                   magnetic: magnetic, gridReference: gridReference, library: library, preferences: preferences, location: location, now: now,
-                  configuration: configuration)
+                  configuration: configuration, scores: scores)
     }
 
     public init(discoveryFactory: @escaping @MainActor () -> any DiscoveryRunning, placeSearch: any PlaceSearchProvider, geocoder: any Geocoder, routing: any RoutingProvider,
                 streetLevel: (any StreetLevelImageryProvider)?, magnetic: any MagneticModelProvider, gridReference: any GridReferenceProvider,
                 library: LibraryStore, preferences: Preferences, location: any LocationProviding,
-                now: @escaping @Sendable () -> Date, configuration: FindConfiguration = FindConfiguration()) {
+                now: @escaping @Sendable () -> Date, configuration: FindConfiguration = FindConfiguration(),
+                scores: (any FindScoreSource)? = nil) {
+        self.scoreSource = scores
         self.runnerFactory = discoveryFactory
         self.placeSearch = placeSearch
         self.geocoder = geocoder
@@ -218,6 +230,7 @@ public final class FindModel {
         droppedCount = 0
         rows = []
         kindFilters = []
+        resetScores()
         rebuildMapContent()
     }
 

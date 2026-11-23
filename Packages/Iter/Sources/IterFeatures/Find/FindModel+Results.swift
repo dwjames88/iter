@@ -55,6 +55,7 @@ extension FindModel {
         let next = shown.map(makeRow)
         if next != rows { rows = next }
         rebuildMapContent()
+        refreshScoreRequests()
     }
 
     /// Rebuilds one row (a drive time arrived, a place was saved) without touching the others.
@@ -83,7 +84,7 @@ extension FindModel {
             verification: d.verification, verificationLabel: verificationLabel(d, names: names),
             sourceNames: d.sources.map { name(of: $0, in: names) }, photo: d.photos.first, photoCount: d.photoCount,
             distanceKm: km, distanceBasis: basis, drive: driveTime(id: d.id, km: km, basis: basis), lightSuit: lightSuit(of: d),
-            isSaved: library.places.isSaved(placeForRow(d)), isFetchingDrive: fetchingDrive.contains(d.id))
+            isSaved: library.places.isSaved(placeForRow(d)), isFetchingDrive: fetchingDrive.contains(d.id), score: scoreValues[d.id])
     }
 
     func distance(of d: DiscoveredPlace) -> (Double?, DistanceBasis) {
@@ -126,7 +127,7 @@ extension FindModel {
             singles.append(FindPin(id: "place:\(p.id.uuidString)", coordinate: p.coordinate, title: p.name, kind: p.origin == .user ? .own : .saved))
         }
         for m in matches { singles.append(FindPin(id: m.id, coordinate: m.coordinate, title: m.name, kind: .match)) }
-        let resultPins = rows.enumerated().map { FindPin(id: $0.element.id, coordinate: $0.element.coordinate, title: $0.element.name, kind: .result(rank: $0.offset + 1)) }
+        let resultPins = rows.enumerated().map { FindPin(id: $0.element.id, coordinate: $0.element.coordinate, title: $0.element.name, kind: .result(rank: $0.offset + 1), score: $0.element.score) }
         let grouped = FindPinClusterer.cluster(resultPins.map { ($0.id, $0.coordinate) }, region: region, viewportWidth: viewportWidth)
         let single = Set(grouped.singles)
         singles += resultPins.filter { single.contains($0.id) }

@@ -202,6 +202,8 @@ public struct FindRow: Equatable, Identifiable, Sendable {
     public var isSaved: Bool
     /// True while a router answer is on its way for this row.
     public var isFetchingDrive: Bool
+    /// Today's Sky Index for the place, nil when scoring is not wired. Loads lazily, rows in view first.
+    public var score: FindScore? = nil
 
     /// "23 km from you", "23 km from the search centre".
     public var distanceText: String? {
@@ -256,6 +258,8 @@ public struct FindPin: Equatable, Identifiable, Sendable {
     public var coordinate: Coordinate
     public var title: String
     public var kind: Kind
+    /// A result's score for the chip the map shows on the selected and top pins; nil until one is known.
+    public var score: FindScore? = nil
     public var isMovable: Bool { kind == .own }
 }
 

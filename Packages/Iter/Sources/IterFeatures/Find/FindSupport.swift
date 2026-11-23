@@ -19,18 +19,21 @@ public struct FindConfiguration: Sendable {
     /// Results that get a real drive time after a run, and how many routes run at once.
     public var driveTimeCount: Int
     public var driveTimeConcurrency: Int
+    /// How many results at the top of the list count as in view until the list says what is (their scores are asked for first).
+    public var scoreLeadCount: Int
     /// Longest wait for Apple Maps on a typed lookup, and for a place's time zone and Look Around answers.
     public var lookupTimeout: Duration
     /// Seconds from any fixed point, never going back (the system uptime in the app).
     public var monotonic: @Sendable () -> TimeInterval
 
     public init(slowAfter: Duration = .seconds(6), tick: Duration = .seconds(1), driveTimeCount: Int = 10, driveTimeConcurrency: Int = 2,
-                lookupTimeout: Duration = .seconds(8), monotonic: @escaping @Sendable () -> TimeInterval = { ProcessInfo.processInfo.systemUptime }) {
+                lookupTimeout: Duration = .seconds(8), scoreLeadCount: Int = 8, monotonic: @escaping @Sendable () -> TimeInterval = { ProcessInfo.processInfo.systemUptime }) {
         self.slowAfter = slowAfter
         self.tick = tick
         self.driveTimeCount = max(0, driveTimeCount)
         self.driveTimeConcurrency = max(1, driveTimeConcurrency)
         self.lookupTimeout = lookupTimeout
+        self.scoreLeadCount = max(0, scoreLeadCount)
         self.monotonic = monotonic
     }
 }

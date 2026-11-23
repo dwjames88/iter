@@ -37,6 +37,7 @@ extension FindModel {
         lookTask?.cancel()
         selectedID = nil
         card = nil
+        if cardScore != nil { cardScore = nil }
         lookAround = .unknown
     }
 
@@ -44,6 +45,8 @@ extension FindModel {
         selectionGeneration += 1
         selectedID = id
         card = newCard
+        cardScore = scoreValues[id]
+        refreshScoreRequests()
         checkLookAround(at: coordinate)
         resolveTimeZone(for: id, place: newCard.place)
     }
