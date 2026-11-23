@@ -1,3 +1,5 @@
+> **Note (rebuild): this page describes something that no longer exists.** The licensing module (`IterLicensing`, the Licence settings pane and the key check) was dropped in the rebuild (decision D11), and the old `Packages/IterKit` and `App/` folders it refers to are removed. Iter has no licence key, no activation and no Lemon Squeezy call. Nothing below applies to the current code. It is kept as a record of the earlier design in case licensing returns.
+
 # Licensing
 
 Iter sells signed-release licence keys through Lemon Squeezy. This page covers the app's side: how a key is activated, what is stored and sent, the offline rules, how licensing stays switched off in 0.x, the plan for crediting early buyers at App Store launch, and the Lemon Squeezy setup checklist. The site's side (the `/buy` page, the webhook, the buyer ledger) is in the site repository's `docs/licensing.md`.
