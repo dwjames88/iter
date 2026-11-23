@@ -95,10 +95,10 @@ Sun, moon, twilight and Milky Way positions are also computed on the device by t
 | Source | State | Why |
 |---|---|---|
 | Reddit | **Off, not built.** Find shows it as "unavailable" with the reason | Reddit's open JSON no longer works for apps. The only free route needs the owner's own Reddit app credentials (OAuth). The code has an extension point for it (a text-evidence provider with the id `reddit.api`). See [ROADMAP.md](ROADMAP.md) |
-| Google Custom Search | **Off, not built.** Shown as "unavailable" | Google is closing the product to new users. The old optional key is copied into the new Keychain layout, but nothing reads it |
+| Google Custom Search | **Off, not built.** Shown as "unavailable" | Google is closing the product to new users. The old optional key is left where it was and nothing reads it |
 | Light pollution, sky brightness | **No provider** (stub) | No commercial-safe free source. See the table above and the roadmap |
 | Seeing and transparency | **No provider** (stub) | No commercial-safe free source |
-| OpenWeather, Windy, WeatherKit | **Not carried over** | OpenWeather and Windy needed a key. WeatherKit needs a paid developer team (decision D1). The old keys are copied to the new Keychain layout once and left in place, and nothing uses them |
+| OpenWeather, Windy, WeatherKit | **Not carried over** | OpenWeather and Windy needed a key. WeatherKit needs a paid developer team (decision D1). The old keys stay in the Keychain where they were. Nothing reads them |
 | Open-Meteo | Not built | Its free tier is for non-commercial use only |
 | USNO sun and moon, CelesTrak satellites, JTWC cyclones, NAVGEM | Not built | Tested in the research. USNO would only be a test cross-check. The others are not needed for the flow, or carry no cloud data (NAVGEM) |
 
@@ -112,7 +112,7 @@ Three adapters have code and tests but nothing in the apps calls them yet. They 
 
 ## Keys
 
-Nothing needs a key today. The key vault (`IterSources/KeyVault`) is kept so a keyed source can be added later. It stores keys in the Keychain under the service `com.dwjames.iter.keys`, one item per source id. On first run it copies the old app's items (OpenWeather, Windy, Google) into that layout and leaves the old items alone.
+Nothing needs a key today. The key vault (`IterSources/KeyVault`) is kept so a keyed source can be added later. It stores keys in the Keychain under the service `com.dwjames.iter.keys`, one item per source id. The vault can copy the old app's items (OpenWeather, Windy, Google) into that layout and leave the old ones alone (`migrateLegacyItems`), but nothing calls it at launch yet, so no old key is copied.
 
 ## Adding or changing a source
 
