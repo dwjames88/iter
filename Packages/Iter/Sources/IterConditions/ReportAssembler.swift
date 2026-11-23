@@ -208,7 +208,7 @@ struct ReportAssembler: Sendable {
     // MARK: Provenance lines
 
     func sourceName(_ id: SourceID) -> String {
-        registry.sources.first { $0.descriptor.id == id }?.descriptor.name ?? id.rawValue
+        registry.sources.first { $0.descriptor.id == id }?.descriptor.name ?? SourceCatalogue.descriptor(id)?.name ?? id.rawValue
     }
 
     private func describe(_ p: Provenance, grid: Bool) -> String {
@@ -216,6 +216,7 @@ struct ReportAssembler: Sendable {
         if let m = p.model, !m.isEmpty, !text.localizedCaseInsensitiveContains(m) { text += " (\(m))" }
         if let issued = p.issuedAt { text += ", run \(Self.runHour(issued))Z" }
         if grid, let d = p.distanceKm { text += String(format: ", %.1f km grid point", d) }
+        text += Self.militaryNote(p.origin)
         return text
     }
 
@@ -253,7 +254,7 @@ struct ReportAssembler: Sendable {
             if let n = o.value.stationName { text += ", \(n)" }
             if let d = o.provenance.distanceKm { text += String(format: ", %.0f km", d) }
             let minutes = Int(max(0, now.timeIntervalSince(o.value.time)) / 60)
-            text += ", \(minutes) min old"
+            text += ", \(minutes) min old" + Self.militaryNote(o.provenance.origin)
             out.append(ProvenanceLine(label: "Observed", text: text, staleAge: r.observations.isStale ? TimeInterval(minutes * 60) : nil))
         }
         if let p = r.alerts.provenance { out.append(ProvenanceLine(label: "Alerts", text: sourceName(p.source), staleAge: r.alerts.isStale ? max(0, now.timeIntervalSince(p.fetchedAt)) : nil)) }
@@ -279,6 +280,12 @@ struct ReportAssembler: Sendable {
     }
 
     // MARK: Helpers
+
+    /// ", military-origin (US Army) via NOAA Aviation Weather Center" for data a military organisation produced; nothing otherwise.
+    static func militaryNote(_ origin: SourceOrigin?) -> String {
+        guard let origin, origin.tier == .military else { return "" }
+        return ", " + origin.label.prefix(1).lowercased() + origin.label.dropFirst()
+    }
 
     static func unique<T: Hashable>(_ items: [T]) -> [T] {
         var seen = Set<T>()

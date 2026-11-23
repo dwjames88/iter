@@ -1,5 +1,8 @@
 .DS_Store
 build/
+# Source folders named Build (IterFeatures/Build, IterScreens/Build) match build/ on a case-insensitive disk.
+!Packages/Iter/Sources/**/Build/
+!Packages/Iter/Tests/**/Build/
 DerivedData/
 .build/
 .swiftpm/

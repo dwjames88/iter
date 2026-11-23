@@ -2,6 +2,12 @@ name: Iter
 # The iPhone and iPad app lives in its own spec (targets, scheme, iOS deployment target).
 include:
   - project-ios.yml
+# "Test" is a Debug build that can only ever be the render copy: the scheme's test action uses it, so `xcodebuild test`
+# hosts the tests in com.dwjames.iter.render (ad hoc, no team, no hardened runtime) and never in the real app.
+configs:
+  Debug: debug
+  Release: release
+  Test: debug
 options:
   bundleIdPrefix: com.dwjames
   deploymentTarget:
@@ -37,6 +43,12 @@ settings:
     # Keep the build machine's paths out of the binary: source paths are recorded relative to /Iter.
     OTHER_SWIFT_FLAGS: $(inherited) -file-prefix-map $(SRCROOT)=/Iter -debug-prefix-map $(SRCROOT)=/Iter
   configs:
+    Test:
+      ITER_BUNDLE_ID: com.dwjames.iter.render
+      CODE_SIGN_IDENTITY: "-"
+      CODE_SIGN_STYLE: Manual
+      DEVELOPMENT_TEAM: ""
+      ENABLE_HARDENED_RUNTIME: NO
     Release:
       # Strip symbols from the shipped app.
       DEPLOYMENT_POSTPROCESSING: YES
@@ -57,6 +69,22 @@ targets:
     dependencies:
       - package: Iter
         product: IterScreens
+      - package: Iter
+        product: IterFeatures
+      - package: Iter
+        product: IterUI
+      - package: Iter
+        product: IterModel
+      - package: Iter
+        product: IterStore
+      - package: Iter
+        product: IterSources
+      - package: Iter
+        product: IterDiscovery
+      - package: Iter
+        product: IterSky
+      - package: Iter
+        product: IterConditions
       - package: IterUpdater
         product: IterUpdater
     settings:
@@ -91,6 +119,11 @@ schemes:
     run:
       config: Debug
     test:
-      config: Debug
+      config: Test
+      # Launch arguments of the host app while tests run: the in-memory store and a fixed place (Canyon Country), so a
+      # test run never opens the real store and never asks for location.
+      commandLineArguments:
+        "-IterInMemoryStore YES": true
+        "-IterLocation 38.39,-109.87": true
       targets:
         - IterAppTests
