@@ -46,7 +46,8 @@ public final class FindModel {
 
     // MARK: Collaborators and internals
 
-    @ObservationIgnored let runner: any DiscoveryRunning
+    /// Asked once per search, so a container that rebuilds its engine from current preferences is always read fresh.
+    @ObservationIgnored let runnerFactory: @MainActor () -> any DiscoveryRunning
     @ObservationIgnored let placeSearch: any PlaceSearchProvider
     @ObservationIgnored let geocoder: any Geocoder
     @ObservationIgnored let routing: any RoutingProvider
@@ -85,11 +86,20 @@ public final class FindModel {
     @ObservationIgnored var driveTask: Task<Void, Never>?
     @ObservationIgnored var lookTask: Task<Void, Never>?
 
-    public init(discovery: any DiscoveryRunning, placeSearch: any PlaceSearchProvider, geocoder: any Geocoder, routing: any RoutingProvider,
+    public convenience init(discovery: any DiscoveryRunning, placeSearch: any PlaceSearchProvider, geocoder: any Geocoder, routing: any RoutingProvider,
                 streetLevel: (any StreetLevelImageryProvider)?, magnetic: any MagneticModelProvider, gridReference: any GridReferenceProvider,
                 library: LibraryStore, preferences: Preferences, location: any LocationProviding,
                 now: @escaping @Sendable () -> Date, configuration: FindConfiguration = FindConfiguration()) {
-        self.runner = discovery
+        self.init(discoveryFactory: { discovery }, placeSearch: placeSearch, geocoder: geocoder, routing: routing, streetLevel: streetLevel,
+                  magnetic: magnetic, gridReference: gridReference, library: library, preferences: preferences, location: location, now: now,
+                  configuration: configuration)
+    }
+
+    public init(discoveryFactory: @escaping @MainActor () -> any DiscoveryRunning, placeSearch: any PlaceSearchProvider, geocoder: any Geocoder, routing: any RoutingProvider,
+                streetLevel: (any StreetLevelImageryProvider)?, magnetic: any MagneticModelProvider, gridReference: any GridReferenceProvider,
+                library: LibraryStore, preferences: Preferences, location: any LocationProviding,
+                now: @escaping @Sendable () -> Date, configuration: FindConfiguration = FindConfiguration()) {
+        self.runnerFactory = discoveryFactory
         self.placeSearch = placeSearch
         self.geocoder = geocoder
         self.routing = routing
@@ -226,7 +236,7 @@ public final class FindModel {
             text: query, mapRegion: searchRegion ?? region, currentLocation: location.current, ordering: preferences.ordering,
             preferenceText: preferences.preferenceText.isEmpty ? nil : preferences.preferenceText,
             library: saved.map { LibraryReference(name: $0.name, coordinate: $0.coordinate) }, maxResults: preferences.resultCap)
-        let stream = runner.run(request)
+        let stream = runnerFactory().run(request)
         startTicking(generation: mine)
         runTask = Task { [weak self] in
             for await event in stream {
