@@ -32,29 +32,33 @@ struct GoSectionSnapshotTests {
 
     @Test("hero card", arguments: GoSectionCases.hero)
     func hero(_ sample: GoSample) async throws {
-        let s = sample.snapshot(now: Self.now)
-        try await GoSnapshotHarness.render(Self.framed(GoHeroCard(snapshot: s, now: Self.now, actions: .inert)),
+        let now = sample.renderNow
+        let s = sample.snapshot(now: now)
+        try await GoSnapshotHarness.render(Self.framed(GoHeroCard(snapshot: s, now: now, actions: .inert)),
                                            name: "go-section-hero-\(sample.rawValue)", size: CGSize(width: Self.width, height: 640))
     }
 
     @Test("conditions", arguments: GoSectionCases.conditions)
     func conditions(_ sample: GoSample) async throws {
-        let s = sample.snapshot(now: Self.now)
-        try await GoSnapshotHarness.render(Self.framed(GoConditionsSection(snapshot: s, now: Self.now)),
+        let now = sample.renderNow
+        let s = sample.snapshot(now: now)
+        try await GoSnapshotHarness.render(Self.framed(GoConditionsSection(snapshot: s, now: now)),
                                            name: "go-section-conditions-\(sample.rawValue)", size: CGSize(width: Self.width, height: 1180))
     }
 
     @Test("alerts", arguments: GoSectionCases.alerts)
     func alerts(_ sample: GoSample) async throws {
-        let s = sample.snapshot(now: Self.now)
-        try await GoSnapshotHarness.render(Self.framed(GoAlertsSection(snapshot: s, now: Self.now)),
+        let now = sample.renderNow
+        let s = sample.snapshot(now: now)
+        try await GoSnapshotHarness.render(Self.framed(GoAlertsSection(snapshot: s, now: now)),
                                            name: "go-section-alerts-\(sample.rawValue)", size: CGSize(width: Self.width, height: 260))
     }
 
     @Test("freshness note", arguments: GoSectionCases.freshness)
     func freshness(_ sample: GoSample) async throws {
-        let s = sample.snapshot(now: Self.now)
-        try await GoSnapshotHarness.render(Self.framed(GoFreshnessNote(snapshot: s, now: Self.now)),
+        let now = sample.renderNow
+        let s = sample.snapshot(now: now)
+        try await GoSnapshotHarness.render(Self.framed(GoFreshnessNote(snapshot: s, now: now)),
                                            name: "go-section-freshness-\(sample.rawValue)", size: CGSize(width: Self.width, height: 140))
     }
 

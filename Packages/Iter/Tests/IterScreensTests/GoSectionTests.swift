@@ -102,7 +102,7 @@ struct GoSectionTests {
         sky.windowStart = F.at(6, 0).addingTimeInterval(86_400)
         nw.sky = sky
         #expect(GoText.skyBasis(nw, now: now, locale: loc) == "Next window: Sunrise tomorrow · forecast 64, rising")
-        #expect(GoText.skyTitle(sky, locale: loc) == "Forecast Sky Index")
+        #expect(GoText.skyTitle(sky, now: now, locale: loc) == "Forecast Sky Index")
     }
 
     @Test func weatherWords() {
@@ -160,5 +160,36 @@ struct GoSectionTests {
         #expect(t.contains("Conditions updated 3 hrs ago"))
         #expect(t.contains("Updated 3 hrs ago"))
         #expect(GoText.freshnessLines(.idle(at: now), now: now).isEmpty)
+    }
+
+    @Test func oldSnapshotNeverSoundsCurrent() {
+        // Snapshot from 13:30, now 16:23: leave-by 16:04 passed 19 min ago, stored status still "early".
+        var s = F.before(status: .early, leaveBy: F.at(16, 4))
+        s.generatedAt = F.at(13, 30)
+        let c = GoText.leaveCountdown(s, now: now, locale: loc)
+        #expect(c?.text == "19 min past leave-by")
+        #expect(c?.tone == .late)
+        #expect(GoText.staleBanner(s, now: now, locale: loc) == "As of 13:30 · 2 hrs, 53 min old")
+        let badge = GoText.statusWord(s, now: now, locale: loc)
+        #expect(badge?.text == "Past leave-by")
+        var ahead = s; ahead.leave?.leaveBy = F.at(17, 5)
+        #expect(GoText.statusWord(ahead, now: now, locale: loc) == nil)   // no "On time" from an old snapshot
+        #expect(GoText.leaveCountdown(ahead, now: now, locale: loc)?.text == "in 42 min")
+        // A fresh snapshot has no banner and keeps its badge.
+        #expect(GoText.staleBanner(F.before(), now: now, locale: loc) == nil)
+        #expect(GoText.statusWord(F.before(), now: now, locale: loc)?.text == "On time")
+    }
+
+    @Test func oldSkyIsNotLive() {
+        let s = F.before()
+        #expect(GoText.skyTitle(s.sky!, now: now, locale: loc) == "Live Sky Index")
+        var old = F.sky(); old.asOf = F.at(13, 30)
+        #expect(GoText.skyIsOld(old, now: now))
+        #expect(GoText.skyTitle(old, now: now, locale: loc) == "Last Sky Reading")
+        var flagged = F.sky(); flagged.isStale = true
+        #expect(GoText.skyTitle(flagged, now: now, locale: loc) == "Last Sky Reading")
+        var snap = s; snap.sky = old
+        #expect(GoText.skyAgeLine(snap, now: now, locale: loc) == "As of 13:30 · 2 hrs, 53 min old")
+        #expect(GoText.skyAgeLine(s, now: now, locale: loc) == nil)
     }
 }

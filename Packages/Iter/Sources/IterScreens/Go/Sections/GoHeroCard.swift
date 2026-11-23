@@ -33,6 +33,11 @@ public struct GoHeroCard: View {
     public var body: some View {
         if let kind = GoText.heroKind(snapshot) {
             VStack(alignment: .leading, spacing: IterSpace.md) {
+                if let banner = GoText.staleBanner(snapshot, now: now, locale: locale) {
+                    Label { Text(verbatim: banner) } icon: { Image(systemName: "clock.badge.exclamationmark") }
+                        .font(IterFont.captionStrong)
+                        .foregroundStyle(IterColor.warning)
+                }
                 switch kind {
                 case .beforeDeparture: before
                 case .driving: driving
@@ -49,7 +54,7 @@ public struct GoHeroCard: View {
 
     @ViewBuilder private var before: some View {
         let next = snapshot.next
-        header("Next Stop", status: GoText.statusWord(snapshot, locale: locale))
+        header("Next Stop", status: GoText.statusWord(snapshot, now: now, locale: locale))
         if let next { Text(verbatim: next.name).font(IterFont.titleSection).foregroundStyle(IterColor.textPrimary).lineLimit(2) }
         VStack(alignment: .leading, spacing: IterSpace.xs) {
             bigTime(GoText.leaveHeadline(snapshot, locale: locale),

@@ -68,25 +68,49 @@ public enum GoText {
 
     public enum LeaveTone: Hashable, Sendable { case normal, now, late }
 
-    /// The countdown under the headline and its tone: "in 42 min", "Leave now", "6 min late".
+    /// How old a snapshot must be before the hero stops sounding certain.
+    public static let oldAfter: TimeInterval = 15 * 60
+
+    /// When the values on the card were last good, if that is longer ago than `oldAfter`: the snapshot's own time, or a stale ETA's.
+    public static func staleSince(_ s: GoSnapshot, now: Date) -> Date? {
+        if now.timeIntervalSince(s.generatedAt) >= oldAfter { return s.generatedAt }
+        if s.freshness.etaIsStale, let a = s.freshness.etaAsOf ?? s.drive?.asOf, now.timeIntervalSince(a) >= oldAfter { return a }
+        return nil
+    }
+
+    /// First line of the hero when its numbers are old: "As of 13:30 · 3 hr old".
+    public static func staleBanner(_ s: GoSnapshot, now: Date, locale: Locale = .current) -> String? {
+        guard let since = staleSince(s, now: now) else { return nil }
+        let t = time(since, zone(for: subjectStop(s)), locale)
+        let d = TimeText.duration(now.timeIntervalSince(since), locale: locale)
+        return String(localized: "As of \(t) · \(d) old", locale: locale, comment: "Hero: the values on this card are old")
+    }
+
+    /// The countdown under the headline and its tone: "in 42 min", "Leave now", "6 min late", "26 min past leave-by".
+    /// The words come from `now` against the stored leave-by, never from an old status.
     public static func leaveCountdown(_ s: GoSnapshot, now: Date, locale: Locale = .current) -> (text: String, tone: LeaveTone)? {
         guard let leave = s.leave else { return nil }
-        switch leave.status {
-        case .leaveNow:
-            return (String(localized: "Leave now", locale: locale, comment: "Hero: leave now"), .now)
-        case .late:
-            let secs = leave.lateBySeconds ?? leave.leaveBy.map { now.timeIntervalSince($0) } ?? 60
-            let m = minutes(secs, locale)
-            return (String(localized: "\(m) late", locale: locale, comment: "Hero: 6 min late"), .late)
-        case .missed:
+        let fresh = staleSince(s, now: now) == nil
+        if leave.status == .missed, fresh {
             return (String(localized: "Window over", locale: locale, comment: "Hero: the light is gone"), .late)
-        case .early, .leaveSoon:
-            guard let by = leave.leaveBy else { return nil }
+        }
+        if let by = leave.leaveBy {
             let delta = by.timeIntervalSince(now)
-            if delta <= TripText.nowTolerance { return (String(localized: "Leave now", locale: locale, comment: "Hero: leave now"), .now) }
-            return (inTime(delta, locale: locale), .normal)
-        case .atStop, .unscheduled:
-            return nil
+            if delta > TripText.nowTolerance { return (inTime(delta, locale: locale), .normal) }
+            if delta >= -TripText.nowTolerance { return (String(localized: "Leave now", locale: locale, comment: "Hero: leave now"), .now) }
+            if leave.status == .late, fresh {
+                let m = minutes(leave.lateBySeconds ?? -delta, locale)
+                return (String(localized: "\(m) late", locale: locale, comment: "Hero: 6 min late"), .late)
+            }
+            let m = minutes(-delta, locale)
+            return (String(localized: "\(m) past leave-by", locale: locale, comment: "Hero: leave-by has passed"), .late)
+        }
+        switch leave.status {
+        case .leaveNow: return (String(localized: "Leave now", locale: locale), .now)
+        case .late:
+            let m = minutes(leave.lateBySeconds ?? 60, locale)
+            return (String(localized: "\(m) late", locale: locale), .late)
+        default: return nil
         }
     }
 
@@ -151,9 +175,16 @@ public enum GoText {
         return String(localized: "Earliest you can leave: \(t)", locale: locale, comment: "Earliest departure hint")
     }
 
-    /// The status word beside the card heading.
-    public static func statusWord(_ s: GoSnapshot, locale: Locale = .current) -> (text: String, symbol: String, tone: LeaveTone)? {
+    /// The status word beside the card heading. An old snapshot claims nothing ("On time" is never said from old data);
+    /// it only says so when leave-by has passed.
+    public static func statusWord(_ s: GoSnapshot, now: Date, locale: Locale = .current) -> (text: String, symbol: String, tone: LeaveTone)? {
         guard let status = s.leave?.status else { return nil }
+        if staleSince(s, now: now) != nil {
+            if let by = s.leave?.leaveBy, now.timeIntervalSince(by) > TripText.nowTolerance {
+                return (String(localized: "Past leave-by", locale: locale), "exclamationmark.triangle.fill", .late)
+            }
+            return nil
+        }
         switch status {
         case .early: return (String(localized: "On time", locale: locale), "checkmark.circle", .normal)
         case .leaveSoon: return (String(localized: "Leave soon", locale: locale), "clock", .normal)
@@ -175,7 +206,13 @@ public enum GoText {
     /// "in 38 min".
     public static func arriveCountdown(_ s: GoSnapshot, now: Date, locale: Locale = .current) -> String? {
         guard let a = s.drive?.arrival else { return nil }
-        return inTime(a.timeIntervalSince(now), locale: locale)
+        let delta = a.timeIntervalSince(now)
+        if delta < -TripText.nowTolerance {
+            let m = minutes(-delta, locale)
+            return String(localized: "\(m) past ETA", locale: locale, comment: "Driving: the estimate has passed")
+        }
+        if delta <= TripText.nowTolerance { return String(localized: "Arriving now", locale: locale) }
+        return inTime(delta, locale: locale)
     }
 
     /// On time / late / missed against the light.
@@ -303,11 +340,29 @@ public enum GoText {
         }
     }
 
-    /// "Live Sky Index" or, for the next window beyond the live horizon, "Forecast Sky Index".
-    public static func skyTitle(_ sky: GoSkyInfo, locale: Locale = .current) -> String {
-        sky.basis == .nextWindowForecast
-            ? String(localized: "Forecast Sky Index", locale: locale)
-            : String(localized: "Live Sky Index", locale: locale)
+    /// A sky reading older than this is no longer "live".
+    public static let skyOldAfter: TimeInterval = 30 * 60
+
+    public static func skyIsOld(_ sky: GoSkyInfo, now: Date) -> Bool {
+        guard sky.basis != .nextWindowForecast, sky.basis != .noData else { return false }
+        if sky.isStale { return true }
+        if let a = sky.asOf, now.timeIntervalSince(a) >= skyOldAfter { return true }
+        return false
+    }
+
+    /// "Live Sky Index"; "Last Sky Reading" when old (never "Live" over old data); "Forecast Sky Index" beyond the live horizon.
+    public static func skyTitle(_ sky: GoSkyInfo, now: Date, locale: Locale = .current) -> String {
+        if sky.basis == .nextWindowForecast { return String(localized: "Forecast Sky Index", locale: locale) }
+        if skyIsOld(sky, now: now) { return String(localized: "Last Sky Reading", locale: locale) }
+        return String(localized: "Live Sky Index", locale: locale)
+    }
+
+    /// "As of 13:30 · 3 hr old" for an old reading.
+    public static func skyAgeLine(_ s: GoSnapshot, now: Date, locale: Locale = .current) -> String? {
+        guard let sky = s.sky, skyIsOld(sky, now: now), let a = sky.asOf else { return nil }
+        let t = time(a, zone(for: subjectStop(s)), locale)
+        let d = TimeText.duration(now.timeIntervalSince(a), locale: locale)
+        return String(localized: "As of \(t) · \(d) old", locale: locale)
     }
 
     /// The observation the live index leans on: the next stop's, else any.

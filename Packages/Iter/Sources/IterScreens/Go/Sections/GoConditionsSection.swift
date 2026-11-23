@@ -38,19 +38,23 @@ public struct GoConditionsSection: View {
     @ViewBuilder private var skyCard: some View {
         let sky = snapshot.sky
         let score = sky?.displayScore
+        let old = sky.map { GoText.skyIsOld($0, now: now) } ?? false
         VStack(alignment: .leading, spacing: IterSpace.sm) {
             HStack(spacing: IterSpace.md) {
                 if let kind = sky?.windowKind ?? stop?.windowKind {
                     ScoreChip(kind: kind, start: sky?.windowStart ?? stop?.windowStart ?? now, score: score, zone: GoText.zone(for: stop),
-                              locale: locale, size: .large, isLowConfidence: sky?.confidence == .low)
+                              locale: locale, size: .large, isLowConfidence: sky?.confidence == .low || old)
                 }
                 VStack(alignment: .leading, spacing: IterSpace.xs) {
-                    Text(verbatim: sky.map { GoText.skyTitle($0, locale: locale) } ?? String(localized: "Live Sky Index"))
+                    Text(verbatim: sky.map { GoText.skyTitle($0, now: now, locale: locale) } ?? String(localized: "Live Sky Index"))
                         .font(IterFont.captionStrong).foregroundStyle(IterColor.textSecondary)
                     if let score, let sky {
                         Text(verbatim: bandLine(sky, score: score)).font(IterFont.headline).foregroundStyle(IterColor.textPrimary)
                         ConfidenceIndicator(level(sky.confidence), locale: locale)
-                        if let t = trendLabel(sky.trend) { t }
+                        if old, let line = GoText.skyAgeLine(snapshot, now: now, locale: locale) {
+                            Label { Text(verbatim: line) } icon: { Image(systemName: "exclamationmark.triangle.fill") }
+                                .font(IterFont.captionStrong).foregroundStyle(IterColor.warning)
+                        } else if let t = trendLabel(sky.trend) { t }
                     } else {
                         Label { Text("No live data") } icon: { Image(systemName: "circle.dashed") }
                             .font(IterFont.headline).foregroundStyle(IterColor.textSecondary)
