@@ -1,3 +1,5 @@
+> **Note (rebuild): some paths on this page changed.** The Mac app's update screens are now in `Mac/Sources/Updates/` (not `App/Sources/Updates/`), and the app target is built from `Mac/Sources`. `scripts/release.sh` still defaults its entitlements to `App/Iter.entitlements`, which no longer exists: set `ITER_ENTITLEMENTS=Mac/Iter.entitlements` until the script is fixed. Licensing was dropped, so ignore anything here about licence keys. The rest of this page (versions, tag, signing, appcast, update flow) was not rechecked against the rebuilt scripts. The iPhone app is installed from Xcode ([TESTING-iOS.md](../TESTING-iOS.md)) and has no updater.
+
 # Distribution
 
 How Iter gets a version number, how a release is cut, and how installed copies find and install updates. The code is in `Packages/IterUpdater/` (the updater and the `iter-release` tool), `App/Sources/Updates/` (the menu item, window and settings pane) and `scripts/`.
