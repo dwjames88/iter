@@ -7,6 +7,8 @@ import IterUI
 extension EnvironmentValues {
     /// `Preferences.mapStyle` ("hybrid" default, "standard", "imagery"). The shell sets it from the preferences it owns.
     @Entry public var findMapStyle: String = "hybrid"
+    /// Settings ▸ Show Daylight: the Find map shades the night side when zoomed out. Default off (previews, tests).
+    @Entry public var findShowsDaylight: Bool = false
 }
 
 /// Waits for a burst of changes to end before running the work (map size changes reach the model once, after a resize stops).
@@ -63,6 +65,7 @@ struct FindMapView: View {
     /// What covers the map: the floating card on the leading edge.
     var insets = EdgeInsets()
     @Environment(\.findMapStyle) private var styleName
+    @Environment(\.findShowsDaylight) private var showsDaylight
     @Namespace private var mapScope
     @State private var position: MapCameraPosition = .userLocation(fallback: .automatic)
     @State private var width: CGFloat = 0
@@ -76,6 +79,9 @@ struct FindMapView: View {
         MapReader { proxy in
             Map(position: $position, selection: selection, scope: mapScope) {
                 UserAnnotation()
+                if showsDaylight, let span = visibleRegion?.latitudeDelta, DaylightGeometry.isVisible(latitudeSpan: span) {
+                    DaylightTerminator(date: Date())
+                }
                 ForEach(rings.indices, id: \.self) { i in
                     MapPolygon(coordinates: rings[i])
                         .foregroundStyle(IterColor.accent.opacity(0.08))

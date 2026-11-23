@@ -31,6 +31,7 @@ struct IOSRoot: View {
         .environment(shell.navigator)
         .environment(shell.library)
         .environment(\.findMapStyle, shell.container.preferences.mapStyle)
+        .environment(\.findShowsDaylight, shell.container.preferences.showDaylight)
         .onChange(of: shell.navigator.route) { _, route in
             guard let route else { return }
             shell.show(route)

@@ -61,6 +61,7 @@ extension View {
         environment(shell.navigator)
             .environment(shell.library)
             .environment(\.findMapStyle, shell.container.preferences.mapStyle)
+            .environment(\.findShowsDaylight, shell.container.preferences.showDaylight)
     }
 }
 

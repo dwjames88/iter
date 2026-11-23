@@ -49,6 +49,7 @@ struct MainWindow: View {
         .environment(window.navigator)
         .environment(window.library)
         .environment(\.findMapStyle, shell.container.preferences.mapStyle)
+        .environment(\.findShowsDaylight, shell.container.preferences.showDaylight)
         .onAppear { appear(window) }
         .onChange(of: undoManager) { window.library.undoManager = undoManager }
         .onChange(of: window.navigator.route) { storedRoute = window.route.stored }
