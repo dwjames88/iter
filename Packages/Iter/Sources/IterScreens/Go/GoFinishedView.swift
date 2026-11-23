@@ -55,10 +55,11 @@ public struct GoFinishedView: View {
     }
 
     private func subtitle(stops: [GoTripSummary.Stop]) -> String {
-        let shot = stops.filter { $0.outcome == .shot }.count
+        let photoStops = stops.filter { $0.windowKind != nil }
+        let shot = photoStops.filter { $0.outcome == .shot }.count
         var parts: [String] = []
         if let span = dateSpan(stops) { parts.append(span) }
-        if !stops.isEmpty { parts.append("\(shot) of \(stops.count) shot") }
+        if !photoStops.isEmpty { parts.append("\(shot) of \(photoStops.count) shot") }
         if let meters = snapshot.summary?.drivenMeters { parts.append("\(TimeText.distance(meters: meters)) driven") }
         return parts.joined(separator: " · ")
     }
@@ -100,6 +101,9 @@ struct GoFinishedRow: View {
 
     @ViewBuilder private var outcomeLabel: some View {
         switch stop.outcome {
+        case .shot where stop.windowKind == nil:
+            // A lodging or waypoint stop is visited, not shot.
+            Label("Visited", systemImage: "checkmark").font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
         case .shot:
             Label("Shot", systemImage: "camera.fill").font(IterFont.subheadline).foregroundStyle(IterColor.textSecondary)
         case .skipped:

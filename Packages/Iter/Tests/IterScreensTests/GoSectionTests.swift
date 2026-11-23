@@ -192,4 +192,13 @@ struct GoSectionTests {
         #expect(GoText.skyAgeLine(snap, now: now, locale: loc) == "As of 13:30 · 2 hrs, 53 min old")
         #expect(GoText.skyAgeLine(s, now: now, locale: loc) == nil)
     }
+
+    @Test func estimatedArrivalNeverCarriesACheckMark() {
+        let offline = GoSample.offline.snapshot(now: GoSample.offline.renderNow)
+        let status = GoText.drivingStatus(offline, locale: loc)
+        #expect(status.symbol != "checkmark.circle")
+        #expect(GoText.etaIsEstimate(offline))
+        let live = GoSample.drivingOnTime.snapshot(now: GoSample.drivingOnTime.renderNow)
+        if !GoText.etaIsEstimate(live) { #expect(GoText.drivingStatus(live, locale: loc).symbol == "checkmark.circle") }
+    }
 }

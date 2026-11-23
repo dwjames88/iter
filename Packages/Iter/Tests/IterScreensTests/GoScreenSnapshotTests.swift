@@ -19,9 +19,9 @@ struct GoScreenSnapshotTests {
         GoPermissions(location: .always, notifications: .authorized, liveActivitiesEnabled: true, runPhase: snapshot.phase)
     }
 
-    static func screen(_ snapshot: GoSnapshot, permissions: GoPermissions? = nil, trips: [GoTripChoice] = sampleTrips) -> some View {
+    static func screen(_ snapshot: GoSnapshot, permissions: GoPermissions? = nil, trips: [GoTripChoice] = sampleTrips, at moment: Date = now) -> some View {
         NavigationStack {
-            GoSheetContent(snapshot: snapshot, permissions: permissions ?? Self.permissions(for: snapshot), now: now, trips: trips,
+            GoSheetContent(snapshot: snapshot, permissions: permissions ?? Self.permissions(for: snapshot), now: moment, trips: trips,
                            actions: .inert)
         }
         .environment(\.goClockMode, .frozen)
@@ -57,16 +57,16 @@ struct GoScreenSnapshotTests {
 
     @Test("every sample renders at full and half height", arguments: GoSample.allCases)
     func sample(_ sample: GoSample) async throws {
-        let snapshot = sample.snapshot(now: Self.now)
-        try await GoSnapshotHarness.render(Self.screen(snapshot), name: "go-screen-\(sample.rawValue)-full", size: Self.full)
-        try await GoSnapshotHarness.render(Self.screen(snapshot), name: "go-screen-\(sample.rawValue)-half", size: Self.half)
+        let snapshot = sample.snapshot(now: sample.renderNow)
+        try await GoSnapshotHarness.render(Self.screen(snapshot, at: sample.renderNow), name: "go-screen-\(sample.rawValue)-full", size: Self.full)
+        try await GoSnapshotHarness.render(Self.screen(snapshot, at: sample.renderNow), name: "go-screen-\(sample.rawValue)-half", size: Self.half)
     }
 
     /// The schedule sits below the fold in the full-screen renders, so it is drawn on its own as well.
     @Test("schedule section on its own", arguments: [GoSample.betweenOvernight, .drivingLate, .atStopShooting])
     func schedule(_ sample: GoSample) async throws {
-        let snapshot = sample.snapshot(now: Self.now)
-        let view = ScrollView { GoScheduleSection(snapshot: snapshot, now: Self.now).padding(16) }
+        let snapshot = sample.snapshot(now: sample.renderNow)
+        let view = ScrollView { GoScheduleSection(snapshot: snapshot, now: sample.renderNow).padding(16) }
             .environment(\.goClockMode, .frozen)
         try await GoSnapshotHarness.render(view, name: "go-screen-schedule-\(sample.rawValue)", size: CGSize(width: 393, height: 700))
     }
@@ -110,9 +110,9 @@ struct GoScreenSnapshotTests {
         try await GoSnapshotHarness.render(
             Self.screen(driving, permissions: GoPermissions(location: .whenInUse, notifications: .authorized, liveActivitiesEnabled: true, runPhase: .driving)),
             name: "go-screen-permission-always-driving", size: Self.full)
-        let atStop = GoSample.atStopShooting.snapshot(now: Self.now)
+        let atStop = GoSample.atStopShooting.snapshot(now: GoSample.atStopShooting.renderNow)
         try await GoSnapshotHarness.render(
-            Self.screen(atStop, permissions: GoPermissions(location: .always, notifications: .denied, liveActivitiesEnabled: true, runPhase: .atStop)),
+            Self.screen(atStop, permissions: GoPermissions(location: .always, notifications: .denied, liveActivitiesEnabled: true, runPhase: .atStop), at: GoSample.atStopShooting.renderNow),
             name: "go-screen-permission-notifications-denied-stop", size: Self.full)
         try await GoSnapshotHarness.render(
             Self.screen(driving, permissions: GoPermissions(location: .always, notifications: .authorized, liveActivitiesEnabled: false, runPhase: .driving)),
@@ -127,7 +127,7 @@ struct GoScreenSnapshotTests {
     /// The map cannot render offscreen: this only proves the layer builds for every sample and fits a sensible rect.
     @Test func mapLayerInstantiates() throws {
         for sample in GoSample.allCases {
-            let snapshot = sample.snapshot(now: Self.now)
+            let snapshot = sample.snapshot(now: sample.renderNow)
             _ = GoMapLayer(snapshot: snapshot, routePath: [Coordinate(latitude: 38.57, longitude: -109.55), Coordinate(latitude: 38.40, longitude: -109.82)]).body
             _ = GoMapLayer(snapshot: snapshot, routePath: []).body
         }

@@ -186,7 +186,11 @@ public enum GoText {
             return nil
         }
         switch status {
-        case .early: return (String(localized: "On time", locale: locale), "checkmark.circle", .normal)
+        case .early:
+            if etaIsEstimate(s), s.freshness.isOffline || s.freshness.etaIsStale {
+                return (String(localized: "Probably on time", locale: locale), "clock", .normal)
+            }
+            return (String(localized: "On time", locale: locale), "checkmark.circle", .normal)
         case .leaveSoon: return (String(localized: "Leave soon", locale: locale), "clock", .normal)
         case .leaveNow: return (String(localized: "Leave now", locale: locale), "car.fill", .now)
         case .late: return (String(localized: "Running late", locale: locale), "exclamationmark.triangle.fill", .late)
@@ -226,11 +230,21 @@ public enum GoText {
             let m = minutes(s.leave?.lateBySeconds ?? 60, locale)
             return (String(localized: "\(m) after set-up", locale: locale, comment: "Driving: arrive after the set-up time"), "exclamationmark.triangle.fill", .late)
         default:
+            // An estimate (offline, planned or stale ETA) never carries a confident check mark: it is phrased as approximate.
+            let estimate = etaIsEstimate(s)
+            let symbol = estimate ? "clock" : "checkmark.circle"
             if let line = arrivalAgainstLight(s, locale: locale), let rel = line.components(separatedBy: " · ").dropFirst().first {
-                return (rel.prefix(1).uppercased() + rel.dropFirst(), "checkmark.circle", .normal)
+                if estimate { return (String(localized: "About \(rel), estimated", locale: locale, comment: "Driving: approximate margin from an offline or planned ETA"), symbol, .normal) }
+                return (rel.prefix(1).uppercased() + rel.dropFirst(), symbol, .normal)
             }
-            return (String(localized: "On time", locale: locale), "checkmark.circle", .normal)
+            if estimate { return (String(localized: "Probably on time, estimated", locale: locale), symbol, .normal) }
+            return (String(localized: "On time", locale: locale), symbol, .normal)
         }
+    }
+
+    /// The ETA is not a fresh live one: offline estimate, planned leg, offline, or stale.
+    public static func etaIsEstimate(_ s: GoSnapshot) -> Bool {
+        s.drive?.source != .live || s.freshness.isOffline || s.freshness.etaIsStale
     }
 
     /// "Next best: Dead Horse Point" and "Evening Blue Hour 18:20 · arrive 18:05".
