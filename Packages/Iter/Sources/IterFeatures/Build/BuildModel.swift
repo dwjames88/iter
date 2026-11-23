@@ -167,6 +167,7 @@ public final class BuildModel {
     }
 
     isolated deinit {
+        fetcher.stop()
         refreshTask?.cancel()
         packTask?.cancel()
     }
