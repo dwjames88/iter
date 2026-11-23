@@ -6,7 +6,7 @@ import IterModel
 import IterUI
 
 /// A place's own page (sidebar, a saved place, or "Open Place Page" from a card or a stop): header (name, locality, the one
-/// score chip of the headline window), actions (Save, Add to Trip, Edit, Open in Maps), facts, then the Conditions modules.
+/// score chip of the headline window), actions (Add to Trip, Save, Edit, Open in Maps), the Conditions modules, then the facts.
 public struct PlacePageScreen: View {
     let place: Place
     let conditions: ConditionsModel
@@ -26,8 +26,9 @@ public struct PlacePageScreen: View {
             VStack(alignment: .leading, spacing: IterSpace.xl) {
                 header
                 actions
-                PlaceFacts(place: place, readout: readout?(place))
+                // Leads with when to go (the old spot page did); the place's facts follow the conditions.
                 ConditionsStack(model: conditions)
+                PlaceFacts(place: place, readout: readout?(place))
             }
             .padding(IterSpace.xl)
             .frame(maxWidth: 720, alignment: .leading)
@@ -63,15 +64,6 @@ public struct PlacePageScreen: View {
 
     private var actions: some View {
         HStack(spacing: IterSpace.sm) {
-            if place.origin != .user {
-                Button {
-                    if isSaved { library.unsavePlace(place) } else { library.savePlace(place) }
-                    isSaved = library.isSaved(place)
-                } label: {
-                    Label(isSaved ? "Saved" : "Save", systemImage: isSaved ? "bookmark.fill" : "bookmark")
-                }
-                .placeAction(isProminent: !isSaved)
-            }
             Menu {
                 Button("New Trip with This Place", systemImage: "plus") {
                     navigator?.present(.newTrip(templateID: nil, firstPlace: place.id))
@@ -83,9 +75,20 @@ public struct PlacePageScreen: View {
                     }
                 }
             } label: {
-                Label("Add to Trip", systemImage: "plus.circle")
+                Label("Add to Trip", systemImage: "plus")
             }
-            .placeAction()
+            .menuStyle(.button)
+            .menuIndicator(.hidden)
+            .placeAction(isProminent: true)
+            if place.origin != .user {
+                Button {
+                    if isSaved { library.unsavePlace(place) } else { library.savePlace(place) }
+                    isSaved = library.isSaved(place)
+                } label: {
+                    Label(isSaved ? "Saved" : "Save", systemImage: isSaved ? "bookmark.fill" : "bookmark")
+                }
+                .placeAction()
+            }
             if library.place(id: place.id) != nil {
                 Button { navigator?.present(.editPlace(place.id)) } label: { Label("Edit", systemImage: "pencil") }
                     .placeAction()

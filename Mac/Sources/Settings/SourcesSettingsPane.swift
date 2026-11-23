@@ -78,11 +78,14 @@ struct SourceCreditRow: View {
             if let timing = SourceText.timing(row.toggleTiming), row.isToggleable {
                 Text(timing).font(.caption).foregroundStyle(.secondary)
             }
-            Text(row.attributionFull)
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                .textSelection(.enabled)
-                .fixedSize(horizontal: false, vertical: true)
+            // An unavailable source has no credit to give; its attribution only repeats the reason shown above.
+            if case .unavailable = row.status {} else {
+                Text(row.attributionFull)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .textSelection(.enabled)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             if let terms = row.termsURL {
                 Link("Terms of Use", destination: terms).font(.caption)
             }

@@ -114,11 +114,18 @@ struct TripBuilderPanelContent: View {
             }
             #endif
             // A selected day (chosen here, or already selected when the panel opens) scrolls its header to the top.
-            .onChange(of: model.selectedDay, initial: true) {
-                guard let day = model.selectedDay else { return }
+            .onChange(of: model.selectedDay, initial: true) { previous, current in
+                guard let day = current else { return }
+                // The initial call (previous == current) jumps without animation, so the panel opens on the selected
+                // day straight away; a day chosen later scrolls there.
+                let animated = previous != current
                 Task { @MainActor in
                     await Task.yield()
-                    withAnimation { proxy.scrollTo("header-\(day)", anchor: .top) }
+                    if animated {
+                        withAnimation { proxy.scrollTo("header-\(day)", anchor: .top) }
+                    } else {
+                        proxy.scrollTo("header-\(day)", anchor: .top)
+                    }
                 }
             }
             .onChange(of: model.selectedStopID) {
