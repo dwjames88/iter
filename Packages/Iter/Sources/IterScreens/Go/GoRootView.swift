@@ -23,7 +23,7 @@ public struct GoRootView: View {
     @State private var sheetShown = true
 
     /// `startTrip` is the shell's: only it can build a `GoTripInput` for a trip id. `routePath` supplies the line on the map
-    /// (pass nothing for no line).
+    /// (default: the model's planned road still to drive).
     public init(model: GoModel, trips: [GoTripChoice], routePath: (() -> [Coordinate])? = nil,
                 startTrip: @escaping (UUID, UUID?, Bool) async -> Void = { _, _, _ in }) {
         self.model = model
@@ -41,7 +41,7 @@ public struct GoRootView: View {
     }
 
     @ViewBuilder private func composed(now: Date) -> some View {
-        let map = GoMapLayer(snapshot: model.snapshot, routePath: routePath?() ?? [])
+        let map = GoMapLayer(snapshot: model.snapshot, routePath: routePath?() ?? model.routePath)
         let sheet = NavigationStack {
             GoSheetContent(snapshot: model.snapshot, permissions: model.permissions, now: now, trips: trips, actions: actions)
         }

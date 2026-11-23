@@ -25,6 +25,7 @@ struct GoScreenSnapshotTests {
                            actions: .inert)
         }
         .environment(\.goClockMode, .frozen)
+        .environment(\.goFlatButtons, true)
     }
 
     // MARK: Sample trips
@@ -61,6 +62,15 @@ struct GoScreenSnapshotTests {
         try await GoSnapshotHarness.render(Self.screen(snapshot), name: "go-screen-\(sample.rawValue)-half", size: Self.half)
     }
 
+    /// The schedule sits below the fold in the full-screen renders, so it is drawn on its own as well.
+    @Test("schedule section on its own", arguments: [GoSample.betweenOvernight, .drivingLate, .atStopShooting])
+    func schedule(_ sample: GoSample) async throws {
+        let snapshot = sample.snapshot(now: Self.now)
+        let view = ScrollView { GoScheduleSection(snapshot: snapshot, now: Self.now).padding(16) }
+            .environment(\.goClockMode, .frozen)
+        try await GoSnapshotHarness.render(view, name: "go-screen-schedule-\(sample.rawValue)", size: CGSize(width: 393, height: 700))
+    }
+
     // MARK: Start flow
 
     @Test func startWithTrips() async throws {
@@ -76,6 +86,7 @@ struct GoScreenSnapshotTests {
         let view = NavigationStack {
             GoStartView(trips: Self.sampleTrips, actions: .inert, initialSelection: trip.id)
         }
+        .environment(\.goFlatButtons, true)
         try await GoSnapshotHarness.render(view, name: "go-screen-start-from-stop", size: Self.full)
     }
 
@@ -84,6 +95,7 @@ struct GoScreenSnapshotTests {
     @Test func finished() async throws {
         let snapshot = GoSample.finished.snapshot(now: Self.now)
         let view = NavigationStack { GoFinishedView(snapshot: snapshot, done: {}).navigationTitle("Go") }
+            .environment(\.goFlatButtons, true)
         try await GoSnapshotHarness.render(view, name: "go-screen-finished-view", size: Self.full)
     }
 

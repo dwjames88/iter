@@ -7,6 +7,7 @@ import IterUI
 public struct GoFinishedView: View {
     let snapshot: GoSnapshot
     let done: () -> Void
+    @Environment(\.goFlatButtons) private var flat
 
     public init(snapshot: GoSnapshot, done: @escaping () -> Void) {
         self.snapshot = snapshot
@@ -48,7 +49,7 @@ public struct GoFinishedView: View {
             Button { done() } label: {
                 Text("Done").font(IterFont.headline).frame(maxWidth: .infinity, minHeight: IterSize.hitTarget)
             }
-            .buttonStyle(.glassProminent)
+            .goProminentButton(flat: flat)
         }
         .goScreenCard()
     }

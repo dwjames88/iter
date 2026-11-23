@@ -86,6 +86,7 @@ struct GoStartDetail: View {
     let back: () -> Void
     @State private var fromStop: UUID?
     @State private var alreadyThere = false
+    @Environment(\.goFlatButtons) private var flat
 
     var body: some View {
         let days = GoFlow.stopsByDay(trip)
@@ -100,7 +101,7 @@ struct GoStartDetail: View {
                 } label: {
                     Text("Start Trip").font(IterFont.headline).frame(maxWidth: .infinity, minHeight: IterSize.hitTarget)
                 }
-                .buttonStyle(.glassProminent)
+                .goProminentButton(flat: flat)
                 .listRowInsets(EdgeInsets(top: IterSpace.sm, leading: IterSpace.lg, bottom: IterSpace.sm, trailing: IterSpace.lg))
                 .listRowBackground(Color.clear)
             } footer: {
@@ -126,6 +127,9 @@ struct GoStartDetail: View {
             }
         }
         .navigationTitle(trip.name)
+        #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
         .toolbar {
             ToolbarItem(placement: .navigation) {
                 Button { back() } label: { Label("Trips", systemImage: "chevron.backward") }

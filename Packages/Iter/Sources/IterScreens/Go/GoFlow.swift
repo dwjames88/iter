@@ -194,3 +194,11 @@ extension View {
 enum GoNightView {
     static let key = "go.nightView"
 }
+
+extension View {
+    /// The one prominent button of a screen: system `.glassProminent`. `flat` (offscreen renders only, set by tests through
+    /// `goFlatButtons`) swaps in the bordered-prominent style, because system glass blanks offscreen.
+    @ViewBuilder func goProminentButton(flat: Bool) -> some View {
+        if flat { buttonStyle(.borderedProminent).tint(IterColor.accent) } else { buttonStyle(.glassProminent) }
+    }
+}

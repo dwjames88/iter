@@ -25,6 +25,7 @@ struct GoUndoBanner: View {
             Spacer(minLength: IterSpace.sm)
             Button("Not Yet") { Task { await actions.notYet() } }
                 .buttonStyle(.bordered)
+                .tint(IterColor.accent)
                 .controlSize(.large)
         }
         .goScreenCard()

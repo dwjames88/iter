@@ -24,6 +24,7 @@ struct GoPermissionRow: View {
                     .fixedSize(horizontal: false, vertical: true)
                 Button(copy.button) { run(copy.action) }
                     .buttonStyle(.bordered)
+                .tint(IterColor.accent)
                     .controlSize(.regular)
                     .frame(minHeight: IterSize.hitTarget)
             }
