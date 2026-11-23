@@ -124,6 +124,9 @@ public final class BuildModel {
         var zone: String
     }
 
+    /// Every stop card in trip order (a convenience over `rows`; reading it re-reads the rows).
+    public var stops: [BuildStop] { rows.compactMap { if case .stop(let s) = $0.kind { s } else { nil } } }
+
     // MARK: Counters (tests and the perf script)
 
     /// How many times the published state was rebuilt, and how many `dayLight` computations and `Scheduler.schedule` passes
