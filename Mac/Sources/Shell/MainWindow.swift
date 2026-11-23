@@ -12,9 +12,14 @@ struct MainWindow: View {
     @SceneStorage("iter.inspectorShown") private var storedInspector = true
     @Environment(\.undoManager) private var undoManager
 
-    init(shell: AppShell) {
+    private let fixedRoute: AppRoute?
+
+    /// - Parameter route: opens on this route and skips restoration (tests and captures); nil follows `-IterSection`, then
+    ///   what the scene restores.
+    init(shell: AppShell, route: AppRoute? = nil) {
         self.shell = shell
-        _box = State(initialValue: Lazy { WindowShell(shell: shell, initialRoute: MainWindow.launchRoute(shell)) })
+        fixedRoute = route
+        _box = State(initialValue: Lazy { WindowShell(shell: shell, initialRoute: route ?? MainWindow.launchRoute(shell)) })
     }
 
     /// `-IterSection` (with `-IterSeedTrip` for `trip`) wins over what the scene restores.
@@ -52,7 +57,7 @@ struct MainWindow: View {
     private func appear(_ window: WindowShell) {
         guard !window.hasAppeared else { return }
         window.library.undoManager = undoManager
-        if shell.container.options.section == nil { window.restore(stored: storedRoute) }
+        if shell.container.options.section == nil, fixedRoute == nil { window.restore(stored: storedRoute) }
         window.inspectorShown = storedInspector
         window.hasAppeared = true
     }
@@ -68,7 +73,7 @@ private struct WindowSheets: ViewModifier {
             .sheet(item: sheetBinding) { SheetContent(sheet: $0, window: window) }
             .sheet(isPresented: recoveryBinding) {
                 if let info = window.recovery {
-                    RecoveryNoticeView(info: info,
+                    RecoveryNoticeView(backupFolder: info.backupFolder, skippedFiles: info.skippedFiles,
                                        showInFinder: { NSWorkspace.shared.activateFileViewerSelecting([info.backupFolder]) },
                                        dismiss: dismissRecovery)
                 }

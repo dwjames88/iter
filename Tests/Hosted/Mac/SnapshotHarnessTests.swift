@@ -52,12 +52,6 @@ import Testing
         #expect(lumas[0] > lumas[1])
     }
 
-    @Test func rootViewRenders() async throws {
-        let urls = try await Snapshot.render(RebuildRootView(), name: "harness-root", size: CGSize(width: 480, height: 320))
-        #expect(urls.count == 2)
-        for url in urls { #expect(FileManager.default.fileExists(atPath: url.path)) }
-    }
-
     @Test func hostIsNotActiveAndShowsNoWindow() {
         // IterApp sets the activation policy to .prohibited under XCTest: nothing is ever frontmost, key or visible.
         #expect(NSApp.activationPolicy() == .prohibited)

@@ -1,10 +1,10 @@
 import SwiftUI
-import IterStore
 import IterUI
 
 /// The one-time notice after Iter rebuilt the library from a backup. "Show in Finder" runs only on the user's click.
 struct RecoveryNoticeView: View {
-    let info: RecoveryInfo
+    let backupFolder: URL
+    var skippedFiles: [String] = []
     var showInFinder: () -> Void
     var dismiss: () -> Void
 
@@ -20,13 +20,13 @@ struct RecoveryNoticeView: View {
                     Text("Iter couldn't open your library the way it was saved, so it made a new one from the latest backup. Your original files were left exactly as they were, and the backup is still on this Mac.")
                         .fixedSize(horizontal: false, vertical: true)
                     LabeledContent("Backup Folder") {
-                        Text(info.backupFolder.path(percentEncoded: false))
+                        Text(backupFolder.path(percentEncoded: false))
                             .textSelection(.enabled)
                             .multilineTextAlignment(.trailing)
                     }
                     .font(IterFont.secondary)
-                    if !info.skippedFiles.isEmpty {
-                        Text("These backup files couldn't be read, so they aren't in the new library: \(info.skippedFiles.joined(separator: ", ")).")
+                    if !skippedFiles.isEmpty {
+                        Text("These backup files couldn't be read, so they aren't in the new library: \(skippedFiles.joined(separator: ", ")).")
                             .font(IterFont.secondary)
                             .foregroundStyle(IterColor.warning)
                             .fixedSize(horizontal: false, vertical: true)
