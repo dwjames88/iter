@@ -20,6 +20,10 @@ public final class Preferences {
     public var disabledSources: Set<SourceID> {
         didSet { defaults.set(disabledSources.map(\.rawValue).sorted(), forKey: Keys.disabledSources) }
     }
+    /// Sources that are off by default (EUMETSAT, IEM radar) and the owner switched on.
+    public var enabledOverrides: Set<SourceID> {
+        didSet { defaults.set(enabledOverrides.map(\.rawValue).sorted(), forKey: Keys.enabledOverrides) }
+    }
     /// Map style raw value (the shell maps it to MapKit: "hybrid" default, "standard", "imagery").
     public var mapStyle: String { didSet { defaults.set(mapStyle, forKey: Keys.mapStyle) } }
     /// The day and night line on zoomed-out maps.
@@ -30,6 +34,7 @@ public final class Preferences {
         public static let ordering = "IterDiscoveryOrdering"
         public static let resultCap = "IterResultCap"
         public static let disabledSources = "IterDisabledSources"
+        public static let enabledOverrides = "IterEnabledSourceOverrides"
         public static let mapStyle = "IterMapStyle"
         public static let showDaylight = "IterShowDaylight"
     }
@@ -41,6 +46,7 @@ public final class Preferences {
         let cap = defaults.integer(forKey: Keys.resultCap)
         resultCap = cap > 0 ? cap : 40
         disabledSources = Set((defaults.stringArray(forKey: Keys.disabledSources) ?? []).map { SourceID(rawValue: $0) })
+        enabledOverrides = Set((defaults.stringArray(forKey: Keys.enabledOverrides) ?? []).map { SourceID(rawValue: $0) })
         mapStyle = defaults.string(forKey: Keys.mapStyle) ?? "hybrid"
         showDaylight = defaults.object(forKey: Keys.showDaylight) as? Bool ?? true
     }

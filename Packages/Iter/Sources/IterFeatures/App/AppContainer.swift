@@ -42,14 +42,23 @@ public final class AppContainer {
 
     // Library
     public let library: LibraryStore
-    public let store: StoreStatus
+    /// What the store open produced. `markRecoveryNoticeShown()` updates `recovered.noticeShown`.
+    public internal(set) var store: StoreStatus
+    /// Rewrites the recovery manifest (set by the live composition; nil in memory and in tests).
+    public var recoveryNoticeWriter: (@MainActor () throws -> Void)?
 
     // Conditions
     public let conditionsService: ConditionsService
     public let conditions: ConditionsStore
 
     // Find
-    public let discovery: DiscoveryEngine
+    /// The Find engine. A computed property: when the composition supplied a factory (live and sample compositions do) it
+    /// builds a fresh engine from the CURRENT `Preferences.disabledSources`, so a source toggle in Settings takes effect
+    /// on the next search. Read it per search (`DiscoverySearch(engine: container.discovery)` per run), never cache it.
+    public var discovery: DiscoveryEngine { discoveryFactory?() ?? fixedDiscovery }
+    /// Builds a discovery engine from current preferences (nil for hand-made containers, which use `fixedDiscovery`).
+    public var discoveryFactory: (@MainActor () -> DiscoveryEngine)?
+    private let fixedDiscovery: DiscoveryEngine
     public let placeSearch: any PlaceSearchProvider
     public let geocoder: any Geocoder
 
@@ -81,7 +90,7 @@ public final class AppContainer {
         self.store = store
         self.conditionsService = conditionsService
         self.conditions = conditions
-        self.discovery = discovery
+        self.fixedDiscovery = discovery
         self.placeSearch = placeSearch
         self.geocoder = geocoder
         self.routing = routing
@@ -92,5 +101,13 @@ public final class AppContainer {
         self.keyVault = keyVault
         self.preferences = preferences
         self.sources = sources
+    }
+
+    /// The shell calls this once it has shown the one-time "your library was recovered" notice. No-op when the store was
+    /// not recovered (always so in memory).
+    public func markRecoveryNoticeShown() {
+        guard store.recovered?.needsNotice == true else { return }
+        do { try recoveryNoticeWriter?() } catch { return }
+        store.recovered?.noticeShown = true
     }
 }
