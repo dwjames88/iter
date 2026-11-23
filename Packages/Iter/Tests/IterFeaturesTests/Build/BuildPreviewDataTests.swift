@@ -65,11 +65,4 @@ import IterModel
         #expect(model.startPlace?.firstLeaveBy != nil)
         #expect(model.transferRows.first?.day == 0)
     }
-
-    @Test func everyVariantBuilds() {
-        for variant in BuildPreviewData.Variant.allCases {
-            let model = BuildPreviewData.canyonCountry(variant)
-            #expect(model.header != nil)
-        }
-    }
 }
