@@ -155,6 +155,8 @@ enum Snapshot {
 #if canImport(AppKit)
 
 extension Snapshot {
+    @MainActor private static var keepAlive: [(NSWindow, NSView)] = []
+
     fileprivate static func renderBackend(_ view: AnyView, appearance: SnapshotAppearance, size: CGSize,
                                           scale: CGFloat, settle: Duration) async throws -> CGImage {
         // An xctest bundle has no app. A prohibited app never shows a Dock icon, never activates, never fronts.
@@ -171,6 +173,9 @@ extension Snapshot {
         let host = NSHostingView(rootView: view)
         host.appearance = nsAppearance
         window.contentView = host
+        // MapKit views deadlock in `-[VKMapView dealloc]` (a dispatch_sync to the main loop) when they die inside a test run, so
+        // every hosting window and view lives until the process ends. Offscreen renders are small and few.
+        keepAlive.append((window, host))
         window.setFrame(NSRect(x: -30_000, y: -30_000, width: size.width, height: size.height), display: false)
         window.orderBack(nil)
         defer { window.orderOut(nil); window.close() }
