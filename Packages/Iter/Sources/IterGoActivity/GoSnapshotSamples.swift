@@ -44,6 +44,15 @@ public enum GoSample: String, CaseIterable, Sendable {
     /// No window within the live horizon: the next window's forecast score with its trend.
     case nextWindowForecast
 
+    /// The moment this case is meant to be viewed: 16:30 MDT on 24 October 2026 (sunset in Moab is about 18:20), except the three
+    /// at-stop cases, which are viewed at 17:45 MDT with golden hour running at Dead Horse Point (about 35 minutes left).
+    public var renderNow: Date {
+        switch self {
+        case .atStopShooting, .atStopStayCost, .arrivedUndo: Date(timeIntervalSince1970: 1_792_885_500)
+        default: Date(timeIntervalSince1970: 1_792_881_000)
+        }
+    }
+
     /// The sample at `now`.
     public func snapshot(now: Date) -> GoSnapshot { GoSampleFactory.snapshot(self, now: now) }
 }
@@ -386,13 +395,13 @@ private enum GoSampleFactory {
     }
 
     private static func atStopShooting(_ now: Date) -> GoSnapshot {
-        let f = Frame(now: now, sunset: 110)
-        let l = f.leaveBy(.mesaArch)
-        var s = f.base(.atStop, current: .deadHorse, next: .mesaArch)
-        s.leave = f.leave(.mesaArch, .early, earliest: 75)
-        s.drive = GoDriveInfo(arrival: f.at(l + 19), driveSeconds: 1140, driveMeters: nil, source: .planned, asOf: f.ago(42))
-        s.stay = GoStayInfo(plannedDeparture: f.at(75), latestDeparture: f.at(l), cutsShortBySeconds: nil, nextStopName: "Mesa Arch",
-                            nextWindowKind: .blueEvening)
+        let f = Frame(now: now, sunset: 35)
+        let l = f.leaveBy(.lodging)
+        var s = f.base(.atStop, current: .deadHorse, next: .lodging)
+        s.leave = f.leave(.lodging, .early, earliest: 35)
+        s.drive = GoDriveInfo(arrival: f.at(l + 55), driveSeconds: 3300, driveMeters: nil, source: .planned, asOf: f.ago(42))
+        s.stay = GoStayInfo(plannedDeparture: f.at(35), latestDeparture: f.at(l), cutsShortBySeconds: nil, nextStopName: "Moab lodging",
+                            nextWindowKind: nil)
         s.sky = f.sky(.deadHorse, live: 68, forecast: 61, confidence: .high, trend: .rising, basis: .blended, asOfAgo: 3)
         s.weather = [f.observed(.here, agoMin: 7, temp: 6.4, cloud: 0.22, vis: 40, wind: 3.0, distance: 38),
                      f.forecastWx(.stop(Spot.deadHorse.id), agoMin: 3, temp: 6.8, cloud: 0.24, wind: 3.6)]
@@ -400,18 +409,18 @@ private enum GoSampleFactory {
         s.sources = ["NOAA HRRR", "KCNY METAR", "KHIF (Hill AFB) METAR"]
         s.hours = f.hours(for: .deadHorse, bases: obsHours, cloud: [0.24, 0.2, 0.22, 0.28, 0.35, 0.4], temp: 6.5)
         s.sourceDetails = f.details(forecastAge: 3, obs: true, military: true, obsAge: 7)
-        s.schedule = f.schedule([.mesaArch, .lodging, .fisherTowers, .delicateArch], first: (l, l + 19, .early))
+        s.schedule = f.schedule([.lodging, .fisherTowers, .delicateArch], first: (l, l + 55, .early))
         s.here = Coordinate(latitude: 38.4838, longitude: -109.7412)
         return s
     }
 
     private static func atStopStayCost(_ now: Date) -> GoSnapshot {
-        let f = Frame(now: now, sunset: 110)
+        let f = Frame(now: now, sunset: 35)
         let l = f.leaveBy(.mesaArch)
         var s = f.base(.atStop, current: .deadHorse, next: .mesaArch)
-        s.leave = f.leave(.mesaArch, .early)
+        s.leave = f.leave(.mesaArch, .leaveSoon)
         s.drive = GoDriveInfo(arrival: f.at(l + 19), driveSeconds: 1140, driveMeters: nil, source: .planned, asOf: f.ago(25))
-        s.stay = GoStayInfo(plannedDeparture: f.at(110), latestDeparture: f.at(l), cutsShortBySeconds: (110 - l) * 60, nextStopName: "Mesa Arch",
+        s.stay = GoStayInfo(plannedDeparture: f.at(35), latestDeparture: f.at(l), cutsShortBySeconds: (35 - l) * 60, nextStopName: "Mesa Arch",
                             nextWindowKind: .blueEvening)
         s.sky = f.sky(.deadHorse, live: 72, forecast: 66, confidence: .high, trend: .steady, basis: .blended, asOfAgo: 2)
         s.weather = [f.observed(.here, agoMin: 5, temp: 6.0, cloud: 0.2, vis: 40, wind: 2.8, distance: 38),
@@ -420,18 +429,18 @@ private enum GoSampleFactory {
         s.sources = ["NOAA HRRR", "KCNY METAR"]
         s.hours = f.hours(for: .deadHorse, bases: obsHours, cloud: [0.2, 0.18, 0.2, 0.26, 0.3, 0.35], temp: 6.2)
         s.sourceDetails = f.details(forecastAge: 2, obs: true, obsAge: 5)
-        s.schedule = f.schedule([.mesaArch, .lodging, .fisherTowers, .delicateArch], first: (l, l + 19, .early))
+        s.schedule = f.schedule([.mesaArch, .lodging, .fisherTowers, .delicateArch], first: (l, l + 19, .leaveSoon))
         s.here = Coordinate(latitude: 38.4838, longitude: -109.7412)
         return s
     }
 
     private static func arrivedUndo(_ now: Date) -> GoSnapshot {
-        let f = Frame(now: now, sunset: 110)
+        let f = Frame(now: now, sunset: 35)
         let l = f.leaveBy(.mesaArch)
         var s = f.base(.atStop, current: .deadHorse, next: .mesaArch)
-        s.leave = f.leave(.mesaArch, .early, earliest: 70)
+        s.leave = f.leave(.mesaArch, .leaveSoon)
         s.drive = GoDriveInfo(arrival: f.at(l + 19), driveSeconds: 1140, driveMeters: nil, source: .planned, asOf: f.ago(1))
-        s.stay = GoStayInfo(plannedDeparture: f.at(70), latestDeparture: f.at(l), cutsShortBySeconds: nil, nextStopName: "Mesa Arch",
+        s.stay = GoStayInfo(plannedDeparture: f.at(35), latestDeparture: f.at(l), cutsShortBySeconds: (35 - l) * 60, nextStopName: "Mesa Arch",
                             nextWindowKind: .blueEvening)
         s.sky = f.sky(.deadHorse, live: 63, forecast: 60, confidence: .medium, trend: .steady, basis: .blended, asOfAgo: 2)
         s.weather = [f.observed(.here, agoMin: 4, temp: 7.1, cloud: 0.3, vis: 35, wind: 3.2, distance: 38),
@@ -441,7 +450,7 @@ private enum GoSampleFactory {
         s.sources = ["NOAA HRRR", "KCNY METAR"]
         s.hours = f.hours(for: .deadHorse, bases: obsHours, cloud: [0.3, 0.28, 0.3, 0.34, 0.4, 0.45], temp: 7)
         s.sourceDetails = f.details(forecastAge: 2, obs: true, obsAge: 4)
-        s.schedule = f.schedule([.mesaArch, .lodging, .fisherTowers, .delicateArch], first: (l, l + 19, .early))
+        s.schedule = f.schedule([.mesaArch, .lodging, .fisherTowers, .delicateArch], first: (l, l + 19, .leaveSoon))
         s.here = Coordinate(latitude: 38.4837, longitude: -109.7411)
         return s
     }

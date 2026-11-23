@@ -78,10 +78,11 @@ func sampleActivityContentIsUnderTwoKilobytes(_ sample: GoSample) throws {
 /// 2026-10-24 22:30 UTC, 16:30 MDT in Moab: the `now` every render uses. Sunset there is about 18:20, sunrise about 07:35.
 @Test(arguments: GoSample.allCases)
 func sampleLightWindowsStartAtPlausibleLocalHours(_ sample: GoSample) throws {
-    let now = Date(timeIntervalSince1970: 1_792_881_000)
+    let now = sample.renderNow
     var calendar = Calendar(identifier: .gregorian)
     calendar.timeZone = try #require(TimeZone(identifier: "America/Denver"))
-    #expect(calendar.component(.hour, from: now) == 16 && calendar.component(.minute, from: now) == 30)
+    let atStop: Set<GoSample> = [.atStopShooting, .atStopStayCost, .arrivedUndo]
+    #expect(calendar.component(.hour, from: now) == (atStop.contains(sample) ? 17 : 16) && calendar.component(.minute, from: now) == (atStop.contains(sample) ? 45 : 30))
     let s = sample.snapshot(now: now)
 
     func hour(_ d: Date) -> Double { Double(calendar.component(.hour, from: d)) + Double(calendar.component(.minute, from: d)) / 60 }
@@ -117,4 +118,20 @@ func sampleLightWindowsStartAtPlausibleLocalHours(_ sample: GoSample) throws {
         #expect(s.leave?.earliestDeparture == nil)
         #expect(try #require(s.leave?.leaveBy) > now.addingTimeInterval(12 * 3600))
     }
+}
+
+@Test func atStopSamplesDrawAWindowThatIsRunning() throws {
+    for sample in [GoSample.atStopShooting, .atStopStayCost, .arrivedUndo] {
+        let now = sample.renderNow
+        let s = sample.snapshot(now: now)
+        let current = try #require(s.current)
+        let start = try #require(current.windowStart), end = try #require(current.windowEnd)
+        #expect(start < now && end > now && end.timeIntervalSince(now) > 30 * 60 && end.timeIntervalSince(now) < 40 * 60)
+        #expect(s.sky?.stopID == current.id && s.sky?.basis == .blended && s.sky?.liveScore != nil)
+        #expect(s.hours?.contains { $0.isInWindow } == true)
+        #expect(s.weather.contains { $0.subject == .stop(current.id) })
+    }
+    let cost = GoSample.atStopStayCost.snapshot(now: GoSample.atStopStayCost.renderNow)
+    #expect(cost.next?.name == "Mesa Arch" && cost.next?.windowKind == .blueEvening)
+    #expect((cost.stay?.cutsShortBySeconds ?? 0) > 20 * 60)
 }
