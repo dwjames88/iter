@@ -71,6 +71,11 @@ struct ShellPresentations: ViewModifier {
                     shell.sharing.beginImport()
                 }
             }
+            .sheet(isPresented: Binding(get: { shell.showsFirstRun && shell.recovery == nil },
+                                        set: { if !$0 { shell.dismissFirstRun() } })) {
+                FirstRunGuide { shell.dismissFirstRun() }
+                    .presentationDetents([.large])
+            }
             .sharingFlows(shell.sharing)
     }
 

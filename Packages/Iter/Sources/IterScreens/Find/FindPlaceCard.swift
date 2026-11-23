@@ -91,9 +91,9 @@ struct FindPlaceCard: View {
                     if let conditions { ConditionsSummary(model: conditions, showsChip: model.cardScore == nil) }
                     if card.isOwn, let id = FindCardText.placeID(from: card.id) {
                         FindCoordinateSection(model: model, placeID: id, coordinate: card.coordinate, elevationMeters: card.place.elevationMeters)
-                        Label(Self.moveHint, systemImage: "hand.draw")
-                            .font(IterFont.caption)
-                            .foregroundStyle(IterColor.textTertiary)
+                        if !model.notices.hasSeen(.moveSpotTip) {
+                            MoveSpotTip(message: Self.moveHint) { model.notices.markSeen(.moveSpotTip) }
+                        }
                     }
                     FindImagery(coordinate: card.coordinate, availability: model.lookAround)
                     if let why = card.why { whyLine(why) }
@@ -122,6 +122,9 @@ struct FindPlaceCard: View {
         .scrollIndicators(.automatic)
         .onAppear { trips = model.tripChoices() }
         .onChange(of: card.id) { addedTo = nil; trips = model.tripChoices() }
+        // Moving the pin, by hand or with Adjust Location, is the tip's lesson learned.
+        .onChange(of: model.spots.dragging?.id) { _, id in if id != nil { model.notices.markSeen(.moveSpotTip) } }
+        .onChange(of: model.spots.adjusting?.placeID) { _, id in if id != nil { model.notices.markSeen(.moveSpotTip) } }
         #if os(macOS)
         .onExitCommand(perform: onBack)
         #endif
