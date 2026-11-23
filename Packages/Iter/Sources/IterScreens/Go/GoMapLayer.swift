@@ -5,37 +5,138 @@ import IterGoActivity
 import IterUI
 
 /// The map under the sheet: your position, the stops still to do as solid numbered plates, the route in the route colour.
-/// Apple Maps geometry in the standard style; "Dark for Night Shooting" mutes it. The camera fits you and the stops.
+/// Apple Maps geometry in the standard style; "Dark for Night Shooting" mutes it.
+///
+/// **Camera.** It frames you and the stop you are heading to, plus the rest of today's stops while they fit at a legible zoom
+/// (`GoMapCamera`), inside the part of the screen the sheet and the Dynamic Island leave uncovered. Whole-trip framing is gone:
+/// it piled the numbered pins on top of each other. The camera follows while you do nothing; the moment you pan or zoom it
+/// stops, and a recentre button brings it back.
+///
+/// **Pins** that would overlap at the current zoom merge into one badge ("6–8", `GoMapPins`), so no two plates ever stack.
 public struct GoMapLayer: View {
     let snapshot: GoSnapshot
     let routePath: [Coordinate]
+    /// How much of the bottom the sheet covers right now (its detent's height). Zero on the Mac, where the sheet is a column.
+    let bottomInset: Double
+
     @AppStorage(GoNightView.key) private var night = false
     @State private var position: MapCameraPosition = .automatic
+    @State private var size: CGSize = .zero
+    @State private var topInset: Double = 0
+    @State private var following = true
+    @State private var mapPointsPerPoint: Double = 0
 
-    public init(snapshot: GoSnapshot, routePath: [Coordinate]) {
+    public init(snapshot: GoSnapshot, routePath: [Coordinate], bottomInset: Double = 0) {
         self.snapshot = snapshot
         self.routePath = routePath
+        self.bottomInset = bottomInset
     }
 
     public var body: some View {
+        GeometryReader { proxy in
+            ZStack(alignment: .bottomTrailing) {
+                map
+                    .ignoresSafeArea()
+                    .onGeometryChange(for: CGSize.self, of: { $0.size }) { size = $0 }
+                if !following { recentreButton }
+            }
+            .onChange(of: proxy.safeAreaInsets.top, initial: true) { _, top in topInset = top }
+        }
+        // The camera follows while `following`; one key says when it has to move (a nudge of you under ~200 m does not).
+        .task(id: FitKey(snapshot: snapshot, size: size, top: topInset, bottom: bottomInset)) {
+            if following { fit(animated: hasFitted) }
+        }
+    }
+
+    @State private var hasFitted = false
+
+    private var map: some View {
         let stops = Self.stops(snapshot)
         let nextID = (snapshot.next ?? stops.first)?.id
-        Map(position: $position) {
+        let groups = GoMapPins.groups(stops: stops, nextID: nextID, mapPointsPerPoint: mapPointsPerPoint)
+        return Map(position: $position) {
             UserAnnotation()
+            overlays
             if routePath.count > 1 {
                 MapPolyline(coordinates: routePath.map(Self.clCoordinate))
                     .stroke(IterColor.route, lineWidth: IterStroke.route)
             }
-            ForEach(stops) { stop in
-                Annotation(stop.name, coordinate: Self.clCoordinate(stop.coordinate), anchor: .center) {
-                    GoMapPlate(number: stop.number, isNext: stop.id == nextID)
+            ForEach(groups) { group in
+                Annotation(group.accessibilityLabel, coordinate: Self.clCoordinate(group.coordinate), anchor: .center) {
+                    if group.isCluster {
+                        GoMapClusterBadge(group: group)
+                    } else {
+                        GoMapPlate(number: group.stops[0].number, isNext: group.containsNext)
+                    }
                 }
                 .annotationTitles(.hidden)
             }
         }
         .mapStyle(.standard(emphasis: night ? .muted : .automatic))
-        .onAppear { fit() }
-        .onChange(of: Self.fitKey(snapshot)) { _, _ in fit() }
+        .onMapCameraChange(frequency: .onEnd) { context in
+            if size.width > 0 { mapPointsPerPoint = context.rect.size.width / size.width }
+        }
+        // Moving or zooming the map by hand ends the following until the recentre button is pressed.
+        .onChange(of: position.positionedByUser) { _, byUser in
+            if byUser { following = false }
+        }
+    }
+
+    /// Where a weather overlay (the cloud imagery layer) goes: under the route and the pins, over the base map. Empty for now.
+    @MapContentBuilder private var overlays: some MapContent {
+    }
+
+    private var recentreButton: some View {
+        Button {
+            following = true
+            fit(animated: true)
+        } label: {
+            Image(systemName: "location.fill")
+                .font(.system(size: 17, weight: .semibold))
+                .frame(width: 44, height: 44)
+        }
+        .buttonStyle(.glass)
+        .buttonBorderShape(.circle)
+        .accessibilityLabel("Recentre")
+        .padding(.trailing, 12)
+        .padding(.bottom, bottomInset + 12)
+    }
+
+    // MARK: Camera
+
+    private var viewport: GoMapViewport {
+        GoMapViewport(size: size, top: topInset, leading: 0, bottom: bottomInset, trailing: 0)
+    }
+
+    private func fit(animated: Bool) {
+        guard size.width > 0 else { return }
+        let focus = snapshot.next ?? snapshot.current
+        let today = Self.stops(snapshot).filter { $0.dayIndex == focus?.dayIndex }.map(\.coordinate)
+        guard let framing = GoMapCamera.frame(user: snapshot.here, next: focus?.coordinate, today: today, viewport: viewport) else { return }
+        mapPointsPerPoint = framing.mapPointsPerPoint
+        hasFitted = true
+        if animated {
+            withAnimation(.smooth(duration: 0.6)) { position = .rect(framing.rect) }
+        } else {
+            position = .rect(framing.rect)
+        }
+    }
+
+    /// What moves the camera. You are rounded to about 200 m so a moving dot does not re-aim it on every fix.
+    struct FitKey: Equatable {
+        var here: [Int]
+        var stops: [UUID]
+        var size: CGSize
+        var top: Double
+        var bottom: Double
+
+        init(snapshot: GoSnapshot, size: CGSize, top: Double, bottom: Double) {
+            here = snapshot.here.map { [Int(($0.latitude * 500).rounded()), Int(($0.longitude * 500).rounded())] } ?? []
+            stops = [snapshot.next?.id, snapshot.current?.id].compactMap { $0 } + GoMapLayer.stops(snapshot).map(\.id)
+            self.size = size
+            self.top = top
+            self.bottom = bottom
+        }
     }
 
     // MARK: Pure helpers
@@ -47,49 +148,25 @@ public struct GoMapLayer: View {
         return snapshot.current.map { [$0] } ?? []
     }
 
-    /// Everything the camera should hold: you, then the stops.
-    static func fitCoordinates(_ snapshot: GoSnapshot) -> [Coordinate] {
-        (snapshot.here.map { [$0] } ?? []) + stops(snapshot).map(\.coordinate)
-    }
-
-    static func fitKey(_ snapshot: GoSnapshot) -> [Coordinate] { fitCoordinates(snapshot) }
-
     static func clCoordinate(_ c: Coordinate) -> CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude)
     }
+}
 
-    /// A map rect around the points. On iPhone the sheet covers the lower half, so the rect grows downward and the points
-    /// sit in the top half; a single point gets a small neighbourhood.
-    static func fitRect(_ coordinates: [Coordinate], sheetCoversBottom: Bool) -> MKMapRect? {
-        guard !coordinates.isEmpty else { return nil }
-        var rect = MKMapRect.null
-        for c in coordinates {
-            let p = MKMapPoint(clCoordinate(c))
-            rect = rect.union(MKMapRect(origin: p, size: MKMapSize(width: 0, height: 0)))
-        }
-        let minSpan = MKMapPointsPerMeterAtLatitude(coordinates[0].latitude) * 6_000
-        var w = max(rect.size.width * 1.4, minSpan)
-        var h = max(rect.size.height * 1.4, minSpan)
-        let cx = rect.midX, cy = rect.midY
-        if sheetCoversBottom {
-            h *= 2.1
-            w = max(w, h * 0.46)
-            return MKMapRect(x: cx - w / 2, y: rect.minY - (h - rect.size.height) * 0.18, width: w, height: h)
-        }
-        w = max(w, h * 0.6)
-        h = max(h, w * 0.6)
-        return MKMapRect(x: cx - w / 2, y: cy - h / 2, width: w, height: h)
-    }
+/// Stops too close to tell apart at this zoom, as one solid badge. Coral when the stop you are heading to is inside it.
+struct GoMapClusterBadge: View {
+    let group: GoMapPinGroup
 
-    private func fit() {
-        #if os(iOS)
-        let covered = true
-        #else
-        let covered = false
-        #endif
-        if let rect = Self.fitRect(Self.fitCoordinates(snapshot), sheetCoversBottom: covered) {
-            position = .rect(rect)
-        }
+    var body: some View {
+        Text(group.label)
+            .font(IterFont.captionStrong)
+            .monospacedDigit()
+            .foregroundStyle(IterColor.onAccent)
+            .padding(.horizontal, IterSpace.sm)
+            .frame(minWidth: IterSize.mapPin, minHeight: IterSize.mapPin)
+            .background(group.containsNext ? IterColor.mapPin : IterColor.mapPinInactive, in: Capsule())
+            .overlay { Capsule().strokeBorder(IterColor.backgroundContent, lineWidth: IterStroke.regular) }
+            .accessibilityLabel(group.accessibilityLabel)
     }
 }
 

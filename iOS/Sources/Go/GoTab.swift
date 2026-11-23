@@ -13,10 +13,9 @@ struct GoTabMap: View {
 
     var body: some View {
         let model = shell.go.model
-        GoMapLayer(snapshot: model.snapshot, routePath: model.routePath)
-            .safeAreaInset(edge: .bottom, spacing: 0) {
-                Color.clear.frame(height: Self.inset(forSheet: shell.sheetHeight)).allowsHitTesting(false)
-            }
+        // The inset goes to the layer, not to a safe-area inset: the camera frames the uncovered part itself, and MapKit would
+        // otherwise count the same inset twice.
+        GoMapLayer(snapshot: model.snapshot, routePath: model.routePath, bottomInset: Self.inset(forSheet: shell.sheetHeight))
     }
 
     /// The map's bottom inset: the sheet's height, but never more than the part of the screen it should keep clear.

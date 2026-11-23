@@ -21,6 +21,7 @@ public struct GoRootView: View {
     @Environment(\.openURL) private var openURL
     @State private var detent: PresentationDetent = .medium
     @State private var sheetShown = true
+    @State private var height: CGFloat = 0
 
     /// `startTrip` is the shell's: only it can build a `GoTripInput` for a trip id. `routePath` supplies the line on the map
     /// (default: the model's planned road still to drive).
@@ -41,13 +42,14 @@ public struct GoRootView: View {
     }
 
     @ViewBuilder private func composed(now: Date) -> some View {
-        let map = GoMapLayer(snapshot: model.snapshot, routePath: routePath?() ?? model.routePath)
+        let map = GoMapLayer(snapshot: model.snapshot, routePath: routePath?() ?? model.routePath, bottomInset: mapBottomInset)
         let sheet = NavigationStack {
             GoSheetContent(snapshot: model.snapshot, permissions: model.permissions, now: now, trips: trips, actions: actions)
         }
         #if os(iOS)
         map
             .ignoresSafeArea()
+            .onGeometryChange(for: CGFloat.self, of: { $0.size.height }) { height = $0 }
             .sheet(isPresented: $sheetShown) {
                 sheet
                     .presentationDetents([.height(Self.peekHeight), .medium, .large], selection: $detent)
@@ -60,6 +62,16 @@ public struct GoRootView: View {
             map
             sheet.frame(width: 380)
         }
+        #endif
+    }
+
+    /// How much of the map the sheet covers at its current detent: the peek's height, else half the screen (full height hides the
+    /// map, so the camera keeps the half-height framing). The Mac has a column, not a sheet.
+    private var mapBottomInset: Double {
+        #if os(iOS)
+        detent == .height(Self.peekHeight) ? Self.peekHeight : Double(height) * 0.5
+        #else
+        0
         #endif
     }
 
