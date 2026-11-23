@@ -27,6 +27,8 @@ struct ShellCommands: Commands {
                 .disabled(window == nil)
             Button("Export Library…") { window?.exportLibrary() }
                 .disabled(window == nil)
+            Button("Send Library to iPhone…") { window?.sendLibraryToIPhone() }
+                .disabled(window == nil)
         }
         CommandGroup(after: .pasteboard) {
             Button("Edit Place…") { window?.editPlace(selectedSaved: selectedSavedPlace) }
@@ -69,6 +71,9 @@ struct ShellCommands: Commands {
                 .disabled(!(window?.availability.tripCommands ?? false))
             Button("Export…") { window?.exportCurrentTrip() }
                 .keyboardShortcut("e", modifiers: [.command, .shift])
+                .disabled(!(window?.availability.tripCommands ?? false))
+            Button("Send to iPhone…") { window?.sendCurrentTripToIPhone() }
+                .keyboardShortcut("i", modifiers: [.command, .shift])
                 .disabled(!(window?.availability.tripCommands ?? false))
         }
     }
