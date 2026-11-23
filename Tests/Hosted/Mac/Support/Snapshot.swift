@@ -90,6 +90,10 @@ enum Snapshot {
     static func renderImage<V: View>(_ view: V, appearance: Appearance, size: CGSize, settle: Duration,
                                      chrome: Chrome = .bare) async throws -> CGImage {
         try requireRenderHost()
+        // One render at a time: tests run concurrently on the main actor and each render suspends while it settles, so
+        // unserialised renders share windows' first-responder and display state (the package harness flake).
+        await RenderLock.shared.acquire()
+        defer { RenderLock.shared.release() }
         let rect = NSRect(x: 0, y: 0, width: size.width, height: size.height)
         let nsAppearance = NSAppearance(named: appearance == .dark ? .darkAqua : .aqua)!
         let style: NSWindow.StyleMask = chrome == .titled ? [.titled, .fullSizeContentView] : [.borderless]
@@ -341,6 +345,21 @@ enum Snapshot {
     }
 
     enum SnapshotError: Error { case render; case notRenderHost(String) }
+}
+
+/// A FIFO async mutex on the main actor.
+@MainActor
+final class RenderLock {
+    static let shared = RenderLock()
+    private var busy = false
+    private var waiters: [CheckedContinuation<Void, Never>] = []
+    func acquire() async {
+        if !busy { busy = true; return }
+        await withCheckedContinuation { waiters.append($0) }
+    }
+    func release() {
+        if waiters.isEmpty { busy = false } else { waiters.removeFirst().resume() }
+    }
 }
 
 /// A window that is never constrained to a display, never key and never main.
