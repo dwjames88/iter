@@ -201,6 +201,12 @@ struct FindMapView: View {
 
     // MARK: Overlays
 
+    #if os(iOS)
+    private static let dropText = "Tap the map to drop a pin"
+    #else
+    private static let dropText = "Click the map to drop a pin"
+    #endif
+
     private var controls: some View {
         MapControlStack(actions: {
             MapControlButton(title: "Add Spot", systemImage: "mappin.and.ellipse",
@@ -239,7 +245,7 @@ struct FindMapView: View {
                 .padding(.top, IterSpace.md)
                 .padding(.leading, insets.leading)
         } else if spots.isAdding {
-            FindModeBanner(text: "Click the map to drop a pin", primary: nil, secondary: ("Cancel", { spots.cancelAdding() }))
+            FindModeBanner(text: Self.dropText, primary: nil, secondary: ("Cancel", { spots.cancelAdding() }))
                 .padding(.top, IterSpace.md)
                 .padding(.leading, insets.leading)
         }
@@ -294,29 +300,45 @@ struct FindOwnPinDrag: ViewModifier {
             .help("Drag to move your spot")
     }
 
+    #if os(macOS)
     private var drag: some Gesture {
         DragGesture(minimumDistance: 3, coordinateSpace: .global)
+            .onChanged { value in moved(to: value.location, from: value.startLocation) }
+            .onEnded { _ in ended() }
+    }
+    #else
+    /// Touch and hold the pin (so a plain drag still pans the map), then drag it.
+    private var drag: some Gesture {
+        LongPressGesture(minimumDuration: 0.35)
+            .sequenced(before: DragGesture(minimumDistance: 0, coordinateSpace: .global))
             .onChanged { value in
-                if model.spots.dragging == nil {
-                    guard model.spots.beginDrag(placeID) else { return }
-                    grab = nil
-                    tipAtStart = proxy.convert(FindMapGeometry.cl(stored), to: .global)
-                }
-                if grab == nil {
-                    let tip = tipAtStart ?? value.startLocation
-                    grab = CGSize(width: value.startLocation.x - tip.x, height: value.startLocation.y - tip.y)
-                }
-                let g = grab ?? .zero
-                let point = CGPoint(x: value.location.x - g.width, y: value.location.y - g.height)
-                if let c = proxy.convert(point, from: .global) { model.spots.drag(to: FindMapGeometry.coordinate(c)) }
+                if case .second(true, let drag?) = value { moved(to: drag.location, from: drag.startLocation) }
             }
-            .onEnded { _ in
-                guard model.spots.dragging != nil else { return }
-                let moved = model.spots.dragging.map { $0.coordinate != stored } ?? false
-                model.spots.endDrag(commit: moved)
-                grab = nil
-                tipAtStart = nil
-                if moved { model.didMoveSpot(placeID) }
-            }
+            .onEnded { _ in ended() }
+    }
+    #endif
+
+    private func moved(to location: CGPoint, from startLocation: CGPoint) {
+        if model.spots.dragging == nil {
+            guard model.spots.beginDrag(placeID) else { return }
+            grab = nil
+            tipAtStart = proxy.convert(FindMapGeometry.cl(stored), to: .global)
+        }
+        if grab == nil {
+            let tip = tipAtStart ?? startLocation
+            grab = CGSize(width: startLocation.x - tip.x, height: startLocation.y - tip.y)
+        }
+        let g = grab ?? .zero
+        let point = CGPoint(x: location.x - g.width, y: location.y - g.height)
+        if let c = proxy.convert(point, from: .global) { model.spots.drag(to: FindMapGeometry.coordinate(c)) }
+    }
+
+    private func ended() {
+        guard model.spots.dragging != nil else { return }
+        let moved = model.spots.dragging.map { $0.coordinate != stored } ?? false
+        model.spots.endDrag(commit: moved)
+        grab = nil
+        tipAtStart = nil
+        if moved { model.didMoveSpot(placeID) }
     }
 }

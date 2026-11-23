@@ -121,10 +121,12 @@ struct DayFooter: View {
     let day: Int
     let overnight: BuildOvernight?
     @State private var isAdding = false
+    @Environment(\.tripBuilderAddStopFromFind) private var addFromFind
 
     var body: some View {
         HStack(spacing: 8) {
-            AddStopButton { isAdding = true }
+            // On the iPhone Add Stop takes the user to Find with this trip as the add target; elsewhere it opens the popover.
+            AddStopButton { if let addFromFind { addFromFind(model.tripID, day) } else { isAdding = true } }
                 .popover(isPresented: $isAdding, arrowEdge: .bottom) { AddStopPopover(model: model, day: day) }
             Spacer(minLength: 8)
             if let overnight {
