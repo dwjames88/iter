@@ -7,9 +7,17 @@
 #   ITER_IOS_RUNTIME="iOS 26.5" scripts/test-ios.sh   documented fallback if 27.2 misbehaves
 #   scripts/test-ios.sh --print-device          print the chosen runtime, name and udid, then stop
 # Also runs the Packages/Iter tests (swift test). It never runs or quits the Mac app and never opens Simulator.app.
+# The app-hosted bundle (IterAppTests iOS) is built with `xcodebuild build-for-testing` and run with `simctl spawn ... xctest`:
+# `xcodebuild test` hangs before reaching the runner on this Mac. The bundle links Iter.debug.dylib (inside Iter.app) for
+# `@testable import Iter`, so spawning xctest with that folder on DYLD_*_PATH is enough; the app is never installed or launched.
+#   ITER_SNAPSHOT_RECORD=1 scripts/test-ios.sh       also writes Design/snapshots/rebuild/go/*-ios-*.png
+#   ITER_IOS_SKIP_PACKAGE=1 scripts/test-ios.sh      only the app-hosted bundle
+#   ITER_IOS_FILTER="GoPresentationTests" ...        an XCTest filter (Swift Testing always runs the whole bundle)
+# Uses Xcode.app (the iOS 27.2 SDK) unless DEVELOPER_DIR is set; the default xcodebuild on this Mac is a beta with the 27.0 SDK.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
+export DEVELOPER_DIR="${DEVELOPER_DIR:-/Applications/Xcode.app/Contents/Developer}"
 DERIVED="${ITER_IOS_DERIVED:-$ROOT/build/DerivedData-rebuild-ios}"
 RUNTIME_NAME="${ITER_IOS_RUNTIME:-iOS 27.2}"
 DEVICE="${ITER_IOS_DEVICE:-Iter Rebuild}"
@@ -67,9 +75,37 @@ if [ "${1:-}" = "--print-device" ]; then
   exit 0
 fi
 
-echo "== Packages/Iter (swift test)"
-( cd Packages/Iter && swift test 2>&1 | grep -E "Test run with|error:|recorded an issue" )
-echo "== iOS app (xcodebuild test on $DEVICE, $RUNTIME_NAME, $ITER_IOS_UDID)"
+if [ -z "${ITER_IOS_SKIP_PACKAGE:-}" ]; then
+  echo "== Packages/Iter (swift test)"
+  ( cd Packages/Iter && swift test 2>&1 | grep -E "Test run with|error:|recorded an issue" )
+fi
+
+STATE="$(xcrun simctl list devices | grep "$ITER_IOS_UDID" | sed -E 's/.*\((Booted|Shutdown|[A-Za-z ]+)\) *$/\1/')"
+if [ "$STATE" != "Booted" ]; then xcrun simctl boot "$ITER_IOS_UDID"; xcrun simctl bootstatus "$ITER_IOS_UDID" >/dev/null; fi
+
+echo "== iOS app (build-for-testing on $DEVICE, $RUNTIME_NAME, $ITER_IOS_UDID)"
 xcodegen generate --quiet
-xcodebuild test -project Iter.xcodeproj -scheme "Iter iOS" -destination "platform=iOS Simulator,id=$ITER_IOS_UDID" \
-  -derivedDataPath "$DERIVED" 2>&1 | grep -E "error:|Test run with|failed|passed after|TEST (SUCCEEDED|FAILED)" | tail -20
+xcodebuild build-for-testing -project Iter.xcodeproj -scheme "Iter iOS" -destination "platform=iOS Simulator,id=$ITER_IOS_UDID" \
+  -derivedDataPath "$DERIVED" 2>&1 | grep -E "error:|TEST BUILD (SUCCEEDED|FAILED)" | sort -u | head -30
+PRODUCTS="$DERIVED/Build/Products/Debug-iphonesimulator"
+APP="$PRODUCTS/Iter.app"
+BUNDLE="$APP/PlugIns/IterAppTests iOS.xctest"
+[ -d "$BUNDLE" ] || { echo "No test bundle at $BUNDLE (build failed?)" >&2; exit 1; }
+
+P="$(xcrun --sdk iphonesimulator --show-sdk-platform-path)/Developer"
+export SIMCTL_CHILD_DYLD_FRAMEWORK_PATH="$P/Library/Frameworks:$P/Library/PrivateFrameworks:$APP:$PRODUCTS/PackageFrameworks:$PRODUCTS"
+export SIMCTL_CHILD_DYLD_LIBRARY_PATH="$P/usr/lib:$APP"
+export SIMCTL_CHILD_ITER_REPO_ROOT="$ROOT"
+while IFS='=' read -r name value; do
+  case "$name" in ITER_SNAPSHOT_*|ITER_TEST_*) export "SIMCTL_CHILD_$name=$value" ;; esac
+done < <(env)
+LOG="$DERIVED/IterAppTests-$$.log"
+echo "== xctest (log: $LOG)"
+cd /tmp
+if [ -n "${ITER_IOS_FILTER:-}" ]; then
+  timeout 900 xcrun simctl spawn "$ITER_IOS_UDID" "$P/Library/Xcode/Agents/xctest" -XCTest "$ITER_IOS_FILTER" "$BUNDLE" > "$LOG" 2>&1 || true
+else
+  timeout 900 xcrun simctl spawn "$ITER_IOS_UDID" "$P/Library/Xcode/Agents/xctest" "$BUNDLE" > "$LOG" 2>&1 || true
+fi
+grep -E "Test run with|^✘|recorded an issue|error:|Executed" "$LOG" | cut -c1-240 | tail -40
+grep -qE "Test run with .* passed|Executed .* with 0 failures" "$LOG"
