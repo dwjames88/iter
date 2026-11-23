@@ -13,3 +13,9 @@ struct GoTabRoot: View {
     let shell: IOSShell
     var body: some View { Text(verbatim: "Go") }
 }
+
+/// The iPad detail for Go (map with the Go content beside or over it).
+struct GoPadDetail: View {
+    let shell: IOSShell
+    var body: some View { Text(verbatim: "Go") }
+}
