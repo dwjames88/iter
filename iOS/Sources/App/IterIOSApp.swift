@@ -55,10 +55,17 @@ enum IOSLaunch {
         return options
     }
 
+    /// The app's clock: the real one, or `-IterNow` (in-memory runs only) so a screenshot can pin the time of day.
+    static func clock(_ options: LaunchOptions) -> @Sendable () -> Date {
+        guard let fixed = options.fixedNow else { return { Date() } }
+        return { fixed }
+    }
+
     static func launch(makeContainer: (() throws -> AppContainer)? = nil) -> IOSLaunchResult {
         do {
             let container = try makeContainer?() ?? AppContainer.live(options: options(), bundleID: Bundle.main.bundleIdentifier,
-                                                                    environment: ProcessInfo.processInfo.environment)
+                                                                    environment: ProcessInfo.processInfo.environment,
+                                                                    now: Self.clock(options()))
             // Location is asked at launch (When In Use); nothing is gated on the answer. Fixed and inert providers never prompt.
             container.location.start()
             let shell = IOSShell(container: container)

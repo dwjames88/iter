@@ -1,5 +1,7 @@
 import Foundation
 import Testing
+import IterSky
+import IterConditions
 import IterModel
 import IterDiscovery
 @testable import IterFeatures
@@ -78,6 +80,77 @@ struct FindQuickChoiceTests {
     }
 }
 
+/// Today when the light has gone: no night "0" in place of a score, and one quiet line instead of a list of zeros.
+@MainActor @Suite("Find: Today after sunset")
+struct FindTodayOverTests {
+    private let area = GeoRegion(center: FindFixtures.moab, latitudeDelta: 1.0, longitudeDelta: 1.0)
+
+    private func report(for place: Place, scores: [LightWindowKind: Int]) -> SkyReport {
+        let base = ConditionsFixtures.report(day: LocalDay(FindFixtures.retrievedAt, in: place.timeZone), place: place)
+        return ConditionsFixtures.report(base, scores: scores)
+    }
+
+    private func runToday(clock: Date, scores: [LightWindowKind: Int]) async throws -> (Rig, FakeFindScores) {
+        let fake = FakeFindScores()
+        fake.script = { place, day in .ready(ConditionsFixtures.report(ConditionsFixtures.report(day: day, place: place), scores: scores)) }
+        var config = Rig.fastFind
+        config.scoreLeadCount = 6
+        let rig = try Rig(configuration: config, scores: fake, now: { clock })
+        rig.model.mapRegion = area
+        rig.model.runQuickChoice(.today)
+        _ = await waitUntil { rig.model.phase == .finished }
+        _ = await waitUntil { rig.model.rows.contains { $0.score?.isLoading == false } }
+        return (rig, fake)
+    }
+
+    @Test func theDecisionUsesTheClock() {
+        let t = Date(timeIntervalSince1970: 1_791_806_400)
+        let windows = [LightWindowSpan(kind: .goldenEvening, end: t.addingTimeInterval(3600)),
+                       LightWindowSpan(kind: .blueEvening, end: t.addingTimeInterval(5400)),
+                       LightWindowSpan(kind: .night, end: t.addingTimeInterval(20_000))]
+        #expect(FindTodayLight.hasLightLeft(windows: windows, now: t))
+        #expect(FindTodayLight.hasLightLeft(windows: windows, now: t.addingTimeInterval(5000)))
+        #expect(!FindTodayLight.hasLightLeft(windows: windows, now: t.addingTimeInterval(5400)))
+        // Night does not count as light, however much of it is left.
+        #expect(!FindTodayLight.hasLightLeft(windows: [windows[2]], now: t))
+        #expect(FindTodayLight.isOver(results: [windows], now: t.addingTimeInterval(6000)))
+        #expect(!FindTodayLight.isOver(results: [windows], now: t))
+        // Nothing reported yet is not "over".
+        #expect(!FindTodayLight.isOver(results: [], now: t))
+        #expect(!FindTodayLight.isOver(results: [[]], now: t))
+    }
+
+    @Test func afterSunsetANightZeroIsNotShownAndTheListSaysTodayIsOver() async throws {
+        let place = ConditionsFixtures.place
+        let late = report(for: place, scores: [:]).daylight.window(.blueEvening)!.span.end.addingTimeInterval(1800)
+        let (rig, _) = try await runToday(clock: late, scores: [.night: 0])
+        #expect(!rig.model.rows.isEmpty)
+        // The night window is scored 0, but it is not what a daytime place shows: no number at all.
+        let shown = rig.model.rows.compactMap(\.score)
+        #expect(!shown.isEmpty && shown.allSatisfy { $0.value == nil })
+        #expect(rig.model.todayLightIsOver)
+    }
+
+    @Test func beforeSunsetTheScoreShowsAndTodayIsNotOver() async throws {
+        let place = ConditionsFixtures.place
+        let early = report(for: place, scores: [:]).daylight.window(.goldenMorning)!.span.start.addingTimeInterval(-3600)
+        let (rig, _) = try await runToday(clock: early, scores: [.goldenEvening: 70, .night: 0])
+        let values = rig.model.rows.compactMap(\.score).compactMap(\.value)
+        #expect(values.contains(70))
+        #expect(!rig.model.todayLightIsOver)
+    }
+
+    @Test func tomorrowIsNeverCalledOver() async throws {
+        let clock = FindFixtures.retrievedAt
+        let fake = FakeFindScores()
+        let rig = try Rig(scores: fake, now: { clock })
+        rig.model.mapRegion = area
+        rig.model.runQuickChoice(.tomorrow)
+        _ = await waitUntil { rig.model.phase == .finished }
+        #expect(!rig.model.todayLightIsOver)
+    }
+}
+
 @MainActor @Suite("One-time notices")
 struct OneTimeNoticesTests {
     @Test func aNoticeIsSeenOnceAndStaysSeen() {
@@ -107,5 +180,15 @@ struct OneTimeNoticesTests {
         let a = OneTimeNotices.forLaunch(inMemoryStore: true)
         a.markSeen(.firstRunGuide)
         #expect(!OneTimeNotices.forLaunch(inMemoryStore: true).hasSeen(.firstRunGuide))
+    }
+}
+
+@Suite("Launch clock")
+struct FixedNowTests {
+    @Test func theClockSwitchIsHonouredOnlyForAnInMemoryStore() {
+        let args = ["-IterNow", "2026-11-23T01:19:00Z"]
+        #expect(LaunchOptions(arguments: args + ["-IterInMemoryStore", "YES"]).fixedNow == Date(timeIntervalSince1970: 1_795_396_740))
+        #expect(LaunchOptions(arguments: args).fixedNow == nil)
+        #expect(LaunchOptions(arguments: ["-IterInMemoryStore", "YES", "-IterNow", "tonight"]).fixedNow == nil)
     }
 }

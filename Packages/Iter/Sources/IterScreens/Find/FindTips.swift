@@ -78,3 +78,25 @@ struct FindQuickChoiceChips: View {
         .accessibilityElement(children: .contain)
     }
 }
+
+/// Today's light has passed for every result: one quiet line, and a way to Tomorrow. No chips full of zeros.
+struct FindTodayOverLine: View {
+    let showTomorrow: () -> Void
+
+    var body: some View {
+        HStack(spacing: IterSpace.sm) {
+            Text("Today's light is over", comment: "Find: every result's golden and blue hour has passed today")
+                .font(IterFont.secondary)
+                .foregroundStyle(IterColor.textSecondary)
+            Spacer(minLength: 0)
+            Button(action: showTomorrow) {
+                Text("Show Tomorrow", comment: "Button: run the search again for tomorrow's light")
+                    .font(IterFont.secondary)
+                    .foregroundStyle(IterColor.accentText)
+                    .frame(minHeight: 32)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+        }
+    }
+}

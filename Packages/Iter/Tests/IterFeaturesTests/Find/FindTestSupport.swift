@@ -65,7 +65,8 @@ struct Rig {
     init(runner: (any DiscoveryRunning)? = nil, location: Coordinate? = FindFixtures.moab, routing: FindFixtures.Routing = .init(),
          placeSearch: any PlaceSearchProvider = FindFixtures.PlaceSearch(), geocoder: any IterSources.Geocoder = FindFixtures.FixtureGeocoder(),
          streetLevel: (any StreetLevelImageryProvider)? = FindFixtures.StreetLevel(coveredNear: FindFixtures.mesaArch),
-         configuration: FindConfiguration = Rig.fastFind, undoable: Bool = false, scores: (any FindScoreSource)? = nil) throws {
+         configuration: FindConfiguration = Rig.fastFind, undoable: Bool = false, scores: (any FindScoreSource)? = nil,
+         now: @escaping @Sendable () -> Date = { FindFixtures.retrievedAt }) throws {
         library = LibraryStore(container: try IterStoreSchema.makeInMemoryContainer())
         undo.groupsByEvent = false
         if undoable { library.undoManager = undo }
@@ -76,7 +77,7 @@ struct Rig {
         let provider: any LocationProviding = location.map { FixedLocationProvider($0) as any LocationProviding } ?? InertLocationProvider()
         model = FindModel(discovery: used, placeSearch: placeSearch, geocoder: geocoder, routing: routing, streetLevel: streetLevel,
                           magnetic: WorldMagneticModelProvider(), gridReference: MGRSProvider(), library: library, preferences: preferences,
-                          location: provider, now: { FindFixtures.retrievedAt }, configuration: configuration, scores: scores)
+                          location: provider, now: now, configuration: configuration, scores: scores)
     }
 
     /// One user action = one undo group (the app gets this from the run loop).

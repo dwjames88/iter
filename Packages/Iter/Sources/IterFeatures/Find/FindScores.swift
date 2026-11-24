@@ -65,12 +65,30 @@ public final class StoreFindScores: FindScoreSource {
 }
 
 extension FindScore {
+    /// The window a result's chip scores: the place's intent window if scored, else the best scored window of daytime light
+    /// still to come. A night window never stands in for a daytime intent (the rule on `LightIntent`): once golden and blue
+    /// hour have passed, the chip shows no number rather than the night's 0 (a bright moon scores a night window 0, which is
+    /// true of astrophotography and says nothing about the light a result is being picked for). A place whose own intent is
+    /// night is scored on night.
+    static func headline(_ r: SkyReport, intent: LightIntent) -> HeadlineScore? {
+        if let w = r.daylight.headline(for: intent), let s = w.assessment.skyScore {
+            return ConditionsDerivation.score(s, kind: w.kind, tier: r.tier)
+        }
+        guard intent != .night else { return nil }
+        var best: (kind: LightWindowKind, score: SkyScore)?
+        for w in r.daylight.windows.sorted(by: { $0.span.start < $1.span.start }) where w.kind.isDaytimeLight {
+            guard let s = w.assessment.skyScore else { continue }
+            if best == nil || s.value > best!.score.value { best = (w.kind, s) }
+        }
+        return best.map { ConditionsDerivation.score($0.score, kind: $0.kind, tier: r.tier) }
+    }
+
     /// The score for a slot: the place's intent window if scored, else the best scored window left today; nil when the slot holds
     /// nothing that scores (and nothing is loading).
     @MainActor static func make(state: ConditionsLoadState?, place: Place, now: Date) -> FindScore? {
         let zone = place.timeZone
         let loading = state?.isLoading ?? true
-        if let report = state?.report, let h = ConditionsDerivation.headline(report, intent: place.defaultIntent) {
+        if let report = state?.report, let h = headline(report, intent: place.defaultIntent) {
             let window = report.daylight.windows.first { $0.kind == h.kind }
             return FindScore(kind: h.kind, start: window?.span.start ?? now, value: h.value, confidence: h.confidence, isLoading: false,
                              zoneIdentifier: place.timeZoneIdentifier)

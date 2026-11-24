@@ -58,3 +58,48 @@ extension FindModel {
         runDiscovery(plan.query, region: plan.region, quick: choice)
     }
 }
+
+// MARK: Today with no light left
+
+/// Whether Today still has light to offer, decided from the windows the Conditions stage reports for each result and the clock.
+public enum FindTodayLight {
+    /// True when a window of daytime light (golden or blue hour) is still open or ahead at `now`.
+    public static func hasLightLeft(windows: [LightWindowSpan], now: Date) -> Bool {
+        windows.contains { $0.kind.isDaytimeLight && $0.end > now }
+    }
+
+    /// True when at least one result has reported and none of them has daytime light left: Today is over for all of them.
+    /// Results still loading do not count either way, so the line never flashes while scores arrive.
+    public static func isOver(results: [[LightWindowSpan]], now: Date) -> Bool {
+        let reported = results.filter { !$0.isEmpty }
+        return !reported.isEmpty && !reported.contains { hasLightLeft(windows: $0, now: now) }
+    }
+}
+
+public struct LightWindowSpan: Equatable, Sendable {
+    public var kind: LightWindowKind
+    public var end: Date
+    public init(kind: LightWindowKind, end: Date) { self.kind = kind; self.end = end }
+}
+
+extension FindModel {
+    /// True while the Today choice's results have no daytime light left at the clock's now. The list says so in one quiet line and
+    /// offers Tomorrow instead of a list of chips with nothing to show.
+    public var todayLightIsOver: Bool {
+        guard activeQuickChoice == .today, phase == .finished, let source = scoreSource else { return false }
+        let windows: [[LightWindowSpan]] = scoreTargets.values.map { target in
+            guard let report = source.state(for: target.place.id, day: target.day).report else { return [] }
+            return report.daylight.windows.map { LightWindowSpan(kind: $0.kind, end: $0.span.end) }
+        }
+        return FindTodayLight.isOver(results: windows, now: now())
+    }
+}
+
+extension LaunchOptions {
+    /// `-IterNow 2026-11-23T01:19:00Z`: the clock a screenshot runs on, honoured only with `-IterInMemoryStore YES` so it can
+    /// never move a real library's day. Nil when absent, malformed or not in-memory.
+    public var fixedNow: Date? {
+        guard inMemoryStore, let i = arguments.firstIndex(of: "-IterNow"), i + 1 < arguments.count else { return nil }
+        return ISO8601DateFormatter().date(from: arguments[i + 1])
+    }
+}

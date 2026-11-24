@@ -125,6 +125,9 @@ struct FindResultsCard: View {
             FindProgressSection(progress: model.progress, phase: model.phase, chips: model.chips, isExpanded: initiallyShowsSources) {
                 model.cancel()
             }
+            if model.todayLightIsOver {
+                FindTodayOverLine { model.runQuickChoice(.tomorrow) }
+            }
             if model.kindFilters.count > 1 {
                 FindFilterChips(filters: model.kindFilters) { model.toggleKind($0) }
             }
