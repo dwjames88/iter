@@ -147,7 +147,6 @@ import IterDiscovery
         #expect(s.learnFromLibrary)
         s.learnFromLibrary = false
         #expect(!c.preferences.learnFromLibrary)
-        #expect(!c.preferences.showCloudImagery)
     }
 
     @Test func theEngineGetsAProfileOnlyWhileTheToggleIsOn() throws {

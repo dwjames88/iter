@@ -32,12 +32,9 @@ public final class Preferences {
     /// "Learn From My Library": rank discovery with a small on-device summary of what is saved and planned. On by default,
     /// as in the old app. Never leaves the device.
     public var learnFromLibrary: Bool { didSet { defaults.set(learnFromLibrary, forKey: Keys.learnFromLibrary) } }
-    /// NASA GIBS true-colour cloud imagery on the Find and Go maps. Off by default.
-    public var showCloudImagery: Bool { didSet { defaults.set(showCloudImagery, forKey: Keys.showCloudImagery) } }
 
     public enum Keys {
         public static let learnFromLibrary = "IterSearchLearnsFromLibrary"
-        public static let showCloudImagery = "IterShowCloudImagery"
         public static let preferenceText = "IterPreferenceText"
         public static let ordering = "IterDiscoveryOrdering"
         public static let resultCap = "IterResultCap"
@@ -57,7 +54,6 @@ public final class Preferences {
         enabledOverrides = Set((defaults.stringArray(forKey: Keys.enabledOverrides) ?? []).map { SourceID(rawValue: $0) })
         mapStyle = defaults.string(forKey: Keys.mapStyle) ?? "hybrid"
         learnFromLibrary = defaults.object(forKey: Keys.learnFromLibrary) as? Bool ?? true
-        showCloudImagery = defaults.object(forKey: Keys.showCloudImagery) as? Bool ?? false
         showDaylight = defaults.object(forKey: Keys.showDaylight) as? Bool ?? true
     }
 
