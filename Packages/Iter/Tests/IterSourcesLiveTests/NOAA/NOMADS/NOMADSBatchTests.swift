@@ -83,7 +83,10 @@ private func provider(_ http: any HTTPClient, cache: (any BlobCaching)? = nil) -
         #expect(hours.count == 4 * 13)
         // The first eight requests (probe, then two hours of four tiles) never reach past f03 (two in flight may swap).
         #expect(hours.prefix(8).allSatisfy { $0 <= 3 })
-        #expect(hours.suffix(8).allSatisfy { $0 >= 12 })
+        // The last eight are hours 12 and 13 of the four tiles. The engine keeps two requests in flight (`maxConcurrent`),
+        // and which of two finishes first is the scheduler's (a loaded full run swaps them), so the last request of hour 11
+        // may land among them: it is the only way in, hence hour 11 passes and hour 10 does not.
+        #expect(hours.suffix(8).allSatisfy { $0 >= 11 })
         // Each tile's own hours go in order.
         for box in Set(client.parsed.map(\.box.id)) {
             let own = client.parsed.filter { $0.box.id == box }.map(\.ref.forecastHour)
