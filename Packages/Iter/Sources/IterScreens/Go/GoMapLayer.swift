@@ -55,7 +55,14 @@ public struct GoMapLayer: View {
         let nextID = (snapshot.next ?? stops.first)?.id
         let groups = GoMapPins.groups(stops: stops, nextID: nextID, mapPointsPerPoint: mapPointsPerPoint)
         return Map(position: $position) {
-            UserAnnotation()
+            // Your position comes from the app's own location (the engine's fix), so it shows with a fixed or scripted location
+            // too; MapKit's dot is only the fallback before the first fix.
+            if let here = snapshot.here {
+                Annotation("You", coordinate: Self.clCoordinate(here), anchor: .center) { GoMapUserDot() }
+                    .annotationTitles(.hidden)
+            } else {
+                UserAnnotation()
+            }
             overlays
             if routePath.count > 1 {
                 MapPolyline(coordinates: routePath.map(Self.clCoordinate))
@@ -150,6 +157,18 @@ public struct GoMapLayer: View {
 
     static func clCoordinate(_ c: Coordinate) -> CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude)
+    }
+}
+
+/// Where you are: the system's blue location dot, solid with a white ring (map markers are never material).
+struct GoMapUserDot: View {
+    var body: some View {
+        Circle()
+            .fill(Color.blue)
+            .frame(width: 14, height: 14)
+            .overlay { Circle().strokeBorder(.white, lineWidth: 3) }
+            .shadow(color: .black.opacity(0.25), radius: 2, y: 1)
+            .accessibilityLabel("Your location")
     }
 }
 

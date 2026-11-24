@@ -84,6 +84,8 @@ public struct GoSheetContent: View {
             .padding(.horizontal, IterSpace.lg)
             .padding(.bottom, IterSpace.lg)
         }
+        // Content scrolls under the floating tab bar: the system's hard bottom edge keeps it from showing through (as in Find).
+        .scrollEdgeEffectStyle(.hard, for: .bottom)
     }
 
     // MARK: Toolbar
