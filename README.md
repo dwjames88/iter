@@ -28,6 +28,7 @@ This version replaces the earlier Iter app and keeps its data. **The first time 
 - **iPhone.** The store is in the app's own Application Support folder, and the backup goes in `Iter/Backups/` there. On the iPhone you can reach it by copying the app container (Xcode ▸ Devices and Simulators ▸ Download Container).
 - **What is in a backup.** Copies of the raw store files, every trip as an `.iter` file the earlier app can open, and `backup.json` with the counts.
 - **If the new store fails to open.** Iter keeps the original file untouched, builds a new store beside it from the backup's `.iter` files, and shows a one-time notice with the backup folder.
+- **Tried on a copy first.** The migration was run on a copy of the real Mac library, not the library itself. The copy was at schema V3. It was backed up (the raw files matched the original byte for byte, with one `.iter` file per trip and a `backup.json`) and migrated V3 to V5. Comparing every field with what the old code reads found no differences. When the open was forced to fail, the original file stayed untouched and the trips came back from the backup's `.iter` files. That fallback does not bring back folders, pins, saved flags or sort order. The normal migration does. The iPhone store has not been tried on a copy.
 - **Going back.** Quit the new app and restore `Iter.store` (and its `-wal` and `-shm` files) from the backup folder, or import the `.iter` files into the earlier app.
 
 Settings and keys: the Mac keeps its settings in the app's preferences and any keys in the Keychain. This version needs no keys.
@@ -43,7 +44,7 @@ scripts/run.sh            # builds build/Iter.app (signed with your Apple Develo
 scripts/run.sh --real     # the same, then opens it: the real app on the real store, first launch migrates to V5
 ```
 
-It runs as `com.dwjames.iter`. Opening it for the first time on your real library triggers the migration above. If you want to look at the app without touching your data, use the render copy.
+`build/Iter.app` is the real app, `com.dwjames.iter`, on your real store. The script warns about this and only opens it when you pass `--real`. Opening it for the first time on your real library triggers the migration above. If you want to look at the app without touching your data, use the render copy.
 
 **The render copy.** The same Mac app under another bundle id, `com.dwjames.iter.render`, signed ad hoc. It can never open the real store or the real Keychain, and it never asks for location. Use it to look at the app, take screenshots and run tests.
 
@@ -58,7 +59,7 @@ The render copy runs on sample data with an in-memory store. See [TESTING.md](TE
 **The iPhone and iPad app.**
 
 ```
-DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer scripts/test-ios.sh   # build and test on the iOS 27.2 simulator
+scripts/test-ios.sh      # build and test on the iOS 27.2 simulator (it picks the right Xcode itself)
 ```
 
 To put it on your own iPhone, follow "Install on your iPhone" in [TESTING-iOS.md](TESTING-iOS.md). It uses a free Personal Team and Xcode.
@@ -67,6 +68,7 @@ To put it on your own iPhone, follow "Install on your iPhone" in [TESTING-iOS.md
 
 ```
 cd Packages/Iter && swift test
+scripts/test.sh          # everything: both packages, the Mac hosted tests and the iOS tests
 ```
 
 ## What is in the repository
@@ -79,6 +81,8 @@ Mac/                   the Mac app shell
 iOS/                   the iPhone and iPad app shell
 Widgets/               the Live Activity, Dynamic Island, Lock Screen and Home widgets
 Tests/Hosted/          tests that run inside an app (Mac render copy, iOS simulator)
+Tools/LegacyFixtureGen the old store code, frozen, used only to make migration fixtures and for dry runs.
+                       Never linked into the apps (see its README)
 Design/                design tokens, glass rules, Figma map, screen renders
 Brand/                 logo and palette
 docs/                  documentation (below)

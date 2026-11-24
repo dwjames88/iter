@@ -20,6 +20,8 @@ Mac/                   Mac app shell: scenes, windows, commands, sidebar, Settin
 iOS/                   iPhone and iPad shell: tabs, iPad split view, Go tab, sharing, Settings
 Widgets/               iOS widget extension: Live Activity, Dynamic Island, Lock Screen and Home widgets
 Tests/Hosted/{Mac,iOS} tests that must run inside an app (snapshots of whole windows, shell and wiring)
+Tools/LegacyFixtureGen the old store code, frozen, as a fixture generator and dry-run tool. Not a dependency of the
+                       package or the apps (its README explains)
 Design/                tokens.json (source of truth), GLASS-RULES.md, FIGMA-MAP.md, snapshots
 Brand/                 logo files and palette
 docs/                  these documents; docs/rebuild/ is the record of the rebuild
@@ -28,7 +30,7 @@ project.yml            XcodeGen spec for the Mac app and its tests (includes pro
 project-ios.yml        XcodeGen spec for the iOS app, the widget extension and the iOS tests
 ```
 
-There are no shared-folder exclude lists. Every view used by both apps lives in `IterUI` or `IterScreens` in the package. The app folders hold only platform shells. `Legacy/` (the old package) and the old `App/` and `AppiOS/` folders are being deleted in the cut-over.
+There are no shared-folder exclude lists. Every view used by both apps lives in `IterUI` or `IterScreens` in the package. The app folders hold only platform shells. The old `App/`, `AppiOS/`, old test folders and `Legacy/` are gone. The old store code survives only in `Tools/LegacyFixtureGen`, which makes the migration fixtures and can read a store the way the old app did, for a dry run.
 
 ## The package: 16 targets
 
@@ -94,7 +96,7 @@ There is no Mac widget, no share extension and no CarPlay target. Go is iPhone o
 
 SwiftData holds the library: places, trips, stops, folders, trip runs, stop visits, deletion tombstones and sync-peer records. Forecasts, observations and other fetched data are not in SwiftData. They are cache files.
 
-**Schemas.** V1 to V4 are the old app's schemas, copied unchanged into `IterStore/Schema/Legacy/` and frozen. V5 is the rebuild's. The live models keep the class names `PlaceRecord`, `TripRecord`, `StopRecord` and `FolderRecord`, so SwiftData sees one store evolving, not a delete and an insert. The migration plan has four lightweight stages, V1 to V2 to V3 to V4 to V5. V5 only adds optional or defaulted fields and new models, which keeps it in the kind of migration SwiftData has already done for this store three times.
+**Schemas.** V1 to V4 are the old app's schemas, copied unchanged into `IterStore/Schema/Legacy/` and frozen (not the removed `Legacy/` package). V5 is the rebuild's. The live models keep the class names `PlaceRecord`, `TripRecord`, `StopRecord` and `FolderRecord`, so SwiftData sees one store evolving, not a delete and an insert. The migration plan has four lightweight stages, V1 to V2 to V3 to V4 to V5. V5 only adds optional or defaulted fields and new models, which keeps it in the kind of migration SwiftData has already done for this store three times.
 
 **What V5 adds.** Place provenance (sources, citations, verification state, discovered date, a cached horizon profile); stop dwell, fixed arrival and kind (light, lodging, waypoint); the trip's start place; and the models `TripRunRecord`, `StopVisitRecord`, `DeletionRecord` and `SyncPeerRecord`.
 
@@ -127,7 +129,7 @@ Offline packs for pinned trips go beside the store in `OfflinePacks/`. The sourc
 - `SourceCatalogue` is the one table of every source: tier, coverage, rate policy, cache lifetime, licence, default on or off. [DATA-PROVIDERS.md](DATA-PROVIDERS.md) lists it all.
 - `SourceHTTP` sends requests with the app-name-and-version User-Agent, per-host spacing and concurrency, an optional per-minute cap, retries with backoff and jitter, conditional requests (`ETag`, `If-Modified-Since`) and MET Norway's `Expires` rule.
 - `SourceCache` keeps values in memory and on disk with a time-to-live and stale-while-revalidate, and does not write to disk what a licence forbids keeping.
-- `KeyVault` keeps optional keys in the Keychain.
+- `KeyVault` keeps optional keys in the Keychain. At launch, for the real process only, it copies the old app's Keychain items (OpenWeather, Windy, Google) to its own layout once. It never overwrites a new item and never touches an old one, and a marker makes later launches do nothing.
 - Every result is a `Sourced<T>` with provenance, or a `DataState` that says fresh, stale with an age, or none with a reason.
 
 ## Discovery pipeline (Find)
@@ -139,7 +141,7 @@ Offline packs for pinned trips go beside the store in `OfflinePacks/`. The sourc
 3. **Fan-out.** Every provider that applies runs at once as structured tasks: Apple Maps search and points of interest, Overpass features, USGS names, Wikipedia, Wikivoyage, Commons photos. A source that fails or is off becomes a status chip. It never fails the search.
 4. **Extraction.** The model may pull place names out of the text evidence. It never supplies a coordinate.
 5. **Verification.** Every candidate gets its coordinate from a geocoder or a gazetteer and must fall inside the area. Anything else is dropped. This is the grounding rule: no result has a model-made coordinate, and the tests assert it.
-6. **Merge, rank, explain, cite.** Candidates from different sources are merged by name and distance, ranked (popular, unique or mixed, with a small boost for kinds you save, if "Learn From My Library" is on), and given a short explanation and citation links.
+6. **Merge, rank, explain, cite.** Candidates from different sources are merged by name and distance, ranked (popular, unique or mixed, with a boost of at most 12 percent for kinds you save, if "Learn From My Library" is on; it is on by default, has a Settings toggle and never leaves the device), and given a short explanation and citation links.
 
 Cancelling the search cancels every provider and model call. Reddit and Google appear in the chips as unavailable, with the reason.
 
@@ -160,6 +162,7 @@ Both indexes score a shooting window from 0 to 100 with the same scorer, so the 
 
 `IterGo` runs a trip on the phone. Everything platform-specific (location, notifications, Live Activity, background refresh, power) is behind a protocol, so the whole engine runs on macOS in tests with a scripted location trace and a fake clock.
 
+- **Legs.** Go starts from the drive legs Build planned. Build keeps them in `<tripID>.legs` beside the offline pack, and Go routes only a leg that is missing, so a planned trip works offline. Sample-data mode builds no pack and says so.
 - **State.** A run is armed, active, paused or finished and is saved (`TripRunRecord`, `StopVisitRecord`), so it survives a relaunch. Each stop is pending, en route, arrived, done or skipped. Leave-by and arrival times are frozen when you set off, so notifications stay stable.
 - **One step.** Every event (a tick, a location fix, an action, a foreground, a background refresh) goes through the same step: recompute the live schedule, feed the state machine, set the location mode, ask for an ETA only if due, start the conditions loop if due, build the snapshot, plan and sync notifications, publish the snapshot, update the Live Activity, save, and ask for the next background refresh.
 - **Location.** Off when nothing is running; region monitoring while waiting; continuous updates with backup regions while driving; back down at arrival. Choosing the mode is a pure function of the phase.
@@ -188,7 +191,7 @@ What does not exist: **Bonjour peer sync (blueprint phase 10b) is not built.** `
 - Every fan-out is a structured task owned by a model, cancelled when its view or input goes away, and written under a generation guard so a late result cannot overwrite a newer one.
 - Performance rules (per-property observable state, `Equatable` rows, debounced map size, precomputed map content, no export built in a view body) are in [PERFORMANCE.md](PERFORMANCE.md).
 - **The real app and everything else.** `StorePlacement` decides what a launch may open. Only the real bundle id (`com.dwjames.iter` on the Mac, `com.dwjames.iter.ios` on iPhone), outside a test host, can open the real store. Every other process gets an in-memory store or an explicit scratch path, and a scratch path inside the real store's folder is refused. Keys, preferences and location follow the same rule: the real Keychain and defaults only for the real process, and a render or test never prompts for location or notifications. This is structural, not a convention.
-- **Sample data.** `-IterSampleDataEnabled YES` swaps every network service for built-in sample services. Settings and the credits say when sample data is on.
+- **Sample data.** `-IterSampleDataEnabled YES` swaps every network service for built-in sample services. Everything it shows says so: Sample drive times, Sample Sky Index, "Sample" on the widget and Live Activity, and no Apple Maps credit.
 
 ## Design
 
