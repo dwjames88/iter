@@ -51,6 +51,4 @@ If the team is free, none of these are possible and the app is already designed 
 
 ## Housekeeping
 
-- **Fix or remove old scripts** that still point at `App/`, `AppiOS/` and `IterKit`: `scripts/test.sh`, `scripts/snapshots.sh`, `scripts/snapshots-ios.sh`, `scripts/strings.sh`, `scripts/pin-drag-test.sh`, `scripts/make-icon.sh`, the `--weatherkit` option of `scripts/run.sh`, and the default entitlements path in `scripts/release.sh`.
-- **The Mac window-capture option.** `scripts/render.sh --capture` passes `-IterCaptureWindow`, which the rebuilt app does not read. Add it or drop the option.
 - **Release notes and version.** The rebuild has not been given a version number or released. Cut it with `scripts/release.sh` ([DISTRIBUTION.md](DISTRIBUTION.md)) once the first-look checklist is done.

@@ -1,12 +1,13 @@
 #!/bin/bash
-# Rebuilds the app icon PNGs and the in-app logo image sets from Brand/logo/*.svg. No windows are opened.
+# Rebuilds the Mac app icon PNGs (Mac/Resources/Assets.xcassets/AppIcon.appiconset) from Brand/logo/app-icon.svg. No windows are
+# opened. The set's Contents.json and the iOS icon (iOS/Resources, which has its own 1024 art) are left alone.
 #   scripts/make-icon.sh
+# Environment: ITER_ICON_SET = write the PNGs into this folder instead (to try it without touching the catalog).
 # Icon convention (macOS 26): the system masks the icon, so the artwork is a full-bleed square (no rounded
 # corners, no margin, no shadow). See Design/TOKENS.md, "App icon".
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 LOGO="$ROOT/Brand/logo"
-CAT="$ROOT/App/Resources/Assets.xcassets"
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
@@ -42,50 +43,12 @@ for pixels in [16, 32, 64, 128, 256, 512, 1024] {
 SWIFT
 swift "$WORK/render.swift" "$WORK/app-icon-square.svg" "$WORK/png"
 
-ICONSET="$CAT/AppIcon.appiconset"
-rm -rf "$ICONSET"; mkdir -p "$ICONSET"
+ICONSET="${ITER_ICON_SET:-$ROOT/Mac/Resources/Assets.xcassets/AppIcon.appiconset}"
+mkdir -p "$ICONSET"
 # name:pixels, in the order of Contents.json
 for entry in 16x16:1:16 16x16:2:32 32x32:1:32 32x32:2:64 128x128:1:128 128x128:2:256 256x256:1:256 256x256:2:512 512x512:1:512 512x512:2:1024; do
   IFS=: read -r size scale px <<<"$entry"
   suffix=""; [ "$scale" = 2 ] && suffix="@2x"
   cp "$WORK/png/$px.png" "$ICONSET/icon_${size}${suffix}.png"
 done
-python3 - "$ICONSET/Contents.json" <<'PY'
-import json, sys
-images = []
-for size in ["16x16", "32x32", "128x128", "256x256", "512x512"]:
-    for scale in (1, 2):
-        images.append({"filename": f"icon_{size}{'@2x' if scale == 2 else ''}.png", "idiom": "mac", "scale": f"{scale}x", "size": size})
-json.dump({"images": images, "info": {"author": "xcode", "version": 1}}, open(sys.argv[1], "w"), indent=2, sort_keys=True)
-open(sys.argv[1], "a").write("\n")
-PY
-
-# --- In-app logo image sets (vector, single scale) --------------------------------------------------------------------
-# currentColor does not survive an asset catalog, so the Logo/Symbol files carry written-out colours. Logo/Symbol have a light file and a
-# dark-appearance file; the Mono sets are black template images that tint to whatever the view's foreground style is.
-imageset() { # name, light svg, dark svg (or empty), template (yes/no)
-  local dir="$CAT/$1.imageset"; rm -rf "$dir"; mkdir -p "$dir"
-  cp "$2" "$dir/$1.svg"
-  python3 - "$dir/Contents.json" "$1" "${3:+$1-dark}" "$4" <<'PY'
-import json, sys
-path, name, dark, template = sys.argv[1:5]
-images = [{"filename": f"{name}.svg", "idiom": "universal"}]
-if dark:
-    images.append({"appearances": [{"appearance": "luminosity", "value": "dark"}], "filename": f"{dark}.svg", "idiom": "universal"})
-props = {"preserves-vector-representation": True}
-if template == "yes":
-    props["template-rendering-intent"] = "template"
-json.dump({"images": images, "info": {"author": "xcode", "version": 1}, "properties": props}, open(path, "w"), indent=2, sort_keys=True)
-open(path, "a").write("\n")
-PY
-  if [ -n "${3:-}" ]; then cp "$3" "$dir/$1-dark.svg"; fi
-}
-recolor() { sed -e "s/currentColor/$1/g" "$2"; }
-for name in lockup symbol; do
-  recolor "#000000" "$LOGO/$name-mono.svg" > "$WORK/$name-mono.svg"
-done
-imageset Logo "$LOGO/lockup.svg" "$LOGO/lockup-dark.svg" no
-imageset Symbol "$LOGO/symbol.svg" "$LOGO/symbol-dark.svg" no
-imageset LogoMono "$WORK/lockup-mono.svg" "" yes
-imageset SymbolMono "$WORK/symbol-mono.svg" "" yes
-echo "icon and logo assets written to $CAT"
+echo "icon PNGs written to $ICONSET"

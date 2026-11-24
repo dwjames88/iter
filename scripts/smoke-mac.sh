@@ -7,13 +7,13 @@
 # Always passes: -IterInMemoryStore YES -IterLocation 38.39,-109.87 -IterSampleDataEnabled YES -IterSmokeQuitAfter 8
 # (each unless the caller passes its own). The app's stdout and stderr go to build/smoke-mac.log.
 #
-# Switches the Mac shell must implement (the shell worker; IterApp.swift is a stub until then):
+# Switches the Mac shell implements (Mac/Sources/App/SmokeSwitches.swift):
 #   -IterSmokeQuitAfter N   once the first window's content has loaded, log one line to stdout starting with "smoke: ready"
 #                           (what it loaded: section, counts, store kind), then quit itself with exit 0 after N seconds. On a
 #                           failure to load, log "smoke: failed <reason>" and exit non-zero straight away.
 #   plus the contract in LaunchOptions: -IterInMemoryStore, -IterLocation, -IterSampleDataEnabled, -IterSection, -IterSeedTrip.
 # Result: exit 0 = quit by itself and "smoke: ready" was logged; 1 = anything else (timeout, no ready line, a new crash
-# report, "smoke: failed"). While the shell is the stub, the script still runs and reports "no smoke: ready line".
+# report, "smoke: failed").
 # Environment: ITER_DD (derived data, used by render.sh).
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -68,7 +68,7 @@ FAILED="$(grep -m1 "smoke: failed" "$LOG" || true)"
 CRASH="$(find "$HOME/Library/Logs/DiagnosticReports" -name 'Iter-*.ips' -newer "$MARK" 2>/dev/null | head -1)"
 rm -f "$MARK"
 [ "$KILLED" = 1 ] && echo "Status: still running after ${TIMEOUT}s; stopped pid $PID (not a clean quit)" || echo "Status: quit by itself after ${ELAPSED}s"
-[ -n "$READY" ] && echo "Ready line: $READY" || echo "Ready line: none (no 'smoke: ready' in $LOG; expected while the shell is the stub)"
+[ -n "$READY" ] && echo "Ready line: $READY" || echo "Ready line: none (no 'smoke: ready' in $LOG)"
 [ -n "$FAILED" ] && echo "Failure line: $FAILED"
 [ -n "$CRASH" ] && echo "Crash report: $CRASH"
 echo "Log: $LOG ($(wc -l < "$LOG" | tr -d ' ') lines)"

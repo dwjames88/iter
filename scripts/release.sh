@@ -10,7 +10,7 @@
 #                          Default: the login Keychain item com.dwjames.iter.update-signing / ed25519.
 #   ITER_SIGN_IDENTITY     re-sign with this identity, e.g. "Developer ID Application: Name (TEAMID)".
 #                          Default: whatever the project's automatic signing produced.
-#   ITER_ENTITLEMENTS      entitlements used for that re-sign (default App/Iter.entitlements).
+#   ITER_ENTITLEMENTS      entitlements used for that re-sign (default Mac/Iter.entitlements).
 #   ITER_NOTARY_PROFILE    notarytool keychain profile; if set, the app is notarised and stapled.
 # Nothing here ever pushes without --publish. After the release commit, a failure prints how to undo it locally.
 set -euo pipefail
@@ -206,7 +206,7 @@ if [ "$PREPARED" = 0 ]; then
   stage "8/11 Code signature"
   if [ -n "${ITER_SIGN_IDENTITY:-}" ]; then
     echo "Re-signing with: $ITER_SIGN_IDENTITY"
-    codesign --force --options runtime --timestamp --entitlements "${ITER_ENTITLEMENTS:-App/Iter.entitlements}" \
+    codesign --force --options runtime --timestamp --entitlements "${ITER_ENTITLEMENTS:-Mac/Iter.entitlements}" \
       --sign "$ITER_SIGN_IDENTITY" "$APP"
   else
     echo "Keeping the signature from the project's automatic signing (no ITER_SIGN_IDENTITY)."

@@ -458,7 +458,7 @@ The Explore light panel ([ExploreLightPanel](COMPONENTS.md#explorelightpanel)) r
 | Compass: View up | Mesa Arch with the classic view at 190° S, 18:45, the toggle set to "View up" | The rose is turned so the classic view direction is at the top; the wedge points up and the cardinal labels sit around the rim. | `snapshots/skyrose-panel-view-up-{light,dark}-360x1500.png`, `snapshots/skyrose-page-view-up-{light,dark}-988x1250.png` |
 | Compass: no classic view | Mesa Arch with no facing, 12:30 | No orientation toggle and no wedge; the fact is "Sun rises at 96° E at 07:20" (12:30 is before solar noon, 13:07, so the fact is about the sunrise; after noon it is about the sunset). | `snapshots/skyrose-panel-no-facing-{light,dark}-360x1500.png`, `snapshots/skyrose-page-no-facing-{light,dark}-988x1250.png` |
 
-**iPhone full-page snapshots** (`FullPageIOSSnapshotTests`, run with `scripts/snapshots-ios.sh [simulator] [suite]`):
+**iPhone full-page snapshots** (`FullPageIOSSnapshotTests`, run with `scripts/test-ios.sh`):
 
 | State | Trigger | What changes | Snapshots |
 |---|---|---|---|

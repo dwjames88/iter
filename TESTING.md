@@ -2,7 +2,7 @@
 
 How to test each layer, how to look at the Mac app without touching your data, and the checklist for what only a person can check. The iPhone and iPad side is in [TESTING-iOS.md](TESTING-iOS.md).
 
-Script names below are the ones in `scripts/` today. If a script is renamed or removed, this page is wrong until it is updated. A few older scripts still mention the removed `App/` folder: see "Scripts that are out of date" at the end.
+Script names below are the ones in `scripts/` today. If a script is renamed or removed, this page is wrong until it is updated.
 
 ## The two Mac apps
 
@@ -73,7 +73,7 @@ scripts/render.sh                                         # build build/render/I
 scripts/render.sh --run --wait 15 -- -IterSection trips
 ```
 
-`--run` launches the render copy hidden with sample data, an in-memory store and a fixed location (San Francisco) unless you pass your own. The script's `--capture DIR` option passes `-IterCaptureWindow`, which the rebuilt Mac app does not implement, so no `screen.png` is written. Use the hosted tests for window images (`scripts/test-mac.sh`). As with snapshots, glass and maps do not draw in a hidden window.
+`--run` launches the render copy hidden with sample data, an in-memory store and a fixed location (San Francisco) unless you pass your own. For window images use the hosted tests (`scripts/test-mac.sh`). As with snapshots, glass and maps do not draw in a hidden window.
 
 ### 5. Updater: `scripts/updater-e2e.sh`
 
@@ -216,7 +216,3 @@ Nothing below could be checked by a headless run. Look at each one yourself, on 
 - The Live Activity and Dynamic Island were rendered as views, not seen running.
 - The recorded fixtures show what the feeds looked like on the day they were recorded. Feeds change.
 - The battery numbers in `LocationPolicy` are estimates.
-
-## Scripts that are out of date
-
-These still mention the removed `App/`, `AppiOS/`, `AppTests/` or `IterKit` and are expected to be fixed or removed in the cut-over: `scripts/test.sh`, `scripts/snapshots.sh`, `scripts/snapshots-ios.sh`, `scripts/strings.sh`, `scripts/pin-drag-test.sh`, `scripts/make-icon.sh`, and the `--weatherkit` option of `scripts/run.sh`. `scripts/release.sh` defaults its entitlements to `App/Iter.entitlements`; set `ITER_ENTITLEMENTS=Mac/Iter.entitlements` until it is fixed. Use `scripts/test-mac.sh`, `scripts/test-ios.sh` and `swift test` instead of the first three.

@@ -39,8 +39,8 @@ You need a Mac with Xcode, and [XcodeGen](https://github.com/yonaskolb/XcodeGen)
 **The real Mac app.** This is the one that opens your real store.
 
 ```
-scripts/run.sh            # builds build/Iter.app (signed with your Apple Development certificate) and opens it
-scripts/run.sh --no-open  # build only
+scripts/run.sh            # builds build/Iter.app (signed with your Apple Development certificate); does not open it
+scripts/run.sh --real     # the same, then opens it: the real app on the real store, first launch migrates to V5
 ```
 
 It runs as `com.dwjames.iter`. Opening it for the first time on your real library triggers the migration above. If you want to look at the app without touching your data, use the render copy.

@@ -179,4 +179,4 @@ The Mac checklist in [TESTING.md](TESTING.md) covers first launch, Liquid Glass,
 2. The "Iter Rebuild" simulator is a two-display device. Layout evidence for the tab bar and sheet (decision D6) came from it and should be rechecked on a phone-sized device.
 3. FoundationModels is weak-linked (`-weak_framework FoundationModels` in `project-ios.yml`). Built with the iOS 27 SDK, the `@Generable` code refers to a symbol iOS 26 does not have, and a strong link stops the app at launch on iOS 26. Find checks availability before it uses the model.
 4. No updater on iOS, and no offline base map (MapKit has no way to download tiles). Pinned and active trips keep their conditions, drive times and images.
-5. Old script names: `scripts/snapshots-ios.sh` still refers to the old `AppiOS` tests and looks out of date. Use `scripts/test-ios.sh` with `ITER_SNAPSHOT_RECORD=1`, or the screenshot steps above.
+5. `scripts/snapshots-ios.sh` is gone. Use `scripts/test-ios.sh` with `ITER_SNAPSHOT_RECORD=1`, or the screenshot steps above.
