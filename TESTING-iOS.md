@@ -106,6 +106,9 @@ Pass them after the bundle id with `simctl launch`, or in the scheme's Arguments
 | `-IterFindQuery <text>` | Runs a Find search at launch |
 | `-IterFindSelect saved` | Shows the first saved place on Find's card |
 | `-IterSettings root\|sources` | Opens Settings, on a pane |
+| `-IterFirstRun YES\|NO` | Forces the one-time first-run guide on or off |
+| `-IterFindQuick today\|tomorrow\|nearyou` | Runs a Today, Tomorrow or Near You quick choice on Find (iPhone and iPad only) |
+| `-IterMapCamera lat,lon,span` and `-IterMapTime <ISO 8601>` | Find map camera (span in degrees of latitude) and the instant the night side is drawn for. Only with `-IterInMemoryStore YES` |
 | `-IterGoSampleRun YES` | Starts the sample trip at its first stop (fakes only) |
 | `-IterD6Probe YES` | Debug only. The rejected tab-bar-outside layout, kept as evidence (decision D6, see [Design/GLASS-RULES.md](Design/GLASS-RULES.md)) |
 
@@ -168,6 +171,10 @@ The Mac checklist in [TESTING.md](TESTING.md) covers first launch, Liquid Glass,
 - [ ] Notifications from the Lock Screen: leave-soon and leave-now arrive. Navigate on leave-now opens Apple Maps. On automatic arrival, Not yet undoes it.
 - [ ] Do notifications break through a Focus? (Time-sensitive is expected not to work on a free team.)
 - [ ] Force-quit during a run and reopen: the run is still there.
+- [ ] Go works with no signal after Build has planned the trip (legs are kept beside the offline pack). The sample-data version says Sample everywhere.
+- [ ] The Go map frames you, the next stop and today's stops, shows your blue dot, and the recentre button works after you pan.
+- [ ] The Find list ends at a hard edge above the tab bar, and the sources line is one quiet line.
+- [ ] First-run guide shows once on a fresh install, and the Today, Tomorrow and Near You choices appear before a search.
 - [ ] Home widget: add it and compare it with the app.
 - [ ] AirDrop: receive a trip and the library from the Mac. A second send updates the trip, not duplicates it. A trip changed on the phone and sent back updates the Mac.
 - [ ] Real network sources on cellular and on Wi-Fi, including Find with Apple Intelligence on and off.

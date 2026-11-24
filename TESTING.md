@@ -13,13 +13,22 @@ Script names below are the ones in `scripts/` today. If a script is renamed or r
 | Store | Your real library, `~/Library/Application Support/Iter/Iter.store` | In memory, or a scratch file you name. Refused inside the real folder |
 | Keychain and preferences | The real ones | Throwaway. Never touches the real ones |
 | Location | Asks at launch | Never asks. A fixed place, or none |
-| Built by | `scripts/run.sh` | `scripts/render.sh`, `scripts/test-mac.sh`, `scripts/smoke-mac.sh` |
+| Built by | `scripts/run.sh` (builds only; `--real` also opens it, which is the real app on the real store) | `scripts/render.sh`, `scripts/test-mac.sh`, `scripts/smoke-mac.sh` |
 
 This split is enforced in code (`StorePlacement`), not by habit. A test or render run cannot open the real store even if given its path. Everything in the "headless" sections below uses the render copy.
 
 **First launch of the real app on your real library** migrates the store to V5 and writes a backup first. See the first-look checklist, and the README.
 
 ## Layers
+
+### One command for everything: `scripts/test.sh`
+
+```
+scripts/test.sh                  # package, IterUpdater, hosted Mac tests, iOS tests, in that order
+scripts/test.sh --no-ios --no-mac   # skip stages: --no-package --no-updater --no-mac --no-ios
+```
+
+Every stage runs even if an earlier one fails, and the exit code is non-zero if any stage failed. Set `ITER_SCRATCH` to move the SwiftPM scratch folder. Everything it runs is headless and uses the render copy and the iOS 27.2 simulator.
 
 ### 1. The package: `swift test`
 
@@ -97,6 +106,8 @@ Switches are `-Name value` pairs, parsed from the process arguments by `LaunchOp
 | `-IterLocation lat,lon` | A fixed location. No permission is ever asked |
 | `-IterSection find\|trips\|places\|trip` | The section to open on |
 | `-IterSeedTrip YES` | Adds the sample library. With `-IterSection trip` it opens the sample trip. Never applies to the real store |
+| `-IterMapCamera lat,lon,span` | Find map: starts centred there, `span` degrees of latitude tall (zoomed out shows the night side). Only with `-IterInMemoryStore YES` |
+| `-IterMapTime <ISO 8601>` | Find map: draws the night side for that instant. Only with `-IterInMemoryStore YES` |
 
 ### Mac only
 
@@ -116,6 +127,8 @@ The Debug menu (Debug builds only, which include the render copy) has Seed Sampl
 | `-IterFindQuery <text>` | Runs a Find search at launch |
 | `-IterFindSelect saved` | Shows the first saved place on Find's card |
 | `-IterSettings root\|sources` | Opens Settings, on a pane |
+| `-IterFirstRun YES\|NO` | Forces the one-time first-run guide on or off (it otherwise shows once) |
+| `-IterFindQuick today\|tomorrow\|nearyou` | Runs a Today, Tomorrow or Near You quick choice on Find (iPhone and iPad only) |
 | `-IterGoSampleRun YES` | Starts the sample trip at its first stop. Only with fake wiring (a fixed location or sample data) |
 | `-IterD6Probe YES` | Debug builds only. The rejected "tab bar outside the sheet" layout, kept as evidence for decision D6 |
 
@@ -139,7 +152,7 @@ Start a hidden render copy with `scripts/render.sh --run`, or build it and open 
 3. Reorder stops, change the transfer timing between days (Morning or Evening Before), edit a drive note, Undo each (Command-Z, the menu names the action).
 4. Export the trip, import it again (a copy), and check it matches.
 
-**Go (iPhone only).** In the simulator, start it with `-IterTab go -IterGoSampleRun YES`. The Go tab shows the next stop, leave-by, the drive time, conditions and the live sky card. Real Go behaviour (background location, notifications, Live Activity) is on the first-look checklist.
+**Go (iPhone only).** Go starts from the legs Build planned (kept in `<tripID>.legs` beside the offline pack) and works offline. With sample data it says so: Sample drive times, Sample Sky Index, "Sample" on the widget and Live Activity, and Trip Builder shows "Sample data, no offline pack". The Go map frames you, the next stop and today's stops, merges close pins into one badge, shows your own blue dot and has a recentre button.  In the simulator, start it with `-IterTab go -IterGoSampleRun YES`. The Go tab shows the next stop, leave-by, the drive time, conditions and the live sky card. Real Go behaviour (background location, notifications, Live Activity) is on the first-look checklist.
 
 ## First-look checklist
 
@@ -161,6 +174,7 @@ Nothing below could be checked by a headless run. Look at each one yourself, on 
 
 **Maps**
 - [ ] Map pins draw on the Mac Find and Saved Places maps, with the score chips. Clusters form and open when you zoom in.
+- [ ] The one-time "Move This Spot" tip shows on your own spot and does not come back after you close it.
 - [ ] Your own pins never merge into a cluster, and you can drag one. The coordinates update. Undo moves it back.
 - [ ] Map style (Standard, Satellite, Hybrid) changes on every map. Show Daylight draws the night side when zoomed out.
 - [ ] Look Around shows on a place card where Apple has it.
@@ -177,6 +191,7 @@ Nothing below could be checked by a headless run. Look at each one yourself, on 
 - [ ] View: Trip Builder panel (Option-Command-0).
 - [ ] Go menu: Find (Command-1), Trips (Command-2), Saved Places (Command-3).
 - [ ] Conditions: Refresh (Command-R). Trip: Change Dates (Shift-Command-D), Export (Shift-Command-E), Send to iPhone (Shift-Command-I).
+- [ ] Learn From My Library (Settings ▸ Search, on by default) changes the order of results a little toward the kinds you save, and nothing else. Turn it off and the order returns.
 - [ ] Settings: General, Search, Sources & Credits, Keys, Updates. Turning EUMETSAT or IEM on needs a relaunch of Conditions to apply, as the pane says.
 
 **Real network sources** (the headless runs used recordings)
