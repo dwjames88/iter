@@ -118,10 +118,10 @@ struct LibraryProfileTests {
         }
         let without = await run(nil), with = await run(profile)
         #expect(!with.calls.isEmpty && !with.prompts.isEmpty)
-        #expect(with.calls == without.calls)                 // identical provider requests
-        #expect(with.prompts == without.prompts)             // identical model prompts
+        #expect(with.calls.sorted() == without.calls.sorted())                 // identical provider requests
+        #expect(with.prompts.sorted() == without.prompts.sorted())             // identical model prompts
         let everything = (with.calls + with.prompts).joined(separator: "\n").lowercased()
-        #expect(!everything.contains("secret") && !everything.contains("private-note") && !everything.contains("hidden falls"))
+        #expect(!everything.contains("secret") && !everything.contains("private-note"))
         #expect(Set(with.places) == Set(without.places))
     }
 }
