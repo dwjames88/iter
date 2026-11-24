@@ -1,5 +1,7 @@
 # Iter screens and states
 
+> **Note (rebuild): this page describes the earlier Mac app.** Its source paths (`App/Sources/`, `AppTests/`) were removed in the rebuild. The current screens are in `Packages/Iter/Sources/IterScreens` and the shells in `Mac/` and `iOS/`, and current renders are in `Design/snapshots/rebuild/`. Treat the layout and token notes below as the earlier design, not a description of the current code. The menus now live in `Mac/Sources/Shell/ShellCommands.swift`.
+
 Hand-off for rebuilding Iter's design in a design tool. Companion files: [COMPONENTS.md](COMPONENTS.md) (every component), [TOKENS.md](TOKENS.md) and `tokens.json` (every colour, size and type style). Everything here is read from the SwiftUI code in `App/Sources/` and the snapshot tests in `AppTests/`.
 
 Iter is a native macOS 26 app. Its promise: **"Be in the right place when the light is right."** It plans photography trips around the Light Index, a 0 to 100 score for one named light window (Sunrise, Sunset, the blue hours, Night) at one place.
@@ -65,7 +67,7 @@ A new section's detail replaces the previous one. Trips are listed first in the 
 
 ## Menu bar and keyboard shortcuts
 
-From `App/Sources/Shell/AppCommands.swift`, plus screen-level shortcuts. None of the menus render in snapshots.
+From the earlier app's `AppCommands.swift` (now `Mac/Sources/Shell/ShellCommands.swift`), plus screen-level shortcuts. None of the menus render in snapshots.
 
 | Menu | Item | Shortcut | Notes |
 |---|---|---|---|
