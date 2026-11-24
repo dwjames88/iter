@@ -14,7 +14,10 @@ Iter has been rebuilt from the ground up. It keeps your trips, places and folder
 - Iter makes a backup before it touches anything. On the Mac it is `~/Library/Application Support/Iter/Backups/pre-v5-<date and time>/`, with the raw store files, every trip as an `.iter` file the earlier app can open, and `backup.json`. If the backup cannot be made, the store is not opened and nothing is changed.
 - If the new store fails to open, Iter leaves your original file alone, builds a new store beside it from the backup's `.iter` files, and tells you where the backup is.
 - The iPhone does the same in its own app folder. The iPhone's bundle id is unchanged, so its library carries over.
-- Migration was tested on fixture stores made by the old app's own code (schemas V1 to V4, including folders, pins, transfer timings and drive notes). It has not been tried on a copy of the iPhone store.
+- Migration was tested on fixture stores made by the old app's own code (schemas V1 to V4, including folders, pins, transfer timings and drive notes).
+- **Dry run on a copy of your real Mac library** (never on the library itself). The copy was at schema V3, not V4. The new opener backed it up (the raw store files were byte-identical to the original, with one `.iter` file per trip and a `backup.json`) and migrated it V3 to V5. A field-by-field comparison with what the old code reads from the same store found no differences. A forced failure of the V5 open left the original untouched and rebuilt the trips from the backup's `.iter` files. That fallback does not carry folders, pins, saved flags or sort order. The normal path does.
+- It has not been tried on a copy of the iPhone store.
+- The old Keychain keys (OpenWeather, Windy, Google) are copied once to the new layout at launch. The old items stay where they are, and nothing uses the copies.
 
 ### New
 - **One flow, Find, Conditions, Build, Go, on Mac and iPhone.** The Mac sidebar is Find, Trips and Saved Places ("Locations" is now "Saved Places"). The iPhone has Find, Trips, Saved and Go tabs. Go is iPhone only.
@@ -24,6 +27,10 @@ Iter has been rebuilt from the ground up. It keeps your trips, places and folder
 - **On-device military-origin references.** World Magnetic Model 2025 (declination) and MGRS grid references, computed on the device.
 - **A new Sky Index.** The Forecast Sky Index now uses precipitation, visibility, moon, smoke and aerosol, terrain (the real horizon, computed per place), humidity, wind and the Milky Way core, as well as cloud. A missing input is dropped and the screen says so. The score runs from 0 to 100 (it was 5 to 100). The Live Sky Index blends the latest observation, the nowcast and the forecast for the sky now and the next few hours, and shows a trend. A forecast older than three hours is marked stale. The new factors are first guesses that still need calibrating.
 - **Better planning.** Stops can have a dwell time (shoot until), a fixed arrival, and a kind (light, lodging, waypoint). A trip has a start place, so the first stop gets a leave-by time. Leave-by and drive times use live routes, with an offline estimate when there is no signal.
+- **Go plans from Build.** Go starts from the drive legs Build planned, which are kept beside the offline pack, so a planned trip works with no signal. It asks for a route only for a leg that is missing. In sample-data mode everything says so: Sample drive times, Sample Sky Index, "Sample" on the widget and Live Activity, and "Sample data, no offline pack" in the Trip Builder.
+- **A better Go map.** It frames you, the next stop and today's stops, merges close pins into one badge, draws your own blue dot, stops following when you pan, and has a recentre button. On iPhone the sheet's content ends at a hard edge above the tab bar.
+- **Find, iPhone and iPad.** Today, Tomorrow and Near You quick choices before a search (the same search, the day only picks which day's scores). A one-time first-run guide. A quiet one-line sources note with a Sources link. Place action tiles are all the height of the tallest. A one-time "Move This Spot" tip on your own spots. The map's night side is a little stronger.
+- **Learn From My Library.** On by default, with a Settings toggle. It uses a short summary of what you save, on the device only, to nudge result ranking by at most 12 percent.
 - **Pinned and active trips keep their conditions offline**, labelled with their age.
 - **`.iter` version 2.** Holds a trip or the whole library, with folders, pins, saved places, provenance, and deletion records. Importing merges by id: the newer edit wins, and a second import updates a trip instead of duplicating it. **Send to iPhone** and **Send Library to iPhone** (Mac, with AirDrop) use it. **Export for older Iter** writes version 1. Version 1 files stay readable.
 - **Recovery and backup**, as above.
@@ -41,7 +48,7 @@ Iter has been rebuilt from the ground up. It keeps your trips, places and folder
 - **The licensing module.** Dropped. Iter has no licence check.
 - **Reddit and Google search.** Not available. Reddit needs your own API credentials, and Google is closing its search product to new users. Find lists both as "unavailable" with the reason.
 - **Light pollution and seeing.** There is no source. The sky index leaves Bortle and seeing out and says so.
-- **Satellite and radar maps.** The NASA, EUMETSAT and IEM imagery adapters exist but no map layer uses them yet. EUMETSAT and IEM radar are off until their licences are read.
+- **Satellite and radar maps.** The NASA, EUMETSAT and IEM imagery adapters exist, but no map shows them. SwiftUI's `Map` has no tile-overlay content, so a cloud layer needs an `MKMapView`-based map or a future MapKit API. EUMETSAT and IEM radar are also off until their licences are read. The old "show cloud imagery" preference is gone.
 
 ### Known gaps
 - **Bonjour sync is not built.** Only file sharing (AirDrop and Files) with merge. There is no iCloud sync.
