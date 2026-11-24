@@ -102,8 +102,12 @@ private struct PlaceActionLabelStyle: LabelStyle {
         }
         .padding(.vertical, PlaceActionMetrics.verticalPadding)
         .padding(.horizontal, PlaceActionMetrics.horizontalPadding)
+        #if os(macOS)
+        .frame(maxWidth: .infinity, minHeight: PlaceActionMetrics.height)
+        #else
         // maxHeight lets the label (and so the button's fill) take the height `PlaceActionRow` proposes, the tallest tile's.
         .frame(maxWidth: .infinity, minHeight: PlaceActionMetrics.height, maxHeight: .infinity)
+        #endif
     }
 }
 
