@@ -53,7 +53,7 @@ Why the two stubs exist: no commercial-safe light-pollution or seeing source was
 
 | Source | Provides | Operator | Origin tier | Licence and credit text | Key | Rates and limits | On by default |
 |---|---|---|---|---|---|---|---|
-| NASA GIBS (`nasa.gibs`) | Satellite cloud imagery tiles from GOES and Himawari | NASA ESDIS | Government (data from NOAA and JMA) | "Imagery: NASA GIBS / NOAA GOES / JMA Himawari" | None | Spacing 100 ms, 4 in flight, timeout 20 s, 1 retry. Cache 10 min | Yes in the catalogue. Not shown in the app yet: see "Built but not used" |
+| NASA GIBS (`nasa.gibs`) | Satellite cloud imagery tiles from GOES and Himawari | NASA ESDIS | Government (data from NOAA and JMA) | "Imagery: NASA GIBS / NOAA GOES / JMA Himawari" | None | Spacing 100 ms, 4 in flight, timeout 20 s, 1 retry. Cache 10 min | Yes in the catalogue. Not shown in the app: see "Built but not used" |
 | EUMETSAT Meteosat (`eumetsat.view`) | Meteosat imagery for Europe and Africa | EUMETSAT | Government | "Contains EUMETSAT data". Memory only, never stored on disk | None | Spacing 250 ms, 2 in flight, timeout 20 s, 1 retry. Cache 15 min | **No.** The licence for real-time imagery in an app has not been read. The user can switch it on in Settings |
 | IEM NEXRAD radar (`iem.nexrad`) | US radar tiles | Iowa Environmental Mesonet (Iowa State University), from NOAA NWS NEXRAD data | Open data (the data itself is government) | "Radar tiles: Iowa Environmental Mesonet (NEXRAD)". Memory only | None | Spacing 100 ms, 4 in flight, timeout 15 s, 1 retry. Cache 5 min | **No.** The service's terms have not been fully read. The user can switch it on in Settings |
 
@@ -104,15 +104,15 @@ Sun, moon, twilight and Milky Way positions are also computed on the device by t
 
 ## Built but not used
 
-Three adapters have code and tests but nothing in the apps calls them yet. They are listed in Settings ▸ Sources & Credits so the credits cover everything the app can show.
+Four sources have code and tests but nothing in the apps shows or calls them yet. They are listed in Settings ▸ Sources & Credits so the credits cover everything the app can show.
 
-- **NASA GIBS imagery.** There is a "show cloud imagery" preference (off by default) but no map layer draws it yet.
-- **EUMETSAT** and **IEM radar.** Off by default as above, and not drawn anywhere yet.
+- **NASA GIBS imagery.** There is a verified true-colour layer descriptor (Web Mercator) and a URL helper, and a real tile was fetched to check it. The cloud-imagery overlay is left out because SwiftUI's `Map` has no tile-overlay content. It needs an `MKMapView`-based map or a future MapKit API. The "show cloud imagery" preference was removed.
+- **EUMETSAT** and **IEM radar.** Off by default as above, and not drawn anywhere, for the same map reason.
 - **USGS 3DEP point elevation.** Terrain Tiles supply elevation worldwide, so the US-only point service is not called.
 
 ## Keys
 
-Nothing needs a key today. The key vault (`IterSources/KeyVault`) is kept so a keyed source can be added later. It stores keys in the Keychain under the service `com.dwjames.iter.keys`, one item per source id. The vault can copy the old app's items (OpenWeather, Windy, Google) into that layout and leave the old ones alone (`migrateLegacyItems`), but nothing calls it at launch yet, so no old key is copied.
+Nothing needs a key today. The key vault (`IterSources/KeyVault`) is kept so a keyed source can be added later. It stores keys in the Keychain under the service `com.dwjames.iter.keys`, one item per source id. At launch, for the real process only, the vault copies the old app's items (OpenWeather, Windy, Google) into that layout once (`migrateLegacyItems`). It never overwrites a new item, leaves the old ones in place, and a marker makes later launches do nothing. The copied keys are not used by anything today.
 
 ## Adding or changing a source
 
