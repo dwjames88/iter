@@ -81,7 +81,7 @@ public enum BuildPreviewData {
     /// The sample trip's model. `selectedDay` is 0-based; `selectedStop` is the 1-based stop number (the map pin's number).
     /// `startPlace` gives the trip a start place ("Salt Lake City") so day 1 has a first leave-by.
     public static func canyonCountry(_ variant: Variant = .ready, selectedDay: Int? = nil, selectedStop: Int? = nil,
-                                     startPlace: Bool = false) -> BuildModel {
+                                     startPlace: Bool = false, isSampleData: Bool = false) -> BuildModel {
         let library: LibraryStore
         do {
             library = LibraryStore(container: try IterStoreSchema.makeInMemoryContainer(), clock: { BuildPreviewData.now })
@@ -106,7 +106,7 @@ public enum BuildPreviewData {
         let scale = variant == .driveDoesNotFit ? 30.0 : 1.0
         let model = BuildModel(tripID: record.id, library: library, conditions: conditions, packs: nil,
                                routing: BuildPreviewRouting(scale: scale), now: { BuildPreviewData.now },
-                               engine: LightEngine(ephemeris: MemoizedEphemeris.shared))
+                               engine: LightEngine(ephemeris: MemoizedEphemeris.shared), isSampleData: isSampleData)
         if variant == .backwardsDay,
            let delicate = model.stops.first(where: { $0.name == "Delicate Arch" }) {
             model.moveStop(delicate.id, toDay: 2, index: 0)

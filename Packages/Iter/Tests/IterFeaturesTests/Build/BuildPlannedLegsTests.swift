@@ -87,3 +87,25 @@ import IterSources
         m.close()
     }
 }
+
+@MainActor
+@Suite struct BuildSampleBasisTests {
+    @Test func sampleModeLabelsEveryDriveAsSampleNeverTraffic() async throws {
+        let h = try BuildHarness()
+        let sleeper = h.sleeper
+        func bases(sample: Bool) async -> Set<String> {
+            let m = BuildModel(tripID: h.trip.id, library: h.library, conditions: h.conditions, packs: h.packs, routing: h.routing, now: { testNow },
+                               engine: LightEngine(ephemeris: MemoizedEphemeris.shared), timing: BuildTiming(sleep: { try await sleeper.sleep($0) }),
+                               legStore: nil, isSampleData: sample)
+            m.open()
+            _ = await settle { !m.isLoadingDrives }
+            m.refreshIfChanged()
+            defer { m.close() }
+            return Set(m.driveRows.compactMap { $0.basis?.label })
+        }
+        let live = await bases(sample: false)
+        #expect(live.contains("With traffic"))
+        let sample = await bases(sample: true)
+        #expect(sample == ["Sample drive time"])
+    }
+}

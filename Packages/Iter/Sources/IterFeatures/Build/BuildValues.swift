@@ -224,6 +224,8 @@ public enum DriveBasis: Equatable, Sendable {
     case typical
     /// No road route: a straight-line guess, labelled as such.
     case estimate
+    /// Sample data: the built-in router's drive time. Never described as traffic.
+    case sample
 
     /// "With traffic", "Typical" or "Estimated" (English; views may phrase it themselves).
     public var label: String {
@@ -231,6 +233,7 @@ public enum DriveBasis: Equatable, Sendable {
         case .trafficAware: "With traffic"
         case .typical: "Typical"
         case .estimate: "Estimated"
+        case .sample: "Sample drive time"
         }
     }
 }

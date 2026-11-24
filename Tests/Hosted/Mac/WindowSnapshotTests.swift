@@ -125,7 +125,7 @@ import IterScreens
     /// Three columns: the sidebar, the route map and the Trip Builder inspector, with the multi-day Canyon Country trip.
     @Test func tripThreeColumns() async throws {
         try await framed("trip") { window in
-            let model = BuildPreviewData.canyonCountry(.ready, selectedDay: 2)
+            let model = BuildPreviewData.canyonCountry(.ready, selectedDay: 2, isSampleData: window.container.dataMode == .sample)
             TripLayout(window: window, tripID: model.tripID, model: model)
         }
     }

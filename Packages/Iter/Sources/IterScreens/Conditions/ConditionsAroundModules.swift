@@ -74,6 +74,7 @@ struct HourlyModule: View {
 
 struct NowModule: View {
     let model: ConditionsModel
+    @Environment(\.isSampleData) private var isSampleData
 
     var body: some View {
         ModuleCard(title: "Now", symbol: "dot.radiowaves.left.and.right") {
@@ -128,7 +129,7 @@ struct NowModule: View {
 
     private func liveRow(_ live: LiveConditions) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: IterSpace.sm) {
-            Text("Live").font(IterFont.captionStrong).foregroundStyle(IterColor.accentText)
+            Text(verbatim: SampleDataText.liveWord(sample: isSampleData)).font(IterFont.captionStrong).foregroundStyle(IterColor.accentText)
             if let score = live.reading.score, let kind = live.reading.kind {
                 Text(verbatim: "\(ConditionsText.name(kind)) \(score)" + (live.reading.forecastScore.map { " (forecast \($0))" } ?? ""))
                     .font(IterFont.body).foregroundStyle(IterColor.textPrimary)

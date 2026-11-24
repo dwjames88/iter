@@ -30,6 +30,7 @@ struct IOSRoot: View {
         }
         .environment(shell.navigator)
         .environment(shell.library)
+        .environment(\.isSampleData, shell.container.dataMode == .sample)
         .environment(\.findMapStyle, shell.container.preferences.mapStyle)
         .environment(\.findShowsDaylight, shell.container.preferences.showDaylight)
         .onChange(of: shell.navigator.route) { _, route in

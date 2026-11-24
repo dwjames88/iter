@@ -48,6 +48,7 @@ struct MainWindow: View {
         // Screens and sheets read these from the environment (sheets inherit from here, so this sits outside them).
         .environment(window.navigator)
         .environment(window.library)
+        .environment(\.isSampleData, shell.container.dataMode == .sample)
         .environment(\.findMapStyle, shell.container.preferences.mapStyle)
         .environment(\.findShowsDaylight, shell.container.preferences.showDaylight)
         .onAppear { appear(window) }

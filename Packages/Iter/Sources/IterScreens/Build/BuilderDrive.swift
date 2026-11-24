@@ -113,6 +113,9 @@ struct DriveStatus: Equatable {
             case .typical:
                 text = String(localized: "Typical", comment: "A drive time without traffic for a set departure")
                 symbol = .none
+            case .sample:
+                text = String(localized: "Sample drive time", comment: "Sample data mode: the drive time comes from the built-in sample router, not from traffic")
+                symbol = .none
             case .estimate, nil:
                 return nil
             }

@@ -316,7 +316,8 @@ public final class BuildModel {
             wants.append(.init(key: .init(leg: pair, bucket: nil), from: a, to: b, departing: nil))
         }
         var effective = typical
-        var basis: [LegKey: DriveBasis] = typical.mapValues { _ in .typical }
+        let typicalBasis: DriveBasis = isSampleData ? .sample : .typical
+        var basis: [LegKey: DriveBasis] = typical.mapValues { _ in typicalBasis }
         var overlaid = false
         for stop in ordered {
             guard let pair = pairFor[stop.id], let known = typical[pair], !known.isEstimate,
@@ -329,7 +330,7 @@ public final class BuildModel {
             wants.append(.init(key: key, from: a, to: b, departing: departing))
             if let leg = fetcher.leg(for: key, from: a, to: b) {
                 effective[pair] = leg
-                basis[pair] = .trafficAware(departing: departing)
+                basis[pair] = isSampleData ? .sample : .trafficAware(departing: departing)
                 overlaid = true
             }
         }
