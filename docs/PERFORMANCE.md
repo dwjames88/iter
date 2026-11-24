@@ -29,7 +29,7 @@ xctrace record --template 'Time Profiler' --attach <pid> --output run.trace
 
 Symbolicate with the build's dSYM and read main-thread samples only (1 ms each). Idle CPU and memory were read with `top -l 4 -s 5` on the pid, 25 seconds after launch, with the window hidden.
 
-**Package benchmarks.** `ITER_BENCH=1 swift test` in `Packages/IterKit` runs the engine and weather-parsing benchmarks and prints microseconds per call. `TripBuilderPerfTests` and `ExplorePerfTests` pin the model counters below, so a regression in redraw or recompute counts fails a test instead of needing a profile.
+**Package benchmarks.** `ITER_BENCH=1 swift test --filter EngineBenchmark` in `Packages/Iter` runs the engine benchmarks and prints microseconds per call (add `-c release` for optimised numbers). The perf tests in `Packages/Iter/Tests/IterFeaturesTests/Build/BuildPerfTests.swift` pin model counters, so a regression in redraw or recompute counts fails a test instead of needing a profile.
 
 ## Method for the tables
 
