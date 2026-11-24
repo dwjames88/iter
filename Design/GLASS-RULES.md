@@ -21,7 +21,7 @@ Measured from Apple Maps. The latest values (b15548c) supersede earlier ones suc
 - Panels, imagery and prominent buttons use `ConcentricRectangle`, concentric with the window or parent shape.
 - Sidebar search: 37 pt glass capsule, 13 pt text, 12 pt inset from the sidebar edges (the Figma sidebar's padding). The sidebar is 280 pt wide on the paper background; its bottom bar holds plain borderless buttons (info, +), no glass.
 - Action tiles: 39 to 52 pt tall, one style and shape per row (`PlaceActionStyle.swift`); the main action filled with the accent, the rest the accent on a faint accent fill (or bordered, monochrome labels on iOS).
-- Filter chips: 44 pt, system toggle buttons, monochrome (`FilterChip` and `filterChipStyle()` in `AppiOS/Sources/Explore/Components/SheetComponents.swift`).
+- Filter chips: 44 pt, system toggle buttons, monochrome (`FilterChip` and `filterChipStyle()` in the old app's Explore sheet).
 - Map controls: one stack (`MapControlStack.swift`); Windy and Add Spot share a glass capsule at the top of it, not the toolbar.
 
 ## Components

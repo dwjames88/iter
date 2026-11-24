@@ -4,7 +4,7 @@ import Testing
 
 // MARK: - Offscreen renderer (hosted Mac tests): what works, what does not, and why
 //
-// Ported from the old AppTests/Support/Snapshot.swift for the rebuild. Differences: one fixed size per call, one PNG per
+// Ported from the old app's test support for the rebuild. Differences: one fixed size per call, one PNG per
 // appearance named <name>-<light|dark>.png, and the harness refuses to run unless the host app is the render copy
 // (com.dwjames.iter.render), so it can never run inside the owner's real app.
 //
