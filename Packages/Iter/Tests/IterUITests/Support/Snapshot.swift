@@ -1,4 +1,5 @@
 import CoreGraphics
+import Darwin
 import Foundation
 import SwiftUI
 import Testing
@@ -10,7 +11,7 @@ import UIKit
 
 // MARK: - Offscreen snapshot harness (package tests, no host app)
 //
-// Ported from AppTests/Support/Snapshot.swift. Goal: PNGs of SwiftUI views with NO visible window, NO focus change and
+// Ported from the old app's test support. Goal: PNGs of SwiftUI views with NO visible window, NO focus change and
 // NO Screen Recording permission, so never ScreenCaptureKit or CGWindowList.
 //
 // macOS (xctest bundle, no app): `NSApplication.shared` is created with the `.prohibited` activation policy (never
@@ -26,17 +27,36 @@ enum SnapshotAppearance: String, CaseIterable, Sendable {
     case light, dark
 }
 
-/// A FIFO async mutex on the main actor (see `Snapshot.image`).
+/// A FIFO async mutex on the main actor (see `Snapshot.image`), and a process-wide one on top.
+///
+/// Why the file lock: `swift test` runs every test target in ONE process, and three copies of this harness exist
+/// (IterUITests, IterScreensTests `Snapshot`, and `GoSnapshotHarness`). A per-copy lock only serialised renders within
+/// its own copy, so a sidebar render from one target interleaved with a builder render from another: several
+/// off-screen windows at the same spot, shared first-responder, display and CATransaction state, which moved text by a
+/// pixel or two (the `SidebarSnapshotTests.parts` and `TripBuilderSnapshotTests.stopCard` flakes, only under a full run).
+/// Every copy now takes the same `flock` on one file in the temp folder, polled with short sleeps so the main actor is
+/// never blocked. The file name carries the process id, so two `swift test` runs at once never wait for each other.
 @MainActor
 final class RenderLock {
     static let shared = RenderLock()
     private var busy = false
     private var waiters: [CheckedContinuation<Void, Never>] = []
+    private var descriptor: Int32 = -1
+
     func acquire() async {
-        if !busy { busy = true; return }
-        await withCheckedContinuation { waiters.append($0) }
+        if busy { await withCheckedContinuation { waiters.append($0) } } else { busy = true }
+        // This copy's turn. Now the process-wide one.
+        let path = FileManager.default.temporaryDirectory.appendingPathComponent("iter-snapshot-render-\(getpid()).lock").path
+        let fd = open(path, O_CREAT | O_RDWR, 0o666)
+        guard fd >= 0 else { return }
+        while flock(fd, LOCK_EX | LOCK_NB) != 0 {
+            try? await Task.sleep(for: .milliseconds(20))
+        }
+        descriptor = fd
     }
+
     func release() {
+        if descriptor >= 0 { flock(descriptor, LOCK_UN); close(descriptor); descriptor = -1 }
         if waiters.isEmpty { busy = false } else { waiters.removeFirst().resume() }
     }
 }

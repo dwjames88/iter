@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: - Offscreen snapshot harness for the Go screens (copied from IterUITests/Support/Snapshot.swift, renamed)
 //
-// Ported from AppTests/Support/Snapshot.swift. Goal: PNGs of SwiftUI views with NO visible window, NO focus change and
+// Ported from the old app's test support. Goal: PNGs of SwiftUI views with NO visible window, NO focus change and
 // NO Screen Recording permission, so never ScreenCaptureKit or CGWindowList.
 //
 // macOS (xctest bundle, no app): `NSApplication.shared` is created with the `.prohibited` activation policy (never
@@ -54,6 +54,9 @@ enum GoSnapshotHarness {
             .frame(width: size.width, height: size.height)
             .background { background }
             .environment(\.colorScheme, appearance == .dark ? .dark : .light)
+        // The same process-wide lock as `Snapshot` (this copy had none): see `RenderLock`.
+        await RenderLock.shared.acquire()
+        defer { RenderLock.shared.release() }
         return try await renderBackend(AnyView(content), appearance: appearance, size: size, scale: scale, settle: settle)
     }
 
