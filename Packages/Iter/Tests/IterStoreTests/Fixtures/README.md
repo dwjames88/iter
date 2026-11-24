@@ -1,6 +1,6 @@
 # Store fixtures
 
-Everything here was written by the OLD code (`Legacy/IterKit`, module `IterData`) by the `IterFixtureGen` tool. Nothing was
+Everything here was written by the OLD code (`Tools/LegacyFixtureGen`, module `IterData`) by the `IterFixtureGen` tool. Nothing was
 copied from a real user store. These are the oracle for the rebuild's Phase 1: the new `IterStore` must open each store and
 produce the same data as `expected.json`.
 
@@ -42,7 +42,7 @@ comparison should skip them.
 
 From the worktree root:
 
-    swift run --package-path Legacy/IterKit IterFixtureGen Packages/Iter/Tests/IterStoreTests/Fixtures
+    swift run --package-path Tools/LegacyFixtureGen IterFixtureGen Packages/Iter/Tests/IterStoreTests/Fixtures
 
 It deletes and rewrites `stores/`, `documents/` and `model-hashes.json` (this README is left alone). The tool uses
 `@testable import IterData` (debug builds enable testability) to reach the frozen `internal` classes. It works in a temp folder and
@@ -55,7 +55,7 @@ those IDs. Regenerate only on purpose, and commit the whole set together.
 
 ### Dump mode (a store this repo has never seen)
 
-    swift run --package-path Legacy/IterKit --scratch-path <scratch> IterFixtureGen --dump <storeDir> <out.json>
+    swift run --package-path Tools/LegacyFixtureGen --scratch-path <scratch> IterFixtureGen --dump <storeDir> <out.json>
 
 Used by the cut-over dry run on the owner's own store. `<storeDir>` is never opened: the whole folder (`Iter.store`, `-wal`, `-shm`) is
 copied into a fresh temp folder first, and every read happens on those copies. The tool finds the written schema version by comparing the
